@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SubscriptionEngine.Core", "src\SubscriptionEngine.Core\SubscriptionEngine.Core.csproj", "{D80E56C8-8DD6-4911-9A99-F534C9497D6A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SubscriptionEngine.Core.Tests", "src\SubscriptionEngine.Core.Tests\SubscriptionEngine.Core.Tests.csproj", "{F7A7B1F6-6548-4388-B62D-32F034FC7462}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{236D3C49-DD6D-4D3D-A7B2-82575ACBB1BA}"
+	ProjectSection(SolutionItems) = preProject
+		build.xml = build.xml
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D80E56C8-8DD6-4911-9A99-F534C9497D6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D80E56C8-8DD6-4911-9A99-F534C9497D6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D80E56C8-8DD6-4911-9A99-F534C9497D6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D80E56C8-8DD6-4911-9A99-F534C9497D6A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7A7B1F6-6548-4388-B62D-32F034FC7462}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7A7B1F6-6548-4388-B62D-32F034FC7462}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7A7B1F6-6548-4388-B62D-32F034FC7462}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7A7B1F6-6548-4388-B62D-32F034FC7462}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

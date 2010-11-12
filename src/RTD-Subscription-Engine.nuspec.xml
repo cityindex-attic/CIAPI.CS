@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package>
+  <metadata>
+    <id>RTD-Subscription-Engine</id>
+    <title>Excel RTD Subscription engine</title>
+    <version>1.0.0.0</version>
+    <authors>CityIndex Ltd, Mike Lear, David Laing</authors>
+    <description>A pluggable subscription engine to stream real-time data into Excel from stream sources like COMETD, ActiveMQ and Tibco</description>
+    <language>en-GB</language>
+    <licenseUrl>https://github.com/cityindex/RTD-Subscription-Engine/raw/master/LICENSE.txt</licenseUrl>
+  </metadata>
+</package>
