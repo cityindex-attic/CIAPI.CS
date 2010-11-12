@@ -7,7 +7,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SubscriptionEngine.Core.Tes
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{236D3C49-DD6D-4D3D-A7B2-82575ACBB1BA}"
 	ProjectSection(SolutionItems) = preProject
-		build.xml = build.xml
+		src\build.xml = src\build.xml
+		LICENSE.txt = LICENSE.txt
+		README.markdown = README.markdown
 	EndProjectSection
 EndProject
 Global
