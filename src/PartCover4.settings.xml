@@ -1,0 +1,9 @@
+<PartCoverSettings>
+  <Target>C:\Dev\CI.Opensource\project-templates\tools\nunit-runner\nunit-console-x86.exe</Target>
+  <TargetWorkDir>C:\Dev\CI.Opensource\project-templates\reports</TargetWorkDir>
+  <TargetArgs>/process=Single /domain=Single /nothread /framework=4.0.30319 ..\src\MyProject.Core.Tests\bin\Debug\MyProject.Core.Tests.dll /xml:NUnitResults.xml</TargetArgs>
+  <Rule>+[*]*</Rule>
+  <Rule>-[nunit*]*</Rule>
+  <Rule>-[log4net*]*</Rule>
+  <Rule>-[*.Tests]*</Rule>
+</PartCoverSettings>

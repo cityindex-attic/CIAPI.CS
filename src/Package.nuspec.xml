@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package>
+  <metadata>
+    <id>CSharp-project-template</id>
+    <title>CSharp-project-template</title>
+    <version>1.0.0.0</version>
+    <authors>CityIndex Ltd</authors>
+    <description>[enter description]</description>
+    <language>en-GB</language>
+    <licenseUrl>http://link.to/LICENSE.txt</licenseUrl>
+  </metadata>
+</package>

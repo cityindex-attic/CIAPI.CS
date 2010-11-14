@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Go" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ReportsDirectory>$(RootDirectory)\reports</ReportsDirectory>
+    
+    <NunitEXE>$(RootDirectory)\tools\nunit-runner\nunit-console-x86.exe</NunitEXE>
+    <NUnitArgs>/process=Single /domain=Single /nothread /framework=4.0.30319</NUnitArgs>
+
+    <PartCover4Directory>$(ProgramFiles86)\PartCover\PartCover .NET 4.0</PartCover4Directory>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Assemblies Include="$(SrcDirectory)\**\bin\$(Configuration)\MyProject.Core.dll"/>
+  </ItemGroup>
+  
+  <!-- Runs unit tests through PartCover to calculate unit test covereage-->
+  <!-- Use %2a instead of * and %3f instead of ? to prevent expansion -->
+  <!-- %40 = @  %25 = % %24 = $ -->
+  <Target Name="RunTests" DependsOnTargets="CreateReportDirectories; UpdatePartCover4Settings">
+
+    <CreateItem Include="$(SrcDirectory)\**\bin\$(Configuration)\*.Tests.dll">
+      <Output TaskParameter="Include" ItemName="TestAssemblies" />
+    </CreateItem>
+
+    <Exec Command="&quot;$(PartCover4Directory)\PartCover.exe&quot; --settings $(SrcDirectory)\PartCover4.settings.xml --output $(ReportsDirectory)\PartCover-results.xml"
+      ContinueOnError="true"
+      WorkingDirectory="$(ReportsDirectory)">
+      <Output TaskParameter="ExitCode" ItemName="ExitCodes"/>
+    </Exec>
+
+    <XslTransformation XslInputPath="$(RootDirectory)\tools\partcover4\xslt\PartCoverFullReport.xslt"
+                      XmlInputPaths="$(ReportsDirectory)\PartCover-results.xml"
+                      OutputPaths="$(ReportsDirectory)\PartCover-results-PartCoverFullReport.html" />
+
+    <Error Text="Test error occurred" Condition="'%(ExitCodes.Identity)'>0"/>
+  </Target>
+
+  <Target Name="CreateReportDirectories">
+    <Message Text="Making the report directories at '$(ReportsDirectory)'." />
+    <RemoveDir Directories="$(ReportsDirectory)" Condition="Exists('$(ReportsDirectory)')" ContinueOnError="True" />
+    <MakeDir Directories="$(ReportsDirectory)"/>
+  </Target>
+
+  <Target Name="CalculateMetrics" DependsOnTargets="CalculateComplexityMetrics; CalculateCRAPMetrics"></Target>
+  
+  <Target Name="CalculateComplexityMetrics">
+    <Exec Command="&quot;$(RootDirectory)\tools\reflector\Reflector.exe&quot; /Run:Reflector.CodeMetrics /Assembly:&quot;%(Assemblies.Identity)&quot; /OutputPath:&quot;CodeMetrics.xml&quot;"
+      ContinueOnError="false"
+      WorkingDirectory="$(ReportsDirectory)" />
+  </Target>
+
+  <Target Name="CalculateCRAPMetrics">
+    <Exec Command="&quot;$(RootDirectory)\tools\crap4net\Crap4Net-Console.exe&quot;"
+      ContinueOnError="false"
+      WorkingDirectory="$(ReportsDirectory)" />
+  </Target>
+  
+  <Target Name="UpdatePartCover4Settings">
+    <ItemGroup>
+      <pc4_settings Include="--target &quot;$(NUnitEXE)&quot;"/>
+      <pc4_settings Include="--target-work-dir &quot;$(ReportsDirectory)&quot;"/>
+<!--      target-args &quot;%(TestAssemblies.Identity) $(NUnitArgs) /xml:%(TestAssemblies.Identity).NUnitResults.xml&quot;-->
+      <pc4_settings Include="--include [%2a]%2a"/>
+      <pc4_settings Include="--exclude [nunit%2a]%2a"/>
+      <pc4_settings Include="--exclude [log4net%2a]%2a"/>
+      <pc4_settings Include="--exclude [MyProject.Core.Tests%2a]%2a"/>
+    </ItemGroup>
+  </Target>
+</Project>
