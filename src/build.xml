@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Go" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition="'$(Configuration)' == ''">Debug</Configuration>
+    <RootDirectory>$(MSBuildProjectDirectory)\..</RootDirectory>
+    <BuildDirectory>$(RootDirectory)\build</BuildDirectory>
+    <DropDirectory>$(RootDirectory)\dist</DropDirectory>
+    <DropLibDirectory>$(DropDirectory)\lib</DropLibDirectory>
+    <DropContentDirectory>$(DropDirectory)\content</DropContentDirectory>
+    <DropToolsDirectory>$(DropDirectory)\tools</DropToolsDirectory>
+
+    <ProgramFiles86>C:\Program Files</ProgramFiles86>
+    <ProgramFiles86 Condition="Exists('C:\Program Files (x86)')">C:\Program Files (x86)</ProgramFiles86>
+
+    <NunitEXE>$(RootDirectory)\tools\nunit-runner\nunit-console-x86.exe</NunitEXE>
+    <NUnitArgs>/process=Single /domain=Single /nothread /framework=4.0.30319</NUnitArgs>
+
+    <PartCover4Directory>$(ProgramFiles86)\PartCover\PartCover .NET 4.0</PartCover4Directory>
+    
+    <NuGetEXE>$(RootDirectory)\tools\nuget\nuget.exe</NuGetEXE>
+
+    <Major>1</Major>
+    <Minor>0</Minor>
+    <Build>0</Build>
+    <Revision>0</Revision>
+    <!--Hudson sets BUILD_NUMBER -->
+    <Build Condition="'$(BUILD_NUMBER)'!=''">$(BUILD_NUMBER)</Build>
+  
+</PropertyGroup>
+
+  <Target Name="Go" DependsOnTargets="CreateCleanDirectories; UpdateVersion; 
+                                      Build; RunTests; 
+                                      CopyMSBuildOutputToDropDirectory; CopyLicenseToAllDirectories; CopyReportsToDropFolder;
+                                      Package">
+  </Target>
+
+  <Import Project="$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets" Condition="Exists('$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets')" />
+  <Target Name="UpdateVersion" Condition="Exists('$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets')">
+    <Message Text="Version: $(Major).$(Minor).$(Build).$(Revision)" />
+
+    <CreateItem Include="$(RootDirectory)\**\AssemblyInfo.cs">
+      <Output TaskParameter="Include" ItemName="AssemblyInfos"/>
+    </CreateItem>
+
+    <Message Text="AssemblyInfos.FullPath='%(AssemblyInfos.FullPath)'" Importance="Low"/>
+
+    <FileUpdate Files="%(AssemblyInfos.FullPath)"
+                Regex="AssemblyVersion\s*\(\s*\&quot;(\d+\.\d+\.(\d+|\*)\.(\d+|\*))\&quot;\s*\)"
+                ReplacementText="AssemblyVersion(&quot;$(Major).$(Minor).$(Build).$(Revision)&quot;)" />
+    <FileUpdate Files="%(AssemblyInfos.FullPath)"
+                Regex="AssemblyFileVersion\s*\(\s*\&quot;(\d+\.\d+\.(\d+|\*)\.(\d+|\*))\&quot;\s*\)"
+                ReplacementText="AssemblyFileVersion(&quot;$(Major).$(Minor).$(Build).$(Revision)&quot;)"/>
+    <FileUpdate Files="$(RootDirectory)\src\RTD-Subscription-Engine.nuspec.xml"
+                Regex="&lt;version&gt;(.*?)&lt;/version&gt;"
+                ReplacementText="&lt;version&gt;$(Major).$(Minor).$(Build).$(Revision)&lt;/version&gt;" />
+  </Target>
+
+  <Target Name="Build">
+    <MSBuild Projects="$(RootDirectory)\RTD-Subscription-Engine.sln" Targets="Rebuild" Properties="EnableCodeAnalysis=true;GenerateDocumentation=true" />
+  </Target>
+
+  <Target Name="CreateCleanDirectories">
+    <Message Text="Making the output directories for the compiled output at '$(BuildDirectory)' and '$(DropDirectory)'." />
+    <RemoveDir Directories="$(BuildDirectory)" Condition="Exists('$(BuildDirectory)')" ContinueOnError="True" />
+    <MakeDir Directories="$(BuildDirectory)" Condition="!Exists('$(BuildDirectory)')" />
+
+    <RemoveDir Directories="$(DropDirectory)" Condition="Exists('$(DropDirectory)')" ContinueOnError="True" />
+    <MakeDir Directories="$(DropDirectory)" Condition="!Exists('$(DropDirectory)')" />
+    <MakeDir Directories="$(DropLibDirectory)" Condition="!Exists('$(DropLibDirectory)')" />
+    <MakeDir Directories="$(DropContentDirectory)" Condition="!Exists('$(DropContentDirectory)')" />
+    <MakeDir Directories="$(DropToolsDirectory)" Condition="!Exists('$(DropToolsDirectory)')" />
+  </Target>
+
+  <!-- Runs unit tests through PartCover to calculate unit test covereage-->
+  <!-- Use %2a instead of * and %3f instead of ? to prevent expansion -->
+  <!-- %40 = @  %25 = % %24 = $ -->
+  <Target Name="RunTests">
+    <ItemGroup>
+      <pc4_settings Include="--target &quot;$(NUnitEXE)&quot;"/>
+      <pc4_settings Include="--target-work-dir &quot;$(RootDirectory)\src&quot;"/>
+      <pc4_settings Include="--include [%2a]%2a"/>
+      <pc4_settings Include="--exclude [nunit%2a]%2a"/>
+      <pc4_settings Include="--exclude [log4net%2a]%2a"/>
+      <pc4_settings Include="--exclude [SubscriptionEngine.Core.Tests%2a]%2a"/>
+    </ItemGroup>
+
+    <CreateItem Include="$(RootDirectory)\src\**\bin\$(Configuration)\*.Tests.dll">
+      <Output TaskParameter="Include" ItemName="TestAssemblies" />
+    </CreateItem>
+
+    <Exec Command="&quot;$(PartCover4Directory)\PartCover.exe&quot; --register @(pc4_settings,' ') --target-args &quot;%(TestAssemblies.Identity) $(NUnitArgs) /xml:%(TestAssemblies.Identity).NUnitResults.xml&quot; --output $(BuildDirectory)\PartCover-results.xml"
+      ContinueOnError="true"
+      WorkingDirectory="$(BuildDirectory)">
+      <Output TaskParameter="ExitCode" ItemName="ExitCodes"/>
+    </Exec>
+
+    <XslTransformation XslInputPath="$(RootDirectory)\tools\partcover4\xslt\PartCoverFullReport.xslt"
+                      XmlInputPaths="$(BuildDirectory)\PartCover-results.xml"
+                      OutputPaths="$(BuildDirectory)\PartCover-results-PartCoverFullReport.html" />
+
+    <Error Text="Test error occurred" Condition="'%(ExitCodes.Identity)'>0"/>
+  </Target>
+  
+  <Target Name="CopyMSBuildOutputToDropDirectory">
+    <ItemGroup>
+      <MSBuildOutputItems Exclude="$(RootDirectory)\**\*.pdb" Include="$(RootDirectory)\src\MetadataProcessor\bin\$(Configuration)\*.*" />
+    </ItemGroup>
+    <Message Text="Copying dll output to $(DropLibDirectory)" />
+    <Copy ContinueOnError="false" SourceFiles="@(MSBuildOutputItems)" DestinationFiles="@(MSBuildOutputItems ->'$(DropLibDirectory)\%(RecursiveDir)%(Filename)%(Extension)')" />
+  </Target>
+
+  <Target Name="CopyLicenseToAllDirectories">
+    <ItemGroup>
+      <LicenseFileItems Include="$(RootDirectory)\LICENSE.txt" />
+    </ItemGroup>
+    <Message Text="Copying the License to all drop directories" />
+    <Copy ContinueOnError="false" SourceFiles="@(LicenseFileItems)" DestinationFiles="@(LicenseFileItems -&gt;'$(DropDirectory)\%(RecursiveDir)%(Filename)%(Extension)')" />
+  </Target>
+
+  <Target Name="CopyReportsToDropFolder">
+    <ItemGroup>
+      <Reports Include="$(BuildDirectory)\PartCover*.html" />
+    </ItemGroup>
+    <Message Text="Copying the Reports to drop directories" />
+    <Copy ContinueOnError="false" SourceFiles="@(Reports)" DestinationFiles="@(Reports -&gt;'$(DropDirectory)\%(RecursiveDir)%(Filename)%(Extension)')" />
+  </Target>
+
+  <Target Name="Package">
+    <ItemGroup>
+      <LicenseFileItems Include="$(RootDirectory)\LICENSE.txt" />
+    </ItemGroup>
+    <Message Text="Packaging with NuGet" />
+    <Copy SourceFiles="$(RootDirectory)\src\RTD-Subscription-Engine.nuspec.xml" DestinationFolder="$(DropDirectory)"/>
+    <Exec Command='"$(NuGetEXE)" pack $(DropDirectory)\RTD-Subscription-Engine.nuspec.xml' ContinueOnError='false'
+          WorkingDirectory='$(DropDirectory)'/>
+  </Target>
+
+  
+</Project>
