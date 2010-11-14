@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Go" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <DropDirectory>$(RootDirectory)\dist</DropDirectory>
+    <DropLibDirectory>$(DropDirectory)\lib</DropLibDirectory>
+    <DropContentDirectory>$(DropDirectory)\content</DropContentDirectory>
+    <DropToolsDirectory>$(DropDirectory)\tools</DropToolsDirectory>
+
+    <NuGetEXE>$(RootDirectory)\tools\nuget\nuget.exe</NuGetEXE>
+  </PropertyGroup>
+
+  <Target Name="Package" DependsOnTargets="CreateDropDirectories;CopyMSBuildOutputToDropDirectory;CopyLicenseToAllDirectories;CopyReportsToDropFolder">
+    <Message Text="Packaging with NuGet" />
+    <Copy SourceFiles="$(RootDirectory)\src\Package.nuspec.xml" DestinationFolder="$(DropDirectory)"/>
+    <Exec Command='"$(NuGetEXE)" pack $(DropDirectory)\Package.nuspec.xml' ContinueOnError='false'
+          WorkingDirectory='$(DropDirectory)'/>
+  </Target>
+  
+  <Target Name="CreateDropDirectories">
+    <Message Text="Making the drop directories at '$(DropDirectory)'." />
+    <RemoveDir Directories="$(DropDirectory)" Condition="Exists('$(DropDirectory)')" ContinueOnError="True" />
+    <MakeDir Directories="$(DropDirectory)" Condition="!Exists('$(DropDirectory)')" />
+    <MakeDir Directories="$(DropLibDirectory)" Condition="!Exists('$(DropLibDirectory)')" />
+    <MakeDir Directories="$(DropContentDirectory)" Condition="!Exists('$(DropContentDirectory)')" />
+    <MakeDir Directories="$(DropToolsDirectory)" Condition="!Exists('$(DropToolsDirectory)')" />
+  </Target>
+  
+  <Target Name="CopyMSBuildOutputToDropDirectory">
+    <ItemGroup>
+      <MSBuildOutputItems Exclude="$(SrcDirectory)\**\*.pdb" Include="$(SrcDirectory)\**\bin\$(Configuration)\*.*" />
+    </ItemGroup>
+    <Message Text="Copying dll output to $(DropLibDirectory)" />
+    <Copy ContinueOnError="false" SourceFiles="@(MSBuildOutputItems)" DestinationFiles="@(MSBuildOutputItems ->'$(DropLibDirectory)\%(RecursiveDir)%(Filename)%(Extension)')" />
+  </Target>
+
+  <Target Name="CopyLicenseToAllDirectories">
+    <ItemGroup>
+      <LicenseFileItems Include="$(RootDirectory)\LICENSE.txt" />
+    </ItemGroup>
+    <Message Text="Copying the License to all drop directories" />
+    <Copy ContinueOnError="false" SourceFiles="@(LicenseFileItems)" DestinationFiles="@(LicenseFileItems -&gt;'$(DropDirectory)\%(RecursiveDir)%(Filename)%(Extension)')" />
+  </Target>
+
+  <Target Name="CopyReportsToDropFolder">
+    <ItemGroup>
+      <Reports Include="$(ReportsDirectory)\PartCover*.html" />
+    </ItemGroup>
+    <Message Text="Copying the Reports to drop directories" />
+    <Copy ContinueOnError="false" SourceFiles="@(Reports)" DestinationFiles="@(Reports -&gt;'$(DropDirectory)\%(RecursiveDir)%(Filename)%(Extension)')" />
+  </Target>
+
+  
+</Project>

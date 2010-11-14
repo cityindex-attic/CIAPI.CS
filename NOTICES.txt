@@ -1,0 +1,5 @@
+RTD-Subscription-Engine
+Copyright 2010 CityIndex Ltd.
+
+This product includes software developed at
+	CityIndex Ltd. (http://www.cityindex.com)
