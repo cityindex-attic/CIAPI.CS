@@ -6,7 +6,11 @@
   <Import Project="$(MSBuildProjectDirectory)\..\tools\msbuild\Versioning.targets.xml" />
   <Import Project="$(MSBuildProjectDirectory)\..\tools\msbuild\TestsAndMetrics.targets.xml" />
   <Import Project="$(MSBuildProjectDirectory)\..\tools\msbuild\DropsAndPackaging.targets.xml" />
-  
+
+  <ItemGroup>
+    <Assemblies     Include="$(SrcDirectory)\SubscriptionEngine.Core\bin\$(Configuration)\SubscriptionEngine.Core.dll"/>
+    <TestAssemblies Include="$(SrcDirectory)\SubscriptionEngine.Core.Tests\bin\$(Configuration)\SubscriptionEngine.Core.Tests.dll"/>
+  </ItemGroup>
 
   <Target Name="Go" DependsOnTargets="UpdateVersion; 
                                       Build; 

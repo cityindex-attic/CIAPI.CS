@@ -8,19 +8,13 @@
 
     <PartCover4Directory>$(ProgramFiles86)\PartCover\PartCover .NET 4.0</PartCover4Directory>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Assemblies Include="$(SrcDirectory)\**\bin\$(Configuration)\MyProject.Core.dll"/>
-  </ItemGroup>
   
   <!-- Runs unit tests through PartCover to calculate unit test covereage-->
   <!-- Use %2a instead of * and %3f instead of ? to prevent expansion -->
   <!-- %40 = @  %25 = % %24 = $ -->
   <Target Name="RunTests" DependsOnTargets="CreateReportDirectories; UpdatePartCover4Settings">
 
-    <CreateItem Include="$(SrcDirectory)\**\bin\$(Configuration)\*.Tests.dll">
-      <Output TaskParameter="Include" ItemName="TestAssemblies" />
-    </CreateItem>
+    
 
     <Exec Command="&quot;$(PartCover4Directory)\PartCover.exe&quot; --settings $(SrcDirectory)\PartCover4.settings.xml --output $(ReportsDirectory)\PartCover-results.xml"
       ContinueOnError="true"
@@ -44,6 +38,7 @@
   <Target Name="CalculateMetrics" DependsOnTargets="CalculateComplexityMetrics; CalculateCRAPMetrics"></Target>
   
   <Target Name="CalculateComplexityMetrics">
+    
     <Exec Command="&quot;$(RootDirectory)\tools\reflector\Reflector.exe&quot; /Run:Reflector.CodeMetrics /Assembly:&quot;%(Assemblies.Identity)&quot; /OutputPath:&quot;CodeMetrics.xml&quot;"
       ContinueOnError="false"
       WorkingDirectory="$(ReportsDirectory)" />
