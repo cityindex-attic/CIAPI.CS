@@ -1,7 +1,7 @@
 <PartCoverSettings>
   <Target>..\tools\nunit-runner\nunit-console-x86.exe</Target>
   <TargetWorkDir>..\reports</TargetWorkDir>
-  <TargetArgs>/process=Single /domain=Single /nothread /framework=4.0.30319 ..\src\SubscriptionEngine.Core.Tests\bin\Debug\SubscriptionEngine.Core.Tests.dll /xml:NUnitResults.xml</TargetArgs>
+  <TargetArgs>/process=Single /domain=Single /nothread /framework=4.0.30319 ..\src\Core.Tests\bin\Debug\CIAPI.Core.Tests.dll /xml:NUnitResults.xml</TargetArgs>
   <Rule>+[*]*</Rule>
   <Rule>-[nunit*]*</Rule>
   <Rule>-[log4net*]*</Rule>

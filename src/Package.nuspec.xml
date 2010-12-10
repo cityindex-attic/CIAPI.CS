@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package>
   <metadata>
-    <id>RTD-Subscription-Engine</id>
-    <title>Excel RTD Subscription engine</title>
+    <id>CIAPI.CS</id>
+    <title>CIAPI.CS</title>
     <version>1.0.0.0</version>
-    <authors>CityIndex Ltd, Mike Lear, David Laing</authors>
-    <description>A pluggable subscription engine to stream real-time data into Excel from stream sources like COMETD, ActiveMQ and Tibco</description>
+    <authors>CityIndex Ltd, Sky Sanders, David Laing</authors>
+    <description>.NET client library for CityIndex Trading API</description>
     <language>en-GB</language>
-    <licenseUrl>https://github.com/cityindex/RTD-Subscription-Engine/raw/master/LICENSE.txt</licenseUrl>
+    <licenseUrl>https://github.com/cityindex/CIAPI.CS/raw/master/LICENSE.txt</licenseUrl>
   </metadata>
 </package>
