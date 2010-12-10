@@ -8,8 +8,8 @@
     <ProjectGuid>{F7A7B1F6-6548-4388-B62D-32F034FC7462}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SubscriptionEngine.Core.Tests</RootNamespace>
-    <AssemblyName>SubscriptionEngine.Core.Tests</AssemblyName>
+    <RootNamespace>CIAPI.Core.Tests</RootNamespace>
+    <AssemblyName>CIAPI.Core.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -44,16 +44,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SubscriptionTests.cs" />
+    <Compile Include="ApiContextTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SubscriptionEngine.Core\SubscriptionEngine.Core.csproj">
+    <ProjectReference Include="..\Core\Core.csproj">
       <Project>{D80E56C8-8DD6-4911-9A99-F534C9497D6A}</Project>
-      <Name>SubscriptionEngine.Core</Name>
+      <Name>Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -8,8 +8,8 @@
   <Import Project="$(MSBuildProjectDirectory)\..\tools\msbuild\DropsAndPackaging.targets.xml" />
 
   <ItemGroup>
-    <Assemblies     Include="$(SrcDirectory)\SubscriptionEngine.Core\bin\$(Configuration)\SubscriptionEngine.Core.dll"/>
-    <TestAssemblies Include="$(SrcDirectory)\SubscriptionEngine.Core.Tests\bin\$(Configuration)\SubscriptionEngine.Core.Tests.dll"/>
+    <Assemblies     Include="$(SrcDirectory)\Core\bin\$(Configuration)\CIAPI.Core.dll"/>
+    <TestAssemblies Include="$(SrcDirectory)\Core.Tests\bin\$(Configuration)\CIAPI.Core.Tests.dll"/>
   </ItemGroup>
 
   <Target Name="Go" DependsOnTargets="UpdateVersion; 
@@ -20,7 +20,7 @@
   </Target>
 
   <Target Name="Build">
-    <MSBuild Projects="$(SrcDirectory)\RTD-Subscription-Engine.sln" Targets="Rebuild" 
+    <MSBuild Projects="$(SrcDirectory)\CIAPI.CS.sln" Targets="Rebuild" 
              Properties="EnableCodeAnalysis=true;GenerateDocumentation=true" />
   </Target>
 </Project>
