@@ -1,0 +1,4 @@
+﻿PLINQ is not available in Silverlight 4. Examine http://www.codeproject.com/KB/silverlight/Mtvt.aspx
+
+the Clarius Visual T4 VS2010 beta is all kindsa buggy and prevents project from building. The templates themselves are excluded from the project but the output is not.
+If you don't have 'show all files' set true you will not see the generated code, which are nested in the hidden .tt files, in CodeGen. Go ahead and show all files and edit and run the templates if necessary.
