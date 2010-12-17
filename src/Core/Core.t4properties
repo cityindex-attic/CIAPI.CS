@@ -2,12 +2,12 @@
 <TransformationPropertyValues xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Values>
     <TransformationPropertyValue>
-      <FileName>ROUTES.tt</FileName>
+      <FileName>CodeGen\DTO.tt</FileName>
       <PropertyName>Host</PropertyName>
       <Value>VisualStudio</Value>
     </TransformationPropertyValue>
     <TransformationPropertyValue>
-      <FileName>DTO.tt</FileName>
+      <FileName>CodeGen\ROUTES.tt</FileName>
       <PropertyName>Host</PropertyName>
       <Value>VisualStudio</Value>
     </TransformationPropertyValue>

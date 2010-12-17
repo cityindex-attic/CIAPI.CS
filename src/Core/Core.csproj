@@ -48,7 +48,7 @@
     <Compile Include="ApiAsyncResult.cs" />
     <Compile Include="ApiContext.cs" />
     <Compile Include="ApiException.cs" />
-    <Compile Include="CodeGen\DTO.cs">
+    <Compile Include="CodeGen\DTO1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DTO.tt</DependentUpon>

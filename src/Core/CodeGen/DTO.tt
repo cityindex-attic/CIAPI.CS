@@ -1,6 +1,6 @@
 ﻿<#@ template debug="true" hostspecific="true" language="C#" #>
 <#@ output extension=".cs" #>
-<#@ Assembly Name="C:\CIAPI.CS.GIT\src\packages\Newtonsoft.Json.3.5.8\lib\35\Newtonsoft.Json.dll" #>
+<#@ Assembly Name="$(SolutionDir)packages\Newtonsoft.Json.3.5.8\lib\35\Newtonsoft.Json.dll" #>
 <#@ import namespace="System" #>
 <#@ import namespace="System.IO" #>
 <#@ import namespace="System.Net" #>
