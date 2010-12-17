@@ -11,15 +11,15 @@ namespace CIAPI.Core
     /// <summary>
     /// Currently this is a simple implementation of HttpAsyncResult
     /// </summary>
-    public class ApiAsyncResult<T> : ApiAsyncResult, IAsyncResult where T : class,new()
+    public class ApiAsyncResult<TDTO> : ApiAsyncResult, IAsyncResult where TDTO : class,new()
     {
         // Fields
         private object _asyncState;
-        private ApiAsyncCallback<T> _callback;
+        private ApiAsyncCallback<TDTO> _callback;
         private bool _completed;
         private bool _completedSynchronously;
         private Exception _error;
-        private T _result;
+        private TDTO _result;
         private RequestNotificationStatus _status;
         private readonly Guid _id;
         public Guid Id
@@ -30,7 +30,7 @@ namespace CIAPI.Core
             }
         }
         // Methods
-        internal ApiAsyncResult(ApiAsyncCallback<T> cb, object state)
+        internal ApiAsyncResult(ApiAsyncCallback<TDTO> cb, object state)
         {
             _id = Guid.NewGuid();
             _callback = cb;
@@ -38,7 +38,7 @@ namespace CIAPI.Core
             _status = RequestNotificationStatus.Continue;
         }
 
-        internal ApiAsyncResult(ApiAsyncCallback<T> cb, object state, bool completed, T result, Exception error)
+        internal ApiAsyncResult(ApiAsyncCallback<TDTO> cb, object state, bool completed, TDTO result, Exception error)
         {
             _id = Guid.NewGuid();
             _callback = cb;
@@ -55,12 +55,12 @@ namespace CIAPI.Core
         }
 
         [TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]
-        internal void Complete(bool synchronous, T result, Exception error)
+        internal void Complete(bool synchronous, TDTO result, Exception error)
         {
             Complete(synchronous, result, error, RequestNotificationStatus.Continue);
         }
 
-        internal void Complete(bool synchronous, T result, Exception error, RequestNotificationStatus status)
+        internal void Complete(bool synchronous, TDTO result, Exception error, RequestNotificationStatus status)
         {
             _completed = true;
             _completedSynchronously = synchronous;
@@ -78,7 +78,7 @@ namespace CIAPI.Core
         /// when we have the api response here in the response. We could make this public and drastically simplify the workflow.
         /// </summary>
         /// <returns></returns>
-        public T End()
+        internal TDTO End()
         {
             if (_error != null)
             {

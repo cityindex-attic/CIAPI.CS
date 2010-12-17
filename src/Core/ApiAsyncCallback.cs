@@ -5,5 +5,5 @@ using System.Text;
 
 namespace CIAPI.Core
 {
-    public delegate void ApiAsyncCallback<T>(ApiAsyncResult<T> ar) where T : class,new();
+    public delegate void ApiAsyncCallback<TDTO>(ApiAsyncResult<TDTO> ar) where TDTO : class,new();
 }

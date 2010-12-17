@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using CIAPI.DTO;
 using NUnit.Framework;
 
@@ -35,6 +36,29 @@ namespace CIAPI.Core.Tests
             ListNewsHeadlinesResponseDTO response = ctx.ListNewsHeadlines("UK", 12);
             Assert.AreEqual(12, response.Headlines.Length);
 
+        }
+
+        [Test]
+        public void CanGetNewsHeadlinesAsync()
+        {
+            var ctx = new ApiContext(new Uri(TestConfig.ApiUrl), TestConfig.BasicAuthUsername, TestConfig.BasicAuthPassword)
+            {
+                UserName = TestConfig.ApiUsername,
+                SessionId = TestConfig.ApiTestSessionId
+            };
+            var gate = new ManualResetEvent(false);
+
+            ListNewsHeadlinesResponseDTO response=null;
+
+            ctx.BeginListNewsHeadlines(ar =>
+                                           {
+                                               response = ctx.EndListNewsHeadlines(ar);
+                                               gate.Set();
+                                           }, null, "UK", 14);
+
+            gate.WaitOne();
+
+            Assert.AreEqual(14, response.Headlines.Length);            
         }
     }
 }
