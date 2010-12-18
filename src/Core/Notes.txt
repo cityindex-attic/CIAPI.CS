@@ -1,2 +1,4 @@
-﻿PLINQ is not available in Silverlight 4. Examine http://www.codeproject.com/KB/silverlight/Mtvt.aspx
+﻿PLINQ is not available in Silverlight 4. Need thread safe collections.
+
+packages wont work for newtonsoft.json silverlight due to the fact that json.net is built for Silverlight 3. Standard lib reference. Updates _should_ be handled by fx project update?
 

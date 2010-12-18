@@ -58,6 +58,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ROUTES.tt</DependentUpon>
     </Compile>
+    <Compile Include="Collections\TDictionary.cs" />
+    <Compile Include="Collections\TList.cs" />
+    <Compile Include="Collections\TQueue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequestNotificationStatus.cs" />
   </ItemGroup>
@@ -70,9 +73,7 @@
   <ItemGroup>
     <Content Include="Notes.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="CodeGen\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

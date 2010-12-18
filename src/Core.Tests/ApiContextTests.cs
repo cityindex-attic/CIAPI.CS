@@ -12,11 +12,48 @@ namespace CIAPI.Core.Tests
         [Test]
         public void CanLogin()
         {
+
             var ctx = new ApiContext(new Uri(TestConfig.ApiUrl), TestConfig.BasicAuthUsername, TestConfig.BasicAuthPassword);
             CreateSessionResponseDTO response = ctx.CreateSession(TestConfig.ApiUsername, TestConfig.ApiPassword);
             Assert.IsNotNullOrEmpty(response.Session);
+
         }
 
+        [Test]
+        public void BasicAuthenticationFailure()
+        {
+
+            var ctx = new ApiContext(new Uri(TestConfig.ApiUrl));
+            try
+            {
+                ctx.CreateSession(TestConfig.ApiUsername, TestConfig.ApiPassword);
+                Assert.Fail("Expected exception");
+            }
+            catch (ApiException ex)
+            {
+
+                Assert.AreEqual("The remote server returned an error: (401) Unauthorized.", ex.Message);
+            }
+        }
+
+        [Test]
+        public void ApiAuthenticationFailure()
+        {
+            var ctx = new ApiContext(new Uri(TestConfig.ApiUrl), TestConfig.BasicAuthUsername, TestConfig.BasicAuthPassword);
+            try
+            {
+
+                ctx.CreateSession("foo", "bar");
+                Assert.Fail("Expected exception");
+            }
+            catch (ApiException ex)
+            {
+
+
+                Assert.AreEqual("[insert api unauthrized]", ex.Message, "FIXME: the API is just setting 401. it needs to send ErrorResponseDTO json as well.");
+                Assert.AreEqual("[insert error response dto json]", ex.ResponseText);
+            }
+        }
         [Test]
         public void CanLogout()
         {
@@ -41,24 +78,23 @@ namespace CIAPI.Core.Tests
         [Test]
         public void CanGetNewsHeadlinesAsync()
         {
-            var ctx = new ApiContext(new Uri(TestConfig.ApiUrl), TestConfig.BasicAuthUsername, TestConfig.BasicAuthPassword)
+            using (var gate = new ManualResetEvent(false))
             {
-                UserName = TestConfig.ApiUsername,
-                SessionId = TestConfig.ApiTestSessionId
-            };
-            var gate = new ManualResetEvent(false);
+                var ctx = new ApiContext(new Uri(TestConfig.ApiUrl), TestConfig.BasicAuthUsername, TestConfig.BasicAuthPassword)
+                {
+                    UserName = TestConfig.ApiUsername,
+                    SessionId = TestConfig.ApiTestSessionId
+                };
 
-            ListNewsHeadlinesResponseDTO response=null;
+                ctx.BeginListNewsHeadlines(ar =>
+                    {
+                        ListNewsHeadlinesResponseDTO response = ctx.EndListNewsHeadlines(ar);
+                        Assert.AreEqual(14, response.Headlines.Length);
+                        gate.Set();
+                    }, null, "UK", 14);
 
-            ctx.BeginListNewsHeadlines(ar =>
-                                           {
-                                               response = ctx.EndListNewsHeadlines(ar);
-                                               gate.Set();
-                                           }, null, "UK", 14);
-
-            gate.WaitOne();
-
-            Assert.AreEqual(14, response.Headlines.Length);            
+                gate.WaitOne();
+            }
         }
     }
 }

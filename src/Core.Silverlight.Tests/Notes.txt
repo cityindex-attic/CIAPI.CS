@@ -1,0 +1,5 @@
+﻿Silverlight NUnit is not nuget packaged
+http://greenicicleblog.com/2010/04/27/nunit-for-silverlight-updated/
+
+using statlight for CI 
+http://statlight.codeplex.com/

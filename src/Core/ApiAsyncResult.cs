@@ -54,7 +54,7 @@ namespace CIAPI.Core
             }
         }
 
-        [TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]
+        
         internal void Complete(bool synchronous, TDTO result, Exception error)
         {
             Complete(synchronous, result, error, RequestNotificationStatus.Continue);
@@ -95,7 +95,6 @@ namespace CIAPI.Core
         // Properties
         public object AsyncState
         {
-            [TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]
             get
             {
                 return _asyncState;
@@ -112,7 +111,6 @@ namespace CIAPI.Core
 
         public bool CompletedSynchronously
         {
-            [TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]
             get
             {
                 return _completedSynchronously;
@@ -121,7 +119,6 @@ namespace CIAPI.Core
 
         internal Exception Error
         {
-            [TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]
             get
             {
                 return _error;
@@ -130,7 +127,6 @@ namespace CIAPI.Core
 
         public bool IsCompleted
         {
-            [TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]
             get
             {
                 return _completed;
@@ -139,7 +135,6 @@ namespace CIAPI.Core
 
         internal RequestNotificationStatus Status
         {
-            [TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]
             get
             {
                 return _status;
