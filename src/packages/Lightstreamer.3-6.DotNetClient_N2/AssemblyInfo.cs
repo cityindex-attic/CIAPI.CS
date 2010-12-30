@@ -1,6 +1,6 @@
 ﻿// Assembly DotNetClient_N2, Version 1.1.3323.32539
 
-[assembly: System.Reflection.AssemblyVersion("1.1.3323.32539")]
+[assembly: System.Reflection.AssemblyVersion("1.0.0.0")]
 [assembly: System.Runtime.InteropServices.Guid("6957aed9-4119-47d8-a864-e8987adfa8a1")]
 [assembly: System.Runtime.InteropServices.ComVisible(false)]
 [assembly: System.Runtime.CompilerServices.RuntimeCompatibility(WrapNonExceptionThrows=true)]
