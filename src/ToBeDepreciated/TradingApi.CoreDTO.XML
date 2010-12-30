@@ -1,0 +1,213 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TradingApi.CoreDTO</name>
+    </assembly>
+    <members>
+        <member name="T:TradingApi.CoreDTO.NewsDetailDTO">
+            <summary>
+             Contains details of a specific news story
+            </summary>
+             <jschema />
+        </member>
+        <member name="T:TradingApi.CoreDTO.NewsDTO">
+            <summary>
+             A news headline
+            </summary>
+             <jschema />
+        </member>
+        <member name="P:TradingApi.CoreDTO.NewsDTO.StoryId">
+            <summary>
+             The unique identifier for a news story
+            </summary>
+             <jschema
+               minimum = "1"
+               maximum = "2147483647"
+               demoValue="12654"
+             />
+        </member>
+        <member name="P:TradingApi.CoreDTO.NewsDTO.Headline">
+            <summary>
+             The News story headline
+            </summary>
+             <jschema
+             demoValue="Barron&apos;s(8/29) Speaking Of Dividends: The Big Cheese: Kraft Foods Slices Costs And Serves A Payout Hike"
+             />
+        </member>
+        <member name="P:TradingApi.CoreDTO.NewsDTO.PublishDate">
+            <summary>
+             The date on which the news story was published.  Always in UTC
+            </summary>
+             <jschema
+             demoValue="/Date(1289231327280)/"
+             />
+        </member>
+        <member name="M:TradingApi.CoreDTO.NewsDetailDTO.#ctor(System.Int32,System.String,System.DateTime,System.String)">
+            <summary>
+            </summary>
+            <param name="storyId"></param>
+            <param name="headline"></param>
+            <param name="publishDate"></param>
+            <param name="story"></param>
+        </member>
+        <member name="P:TradingApi.CoreDTO.NewsDetailDTO.Story">
+            <summary>
+             The detail of the story.  This can contain HTML characters.
+            </summary>
+             <jschema
+               minLength = "0"
+               maxLength = "2147483647"
+               demoValue="&lt;pre&gt;    (Expect lots of HTML here)     By Shirley A. Lazo &lt;/pre&gt;&lt;p&gt;    (END) Dow Jones Newswires&lt;/p&gt;&lt;p&gt;   August 27, 2005 00:01 ET (04:01 GMT)&lt;/p&gt;"
+             />
+        </member>
+        <member name="T:TradingApi.CoreDTO.PriceTickDTO">
+            <summary>
+             The mid price at a particular point in time.
+            </summary>
+             <jschema />
+        </member>
+        <member name="P:TradingApi.CoreDTO.PriceTickDTO.TickDate">
+            <summary>
+             The datetime at which a price tick occured.  Accurate to the millisecond
+            </summary>
+             <jschema
+                format="wcf-date"
+                demoValue="/Date(1287136540715)/"
+             />
+        </member>
+        <member name="P:TradingApi.CoreDTO.PriceTickDTO.Price">
+            <summary>
+             The mid price
+            </summary>
+             <jschema
+                minimum="0"
+                demoValue="1.5457"
+             />
+        </member>
+        <member name="T:TradingApi.CoreDTO.PriceBarDTO">
+            <summary>
+             The details of a specific price bar, useful for plotting candlestick charts
+            </summary>
+             <jschema />
+        </member>
+        <member name="P:TradingApi.CoreDTO.PriceBarDTO.BarDate">
+            <summary>
+             The date of the start of the price bar interval
+            </summary>
+             <jschema
+             format="wcf-date"
+             demoValue="/Date(1287136540715)/"
+             />
+        </member>
+        <member name="P:TradingApi.CoreDTO.PriceBarDTO.Open">
+            <summary>
+             The price at the open of the price bar interval
+            </summary>
+             <jschema
+             demoValue="1.5"
+             />
+        </member>
+        <member name="P:TradingApi.CoreDTO.PriceBarDTO.High">
+            <summary>
+             The highest price occuring during the interval of the price bar
+            </summary>
+             <jschema
+             demoValue="2.343"
+             />
+        </member>
+        <member name="P:TradingApi.CoreDTO.PriceBarDTO.Low">
+            <summary>
+             The lowest price occuring during the interval of the price bar
+            </summary>
+             <jschema
+             demoValue="1.3423"
+             />
+        </member>
+        <member name="P:TradingApi.CoreDTO.PriceBarDTO.Close">
+            <summary>
+             The price at the end of the price bar interval
+            </summary>
+             <jschema
+             demoValue="2.42"
+             />
+        </member>
+        <member name="T:TradingApi.CoreDTO.Orders.IfDoneDTO">
+            <summary>
+            An IfDone order represents an order which is placed when
+            the corresponding order is filled, e.g attaching a stop/limit 
+            to a trade or order
+            </summary>
+            <jschema />
+        </member>
+        <member name="P:TradingApi.CoreDTO.Orders.IfDoneDTO.Stop">
+            <summary>
+            The price at which the stop order will be filled
+            </summary>
+            <jschema/>
+        </member>
+        <member name="P:TradingApi.CoreDTO.Orders.IfDoneDTO.Limit">
+            <summary>
+            The price at which the limit order will be filled
+            </summary>
+            <jschema />
+        </member>
+        <member name="P:TradingApi.CoreDTO.Orders.IfDoneDTO.Applicability">
+            <summary>
+            Identifier which relates to the expiry of the
+            order/trade, i.e. GoodTillTime (GTT), 
+            GoodTillCancelled (GTC) or GoodTillDay (GTD)
+            </summary>
+            <jschema
+            demoValue="GTC"
+            />
+        </member>
+        <member name="P:TradingApi.CoreDTO.Orders.IfDoneDTO.ExpiryDateTimeUTC">
+            <summary>
+            The associated expiry DateTime for a 
+            pair of GoodTillTime IfDone orders
+            </summary>
+            <jschema
+            demoValue="\/Date(1290164280000)\/"/>
+        </member>
+        <member name="T:TradingApi.CoreDTO.Orders.StopLimitOrderDTO">
+            <summary>
+            
+            </summary>
+            <jschema/>
+        </member>
+        <member name="T:TradingApi.CoreDTO.Orders.OrderDTO">
+            <summary>
+            
+            </summary>
+            <jschema/>
+        </member>
+        <member name="T:TradingApi.CoreDTO.MarketDTO">
+            <summary>
+             Information about a Market
+            </summary>
+             <jschema
+             
+             />
+        </member>
+        <member name="P:TradingApi.CoreDTO.MarketDTO.MarketId">
+            <summary>
+             A market&apos;s unique identifier
+            </summary>
+             <jschema
+             minimum="1000000" 
+             maximum="9999999" 
+             demoValue="254527845"
+             />
+        </member>
+        <member name="P:TradingApi.CoreDTO.MarketDTO.Name">
+            <summary>
+             The market name
+            </summary>
+             <jschema
+             minLength="1"
+             maxLength="120"
+             demoValue="Vodaphone CFD"
+             />
+        </member>
+    </members>
+</doc>
