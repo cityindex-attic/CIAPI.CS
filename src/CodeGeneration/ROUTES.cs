@@ -15,11 +15,12 @@ namespace CIAPI.Core
         /// <returns></returns>
         public CreateSessionResponseDTO CreateSession(String UserName, String Password)
         {
+       
             return Request<CreateSessionResponseDTO>("session","/", "POST", new Dictionary<string, object>
                                 {
 									{"UserName",UserName},
 									{"Password",Password},
-                                });
+                                }, TimeSpan.FromMilliseconds(0));
         }
 
         /// <summary>
@@ -35,7 +36,7 @@ namespace CIAPI.Core
                                 {
 									{"UserName",UserName},
 									{"Password",Password},
-                                });
+                                }, TimeSpan.FromMilliseconds(0));
         }
 
         public CreateSessionResponseDTO EndCreateSession(ApiAsyncResult<CreateSessionResponseDTO> asyncResult)
@@ -50,11 +51,12 @@ namespace CIAPI.Core
         /// <returns></returns>
         public SessionDeletionResponseDTO DeleteSession(String userName, Guid session)
         {
+       
             return Request<SessionDeletionResponseDTO>("session","/deleteSession?userName={userName}&session={session}", "POST", new Dictionary<string, object>
                                 {
 									{"userName",userName},
 									{"session",session},
-                                });
+                                }, TimeSpan.FromMilliseconds(0));
         }
 
         /// <summary>
@@ -70,7 +72,7 @@ namespace CIAPI.Core
                                 {
 									{"userName",userName},
 									{"session",session},
-                                });
+                                }, TimeSpan.FromMilliseconds(0));
         }
 
         public SessionDeletionResponseDTO EndDeleteSession(ApiAsyncResult<SessionDeletionResponseDTO> asyncResult)
@@ -87,13 +89,14 @@ namespace CIAPI.Core
         /// <returns></returns>
         public GetPriceBarResponseDTO GetPriceBars(String marketId, String interval, Int32 span, String priceBars)
         {
+       
             return Request<GetPriceBarResponseDTO>("market","/{marketId}/barhistory?interval={interval}&span={span}&pricebars={priceBars}", "GET", new Dictionary<string, object>
                                 {
 									{"marketId",marketId},
 									{"interval",interval},
 									{"span",span},
 									{"priceBars",priceBars},
-                                });
+                                }, TimeSpan.FromMilliseconds(10000));
         }
 
         /// <summary>
@@ -113,7 +116,7 @@ namespace CIAPI.Core
 									{"interval",interval},
 									{"span",span},
 									{"priceBars",priceBars},
-                                });
+                                }, TimeSpan.FromMilliseconds(10000));
         }
 
         public GetPriceBarResponseDTO EndGetPriceBars(ApiAsyncResult<GetPriceBarResponseDTO> asyncResult)
@@ -128,11 +131,12 @@ namespace CIAPI.Core
         /// <returns></returns>
         public GetPriceTickResponseDTO GetPriceTicks(String marketId, String priceTicks)
         {
+       
             return Request<GetPriceTickResponseDTO>("market","/{marketId}/tickhistory?priceticks={priceTicks}", "GET", new Dictionary<string, object>
                                 {
 									{"marketId",marketId},
 									{"priceTicks",priceTicks},
-                                });
+                                }, TimeSpan.FromMilliseconds(10000));
         }
 
         /// <summary>
@@ -148,7 +152,7 @@ namespace CIAPI.Core
                                 {
 									{"marketId",marketId},
 									{"priceTicks",priceTicks},
-                                });
+                                }, TimeSpan.FromMilliseconds(10000));
         }
 
         public GetPriceTickResponseDTO EndGetPriceTicks(ApiAsyncResult<GetPriceTickResponseDTO> asyncResult)
@@ -163,11 +167,12 @@ namespace CIAPI.Core
         /// <returns></returns>
         public ListNewsHeadlinesResponseDTO ListNewsHeadlines(String category, Int32 maxResults)
         {
+       
             return Request<ListNewsHeadlinesResponseDTO>("news","?Category={category}&MaxResults={maxResults}", "GET", new Dictionary<string, object>
                                 {
 									{"category",category},
 									{"maxResults",maxResults},
-                                });
+                                }, TimeSpan.FromMilliseconds(10000));
         }
 
         /// <summary>
@@ -183,7 +188,7 @@ namespace CIAPI.Core
                                 {
 									{"category",category},
 									{"maxResults",maxResults},
-                                });
+                                }, TimeSpan.FromMilliseconds(10000));
         }
 
         public ListNewsHeadlinesResponseDTO EndListNewsHeadlines(ApiAsyncResult<ListNewsHeadlinesResponseDTO> asyncResult)
@@ -197,10 +202,11 @@ namespace CIAPI.Core
         /// <returns></returns>
         public GetNewsDetailResponseDTO GetNewsDetail(String storyId)
         {
+       
             return Request<GetNewsDetailResponseDTO>("news","/{storyId}", "GET", new Dictionary<string, object>
                                 {
 									{"storyId",storyId},
-                                });
+                                }, TimeSpan.FromMilliseconds(10000));
         }
 
         /// <summary>
@@ -214,7 +220,7 @@ namespace CIAPI.Core
             BeginRequest(callback, state, "news","/{storyId}", "GET",new Dictionary<string, object>
                                 {
 									{"storyId",storyId},
-                                });
+                                }, TimeSpan.FromMilliseconds(10000));
         }
 
         public GetNewsDetailResponseDTO EndGetNewsDetail(ApiAsyncResult<GetNewsDetailResponseDTO> asyncResult)
@@ -231,13 +237,14 @@ namespace CIAPI.Core
         /// <returns></returns>
         public ListCfdMarketsResponseDTO ListCfdMarkets(String searchByMarketName, String searchByMarketCode, Int32 clientAccountId, Int32 maxResults)
         {
+       
             return Request<ListCfdMarketsResponseDTO>("cfd/markets","?MarketName={searchByMarketName}&MarketCode={searchByMarketCode}&ClientAccountId={clientAccountId}&MaxResults={maxResults}", "GET", new Dictionary<string, object>
                                 {
 									{"searchByMarketName",searchByMarketName},
 									{"searchByMarketCode",searchByMarketCode},
 									{"clientAccountId",clientAccountId},
 									{"maxResults",maxResults},
-                                });
+                                }, TimeSpan.FromMilliseconds(0));
         }
 
         /// <summary>
@@ -257,7 +264,7 @@ namespace CIAPI.Core
 									{"searchByMarketCode",searchByMarketCode},
 									{"clientAccountId",clientAccountId},
 									{"maxResults",maxResults},
-                                });
+                                }, TimeSpan.FromMilliseconds(0));
         }
 
         public ListCfdMarketsResponseDTO EndListCfdMarkets(ApiAsyncResult<ListCfdMarketsResponseDTO> asyncResult)
@@ -274,13 +281,14 @@ namespace CIAPI.Core
         /// <returns></returns>
         public ListSpreadMarketsResponseDTO ListSpreadMarkets(String searchByMarketName, String searchByMarketCode, Int32 clientAccountId, Int32 maxResults)
         {
+       
             return Request<ListSpreadMarketsResponseDTO>("spread/markets","?MarketName={searchByMarketName}&MarketCode={searchByMarketCode}&ClientAccountId={clientAccountId}&MaxResults={maxResults}", "GET", new Dictionary<string, object>
                                 {
 									{"searchByMarketName",searchByMarketName},
 									{"searchByMarketCode",searchByMarketCode},
 									{"clientAccountId",clientAccountId},
 									{"maxResults",maxResults},
-                                });
+                                }, TimeSpan.FromMilliseconds(10000));
         }
 
         /// <summary>
@@ -300,7 +308,7 @@ namespace CIAPI.Core
 									{"searchByMarketCode",searchByMarketCode},
 									{"clientAccountId",clientAccountId},
 									{"maxResults",maxResults},
-                                });
+                                }, TimeSpan.FromMilliseconds(10000));
         }
 
         public ListSpreadMarketsResponseDTO EndListSpreadMarkets(ApiAsyncResult<ListSpreadMarketsResponseDTO> asyncResult)
@@ -320,6 +328,7 @@ namespace CIAPI.Core
         /// <returns></returns>
         public NewTradeOrderResponseDTO Order(Int32 MarketId, String Direction, Decimal Quantity, Decimal BidPrice, Decimal OfferPrice, String AuditId, Int32 TradingAccountId)
         {
+       
             return Request<NewTradeOrderResponseDTO>("order","/", "POST", new Dictionary<string, object>
                                 {
 									{"MarketId",MarketId},
@@ -329,7 +338,7 @@ namespace CIAPI.Core
 									{"OfferPrice",OfferPrice},
 									{"AuditId",AuditId},
 									{"TradingAccountId",TradingAccountId},
-                                });
+                                }, TimeSpan.FromMilliseconds(0));
         }
 
         /// <summary>
@@ -355,7 +364,7 @@ namespace CIAPI.Core
 									{"OfferPrice",OfferPrice},
 									{"AuditId",AuditId},
 									{"TradingAccountId",TradingAccountId},
-                                });
+                                }, TimeSpan.FromMilliseconds(0));
         }
 
         public NewTradeOrderResponseDTO EndOrder(ApiAsyncResult<NewTradeOrderResponseDTO> asyncResult)
@@ -375,6 +384,7 @@ namespace CIAPI.Core
         /// <returns></returns>
         public NewTradeOrderResponseDTO Trade(Int32 MarketId, String Direction, Decimal Quantity, Decimal BidPrice, Decimal OfferPrice, String AuditId, Int32 TradingAccountId)
         {
+       
             return Request<NewTradeOrderResponseDTO>("trade","/", "POST", new Dictionary<string, object>
                                 {
 									{"MarketId",MarketId},
@@ -384,7 +394,7 @@ namespace CIAPI.Core
 									{"OfferPrice",OfferPrice},
 									{"AuditId",AuditId},
 									{"TradingAccountId",TradingAccountId},
-                                });
+                                }, TimeSpan.FromMilliseconds(0));
         }
 
         /// <summary>
@@ -410,7 +420,7 @@ namespace CIAPI.Core
 									{"OfferPrice",OfferPrice},
 									{"AuditId",AuditId},
 									{"TradingAccountId",TradingAccountId},
-                                });
+                                }, TimeSpan.FromMilliseconds(0));
         }
 
         public NewTradeOrderResponseDTO EndTrade(ApiAsyncResult<NewTradeOrderResponseDTO> asyncResult)
@@ -424,10 +434,11 @@ namespace CIAPI.Core
         /// <returns></returns>
         public ErrorResponseDTO GenerateException(Int32 errorCode)
         {
+       
             return Request<ErrorResponseDTO>("errors","?errorCode={errorCode}", "GET", new Dictionary<string, object>
                                 {
 									{"errorCode",errorCode},
-                                });
+                                }, TimeSpan.FromMilliseconds(0));
         }
 
         /// <summary>
@@ -441,7 +452,7 @@ namespace CIAPI.Core
             BeginRequest(callback, state, "errors","?errorCode={errorCode}", "GET",new Dictionary<string, object>
                                 {
 									{"errorCode",errorCode},
-                                });
+                                }, TimeSpan.FromMilliseconds(0));
         }
 
         public ErrorResponseDTO EndGenerateException(ApiAsyncResult<ErrorResponseDTO> asyncResult)

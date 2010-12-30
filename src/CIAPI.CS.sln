@@ -23,6 +23,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Silverlight", "Core.Si
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Silverlight.Tests", "Core.Silverlight.Tests\Core.Silverlight.Tests.csproj", "{C9368100-CCEB-4140-9C3F-B7C4EECB0E3E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeGeneration", "CodeGeneration\CodeGeneration.csproj", "{6D3155EE-7329-4993-830A-D5F6E6E5A953}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Phone7", "Core.Phone7\Core.Phone7.csproj", "{DB3089D5-44AC-441C-845C-3596C21C5E34}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +49,14 @@ Global
 		{C9368100-CCEB-4140-9C3F-B7C4EECB0E3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C9368100-CCEB-4140-9C3F-B7C4EECB0E3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C9368100-CCEB-4140-9C3F-B7C4EECB0E3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D3155EE-7329-4993-830A-D5F6E6E5A953}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D3155EE-7329-4993-830A-D5F6E6E5A953}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D3155EE-7329-4993-830A-D5F6E6E5A953}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D3155EE-7329-4993-830A-D5F6E6E5A953}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB3089D5-44AC-441C-845C-3596C21C5E34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB3089D5-44AC-441C-845C-3596C21C5E34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB3089D5-44AC-441C-845C-3596C21C5E34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB3089D5-44AC-441C-845C-3596C21C5E34}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

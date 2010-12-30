@@ -17,7 +17,7 @@ namespace Core.Silverlight.Tests
         [Asynchronous]
         public void CanLoginAsync()
         {
-            var ctx = new ApiContext(new Uri(TestConfig.ApiUrl), TestConfig.BasicAuthUsername, TestConfig.BasicAuthPassword);
+            var ctx = new ApiContext(new Uri(TestConfig.ApiUrl));
             ctx.BeginCreateSession(ar =>
             {
                 var response = ctx.EndCreateSession(ar);
@@ -31,7 +31,7 @@ namespace Core.Silverlight.Tests
         [Asynchronous]
         public void CanLogoutAsync()
         {
-            var ctx = new ApiContext(new Uri(TestConfig.ApiUrl), TestConfig.BasicAuthUsername, TestConfig.BasicAuthPassword);
+            var ctx = new ApiContext(new Uri(TestConfig.ApiUrl));
             ctx.BeginDeleteSession(ar =>
             {
                 var response = ctx.EndDeleteSession(ar);
@@ -45,7 +45,7 @@ namespace Core.Silverlight.Tests
         [Asynchronous]
         public void CanGetNewsHeadlinesAsync()
         {
-            var ctx = new ApiContext(new Uri(TestConfig.ApiUrl), TestConfig.BasicAuthUsername, TestConfig.BasicAuthPassword)
+            var ctx = new ApiContext(new Uri(TestConfig.ApiUrl))
             {
                 UserName = TestConfig.ApiUsername,
                 SessionId = TestConfig.ApiTestSessionId
