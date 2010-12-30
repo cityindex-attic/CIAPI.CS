@@ -2,25 +2,25 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Web.Script.Serialization;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using Rhino.Mocks;
 
 namespace TradingApi.Client.Core.UnitTests
 {
-    [TestClass]
+    [TestFixture]
     public class OrderPlacerTests
     {
         private Settings _settings;
         private IWebClient _mockWebClient;
 
-        [TestInitialize]
+        [SetUp]
         public void SetUp()
         {
             _settings = new Settings { TradingAPIUrlBase = "http://myserver.com/TradingAPI/" };
             _mockWebClient = MockRepository.GenerateMock<IWebClient>();
         }
 
-        [TestMethod]
+        [Test]
         [ExpectedException(typeof(UnauthorizedAccessException))]
         public void WithInvalidCredentialsPlaceStopLimitOrderThrowsUnauthorizedAccessException()
         {
@@ -34,7 +34,7 @@ namespace TradingApi.Client.Core.UnitTests
             orderPlacer.PlaceStopLimitOrder(new StopLimitOrderDTO());
         }
 
-        [TestMethod]
+        [Test]
         public void PlaceStopLimitOrderReturnsOrderConfirmationDto()
         {
             var responseData = "[OrderId=1001]";

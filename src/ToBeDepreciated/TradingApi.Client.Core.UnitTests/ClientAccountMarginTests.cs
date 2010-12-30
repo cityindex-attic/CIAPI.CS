@@ -1,11 +1,11 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace TradingApi.Client.Core.UnitTests.Domain
 {
-    [TestClass]
+    [TestFixture]
     public class ClientAccountMarginTests
     {
-        [TestMethod]
+        [Test]
         public void ToStringShouldShowAllProperties()
         {
             var clientAccountMargin = new ClientAccountMarginBuilder().Build();

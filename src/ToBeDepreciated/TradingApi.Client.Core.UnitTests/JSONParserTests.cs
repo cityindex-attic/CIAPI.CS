@@ -1,12 +1,12 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace TradingApi.Client.Core.UnitTests
 {
-    [TestClass]
+    [TestFixture]
     public class JSONParserTests
     {
-        [TestMethod]
+        [Test]
         public void ShouldParseToUtc()
         {
             //14 Sep 2010 17:30:05 GMT

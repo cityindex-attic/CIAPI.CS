@@ -1,15 +1,15 @@
 using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using Rhino.Mocks;
 using TradingApi.Client.Core.ClientDTO;
 using TradingApi.CoreDTO;
 
 namespace TradingApi.Client.Core.UnitTests
 {
-    [TestClass]
+    [TestFixture]
     public class PriceHistoryFetcherTests
     {
-        [TestMethod]
+        [Test]
         public void FetchPriceHistoryReturnsCollectionOfPriceBars()
         {
             var historyRequest = new PriceHistoryRequest

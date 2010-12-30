@@ -1,12 +1,12 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using NUnit.Framework;
 using TradingApi.Client.Core.Lightstreamer;
 
 namespace TradingApi.Client.Core.UnitTests
 {
-    [TestClass()]
+    [TestFixture]
     public class ConnectionTest
     {
-        [TestMethod, Ignore]
+        [Test, Ignore]
         public void UsernamePasswordAndLightstreamerServerUrlUsedToInitialiseLightstreamerClient()
         {
             var connection = new Connection("joeblow", "mustard", "", @"http://lightstreamerserver:8080/", "CITYINDEXPRICING");

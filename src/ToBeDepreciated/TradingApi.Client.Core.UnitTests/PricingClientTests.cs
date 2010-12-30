@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using NUnit.Framework;
 using Rhino.Mocks;
 using TradingApi.Client.Core.ClientDTO;
 using TradingApi.Client.Core.Domain;
@@ -7,14 +7,10 @@ using TradingApi.Client.Core.UnitTests.Domain;
 
 namespace TradingApi.Client.Core.UnitTests
 {
-
-
-
-
-    [TestClass]
+    [TestFixture]
     public class PricingClientTests
     {
-        [TestMethod]
+        [Test]
         public void StreamingUpdateTriggersUpdateEvent()
         {
             var priceFromEvent = new Price();
