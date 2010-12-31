@@ -103,6 +103,9 @@
     <Compile Include="..\Core.Tests\TestRequestFactory.cs">
       <Link>TestRequestFactory.cs</Link>
     </Compile>
+    <Compile Include="..\Core.Tests\TestRequestInfo.cs">
+      <Link>TestRequestInfo.cs</Link>
+    </Compile>
     <Compile Include="..\Core.Tests\TestWebReponse.cs">
       <Link>TestWebReponse.cs</Link>
     </Compile>
