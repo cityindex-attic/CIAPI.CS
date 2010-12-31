@@ -5,8 +5,10 @@ using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+using log4net;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Soapi.Net;
 
 #if SILVERLIGHT
 using System.Net.Browser;
@@ -28,7 +30,9 @@ namespace CIAPI.Core
 
 #endif
 
-        private IRequestFactory _requestFactory;
+        private static readonly ILog Log = LogManager.GetLogger(typeof(ApiContext));
+
+        private readonly IRequestThrottle _requestThrottle;
 
         private RequestCache Cache { get; set; }
 
@@ -50,13 +54,14 @@ namespace CIAPI.Core
         /// </summary>
         /// <param name="uri"></param>
         public ApiContext(Uri uri)
-            : this(uri, new RequestCache(),new RequestFactory())
+            : this(uri, new RequestCache(), RequestThrottle.Instance)
         {
 
         }
-        public ApiContext(Uri uri, RequestCache cache,IRequestFactory requestFactory)
+        public ApiContext(Uri uri, RequestCache cache, IRequestThrottle requestThrottle)
         {
-            _requestFactory = requestFactory;
+            _requestThrottle = requestThrottle;
+
             Cache = cache;
             Uri = uri;
         }
@@ -147,7 +152,7 @@ namespace CIAPI.Core
                 switch (item.ItemState)
                 {
                     case CacheItemState.New:
-                        var request = _requestFactory.Create(url);
+                        var request = _requestThrottle.Create(url);
 
                         request.Method = method.ToUpper();
 
@@ -333,4 +338,6 @@ namespace CIAPI.Core
 
         #endregion
     }
+
+
 }

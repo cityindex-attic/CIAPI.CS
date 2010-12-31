@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using log4net;
 
 namespace CIAPI.Core
 {
     public class RequestCache
     {
-        
+        private static readonly ILog Log = LogManager.GetLogger(typeof(RequestCache));
+
         public RequestCache(TimeSpan purgeInterval)
         {
             _lock = new object();

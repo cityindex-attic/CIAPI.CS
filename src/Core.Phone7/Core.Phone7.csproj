@@ -77,6 +77,9 @@
     <Compile Include="..\Core\IRequestFactory.cs">
       <Link>IRequestFactory.cs</Link>
     </Compile>
+    <Compile Include="..\Core\IRequestThrottle.cs">
+      <Link>IRequestThrottle.cs</Link>
+    </Compile>
     <Compile Include="..\Core\RequestCache.cs">
       <Link>RequestCache.cs</Link>
     </Compile>
@@ -85,6 +88,9 @@
     </Compile>
     <Compile Include="..\Core\RequestNotificationStatus.cs">
       <Link>RequestNotificationStatus.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\RequestThrottle.cs">
+      <Link>RequestThrottle.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -97,6 +103,12 @@
     <None Include="..\Core\packages.config">
       <Link>packages.config</Link>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\log4net.Silverlight\log4net.Silverlight.csproj">
+      <Project>{E49EB549-9B49-4A1E-A7D0-2B457335293E}</Project>
+      <Name>log4net.Silverlight</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
