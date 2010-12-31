@@ -212,6 +212,7 @@ namespace CIAPI.Core
                     {
                         lock (Cache)
                         {
+                            _requestThrottle.Complete();
                             CacheItem<TDTO> item = Cache.Remove<TDTO>(request.RequestUri.AbsoluteUri);
                             item.CompleteResponse(null, new ApiException(ex));
                         }
@@ -264,35 +265,42 @@ namespace CIAPI.Core
 
                     lock (Cache)
                     {
-                        // the item had better be in the cache because if it is not
-                        // and this throws then we have a deadlock as the callbacks are int
-                        // the cache item that does not exist so no where to send the exception.
-                        // TODO: add an OnException event to this class
-                        CacheItem<TDTO> item = Cache.Get<TDTO>(url);
-
                         try
                         {
+                            // the item had better be in the cache because if it is not
+                            // and this throws then we have a deadlock as the callbacks are int
+                            // the cache item that does not exist so no where to send the exception.
+                            // TODO: add an OnException event to this class
+                            CacheItem<TDTO> item = Cache.Get<TDTO>(url);
 
-                            using (var response = request.EndGetResponse(ar))
-                            using (Stream stream = response.GetResponseStream())
-                            using (var reader = new StreamReader(stream))
+                            try
                             {
-                                string json = reader.ReadToEnd();
 
-                                // TODO: check json for exception 
-                                Exception seralizedException = null;
+                                using (var response = request.EndGetResponse(ar))
+                                using (Stream stream = response.GetResponseStream())
+                                using (var reader = new StreamReader(stream))
+                                {
+                                    string json = reader.ReadToEnd();
+
+                                    // TODO: check json for exception 
+                                    Exception seralizedException = null;
 
 
-                                item.CompleteResponse(json, seralizedException);
+                                    item.CompleteResponse(json, seralizedException);
+                                }
+                            }
+                            catch (WebException wex)
+                            {
+                                item.CompleteResponse(null, new ApiException(wex));
+                            }
+                            catch (Exception ex)
+                            {
+                                item.CompleteResponse(null, new ApiException(ex));
                             }
                         }
-                        catch (WebException wex)
+                        finally
                         {
-                            item.CompleteResponse(null, new ApiException(wex));
-                        }
-                        catch (Exception ex)
-                        {
-                            item.CompleteResponse(null, new ApiException(ex));
+                            _requestThrottle.Complete();
                         }
                     }
                 }, null);
