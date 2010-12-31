@@ -8,7 +8,6 @@ using System.Threading;
 using log4net;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Soapi.Net;
 
 #if SILVERLIGHT
 using System.Net.Browser;
@@ -32,8 +31,8 @@ namespace CIAPI.Core
 #endif
 
         private static readonly ILog Log = LogManager.GetLogger(typeof(ApiContext));
-
-        public Dictionary<string, IRequestThrottle> ThrottleScopes;
+        private IRequestFactory _requestFactory;
+        public Dictionary<string, IThrottedRequestQueue> ThrottleScopes;
         
         private RequestCache Cache { get; set; }
 
@@ -55,18 +54,18 @@ namespace CIAPI.Core
         /// </summary>
         /// <param name="uri"></param>
         public ApiContext(Uri uri)
-            : this(uri, new RequestCache(), new Dictionary<string, IRequestThrottle>
+            : this(uri, new RequestCache(), new RequestFactory(), new Dictionary<string, IThrottedRequestQueue>
                 {
-                    { "data", new RequestThrottle(new RequestFactory(), TimeSpan.FromSeconds(5),30,10) }, 
-                    { "trading", new RequestThrottle(new RequestFactory(), TimeSpan.FromSeconds(3),1,10) }
+                    { "data", new ThrottedRequestQueue(TimeSpan.FromSeconds(5),30,10) }, 
+                    { "trading", new ThrottedRequestQueue(TimeSpan.FromSeconds(3),1,10) }
                 })
         {
 
         }
-        public ApiContext(Uri uri, RequestCache cache, Dictionary<string, IRequestThrottle> throttleScopes)
+        public ApiContext(Uri uri, RequestCache cache, IRequestFactory requestFactory,Dictionary<string, IThrottedRequestQueue> throttleScopes)
         {
+            _requestFactory = requestFactory;
             ThrottleScopes = throttleScopes;
-
             Cache = cache;
             Uri = uri;
         }
@@ -165,7 +164,7 @@ namespace CIAPI.Core
                         }
                         var throttle = ThrottleScopes[throttleScope];
 
-                        var request = throttle.Create(url);
+                        var request = _requestFactory.Create(url);
 
                         request.Method = method.ToUpper();
 
@@ -181,7 +180,7 @@ namespace CIAPI.Core
 
                         if (method.ToUpper() == "POST")
                         {
-                            SetPostEntityAndExecuteRequest<TDTO>(url, request, parameters,throttle);
+                            SetPostEntityAndExecuteRequest<TDTO>(url, request, parameters, throttle);
                         }
                         else
                         {
@@ -207,7 +206,7 @@ namespace CIAPI.Core
         /// <param name="request"></param>
         /// <param name="parameters"></param>
         /// <param name="throttle"></param>
-        private void SetPostEntityAndExecuteRequest<TDTO>(string url, WebRequest request, Dictionary<string, object> parameters, IRequestThrottle throttle)
+        private void SetPostEntityAndExecuteRequest<TDTO>(string url, WebRequest request, Dictionary<string, object> parameters, IThrottedRequestQueue throttle)
             where TDTO : class, new()
         {
             byte[] bodyValue = CreatePostEntity(parameters);
@@ -226,7 +225,6 @@ namespace CIAPI.Core
                     {
                         lock (Cache)
                         {
-                            throttle.Complete();
                             CacheItem<TDTO> item = Cache.Remove<TDTO>(request.RequestUri.AbsoluteUri);
                             item.CompleteResponse(null, new ApiException(ex));
                         }
@@ -271,54 +269,46 @@ namespace CIAPI.Core
         /// <param name="throttle"></param>
         // ReSharper disable MemberCanBeMadeStatic.Local
         // this method currently qualifies as a static member. please do not make it so, we will be doing housekeeping in here at a later date.
-        private void ExecuteRequest<TDTO>(string url, WebRequest request, IRequestThrottle throttle) where TDTO : class, new()
+        private void ExecuteRequest<TDTO>(string url, WebRequest request, IThrottedRequestQueue throttle) where TDTO : class, new()
         // ReSharper restore MemberCanBeMadeStatic.Local
         {
-            request.BeginGetResponse(ar =>
+
+            throttle.Enqueue(url, request, ar =>
                 {
-
-
                     lock (Cache)
                     {
+                        // the item had better be in the cache because if it is not
+                        // and this throws then we have a deadlock as the callbacks are int
+                        // the cache item that does not exist so no where to send the exception.
+                        // TODO: add an OnException event to this class
+                        CacheItem<TDTO> item = Cache.Get<TDTO>(url);
+
                         try
                         {
-                            // the item had better be in the cache because if it is not
-                            // and this throws then we have a deadlock as the callbacks are int
-                            // the cache item that does not exist so no where to send the exception.
-                            // TODO: add an OnException event to this class
-                            CacheItem<TDTO> item = Cache.Get<TDTO>(url);
-
-                            try
+                            using (var response = request.EndGetResponse(ar))
+                            using (Stream stream = response.GetResponseStream())
+                            using (var reader = new StreamReader(stream))
                             {
+                                string json = reader.ReadToEnd();
 
-                                using (var response = request.EndGetResponse(ar))
-                                using (Stream stream = response.GetResponseStream())
-                                using (var reader = new StreamReader(stream))
-                                {
-                                    string json = reader.ReadToEnd();
-
-                                    // TODO: check json for exception 
-                                    Exception seralizedException = null;
+                                // TODO: check json for exception 
+                                Exception seralizedException = null;
 
 
-                                    item.CompleteResponse(json, seralizedException);
-                                }
-                            }
-                            catch (WebException wex)
-                            {
-                                item.CompleteResponse(null, new ApiException(wex));
-                            }
-                            catch (Exception ex)
-                            {
-                                item.CompleteResponse(null, new ApiException(ex));
+                                item.CompleteResponse(json, seralizedException);
                             }
                         }
-                        finally
+                        catch (WebException wex)
                         {
-                            throttle.Complete();
+                            item.CompleteResponse(null, new ApiException(wex));
+                        }
+                        catch (Exception ex)
+                        {
+                            item.CompleteResponse(null, new ApiException(ex));
                         }
                     }
-                }, null);
+                });
+
         }
 
         /// <summary>

@@ -81,11 +81,14 @@
     <Compile Include="..\Core\CacheItem.cs">
       <Link>CacheItem.cs</Link>
     </Compile>
+    <Compile Include="..\Core\HttpRequest.cs">
+      <Link>HttpRequest.cs</Link>
+    </Compile>
     <Compile Include="..\Core\IRequestFactory.cs">
       <Link>IRequestFactory.cs</Link>
     </Compile>
-    <Compile Include="..\Core\IRequestThrottle.cs">
-      <Link>IRequestThrottle.cs</Link>
+    <Compile Include="..\Core\IThrottedRequestQueue.cs">
+      <Link>IThrottedRequestQueue.cs</Link>
     </Compile>
     <Compile Include="..\Core\RequestCache.cs">
       <Link>RequestCache.cs</Link>
@@ -96,8 +99,8 @@
     <Compile Include="..\Core\RequestNotificationStatus.cs">
       <Link>RequestNotificationStatus.cs</Link>
     </Compile>
-    <Compile Include="..\Core\RequestThrottle.cs">
-      <Link>RequestThrottle.cs</Link>
+    <Compile Include="..\Core\ThrottedRequestQueue.cs">
+      <Link>ThrottedRequestQueue.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

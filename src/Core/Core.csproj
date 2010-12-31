@@ -57,12 +57,13 @@
     <Compile Include="CacheCallBack.cs" />
     <Compile Include="CacheItem.cs" />
     <Compile Include="IRequestFactory.cs" />
-    <Compile Include="IRequestThrottle.cs" />
+    <Compile Include="IThrottedRequestQueue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="HttpRequest.cs" />
     <Compile Include="RequestCache.cs" />
     <Compile Include="RequestFactory.cs" />
     <Compile Include="RequestNotificationStatus.cs" />
-    <Compile Include="RequestThrottle.cs" />
+    <Compile Include="ThrottedRequestQueue.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

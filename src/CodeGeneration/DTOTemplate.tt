@@ -7,6 +7,9 @@
 <#@ import namespace="Newtonsoft.Json.Linq" #>
 <#+
 
+/// <summary>
+/// are you trying to make me look like a hack? ;-)
+/// </summary>
 public class DTOTemplate : Template
 {
 	public JObject typeObj { get; set; }

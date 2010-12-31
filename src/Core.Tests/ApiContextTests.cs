@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using CIAPI.DTO;
 using NUnit.Framework;
-using Soapi.Net;
+
 
 namespace CIAPI.Core.Tests
 {
@@ -29,37 +29,37 @@ namespace CIAPI.Core.Tests
 
             var requestFactory = new TestRequestFactory();
 
-            var throttleScopes = new Dictionary<string, IRequestThrottle>
+            var throttleScopes = new Dictionary<string, IThrottedRequestQueue>
                 {
-                    {"data", new RequestThrottle(requestFactory , TimeSpan.FromSeconds(5), 30, 10)},
-                    {"trading", new RequestThrottle(requestFactory , TimeSpan.FromSeconds(3), 1, 10)}
+                    {"data", new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10)},
+                    {"trading", new ThrottedRequestQueue(TimeSpan.FromSeconds(3), 1, 10)}
                 };
 
             requestFactory.CreateTestRequest(LoggedIn);
 
-            var ctx = new ApiContext(new Uri(TestConfig.ApiUrl), new RequestCache(), throttleScopes);
+            var ctx = new ApiContext(new Uri(TestConfig.ApiUrl), new RequestCache(), requestFactory, throttleScopes);
 
             CreateSessionResponseDTO response = ctx.CreateSession(TestConfig.ApiUsername, TestConfig.ApiPassword);
             Assert.IsNotNullOrEmpty(response.Session);
 
         }
 
- 
 
-        [Test,Ignore]
+
+        [Test, Ignore]
         public void ApiAuthenticationFailure()
         {
             var requestFactory = new TestRequestFactory();
 
-            var throttleScopes = new Dictionary<string, IRequestThrottle>
+            var throttleScopes = new Dictionary<string, IThrottedRequestQueue>
                 {
-                    {"data", new RequestThrottle(requestFactory , TimeSpan.FromSeconds(5), 30, 10)},
-                    {"trading", new RequestThrottle(requestFactory , TimeSpan.FromSeconds(3), 1, 10)}
+                    {"data", new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10)},
+                    {"trading", new ThrottedRequestQueue(TimeSpan.FromSeconds(3), 1, 10)}
                 };
 
             requestFactory.CreateTestRequest(LoggedIn);
 
-            var ctx = new ApiContext(new Uri(TestConfig.ApiUrl), new RequestCache(), throttleScopes);
+            var ctx = new ApiContext(new Uri(TestConfig.ApiUrl), new RequestCache(), requestFactory, throttleScopes);
 
             try
             {
@@ -80,15 +80,15 @@ namespace CIAPI.Core.Tests
         {
             var requestFactory = new TestRequestFactory();
 
-            var throttleScopes = new Dictionary<string, IRequestThrottle>
+            var throttleScopes = new Dictionary<string, IThrottedRequestQueue>
                 {
-                    {"data", new RequestThrottle(requestFactory , TimeSpan.FromSeconds(5), 30, 10)},
-                    {"trading", new RequestThrottle(requestFactory , TimeSpan.FromSeconds(3), 1, 10)}
+                    {"data", new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10)},
+                    {"trading", new ThrottedRequestQueue(TimeSpan.FromSeconds(3), 1, 10)}
                 };
 
-            requestFactory.CreateTestRequest(LoggedIn);
+            requestFactory.CreateTestRequest(LoggedOut);
 
-            var ctx = new ApiContext(new Uri(TestConfig.ApiUrl), new RequestCache(), throttleScopes);
+            var ctx = new ApiContext(new Uri(TestConfig.ApiUrl), new RequestCache(), requestFactory, throttleScopes);
 
             SessionDeletionResponseDTO response = ctx.DeleteSession(TestConfig.ApiUsername, TestConfig.ApiTestSessionId);
             Assert.IsTrue(response.LoggedOut);
@@ -100,20 +100,20 @@ namespace CIAPI.Core.Tests
 
             var requestFactory = new TestRequestFactory();
 
-            var throttleScopes = new Dictionary<string, IRequestThrottle>
+            var throttleScopes = new Dictionary<string, IThrottedRequestQueue>
                 {
-                    {"data", new RequestThrottle(requestFactory , TimeSpan.FromSeconds(5), 30, 10)},
-                    {"trading", new RequestThrottle(requestFactory , TimeSpan.FromSeconds(3), 1, 10)}
+                    {"data", new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10)},
+                    {"trading", new ThrottedRequestQueue(TimeSpan.FromSeconds(3), 1, 10)}
                 };
 
-            requestFactory.CreateTestRequest(LoggedIn);
+            requestFactory.CreateTestRequest(NewsHeadlines12);
 
-            var ctx = new ApiContext(new Uri(TestConfig.ApiUrl), new RequestCache(), throttleScopes)
+            var ctx = new ApiContext(new Uri(TestConfig.ApiUrl), new RequestCache(), requestFactory, throttleScopes)
             {
                 UserName = TestConfig.ApiUsername,
                 SessionId = TestConfig.ApiTestSessionId
             };
-            
+
             ListNewsHeadlinesResponseDTO response = ctx.ListNewsHeadlines("UK", 12);
             Assert.AreEqual(12, response.Headlines.Length);
 
@@ -127,21 +127,21 @@ namespace CIAPI.Core.Tests
 
                 var requestFactory = new TestRequestFactory();
 
-                var throttleScopes = new Dictionary<string, IRequestThrottle>
+                var throttleScopes = new Dictionary<string, IThrottedRequestQueue>
                 {
-                    {"data", new RequestThrottle(requestFactory , TimeSpan.FromSeconds(5), 30, 10)},
-                    {"trading", new RequestThrottle(requestFactory , TimeSpan.FromSeconds(3), 1, 10)}
+                    {"data", new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10)},
+                    {"trading", new ThrottedRequestQueue(TimeSpan.FromSeconds(3), 1, 10)}
                 };
 
-                requestFactory.CreateTestRequest(LoggedIn);
+                requestFactory.CreateTestRequest(NewsHeadlines14);
 
-                var ctx = new ApiContext(new Uri(TestConfig.ApiUrl), new RequestCache(), throttleScopes)
+                var ctx = new ApiContext(new Uri(TestConfig.ApiUrl), new RequestCache(), requestFactory, throttleScopes)
                 {
                     UserName = TestConfig.ApiUsername,
                     SessionId = TestConfig.ApiTestSessionId
                 };
 
-            
+
 
                 ctx.BeginListNewsHeadlines(ar =>
                     {
