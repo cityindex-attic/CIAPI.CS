@@ -64,7 +64,7 @@ namespace CIAPI.Core
 
                 if (_items.ContainsKey(url))
                 {
-                    item = (CacheItem<TDTO>) _items[url];
+                    item = (CacheItem<TDTO>)_items[url];
 
                     // if currently processing callbacks we need to wait
 
@@ -113,6 +113,13 @@ namespace CIAPI.Core
             }
         }
 
+        /// <summary>
+        /// NOTE: This method should only be called for items that are expected to be in the cache, typically those with state of pending.
+        /// If not found, an exception is thown.
+        /// </summary>
+        /// <typeparam name="TDTO"></typeparam>
+        /// <param name="url"></param>
+        /// <returns></returns>
         public CacheItem<TDTO> Get<TDTO>(string url) where TDTO : class,new()
         {
             lock (_lock)

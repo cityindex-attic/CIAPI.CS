@@ -53,11 +53,14 @@
   <ItemGroup>
     <Compile Include="ApiContextTests.cs" />
     <Compile Include="CacheFixture.cs" />
+    <Compile Include="TestRequestFactoryFixture.cs" />
+    <Compile Include="TestRequestInfo.cs" />
     <Compile Include="TestWebReponse.cs" />
     <Compile Include="TestRequestFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestConfig.cs" />
     <Compile Include="TestWebRequest.cs" />
+    <Compile Include="ThrottleFixture.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

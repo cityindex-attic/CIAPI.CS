@@ -50,6 +50,7 @@ namespace CIAPI.Core
 	        first = false;
 		}
 	    var cacheDuration = method["cacheDuration"] != null ? method["cacheDuration"].Value<int>() : 0;
+        var throttleScope = method["throttleScope"] != null ? method["throttleScope"].Value<string>() : "";
         
 #>)
         {
@@ -66,7 +67,7 @@ namespace CIAPI.Core
 	
 		}
 #>
-                                }, TimeSpan.FromMilliseconds(<#= cacheDuration #>));
+                                }, TimeSpan.FromMilliseconds(<#= cacheDuration #>),"<#= throttleScope #>");
         }
 
         /// <summary>
@@ -103,7 +104,7 @@ namespace CIAPI.Core
 	
 		}
 #>
-                                }, TimeSpan.FromMilliseconds(<#= cacheDuration #>));
+                                }, TimeSpan.FromMilliseconds(<#= cacheDuration #>),"<#= throttleScope #>");
         }
 
         public <#= method["returns"]["$ref"].Value<string>().Substring(2) #> End<#= service.Name #>(ApiAsyncResult<<#= method["returns"]["$ref"].Value<string>().Substring(2) #>> asyncResult)

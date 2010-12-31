@@ -7,13 +7,18 @@ namespace CIAPI.Core.Tests
 {
     public class TestWebRequest : WebRequest
     {
+
+        private readonly int _latency;
+        private readonly Exception _requestStreamException;
+        private readonly Exception _responseStreamException;
+
         private readonly MemoryStream _requestStream = new MemoryStream();
         private readonly MemoryStream _responseStream;
         private WebHeaderCollection _headers = new WebHeaderCollection();
         public override WebHeaderCollection Headers
         {
             get { return _headers; }
-            set { _headers=value; }
+            set { _headers = value; }
         }
 
         public override string Method { get; set; }
@@ -30,12 +35,28 @@ namespace CIAPI.Core.Tests
 
         public override IAsyncResult BeginGetRequestStream(AsyncCallback callback, object state)
         {
+            using (var wait = new AutoResetEvent(false))
+            {
+                wait.WaitOne(_latency);
+            }
+            if (_requestStreamException != null)
+            {
+                throw _requestStreamException;
+            }
             return new TestAsyncResult(callback, state);
         }
 
         public override IAsyncResult BeginGetResponse(AsyncCallback callback, object state)
         {
-            return new TestAsyncResult(callback, state);    
+            using (var wait = new AutoResetEvent(false))
+            {
+                wait.WaitOne(_latency);
+            }
+            if (_responseStreamException != null)
+            {
+                throw _responseStreamException;
+            }
+            return new TestAsyncResult(callback, state);
         }
 
         public override Stream EndGetRequestStream(IAsyncResult asyncResult)
@@ -50,12 +71,20 @@ namespace CIAPI.Core.Tests
 
         public override string ContentType { get; set; }
 
-
         /// <summary>Initializes a new instance of <see cref="TestWebRequest"/>
         /// with the response to return.</summary>
         public TestWebRequest(string response)
+            : this(response, 10, null, null)
+        {
+
+        }
+
+        public TestWebRequest(string response, int latency, Exception requestStreamException, Exception responseStreamException)
         {
             _responseStream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(response));
+            _latency = latency;
+            _requestStreamException = requestStreamException;
+            _responseStreamException = responseStreamException;
         }
 
         /// <summary>Returns the request contents as a string.</summary>
@@ -84,12 +113,29 @@ namespace CIAPI.Core.Tests
         /// <summary>See <see cref="WebRequest.GetRequestStream"/>.</summary>
         public override Stream GetRequestStream()
         {
+            using (var wait = new AutoResetEvent(false))
+            {
+                wait.WaitOne(_latency);
+            }
+            if (_requestStreamException != null)
+            {
+                throw _requestStreamException;
+            }
+
             return _requestStream;
         }
 
         /// <summary>See <see cref="WebRequest.GetResponse"/>.</summary>
         public override WebResponse GetResponse()
         {
+            using (var wait = new AutoResetEvent(false))
+            {
+                wait.WaitOne(_latency);
+            }
+            if (_responseStreamException != null)
+            {
+                throw _responseStreamException;
+            }
             return new TestWebReponse(_responseStream);
         }
 #endif

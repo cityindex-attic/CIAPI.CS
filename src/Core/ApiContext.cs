@@ -16,6 +16,7 @@ using System.Net.Browser;
 
 namespace CIAPI.Core
 {
+
     public partial class ApiContext
     {
 #if !SILVERLIGHT
@@ -32,8 +33,8 @@ namespace CIAPI.Core
 
         private static readonly ILog Log = LogManager.GetLogger(typeof(ApiContext));
 
-        private readonly IRequestThrottle _requestThrottle;
-
+        public Dictionary<string, IRequestThrottle> ThrottleScopes;
+        
         private RequestCache Cache { get; set; }
 
         /// <summary>
@@ -54,13 +55,17 @@ namespace CIAPI.Core
         /// </summary>
         /// <param name="uri"></param>
         public ApiContext(Uri uri)
-            : this(uri, new RequestCache(), RequestThrottle.Instance)
+            : this(uri, new RequestCache(), new Dictionary<string, IRequestThrottle>
+                {
+                    { "data", new RequestThrottle(new RequestFactory(), TimeSpan.FromSeconds(5),30,10) }, 
+                    { "trading", new RequestThrottle(new RequestFactory(), TimeSpan.FromSeconds(3),1,10) }
+                })
         {
 
         }
-        public ApiContext(Uri uri, RequestCache cache, IRequestThrottle requestThrottle)
+        public ApiContext(Uri uri, RequestCache cache, Dictionary<string, IRequestThrottle> throttleScopes)
         {
-            _requestThrottle = requestThrottle;
+            ThrottleScopes = throttleScopes;
 
             Cache = cache;
             Uri = uri;
@@ -85,9 +90,10 @@ namespace CIAPI.Core
         /// <param name="method"></param>
         /// <param name="parameters"></param>
         /// <param name="cacheDuration"></param>
+        /// <param name="throttleScope"></param>
         /// <returns></returns>
         private TDTO Request<TDTO>(string target, string uriTemplate, string method,
-                                   Dictionary<string, object> parameters, TimeSpan cacheDuration) where TDTO : class, new()
+                                   Dictionary<string, object> parameters, TimeSpan cacheDuration, string throttleScope) where TDTO : class, new()
         {
             TDTO response = null;
             Exception exception = null;
@@ -105,7 +111,7 @@ namespace CIAPI.Core
                         }
 
                         gate.Set();
-                    }, null, target, uriTemplate, method, parameters, cacheDuration);
+                    }, null, target, uriTemplate, method, parameters, cacheDuration, throttleScope);
 
                 gate.WaitOne();
             }
@@ -133,8 +139,9 @@ namespace CIAPI.Core
         /// <param name="method"></param>
         /// <param name="parameters"></param>
         /// <param name="cacheDuration"></param>
+        /// <param name="throttleScope"></param>
         private void BeginRequest<TDTO>(ApiAsyncCallback<TDTO> cb, object state, string target, string uriTemplate,
-                                        string method, Dictionary<string, object> parameters, TimeSpan cacheDuration) where TDTO : class, new()
+                                        string method, Dictionary<string, object> parameters, TimeSpan cacheDuration, string throttleScope) where TDTO : class, new()
         {
             lock (Cache)
             {
@@ -152,7 +159,13 @@ namespace CIAPI.Core
                 switch (item.ItemState)
                 {
                     case CacheItemState.New:
-                        var request = _requestThrottle.Create(url);
+                        if (!ThrottleScopes.ContainsKey(throttleScope))
+                        {
+                            throw new Exception(string.Format("throttle for scope '{0}' not found", throttleScope));
+                        }
+                        var throttle = ThrottleScopes[throttleScope];
+
+                        var request = throttle.Create(url);
 
                         request.Method = method.ToUpper();
 
@@ -168,11 +181,11 @@ namespace CIAPI.Core
 
                         if (method.ToUpper() == "POST")
                         {
-                            SetPostEntityAndExecuteRequest<TDTO>(url, request, parameters);
+                            SetPostEntityAndExecuteRequest<TDTO>(url, request, parameters,throttle);
                         }
                         else
                         {
-                            ExecuteRequest<TDTO>(url, request);
+                            ExecuteRequest<TDTO>(url, request, throttle);
                         }
                         break;
                     case CacheItemState.Complete:
@@ -193,7 +206,8 @@ namespace CIAPI.Core
         /// <param name="url"></param>
         /// <param name="request"></param>
         /// <param name="parameters"></param>
-        private void SetPostEntityAndExecuteRequest<TDTO>(string url, WebRequest request, Dictionary<string, object> parameters)
+        /// <param name="throttle"></param>
+        private void SetPostEntityAndExecuteRequest<TDTO>(string url, WebRequest request, Dictionary<string, object> parameters, IRequestThrottle throttle)
             where TDTO : class, new()
         {
             byte[] bodyValue = CreatePostEntity(parameters);
@@ -206,13 +220,13 @@ namespace CIAPI.Core
                         {
                             requestStream.Write(bodyValue, 0, bodyValue.Length);
                         }
-                        ExecuteRequest<TDTO>(url, request);
+                        ExecuteRequest<TDTO>(url, request, throttle);
                     }
                     catch (Exception ex)
                     {
                         lock (Cache)
                         {
-                            _requestThrottle.Complete();
+                            throttle.Complete();
                             CacheItem<TDTO> item = Cache.Remove<TDTO>(request.RequestUri.AbsoluteUri);
                             item.CompleteResponse(null, new ApiException(ex));
                         }
@@ -254,9 +268,10 @@ namespace CIAPI.Core
         /// <typeparam name="TDTO"></typeparam>
         /// <param name="url"></param>
         /// <param name="request"></param>
+        /// <param name="throttle"></param>
         // ReSharper disable MemberCanBeMadeStatic.Local
         // this method currently qualifies as a static member. please do not make it so, we will be doing housekeeping in here at a later date.
-        private void ExecuteRequest<TDTO>(string url, WebRequest request) where TDTO : class, new()
+        private void ExecuteRequest<TDTO>(string url, WebRequest request, IRequestThrottle throttle) where TDTO : class, new()
         // ReSharper restore MemberCanBeMadeStatic.Local
         {
             request.BeginGetResponse(ar =>
@@ -300,7 +315,7 @@ namespace CIAPI.Core
                         }
                         finally
                         {
-                            _requestThrottle.Complete();
+                            throttle.Complete();
                         }
                     }
                 }, null);

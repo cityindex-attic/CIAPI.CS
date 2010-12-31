@@ -40,6 +40,9 @@ namespace Soapi.Net
     ///   http://msdn.microsoft.com/en-us/library/system.net.webrequest.registerprefix.aspx
     ///   but this is not a viable option for silverlight so in Soapi, where requests
     ///   are created in one place, we just call it explicitly.
+    /// 
+    /// Initially implemented as singleton but have exposed the ctor and added some parameters to enable
+    /// use also as instance. Dual use is a bit smelly but I see no reason to yank out the singleton plumbing yet.
     /// </summary>
     /// <remarks>
     /// Throttling conversation here: http://stackapps.com/questions/1143/request-throttling-limits
@@ -48,8 +51,6 @@ namespace Soapi.Net
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(RequestThrottle));
 
-
-        
 
         #region Fields
 
@@ -69,23 +70,29 @@ namespace Soapi.Net
 
         #region Constructors
 
-        private RequestThrottle()
+        public RequestThrottle()
+            : this(new RequestFactory(), TimeSpan.FromSeconds(5), 30, 10)
         {
-            ThrottleWindowTime = new TimeSpan(0, 0, 0, 7);
-            ThrottleWindowCount = 30;
-            MaxPendingRequests = 10;
+        }
+
+        public RequestThrottle(IRequestFactory requestFactory, TimeSpan throttleWindowTime, int throttleWindowCount, int maxPendingRequests)
+        {
+            RequestFactory = requestFactory;
+            ThrottleWindowTime = throttleWindowTime;
+            ThrottleWindowCount = throttleWindowCount;
+            MaxPendingRequests = maxPendingRequests;
         }
 
         #endregion
 
         #region Properties
 
-        ///<summary>
-        ///</summary>
-        public static RequestThrottle Instance
-        {
-            get { return Nested.instance; }
-        }
+        /////<summary>
+        /////</summary>
+        //public static RequestThrottle Instance
+        //{
+        //    get { return Nested.instance; }
+        //}
 
 
         private int _maxPendingRequests;
@@ -191,7 +198,7 @@ namespace Soapi.Net
         /// <returns></returns>
         public WebRequest Create(Uri uri)
         {
-            lock (typeof(ThrottleLock))
+            lock (_throttleLock/*typeof(ThrottleLock)*/)
             {
                 // note: we could use a list of WeakReferences and 
                 // may do so at a later date, but for now, this
@@ -203,10 +210,9 @@ namespace Soapi.Net
 
                     if (!notifiedMaxPending)
                     {
-
                         Log.Debug(string.Format("Waiting: pending requests {0}", _outstandingRequests));
-
                     }
+
                     using (var throttleGate = new AutoResetEvent(false))
                     {
                         throttleGate.WaitOne(100);
@@ -265,37 +271,39 @@ namespace Soapi.Net
         #endregion
 
 
-        /// <summary>
-        ///   lock handle
-        /// </summary>
-        private class ThrottleLock
-        {
-        }
+        private object _throttleLock=new object();
 
-        #region Singleton Plubming
+        ///// <summary>
+        /////   singleton lock handle
+        ///// </summary>
+        //private class ThrottleLock
+        //{
+        //}
 
-        // the skeet singleton implementation
-        // http://www.yoda.arachsys.com/csharp/singleton.html
+        //#region Singleton Plubming
 
-        // ReSharper disable ClassNeverInstantiated.Local
-        class Nested
-        // ReSharper restore ClassNeverInstantiated.Local
-        {
+        //// the skeet singleton implementation
+        //// http://www.yoda.arachsys.com/csharp/singleton.html
 
-            // ReSharper disable EmptyConstructor
-            // Explicit static constructor to tell C# compiler
-            // not to mark type as beforefieldinit
-            static Nested()
-            // ReSharper restore EmptyConstructor
-            {
-            }
+        //// ReSharper disable ClassNeverInstantiated.Local
+        //class Nested
+        //// ReSharper restore ClassNeverInstantiated.Local
+        //{
 
-            // ReSharper disable InconsistentNaming
-            internal static readonly RequestThrottle instance = new RequestThrottle();
-            // ReSharper restore InconsistentNaming
-        }
+        //    // ReSharper disable EmptyConstructor
+        //    // Explicit static constructor to tell C# compiler
+        //    // not to mark type as beforefieldinit
+        //    static Nested()
+        //    // ReSharper restore EmptyConstructor
+        //    {
+        //    }
 
-        #endregion
+        //    // ReSharper disable InconsistentNaming
+        //    internal static readonly RequestThrottle instance = new RequestThrottle();
+        //    // ReSharper restore InconsistentNaming
+        //}
+
+        //#endregion
 
 
     }

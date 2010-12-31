@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using CIAPI.Core;
 using CIAPI.Core.Tests;
@@ -23,16 +24,23 @@ namespace Core.Silverlight.Tests
         [TestFixtureSetUp]
         public void TestFixtureSetup()
         {
-            RequestThrottle.Instance.RequestFactory = new TestRequestFactory();
         }
-
+        
         [Test]
         [Asynchronous]
         public void CanLoginAsync()
         {
+            var requestFactory = new TestRequestFactory();
 
-            ((TestRequestFactory)RequestThrottle.Instance.RequestFactory).CreateTestRequest(LoggedIn);
-            var ctx = new ApiContext(new Uri(TestConfig.ApiUrl), new RequestCache(), RequestThrottle.Instance);
+            var throttleScopes = new Dictionary<string, IRequestThrottle>
+                {
+                    {"data", new RequestThrottle(requestFactory , TimeSpan.FromSeconds(5), 30, 10)},
+                    {"trading", new RequestThrottle(requestFactory , TimeSpan.FromSeconds(3), 1, 10)}
+                };
+
+            var ctx = new ApiContext(new Uri(TestConfig.ApiUrl), new RequestCache(), throttleScopes);
+
+            requestFactory.CreateTestRequest(LoggedIn);
 
             ctx.BeginCreateSession(ar =>
             {
@@ -47,9 +55,18 @@ namespace Core.Silverlight.Tests
         [Asynchronous]
         public void CanLogoutAsync()
         {
-            
-            ((TestRequestFactory)RequestThrottle.Instance.RequestFactory).CreateTestRequest(LoggedOut);
-            var ctx = new ApiContext(new Uri(TestConfig.ApiUrl), new RequestCache(), RequestThrottle.Instance);
+
+            var requestFactory = new TestRequestFactory();
+
+            var throttleScopes = new Dictionary<string, IRequestThrottle>
+                {
+                    {"data", new RequestThrottle(requestFactory , TimeSpan.FromSeconds(5), 30, 10)},
+                    {"trading", new RequestThrottle(requestFactory , TimeSpan.FromSeconds(3), 1, 10)}
+                };
+
+            requestFactory.CreateTestRequest(LoggedOut);
+
+            var ctx = new ApiContext(new Uri(TestConfig.ApiUrl), new RequestCache(), throttleScopes);
 
             ctx.BeginDeleteSession(ar =>
             {
@@ -64,10 +81,18 @@ namespace Core.Silverlight.Tests
         [Asynchronous]
         public void CanGetNewsHeadlinesAsync()
         {
-            
-            
-            ((TestRequestFactory)RequestThrottle.Instance.RequestFactory).CreateTestRequest(NewsHeadlines14);
-            var ctx = new ApiContext(new Uri(TestConfig.ApiUrl), new RequestCache(), RequestThrottle.Instance)
+
+            var requestFactory = new TestRequestFactory();
+
+            var throttleScopes = new Dictionary<string, IRequestThrottle>
+                {
+                    {"data", new RequestThrottle(requestFactory , TimeSpan.FromSeconds(5), 30, 10)},
+                    {"trading", new RequestThrottle(requestFactory , TimeSpan.FromSeconds(3), 1, 10)}
+                };
+
+            requestFactory.CreateTestRequest(NewsHeadlines14);
+
+            var ctx = new ApiContext(new Uri(TestConfig.ApiUrl), new RequestCache(), throttleScopes)
             {
                 UserName = TestConfig.ApiUsername,
                 SessionId = TestConfig.ApiTestSessionId

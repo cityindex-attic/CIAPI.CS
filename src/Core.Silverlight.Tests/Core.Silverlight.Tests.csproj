@@ -137,6 +137,10 @@
       <Project>{0156697E-DEFE-47CF-9EB0-11F120780356}</Project>
       <Name>Core.Silverlight</Name>
     </ProjectReference>
+    <ProjectReference Include="..\log4net.Silverlight\log4net.Silverlight.csproj">
+      <Project>{E49EB549-9B49-4A1E-A7D0-2B457335293E}</Project>
+      <Name>log4net.Silverlight</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <Import Condition="$(SilverlightVersion)=='v3.0'" Project="$(Registry:HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\SilverlightToolkit\Tools\v3.0)Microsoft.Silverlight.Toolkit.Build.targets" />
