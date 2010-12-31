@@ -5,12 +5,12 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{0156697E-DEFE-47CF-9EB0-11F120780356}</ProjectGuid>
+    <ProjectGuid>{E49EB549-9B49-4A1E-A7D0-2B457335293E}</ProjectGuid>
     <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CIAPI.Core</RootNamespace>
-    <AssemblyName>CIAPI.Core</AssemblyName>
+    <RootNamespace>log4net</RootNamespace>
+    <AssemblyName>log4net.Silverlight</AssemblyName>
     <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
@@ -47,70 +47,18 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />
-    <Reference Include="Newtonsoft.Json.Silverlight">
-      <HintPath>..\packages\Newtonsoft.Json.3.5.8\lib\SL\Newtonsoft.Json.Silverlight.dll</HintPath>
-    </Reference>
     <Reference Include="System.Windows" />
     <Reference Include="system" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
     <Reference Include="System.Net" />
     <Reference Include="System.Windows.Browser" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\CodeGeneration\DTO.cs">
-      <Link>DTO.cs</Link>
-    </Compile>
-    <Compile Include="..\CodeGeneration\ROUTES.cs">
-      <Link>ROUTES.cs</Link>
-    </Compile>
-    <Compile Include="..\Core\ApiAsyncCallback.cs">
-      <Link>ApiAsyncCallback.cs</Link>
-    </Compile>
-    <Compile Include="..\Core\ApiAsyncResult.cs">
-      <Link>ApiAsyncResult.cs</Link>
-    </Compile>
-    <Compile Include="..\Core\ApiContext.cs">
-      <Link>ApiContext.cs</Link>
-    </Compile>
-    <Compile Include="..\Core\ApiException.cs">
-      <Link>ApiException.cs</Link>
-    </Compile>
-    <Compile Include="..\Core\CacheCallBack.cs">
-      <Link>CacheCallBack.cs</Link>
-    </Compile>
-    <Compile Include="..\Core\CacheItem.cs">
-      <Link>CacheItem.cs</Link>
-    </Compile>
-    <Compile Include="..\Core\IRequestFactory.cs">
-      <Link>IRequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\Core\IRequestThrottle.cs">
-      <Link>IRequestThrottle.cs</Link>
-    </Compile>
-    <Compile Include="..\Core\RequestCache.cs">
-      <Link>RequestCache.cs</Link>
-    </Compile>
-    <Compile Include="..\Core\RequestFactory.cs">
-      <Link>RequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\Core\RequestNotificationStatus.cs">
-      <Link>RequestNotificationStatus.cs</Link>
-    </Compile>
-    <Compile Include="..\Core\RequestThrottle.cs">
-      <Link>RequestThrottle.cs</Link>
-    </Compile>
+    <Compile Include="LogManager.cs" />
+    <Compile Include="ILog.cs" />
+    <Compile Include="NullLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="..\Core\Notes.txt">
-      <Link>Notes.txt</Link>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\log4net.Silverlight\log4net.Silverlight.csproj">
-      <Project>{E49EB549-9B49-4A1E-A7D0-2B457335293E}</Project>
-      <Name>log4net.Silverlight</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime;
 using System.Text;
 using System.Threading;
+using Newtonsoft.Json;
 
 namespace CIAPI.Core
 {
@@ -19,7 +20,7 @@ namespace CIAPI.Core
         private bool _completed;
         private bool _completedSynchronously;
         private Exception _error;
-        private TDTO _result;
+        private string _responseText;
         private RequestNotificationStatus _status;
         private readonly Guid _id;
         public Guid Id
@@ -38,14 +39,14 @@ namespace CIAPI.Core
             _status = RequestNotificationStatus.Continue;
         }
 
-        internal ApiAsyncResult(ApiAsyncCallback<TDTO> cb, object state, bool completed, TDTO result, Exception error)
+        internal ApiAsyncResult(ApiAsyncCallback<TDTO> cb, object state, bool completed, string responseText, Exception error)
         {
             _id = Guid.NewGuid();
             _callback = cb;
             _asyncState = state;
             _completed = completed;
             _completedSynchronously = completed;
-            _result = result;
+            _responseText = responseText;
             _error = error;
             _status = RequestNotificationStatus.Continue;
             if (_completed && (_callback != null))
@@ -54,17 +55,17 @@ namespace CIAPI.Core
             }
         }
 
-        
-        internal void Complete(bool synchronous, TDTO result, Exception error)
+
+        internal void Complete(bool synchronous, string responseText, Exception error)
         {
-            Complete(synchronous, result, error, RequestNotificationStatus.Continue);
+            Complete(synchronous, responseText, error, RequestNotificationStatus.Continue);
         }
 
-        internal void Complete(bool synchronous, TDTO result, Exception error, RequestNotificationStatus status)
+        internal void Complete(bool synchronous, string responseText, Exception error, RequestNotificationStatus status)
         {
             _completed = true;
             _completedSynchronously = synchronous;
-            _result = result;
+            _responseText = responseText;
             _error = error;
             _status = status;
             if (_callback != null)
@@ -84,7 +85,7 @@ namespace CIAPI.Core
             {
                 throw new ApiException(_error);
             }
-            return _result;
+            return JsonConvert.DeserializeObject<TDTO>(_responseText);
         }
 
         internal void SetComplete()

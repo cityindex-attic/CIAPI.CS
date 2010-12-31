@@ -33,6 +33,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradingApi.Client.Core", "T
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradingApi.Client.Core.UnitTests", "ToBeDepreciated\TradingApi.Client.Core.UnitTests\TradingApi.Client.Core.UnitTests.csproj", "{1BB6F4C3-9F86-4943-936E-BBDEC1020819}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Phone7", "Core.Phone7\Core.Phone7.csproj", "{DB3089D5-44AC-441C-845C-3596C21C5E34}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "log4net.Silverlight", "log4net.Silverlight\log4net.Silverlight.csproj", "{E49EB549-9B49-4A1E-A7D0-2B457335293E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeGeneration", "CodeGeneration\CodeGeneration.csproj", "{6D3155EE-7329-4993-830A-D5F6E6E5A953}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +73,18 @@ Global
 		{1BB6F4C3-9F86-4943-936E-BBDEC1020819}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1BB6F4C3-9F86-4943-936E-BBDEC1020819}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1BB6F4C3-9F86-4943-936E-BBDEC1020819}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB3089D5-44AC-441C-845C-3596C21C5E34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB3089D5-44AC-441C-845C-3596C21C5E34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB3089D5-44AC-441C-845C-3596C21C5E34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB3089D5-44AC-441C-845C-3596C21C5E34}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E49EB549-9B49-4A1E-A7D0-2B457335293E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E49EB549-9B49-4A1E-A7D0-2B457335293E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E49EB549-9B49-4A1E-A7D0-2B457335293E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E49EB549-9B49-4A1E-A7D0-2B457335293E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D3155EE-7329-4993-830A-D5F6E6E5A953}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D3155EE-7329-4993-830A-D5F6E6E5A953}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D3155EE-7329-4993-830A-D5F6E6E5A953}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D3155EE-7329-4993-830A-D5F6E6E5A953}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

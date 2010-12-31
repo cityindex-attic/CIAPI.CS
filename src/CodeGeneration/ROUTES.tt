@@ -49,8 +49,11 @@ namespace CIAPI.Core
 #><#=(first ? "" : ", ") + GetTypeName(parameter) +" " + parameter["name"].Value<string>() #><#			
 	        first = false;
 		}
+	    var cacheDuration = method["cacheDuration"] != null ? method["cacheDuration"].Value<int>() : 0;
+        
 #>)
         {
+       
             return Request<<#= method["returns"]["$ref"].Value<string>().Substring(2) #>>("<#= method["target"].Value<string>() #>","<#= method["uriTemplate"].Value<string>() #>", "<#= method["transport"].Value<string>() #>", new Dictionary<string, object>
                                 {
 <#
@@ -63,7 +66,7 @@ namespace CIAPI.Core
 	
 		}
 #>
-                                });
+                                }, TimeSpan.FromMilliseconds(<#= cacheDuration #>));
         }
 
         /// <summary>
@@ -100,7 +103,7 @@ namespace CIAPI.Core
 	
 		}
 #>
-                                });
+                                }, TimeSpan.FromMilliseconds(<#= cacheDuration #>));
         }
 
         public <#= method["returns"]["$ref"].Value<string>().Substring(2) #> End<#= service.Name #>(ApiAsyncResult<<#= method["returns"]["$ref"].Value<string>().Substring(2) #>> asyncResult)

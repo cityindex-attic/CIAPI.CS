@@ -5,11 +5,15 @@ using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+using log4net;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Soapi.Net;
+
 #if SILVERLIGHT
 using System.Net.Browser;
 #endif
+
 namespace CIAPI.Core
 {
     public partial class ApiContext
@@ -26,11 +30,17 @@ namespace CIAPI.Core
 
 #endif
 
+        private static readonly ILog Log = LogManager.GetLogger(typeof(ApiContext));
+
+        private readonly IRequestThrottle _requestThrottle;
+
+        private RequestCache Cache { get; set; }
+
         /// <summary>
         /// Authenticates the request with the API
         /// </summary>
         /// <param name="request"></param>
-        private void SetSessionHeaders(HttpWebRequest request)
+        private void SetSessionHeaders(WebRequest request)
         {
             request.Headers["UserName"] = UserName;
             // API advertises session id as a GUID but treats as a string internally so we need to ucase here.
@@ -38,44 +48,33 @@ namespace CIAPI.Core
         }
 
 
-        /// <summary>
-        /// Instantiates an ApiContext with support for a Basic Authentication gate.
-        /// NOTE: the basicUid and basicPwd are for satisfying IIS, NOT for authenticating against the API.
-        /// </summary>
-        /// <param name="uri"></param>
-        /// <param name="basicUid"></param>
-        /// <param name="basicPwd"></param>
-        public ApiContext(Uri uri, string basicUid, string basicPwd)
-            : this(uri)
-        {
-            BasicUid = basicUid;
-            BasicPwd = basicPwd;
-        }
-
-        public string BasicUid { get; set; }
-        public string BasicPwd { get; set; }
 
         /// <summary>
         /// Instantiates an ApiContext that does not require support for Basic Authentication
         /// </summary>
         /// <param name="uri"></param>
         public ApiContext(Uri uri)
+            : this(uri, new RequestCache(), RequestThrottle.Instance)
         {
+
+        }
+        public ApiContext(Uri uri, RequestCache cache, IRequestThrottle requestThrottle)
+        {
+            _requestThrottle = requestThrottle;
+
+            Cache = cache;
             Uri = uri;
         }
-
 
         public Uri Uri { get; set; }
         public string UserName { get; set; }
         public Guid SessionId { get; set; }
 
-
-
         #region Synchronous Wrapper
 
         /// <summary>
         /// Very simple synchronous wrapper of the begin/end methods.
-        /// I have chosen not to simply use the synchronous .GetResponse() method of HttpWebRequest to prevent evolution
+        /// I have chosen not to simply use the synchronous .GetResponse() method of WebRequest to prevent evolution
         /// of code that will not port to silverlight. While it is against everything righteous and holy in the silverlight crowd
         /// to implement syncronous patterns, no matter how cleverly, there is just too much that can be done with a sync fetch, i.e. multi page, eager fetches, etc,
         /// to ignore it. We simply forbid usage on the UI thread with an exception. Simple.
@@ -85,29 +84,28 @@ namespace CIAPI.Core
         /// <param name="uriTemplate"></param>
         /// <param name="method"></param>
         /// <param name="parameters"></param>
+        /// <param name="cacheDuration"></param>
         /// <returns></returns>
         private TDTO Request<TDTO>(string target, string uriTemplate, string method,
-                                   Dictionary<string, object> parameters) where TDTO : class, new()
+                                   Dictionary<string, object> parameters, TimeSpan cacheDuration) where TDTO : class, new()
         {
             TDTO response = null;
             Exception exception = null;
             using (var gate = new ManualResetEvent(false))
             {
                 BeginRequest<TDTO>(ar =>
-                {
-
-                    try
                     {
-                        response = ar.End();
-                    }
-                    catch (Exception ex)
-                    {
-                        exception = ex;
-                    }
+                        try
+                        {
+                            response = EndRequest(ar);
+                        }
+                        catch (Exception ex)
+                        {
+                            exception = ex;
+                        }
 
-                    gate.Set();
-
-                }, null, target, uriTemplate, method, parameters);
+                        gate.Set();
+                    }, null, target, uriTemplate, method, parameters, cacheDuration);
 
                 gate.WaitOne();
             }
@@ -134,48 +132,57 @@ namespace CIAPI.Core
         /// <param name="uriTemplate"></param>
         /// <param name="method"></param>
         /// <param name="parameters"></param>
+        /// <param name="cacheDuration"></param>
         private void BeginRequest<TDTO>(ApiAsyncCallback<TDTO> cb, object state, string target, string uriTemplate,
-                                        string method, Dictionary<string, object> parameters) where TDTO : class, new()
+                                        string method, Dictionary<string, object> parameters, TimeSpan cacheDuration) where TDTO : class, new()
         {
-            string uri = Uri.AbsoluteUri + target + uriTemplate;
-
-            if (method.ToUpper() == "GET")
+            lock (Cache)
             {
-                uri = ApplyUriTemplateParameters(parameters, uri);
-            }
+                string url = Uri.AbsoluteUri + target + uriTemplate;
 
-            var request = (HttpWebRequest)WebRequest.Create(uri.TrimEnd('/'));
+                if (method.ToUpper() == "GET")
+                {
+                    url = ApplyUriTemplateParameters(parameters, url);
+                }
 
+                url = url.TrimEnd('/');
 
-            if (BasicUid != null)
-            {
-                // TODO: credentials don't seem to be getting honored by silverlight? not a huge issue right now, but what is going on?
-                request.Credentials = new NetworkCredential(BasicUid, BasicPwd);
-#if SILVERLIGHT
-                request.UseDefaultCredentials = false;
-#endif
-            }
+                CacheItem<TDTO> item = Cache.GetOrCreateCacheItem(url, cb, state, cacheDuration);
 
+                switch (item.ItemState)
+                {
+                    case CacheItemState.New:
+                        var request = _requestThrottle.Create(url);
 
-            request.Method = method.ToUpper();
+                        request.Method = method.ToUpper();
 
 #if !SILVERLIGHT
-            // silverlight crossdomain request does not support content type (?!)
-            request.ContentType = "application/json";
+                        // silverlight crossdomain request does not support content type (?!)
+                        request.ContentType = "application/json";
 #endif
 
-            if (uri.IndexOf("/session", StringComparison.OrdinalIgnoreCase) == -1)
-            {
-                SetSessionHeaders(request);
-            }
+                        if (url.IndexOf("/session", StringComparison.OrdinalIgnoreCase) == -1)
+                        {
+                            SetSessionHeaders(request);
+                        }
 
-            if (method.ToUpper() == "POST")
-            {
-                SetPostEntityAndExecuteRequest(cb, state, parameters, request);
-            }
-            else
-            {
-                ExecuteRequest(cb, state, request);
+                        if (method.ToUpper() == "POST")
+                        {
+                            SetPostEntityAndExecuteRequest<TDTO>(url, request, parameters);
+                        }
+                        else
+                        {
+                            ExecuteRequest<TDTO>(url, request);
+                        }
+                        break;
+                    case CacheItemState.Complete:
+                        new ApiAsyncResult<TDTO>(cb, state, true, item.ResponseText, null);
+                        break;
+                    default:
+                        new ApiAsyncResult<TDTO>(cb, state, true, null,
+                                                 new Exception("invalid item state, should never see this"));
+                        break;
+                }
             }
         }
 
@@ -183,12 +190,10 @@ namespace CIAPI.Core
         /// <summary>
         /// Builds a JSOB from parameters and asynchronously feeds the request stream with the resultant JSON before sending the request
         /// </summary>
-        /// <param name="state"></param>
-        /// <param name="parameters"></param>
+        /// <param name="url"></param>
         /// <param name="request"></param>
-        /// <param name="cb"></param>
-        private void SetPostEntityAndExecuteRequest<TDTO>(ApiAsyncCallback<TDTO> cb, object state,
-                                                          Dictionary<string, object> parameters, HttpWebRequest request)
+        /// <param name="parameters"></param>
+        private void SetPostEntityAndExecuteRequest<TDTO>(string url, WebRequest request, Dictionary<string, object> parameters)
             where TDTO : class, new()
         {
             byte[] bodyValue = CreatePostEntity(parameters);
@@ -201,14 +206,18 @@ namespace CIAPI.Core
                         {
                             requestStream.Write(bodyValue, 0, bodyValue.Length);
                         }
-
-                        ExecuteRequest(cb, state, request);
+                        ExecuteRequest<TDTO>(url, request);
                     }
                     catch (Exception ex)
                     {
-                        new ApiAsyncResult<TDTO>(cb, state, true, null, new ApiException(ex));
+                        lock (Cache)
+                        {
+                            _requestThrottle.Complete();
+                            CacheItem<TDTO> item = Cache.Remove<TDTO>(request.RequestUri.AbsoluteUri);
+                            item.CompleteResponse(null, new ApiException(ex));
+                        }
                     }
-                }, state);
+                }, null);
         }
 
         /// <summary>
@@ -243,39 +252,59 @@ namespace CIAPI.Core
         /// In the near future this will be where the throttle/cache magic starts.
         /// </summary>
         /// <typeparam name="TDTO"></typeparam>
-        /// <param name="cb"></param>
-        /// <param name="state"></param>
+        /// <param name="url"></param>
         /// <param name="request"></param>
         // ReSharper disable MemberCanBeMadeStatic.Local
         // this method currently qualifies as a static member. please do not make it so, we will be doing housekeeping in here at a later date.
-        private void ExecuteRequest<TDTO>(ApiAsyncCallback<TDTO> cb, object state, HttpWebRequest request)
-            // ReSharper restore MemberCanBeMadeStatic.Local
-            where TDTO : class, new()
+        private void ExecuteRequest<TDTO>(string url, WebRequest request) where TDTO : class, new()
+        // ReSharper restore MemberCanBeMadeStatic.Local
         {
             request.BeginGetResponse(ar =>
                 {
-                    try
+
+
+                    lock (Cache)
                     {
-                        using (var response = (HttpWebResponse)request.EndGetResponse(ar))
-                        using (Stream stream = response.GetResponseStream())
-                        using (var reader = new StreamReader(stream))
+                        try
                         {
-                            string json = reader.ReadToEnd();
-                            var result = JsonConvert.DeserializeObject<TDTO>(json);
-                            new ApiAsyncResult<TDTO>(cb, state, true, result, null);
+                            // the item had better be in the cache because if it is not
+                            // and this throws then we have a deadlock as the callbacks are int
+                            // the cache item that does not exist so no where to send the exception.
+                            // TODO: add an OnException event to this class
+                            CacheItem<TDTO> item = Cache.Get<TDTO>(url);
+
+                            try
+                            {
+
+                                using (var response = request.EndGetResponse(ar))
+                                using (Stream stream = response.GetResponseStream())
+                                using (var reader = new StreamReader(stream))
+                                {
+                                    string json = reader.ReadToEnd();
+
+                                    // TODO: check json for exception 
+                                    Exception seralizedException = null;
+
+
+                                    item.CompleteResponse(json, seralizedException);
+                                }
+                            }
+                            catch (WebException wex)
+                            {
+                                item.CompleteResponse(null, new ApiException(wex));
+                            }
+                            catch (Exception ex)
+                            {
+                                item.CompleteResponse(null, new ApiException(ex));
+                            }
+                        }
+                        finally
+                        {
+                            _requestThrottle.Complete();
                         }
                     }
-                    catch (WebException wex)
-                    {
-                        new ApiAsyncResult<TDTO>(cb, state, true, null, new ApiException(wex));
-                    }
-                    catch (Exception ex)
-                    {
-                        new ApiAsyncResult<TDTO>(cb, state, true, null, new ApiException(ex));
-                    }
-                }, state);
+                }, null);
         }
-
 
         /// <summary>
         /// Standard async end implementation. 
@@ -285,14 +314,11 @@ namespace CIAPI.Core
         /// <returns></returns>
         // ReSharper disable MemberCanBeMadeStatic.Local
         // this method currently qualifies as a static member. please do not make it so, we will be doing housekeeping in here at a later date.
-        private TDTO EndRequest<TDTO>(ApiAsyncResult<TDTO> asyncResult) where TDTO : class, new()
+        public TDTO EndRequest<TDTO>(ApiAsyncResult<TDTO> asyncResult) where TDTO : class, new()
         // ReSharper restore MemberCanBeMadeStatic.Local
         {
             return asyncResult.End();
         }
-
-
-
 
         /// <summary>
         /// Replaces templates with parameter values, if present, and cleans up missing templates.
@@ -317,7 +343,9 @@ namespace CIAPI.Core
             // clean up unused templates
             return new Regex(@"\w+={\w+}").Replace(uri, "");
         }
-    } 
 
         #endregion
+    }
+
+
 }
