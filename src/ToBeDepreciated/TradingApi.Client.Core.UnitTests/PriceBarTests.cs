@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using TradingApi.Client.Core.Domain;
 using TradingApi.CoreDTO;
 
 namespace TradingApi.Client.Core.UnitTests.Domain
 {
-    [TestClass]
+    [TestFixture]
     public class PriceBarTests
     {
         /// <summary>
@@ -14,7 +14,7 @@ namespace TradingApi.Client.Core.UnitTests.Domain
         /// </summary>
         public DateTime sampleTime = DateTime.FromFileTime(129113057243959686);
 
-        [TestMethod]
+        [Test]
         public void ToStringShouldShowAllProperties()
         {
             var pricebar = new PriceBarDTO

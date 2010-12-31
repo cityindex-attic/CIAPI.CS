@@ -1,11 +1,11 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using NUnit.Framework;
 
 namespace TradingApi.Client.Core.UnitTests.Domain
 {
-    [TestClass]
+    [TestFixture]
     public class PriceTests
     {
-        [TestMethod]
+        [Test]
         public void ToStringShouldShowAllProperties()
         {
             var price = new PriceBuilder().Build();
