@@ -48,11 +48,7 @@
     <Compile Include="ApiAsyncResult.cs" />
     <Compile Include="ApiContext.cs" />
     <Compile Include="ApiException.cs" />
-    <Compile Include="CodeGen\DTO1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DTO.tt</DependentUpon>
-    </Compile>
+    <Compile Include="CodeGen\DTO1.cs" />
     <Compile Include="CodeGen\ROUTES.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
