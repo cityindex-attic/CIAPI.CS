@@ -40,7 +40,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DTO.cs" />
+    <Compile Include="DTO.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DTO.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ROUTES.cs">
       <AutoGen>True</AutoGen>
@@ -55,6 +59,10 @@
     <Content Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTO.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>DTO.cs</LastGenOutput>
+    </Compile>
     <None Include="ROUTES.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ROUTES.cs</LastGenOutput>
