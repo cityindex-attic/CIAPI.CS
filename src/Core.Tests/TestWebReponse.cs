@@ -26,10 +26,9 @@ namespace CIAPI.Core.Tests
             return responseStream;
         }
 
-#if SILVERLIGHT
         public override void Close()
         {
-            throw new NotImplementedException();
+            // noop
         }
 
         public override long ContentLength
@@ -46,6 +45,5 @@ namespace CIAPI.Core.Tests
         {
             get { throw new NotImplementedException(); }
         }
-#endif
     }
 }

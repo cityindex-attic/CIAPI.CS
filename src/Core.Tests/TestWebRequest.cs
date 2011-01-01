@@ -11,6 +11,7 @@ namespace CIAPI.Core.Tests
         private readonly int _latency;
         private readonly Exception _requestStreamException;
         private readonly Exception _responseStreamException;
+        private readonly Exception _endGetResponseException;
 
         private readonly MemoryStream _requestStream = new MemoryStream();
         private readonly MemoryStream _responseStream;
@@ -48,10 +49,7 @@ namespace CIAPI.Core.Tests
 
         public override IAsyncResult BeginGetResponse(AsyncCallback callback, object state)
         {
-            using (var wait = new AutoResetEvent(false))
-            {
-                wait.WaitOne(_latency);
-            }
+ 
             if (_responseStreamException != null)
             {
                 throw _responseStreamException;
@@ -66,6 +64,15 @@ namespace CIAPI.Core.Tests
 
         public override WebResponse EndGetResponse(IAsyncResult asyncResult)
         {
+            using (var wait = new AutoResetEvent(false))
+            {
+                wait.WaitOne(_latency);
+            }
+            if (_endGetResponseException != null)
+            {
+                throw _endGetResponseException;
+            }
+
             return new TestWebReponse(_responseStream);
         }
 
@@ -74,17 +81,19 @@ namespace CIAPI.Core.Tests
         /// <summary>Initializes a new instance of <see cref="TestWebRequest"/>
         /// with the response to return.</summary>
         public TestWebRequest(string response)
-            : this(response, 10, null, null)
+            : this(response, 10, null, null, null)
         {
 
         }
 
-        public TestWebRequest(string response, int latency, Exception requestStreamException, Exception responseStreamException)
+        public TestWebRequest(string response, int latency, Exception requestStreamException, Exception responseStreamException, Exception endGetResponseException)
         {
+
             _responseStream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(response));
             _latency = latency;
             _requestStreamException = requestStreamException;
             _responseStreamException = responseStreamException;
+            _endGetResponseException = endGetResponseException;
         }
 
         /// <summary>Returns the request contents as a string.</summary>

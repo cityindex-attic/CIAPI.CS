@@ -33,7 +33,7 @@ namespace CIAPI.Core
         private static readonly ILog Log = LogManager.GetLogger(typeof(ApiContext));
         private IRequestFactory _requestFactory;
         public Dictionary<string, IThrottedRequestQueue> ThrottleScopes;
-        
+        private int _retryCount;
         private RequestCache Cache { get; set; }
 
         /// <summary>
@@ -58,12 +58,13 @@ namespace CIAPI.Core
                 {
                     { "data", new ThrottedRequestQueue(TimeSpan.FromSeconds(5),30,10) }, 
                     { "trading", new ThrottedRequestQueue(TimeSpan.FromSeconds(3),1,10) }
-                })
+                }, 3)
         {
 
         }
-        public ApiContext(Uri uri, RequestCache cache, IRequestFactory requestFactory,Dictionary<string, IThrottedRequestQueue> throttleScopes)
+        public ApiContext(Uri uri, RequestCache cache, IRequestFactory requestFactory, Dictionary<string, IThrottedRequestQueue> throttleScopes, int retryCount)
         {
+            _retryCount = retryCount;
             _requestFactory = requestFactory;
             ThrottleScopes = throttleScopes;
             Cache = cache;
@@ -180,11 +181,11 @@ namespace CIAPI.Core
 
                         if (method.ToUpper() == "POST")
                         {
-                            SetPostEntityAndExecuteRequest<TDTO>(url, request, parameters, throttle);
+                            SetPostEntityAndEnqueueRequest<TDTO>(url, request, parameters, throttle);
                         }
                         else
                         {
-                            ExecuteRequest<TDTO>(url, request, throttle);
+                            EnqueueRequest<TDTO>(url, request, throttle);
                         }
                         break;
                     case CacheItemState.Complete:
@@ -206,7 +207,7 @@ namespace CIAPI.Core
         /// <param name="request"></param>
         /// <param name="parameters"></param>
         /// <param name="throttle"></param>
-        private void SetPostEntityAndExecuteRequest<TDTO>(string url, WebRequest request, Dictionary<string, object> parameters, IThrottedRequestQueue throttle)
+        private void SetPostEntityAndEnqueueRequest<TDTO>(string url, WebRequest request, Dictionary<string, object> parameters, IThrottedRequestQueue throttle)
             where TDTO : class, new()
         {
             byte[] bodyValue = CreatePostEntity(parameters);
@@ -219,7 +220,7 @@ namespace CIAPI.Core
                         {
                             requestStream.Write(bodyValue, 0, bodyValue.Length);
                         }
-                        ExecuteRequest<TDTO>(url, request, throttle);
+                        EnqueueRequest<TDTO>(url, request, throttle);
                     }
                     catch (Exception ex)
                     {
@@ -265,27 +266,29 @@ namespace CIAPI.Core
         /// </summary>
         /// <typeparam name="TDTO"></typeparam>
         /// <param name="url"></param>
-        /// <param name="request"></param>
+        /// <param name="webRequest"></param>
         /// <param name="throttle"></param>
         // ReSharper disable MemberCanBeMadeStatic.Local
         // this method currently qualifies as a static member. please do not make it so, we will be doing housekeeping in here at a later date.
-        private void ExecuteRequest<TDTO>(string url, WebRequest request, IThrottedRequestQueue throttle) where TDTO : class, new()
+        private void EnqueueRequest<TDTO>(string url, WebRequest webRequest, IThrottedRequestQueue throttle) where TDTO : class, new()
         // ReSharper restore MemberCanBeMadeStatic.Local
         {
 
-            throttle.Enqueue(url, request, ar =>
+            throttle.Enqueue(url, webRequest, (ar, requestHolder) =>
                 {
                     lock (Cache)
                     {
+
                         // the item had better be in the cache because if it is not
                         // and this throws then we have a deadlock as the callbacks are int
                         // the cache item that does not exist so no where to send the exception.
                         // TODO: add an OnException event to this class
                         CacheItem<TDTO> item = Cache.Get<TDTO>(url);
-
+                        WebResponse response = null;
                         try
                         {
-                            using (var response = request.EndGetResponse(ar))
+
+                            using (response = webRequest.EndGetResponse(ar))
                             using (Stream stream = response.GetResponseStream())
                             using (var reader = new StreamReader(stream))
                             {
@@ -294,13 +297,38 @@ namespace CIAPI.Core
                                 // TODO: check json for exception 
                                 Exception seralizedException = null;
 
-
                                 item.CompleteResponse(json, seralizedException);
                             }
                         }
                         catch (WebException wex)
                         {
-                            item.CompleteResponse(null, new ApiException(wex));
+                            // TODO: allow for retries on select exception types
+                            // e.g. 50* server errors, timeouts and transport errors
+                            // DO NOT RETRY THROTTLE, AUTHENTICATION OR ARGUMENT EXCEPTIONS ETC
+                            bool shouldRetry = true; // TODO: identify qualifying exceptions
+
+                            if (shouldRetry && item.RetryCount <= RetryCount)
+                            {
+
+                                // TODO: TEST THIS
+                                item.RetryCount++;
+                                item.ItemState = CacheItemState.New; // should already be New - check this
+                                if (response != null)
+                                {
+                                    response.Close();
+                                }
+                                EnqueueRequest<TDTO>(url, webRequest, throttle);
+                            }
+                            else
+                            {
+                                var exception = new ApiException(wex);
+                                if (item.RetryCount > 0)
+                                {
+                                    exception = new ApiException(exception.Message + String.Format("\r\nretried {0} times", item.RetryCount - 1), exception);
+                                }
+                                item.CompleteResponse(null, exception);
+                            }
+
                         }
                         catch (Exception ex)
                         {
@@ -309,6 +337,12 @@ namespace CIAPI.Core
                     }
                 });
 
+        }
+
+
+        public int RetryCount
+        {
+            get { return _retryCount; }
         }
 
         /// <summary>

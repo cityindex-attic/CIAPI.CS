@@ -39,7 +39,7 @@ namespace CIAPI.Core.Tests
             return _nextRequest;
         }
 
-        
+
 
 
         /// <summary>Utility method for creating a TestWebRequest and setting
@@ -52,12 +52,12 @@ namespace CIAPI.Core.Tests
 
         public TestWebRequest CreateTestRequest(string response, int latency)
         {
-            return CreateTestRequest(response, latency, null, null);
+            return CreateTestRequest(response, latency, null, null, null);
         }
 
-        public TestWebRequest CreateTestRequest(string response, int latency, Exception requestStreamException, Exception responseStreamException)
+        public TestWebRequest CreateTestRequest(string response, int latency, Exception requestStreamException, Exception responseStreamException, Exception endGetResponseException)
         {
-            var request = new TestWebRequest(response, latency, requestStreamException, responseStreamException);
+            var request = new TestWebRequest(response, latency, requestStreamException, responseStreamException, endGetResponseException);
             NextRequest = request;
             return request;
         }

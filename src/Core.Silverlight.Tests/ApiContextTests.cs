@@ -38,7 +38,7 @@ namespace Core.Silverlight.Tests
                     {"trading", new ThrottedRequestQueue(TimeSpan.FromSeconds(3), 1, 10)}
                 };
 
-            var ctx = new ApiContext(new Uri(TestConfig.ApiUrl), new RequestCache(),requestFactory, throttleScopes);
+            var ctx = new ApiContext(new Uri(TestConfig.ApiUrl), new RequestCache(),requestFactory, throttleScopes,3);
 
             requestFactory.CreateTestRequest(LoggedIn);
 
@@ -66,7 +66,7 @@ namespace Core.Silverlight.Tests
 
             requestFactory.CreateTestRequest(LoggedOut);
 
-            var ctx = new ApiContext(new Uri(TestConfig.ApiUrl), new RequestCache(),requestFactory, throttleScopes);
+            var ctx = new ApiContext(new Uri(TestConfig.ApiUrl), new RequestCache(), requestFactory, throttleScopes, 3);
 
             ctx.BeginDeleteSession(ar =>
             {
@@ -92,7 +92,7 @@ namespace Core.Silverlight.Tests
 
             requestFactory.CreateTestRequest(NewsHeadlines14);
 
-            var ctx = new ApiContext(new Uri(TestConfig.ApiUrl), new RequestCache(),requestFactory, throttleScopes)
+            var ctx = new ApiContext(new Uri(TestConfig.ApiUrl), new RequestCache(), requestFactory, throttleScopes, 3)
             {
                 UserName = TestConfig.ApiUsername,
                 SessionId = TestConfig.ApiTestSessionId

@@ -8,6 +8,7 @@ namespace CIAPI.Core
 {
     /// <summary>
     /// TODO: allow for pausing
+    /// TODO: need to go back to a singleton and implement as a queue collection - singleton throttle is very important in real world code especially web apps that proxy for arbitrary numbers of concurrent users.
     /// would like to allow for clearing the queue but dependencies on the cache make
     /// this a non starter. the only viable ways to that means is to merge throttle and cache.
     /// this will have to be a builder type action in the calling class that can corelate the
@@ -21,7 +22,7 @@ namespace CIAPI.Core
         #region Fields
 
         private readonly Queue<DateTimeOffset> _requestTimes = new Queue<DateTimeOffset>();
-        private readonly Queue<HttpRequest> _requests = new Queue<HttpRequest>();
+        private readonly Queue<RequestHolder> _requests = new Queue<RequestHolder>();
 
         private int _dispatchedCount;
         private int _outstandingRequests;
@@ -81,7 +82,7 @@ namespace CIAPI.Core
         /// <summary>
         ///   If you are interested in monitoring
         /// </summary>
-        public int OutstandingRequests
+        public int PendingRequests
         {
             get { return _outstandingRequests; }
         }
@@ -109,12 +110,12 @@ namespace CIAPI.Core
         #region Public Methods
 
 
-        public void Enqueue(string url, WebRequest request, Action<IAsyncResult> action)
+        public void Enqueue(string url, WebRequest request, Action<IAsyncResult, RequestHolder> action)
         {
             lock (_requests)
             {
                 // TODO: have a max queue length to keep things from getting out of hand - THEN we can throw an exception
-                _requests.Enqueue(new HttpRequest
+                _requests.Enqueue(new RequestHolder
                     {
                         WebRequest = request,
                         Url = url,
@@ -180,7 +181,7 @@ namespace CIAPI.Core
                         }
                         _requestTimes.Dequeue();
                     }
-                    
+
 
                     // good to go. 
                     _notifiedWaitingOnWindow = false;
@@ -191,12 +192,15 @@ namespace CIAPI.Core
 
 
                     var requestIndex = _dispatchedCount;
+
+                    // TODO: should not get an exception here but need to allow for one
+
                     request.WebRequest.BeginGetResponse(ar =>
                         {
                             string msgIssued = string.Format("Recieved #{0} : {1} ", requestIndex, request.Url);
                             Log.Debug(msgIssued);
                             _outstandingRequests--;
-                            request.AsyncResultHandler(ar);
+                            request.AsyncResultHandler(ar, request);
                         }, null);
 
                     string msgDispatched = string.Format("Dispatched #{0} : {1} ", _dispatchedCount, request.Url);
@@ -204,7 +208,7 @@ namespace CIAPI.Core
                     _requests.Dequeue();
 
                     _outstandingRequests++;
-                    
+
                 }
                 finally
                 {

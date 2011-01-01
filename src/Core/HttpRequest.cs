@@ -3,10 +3,11 @@ using System.Net;
 
 namespace CIAPI.Core
 {
-    public class HttpRequest
+    public class RequestHolder
     {
         public string Url { get; set; }
         public WebRequest WebRequest { get; set; }
-        public Action<IAsyncResult> AsyncResultHandler { get; set; }
+        public Action<IAsyncResult, RequestHolder> AsyncResultHandler { get; set; }
+        
     }
 }

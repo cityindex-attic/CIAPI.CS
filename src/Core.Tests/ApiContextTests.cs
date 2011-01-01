@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading;
 using CIAPI.DTO;
 using NUnit.Framework;
@@ -37,7 +38,7 @@ namespace CIAPI.Core.Tests
 
             requestFactory.CreateTestRequest(LoggedIn);
 
-            var ctx = new ApiContext(new Uri(TestConfig.ApiUrl), new RequestCache(), requestFactory, throttleScopes);
+            var ctx = new ApiContext(new Uri(TestConfig.ApiUrl), new RequestCache(), requestFactory, throttleScopes, 3);
 
             CreateSessionResponseDTO response = ctx.CreateSession(TestConfig.ApiUsername, TestConfig.ApiPassword);
             Assert.IsNotNullOrEmpty(response.Session);
@@ -59,7 +60,7 @@ namespace CIAPI.Core.Tests
 
             requestFactory.CreateTestRequest(LoggedIn);
 
-            var ctx = new ApiContext(new Uri(TestConfig.ApiUrl), new RequestCache(), requestFactory, throttleScopes);
+            var ctx = new ApiContext(new Uri(TestConfig.ApiUrl), new RequestCache(), requestFactory, throttleScopes, 3);
 
             try
             {
@@ -88,7 +89,7 @@ namespace CIAPI.Core.Tests
 
             requestFactory.CreateTestRequest(LoggedOut);
 
-            var ctx = new ApiContext(new Uri(TestConfig.ApiUrl), new RequestCache(), requestFactory, throttleScopes);
+            var ctx = new ApiContext(new Uri(TestConfig.ApiUrl), new RequestCache(), requestFactory, throttleScopes, 3);
 
             SessionDeletionResponseDTO response = ctx.DeleteSession(TestConfig.ApiUsername, TestConfig.ApiTestSessionId);
             Assert.IsTrue(response.LoggedOut);
@@ -108,7 +109,7 @@ namespace CIAPI.Core.Tests
 
             requestFactory.CreateTestRequest(NewsHeadlines12);
 
-            var ctx = new ApiContext(new Uri(TestConfig.ApiUrl), new RequestCache(), requestFactory, throttleScopes)
+            var ctx = new ApiContext(new Uri(TestConfig.ApiUrl), new RequestCache(), requestFactory, throttleScopes, 3)
             {
                 UserName = TestConfig.ApiUsername,
                 SessionId = TestConfig.ApiTestSessionId
@@ -135,7 +136,7 @@ namespace CIAPI.Core.Tests
 
                 requestFactory.CreateTestRequest(NewsHeadlines14);
 
-                var ctx = new ApiContext(new Uri(TestConfig.ApiUrl), new RequestCache(), requestFactory, throttleScopes)
+                var ctx = new ApiContext(new Uri(TestConfig.ApiUrl), new RequestCache(), requestFactory, throttleScopes, 3)
                 {
                     UserName = TestConfig.ApiUsername,
                     SessionId = TestConfig.ApiTestSessionId
@@ -151,6 +152,55 @@ namespace CIAPI.Core.Tests
                     }, null, "UK", 14);
 
                 gate.WaitOne();
+            }
+        }
+
+        [Test]
+        public void SpecificRequestExceptionsAreRetried()
+        {
+            using (var gate = new ManualResetEvent(false))
+            {
+
+                var requestFactory = new TestRequestFactory();
+
+                var throttleScopes = new Dictionary<string, IThrottedRequestQueue>
+                {
+                    {"data", new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10)},
+                    {"trading", new ThrottedRequestQueue(TimeSpan.FromSeconds(3), 1, 10)}
+                };
+
+                var ctx = new ApiContext(new Uri(TestConfig.ApiUrl), new RequestCache(), requestFactory, throttleScopes, 3)
+                {
+                    UserName = TestConfig.ApiUsername,
+                    SessionId = TestConfig.ApiTestSessionId
+                };
+
+
+
+                requestFactory.CreateTestRequest(NewsHeadlines14, 300, null, null, new WebException("intentional"));
+                Exception exception = null;
+                
+                ctx.BeginListNewsHeadlines(ar =>
+                    {
+                        try
+                        {
+                            ctx.EndListNewsHeadlines(ar);
+                        }
+                        catch (Exception ex)
+                        {
+                            exception = ex;
+                        }
+                        finally
+                        {
+                            
+                            gate.Set();
+                        }
+
+                    }, null, "UK", 14);
+                gate.WaitOne();
+                Assert.IsNotNull(exception);
+                Assert.AreEqual("intentional\r\nretried 3 times",exception.Message);
+                
             }
         }
     }

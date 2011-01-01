@@ -28,6 +28,7 @@ namespace CIAPI.Core.Tests
             c.Add("foo", new CacheItem<ErrorResponseDTO>() { Expiration = DateTimeOffset.UtcNow.AddSeconds(2), ItemState = CacheItemState.Complete });
             new AutoResetEvent(false).WaitOne(3000);
             c.Get<ErrorResponseDTO>("foo");
+            Assert.Fail("Expected exception");
             
         }
 

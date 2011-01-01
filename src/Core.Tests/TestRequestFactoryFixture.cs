@@ -28,7 +28,7 @@ namespace CIAPI.Core.Tests
         {
             var f = new TestRequestFactory();
             const string expected = "foo";
-            f.CreateTestRequest(expected, 200, null, null);
+            f.CreateTestRequest(expected, 200, null, null,null);
             WebRequest r = f.Create("");
             var sw = new Stopwatch();
             sw.Start();
@@ -42,18 +42,31 @@ namespace CIAPI.Core.Tests
         public void CanThrowExceptionOnRequestStream()
         {
             var f = new TestRequestFactory();
-            f.CreateTestRequest("", 0, new Exception("request stream exception"), null);
+            f.CreateTestRequest("", 0, new Exception("request stream exception"), null, null);
             WebRequest r = f.Create("");
             r.GetRequestStream();
+            Assert.Fail("Expected exception");
         }
 
         [Test, ExpectedException(typeof (Exception), ExpectedMessage = "response stream exception")]
         public void CanThrowExceptionOnResponseStream()
         {
             var f = new TestRequestFactory();
-            f.CreateTestRequest("", 0, null, new Exception("response stream exception"));
+            f.CreateTestRequest("", 0, null, new Exception("response stream exception"), null);
             WebRequest r = f.Create("");
             r.GetResponse();
+            Assert.Fail("Expected exception");
+        }
+
+
+        [Test, ExpectedException(typeof(Exception), ExpectedMessage = "response exception")]
+        public void CanThrowExceptionOnEndGetResponse()
+        {
+            var f = new TestRequestFactory();
+            f.CreateTestRequest("", 0, null, new Exception("response exception"), null);
+            WebRequest r = f.Create("");
+            r.GetResponse();
+            Assert.Fail("Expected exception");
         }
     }
 }

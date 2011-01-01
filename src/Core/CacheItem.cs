@@ -19,7 +19,7 @@ namespace CIAPI.Core
         public CacheItemState ItemState { get; set; }
         public Exception Exception { get; set; }
         public event EventHandler ProcessingComplete;
-
+        public int RetryCount { get; set; }
         public void OnProcessingComplete(EventArgs e)
         {
             EventHandler handler = ProcessingComplete;

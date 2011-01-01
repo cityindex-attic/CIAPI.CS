@@ -23,7 +23,7 @@ namespace CIAPI.Core
         /// <summary>
         /// If you are interested in monitoring
         /// </summary>
-        int OutstandingRequests { get; }
+        int PendingRequests { get; }
         /// <summary>
         /// The quantitive portion (xxx) of the of 30 requests per 5 seconds
         /// Defaults to published guidelines of 5 seconds
@@ -35,7 +35,7 @@ namespace CIAPI.Core
         /// </summary>
         TimeSpan ThrottleWindowTime { get; }
         
-        void Enqueue(string url, WebRequest request, Action<IAsyncResult> action);
+        void Enqueue(string url, WebRequest request, Action<IAsyncResult,RequestHolder> action);
  
     }
 }
