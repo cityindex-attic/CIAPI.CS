@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System.Threading;
+using NUnit.Framework;
 using Rhino.Mocks;
 using TradingApi.Client.Core.ClientDTO;
 using TradingApi.Client.Core.Domain;
@@ -13,6 +14,9 @@ namespace TradingApi.Client.Core.UnitTests
         [Test]
         public void StreamingUpdateTriggersUpdateEvent()
         {
+            // this is an async test and i see no plumbing. let me add some.
+            var gate = new ManualResetEvent(false);
+
             var priceFromEvent = new Price();
             var expectedPrice = new PriceBuilder { MarketId = 12322211 }.Build();
 
@@ -23,15 +27,17 @@ namespace TradingApi.Client.Core.UnitTests
             pricingAdapterClient.Update += (s, e) =>
             {
                 priceFromEvent = e.Item.Price;
+
             };
 
+
             //Trigger StreamingUpdateEvent using a mock streaming update
-            //var mockStreamingUpdate = new PriceBuilder().CreateMockStreamingUpdateForPrice(expectedPrice);
-            //pricingAdapterClient.OnUpdate(mockStreamingUpdate);
+            var mockStreamingUpdate = new PriceBuilder().CreateMockStreamingUpdateForPrice(expectedPrice);
+            pricingAdapterClient.OnUpdate(mockStreamingUpdate);
 
             //Ensure the correct price was fetched from the Update
-            //mockStreamingUpdate.Item.Update.VerifyAllExpectations();
-            //Assert.AreEqual(expectedPrice.ToString(), priceFromEvent.ToString());
+            mockStreamingUpdate.Item.Update.VerifyAllExpectations();
+            Assert.AreEqual(expectedPrice.ToString(), priceFromEvent.ToString());
         }
     }
 }
