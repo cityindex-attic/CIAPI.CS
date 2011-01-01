@@ -5,6 +5,7 @@ using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+using CIAPI.DTO;
 using log4net;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -384,6 +385,105 @@ namespace CIAPI.Core
         }
 
         #endregion
+
+
+        #region AUthentication Wrapper
+        /// <summary>
+        /// Log In
+        /// </summary>		
+        /// <param name="userName">Username is case sensitive</param>
+        /// <param name="password">Password is case sensitive</param>
+        /// <returns></returns>
+        public void LogIn(String userName, String password)
+        {
+            UserName = userName;
+            SessionId = Guid.Empty;
+
+            var response = Request<CreateSessionResponseDTO>("session", "/", "POST", new Dictionary<string, object>
+                                            {
+            									{"UserName",userName},
+            									{"Password",password},
+                                            }, TimeSpan.FromMilliseconds(0), "data");
+            SessionId = new Guid(response.Session);
+        }
+
+        /// <summary>
+        /// Log In
+        /// </summary>		
+        /// <param name="callback"></param>
+        /// <param name="state"></param>
+        /// <param name="userName">Username is case sensitive</param>
+        /// <param name="password">Password is case sensitive</param>
+        /// <returns></returns>
+        public void BeginLogIn(ApiAsyncCallback<CreateSessionResponseDTO> callback, object state, String userName, String password)
+        {
+
+
+            UserName = userName;
+            SessionId = Guid.Empty;
+
+            BeginRequest(callback, state, "session", "/", "POST", new Dictionary<string, object>
+                                {
+									{"UserName",userName},
+									{"Password",password},
+                                }, TimeSpan.FromMilliseconds(0), "data");
+        }
+
+        public void EndLogIn(ApiAsyncResult<CreateSessionResponseDTO> asyncResult)
+        {
+            CreateSessionResponseDTO response = EndRequest(asyncResult);
+            SessionId = new Guid(response.Session);
+        }
+
+        /// <summary>
+        /// Log out
+        /// </summary>		
+        /// <returns></returns>
+        public bool LogOut()
+        {
+
+            var response = Request<SessionDeletionResponseDTO>("session", "/deleteSession?userName={userName}&session={session}", "POST", new Dictionary<string, object>
+                                            {
+            									{"userName",UserName},
+            									{"session",SessionId},
+                                            }, TimeSpan.FromMilliseconds(0), "data");
+            if (response.LoggedOut)
+            {
+                SessionId = Guid.Empty;
+            }
+
+            return response.LoggedOut;
+        }
+
+        /// <summary>
+        /// Log out
+        /// </summary>		
+        /// <param name="callback"></param>
+        /// <param name="state"></param>
+        /// <returns></returns>
+        public void BeginLogOut(ApiAsyncCallback<SessionDeletionResponseDTO> callback, object state)
+        {
+            BeginRequest(callback, state, "session", "/deleteSession?userName={userName}&session={session}", "POST", new Dictionary<string, object>
+                                {
+									{"userName",UserName},
+									{"session",SessionId},
+                                }, TimeSpan.FromMilliseconds(0), "data");
+        }
+
+        public bool EndLogOut(ApiAsyncResult<SessionDeletionResponseDTO> asyncResult)
+        {
+            var response = EndRequest(asyncResult);
+
+            if (response.LoggedOut)
+            {
+                SessionId = Guid.Empty;
+            }
+
+            return response.LoggedOut;
+        }
+
+        #endregion
+
     }
 
 

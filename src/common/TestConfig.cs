@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Configuration;
 
-namespace CIAPI.Core.Tests
+namespace CIAPI.Core
 {
     public static class TestConfig
     {
@@ -10,20 +10,6 @@ namespace CIAPI.Core.Tests
             get
             {
                 return ConfigurationManager.AppSettings["apiUrl"];
-            }
-        }
-        public static string BasicAuthUsername
-        {
-            get
-            {
-                return ConfigurationManager.AppSettings["basicAuthUsername"];
-            }
-        }
-        public static string BasicAuthPassword
-        {
-            get
-            {
-                return ConfigurationManager.AppSettings["basicAuthPassword"];
             }
         }
         public static string ApiUsername
