@@ -33,11 +33,12 @@ namespace CityIndex.JsonClient
         private Timer _timer;
         private bool _processingQueue;
 
-        public int DispatchedCount
-        {
-            get { return _dispatchedCount; }
-        }
 
+        private readonly int _maxPendingRequests;
+        private readonly int _throttleWindowCount;
+        private readonly TimeSpan _throttleWindowTime;
+        private bool _notifiedWaitingOnMaxPending;
+        private bool _notifiedWaitingOnWindow;
         #endregion
 
         #region Constructors
@@ -56,16 +57,17 @@ namespace CityIndex.JsonClient
         }
         #endregion
 
-        #region Fields
-
-        private readonly int _maxPendingRequests;
-        private readonly int _throttleWindowCount;
-        private readonly TimeSpan _throttleWindowTime;
-        private bool _notifiedWaitingOnMaxPending;
-        private bool _notifiedWaitingOnWindow;
-        #endregion
+ 
 
         #region Properties
+
+        /// <summary>
+        /// The number of requests dispatched by this queue
+        /// </summary>
+        public int DispatchedCount
+        {
+            get { return _dispatchedCount; }
+        }
 
         /// <summary>
         ///   The maximum number of allowed pending request.

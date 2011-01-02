@@ -9,12 +9,15 @@ namespace CityIndex.RestWebServices
     public partial class ApiClient : Client
     {
         public ApiClient(Uri uri)
-            : base(uri)
+            : base(uri, new RequestCache(), new RequestFactory(), new Dictionary<string, IThrottedRequestQueue>
+                {
+                    { "data", new ThrottedRequestQueue(TimeSpan.FromSeconds(5),30,10) }, 
+                    { "trading", new ThrottedRequestQueue(TimeSpan.FromSeconds(3),1,10) }
+                }, 3)
         {
         }
 
-        public ApiClient(Uri uri, RequestCache cache, IRequestFactory requestFactory,
-                          Dictionary<string, IThrottedRequestQueue> throttleScopes, int retryCount)
+        public ApiClient(Uri uri, RequestCache cache, IRequestFactory requestFactory,Dictionary<string, IThrottedRequestQueue> throttleScopes, int retryCount)
             : base(uri, cache, requestFactory, throttleScopes, retryCount)
         {
         }

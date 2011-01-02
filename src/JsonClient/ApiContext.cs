@@ -51,20 +51,7 @@ namespace CityIndex.JsonClient
 
 
 
-        /// <summary>
-        /// Instantiates an ApiContext that does not require support for Basic Authentication
-        /// </summary>
-        /// <param name="uri"></param>
-        protected Client(Uri uri)
-            : this(uri, new RequestCache(), new RequestFactory(), new Dictionary<string, IThrottedRequestQueue>
-                {
-                    { "data", new ThrottedRequestQueue(TimeSpan.FromSeconds(5),30,10) }, 
-                    { "trading", new ThrottedRequestQueue(TimeSpan.FromSeconds(3),1,10) }
-                }, 3)
-        {
-
-        }
-
+ 
         protected Client(Uri uri, RequestCache cache, IRequestFactory requestFactory, Dictionary<string, IThrottedRequestQueue> throttleScopes, int retryCount)
         {
 #if !SILVERLIGHT
