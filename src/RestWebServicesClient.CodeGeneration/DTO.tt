@@ -1,0 +1,222 @@
+﻿<#@ template debug="true" hostspecific="true" language="C#" #>
+<#@ output extension=".cs" #>
+<#@ Assembly Name="$(SolutionDir)packages\Newtonsoft.Json.3.5.8\lib\35\Newtonsoft.Json.dll" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Net" #>
+<#@ import namespace="System.Diagnostics" #>
+<#@ import namespace="Newtonsoft.Json" #>
+<#@ import namespace="Newtonsoft.Json.Linq" #>
+using System;
+namespace CityIndex.RestWebServices.DTO
+{ 
+<#
+
+	var request = new Request(new Uri("http://ec2-174-129-8-69.compute-1.amazonaws.com/RESTWebServices/schema"), "api", "cityindexapi");
+    var source = request.Execute();
+ 
+    JObject schema = (JObject)JsonConvert.DeserializeObject(source);
+    foreach (var typeObj in schema)
+    { 
+#> 
+ 
+	#region <#= typeObj.Key #>
+
+<#
+		// is it a class or an enum
+	    if (typeObj.Value["enum"] != null) { 
+#>
+    /// <summary>
+    /// <#=typeObj.Value["description"] != null ? FixText(typeObj.Value["description"].Value<string>()) : "" #>
+    /// </summary>
+	public enum <#= typeObj.Key #>
+	{
+<#
+	        JArray options = (JArray)typeObj.Value["options"];
+            foreach (JObject value in options)
+            {
+#>
+        /// <summary>
+        /// <#=value["description"]!=null? FixText(value["description"].Value<string>()):"" #>
+        /// </summary>
+		<#= value["label"].Value<string>() #>=<#= value["value"].Value<string>() #>,
+<#
+            } 
+#>
+	}
+<#	       
+        }
+        else 
+        {
+	       JObject extends = (JObject)typeObj.Value["extends"];
+           string baseType = "";
+           if (extends != null)
+           {
+	          baseType =" : " +  typeObj.Value["extends"]["$ref"].Value<string>().Substring(2);
+         }
+#>
+    /// <summary>
+    /// <#=typeObj.Value["description"] != null ? FixText(typeObj.Value["description"].Value<string>()) : "" #>
+    /// </summary>
+	public class <#= typeObj.Key + baseType #>
+	{
+<#
+	
+
+	        JObject properties = (JObject)typeObj.Value["properties"];
+            foreach (var kvp in properties) { 
+#>
+        /// <summary>
+        /// <#=kvp.Value["description"] != null ? FixText(kvp.Value["description"].Value<string>()) : "" #>
+<#
+	            foreach (var attribute in kvp.Value) {
+	                if (attribute is JProperty) {
+	                    switch (((JProperty)attribute).Name) { 
+	                        case "type":
+                            case "description":
+                            case "enum":
+                            case "options":
+                            case "items":
+                            case "$ref":
+	                          break;
+	                        default:
+#>
+        /// <#= ((JProperty)attribute).Name #> : <#= ((JProperty)attribute).Value #>
+<#  	
+break;
+                        }
+                    }
+	             																																															   
+                }
+#>
+        /// </summary>
+		public  <#=  GetTypeName((JObject)kvp.Value) #> <#=  kvp.Key #>{get;set;}
+<#
+
+
+            }
+	
+#>
+	}
+<#	     
+        }  
+#>
+
+	#endregion
+
+<#         
+    }
+	
+#>
+
+}
+
+
+
+<#+
+	private string FixText(string value) {
+	    value = value.Replace("\n", " ");
+        return value;
+    }
+		private string GetTypeName(JObject obj){
+			 JToken reference = obj["$ref"];
+            if (reference != null)
+            {
+                var referenceValue = reference.Value<string>();
+                // get rid of the "#." delimiter
+                return referenceValue.Substring(2);
+            }
+            
+            string typename;
+            var jsonTypename = obj["type"].Value<string>();
+            switch (jsonTypename)
+            {
+                case "string":
+                    typename = "String";
+                    if (obj["format"] != null) {
+						var format = obj["format"].Value<string>();																																																
+	                    switch (format)
+	                    {
+	                        case "wcf-date":
+		                      typename = "DateTime";
+                              break;
+	                        case "guid":
+                              typename = "Guid";
+                              break;
+	                        default:
+	                          throw new NotImplementedException("format " + format);
+                        }																																														
+                    }
+                    break;
+                case "number":
+                    typename = "Decimal";
+                    // TODO: check constraints to determine if this is a Single, Double or Decimal
+                    break;
+                case "integer":
+                    typename = "Int32";
+                    // TODO: check constraints to determine if this is an int64, int32 or int16
+                    break;
+                case "boolean":
+                    typename = "Boolean";
+                    break;
+                case "array":
+
+                    // NOTE: currently we only support single schema or scalar types, no union or tuple types
+                    string itemTypeName = GetTypeName(obj["items"].Value<JObject>());
+                    typename = itemTypeName + "[]";
+                    break;
+                case "object":
+                    throw new NotImplementedException("Nested schema, " + jsonTypename +
+                                                      " not implemented. Only $ref references implemented");
+                default:
+                    throw new NotImplementedException(jsonTypename + " not implemented");
+            }
+            return typename;	       
+    }	  
+
+    public class Request
+    {
+        public Request(Uri uri, string basicUid, string basicPwd)
+        {
+            Uri = uri;
+            BasicUid = basicUid;
+            BasicPwd = basicPwd;
+        }
+
+        public Request(Uri uri)
+            : this(uri, null, null)
+        {
+        }
+
+        public Uri Uri { get; set; }
+
+
+        public string BasicUid { get; set; }
+        public string BasicPwd { get; set; }
+
+        public string Execute()
+        {
+            var request = (HttpWebRequest) WebRequest.Create(Uri);
+            NetworkCredential credentials = null;
+            if (BasicUid != null)
+            {
+                credentials = new NetworkCredential(BasicUid, BasicPwd);
+                request.Credentials = credentials;
+            }
+
+            string json = null;
+            try
+            {
+                using (WebResponse response = request.GetResponse())
+                using (Stream stream = response.GetResponseStream())
+                using (var reader = new StreamReader(stream))
+                    json = reader.ReadToEnd();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return json;
+        }
+    }    
+#>

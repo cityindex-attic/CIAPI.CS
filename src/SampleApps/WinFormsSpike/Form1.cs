@@ -8,14 +8,16 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
-using CIAPI.Core;
-using CIAPI.DTO;
+using CityIndex.RestWebServices;
+using CityIndex.JsonClient;
+using CityIndex.RestWebServices.DTO;
+
 
 namespace WinFormsSpike
 {
     public partial class Form1 : Form
     {
-        ApiContext _ctx;
+        ApiClient _ctx;
 
         public Form1()
         {
@@ -39,7 +41,7 @@ namespace WinFormsSpike
         private void LoginButtonClick(object sender, EventArgs e)
         {
             DisableUi();
-            _ctx = new ApiContext(new Uri(ApiEndpointTextBox.Text));
+            _ctx = new ApiClient(new Uri(ApiEndpointTextBox.Text));
             _ctx.BeginLogIn(result =>
                 {
                     try

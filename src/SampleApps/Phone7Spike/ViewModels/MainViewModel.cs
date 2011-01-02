@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 using System.Windows.Threading;
-using CIAPI.Core;
+using CityIndex.JsonClient;
 
 
 namespace Phone7Spike

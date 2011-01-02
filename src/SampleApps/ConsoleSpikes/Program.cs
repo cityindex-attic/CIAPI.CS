@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using CIAPI.Core;
-using CIAPI.DTO;
+using CityIndex.RestWebServices;
+using CityIndex.JsonClient;
+using CityIndex.RestWebServices.DTO;
 
 
 namespace ConsoleSpikes
@@ -23,12 +24,12 @@ namespace ConsoleSpikes
 
         #region Async Implementation
 
-        static ApiContext _ctx;
+        static ApiClient _ctx;
         private static ManualResetEvent _gate;
 
         private static void GetNewsAsynchronously()
         {
-            _ctx = new ApiContext(new Uri(TestConfig.ApiUrl));
+            _ctx = new ApiClient(new Uri(TestConfig.ApiUrl));
 
             _gate = new ManualResetEvent(false);
             BeginLogIn(TestConfig.ApiUsername, TestConfig.ApiPassword);
@@ -98,7 +99,7 @@ namespace ConsoleSpikes
         {
             try
             {
-                var ctx = new ApiContext(new Uri(TestConfig.ApiUrl));
+                var ctx = new ApiClient(new Uri(TestConfig.ApiUrl));
 
                 ctx.LogIn(TestConfig.ApiUsername, TestConfig.ApiPassword);
                 var headlinesResponse = ctx.ListNewsHeadlines("UK", 10);

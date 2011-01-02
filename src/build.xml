@@ -8,8 +8,8 @@
   <Import Project="$(MSBuildProjectDirectory)\..\tools\msbuild\DropsAndPackaging.targets.xml" />
 
   <ItemGroup>
-    <Assemblies     Include="$(SrcDirectory)\Core\bin\$(Configuration)\CIAPI.Core.dll"/>
-    <TestAssemblies Include="$(SrcDirectory)\Core.Tests\bin\$(Configuration)\CIAPI.Core.Tests.dll"/>
+    <Assemblies     Include="$(SrcDirectory)\JsonClient\bin\$(Configuration)\CityIndex.JsonClient.dll"/>
+    <TestAssemblies Include="$(SrcDirectory)\JsonClient.Tests\bin\$(Configuration)\CityIndex.JsonClient.Tests.dll"/>
   </ItemGroup>
 
   <Target Name="Go" DependsOnTargets="UpdateVersion; 

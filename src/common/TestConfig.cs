@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Configuration;
 
-namespace CIAPI.Core
+namespace CityIndex.JsonClient
 {
     public static class TestConfig
     {

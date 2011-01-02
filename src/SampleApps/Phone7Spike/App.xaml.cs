@@ -11,7 +11,8 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using CIAPI.Core;
+using CityIndex.RestWebServices;
+using CityIndex.JsonClient;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 
@@ -19,7 +20,7 @@ namespace Phone7Spike
 {
     public partial class App : Application
     {
-        public static ApiContext ctx;
+        public static ApiClient ctx;
         private static MainViewModel viewModel = null;
 
         /// <summary>
@@ -77,14 +78,14 @@ namespace Phone7Spike
         // This code will not execute when the application is reactivated
         private void Application_Launching(object sender, LaunchingEventArgs e)
         {
-            ctx = new ApiContext(new Uri("http://ec2-174-129-8-69.compute-1.amazonaws.com/RESTWebServices/"));
+            ctx = new ApiClient(new Uri("http://ec2-174-129-8-69.compute-1.amazonaws.com/RESTWebServices/"));
         }
 
         // Code to execute when the application is activated (brought to foreground)
         // This code will not execute when the application is first launched
         private void Application_Activated(object sender, ActivatedEventArgs e)
         {
-            Debugger.Break();//TODO: why? does the viewmodel get disposed?
+            //TODO: why? does the viewmodel get disposed?
 
             // Ensure that application state is restored appropriately
             ctx.BeginLogIn(result =>

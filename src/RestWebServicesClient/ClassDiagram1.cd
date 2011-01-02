@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="CityIndex.RestWebServices.RestWebServices">
+    <Position X="5.25" Y="5.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>IAAAABAAAAAAAAQAAgAAAAAKAAAAABAAAQEAAAAAAAA=</HashCode>
+      <FileName>ApiContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CIAPI.DTO.NewsDTO" Collapsed="true">
+    <Position X="3.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAABEAAAAAAAA=</HashCode>
+      <FileName>C:\CIAPI.CS.GIT\src\CodeGeneration\DTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CIAPI.DTO.MarketDTO" Collapsed="true">
+    <Position X="11.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>C:\CIAPI.CS.GIT\src\CodeGeneration\DTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CIAPI.DTO.IfDoneDTO" Collapsed="true">
+    <Position X="11.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAgIIAAAAAAAAA=</HashCode>
+      <FileName>C:\CIAPI.CS.GIT\src\CodeGeneration\DTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CIAPI.DTO.PriceBarDTO" Collapsed="true">
+    <Position X="6" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAIAAAAgAAAAAAAAgAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>C:\CIAPI.CS.GIT\src\CodeGeneration\DTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CIAPI.DTO.OrderDTO" Collapsed="true">
+    <Position X="0.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\CIAPI.CS.GIT\src\CodeGeneration\DTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CIAPI.DTO.StopLimitOrderDTO" Collapsed="true">
+    <Position X="0.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\CIAPI.CS.GIT\src\CodeGeneration\DTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CIAPI.DTO.NewsDetailDTO" Collapsed="true">
+    <Position X="3.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\CIAPI.CS.GIT\src\CodeGeneration\DTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CIAPI.DTO.PriceTickDTO" Collapsed="true">
+    <Position X="7.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAA=</HashCode>
+      <FileName>C:\CIAPI.CS.GIT\src\CodeGeneration\DTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CIAPI.DTO.ListCfdMarketsResponseDTO" Collapsed="true">
+    <Position X="13" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\CIAPI.CS.GIT\src\CodeGeneration\DTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CIAPI.DTO.ListSpreadMarketsResponseDTO" Collapsed="true">
+    <Position X="7.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\CIAPI.CS.GIT\src\CodeGeneration\DTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CIAPI.DTO.NewTradeOrderRequestDTO" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAggAAAAAACAAAAgAAAAAAAAgAAAAgAAAAAA=</HashCode>
+      <FileName>C:\CIAPI.CS.GIT\src\CodeGeneration\DTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CIAPI.DTO.OcoOrderRequestDTO" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\CIAPI.CS.GIT\src\CodeGeneration\DTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CIAPI.DTO.CreateSessionResponseDTO" Collapsed="true">
+    <Position X="7.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\CIAPI.CS.GIT\src\CodeGeneration\DTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CIAPI.DTO.GetPriceTickResponseDTO" Collapsed="true">
+    <Position X="7.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\CIAPI.CS.GIT\src\CodeGeneration\DTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CIAPI.DTO.NewTradeOrderResponseDTO" Collapsed="true">
+    <Position X="13" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAIAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\CIAPI.CS.GIT\src\CodeGeneration\DTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CIAPI.DTO.GetPriceBarResponseDTO" Collapsed="true">
+    <Position X="6" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\CIAPI.CS.GIT\src\CodeGeneration\DTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CIAPI.DTO.ErrorResponseDTO" Collapsed="true">
+    <Position X="9.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\CIAPI.CS.GIT\src\CodeGeneration\DTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CIAPI.DTO.HedgeRequestDTO" Collapsed="true">
+    <Position X="9.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAACAAwAAAAAAACAAAAAAAQAAAAIAAAAAgAAAAAA=</HashCode>
+      <FileName>C:\CIAPI.CS.GIT\src\CodeGeneration\DTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CIAPI.DTO.ListNewsHeadlinesResponseDTO" Collapsed="true">
+    <Position X="6" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAA=</HashCode>
+      <FileName>C:\CIAPI.CS.GIT\src\CodeGeneration\DTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CIAPI.DTO.SessionDeletionResponseDTO" Collapsed="true">
+    <Position X="9.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\CIAPI.CS.GIT\src\CodeGeneration\DTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CIAPI.DTO.G2SessionValidationResponseDTO" Collapsed="true">
+    <Position X="11.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAAAAAAAAAEgAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\CIAPI.CS.GIT\src\CodeGeneration\DTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CIAPI.DTO.LogOnRequestDTO" Collapsed="true">
+    <Position X="9.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAQAAAAAAAAA=</HashCode>
+      <FileName>C:\CIAPI.CS.GIT\src\CodeGeneration\DTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CIAPI.DTO.GetNewsDetailResponseDTO" Collapsed="true">
+    <Position X="13" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\CIAPI.CS.GIT\src\CodeGeneration\DTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="CIAPI.DTO.ErrorCode" Collapsed="true">
+    <Position X="6" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAIAAAAAAAgAAAAAAAAACAAAAAAAAgAAAAAAAg=</HashCode>
+      <FileName>C:\CIAPI.CS.GIT\src\CodeGeneration\DTO.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

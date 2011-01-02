@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.20506</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{DB3089D5-44AC-441C-845C-3596C21C5E34}</ProjectGuid>
+    <ProjectTypeGuids>{C089C8C0-30E0-4E22-80C0-CE093F111A43};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CityIndex.JsonClient</RootNamespace>
+    <AssemblyName>CityIndex.JsonClient.Phone7</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <TargetFrameworkProfile>WindowsPhone</TargetFrameworkProfile>
+    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
+    <SilverlightApplication>false</SilverlightApplication>
+    <ValidateXaml>true</ValidateXaml>
+    <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json.Silverlight">
+      <HintPath>..\packages\Newtonsoft.Json.3.5.8\lib\SL\Newtonsoft.Json.Silverlight.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows" />
+    <Reference Include="system" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\JsonClient\ApiAsyncCallback.cs">
+      <Link>ApiAsyncCallback.cs</Link>
+    </Compile>
+    <Compile Include="..\JsonClient\ApiAsyncResult.cs">
+      <Link>ApiAsyncResult.cs</Link>
+    </Compile>
+    <Compile Include="..\JsonClient\ApiContext.cs">
+      <Link>ApiContext.cs</Link>
+    </Compile>
+    <Compile Include="..\JsonClient\ApiException.cs">
+      <Link>ApiException.cs</Link>
+    </Compile>
+    <Compile Include="..\JsonClient\CacheCallBack.cs">
+      <Link>CacheCallBack.cs</Link>
+    </Compile>
+    <Compile Include="..\JsonClient\CacheItem.cs">
+      <Link>CacheItem.cs</Link>
+    </Compile>
+    <Compile Include="..\JsonClient\HttpRequest.cs">
+      <Link>HttpRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\JsonClient\IRequestFactory.cs">
+      <Link>IRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\JsonClient\IRequestThrottle.cs">
+      <Link>IRequestThrottle.cs</Link>
+    </Compile>
+    <Compile Include="..\JsonClient\IThrottedRequestQueue.cs">
+      <Link>IThrottedRequestQueue.cs</Link>
+    </Compile>
+    <Compile Include="..\JsonClient\RequestCache.cs">
+      <Link>RequestCache.cs</Link>
+    </Compile>
+    <Compile Include="..\JsonClient\RequestFactory.cs">
+      <Link>RequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\JsonClient\RequestNotificationStatus.cs">
+      <Link>RequestNotificationStatus.cs</Link>
+    </Compile>
+    <Compile Include="..\JsonClient\ThrottedRequestQueue.cs">
+      <Link>ThrottedRequestQueue.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\log4net.Silverlight\log4net.Silverlight.csproj">
+      <Project>{E49EB549-9B49-4A1E-A7D0-2B457335293E}</Project>
+      <Name>log4net.Silverlight</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\JsonClient\Notes.txt">
+      <Link>Notes.txt</Link>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
+  <ProjectExtensions />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,233 @@
+﻿<#@ template debug="true" hostspecific="true" language="C#" #>
+<#@ output extension=".cs" #>
+<#@ Assembly Name="$(SolutionDir)packages\Newtonsoft.Json.3.5.8\lib\35\Newtonsoft.Json.dll" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Net" #>
+<#@ import namespace="System.Diagnostics" #>
+<#@ import namespace="Newtonsoft.Json" #>
+<#@ import namespace="Newtonsoft.Json.Linq" #>
+using System;
+using System.Collections.Generic;
+using CityIndex.JsonClient;
+using CityIndex.RestWebServices.DTO;
+
+namespace CityIndex.RestWebServices
+{
+	public partial class ApiClient
+	{ 
+
+<#
+
+// TODO: handle default values
+// TODO: handle nullable (required=false) and defaults if present
+
+	var request = new Request(new Uri("http://ec2-174-129-8-69.compute-1.amazonaws.com/RESTWebServices/smd"), "api", "cityindexapi");
+    var source = request.Execute();
+ 
+    JObject smd = (JObject)JsonConvert.DeserializeObject(source);
+    foreach (JProperty service in smd["services"])
+    {
+	    var method = service.Value;
+	// NOTE: only DTO return values supported
+#>
+        /// <summary>
+        /// <#= FixText(method["description"].Value<string>()) #>
+        /// </summary>		
+<#
+	    
+	    foreach (JObject parameter in method["parameters"])
+	    {
+#>
+		/// <param name="<#= parameter["name"].Value<string>() #>"><#=parameter["description"] != null ? FixText(parameter["description"].Value<string>()) : "" /* TODO: param constraints from jschema - needs formatting*/#></param>
+<#			
+		}
+#>        /// <returns></returns>
+        public <#= method["returns"]["$ref"].Value<string>().Substring(2) #> <#= service.Name #>(<#
+	    var first = true;
+	    foreach (JObject parameter in method["parameters"])
+	    {
+#><#=(first ? "" : ", ") + GetTypeName(parameter) +" " + parameter["name"].Value<string>() #><#			
+	        first = false;
+		}
+	    var cacheDuration = method["cacheDuration"] != null ? method["cacheDuration"].Value<int>() : 0;
+        var throttleScope = method["throttleScope"] != null ? method["throttleScope"].Value<string>() : "";
+        
+#>)
+        {
+       
+            return Request<<#= method["returns"]["$ref"].Value<string>().Substring(2) #>>("<#= method["target"].Value<string>() #>","<#= method["uriTemplate"].Value<string>() #>", "<#= method["transport"].Value<string>() #>", new Dictionary<string, object>
+                                {
+<#
+	    
+	    foreach (JObject parameter in method["parameters"])
+	    { 
+#>
+									{"<#= parameter["name"].Value<string>() #>",<#= parameter["name"].Value<string>() #>},
+<#			
+	
+		}
+#>
+                                }, TimeSpan.FromMilliseconds(<#= cacheDuration #>),"<#= throttleScope #>");
+        }
+
+        /// <summary>
+        /// <#= FixText(method["description"].Value<string>()) #>
+        /// </summary>		
+		/// <param name="callback"></param>
+<#
+	    
+	    foreach (JObject parameter in method["parameters"])
+	    { 
+#>
+		/// <param name="<#= parameter["name"].Value<string>() #>"><#=parameter["description"]!=null? FixText(parameter["description"].Value<string>()):"" /* TODO: param constraints from jschema - needs formatting*/#></param>
+<#			
+		}
+#>        /// <returns></returns>
+        public void Begin<#= service.Name #>(ApiAsyncCallback<<#= method["returns"]["$ref"].Value<string>().Substring(2) #>> callback, object state, <#
+	    first = true;
+	    foreach (JObject parameter in method["parameters"])
+	    {
+#><#=(first ? "" : ", ") + GetTypeName(parameter) +" " + parameter["name"].Value<string>() #><#			
+	        first = false;
+		}
+#>)
+        {
+            BeginRequest(callback, state, "<#= method["target"].Value<string>() #>","<#= method["uriTemplate"].Value<string>() #>", "<#= method["transport"].Value<string>() #>",new Dictionary<string, object>
+                                {
+<#
+	    
+	    foreach (JObject parameter in method["parameters"])
+	    { 
+#>
+									{"<#= parameter["name"].Value<string>() #>",<#= parameter["name"].Value<string>() #>},
+<#			
+	
+		}
+#>
+                                }, TimeSpan.FromMilliseconds(<#= cacheDuration #>),"<#= throttleScope #>");
+        }
+
+        public <#= method["returns"]["$ref"].Value<string>().Substring(2) #> End<#= service.Name #>(ApiAsyncResult<<#= method["returns"]["$ref"].Value<string>().Substring(2) #>> asyncResult)
+        {
+            return EndRequest(asyncResult);
+        }
+<#
+    }
+ 
+
+    
+	
+#>
+	}
+}
+
+
+
+<#+
+	private string FixText(string value) {
+	    value = value.Replace("\n", " ");
+        return value; 
+    }
+		private string GetTypeName(JObject obj){
+			 JToken reference = obj["$ref"];
+            if (reference != null)
+            {
+                var referenceValue = reference.Value<string>();
+                // get rid of the "#." delimiter
+                return referenceValue.Substring(2);
+            }
+            
+            string typename;
+            var jsonTypename = obj["type"].Value<string>();
+            switch (jsonTypename)
+            {
+                case "string":
+                    typename = "String";
+                    if (obj["format"] != null) {
+						var format = obj["format"].Value<string>();																																																
+	                    switch (format)
+	                    {
+	                        case "wcf-date":
+		                      typename = "DateTime";
+                              break;
+	                        case "guid":
+                              typename = "Guid";
+                              break;
+	                        default:
+	                          throw new NotImplementedException("format " + format);
+                        }																																														
+                    }
+                    break;
+                case "number":
+                    typename = "Decimal";
+                    // TODO: check constraints to determine if this is a Single, Double or Decimal
+                    break;
+                case "integer":
+                    typename = "Int32";
+                    // TODO: check constraints to determine if this is an int64, int32 or int16
+                    break;
+                case "boolean":
+                    typename = "Boolean";
+                    break;
+                case "array":
+
+                    // NOTE: currently we only support single schema or scalar types, no union or tuple types
+                    string itemTypeName = GetTypeName(obj["items"].Value<JObject>());
+                    typename = itemTypeName + "[]";
+                    break;
+                case "object":
+                    throw new NotImplementedException("Nested schema, " + jsonTypename +
+                                                      " not implemented. Only $ref references implemented");
+                default:
+                    throw new NotImplementedException(jsonTypename + " not implemented");
+            }
+            return typename;	       
+    }	  
+
+    public class Request
+    {
+        public Request(Uri uri, string basicUid, string basicPwd)
+        {
+            Uri = uri;
+            BasicUid = basicUid;
+            BasicPwd = basicPwd;
+        }
+
+        public Request(Uri uri)
+            : this(uri, null, null)
+        {
+        }
+
+        public Uri Uri { get; set; }
+
+
+        public string BasicUid { get; set; }
+        public string BasicPwd { get; set; }
+
+        public string Execute()
+        {
+            var request = (HttpWebRequest) WebRequest.Create(Uri);
+            NetworkCredential credentials = null;
+            if (BasicUid != null)
+            {
+                credentials = new NetworkCredential(BasicUid, BasicPwd);
+                request.Credentials = credentials;
+            }
+
+            string json = null;
+            try
+            {
+                using (WebResponse response = request.GetResponse())
+                using (Stream stream = response.GetResponseStream())
+                using (var reader = new StreamReader(stream))
+                    json = reader.ReadToEnd();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return json;
+        }
+    }    
+#>

@@ -102,9 +102,13 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Core.Phone7\Core.Phone7.csproj">
+    <ProjectReference Include="..\..\JsonClient.Phone7\JsonClient.Phone7.csproj">
       <Project>{DB3089D5-44AC-441C-845C-3596C21C5E34}</Project>
-      <Name>Core.Phone7</Name>
+      <Name>JsonClient.Phone7</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\RestWebServicesClient.Phone7\RestWebServicesClient.Phone7.csproj">
+      <Project>{9E560BF5-A08C-4942-A01B-77C7DF9DB933}</Project>
+      <Name>RestWebServicesClient.Phone7</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />

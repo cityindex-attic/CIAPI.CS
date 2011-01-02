@@ -1,4 +1,6 @@
-﻿namespace WinFormsSpike
+﻿
+
+namespace WinFormsSpike
 {
     partial class Form1
     {
@@ -162,7 +164,7 @@
             // 
             // NewsDTOBindingSource
             // 
-            this.NewsDTOBindingSource.DataSource = typeof(CIAPI.DTO.NewsDTO);
+            this.NewsDTOBindingSource.DataSource = typeof(CityIndex.RestWebServices.DTO.NewsDTO);
             // 
             // tabPage2
             // 
