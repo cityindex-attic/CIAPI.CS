@@ -1,35 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime;
-using System.Text;
 using System.Threading;
 using Newtonsoft.Json;
 
 namespace CityIndex.JsonClient
 {
-    public abstract class ApiAsyncResult { }
     /// <summary>
-    /// Currently this is a simple implementation of HttpAsyncResult
+    /// The asynch request handle that is passed back to the <see cref="Client"/> to retrieve the result of the request.
     /// </summary>
-    public class ApiAsyncResult<TDTO> : ApiAsyncResult, IAsyncResult where TDTO : class,new()
+    public class ApiAsyncResult<TDTO> : ApiAsyncResultBase, IAsyncResult where TDTO : class, new()
     {
         // Fields
-        private object _asyncState;
-        private ApiAsyncCallback<TDTO> _callback;
+        private readonly object _asyncState;
+        private readonly ApiAsyncCallback<TDTO> _callback;
+        private readonly Guid _id;
         private bool _completed;
         private bool _completedSynchronously;
         private Exception _error;
         private string _responseText;
         private RequestNotificationStatus _status;
-        private readonly Guid _id;
-        public Guid Id
-        {
-            get
-            {
-                return _id;
-            }
-        }
+
         // Methods
         internal ApiAsyncResult(ApiAsyncCallback<TDTO> cb, object state)
         {
@@ -39,7 +28,8 @@ namespace CityIndex.JsonClient
             _status = RequestNotificationStatus.Continue;
         }
 
-        internal ApiAsyncResult(ApiAsyncCallback<TDTO> cb, object state, bool completed, string responseText, Exception error)
+        internal ApiAsyncResult(ApiAsyncCallback<TDTO> cb, object state, bool completed, string responseText,
+                                Exception error)
         {
             _id = Guid.NewGuid();
             _callback = cb;
@@ -55,6 +45,47 @@ namespace CityIndex.JsonClient
             }
         }
 
+        public Guid Id
+        {
+            get { return _id; }
+        }
+
+        internal Exception Error
+        {
+            get { return _error; }
+        }
+
+        internal RequestNotificationStatus Status
+        {
+            get { return _status; }
+        }
+
+
+        // Properties
+
+        #region IAsyncResult Members
+
+        public object AsyncState
+        {
+            get { return _asyncState; }
+        }
+
+        public WaitHandle AsyncWaitHandle
+        {
+            get { return null; }
+        }
+
+        public bool CompletedSynchronously
+        {
+            get { return _completedSynchronously; }
+        }
+
+        public bool IsCompleted
+        {
+            get { return _completed; }
+        }
+
+        #endregion
 
         internal void Complete(bool synchronous, string responseText, Exception error)
         {
@@ -92,55 +123,6 @@ namespace CityIndex.JsonClient
         internal void SetComplete()
         {
             _completed = true;
-        }
-
-        // Properties
-        public object AsyncState
-        {
-            get
-            {
-                return _asyncState;
-            }
-        }
-
-        public WaitHandle AsyncWaitHandle
-        {
-            get
-            {
-                return null;
-            }
-        }
-
-        public bool CompletedSynchronously
-        {
-            get
-            {
-                return _completedSynchronously;
-            }
-        }
-
-        internal Exception Error
-        {
-            get
-            {
-                return _error;
-            }
-        }
-
-        public bool IsCompleted
-        {
-            get
-            {
-                return _completed;
-            }
-        }
-
-        internal RequestNotificationStatus Status
-        {
-            get
-            {
-                return _status;
-            }
         }
     }
 }

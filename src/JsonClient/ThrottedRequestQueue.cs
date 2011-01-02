@@ -7,11 +7,6 @@ using log4net;
 namespace CityIndex.JsonClient
 {
     /// <summary>
-    /// 
-    /// TODO: IMPERATIVE! need to go back to a singleton and implement as a queue collection - 
-    ///       singleton throttle is very important in real world code especially web apps that 
-    ///       proxy for arbitrary numbers of concurrent users.
-    /// 
     /// TODO: allow for pausing
     /// would like to allow for clearing the queue but dependencies on the cache make
     /// this a non starter. the only viable ways to that means is to merge throttle and cache.
@@ -21,33 +16,43 @@ namespace CityIndex.JsonClient
     /// </summary>
     public sealed class ThrottedRequestQueue : IThrottedRequestQueue
     {
-        private static readonly ILog Log = LogManager.GetLogger(typeof(ThrottedRequestQueue));
-
         #region Fields
 
+        private static readonly ILog Log = LogManager.GetLogger(typeof(ThrottedRequestQueue));
+        private readonly int _maxPendingRequests;
         private readonly Queue<DateTimeOffset> _requestTimes = new Queue<DateTimeOffset>();
         private readonly Queue<RequestHolder> _requests = new Queue<RequestHolder>();
 
-        private int _dispatchedCount;
-        private int _outstandingRequests;
-        private Timer _timer;
-        private bool _processingQueue;
-
-
-        private readonly int _maxPendingRequests;
         private readonly int _throttleWindowCount;
         private readonly TimeSpan _throttleWindowTime;
+        private int _dispatchedCount;
         private bool _notifiedWaitingOnMaxPending;
         private bool _notifiedWaitingOnWindow;
+        private int _outstandingRequests;
+        private bool _processingQueue;
+        private Timer _timer;
+
         #endregion
 
         #region Constructors
 
+        /// <summary>
+        /// Insantiates a <see cref="ThrottedRequestQueue"/> with default parameters.
+        /// throttleWindowTime = 5 seconds
+        /// throttleWindowCount = 30
+        /// maxPendingRequests = 10
+        /// </summary>
         public ThrottedRequestQueue()
             : this(TimeSpan.FromSeconds(5), 30, 10)
         {
         }
 
+        /// <summary>
+        /// Insantiates a <see cref="ThrottedRequestQueue"/> with supplied parameters.
+        /// </summary>
+        /// <param name="throttleWindowTime">The window in which to restrice issued requests to <paramref name="throttleWindowCount"/></param>
+        /// <param name="throttleWindowCount">The maximum number of requests to issue in the amount of time described by <paramref name="throttleWindowTime"/></param>
+        /// <param name="maxPendingRequests">The maximum allowed number of active requests.</param>
         public ThrottedRequestQueue(TimeSpan throttleWindowTime, int throttleWindowCount, int maxPendingRequests)
         {
             _throttleWindowTime = throttleWindowTime;
@@ -55,64 +60,70 @@ namespace CityIndex.JsonClient
             _maxPendingRequests = maxPendingRequests;
             _timer = new Timer(ProcessQueue, null, 100, 50);
         }
+
         #endregion
 
- 
-
-        #region Properties
+        #region IThrottedRequestQueue Members
 
         /// <summary>
-        /// The number of requests dispatched by this queue
+        /// The number of requests that have been dispatched
         /// </summary>
         public int DispatchedCount
         {
             get { return _dispatchedCount; }
         }
 
+
         /// <summary>
-        ///   The maximum number of allowed pending request.
+        /// The maximum number of allowed pending request.
         /// 
-        ///   The throttle window will keep us in compliance with the 
-        ///   letter of the law, but testing has shown that a large 
-        ///   number of outstanding requests can result in infrastructural
-        ///   issues.
+        /// The throttle window will keep us in compliance with the 
+        /// letter of the law, but testing has shown that a large 
+        /// number of outstanding requests result in a cascade of 
+        /// (500) errors that does not stop. 
         /// 
-        ///   So we will defer queue processing while there are > MaxPendingRequests 
-        ///   regardless of throttle window.
+        /// So we will defer processing while there are > MaxPendingRequests 
+        /// regardless of throttle window.
         /// </summary>
         public int MaxPendingRequests
         {
             get { return _maxPendingRequests; }
         }
 
+
         /// <summary>
-        ///   If you are interested in monitoring
+        /// The number of pending (issued) requests
         /// </summary>
         public int PendingRequests
         {
             get { return _outstandingRequests; }
         }
 
+
         /// <summary>
-        ///   The quantitive portion (xxx) of the of 30 requests per 5 seconds
-        ///   Defaults to published guidelines of 5 seconds
+        /// The quantitive portion (xxx) of the of 30 requests per 5 seconds
         /// </summary>
         public int ThrottleWindowCount
         {
             get { return _throttleWindowCount; }
         }
 
+
         /// <summary>
-        ///   The temporal portion (yyy) of the of 30 requests per 5 seconds
-        ///   Defaults to the published guidelines of 30
+        /// The temporal portion (yyy) of the of 30 requests per 5 seconds
         /// </summary>
         public TimeSpan ThrottleWindowTime
         {
             get { return _throttleWindowTime; }
         }
 
-        #endregion
 
+        /// <summary>
+        /// Adds a request to the end of the queue.
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="request"></param>
+        /// <param name="action"></param>
         public void Enqueue(string url, WebRequest request, Action<IAsyncResult, RequestHolder> action)
         {
             lock (_requests)
@@ -127,6 +138,7 @@ namespace CityIndex.JsonClient
             }
         }
 
+        #endregion
 
         private void ProcessQueue(object ignored)
         {
@@ -142,7 +154,7 @@ namespace CityIndex.JsonClient
                     return;
                 }
 
-                var request = _requests.Peek();
+                RequestHolder request = _requests.Peek();
 
                 _processingQueue = true;
 
@@ -195,8 +207,7 @@ namespace CityIndex.JsonClient
                     _dispatchedCount += 1;
 
 
-
-                    var requestIndex = _dispatchedCount;
+                    int requestIndex = _dispatchedCount;
 
                     // TODO: should not get an exception here but need to allow for one
 
@@ -206,6 +217,7 @@ namespace CityIndex.JsonClient
                             Log.Debug(msgIssued);
 
                             _outstandingRequests--;
+
                             request.AsyncResultHandler(ar, request);
                         }, null);
 
@@ -215,17 +227,12 @@ namespace CityIndex.JsonClient
                     _requests.Dequeue();
 
                     _outstandingRequests++;
-
                 }
                 finally
                 {
                     _processingQueue = false;
                 }
-
             }
-
         }
-
-
     }
 }

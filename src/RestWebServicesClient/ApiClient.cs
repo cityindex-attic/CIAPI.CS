@@ -17,7 +17,7 @@ namespace CityIndex.RestWebServices
         {
         }
 
-        public ApiClient(Uri uri, RequestCache cache, IRequestFactory requestFactory,Dictionary<string, IThrottedRequestQueue> throttleScopes, int retryCount)
+        public ApiClient(Uri uri, IRequestCache cache, IRequestFactory requestFactory, Dictionary<string, IThrottedRequestQueue> throttleScopes, int retryCount)
             : base(uri, cache, requestFactory, throttleScopes, retryCount)
         {
         }

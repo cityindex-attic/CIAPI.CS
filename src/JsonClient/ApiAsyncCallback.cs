@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace CityIndex.JsonClient
+﻿namespace CityIndex.JsonClient
 {
-    public delegate void ApiAsyncCallback<TDTO>(ApiAsyncResult<TDTO> ar) where TDTO : class,new();
+    /// <summary>
+    /// Delegate used to complete async calls.
+    /// </summary>
+    /// <typeparam name="TDTO"></typeparam>
+    /// <param name="asyncResult"></param>
+    public delegate void ApiAsyncCallback<TDTO>(ApiAsyncResult<TDTO> asyncResult) where TDTO : class, new();
 }

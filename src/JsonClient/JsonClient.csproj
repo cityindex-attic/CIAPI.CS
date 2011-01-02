@@ -23,6 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\CityIndex.JsonClient.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -46,22 +47,27 @@
   <ItemGroup>
     <Compile Include="ApiAsyncCallback.cs" />
     <Compile Include="ApiAsyncResult.cs" />
-    <Compile Include="ApiContext.cs" />
+    <Compile Include="ApiAsyncResultBase.cs" />
+    <Compile Include="CacheItemBase.cs" />
+    <Compile Include="CacheItemState.cs" />
+    <Compile Include="Client.cs" />
     <Compile Include="ApiException.cs" />
     <Compile Include="CacheCallBack.cs" />
     <Compile Include="CacheItem.cs" />
+    <Compile Include="IJsonClient.cs" />
+    <Compile Include="IRequestCache.cs" />
     <Compile Include="IRequestFactory.cs" />
     <Compile Include="IThrottedRequestQueue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="HttpRequest.cs" />
+    <Compile Include="RequestHolder.cs" />
     <Compile Include="RequestCache.cs" />
     <Compile Include="RequestFactory.cs" />
     <Compile Include="RequestNotificationStatus.cs" />
     <Compile Include="ThrottedRequestQueue.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
+    <None Include="RequestCache_GetOrCreate_2.sequencediagram" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -69,7 +75,11 @@
   <ItemGroup>
     <Content Include="Notes.txt" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="RequestCache_GetOrCreate_2.sequencediagram.layout">
+      <DependentUpon>RequestCache_GetOrCreate_2.sequencediagram</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

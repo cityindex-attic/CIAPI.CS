@@ -63,6 +63,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SOAPI.CS2", "SOAPI.CS2\SOAP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SOAPI.CS2.Tests", "SOAPI.CS2.Tests\SOAPI.CS2.Tests.csproj", "{13AD1056-380D-4F9D-8B7E-954EA5B82695}"
 EndProject
+Project("{F088123C-0E9E-452A-89E6-6BA2F21D5CAC}") = "JsonClient.Models", "JsonClient.Models\JsonClient.Models.modelproj", "{F635E46A-5700-4B76-ADC8-454885C60606}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -286,6 +288,16 @@ Global
 		{13AD1056-380D-4F9D-8B7E-954EA5B82695}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{13AD1056-380D-4F9D-8B7E-954EA5B82695}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{13AD1056-380D-4F9D-8B7E-954EA5B82695}.Release|x86.ActiveCfg = Release|Any CPU
+		{F635E46A-5700-4B76-ADC8-454885C60606}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F635E46A-5700-4B76-ADC8-454885C60606}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F635E46A-5700-4B76-ADC8-454885C60606}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{F635E46A-5700-4B76-ADC8-454885C60606}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{F635E46A-5700-4B76-ADC8-454885C60606}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F635E46A-5700-4B76-ADC8-454885C60606}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F635E46A-5700-4B76-ADC8-454885C60606}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F635E46A-5700-4B76-ADC8-454885C60606}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{F635E46A-5700-4B76-ADC8-454885C60606}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{F635E46A-5700-4B76-ADC8-454885C60606}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

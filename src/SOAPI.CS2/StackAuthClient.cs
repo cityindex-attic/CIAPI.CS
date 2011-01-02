@@ -31,7 +31,7 @@ namespace SOAPI.CS2
         /// <param name="requestFactory"></param>
         /// <param name="throttleScopes"></param>
         /// <param name="retryCount"></param>
-        public StackAuthClient(Uri uri, RequestCache cache, IRequestFactory requestFactory,
+        public StackAuthClient(Uri uri, IRequestCache cache, IRequestFactory requestFactory,
                                Dictionary<string, IThrottedRequestQueue> throttleScopes, int retryCount)
             : base(uri, cache, requestFactory, throttleScopes, retryCount)
         {

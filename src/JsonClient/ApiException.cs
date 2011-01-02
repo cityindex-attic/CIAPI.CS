@@ -4,9 +4,12 @@ using System.Net;
 
 namespace CityIndex.JsonClient
 {
+    /// <summary>
+    /// An exception class that will retrieve the response text of the inner exception if it is a WebException
+    /// </summary>
     public class ApiException : Exception
     {
-        private readonly string _message;
+
 
         public ApiException()
         {
@@ -52,9 +55,5 @@ namespace CityIndex.JsonClient
 
         public string ResponseText { get; private set; }
 
-        public override string Message
-        {
-            get { return _message ?? base.Message; }
-        }
     }
 }
