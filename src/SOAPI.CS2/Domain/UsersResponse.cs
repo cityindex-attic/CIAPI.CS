@@ -6,9 +6,9 @@ using Newtonsoft.Json;
 
 namespace SOAPI.CS2.Domain
 {
-    public class SitesResponse : CollectionResponse<Site>
+    public class UsersResponse : PagedResponse<User>
     {
-        [JsonProperty("api_sites")]
-        public override List<Site> Items { get; set; }
+        [JsonProperty("users")]
+        public override List<User> Items { get; set; }
     }
 }

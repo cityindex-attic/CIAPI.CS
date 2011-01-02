@@ -30,6 +30,9 @@ namespace SOAPI.CS2.Domain
 
         #region Properties
 
+        [JsonProperty("on_site")]
+        public Site OnSite { get; set; }
+   
         /// <summary>
         ///   user's about me blurb
         /// </summary>

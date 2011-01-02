@@ -25,5 +25,22 @@ namespace SOAPI.CS2
         {
             return EndRequest(asyncResult);
         }
+
+
+        public AssociatedUsersResponse GetAssociatedUsers(Guid associationId)
+        {
+
+            return Request<AssociatedUsersResponse>("users", "/{id}/associated", "GET", new Dictionary<string, object> { { "id", associationId.ToString() } }, TimeSpan.FromMinutes(1), "");
+        }
+
+        public void BeginGetAssociatedUsers(ApiAsyncCallback<AssociatedUsersResponse> callback, object state, Guid associationId)
+        {
+            BeginRequest(callback, state, "users", "/{id}/associated", "GET", new Dictionary<string, object> { { "id", associationId.ToString() } }, TimeSpan.FromMinutes(1), "");
+        }
+
+        public AssociatedUsersResponse EndGetAssociatedUsers(ApiAsyncResult<AssociatedUsersResponse> asyncResult)
+        {
+            return EndRequest(asyncResult);
+        }
     }
 }

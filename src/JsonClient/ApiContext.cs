@@ -49,9 +49,14 @@ namespace CityIndex.JsonClient
         }
 
 
+        protected virtual void BeforeBuildUrl(string target, string uriTemplate,
+                                                   string method, Dictionary<string, object> parameters,
+                                                   TimeSpan cacheDuration, string throttleScope)
+        {
+
+        }
 
 
- 
         protected Client(Uri uri, RequestCache cache, IRequestFactory requestFactory, Dictionary<string, IThrottedRequestQueue> throttleScopes, int retryCount)
         {
 #if !SILVERLIGHT
@@ -61,11 +66,17 @@ namespace CityIndex.JsonClient
             WebRequest.RegisterPrefix("http://", WebRequestCreator.ClientHttp);
             WebRequest.RegisterPrefix("https://", WebRequestCreator.ClientHttp);
 #endif
+
             _retryCount = retryCount;
             _requestFactory = requestFactory;
             ThrottleScopes = throttleScopes;
             Cache = cache;
-            Uri = uri;
+            string url = uri.AbsoluteUri;
+            if (!url.EndsWith("/"))
+            {
+                url = uri.AbsoluteUri + "/";
+            }
+            Uri = new Uri(url);
         }
 
         public Uri Uri { get; set; }
@@ -141,6 +152,9 @@ namespace CityIndex.JsonClient
         {
             lock (Cache)
             {
+
+                BeforeBuildUrl(target, uriTemplate, method, parameters, cacheDuration, throttleScope);
+
                 string url = Uri.AbsoluteUri + target + uriTemplate;
 
                 if (method.ToUpper() == "GET")
@@ -149,6 +163,8 @@ namespace CityIndex.JsonClient
                 }
 
                 url = url.TrimEnd('/');
+
+
 
                 CacheItem<TDTO> item = Cache.GetOrCreateCacheItem(url, cb, state, cacheDuration);
 
@@ -358,11 +374,11 @@ namespace CityIndex.JsonClient
         /// Replaces templates with parameter values, if present, and cleans up missing templates.
         /// </summary>
         /// <param name="parameters"></param>
-        /// <param name="uri"></param>
+        /// <param name="url"></param>
         /// <returns></returns>
-        private static string ApplyUriTemplateParameters(Dictionary<string, object> parameters, string uri)
+        private static string ApplyUriTemplateParameters(Dictionary<string, object> parameters, string url)
         {
-            uri = new Regex(@"{\w+}").Replace(uri, match =>
+            url = new Regex(@"{\w+}").Replace(url, match =>
                 {
                     string key = match.Value.Substring(1, match.Value.Length - 2);
                     object paramValue = parameters[key];
@@ -375,13 +391,18 @@ namespace CityIndex.JsonClient
                 });
 
             // clean up unused templates
-            return new Regex(@"\w+={\w+}").Replace(uri, "");
+            url = new Regex(@"\w+={\w+}").Replace(url, "");
+            // clean up orphaned ampersands
+            url = new Regex(@"&{2,}").Replace(url, "&");
+            // clean up broken query
+            url = new Regex(@"\?&").Replace(url, "?");
+            return url;
         }
 
         #endregion
 
 
-        
+
 
     }
 

@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="StackAuthClientFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StackExchangeClientFixture.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\JsonClient\JsonClient.csproj">
