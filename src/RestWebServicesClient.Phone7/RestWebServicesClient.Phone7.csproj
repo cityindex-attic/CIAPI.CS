@@ -64,10 +64,6 @@
       <Project>{DB3089D5-44AC-441C-845C-3596C21C5E34}</Project>
       <Name>JsonClient.Phone7</Name>
     </ProjectReference>
-    <ProjectReference Include="..\log4net.Silverlight\log4net.Silverlight.csproj">
-      <Project>{E49EB549-9B49-4A1E-A7D0-2B457335293E}</Project>
-      <Name>log4net.Silverlight</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />

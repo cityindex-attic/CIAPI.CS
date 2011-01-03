@@ -1,0 +1,737 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Chapter&nbsp;1.&nbsp;Common Logging</title><link rel="stylesheet" href="styles/html.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot_8103"><link rel="home" href="index.html" title="Common Infrastructure Libraries for .NET"><link rel="up" href="index.html" title="Common Infrastructure Libraries for .NET"><link rel="prev" href="index.html" title="Common Infrastructure Libraries for .NET"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div xmlns="http://www.w3.org/TR/xhtml1/transitional" style="border: 1px solid black; background-color: white; height: 73px;"><a title="Common Infrastructure Libraries for .NET" href="http://netcommon.sf.net/" style="border: medium none ;"><img src="images/netcommon-logo.gif" style="border: medium none ;"></img></a><a title="Common Infrastructure Libraries for .NET" href="http://netcommon.sf.net/" style="border: medium none ;"><img src="images/bubble-big.jpg" style="border: medium none ; position: absolute; padding-top: 5px; right: 32px;"></img></a></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="d4e20"></a>Chapter&nbsp;1.&nbsp;Common Logging</h2></div></div></div>
+  
+
+  <div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="logging-abstract"></a>1.1.&nbsp;Introduction</h2></div></div></div>
+    
+
+    <p>There are a variety of logging implementations for .NET currently in
+    use, log4net, Enterprise Library Logging, NLog, to name the most popular.
+    The downside of having differerent implementation is that they do not
+    share a common interface and therefore impose a particular logging
+    implementation on the users of your library. To solve this dependency
+    problem the Common.Logging library introduces a simple abstraction to
+    allow you to select a specific logging implementation at runtime.</p>
+
+    <p>The library is based on work done by the developers of IBatis.NET
+    and it's usage is inspired by log4net. Many thanks to the developers of
+    those projects! The library is available for .NET 1.0, 1.1, and 2.0 with
+    both debug and strongly signed release assemblies.</p>
+
+    <p>The base logging library, Common.Logging, provides the base logging
+    interfaces that appear in your code and also include simple console and
+    trace based logger implementations. The libraries are located under
+    bin/net/&lt;framework-version&gt;/debug or release.</p>
+
+    <p>The following logging systems are supported out of the box:</p>
+
+    <div class="itemizedlist"><ul type="disc"><li>
+          <p>System.Console</p>
+        </li><li>
+          <p>System.Diagnostics.Trace</p>
+        </li><li>
+          <p>Log4Net 1.2.9</p>
+        </li><li>
+          <p>Log4Net 1.2.10 (higher version by assembly version
+          redirect)</p>
+        </li><li>
+          <p>NLog</p>
+        </li><li>
+          <p>Enterprise Library 3.1 Logging</p>
+        </li><li>
+          <p>Enterprise Library 4.1 Logging</p>
+        </li></ul></div><p>There are two enterprise log4net implementations, one for
+    log4net 1.2.9 and another for log4net 1.2.10. The need for two log4net
+    versions is due to the fact that each is signed with a different strong
+    key making assembly redirection impossible.</p>
+
+    <p>Note that it is not the intention of this library to be a
+    replacement for the many fine logging libraries that are out there. The
+    API is incredibly minimal and will very likely stay that way. Only use
+    this library if you truly need to support multiple logging APIs.</p>
+  </div>
+
+  <div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d4e45"></a>1.2.&nbsp;Upgrading from previous versions</h2></div></div></div>
+    
+
+    <div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d4e47"></a>1.2.1.&nbsp;Upgrading to 2.0</h3></div></div></div>
+      
+
+      <p>The new version of Common.Logging assembly is 100% binary
+      backwards compatible to previous versions. Either you rebuild your
+      project against the new version or simply specifiy an assembly version
+      redirect:</p>
+
+      <pre class="programlisting"><span style="color: #A31515">&lt;configuration&gt;</span>
+  <span style="color: #A31515">&lt;runtime&gt;</span>
+     <span style="color: #A31515">&lt;assemblyBinding</span> <span style="color: #FF0000">xmlns</span>=<span style="color: #0000FF">"urn:schemas-microsoft-com:asm.v1"</span><span style="color: #A31515">&gt;</span>
+        <span style="color: #A31515">&lt;dependentAssembly&gt;</span>
+           <span style="color: #A31515">&lt;assemblyIdentity</span> <span style="color: #FF0000">name</span>=<span style="color: #0000FF">"Common.Logging"</span> <span style="color: #FF0000">publicKeyToken</span>=<span style="color: #0000FF">"af08829b84f0328e"</span> <span style="color: #FF0000">culture</span>=<span style="color: #0000FF">""</span><span style="color: #A31515">/&gt;</span>
+           <span style="color: #A31515">&lt;bindingRedirect</span> <span style="color: #FF0000">oldVersion</span>=<span style="color: #0000FF">"0.0.0.0-65535.65535.65535.65535"</span> <span style="color: #FF0000">newVersion</span>=<span style="color: #0000FF">"2.0.0.0"</span><span style="color: #A31515">/&gt;</span>
+           <i style="color: #008000">&lt;!-- reference specific file: --&gt;</i>
+           <i style="color: #008000">&lt;!-- codeBase version="2.0.0.0" href="../../../build/net/2.0/release/Common.Logging.dll"/ --&gt;</i>
+        <span style="color: #A31515">&lt;/dependentAssembly&gt;</span>
+     <span style="color: #A31515">&lt;/assemblyBinding&gt;</span>
+  <span style="color: #A31515">&lt;/runtime&gt;</span>
+<span style="color: #A31515">&lt;/configuration&gt;</span></pre><p>Those who implemented their own
+      <span xmlns="http://www.w3.org/TR/xhtml1/transitional" xmlns:fo="http://www.w3.org/1999/XSL/Format" style="color: #2B91AF">Common.Logging.ILoggerFactoryAdapter</span> and
+      <span xmlns="http://www.w3.org/TR/xhtml1/transitional" xmlns:fo="http://www.w3.org/1999/XSL/Format" style="color: #2B91AF">Common.Logging.ILog</span> interfaces, need to
+      update their code to the extended interfaces coming with version 2.0.
+      For convenience Common.Logging comes with a couple of support classes,
+      making this task as easy as possible as described in <a class="link" href="ch01.html#logging-advanced-customfactoryadapter" title="1.6.2.&nbsp;Implementing a custom FactoryAdapter">Implementing a custom
+      FactoryAdapter</a></p>
+    </div>
+  </div>
+
+  <div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="logging-usage"></a>1.3.&nbsp;Using Common.Logging API</h2></div></div></div>
+    
+
+    <p>Usage of the Logging API is fairly simple. First you need to obtain
+    a logger from the LogManager and call the appropriate logging method:
+    </p><pre class="programlisting"><span style="color: #0000FF">using</span> Common.Logging;
+...
+ILog log = LogManager.GetCurrentClassLogger();
+log.Debug(<span style="color: #A31515">"hello world"</span>);</pre>
+
+    <p>It is also possible to obtain a logger by name: </p><pre class="programlisting">ILog log = LogManager.GetLogger(<span style="color: #A31515">"mylogger"</span>);</pre>
+
+    <p>When working on NET 3.0 or higher, a logger offers a convenient way
+    to log information while paying as little performance penalty as possible.
+    Sometimes evaluating log messsage arguments migth be costly. These costs
+    even hit you, when the logging is turned off, just because the log call is
+    in your code. In this case one usually writes:</p>
+
+    <pre class="programlisting"><span style="color: #0000FF">if</span> (log.IsDebugEnabled)
+{
+  log.Debug( <span style="color: #A31515">"my expensive to calculate argument is: {0}"</span>, CalculateMessageInfo() );
+}</pre><p>Since Common.Logging 2.0 there is a shortcut notation
+    available that allows you to write:</p>
+
+    <pre class="programlisting">log.Debug( m=&gt;m("my expensive to calculate argument is: {0}", CalculateMessageInfo()) );</pre><p>This
+    form is equivalent to the example above and guarantees, that
+    <code class="methodname">CalculateMessageInfo()</code> is only called, when the
+    message really gets logged!</p>
+
+    <p>Finally here is the complete interface offered by a logger instance:
+    </p><pre class="programlisting"><span style="color: #0000FF">public</span> <span style="color: #0000FF">interface</span> ILog
+{
+    <i style="color: #008000">// Methods</i>
+    <span style="color: #0000FF">void</span> Trace(<span style="color: #0000FF">object</span> message);
+    <span style="color: #0000FF">void</span> Trace(<span style="color: #0000FF">object</span> message, Exception exception);
+    <span style="color: #0000FF">void</span> Trace(FormatMessageCallback formatMessageCallback);
+    <span style="color: #0000FF">void</span> Trace(FormatMessageCallback formatMessageCallback, Exception exception);
+    <span style="color: #0000FF">void</span> Trace(IFormatProvider formatProvider, FormatMessageCallback formatMessageCallback);
+    <span style="color: #0000FF">void</span> Trace(IFormatProvider formatProvider, FormatMessageCallback formatMessageCallback
+               , Exception exception);
+    <span style="color: #0000FF">void</span> TraceFormat(<span style="color: #0000FF">string</span> format, <span style="color: #0000FF">params</span> <span style="color: #0000FF">object</span>[] args);
+    <span style="color: #0000FF">void</span> TraceFormat(<span style="color: #0000FF">string</span> format, Exception exception, <span style="color: #0000FF">params</span> <span style="color: #0000FF">object</span>[] args);
+    <span style="color: #0000FF">void</span> TraceFormat(IFormatProvider formatProvider, <span style="color: #0000FF">string</span> format, <span style="color: #0000FF">params</span> <span style="color: #0000FF">object</span>[] args);
+    <span style="color: #0000FF">void</span> TraceFormat(IFormatProvider formatProvider, <span style="color: #0000FF">string</span> format, Exception exception
+                     , <span style="color: #0000FF">params</span> <span style="color: #0000FF">object</span>[] args);
+
+    <span style="color: #0000FF">void</span> Debug(<span style="color: #0000FF">object</span> message);
+    <span style="color: #0000FF">void</span> Debug(<span style="color: #0000FF">object</span> message, Exception exception);
+    <span style="color: #0000FF">void</span> Debug(FormatMessageCallback formatMessageCallback);
+    <span style="color: #0000FF">void</span> Debug(FormatMessageCallback formatMessageCallback, Exception exception);
+    <span style="color: #0000FF">void</span> Debug(IFormatProvider formatProvider, FormatMessageCallback formatMessageCallback);
+    <span style="color: #0000FF">void</span> Debug(IFormatProvider formatProvider, FormatMessageCallback formatMessageCallback
+               , Exception exception);
+    <span style="color: #0000FF">void</span> DebugFormat(<span style="color: #0000FF">string</span> format, <span style="color: #0000FF">params</span> <span style="color: #0000FF">object</span>[] args);
+    <span style="color: #0000FF">void</span> DebugFormat(<span style="color: #0000FF">string</span> format, Exception exception, <span style="color: #0000FF">params</span> <span style="color: #0000FF">object</span>[] args);
+    <span style="color: #0000FF">void</span> DebugFormat(IFormatProvider formatProvider, <span style="color: #0000FF">string</span> format, <span style="color: #0000FF">params</span> <span style="color: #0000FF">object</span>[] args);
+    <span style="color: #0000FF">void</span> DebugFormat(IFormatProvider formatProvider, <span style="color: #0000FF">string</span> format, Exception exception
+                     , <span style="color: #0000FF">params</span> <span style="color: #0000FF">object</span>[] args);
+
+    <span style="color: #0000FF">void</span> Info(<span style="color: #0000FF">object</span> message);
+    <span style="color: #0000FF">void</span> Info(<span style="color: #0000FF">object</span> message, Exception exception);
+    <span style="color: #0000FF">void</span> Info(FormatMessageCallback formatMessageCallback);
+    <span style="color: #0000FF">void</span> Info(FormatMessageCallback formatMessageCallback, Exception exception);
+    <span style="color: #0000FF">void</span> Info(IFormatProvider formatProvider, FormatMessageCallback formatMessageCallback);
+    <span style="color: #0000FF">void</span> Info(IFormatProvider formatProvider, FormatMessageCallback formatMessageCallback
+              , Exception exception);
+    <span style="color: #0000FF">void</span> InfoFormat(<span style="color: #0000FF">string</span> format, <span style="color: #0000FF">params</span> <span style="color: #0000FF">object</span>[] args);
+    <span style="color: #0000FF">void</span> InfoFormat(<span style="color: #0000FF">string</span> format, Exception exception, <span style="color: #0000FF">params</span> <span style="color: #0000FF">object</span>[] args);
+    <span style="color: #0000FF">void</span> InfoFormat(IFormatProvider formatProvider, <span style="color: #0000FF">string</span> format, <span style="color: #0000FF">params</span> <span style="color: #0000FF">object</span>[] args);
+    <span style="color: #0000FF">void</span> InfoFormat(IFormatProvider formatProvider, <span style="color: #0000FF">string</span> format, Exception exception
+                    , <span style="color: #0000FF">params</span> <span style="color: #0000FF">object</span>[] args);
+
+    <span style="color: #0000FF">void</span> Warn(<span style="color: #0000FF">object</span> message);
+    <span style="color: #0000FF">void</span> Warn(<span style="color: #0000FF">object</span> message, Exception exception);
+    <span style="color: #0000FF">void</span> Warn(FormatMessageCallback formatMessageCallback);
+    <span style="color: #0000FF">void</span> Warn(FormatMessageCallback formatMessageCallback, Exception exception);
+    <span style="color: #0000FF">void</span> Warn(IFormatProvider formatProvider, FormatMessageCallback formatMessageCallback);
+    <span style="color: #0000FF">void</span> Warn(IFormatProvider formatProvider, FormatMessageCallback formatMessageCallback
+              , Exception exception);
+    <span style="color: #0000FF">void</span> WarnFormat(<span style="color: #0000FF">string</span> format, <span style="color: #0000FF">params</span> <span style="color: #0000FF">object</span>[] args);
+    <span style="color: #0000FF">void</span> WarnFormat(<span style="color: #0000FF">string</span> format, Exception exception, <span style="color: #0000FF">params</span> <span style="color: #0000FF">object</span>[] args);
+    <span style="color: #0000FF">void</span> WarnFormat(IFormatProvider formatProvider, <span style="color: #0000FF">string</span> format, <span style="color: #0000FF">params</span> <span style="color: #0000FF">object</span>[] args);
+    <span style="color: #0000FF">void</span> WarnFormat(IFormatProvider formatProvider, <span style="color: #0000FF">string</span> format, Exception exception
+                    , <span style="color: #0000FF">params</span> <span style="color: #0000FF">object</span>[] args);
+
+    <span style="color: #0000FF">void</span> Error(<span style="color: #0000FF">object</span> message);
+    <span style="color: #0000FF">void</span> Error(<span style="color: #0000FF">object</span> message, Exception exception);
+    <span style="color: #0000FF">void</span> Error(FormatMessageCallback formatMessageCallback);
+    <span style="color: #0000FF">void</span> Error(FormatMessageCallback formatMessageCallback, Exception exception);
+    <span style="color: #0000FF">void</span> Error(IFormatProvider formatProvider, FormatMessageCallback formatMessageCallback);
+    <span style="color: #0000FF">void</span> Error(IFormatProvider formatProvider, FormatMessageCallback formatMessageCallback
+               , Exception exception);
+    <span style="color: #0000FF">void</span> ErrorFormat(<span style="color: #0000FF">string</span> format, <span style="color: #0000FF">params</span> <span style="color: #0000FF">object</span>[] args);
+    <span style="color: #0000FF">void</span> ErrorFormat(<span style="color: #0000FF">string</span> format, Exception exception, <span style="color: #0000FF">params</span> <span style="color: #0000FF">object</span>[] args);
+    <span style="color: #0000FF">void</span> ErrorFormat(IFormatProvider formatProvider, <span style="color: #0000FF">string</span> format, <span style="color: #0000FF">params</span> <span style="color: #0000FF">object</span>[] args);
+    <span style="color: #0000FF">void</span> ErrorFormat(IFormatProvider formatProvider, <span style="color: #0000FF">string</span> format, Exception exception
+                     , <span style="color: #0000FF">params</span> <span style="color: #0000FF">object</span>[] args);
+
+    <span style="color: #0000FF">void</span> Fatal(<span style="color: #0000FF">object</span> message);
+    <span style="color: #0000FF">void</span> Fatal(<span style="color: #0000FF">object</span> message, Exception exception);
+    <span style="color: #0000FF">void</span> Fatal(FormatMessageCallback formatMessageCallback);
+    <span style="color: #0000FF">void</span> Fatal(FormatMessageCallback formatMessageCallback, Exception exception);
+    <span style="color: #0000FF">void</span> Fatal(IFormatProvider formatProvider, FormatMessageCallback formatMessageCallback);
+    <span style="color: #0000FF">void</span> Fatal(IFormatProvider formatProvider, FormatMessageCallback formatMessageCallback
+               , Exception exception);
+    <span style="color: #0000FF">void</span> FatalFormat(<span style="color: #0000FF">string</span> format, <span style="color: #0000FF">params</span> <span style="color: #0000FF">object</span>[] args);
+    <span style="color: #0000FF">void</span> FatalFormat(<span style="color: #0000FF">string</span> format, Exception exception, <span style="color: #0000FF">params</span> <span style="color: #0000FF">object</span>[] args);
+    <span style="color: #0000FF">void</span> FatalFormat(IFormatProvider formatProvider, <span style="color: #0000FF">string</span> format, <span style="color: #0000FF">params</span> <span style="color: #0000FF">object</span>[] args);
+    <span style="color: #0000FF">void</span> FatalFormat(IFormatProvider formatProvider, <span style="color: #0000FF">string</span> format, Exception exception
+                     , <span style="color: #0000FF">params</span> <span style="color: #0000FF">object</span>[] args);
+
+    <i style="color: #008000">// Properties</i>
+    <span style="color: #0000FF">bool</span> IsDebugEnabled { <span style="color: #0000FF">get</span>; }
+    <span style="color: #0000FF">bool</span> IsErrorEnabled { <span style="color: #0000FF">get</span>; }
+    <span style="color: #0000FF">bool</span> IsFatalEnabled { <span style="color: #0000FF">get</span>; }
+    <span style="color: #0000FF">bool</span> IsInfoEnabled { <span style="color: #0000FF">get</span>; }
+    <span style="color: #0000FF">bool</span> IsTraceEnabled { <span style="color: #0000FF">get</span>; }
+    <span style="color: #0000FF">bool</span> IsWarnEnabled { <span style="color: #0000FF">get</span>; }
+}</pre>
+
+    <p>Since the ILog interface mimics that of the interface used in
+    log4net, migration from log4net is just a matter of changing the 'using'
+    statement.</p>
+
+    <p>You can get a reference to an instance of an ILog using the
+    LoggingManager class. Its API is shown below:</p>
+
+    <pre class="programlisting"><span style="color: #0000FF">public</span> <span style="color: #0000FF">sealed</span> <span style="color: #0000FF">class</span> LogManager
+{
+  <span style="color: #0000FF">public</span> <span style="color: #0000FF">static</span> ILog GetLogger( Type type ) ...
+  <span style="color: #0000FF">public</span> <span style="color: #0000FF">static</span> ILog GetLogger( <span style="color: #0000FF">string</span> name ) ...
+
+  <span style="color: #0000FF">public</span> <span style="color: #0000FF">static</span> ILoggerFactoryAdapter Adapter ...
+}    </pre>
+
+    <p>The Adapter property is used by the framework itself.</p>
+  </div>
+
+  <div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="logging-config"></a>1.4.&nbsp;Configuring Logging</h2></div></div></div>
+    
+
+    <p>There are 2 ways of configuring logging in your application - either
+    declaratively or pro grammatically.</p>
+
+    <div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="logging-declarative-config"></a>1.4.1.&nbsp;Declarative Configuration</h3></div></div></div>
+      
+
+      <p>Logging configuration can be done declaratively in your
+      app.config</p>
+
+      <pre class="programlisting"><span style="color: #A31515">&lt;configuration&gt;</span>
+  <span style="color: #A31515">&lt;configSections&gt;</span>
+    <span style="color: #A31515">&lt;sectionGroup</span> <span style="color: #FF0000">name</span>=<span style="color: #0000FF">"common"</span><span style="color: #A31515">&gt;</span>
+      <span style="color: #A31515">&lt;section</span> <span style="color: #FF0000">name</span>=<span style="color: #0000FF">"logging"</span> <span style="color: #FF0000">type</span>=<span style="color: #0000FF">"Common.Logging.ConfigurationSectionHandler, Common.Logging"</span><span style="color: #A31515"> /&gt;</span>
+    <span style="color: #A31515">&lt;/sectionGroup&gt;</span>
+  <span style="color: #A31515">&lt;/configSections&gt;</span>
+
+  <span style="color: #A31515">&lt;common&gt;</span>
+    <span style="color: #A31515">&lt;logging&gt;</span>
+      <span style="color: #A31515">&lt;factoryAdapter</span> <span style="color: #FF0000">type</span>=<span style="color: #0000FF">"Common.Logging.Simple.ConsoleOutLoggerFactoryAdapter, Common.Logging"</span><span style="color: #A31515">&gt;</span>
+        <span style="color: #A31515">&lt;arg</span> <span style="color: #FF0000">key</span>=<span style="color: #0000FF">"level"</span> <span style="color: #FF0000">value</span>=<span style="color: #0000FF">"DEBUG"</span><span style="color: #A31515"> /&gt;</span>
+        <span style="color: #A31515">&lt;arg</span> <span style="color: #FF0000">key</span>=<span style="color: #0000FF">"showLogName"</span> <span style="color: #FF0000">value</span>=<span style="color: #0000FF">"true"</span><span style="color: #A31515"> /&gt;</span>
+        <span style="color: #A31515">&lt;arg</span> <span style="color: #FF0000">key</span>=<span style="color: #0000FF">"showDataTime"</span> <span style="color: #FF0000">value</span>=<span style="color: #0000FF">"true"</span><span style="color: #A31515"> /&gt;</span>
+        <span style="color: #A31515">&lt;arg</span> <span style="color: #FF0000">key</span>=<span style="color: #0000FF">"dateTimeFormat"</span> <span style="color: #FF0000">value</span>=<span style="color: #0000FF">"yyyy/MM/dd HH:mm:ss:fff"</span><span style="color: #A31515"> /&gt;</span>
+      <span style="color: #A31515">&lt;/factoryAdapter&gt;</span>
+    <span style="color: #A31515">&lt;/logging&gt;</span>
+  <span style="color: #A31515">&lt;/common&gt;</span>
+<span style="color: #A31515">&lt;/configuration&gt;</span>      </pre>
+
+      <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/admons/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top">
+        <p>The concrete set of &lt;arg&gt; elements you may specify depends
+        on the FactoryAdapter being used.</p>
+      </td></tr></table></div>
+
+      <p>Note that if you have installed Common.Logging in the GAC, you
+      will need to specify the fully qualified name of the assembly, i.e. add
+      the Version, Culture, and PublicKeyToken, etc. See the log4net section
+      for an example.</p>
+    </div>
+
+    <div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="logging-configuring-in-code"></a>1.4.2.&nbsp;Configuring Logging in your code</h3></div></div></div>
+      
+
+      <p>You may manually configure logging by setting a
+      LoggerFactoryAdapter in your code.</p>
+
+      <pre class="programlisting"><i style="color: #008000">// create properties</i>
+NameValueCollection properties = <span style="color: #0000FF">new</span> NameValueCollection();
+properties[<span style="color: #A31515">"showDateTime"</span>] = <span style="color: #A31515">"true"</span>;
+
+<i style="color: #008000">// set Adapter</i>
+Common.Logging.LogManager.Adapter = <span style="color: #0000FF">new</span> Common.Logging.Simple.ConsoleOutLoggerFactoryAdapter(properties);      </pre>
+
+      <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/admons/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top">
+        <p>The concrete set of properties you may specify depends on the
+        FactoryAdapter being used.</p>
+      </td></tr></table></div>
+    </div>
+  </div>
+
+  <div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="logging-adapters"></a>1.5.&nbsp;Logging Adapters</h2></div></div></div>
+    
+
+    <p>There are simple out-of-the-box implementations coming with
+    Common.Logging itself. For connecting to log4net, separate adapters do
+    exist.</p>
+
+    <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/admons/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top">
+      <p>Be sure to correctly specify the type of the FactoryAdapter in the
+      common logging configuration section and to copy the logging
+      implementation .dlls to your runtime directory. At the moment, if the
+      specified FactoryAdapter type is not found or its dependent libraries,
+      the NoOpLoggerFactoryAdaptor is used by default and you will not see any
+      logging output.</p>
+    </td></tr></table></div>
+
+    <div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="logging-noop"></a>1.5.1.&nbsp;NoOpLoggerFactoryAdapter</h3></div></div></div>
+      
+
+      <p>This is the default FactoryAdapter if logging is not configured.
+      It simply does nothing.</p>
+    </div>
+
+    <div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="logging-console"></a>1.5.2.&nbsp;ConsoleOutLoggerFactoryAdapter</h3></div></div></div>
+      
+
+      <p>ConsoleOutLoggerFactoryAdapter uses Console.Out for logging
+      output.</p>
+
+      <div class="table"><a name="logging-console-config-props"></a><div class="title">Table&nbsp;1.1.&nbsp;Configuration Properties</div><div class="table-contents">
+        
+
+        <table summary="Configuration Properties" border="1"><colgroup><col><col><col></colgroup><thead><tr><th>Key</th><th>Possible Value(s)</th><th>Description</th></tr></thead><tbody><tr><td>level</td><td>All Debug Info Warn Error Fatal Off</td><td>Defines the global maximum level of logging.</td></tr><tr><td>showDateTime</td><td>true|false</td><td>output timestamp?</td></tr><tr><td>showLogName</td><td>true|false</td><td>output logger name?</td></tr><tr><td>dateTimeFormat</td><td>any formatstring accepted by DateTime.ToString()</td><td>defines the format to be used for output the timestamp.
+              If no format is specified DateTime.ToString() will be
+              used.</td></tr></tbody></table>
+      </div></div><br class="table-break">
+    </div>
+
+    <div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="logging-trace"></a>1.5.3.&nbsp;TraceLoggerFactoryAdapter</h3></div></div></div>
+      
+
+      <p>TraceLoggerFactoryAdapter uses
+      <span xmlns="http://www.w3.org/TR/xhtml1/transitional" xmlns:fo="http://www.w3.org/1999/XSL/Format" style="color: #2B91AF">System.Diagnostics.Trace</span> for logging output. For
+      viewing it's output you can use any tool that is capable of capturing
+      calls to Win32 <code class="function">OutputDebugString()</code> - e.g. the tool
+      "DebugView" from <a class="link" href="www.sysinternals.com" title="www.sysinternals.com" target="_top">www.sysinternals.com</a>.</p>
+
+      <div class="table"><a name="d4e134"></a><div class="title">Table&nbsp;1.2.&nbsp;Configuration Properties</div><div class="table-contents">
+        
+
+        <table summary="Configuration Properties" border="1"><colgroup><col><col><col></colgroup><thead><tr><th>Key</th><th>Possible Value(s)</th><th>Description</th></tr></thead><tbody><tr><td>level</td><td>All Debug Info Warn Error Fatal Off</td><td>Defines the global maximum level of logging.</td></tr><tr><td>showDateTime</td><td>true|false</td><td>output timestamp?</td></tr><tr><td>showLogName</td><td>true|false</td><td>output logger name?</td></tr><tr><td>dateTimeFormat</td><td>any formatstring accepted by DateTime.ToString()</td><td>defines the format to be used for output the timestamp.
+              If no format is specified DateTime.ToString() will be
+              used.</td></tr></tbody></table>
+      </div></div><br class="table-break">
+    </div>
+
+    <div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="logging-adapters-log4net"></a>1.5.4.&nbsp;Log4NetLoggerFactoryAdapter</h3></div></div></div>
+      
+
+      <p>There are two implementations, both configured similarly.</p>
+
+      <div class="itemizedlist"><ul type="disc"><li>
+          <p><code class="package">Common.Logging.Log4Net</code></p>
+
+          <p>is linked against log4net 1.2.10.0</p>
+        </li><li>
+          <p><code class="package">Common.Logging.Log4Net129</code></p>
+
+          <p>is linked against log4net 1.2.9.0</p>
+        </li></ul></div>
+
+      <p>The only difference is in the type specified to the factory
+      adapter. Both Adapters accept the following configuration
+      properties:</p>
+
+      <div class="table"><a name="logging-log4net-config-props"></a><div class="title">Table&nbsp;1.3.&nbsp;Configuration Properties</div><div class="table-contents">
+        
+
+        <table summary="Configuration Properties" border="1"><colgroup><col><col><col></colgroup><thead><tr><th>Key</th><th>Possible Value(s)</th><th>Description</th></tr></thead><tbody><tr><td>configType</td><td><p>FILE</p> <p>FILE-WATCH</p>
+              <p>INLINE</p> <p>EXTERNAL</p></td><td><p>INLINE will simply call
+              XmlConfigurator.Configure()</p> <p>EXTERNAL expects
+              log4net being configured somewhere else in your code and does
+              nothing.</p> <p>FILE, FILE-WATCH: see property
+              "configFile" below.</p></td></tr><tr><td>configFile</td><td>&lt;path to your log4net.config file&gt;</td><td><p>if configType is FILE or FILE-WATCH, the value of
+              "configFile" is passed to XmlConfigurator.Configure (FileInfo) /
+              ConfigureAndWatch(FileInfo) method.</p></td></tr></tbody></table>
+      </div></div><br class="table-break">
+
+      <p>The example below will configure log4net 1.2.10.0 using the file
+      <code class="filename">log4net.config</code> from your application's root
+      directory by calling
+      <code class="function">XmlConfigurator.ConfigureAndWatch()</code>:</p>
+
+      <pre class="programlisting"><span style="color: #A31515">&lt;configuration&gt;</span>
+  <span style="color: #A31515">&lt;common&gt;</span>
+    <span style="color: #A31515">&lt;logging&gt;</span>
+      <span style="color: #A31515">&lt;factoryAdapter</span> <span style="color: #FF0000">type</span>=<span style="color: #0000FF">"Common.Logging.Log4Net.Log4NetLoggerFactoryAdapter, Common.Logging.Log4net"</span><span style="color: #A31515">&gt;</span>
+        <span style="color: #A31515">&lt;arg</span> <span style="color: #FF0000">key</span>=<span style="color: #0000FF">"configType"</span> <span style="color: #FF0000">value</span>=<span style="color: #0000FF">"FILE-WATCH"</span><span style="color: #A31515"> /&gt;</span>
+        <span style="color: #A31515">&lt;arg</span> <span style="color: #FF0000">key</span>=<span style="color: #0000FF">"configFile"</span> <span style="color: #FF0000">value</span>=<span style="color: #0000FF">"~/log4net.config"</span><span style="color: #A31515"> /&gt;</span>
+      <span style="color: #A31515">&lt;/factoryAdapter&gt;</span>
+    <span style="color: #A31515">&lt;/logging&gt;</span>
+  <span style="color: #A31515">&lt;/common&gt;</span>
+<span style="color: #A31515">&lt;/configuration&gt;</span> </pre>
+
+      <p>For log4net 1.2.9, change the assembly name
+      <code class="package">Common.Logging.Log4Net129.</code></p>
+
+      <p>Another example that shows the log4net configuration 'inline' with
+      the standard application configuration file is shown below.</p>
+
+      <pre class="programlisting"><span style="color: #A31515">&lt;configuration&gt;</span>
+  <span style="color: #A31515">&lt;configSections&gt;</span>
+    <span style="color: #A31515">&lt;sectionGroup</span> <span style="color: #FF0000">name</span>=<span style="color: #0000FF">"common"</span><span style="color: #A31515">&gt;</span>
+      <span style="color: #A31515">&lt;section</span> <span style="color: #FF0000">name</span>=<span style="color: #0000FF">"logging"</span> <span style="color: #FF0000">type</span>=<span style="color: #0000FF">"Common.Logging.ConfigurationSectionHandler, Common.Logging"</span><span style="color: #A31515"> /&gt;</span>
+    <span style="color: #A31515">&lt;/sectionGroup&gt;</span>
+
+    <span style="color: #A31515">&lt;section</span> <span style="color: #FF0000">name</span>=<span style="color: #0000FF">"log4net"</span> <span style="color: #FF0000">type</span>=<span style="color: #0000FF">"log4net.Config.Log4NetConfigurationSectionHandler, log4net"</span><span style="color: #A31515">/&gt;</span>
+  <span style="color: #A31515">&lt;/configSections&gt;</span>
+
+  <span style="color: #A31515">&lt;common&gt;</span>
+    <span style="color: #A31515">&lt;logging&gt;</span>
+      <span style="color: #A31515">&lt;factoryAdapter</span> <span style="color: #FF0000">type</span>=<span style="color: #0000FF">"Common.Logging.Log4Net.Log4NetLoggerFactoryAdapter, Common.Logging.Log4Net"</span><span style="color: #A31515">&gt;</span>
+        <span style="color: #A31515">&lt;arg</span> <span style="color: #FF0000">key</span>=<span style="color: #0000FF">"configType"</span> <span style="color: #FF0000">value</span>=<span style="color: #0000FF">"INLINE"</span><span style="color: #A31515"> /&gt;</span>
+      <span style="color: #A31515">&lt;/factoryAdapter&gt;</span>
+    <span style="color: #A31515">&lt;/logging&gt;</span>
+  <span style="color: #A31515">&lt;/common&gt;</span>
+
+  <span style="color: #A31515">&lt;log4net&gt;</span>
+    <span style="color: #A31515">&lt;appender</span> <span style="color: #FF0000">name</span>=<span style="color: #0000FF">"ConsoleAppender"</span> <span style="color: #FF0000">type</span>=<span style="color: #0000FF">"log4net.Appender.ConsoleAppender"</span><span style="color: #A31515">&gt;</span>
+      <span style="color: #A31515">&lt;layout</span> <span style="color: #FF0000">type</span>=<span style="color: #0000FF">"log4net.Layout.PatternLayout"</span><span style="color: #A31515">&gt;</span>
+        <span style="color: #A31515">&lt;conversionPattern</span> <span style="color: #FF0000">value</span>=<span style="color: #0000FF">"%date [%thread] %-5level %logger %ndc - %message%newline"</span><span style="color: #A31515"> /&gt;</span>
+      <span style="color: #A31515">&lt;/layout&gt;</span>
+    <span style="color: #A31515">&lt;/appender&gt;</span>
+
+    <span style="color: #A31515">&lt;root&gt;</span>
+      <span style="color: #A31515">&lt;level</span> <span style="color: #FF0000">value</span>=<span style="color: #0000FF">"DEBUG"</span><span style="color: #A31515"> /&gt;</span>
+      <span style="color: #A31515">&lt;appender-ref</span> <span style="color: #FF0000">ref</span>=<span style="color: #0000FF">"ConsoleAppender"</span><span style="color: #A31515"> /&gt;</span>
+    <span style="color: #A31515">&lt;/root&gt;</span>
+
+    <span style="color: #A31515">&lt;logger</span> <span style="color: #FF0000">name</span>=<span style="color: #0000FF">"MyApp.DataAccessLayer"</span><span style="color: #A31515">&gt;</span>
+      <span style="color: #A31515">&lt;level</span> <span style="color: #FF0000">value</span>=<span style="color: #0000FF">"DEBUG"</span><span style="color: #A31515"> /&gt;</span>
+    <span style="color: #A31515">&lt;/logger&gt;</span>
+  <span style="color: #A31515">&lt;/log4net&gt;</span>
+<span style="color: #A31515">&lt;/configuration&gt;</span></pre>
+
+      <p>Note that if you are using Common.Logging or any of the adapters
+      from the GAC, you will need to specify the full type name, including
+      verison, publickey token etc., as shown below</p>
+
+      <pre class="programlisting"><span style="color: #A31515">&lt;configSections&gt;</span>
+  <span style="color: #A31515">&lt;sectionGroup</span> <span style="color: #FF0000">name</span>=<span style="color: #0000FF">"common"</span><span style="color: #A31515">&gt;</span>
+    <span style="color: #A31515">&lt;section</span> <span style="color: #FF0000">name</span>=<span style="color: #0000FF">"logging"</span> <span style="color: #FF0000">type</span>=<span style="color: #0000FF">"Common.Logging.ConfigurationSectionHandler, Common.Logging,
+                                  Version=2.0.0.0, Culture=neutral, PublicKeyToken=AF08829B84F0328E"</span><span style="color: #A31515">/&gt;</span>
+  <span style="color: #A31515">&lt;/sectionGroup&gt;</span>
+  <span style="color: #A31515">&lt;section</span> <span style="color: #FF0000">name</span>=<span style="color: #0000FF">"log4net"</span> <span style="color: #FF0000">type</span>=<span style="color: #0000FF">"log4net.Config.Log4NetConfigurationSectionHandler, log4net,
+                                Version=1.2.10.0, Culture=neutral, PublicKeyToken=1B44E1D426115821"</span><span style="color: #A31515">/&gt;</span>
+<span style="color: #A31515">&lt;/configSections&gt;</span>
+<span style="color: #A31515">&lt;common&gt;</span>
+ <span style="color: #A31515">&lt;logging&gt;</span>
+   <span style="color: #A31515">&lt;factoryAdapter</span> <span style="color: #FF0000">type</span>=<span style="color: #0000FF">"Common.Logging.Log4Net.Log4NetLoggerFactoryAdapter, Common.Logging.Log4Net,
+                         Version=2.0.2.2, Culture=neutral, PublicKeyToken=AF08829B84F0328E"</span><span style="color: #A31515">&gt;</span>
+     <span style="color: #A31515">&lt;arg</span> <span style="color: #FF0000">key</span>=<span style="color: #0000FF">"configType"</span> <span style="color: #FF0000">value</span>=<span style="color: #0000FF">"FILE-WATCH"</span><span style="color: #A31515">/&gt;</span>
+     <span style="color: #A31515">&lt;arg</span> <span style="color: #FF0000">key</span>=<span style="color: #0000FF">"configFile"</span> <span style="color: #FF0000">value</span>=<span style="color: #0000FF">"~/log4net.config"</span><span style="color: #A31515">/&gt;</span>
+   <span style="color: #A31515">&lt;/factoryAdapter&gt;</span>
+ <span style="color: #A31515">&lt;/logging&gt;</span>
+<span style="color: #A31515">&lt;/common&gt;</span></pre>
+    </div>
+
+    <div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="logging-adapters-nlog"></a>1.5.5.&nbsp;NLogLoggerFactoryAdapter</h3></div></div></div>
+      
+
+      <p>There is one implementation.</p>
+
+      <div class="itemizedlist"><ul type="disc"><li>
+          <p><code class="package">Common.Logging.NLog</code></p>
+
+          <p>is linked against NLog 1.0.0.505</p>
+        </li></ul></div>
+
+      <div class="table"><a name="logging-nlog-config-props"></a><div class="title">Table&nbsp;1.4.&nbsp;Configuration Properties</div><div class="table-contents">
+        
+
+        <table summary="Configuration Properties" border="1"><colgroup><col><col><col></colgroup><thead><tr><th>Key</th><th>Possible Value(s)</th><th>Description</th></tr></thead><tbody><tr><td>configType</td><td><p>INLINE</p> <p>FILE</p></td><td><p>INLINE</p> <p>FILE: see property "configFile"
+              below.</p></td></tr><tr><td>configFile</td><td>&lt;path to your NLog.config file&gt;</td><td><p>if configType is FILE, the value of "configFile" is
+              passed to XmlLoggingConfiguration(string)
+              constructor.</p></td></tr></tbody></table>
+      </div></div><br class="table-break">
+
+      <p>The example below will configure NLog using the file
+      <code class="filename">NLog.config</code> from your application's root directory
+      by calling <code class="function">XmlLoggingConfiguration(string)</code>:</p>
+
+      <pre class="programlisting"><span style="color: #A31515">&lt;configuration&gt;</span>
+  <span style="color: #A31515">&lt;common&gt;</span>
+    <span style="color: #A31515">&lt;logging&gt;</span>
+      <span style="color: #A31515">&lt;factoryAdapter</span> <span style="color: #FF0000">type</span>=<span style="color: #0000FF">"Common.Logging.NLog.NLogLoggerFactoryAdapter, Common.Logging.NLog"</span><span style="color: #A31515">&gt;</span>
+        <span style="color: #A31515">&lt;arg</span> <span style="color: #FF0000">key</span>=<span style="color: #0000FF">"configType"</span> <span style="color: #FF0000">value</span>=<span style="color: #0000FF">"FILE"</span><span style="color: #A31515"> /&gt;</span>
+        <span style="color: #A31515">&lt;arg</span> <span style="color: #FF0000">key</span>=<span style="color: #0000FF">"configFile"</span> <span style="color: #FF0000">value</span>=<span style="color: #0000FF">"~/NLog.config"</span><span style="color: #A31515"> /&gt;</span>
+      <span style="color: #A31515">&lt;/factoryAdapter&gt;</span>
+    <span style="color: #A31515">&lt;/logging&gt;</span>
+  <span style="color: #A31515">&lt;/common&gt;</span>
+<span style="color: #A31515">&lt;/configuration&gt;</span> </pre>
+
+      <p>Another example that shows the NLog configuration 'inline' with
+      the standard application configuration file is shown below.</p>
+
+      <pre class="programlisting"><span style="color: #A31515">&lt;configuration&gt;</span>
+  <span style="color: #A31515">&lt;configSections&gt;</span>
+    <span style="color: #A31515">&lt;sectionGroup</span> <span style="color: #FF0000">name</span>=<span style="color: #0000FF">"common"</span><span style="color: #A31515">&gt;</span>
+      <span style="color: #A31515">&lt;section</span> <span style="color: #FF0000">name</span>=<span style="color: #0000FF">"logging"</span> <span style="color: #FF0000">type</span>=<span style="color: #0000FF">"Common.Logging.ConfigurationSectionHandler, Common.Logging"</span><span style="color: #A31515"> /&gt;</span>
+    <span style="color: #A31515">&lt;/sectionGroup&gt;</span>
+
+    <span style="color: #A31515">&lt;section</span> <span style="color: #FF0000">name</span>=<span style="color: #0000FF">"nlog"</span> <span style="color: #FF0000">type</span>=<span style="color: #0000FF">"NLog.Config.ConfigSectionHandler, NLog"</span><span style="color: #A31515">/&gt;</span>
+  <span style="color: #A31515">&lt;/configSections&gt;</span>
+
+  <span style="color: #A31515">&lt;common&gt;</span>
+    <span style="color: #A31515">&lt;logging&gt;</span>
+      <span style="color: #A31515">&lt;factoryAdapter</span> <span style="color: #FF0000">type</span>=<span style="color: #0000FF">"Common.Logging.NLog.NLogLoggerFactoryAdapter, Common.Logging.NLog"</span><span style="color: #A31515">&gt;</span>
+        <span style="color: #A31515">&lt;arg</span> <span style="color: #FF0000">key</span>=<span style="color: #0000FF">"configType"</span> <span style="color: #FF0000">value</span>=<span style="color: #0000FF">"INLINE"</span><span style="color: #A31515"> /&gt;</span>
+      <span style="color: #A31515">&lt;/factoryAdapter&gt;</span>
+    <span style="color: #A31515">&lt;/logging&gt;</span>
+  <span style="color: #A31515">&lt;/common&gt;</span>
+
+  <span style="color: #A31515">&lt;nlog</span> <span style="color: #FF0000">xmlns</span>=<span style="color: #0000FF">"http://www.nlog-project.org/schemas/NLog.xsd"</span>
+           <span style="color: #FF0000">xmlns:xsi</span>=<span style="color: #0000FF">"http://www.w3.org/2001/XMLSchema-instance"</span><span style="color: #A31515">&gt;</span>
+    <span style="color: #A31515">&lt;targets&gt;</span>
+      <span style="color: #A31515">&lt;target</span> <span style="color: #FF0000">name</span>=<span style="color: #0000FF">"console"</span> <span style="color: #FF0000">xsi:type</span>=<span style="color: #0000FF">"Console"</span> <span style="color: #FF0000">layout</span>=<span style="color: #0000FF">"${date:format=HH\:MM\:ss} ${logger} ${message}"</span><span style="color: #A31515"> /&gt;</span>
+    <span style="color: #A31515">&lt;/targets&gt;</span>
+    <span style="color: #A31515">&lt;rules&gt;</span>
+      <span style="color: #A31515">&lt;logger</span> <span style="color: #FF0000">name</span>=<span style="color: #0000FF">"*"</span> <span style="color: #FF0000">minlevel</span>=<span style="color: #0000FF">"Debug"</span> <span style="color: #FF0000">writeTo</span>=<span style="color: #0000FF">"console"</span><span style="color: #A31515"> /&gt;</span>
+    <span style="color: #A31515">&lt;/rules&gt;</span>
+  <span style="color: #A31515">&lt;/nlog&gt;</span>
+<span style="color: #A31515">&lt;/configuration&gt;</span> </pre>
+    </div>
+
+    <div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d4e254"></a>1.5.6.&nbsp;Enterprise Library 3.1 Logging Adapter</h3></div></div></div>
+      
+
+      <p>There is one implementation located in the assembly
+      <span xmlns="http://www.w3.org/TR/xhtml1/transitional" xmlns:fo="http://www.w3.org/1999/XSL/Format" style="color: #2B91AF">Common.Logging.EntLib</span> and is linked against the
+      Microsoft Enterprise Library v 3.1, aka EntLib 3.1. The .dlls for EntLib
+      can not be redistributed so you will need to download EntLib
+      separately.</p>
+
+      <p>There are no configuration options for the adapter. Configuration
+      of EntLib logging is done entirely though App.config. The example below
+      shows the basic configuration of the EntLibLoggingAdapter</p>
+
+      <pre class="programlisting"><span style="color: #A31515">&lt;common&gt;</span>
+  <span style="color: #A31515">&lt;logging&gt;</span>
+    <span style="color: #A31515">&lt;factoryAdapter</span> <span style="color: #FF0000">type</span>=<span style="color: #0000FF">"Common.Logging.EntLib.EntLibLoggerFactoryAdapter, Common.Logging.EntLib"</span><span style="color: #A31515">/&gt;</span>
+  <span style="color: #A31515">&lt;/logging&gt;</span>
+<span style="color: #A31515">&lt;/common&gt;</span></pre>
+
+      <p>Future releases may include configuration of the priority and also
+      the format in which information about an exception is logged. The
+      current priority used is -1, the default.</p>
+
+      <p>Note that the following mapping of Common.Logging LogLevel to
+      System.Diagnostics.TraceEventType is used.</p>
+
+      <div class="table"><a name="entlib-level-mapping"></a><div class="title">Table&nbsp;1.5.&nbsp;EntLib 3.1 to Common.Logging log level mapping</div><div class="table-contents">
+          
+
+          <table summary="EntLib 3.1 to Common.Logging log level mapping" border="1"><colgroup><col><col></colgroup><thead><tr><th>Common.Logging.LogLevel</th><th>System.Diagnostics.TraceEventType</th></tr></thead><tbody><tr><td>Trace</td><td>Verbose</td></tr><tr><td>Debug</td><td>Verbose</td></tr><tr><td>Error</td><td>Error</td></tr><tr><td>Fatal</td><td>Critical</td></tr><tr><td>Info</td><td>Information</td></tr><tr><td>Warn</td><td>Warning</td></tr></tbody></table>
+        </div></div><p><br class="table-break"></p>
+    </div>
+
+    <div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d4e291"></a>1.5.7.&nbsp;Enterprise Library 4.1 Logging Adapter</h3></div></div></div>
+      
+
+      <p>There is one implementation located in the assembly
+      <span xmlns="http://www.w3.org/TR/xhtml1/transitional" xmlns:fo="http://www.w3.org/1999/XSL/Format" style="color: #2B91AF">Common.Logging.EntLib</span>41 and is linked against the
+      Microsoft Enterprise Library v4.1, aka EntLib 4.1. The .dlls for EntLib
+      can not be redistributed so you will need to download EntLib
+      separately.</p>
+
+      <p>There are no configuration options for the adapter. Configuration
+      of EntLib logging is done entirely though App.config. The example below
+      shows the basic configuration of the EntLibLoggingAdapter</p>
+
+      <pre class="programlisting"><span style="color: #A31515">&lt;common&gt;</span>
+  <span style="color: #A31515">&lt;logging&gt;</span>
+    <span style="color: #A31515">&lt;factoryAdapter</span> <span style="color: #FF0000">type</span>=<span style="color: #0000FF">"Common.Logging.EntLib.EntLibLoggerFactoryAdapter, Common.Logging.EntLib41"</span><span style="color: #A31515">/&gt;</span>
+  <span style="color: #A31515">&lt;/logging&gt;</span>
+<span style="color: #A31515">&lt;/common&gt;</span></pre>
+
+      <p>Future releases may include configuration of the priority and also
+      the format in which information about an exception is logged. The
+      current priority used is -1, the default.</p>
+
+      <p>Note that the following mapping of Common.Logging LogLevel to
+      System.Diagnostics.TraceEventType is used.</p>
+
+      <div class="table"><a name="entlib41-level-mapping"></a><div class="title">Table&nbsp;1.6.&nbsp;EntLib 4,1 to Common.Logging log level mapping</div><div class="table-contents">
+          
+
+          <table summary="EntLib 4,1 to Common.Logging log level mapping" border="1"><colgroup><col><col></colgroup><thead><tr><th>Common.Logging.LogLevel</th><th>System.Diagnostics.TraceEventType</th></tr></thead><tbody><tr><td>Trace</td><td>Verbose</td></tr><tr><td>Debug</td><td>Verbose</td></tr><tr><td>Error</td><td>Error</td></tr><tr><td>Fatal</td><td>Critical</td></tr><tr><td>Info</td><td>Information</td></tr><tr><td>Warn</td><td>Warning</td></tr></tbody></table>
+        </div></div><p><br class="table-break"></p>
+    </div>
+  </div>
+
+  <div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="logging-advanced"></a>1.6.&nbsp;Advanced Logging Tasks</h2></div></div></div>
+    
+
+    <div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d4e330"></a>1.6.1.&nbsp;Integrating with System.Diagnostics.Trace</h3></div></div></div>
+      
+
+      <p>There are 2 ways of integrating with
+      <span xmlns="http://www.w3.org/TR/xhtml1/transitional" xmlns:fo="http://www.w3.org/1999/XSL/Format" style="color: #2B91AF">System.Diagnostics.Trace</span>: Either you redirect all
+      log messages from <span xmlns="http://www.w3.org/TR/xhtml1/transitional" xmlns:fo="http://www.w3.org/1999/XSL/Format" style="color: #2B91AF">System.Diagnostics.Trace</span> to
+      <span xmlns="http://www.w3.org/TR/xhtml1/transitional" xmlns:fo="http://www.w3.org/1999/XSL/Format" style="color: #2B91AF">Common.Logging</span> or vice versa. Logging from
+      <span xmlns="http://www.w3.org/TR/xhtml1/transitional" xmlns:fo="http://www.w3.org/1999/XSL/Format" style="color: #2B91AF">Common.Logging</span> to
+      <span xmlns="http://www.w3.org/TR/xhtml1/transitional" xmlns:fo="http://www.w3.org/1999/XSL/Format" style="color: #2B91AF">System.Diagnostics.Trace</span> is done by configuring
+      <a class="link" href="ch01.html#logging-trace" title="1.5.3.&nbsp;TraceLoggerFactoryAdapter">TraceLoggerFactoryAdapter</a>.</p>
+
+      <p>To configure <span xmlns="http://www.w3.org/TR/xhtml1/transitional" xmlns:fo="http://www.w3.org/1999/XSL/Format" style="color: #2B91AF">System.Diagnostics.Trace</span> to
+      route its output to the <span xmlns="http://www.w3.org/TR/xhtml1/transitional" xmlns:fo="http://www.w3.org/1999/XSL/Format" style="color: #2B91AF">Common.Logging</span>
+      infrastructure, you need to configure a special
+      <span xmlns="http://www.w3.org/TR/xhtml1/transitional" xmlns:fo="http://www.w3.org/1999/XSL/Format" style="color: #2B91AF">TraceListener</span>:</p>
+
+      <pre class="programlisting"><span style="color: #A31515">&lt;configuration&gt;</span>
+   <span style="color: #A31515">&lt;system.diagnostics&gt;</span>
+      <span style="color: #A31515">&lt;trace&gt;</span>
+         <span style="color: #A31515">&lt;listeners&gt;</span>
+            <span style="color: #A31515">&lt;clear /&gt;</span>
+            <span style="color: #A31515">&lt;add</span> <span style="color: #FF0000">name</span>=<span style="color: #0000FF">"commonLoggingListener"</span>
+                 <span style="color: #FF0000">type</span>=<span style="color: #0000FF">"Common.Logging.CommonLoggingTraceListener, Common.Logging"</span>
+                 <span style="color: #FF0000">initializeData</span>=<span style="color: #0000FF">"LogLevel=Trace"</span><span style="color: #A31515"> /&gt;</span>
+         <span style="color: #A31515">&lt;/listeners&gt;</span>
+      <span style="color: #A31515">&lt;/trace&gt;</span>
+   <span style="color: #A31515">&lt;/system.diagnostics&gt;</span>
+<span style="color: #A31515">&lt;/configuration&gt;</span></pre><p>This configuration causes all messages
+      logged via <span xmlns="http://www.w3.org/TR/xhtml1/transitional" xmlns:fo="http://www.w3.org/1999/XSL/Format" style="color: #2B91AF">System.Diagnostics.Trace.Write</span> to be
+      logged using a logger instance obtained from
+      <span xmlns="http://www.w3.org/TR/xhtml1/transitional" xmlns:fo="http://www.w3.org/1999/XSL/Format" style="color: #2B91AF">LogManager</span> by the "name" attribute and using the
+      LogLevel specified in the "initializeData" attribute.</p>
+    </div>
+
+    <div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="logging-advanced-customfactoryadapter"></a>1.6.2.&nbsp;Implementing a custom FactoryAdapter</h3></div></div></div>
+      
+
+      <p>f you want to plug in a new, yet unsupported logging library, you
+      need to provide a logger factory adapter that implementes the
+      <span xmlns="http://www.w3.org/TR/xhtml1/transitional" xmlns:fo="http://www.w3.org/1999/XSL/Format" style="color: #2B91AF">Common.Logging.ILoggerFactoryAdapter</span>
+      interface. Loggers must implement the
+      <span xmlns="http://www.w3.org/TR/xhtml1/transitional" xmlns:fo="http://www.w3.org/1999/XSL/Format" style="color: #2B91AF">Common.Logging.ILog</span> interface.</p>
+
+      <p><span class="guilabel">Important:</span> Any implementation
+      <span class="emphasis"><em>must</em></span> provide a public constructor accepting a
+      <span xmlns="http://www.w3.org/TR/xhtml1/transitional" xmlns:fo="http://www.w3.org/1999/XSL/Format" style="color: #2B91AF">NameValueCollection</span> parameter as shown in the
+      example below:</p><pre class="programlisting"><span style="color: #0000FF">public</span> <span style="color: #0000FF">class</span> MyLoggingFactoryAdapter :  ILoggerFactoryAdapter
+{
+  <span style="color: #0000FF">public</span> MyLoggingFactoryAdapter(NameValueCollection properties)
+  {
+    <i style="color: #008000">// configure according to properties</i>
+  }
+
+  <span style="color: #0000FF">public</span> ILog GetLogger(Type type) { ... }
+
+  <span style="color: #0000FF">public</span> ILog GetLogger(<span style="color: #0000FF">string</span> name) { ... }
+}</pre>
+
+      <p>For convenience, <span xmlns="http://www.w3.org/TR/xhtml1/transitional" xmlns:fo="http://www.w3.org/1999/XSL/Format" style="color: #2B91AF">Common.Logging</span> comes with
+      an abstract base class
+      <span xmlns="http://www.w3.org/TR/xhtml1/transitional" xmlns:fo="http://www.w3.org/1999/XSL/Format" style="color: #2B91AF">Common.Logging.Factory.AbstractCachingLoggerFactoryAdapter</span>
+      for easier implemention of factory adapters and
+      <span xmlns="http://www.w3.org/TR/xhtml1/transitional" xmlns:fo="http://www.w3.org/1999/XSL/Format" style="color: #2B91AF">Common.Logging.Factory.AbstractLogger</span> for
+      implementing loggers.</p>
+
+      <p></p>
+    </div>
+
+    <div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d4e362"></a>1.6.3.&nbsp;Bridging logging systems</h3></div></div></div>
+      
+
+      <p>In the case your application uses frameworks that are tied to
+      different logging systems, one usually had to find a workaround
+      yourself. Using Common.Logging removes this problem: All integration
+      modules come with plugs to route log messages in 2 directions - either
+      send messages from Common.Logging to the 3rd party logging system, or
+      you can feed messages from that other logging system into
+      Common.Logging.</p>
+
+      <p>Let's assume, one of your frameworks uses log4net, another one
+      System.Diagnostics.Trace. You prefer the small but powerful NLog system.
+      First you need to configure log4net to send all log events to
+      Common.Logging:</p>
+
+      <div class="example"><a name="d4e367"></a><div class="title">Example&nbsp;1.1.&nbsp;Route log4net messages to Common.Logging</div><div class="example-contents">
+          
+
+          <pre class="programlisting"><span style="color: #A31515">&lt;log4net&gt;</span>
+    <span style="color: #A31515">&lt;appender</span> <span style="color: #FF0000">name</span>=<span style="color: #0000FF">"CommonLoggingAppender"</span>
+              <span style="color: #FF0000">type</span>=<span style="color: #0000FF">"Common.Logging.Log4Net.CommonLoggingAppender, Common.Logging.Log4Net"</span><span style="color: #A31515">&gt;</span>
+        <span style="color: #A31515">&lt;layout</span> <span style="color: #FF0000">type</span>=<span style="color: #0000FF">"log4net.Layout.PatternLayout, log4net"</span><span style="color: #A31515">&gt;</span>
+            <b><i>&lt;param</i></b> <span style="color: #FF0000">name</span>=<span style="color: #0000FF">"ConversionPattern"</span> <span style="color: #FF0000">value</span>=<span style="color: #0000FF">"%level - %class.%method: %message"</span><b><i> /&gt;</i></b>
+        <span style="color: #A31515">&lt;/layout&gt;</span>
+    <span style="color: #A31515">&lt;/appender&gt;</span>
+
+    <span style="color: #A31515">&lt;root&gt;</span>
+        <span style="color: #A31515">&lt;level</span> <span style="color: #FF0000">value</span>=<span style="color: #0000FF">"ALL"</span><span style="color: #A31515"> /&gt;</span>
+        <span style="color: #A31515">&lt;appender-ref</span> <span style="color: #FF0000">ref</span>=<span style="color: #0000FF">"CommonLoggingAppender"</span><span style="color: #A31515"> /&gt;</span>
+    <span style="color: #A31515">&lt;/root&gt;</span>
+<span style="color: #A31515">&lt;/log4net&gt;</span>
+</pre><p>To get System.Diagnostics.Trace messages routed to
+          Common.Logging, you need to configure the corresponding
+          CommonLoggingTraceListener:</p>
+
+          <div class="example"><a name="d4e372"></a><div class="title">Example&nbsp;1.2.&nbsp;Route System.Diagnostics.Trace messages to
+              Common.Logging</div><div class="example-contents">
+              
+
+              <pre class="programlisting"><span style="color: #A31515">&lt;system.diagnostics&gt;</span>
+  <span style="color: #A31515">&lt;sharedListeners&gt;</span>
+    <span style="color: #A31515">&lt;add</span> <span style="color: #FF0000">name</span>=<span style="color: #0000FF">"Diagnostics"</span>
+         <span style="color: #FF0000">type</span>=<span style="color: #0000FF">"Common.Logging.Simple.CommonLoggingTraceListener, Common.Logging"</span>
+         <span style="color: #FF0000">initializeData</span>=<span style="color: #0000FF">"DefaultTraceEventType=Information; LoggerNameFormat={listenerName}.{sourceName}"</span><span style="color: #A31515">&gt;</span>
+      <span style="color: #A31515">&lt;filter</span> <span style="color: #FF0000">type</span>=<span style="color: #0000FF">"System.Diagnostics.EventTypeFilter"</span> <span style="color: #FF0000">initializeData</span>=<span style="color: #0000FF">"Information"</span><span style="color: #A31515">/&gt;</span>
+    <span style="color: #A31515">&lt;/add&gt;</span>
+  <span style="color: #A31515">&lt;/sharedListeners&gt;</span>
+  <span style="color: #A31515">&lt;trace&gt;</span>
+    <span style="color: #A31515">&lt;listeners&gt;</span>
+      <span style="color: #A31515">&lt;add</span> <span style="color: #FF0000">name</span>=<span style="color: #0000FF">"Diagnostics"</span><span style="color: #A31515"> /&gt;</span>
+    <span style="color: #A31515">&lt;/listeners&gt;</span>
+  <span style="color: #A31515">&lt;/trace&gt;</span>
+<span style="color: #A31515">&lt;/system.diagnostics&gt;</span>
+</pre><p>Finally you want Common.Logging to output all events to
+              NLog:</p>
+            </div></div><p><br class="example-break"></p><div class="example"><a name="d4e376"></a><div class="title">Example&nbsp;1.3.&nbsp;Route Common.Logging messages to NLog</div><div class="example-contents">
+              
+
+              <pre class="programlisting"><span style="color: #A31515">&lt;nlog</span> <span style="color: #FF0000">autoReload</span>=<span style="color: #0000FF">"true"</span> <span style="color: #FF0000">throwExceptions</span>=<span style="color: #0000FF">"true"</span><span style="color: #A31515">&gt;</span>
+ <span style="color: #A31515">&lt;targets&gt;</span>
+  <span style="color: #A31515">&lt;target</span> <span style="color: #FF0000">name</span>=<span style="color: #0000FF">"common.logging"</span>
+          <span style="color: #FF0000">type</span>=<span style="color: #0000FF">"Common.Logging.NLog.CommonLoggingTarget, Common.Logging.NLog"</span>
+          <span style="color: #FF0000">layout</span>=<span style="color: #0000FF">"${longdate}|${level:uppercase=true}|${message}"</span>
+          <span style="color: #FF0000">filename</span>=<span style="color: #0000FF">"C:\temp\${date:format=yyyy-MM-dd}_logA.txt"</span><span style="color: #A31515">/&gt;</span>
+ <span style="color: #A31515">&lt;/targets&gt;</span>
+ <span style="color: #A31515">&lt;rules&gt;</span>
+  <span style="color: #A31515">&lt;logger</span> <span style="color: #FF0000">name</span>=<span style="color: #0000FF">"*"</span> <span style="color: #FF0000">minlevel</span>=<span style="color: #0000FF">"Info"</span> <span style="color: #FF0000">writeTo</span>=<span style="color: #0000FF">"common.logging"</span><span style="color: #A31515"> /&gt;</span>
+ <span style="color: #A31515">&lt;/rules&gt;</span>
+<span style="color: #A31515">&lt;/nlog&gt;</span>
+</pre>
+            </div></div><p><br class="example-break"></p>
+        </div></div><p><br class="example-break"></p>
+
+      <p></p>
+    </div>
+  </div>
+</div><div xmlns="http://www.w3.org/TR/xhtml1/transitional" xmlns:fo="http://www.w3.org/1999/XSL/Format" class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="index.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right">&nbsp;</td></tr><tr><td width="40%" align="left" valign="top">Common Infrastructure Libraries for .NET&nbsp;</td><td width="20%" align="center"><span style="color:white;font-size:90%;"><a href="http://www.springsoure.com/" title="SpringSource">Sponsored by SpringSource</a></span></td><td width="40%" align="right" valign="top">&nbsp;</td></tr></table></div></body></html>

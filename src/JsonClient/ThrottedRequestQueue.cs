@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Threading;
-using log4net;
+using Common.Logging;
 
 namespace CityIndex.JsonClient
 {

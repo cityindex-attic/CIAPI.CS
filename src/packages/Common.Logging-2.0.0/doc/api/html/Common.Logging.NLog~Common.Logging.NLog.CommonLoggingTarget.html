@@ -1,0 +1,87 @@
+﻿<html dir="LTR" xmlns:ndoc="urn:ndoc-schema">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta content="history" name="save" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>CommonLoggingTarget Class</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">Common Logging 2.0 API Reference</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">CommonLoggingTarget Class</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> Routes all log events logged through NLog into the Common.Logging infrastructure. </p>
+      <p>
+								For a list of all members of this type, see <a href="Common.Logging.NLog~Common.Logging.NLog.CommonLoggingTarget~Members.html">CommonLoggingTarget Members
+								</a>.
+							</p>
+      <p>
+        <a href="http://msdn.microsoft.com/en-us/library/System.Object(VS.80).aspx">System.Object</a>
+        <br />   Target<br />      TargetWithLayout<br />         <b>CommonLoggingTarget</b></p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Public Class CommonLoggingTarget<br />    Inherits <a href="">TargetWithLayout</a></div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <div>public class CommonLoggingTarget<b> : <a href="">TargetWithLayout</a></b></div>
+      </div>
+      <H4 class="dtH4">Thread Safety</H4>
+      <P>
+					Public static (<b>Shared</b> in Visual Basic) members of this type are
+					safe for multithreaded operations. Instance members are <b>not</b> guaranteed to be
+					thread-safe.
+				</P>
+      <h4 class="dtH4">Remarks</h4>
+      <p>
+        <example xmlns="urn:ndoc-schema"> To route all NLog events to Common.Logging, you must add this target to your configuration: <pre class="code" xmlns="">LoggingConfiguration cfg = new LoggingConfiguration();
+CommonLoggingTarget target = new CommonLoggingTarget("${level:uppercase=true}|${logger}|${message}");
+cfg.LoggingRules.Add(new LoggingRule("*", LogLevel.Trace, target));
+
+LogManager.Configuration = cfg;
+
+Logger log = LogManager.GetLogger("mylogger");
+log.Debug("some message");
+</pre></example>
+      </p>
+      <h4 class="dtH4">Requirements</h4>
+      <p>
+        <b>Namespace: </b>
+        <a href="Common.Logging.NLog~Common.Logging.NLog.html">Common.Logging.NLog</a>
+      </p>
+      <p>
+        <b>Assembly: </b>Common.Logging.NLog (in Common.Logging.NLog.dll)
+					</p>
+      <h4 class="dtH4">See Also</h4>
+      <p>
+        <a href="Common.Logging.NLog~Common.Logging.NLog.CommonLoggingTarget~Members.html">CommonLoggingTarget Members</a> | <a href="Common.Logging.NLog~Common.Logging.NLog.html">Common.Logging.NLog Namespace</a></p>
+      <object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;">
+        <param name="Keyword" value="CommonLoggingTarget class, about CommonLoggingTarget class">
+        </param>
+      </object>
+      <hr />
+      <div id="footer">
+        <p>
+          <a href="mailto:netcommon-developer@lists.sourceforge.net?subject=Common%20Logging%202.0%20API%20Reference%20Documentation%20Feedback:%20CommonLoggingTarget%20Class">Send comments on this topic.</a>
+        </p>
+        <p>
+          <a>© The Common Infrastructure Libraries for .NET Team 2009 All Rights Reserved.</a>
+        </p>
+        <p>Generated from assembly Common.Logging.NLog [2.0.0.0] by <a href="http://ndoc3.sourceforget.net">NDoc3</a></p>
+      </div>
+    </div>
+  </body>
+</html>

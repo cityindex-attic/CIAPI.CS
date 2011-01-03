@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
-using log4net;
+using Common.Logging;
+
 
 namespace CityIndex.JsonClient.Tests
 {

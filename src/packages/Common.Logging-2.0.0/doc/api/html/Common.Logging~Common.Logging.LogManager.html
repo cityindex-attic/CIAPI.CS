@@ -1,0 +1,100 @@
+﻿<html dir="LTR" xmlns:ndoc="urn:ndoc-schema">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta content="history" name="save" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>LogManager Class</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">Common Logging 2.0 API Reference</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">LogManager Class</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> Use the LogManager's <a href="Common.Logging~Common.Logging.LogManager.GetLogger2.html">GetLogger</a> or <a href="Common.Logging~Common.Logging.LogManager.GetLogger1.html">GetLogger</a> methods to obtain <a href="Common.Logging~Common.Logging.ILog.html">ILog</a> instances for logging. </p>
+      <p>
+								For a list of all members of this type, see <a href="Common.Logging~Common.Logging.LogManager~Members.html">LogManager Members
+								</a>.
+							</p>
+      <p>
+        <a href="http://msdn.microsoft.com/en-us/library/System.Object(VS.80).aspx">System.Object</a>
+        <br />   <b>LogManager</b></p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Public Shared Class LogManager</div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <div>public static class LogManager</div>
+      </div>
+      <H4 class="dtH4">Thread Safety</H4>
+      <P>
+					Public static (<b>Shared</b> in Visual Basic) members of this type are
+					safe for multithreaded operations. Instance members are <b>not</b> guaranteed to be
+					thread-safe.
+				</P>
+      <h4 class="dtH4">Remarks</h4>
+      <p> For configuring the underlying log system using application configuration, see the example at <a href="Common.Logging~Common.Logging.ConfigurationSectionHandler.html">ConfigurationSectionHandler</a>. For configuring programmatically, see the example section below. </p>
+      <h4 class="dtH4">Example</h4>
+      <p> The example below shows the typical use of LogManager to obtain a reference to a logger and log an exception: <pre class="code">
+ILog log = LogManager.GetLogger(this.GetType());
+...
+try 
+{ 
+  /* .... */ 
+}
+catch(Exception ex)
+{
+  log.ErrorFormat("Hi {0}", ex, "dude");
+}
+
+</pre> The example below shows programmatic configuration of the underlying log system: <pre class="code">
+// create properties
+NameValueCollection properties = new NameValueCollection();
+properties["showDateTime"] = "true";
+
+// set Adapter
+Common.Logging.LogManager.Adapter = new 
+Common.Logging.Simple.ConsoleOutLoggerFactoryAdapter(properties);
+
+</pre></p>
+      <h4 class="dtH4">Requirements</h4>
+      <p>
+        <b>Namespace: </b>
+        <a href="Common.Logging~Common.Logging.html">Common.Logging</a>
+      </p>
+      <p>
+        <b>Assembly: </b>Common.Logging (in Common.Logging.dll)
+					</p>
+      <h4 class="dtH4">See Also</h4>
+      <p>
+        <a href="Common.Logging~Common.Logging.LogManager~Members.html">LogManager Members</a> | <a href="Common.Logging~Common.Logging.html">Common.Logging Namespace</a> | <a href="Common.Logging~Common.Logging.ILog.html">ILog</a> | <a href="Common.Logging~Common.Logging.LogManager.Adapter.html">Adapter</a> | <a href="Common.Logging~Common.Logging.ILoggerFactoryAdapter.html">ILoggerFactoryAdapter</a> | <a href="Common.Logging~Common.Logging.ConfigurationSectionHandler.html">ConfigurationSectionHandler</a></p>
+      <object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;">
+        <param name="Keyword" value="LogManager class, about LogManager class">
+        </param>
+      </object>
+      <hr />
+      <div id="footer">
+        <p>
+          <a href="mailto:netcommon-developer@lists.sourceforge.net?subject=Common%20Logging%202.0%20API%20Reference%20Documentation%20Feedback:%20LogManager%20Class">Send comments on this topic.</a>
+        </p>
+        <p>
+          <a>© The Common Infrastructure Libraries for .NET Team 2009 All Rights Reserved.</a>
+        </p>
+        <p>Generated from assembly Common.Logging [2.0.0.0] by <a href="http://ndoc3.sourceforget.net">NDoc3</a></p>
+      </div>
+    </div>
+  </body>
+</html>

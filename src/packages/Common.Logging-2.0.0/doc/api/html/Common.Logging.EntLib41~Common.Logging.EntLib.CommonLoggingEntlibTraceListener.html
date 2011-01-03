@@ -1,0 +1,120 @@
+﻿<html dir="LTR" xmlns:ndoc="urn:ndoc-schema">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta content="history" name="save" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>CommonLoggingEntlibTraceListener Class</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">Common Logging 2.0 API Reference</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">CommonLoggingEntlibTraceListener Class</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> Use this <a href="http://msdn.microsoft.com/en-us/library/System.Diagnostics.TraceListener(VS.80).aspx">TraceListener</a> implementation to route all Entlib logging events to the Common.Logging infrastructure. </p>
+      <p>
+								For a list of all members of this type, see <a href="Common.Logging.EntLib41~Common.Logging.EntLib.CommonLoggingEntlibTraceListener~Members.html">CommonLoggingEntlibTraceListener Members
+								</a>.
+							</p>
+      <p>
+        <a href="http://msdn.microsoft.com/en-us/library/System.Object(VS.80).aspx">System.Object</a>
+        <br />   MarshalByRefObject<br />      TraceListener<br />         FormattedTraceListenerBase<br />            <b>CommonLoggingEntlibTraceListener</b></p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Public Class CommonLoggingEntlibTraceListener<br />    Inherits <a href="">FormattedTraceListenerBase</a></div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <div>public class CommonLoggingEntlibTraceListener<b> : <a href="">FormattedTraceListenerBase</a></b></div>
+      </div>
+      <H4 class="dtH4">Thread Safety</H4>
+      <P>
+					Public static (<b>Shared</b> in Visual Basic) members of this type are
+					safe for multithreaded operations. Instance members are <b>not</b> guaranteed to be
+					thread-safe.
+				</P>
+      <h4 class="dtH4">Remarks</h4>
+      <p> See <a href="Common.Logging.EntLib41~Common.Logging.EntLib.CommonLoggingEntlibTraceListenerData.html">CommonLoggingEntlibTraceListenerData</a> for a list of properties to configure. </p>
+      <h4 class="dtH4">Example</h4>
+      <p> To route all <b>Logger</b> events to Common.Logging, configure <b>CommonLoggingEntlibTraceListener</b>: <pre class="code"><span class="lang">[XML]
+</span>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;configuration&gt;
+    &lt;configSections&gt;
+        &lt;section name="loggingConfiguration" 
+type="Microsoft.Practices.EnterpriseLibrary.Logging.Configuration.LoggingSettings, 
+Microsoft.Practices.EnterpriseLibrary.Logging, Version=4.1.0.0, Culture=neutral, 
+PublicKeyToken=b03f5f7f11d50a3a" /&gt;
+    &lt;/configSections&gt;
+    &lt;loggingConfiguration name="Logging Application Block" tracingEnabled="true"
+        defaultCategory="General" logWarningsWhenNoCategoriesMatch="true"&gt;
+        &lt;listeners&gt;
+            &lt;add name="Common.Logging Listener" 
+                 type="Common.Logging.EntLib.CommonLoggingEntlibTraceListener, Common.Logging.EntLib"
+                 listenerDataType="Common.Logging.EntLib.CommonLoggingEntlibTraceListenerData, 
+Common.Logging.EntLib"
+                 loggerNameFormat="{listenerName}.{sourceName}"
+                 formatter="Text Formatter"
+                 /&gt;
+        &lt;/listeners&gt;
+        &lt;formatters&gt;
+            &lt;add template="Timestamp: {timestamp}&amp;#xD;&amp;#xA;Message: {message}&amp;#xD;&amp;#xA;Category: 
+{category}&amp;#xD;&amp;#xA;Priority: {priority}&amp;#xD;&amp;#xA;EventId: {eventid}&amp;#xD;&amp;#xA;Severity: 
+{severity}&amp;#xD;&amp;#xA;Title:{title}&amp;#xD;&amp;#xA;Machine: {machine}&amp;#xD;&amp;#xA;Application Domain: 
+{appDomain}&amp;#xD;&amp;#xA;Process Id: {processId}&amp;#xD;&amp;#xA;Process Name: {processName}&amp;#xD;&amp;#xA;Win32 
+Thread Id: {win32ThreadId}&amp;#xD;&amp;#xA;Thread Name: {threadName}&amp;#xD;&amp;#xA;Extended Properties: 
+{dictionary({key} - {value}&amp;#xD;&amp;#xA;)}"
+                type="Microsoft.Practices.EnterpriseLibrary.Logging.Formatters.TextFormatter, 
+Microsoft.Practices.EnterpriseLibrary.Logging, Version=4.1.0.0, Culture=neutral, 
+PublicKeyToken=b03f5f7f11d50a3a"
+                name="Text Formatter" /&gt;
+        &lt;/formatters&gt;
+        &lt;specialSources&gt;
+            &lt;allEvents switchValue="All" name="All Events"&gt;
+                &lt;listeners&gt;
+                    &lt;add name="Test Capturing Listener" /&gt;
+                &lt;/listeners&gt;
+            &lt;/allEvents&gt;
+        &lt;/specialSources&gt;
+    &lt;/loggingConfiguration&gt;
+&lt;/configuration&gt;
+</pre></p>
+      <h4 class="dtH4">Requirements</h4>
+      <p>
+        <b>Namespace: </b>
+        <a href="Common.Logging.EntLib41~Common.Logging.EntLib.html">Common.Logging.EntLib</a>
+      </p>
+      <p>
+        <b>Assembly: </b>Common.Logging.EntLib41 (in Common.Logging.EntLib41.dll)
+					</p>
+      <h4 class="dtH4">See Also</h4>
+      <p>
+        <a href="Common.Logging.EntLib41~Common.Logging.EntLib.CommonLoggingEntlibTraceListener~Members.html">CommonLoggingEntlibTraceListener Members</a> | <a href="Common.Logging.EntLib41~Common.Logging.EntLib.html">Common.Logging.EntLib Namespace</a></p>
+      <object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;">
+        <param name="Keyword" value="CommonLoggingEntlibTraceListener class, about CommonLoggingEntlibTraceListener class">
+        </param>
+      </object>
+      <hr />
+      <div id="footer">
+        <p>
+          <a href="mailto:netcommon-developer@lists.sourceforge.net?subject=Common%20Logging%202.0%20API%20Reference%20Documentation%20Feedback:%20CommonLoggingEntlibTraceListener%20Class">Send comments on this topic.</a>
+        </p>
+        <p>
+          <a>© The Common Infrastructure Libraries for .NET Team 2009 All Rights Reserved.</a>
+        </p>
+        <p>Generated from assembly Common.Logging.EntLib41 [2.0.0.0] by <a href="http://ndoc3.sourceforget.net">NDoc3</a></p>
+      </div>
+    </div>
+  </body>
+</html>

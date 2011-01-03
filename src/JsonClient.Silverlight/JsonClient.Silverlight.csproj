@@ -115,9 +115,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\log4net.Silverlight\log4net.Silverlight.csproj">
-      <Project>{E49EB549-9B49-4A1E-A7D0-2B457335293E}</Project>
-      <Name>log4net.Silverlight</Name>
+    <ProjectReference Include="..\Common.Logging.Silverlight\Common.Logging.Silverlight.csproj">
+      <Project>{74036434-D18E-4404-B854-51395CE40B6C}</Project>
+      <Name>Common.Logging.Silverlight</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

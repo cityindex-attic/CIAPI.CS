@@ -1,0 +1,362 @@
+﻿<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta content="history" name="save" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>Common.Logging</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">Common Logging 2.0 API Reference</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">Common.Logging Assembly</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> This assembly contains the core functionality of the Common.Logging framework. In particular, checkout <a href="Common.Logging~Common.Logging.LogManager.html">LogManager</a> and <a href="Common.Logging~Common.Logging.ILog.html">ILog</a> for usage information. </p>
+      <h3 class="dtH3">Referenced Assemblies</h3>
+      <div class="tablediv">
+        <table class="dtTABLE" cellspacing="0">
+          <tr valign="top">
+            <th width="50%">Assembly Reference</th>
+            <th width="50%">Description</th>
+          </tr>
+          <tr valign="top">
+            <td width="50%">mscorlib</td>
+            <td width="50%"> </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">System</td>
+            <td width="50%"> </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">System.Configuration</td>
+            <td width="50%"> </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">System.Xml</td>
+            <td width="50%"> </td>
+          </tr>
+        </table>
+      </div>
+      <h3 class="dtH3">Dependent Assemblies</h3>
+      <div class="tablediv">
+        <table class="dtTABLE" cellspacing="0">
+          <tr valign="top">
+            <th width="50%">Assembly</th>
+            <th width="50%">Description</th>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="Common.Logging.EntLib.html">Common.Logging.EntLib</a>
+            </td>
+            <td width="50%">
+              <p xmlns:ndoc="urn:ndoc-schema"> This assembly contains the adapter to plug Microsoft Enterprise Logging Library 3.1. into the Common.Logging infrastructure. </p>
+              <p xmlns:ndoc="urn:ndoc-schema">For an example on how to configure <ul type="disc"><li>Common.Logging to render its output to Entlib, see <a href="Common.Logging.EntLib~Common.Logging.EntLib.EntLibLoggerFactoryAdapter.html">EntLibLoggerFactoryAdapter</a>.</li><li>Entlib to render its output to Common.Logging use <a href="Common.Logging.EntLib~Common.Logging.EntLib.CommonLoggingEntlibTraceListener.html">CommonLoggingEntlibTraceListener</a>.</li></ul></p>
+            </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="Common.Logging.EntLib41.html">Common.Logging.EntLib41</a>
+            </td>
+            <td width="50%">
+              <p xmlns:ndoc="urn:ndoc-schema"> This assembly contains the adapter to plug Microsoft Enterprise Logging Library 4.1. into the Common.Logging infrastructure. </p>
+              <p xmlns:ndoc="urn:ndoc-schema">For an example on how to configure <ul type="disc"><li>Common.Logging to render its output to Entlib, see <a href="Common.Logging.EntLib41~Common.Logging.EntLib.EntLibLoggerFactoryAdapter.html">EntLibLoggerFactoryAdapter</a>.</li><li>Entlib to render its output to Common.Logging use <a href="Common.Logging.EntLib41~Common.Logging.EntLib.CommonLoggingEntlibTraceListener.html">CommonLoggingEntlibTraceListener</a>.</li></ul></p>
+            </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="Common.Logging.Log4Net.html">Common.Logging.Log4Net</a>
+            </td>
+            <td width="50%">
+              <p xmlns:ndoc="urn:ndoc-schema">This assembly contains the adapter to the log4net 1.2.10 library</p>
+              <p xmlns:ndoc="urn:ndoc-schema">For an example on how to configure <ul type="disc"><li>Common.Logging to render its output to log4net, see <a href="Common.Logging.Log4Net~Common.Logging.Log4Net.Log4NetLoggerFactoryAdapter.html">Log4NetLoggerFactoryAdapter</a>.</li><li>log4net to render its output to Common.Logging use <a href="Common.Logging.Log4Net~Common.Logging.Log4Net.CommonLoggingAppender.html">CommonLoggingAppender</a>.</li></ul></p>
+            </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="Common.Logging.Log4Net129.html">Common.Logging.Log4Net129</a>
+            </td>
+            <td width="50%">
+              <p xmlns:ndoc="urn:ndoc-schema">This assembly contains the adapter to the log4net 1.2.9 library</p>
+              <p xmlns:ndoc="urn:ndoc-schema">For an example on how to configure <ul type="disc"><li>Common.Logging to render its output to log4net, see <a href="Common.Logging.Log4Net129~Common.Logging.Log4Net.Log4NetLoggerFactoryAdapter.html">Log4NetLoggerFactoryAdapter</a>.</li><li>log4net to render its output to Common.Logging use <a href="Common.Logging.Log4Net129~Common.Logging.Log4Net.CommonLoggingAppender.html">CommonLoggingAppender</a>.</li></ul></p>
+            </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="Common.Logging.NLog.html">Common.Logging.NLog</a>
+            </td>
+            <td width="50%">
+              <p xmlns:ndoc="urn:ndoc-schema">This assembly contains the implementations to plug NLog 1.0.0.505 into Common.Logging.</p>
+              <p xmlns:ndoc="urn:ndoc-schema">For an example on how to configure <ul type="disc"><li>Common.Logging to render its output to Entlib, see <a href="Common.Logging.NLog~Common.Logging.NLog.NLogLoggerFactoryAdapter.html">NLogLoggerFactoryAdapter</a>.</li><li>NLog to render its output to Common.Logging use <a href="Common.Logging.NLog~Common.Logging.NLog.CommonLoggingTarget.html">CommonLoggingTarget</a>.</li></ul></p>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <h3 class="dtH3">Namespaces</h3>
+      <div class="tablediv">
+        <table class="dtTABLE" cellspacing="0">
+          <tr valign="top">
+            <th width="50%">Namespace</th>
+            <th width="50%">Description</th>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="Common.Logging~Common.Logging.html">Common.Logging</a>
+            </td>
+            <td width="50%"> This namespace contains all core classes making up the Common.Logging framework. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="Common.Logging~Common.Logging.Configuration.html">Common.Logging.Configuration</a>
+            </td>
+            <td width="50%"> This namespace contains various utility classes. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="Common.Logging~Common.Logging.Factory.html">Common.Logging.Factory</a>
+            </td>
+            <td width="50%"> This namespace contains convenience base classes for implementing your own <a href="Common.Logging~Common.Logging.ILoggerFactoryAdapter.html">ILoggerFactoryAdapter</a>s. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="Common.Logging~Common.Logging.Simple.html">Common.Logging.Simple</a>
+            </td>
+            <td width="50%"> This namespace contains out-of-the-box adapters to intrinsic systems, namely <a href="Common.Logging~Common.Logging.Simple.ConsoleOutLoggerFactoryAdapter.html">ConsoleOutLoggerFactoryAdapter</a> and <a href="Common.Logging~Common.Logging.Simple.TraceLoggerFactoryAdapter.html">TraceLoggerFactoryAdapter</a>. </td>
+          </tr>
+        </table>
+      </div>
+      <h3 class="dtH3">Classes</h3>
+      <div class="tablediv">
+        <table class="dtTABLE" cellspacing="0">
+          <tr valign="top">
+            <th width="50%">Class</th>
+            <th width="50%">Description</th>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="Common.Logging~Common.Logging.Factory.AbstractCachingLoggerFactoryAdapter.html">AbstractCachingLoggerFactoryAdapter</a>
+            </td>
+            <td width="50%"> An implementation of <a href="Common.Logging~Common.Logging.ILoggerFactoryAdapter.html">ILoggerFactoryAdapter</a> that caches loggers handed out by this factory. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="Common.Logging~Common.Logging.Factory.AbstractLogger.html">AbstractLogger</a>
+            </td>
+            <td width="50%"> Provides base implementation common for most logger adapters </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="Common.Logging~Common.Logging.Simple.AbstractSimpleLogger.html">AbstractSimpleLogger</a>
+            </td>
+            <td width="50%"> Abstract class providing a standard implementation of simple loggers. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="Common.Logging~Common.Logging.Simple.AbstractSimpleLoggerFactoryAdapter.html">AbstractSimpleLoggerFactoryAdapter</a>
+            </td>
+            <td width="50%"> Base factory implementation for creating simple <a href="Common.Logging~Common.Logging.ILog.html">ILog</a> instances. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="Common.Logging~Common.Logging.Configuration.ArgUtils.html">ArgUtils</a>
+            </td>
+            <td width="50%"> Various utility methods for using during factory and logger instance configuration </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="Common.Logging~Common.Logging.Simple.CapturingLogger.html">CapturingLogger</a>
+            </td>
+            <td width="50%"> A logger created by <a href="Common.Logging~Common.Logging.Simple.CapturingLoggerFactoryAdapter.html">CapturingLoggerFactoryAdapter</a> that sends all log events to the owning adapter's <a href="Common.Logging~Common.Logging.Simple.CapturingLoggerFactoryAdapter.AddEvent.html">AddEvent</a></td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="Common.Logging~Common.Logging.Simple.CapturingLoggerEvent.html">CapturingLoggerEvent</a>
+            </td>
+            <td width="50%"> A logging event captured by <a href="Common.Logging~Common.Logging.Simple.CapturingLogger.html">CapturingLogger</a></td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="Common.Logging~Common.Logging.Simple.CapturingLoggerFactoryAdapter.html">CapturingLoggerFactoryAdapter</a>
+            </td>
+            <td width="50%"> An adapter, who's loggers capture all log events and send them to <a href="Common.Logging~Common.Logging.Simple.CapturingLoggerFactoryAdapter.AddEvent.html">AddEvent</a>. Retrieve the list of log events from <a href="Common.Logging~Common.Logging.Simple.CapturingLoggerFactoryAdapter.LoggerEvents.html">LoggerEvents</a>. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="Common.Logging~Common.Logging.Simple.CommonLoggingTraceListener.html">CommonLoggingTraceListener</a>
+            </td>
+            <td width="50%"> A <a href="http://msdn.microsoft.com/en-us/library/System.Diagnostics.TraceListener(VS.80).aspx">TraceListener</a> implementation sending all <a href="http://msdn.microsoft.com/en-us/library/System.Diagnostics.Trace(VS.80).aspx">System.Diagnostics.Trace</a> output to the Common.Logging infrastructure. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="Common.Logging~Common.Logging.ConfigurationException.html">ConfigurationException</a>
+            </td>
+            <td width="50%"> The exception that is thrown when a configuration system error has occurred with Common.Logging </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="Common.Logging~Common.Logging.ConfigurationSectionHandler.html">ConfigurationSectionHandler</a>
+            </td>
+            <td width="50%"> Used in an application's configuration file (App.Config or Web.Config) to configure the logging subsystem. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="Common.Logging~Common.Logging.Simple.ConsoleOutLogger.html">ConsoleOutLogger</a>
+            </td>
+            <td width="50%"> Sends log messages to <a href="http://msdn.microsoft.com/en-us/library/System.Console.Out(VS.80).aspx">Out</a>. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="Common.Logging~Common.Logging.Simple.ConsoleOutLoggerFactoryAdapter.html">ConsoleOutLoggerFactoryAdapter</a>
+            </td>
+            <td width="50%"> Factory for creating <a href="Common.Logging~Common.Logging.ILog.html">ILog</a> instances that write data to <a href="http://msdn.microsoft.com/en-us/library/System.Console.Out(VS.80).aspx">Out</a>. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="Common.Logging~Common.Logging.Configuration.DefaultConfigurationReader.html">DefaultConfigurationReader</a>
+            </td>
+            <td width="50%"> Implementation of <a href="Common.Logging~Common.Logging.IConfigurationReader.html">IConfigurationReader</a> that uses the standard .NET configuration APIs, ConfigurationSettings in 1.x and ConfigurationManager in 2.0 </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="Common.Logging~Common.Logging.LogManager.html">LogManager</a>
+            </td>
+            <td width="50%"> Use the LogManager's <a href="Common.Logging~Common.Logging.LogManager.GetLogger2.html">GetLogger</a> or <a href="Common.Logging~Common.Logging.LogManager.GetLogger1.html">GetLogger</a> methods to obtain <a href="Common.Logging~Common.Logging.ILog.html">ILog</a> instances for logging. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="Common.Logging~Common.Logging.Configuration.LogSetting.html">LogSetting</a>
+            </td>
+            <td width="50%"> Container used to hold configuration information from config file. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="Common.Logging~Common.Logging.Simple.NoOpLogger.html">NoOpLogger</a>
+            </td>
+            <td width="50%"> Silently ignores all log messages. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="Common.Logging~Common.Logging.Simple.NoOpLoggerFactoryAdapter.html">NoOpLoggerFactoryAdapter</a>
+            </td>
+            <td width="50%"> Factory for creating <a href="Common.Logging~Common.Logging.ILog.html">ILog</a> instances that silently ignores logging requests. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="Common.Logging~Common.Logging.Simple.TraceLogger.html">TraceLogger</a>
+            </td>
+            <td width="50%"> Logger sending everything to the trace output stream using <a href="http://msdn.microsoft.com/en-us/library/System.Diagnostics.Trace(VS.80).aspx">Trace</a>. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="Common.Logging~Common.Logging.Simple.TraceLoggerFactoryAdapter.html">TraceLoggerFactoryAdapter</a>
+            </td>
+            <td width="50%"> Factory for creating <a href="Common.Logging~Common.Logging.ILog.html">ILog</a> instances that send everything to the <a href="http://msdn.microsoft.com/en-us/library/System.Diagnostics.Trace(VS.80).aspx">Trace</a> output stream. </td>
+          </tr>
+        </table>
+      </div>
+      <h3 class="dtH3">Interfaces</h3>
+      <div class="tablediv">
+        <table class="dtTABLE" cellspacing="0">
+          <tr valign="top">
+            <th width="50%">Interface</th>
+            <th width="50%">Description</th>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="Common.Logging~Common.Logging.IConfigurationReader.html">IConfigurationReader</a>
+            </td>
+            <td width="50%"> Interface for basic operations to read .NET application configuration information. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="Common.Logging~Common.Logging.ILog.html">ILog</a>
+            </td>
+            <td width="50%"> A simple logging interface abstracting logging APIs. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="Common.Logging~Common.Logging.ILoggerFactoryAdapter.html">ILoggerFactoryAdapter</a>
+            </td>
+            <td width="50%"> LoggerFactoryAdapter interface is used internally by LogManager Only developers wishing to write new Common.Logging adapters need to worry about this interface. </td>
+          </tr>
+        </table>
+      </div>
+      <h3 class="dtH3">Delegates</h3>
+      <div class="tablediv">
+        <table class="dtTABLE" cellspacing="0">
+          <tr valign="top">
+            <th width="50%">Delegate</th>
+            <th width="50%">Description</th>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="Common.Logging~Common.Logging.Factory.AbstractLogger.WriteHandler.html">AbstractLogger.WriteHandler</a>
+            </td>
+            <td width="50%"> Represents a method responsible for writing a message to the log system. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="Common.Logging~Common.Logging.Configuration.ArgUtils.Action.html">ArgUtils.Action</a>
+            </td>
+            <td width="50%"> An anonymous action delegate with no arguments and no return value. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="Common.Logging~Common.Logging.Configuration.ArgUtils.Function$1.html">ArgUtils.Function(T)</a>
+            </td>
+            <td width="50%"> An anonymous action delegate with no arguments and no return value. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="Common.Logging~Common.Logging.Configuration.ArgUtils.ParseHandler$1.html">ArgUtils.ParseHandler(T)</a>
+            </td>
+            <td width="50%"> A delegate converting a string representation into the target type </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="Common.Logging~Common.Logging.FormatMessageHandler.html">FormatMessageHandler</a>
+            </td>
+            <td width="50%"> The type of method that is passed into e.g. <a href="Common.Logging~Common.Logging.ILog.Debug3.html">Debug</a> and allows the callback method to "submit" it's message to the underlying output system. </td>
+          </tr>
+        </table>
+      </div>
+      <h3 class="dtH3">Enumerations</h3>
+      <div class="tablediv">
+        <table class="dtTABLE" cellspacing="0">
+          <tr valign="top">
+            <th width="50%">Enumeration</th>
+            <th width="50%">Description</th>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="Common.Logging~Common.Logging.LogLevel.html">LogLevel</a>
+            </td>
+            <td width="50%"> The 7 possible logging levels </td>
+          </tr>
+        </table>
+      </div>
+      <hr />
+      <div id="footer">
+        <p>
+          <a href="mailto:netcommon-developer@lists.sourceforge.net?subject=Common%20Logging%202.0%20API%20Reference%20Documentation%20Feedback:%20Common.Logging%20Assembly">Send comments on this topic.</a>
+        </p>
+        <p>
+          <a>© The Common Infrastructure Libraries for .NET Team 2009 All Rights Reserved.</a>
+        </p>
+        <p>Generated from assembly Common.Logging [2.0.0.0] by <a href="http://ndoc3.sourceforget.net">NDoc3</a></p>
+      </div>
+    </div>
+  </body>
+</html>

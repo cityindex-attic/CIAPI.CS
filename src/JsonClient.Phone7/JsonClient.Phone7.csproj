@@ -108,15 +108,15 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\log4net.Silverlight\log4net.Silverlight.csproj">
-      <Project>{E49EB549-9B49-4A1E-A7D0-2B457335293E}</Project>
-      <Name>log4net.Silverlight</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="..\JsonClient\Notes.txt">
       <Link>Notes.txt</Link>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common.Logging.Phone7\Common.Logging.Phone7.csproj">
+      <Project>{06CA6C00-672E-4B49-8FD4-A4A9AB453C5A}</Project>
+      <Name>Common.Logging.Phone7</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />

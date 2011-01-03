@@ -1,0 +1,92 @@
+﻿<html dir="LTR" xmlns:ndoc="urn:ndoc-schema">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta content="history" name="save" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>NLogLoggerFactoryAdapter Class</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">Common Logging 2.0 API Reference</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">NLogLoggerFactoryAdapter Class</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> Concrete subclass of ILoggerFactoryAdapter specific to NLog 1.0.0.505. </p>
+      <p>
+								For a list of all members of this type, see <a href="Common.Logging.NLog~Common.Logging.NLog.NLogLoggerFactoryAdapter~Members.html">NLogLoggerFactoryAdapter Members
+								</a>.
+							</p>
+      <p>
+        <a href="http://msdn.microsoft.com/en-us/library/System.Object(VS.80).aspx">System.Object</a>
+        <br />   <a href="Common.Logging~Common.Logging.Factory.AbstractCachingLoggerFactoryAdapter.html">AbstractCachingLoggerFactoryAdapter</a><br />      <b>NLogLoggerFactoryAdapter</b></p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Public Class NLogLoggerFactoryAdapter<br />    Inherits <a href="Common.Logging~Common.Logging.Factory.AbstractCachingLoggerFactoryAdapter.html">AbstractCachingLoggerFactoryAdapter</a></div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <div>public class NLogLoggerFactoryAdapter<b> : <a href="Common.Logging~Common.Logging.Factory.AbstractCachingLoggerFactoryAdapter.html">AbstractCachingLoggerFactoryAdapter</a></b></div>
+      </div>
+      <H4 class="dtH4">Thread Safety</H4>
+      <P>
+					Public static (<b>Shared</b> in Visual Basic) members of this type are
+					safe for multithreaded operations. Instance members are <b>not</b> guaranteed to be
+					thread-safe.
+				</P>
+      <h4 class="dtH4">Remarks</h4>
+      <p> The following configuration property values may be configured: <ul type="disc"><li><code>configType</code>: <code>INLINE|FILE</code></li><li><code>configFile</code>: NLog XML configuration file path in case of FILE</li></ul> The configType values have the following implications: <ul type="disc"><li>FILE: calls <code>NLog.LogManager.Configuration = new NLog.Config.XmlLoggingConfiguration(configFile)</code>.</li><li>&lt;any other value&gt;: expects NLog to be configured externally</li></ul></p>
+      <h4 class="dtH4">Example</h4>
+      <p> The following snippet shows how to configure EntLib logging for Common.Logging: <pre class="code">&lt;configuration&gt;
+  &lt;configSections&gt;
+      &lt;section name="logging" type="Common.Logging.ConfigurationSectionHandler, Common.Logging" /&gt;
+  &lt;/configSections&gt;
+  &lt;common&gt;
+    &lt;logging&gt;
+      &lt;factoryAdapter type="Common.Logging.NLog.NLogLoggerFactoryAdapter, Common.Logging.NLog"&gt;
+        &lt;arg key="configType" value="FILE" /&gt;
+        &lt;arg key="configFile" value="~/nlog.config" /&gt;
+      &lt;/factoryAdapter&gt;
+    &lt;/logging&gt;
+  &lt;/common&gt;
+&lt;/configuration&gt;
+</pre></p>
+      <h4 class="dtH4">Requirements</h4>
+      <p>
+        <b>Namespace: </b>
+        <a href="Common.Logging.NLog~Common.Logging.NLog.html">Common.Logging.NLog</a>
+      </p>
+      <p>
+        <b>Assembly: </b>Common.Logging.NLog (in Common.Logging.NLog.dll)
+					</p>
+      <h4 class="dtH4">See Also</h4>
+      <p>
+        <a href="Common.Logging.NLog~Common.Logging.NLog.NLogLoggerFactoryAdapter~Members.html">NLogLoggerFactoryAdapter Members</a> | <a href="Common.Logging.NLog~Common.Logging.NLog.html">Common.Logging.NLog Namespace</a></p>
+      <object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;">
+        <param name="Keyword" value="NLogLoggerFactoryAdapter class, about NLogLoggerFactoryAdapter class">
+        </param>
+      </object>
+      <hr />
+      <div id="footer">
+        <p>
+          <a href="mailto:netcommon-developer@lists.sourceforge.net?subject=Common%20Logging%202.0%20API%20Reference%20Documentation%20Feedback:%20NLogLoggerFactoryAdapter%20Class">Send comments on this topic.</a>
+        </p>
+        <p>
+          <a>© The Common Infrastructure Libraries for .NET Team 2009 All Rights Reserved.</a>
+        </p>
+        <p>Generated from assembly Common.Logging.NLog [2.0.0.0] by <a href="http://ndoc3.sourceforget.net">NDoc3</a></p>
+      </div>
+    </div>
+  </body>
+</html>

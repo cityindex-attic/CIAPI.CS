@@ -5,7 +5,7 @@ using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
-using log4net;
+using Common.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
