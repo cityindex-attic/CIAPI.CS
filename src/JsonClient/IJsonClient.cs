@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace CityIndex.JsonClient
 {
+    ///<summary>
+    /// Describes a general purpose HTTP JSON API client
+    ///</summary>
     public interface IJsonClient
     {
         /// <summary>

@@ -15,6 +15,8 @@ namespace CityIndex.JsonClient
     {
         private readonly Queue<CacheCallBack<TDTO>> _callbacks;
 
+        ///<summary>
+        ///</summary>
         public CacheItem()
         {
             _callbacks = new Queue<CacheCallBack<TDTO>>();
@@ -57,6 +59,10 @@ namespace CityIndex.JsonClient
                         CacheCallBack<TDTO> callback = _callbacks.Dequeue();
                         new ApiAsyncResult<TDTO>(callback.Callback, callback.State, true, ResponseText, exception);
                     }
+                }
+                catch (Exception ex)
+                {
+                    throw;
                 }
                 finally
                 {

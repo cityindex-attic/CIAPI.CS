@@ -3,6 +3,9 @@ using System.Net;
 
 namespace CityIndex.JsonClient
 {
+    ///<summary>
+    /// Describes a self throttling asynchronous request queue.
+    ///</summary>
     public interface IThrottedRequestQueue
     {
         /// <summary>

@@ -53,6 +53,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RawJsonClient.cs" />
+    <Compile Include="SyncVsAsync.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\common\App.config">

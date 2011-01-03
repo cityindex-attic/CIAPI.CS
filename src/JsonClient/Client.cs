@@ -32,6 +32,13 @@ namespace CityIndex.JsonClient
 
         #endregion
 
+        ///<summary>
+        ///</summary>
+        ///<param name="uri"></param>
+        ///<param name="cache"></param>
+        ///<param name="requestFactory"></param>
+        ///<param name="throttleScopes"></param>
+        ///<param name="retryCount"></param>
         public Client(Uri uri, IRequestCache cache, IRequestFactory requestFactory,
                          Dictionary<string, IThrottedRequestQueue> throttleScopes, int retryCount)
         {
@@ -51,6 +58,26 @@ namespace CityIndex.JsonClient
                 url = uri.AbsoluteUri + "/";
             }
             _uri = new Uri(url);
+        }
+
+        ///<summary>
+        ///</summary>
+        ///<param name="uri"></param>
+        public Client(Uri uri)
+            : this(uri, new RequestCache(), new RequestFactory(), new Dictionary<string, IThrottedRequestQueue> { { "default", new ThrottedRequestQueue() } }, 3)
+        {
+
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="uri"></param>
+        /// <param name="requestFactory"></param>
+        public Client(Uri uri, IRequestFactory requestFactory)
+            : this(uri, new RequestCache(), requestFactory, new Dictionary<string, IThrottedRequestQueue> { { "default", new ThrottedRequestQueue() } }, 3)
+        {
+
         }
 
         #region Protected Methods
@@ -91,13 +118,16 @@ namespace CityIndex.JsonClient
                                               string method, Dictionary<string, object> parameters,
                                               TimeSpan cacheDuration, string throttleScope)
         {
-        } 
+        }
 
         #endregion
 
         #region Public Implementation
 
         #region Synchronous Wrapper
+
+        
+
 
         /// <summary>
         /// Very simple synchronous wrapper of the begin/end methods.
@@ -114,13 +144,14 @@ namespace CityIndex.JsonClient
         /// <param name="cacheDuration"></param>
         /// <param name="throttleScope"></param>
         /// <returns></returns>
-        public TDTO Request<TDTO>(string target, string uriTemplate, string method,
-                                  Dictionary<string, object> parameters, TimeSpan cacheDuration, string throttleScope)
-            where TDTO : class, new()
+        public TDTO Request<TDTO>(string target, string uriTemplate, string method, Dictionary<string, object> parameters, TimeSpan cacheDuration, string throttleScope) where TDTO : class, new()
         {
 #if SILVERLIGHT
             //TODO: add UI thread check and throw forbidden exception if so
 #endif
+            uriTemplate = uriTemplate ?? "";
+            parameters = parameters ?? new Dictionary<string, object>();
+            throttleScope = throttleScope ?? "default";
 
             TDTO response = null;
             Exception exception = null;
@@ -150,6 +181,37 @@ namespace CityIndex.JsonClient
 
             return response;
         }
+
+
+        ///<summary>
+        /// Very simple synchronous wrapper of the begin/end methods.
+        ///</summary>
+        ///<param name="target"></param>
+        ///<param name="method"></param>
+        ///<typeparam name="TDTO"></typeparam>
+        ///<returns></returns>
+        public TDTO Request<TDTO>(string target, string method) where TDTO : class, new()
+        {
+            return Request<TDTO>(target, null, method, null, TimeSpan.FromMilliseconds(0), null);
+        }
+
+        //string target, string method
+        //string target, string uriTemplate, string method, Dictionary<string, object> parameters
+
+        ///<summary>
+        ///</summary>
+        ///<param name="target"></param>
+        ///<param name="uriTemplate"></param>
+        ///<param name="method"></param>
+        ///<param name="parameters"></param>
+        ///<typeparam name="TDTO"></typeparam>
+        ///<returns></returns>
+        public TDTO Request<TDTO>(string target, string uriTemplate, string method, Dictionary<string, object> parameters) where TDTO : class, new()
+        {
+            return Request<TDTO>(target, uriTemplate, method, parameters, TimeSpan.FromMilliseconds(0), null);
+        }
+
+
 
         #endregion
 
@@ -230,6 +292,34 @@ namespace CityIndex.JsonClient
             }
         }
 
+
+
+        ///<summary>
+        ///</summary>
+        ///<param name="cb"></param>
+        ///<param name="state"></param>
+        ///<param name="target"></param>
+        ///<param name="method"></param>
+        ///<typeparam name="TDTO"></typeparam>
+        public void BeginRequest<TDTO>(ApiAsyncCallback<TDTO> cb, object state, string target, string method) where TDTO : class, new()
+        {
+            BeginRequest<TDTO>(cb, state, target, null, method, null, TimeSpan.FromMilliseconds(0), "default");
+        }
+
+
+        ///<summary>
+        ///</summary>
+        ///<param name="cb"></param>
+        ///<param name="state"></param>
+        ///<param name="target"></param>
+        ///<param name="uriTemplate"></param>
+        ///<param name="method"></param>
+        ///<param name="parameters"></param>
+        ///<typeparam name="TDTO"></typeparam>
+        public void BeginRequest<TDTO>(ApiAsyncCallback<TDTO> cb, object state, string target, string uriTemplate, string method, Dictionary<string, object> parameters) where TDTO : class, new()
+        {
+            BeginRequest(cb, state, target, uriTemplate, method, parameters, TimeSpan.FromMilliseconds(0), "default");
+        }
 
         /// <summary>
         /// Standard async end implementation. Calling code passes in the ApiAsyncResult that is returned to the callback
@@ -410,13 +500,16 @@ namespace CityIndex.JsonClient
             url = new Regex(@"{\w+}").Replace(url, match =>
                 {
                     string key = match.Value.Substring(1, match.Value.Length - 2);
-                    object paramValue = parameters[key];
-                    if (paramValue != null)
+                    if (parameters.ContainsKey(key))
                     {
-                        parameters.Remove(key);
-                        return paramValue.ToString();
+                        object paramValue = parameters[key];
+                        if (paramValue != null)
+                        {
+                            parameters.Remove(key);
+                            return paramValue.ToString();
+                        }
                     }
-                    return match.Value;
+                    return null;
                 });
 
             // clean up unused templates
@@ -442,7 +535,9 @@ namespace CityIndex.JsonClient
         {
             // TODO: need to have some preformatting of these components to allow
             // for inconsistencies from caller, e.g. ensure proper trailing and leading slashes
-            return url + target + uriTemplate;
+            url = url + target + uriTemplate;
+            url = url.TrimEnd('/');
+            return url;
         }
 
 

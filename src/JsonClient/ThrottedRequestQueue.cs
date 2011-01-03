@@ -7,6 +7,9 @@ using log4net;
 namespace CityIndex.JsonClient
 {
     /// <summary>
+    /// 
+    /// A self throttling asynchronous request queue.
+    /// 
     /// TODO: allow for pausing
     /// would like to allow for clearing the queue but dependencies on the cache make
     /// this a non starter. the only viable ways to that means is to merge throttle and cache.

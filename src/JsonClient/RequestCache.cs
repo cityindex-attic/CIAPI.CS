@@ -25,7 +25,7 @@ namespace CityIndex.JsonClient
         /// Instantiates a <see cref="RequestCache"/> with default purge interval of 10 seconds and default cache duration of 0 milliseconds.
         /// </summary>
         public RequestCache()
-            : this(TimeSpan.FromSeconds(10), TimeSpan.MinValue)
+            : this(TimeSpan.FromSeconds(10), TimeSpan.FromMilliseconds(0))
         {
         }
 

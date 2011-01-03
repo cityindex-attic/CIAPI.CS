@@ -8,6 +8,8 @@ namespace CityIndex.JsonClient
     /// </summary>
     public class CacheItemBase
     {
+        ///<summary>
+        ///</summary>
         public CacheItemBase()
         {
             ProcessingWaitHandle = new AutoResetEvent(false);

@@ -16,6 +16,10 @@ namespace ConsoleSpikes
 
         static void Main(string[] args)
         {
+            RawJsonClient.SimpleRequest();
+
+            RawJsonClient.ParameterizedRequest();
+
             GetNewsSynchronously();
 
             GetNewsAsynchronously();
@@ -102,6 +106,7 @@ namespace ConsoleSpikes
                 var ctx = new ApiClient(new Uri(TestConfig.ApiUrl));
 
                 ctx.LogIn(TestConfig.ApiUsername, TestConfig.ApiPassword);
+
                 var headlinesResponse = ctx.ListNewsHeadlines("UK", 10);
 
                 foreach (var item in headlinesResponse.Headlines)
@@ -121,6 +126,8 @@ namespace ConsoleSpikes
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
+                Console.WriteLine("\r\nPress enter to continue\r\n");
+                Console.ReadLine();
             }
 
         #endregion
