@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<dtoGenerator>
+  <namespace>SOAPI.CS2.StackAuth.DTO</namespace>
+  <schemaPath>~/stackauth-schema.txt</schemaPath>
+  <types pascalCaseProperties="true">
+    <type name="UsersByIdAssociatedResponse" base="">
+      <property jsonName="users" renderedName="Items"/>
+    </type>
+    <type name="SitesResponse" base="">
+      <property jsonName="api_sites" renderedName="Items"/>
+    </type>    
+  </types>
+</dtoGenerator>

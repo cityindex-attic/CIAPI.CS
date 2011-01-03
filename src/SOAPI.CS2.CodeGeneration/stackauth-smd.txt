@@ -1,0 +1,45 @@
+﻿{
+    "SMDVersion": "2.6",
+    "version": "1.0",
+    "id": "http://ec2-174-129-8-69.compute-1.amazonaws.com/stackauth/smd",
+    "schema": "http://ec2-174-129-8-69.compute-1.amazonaws.com/stackauth/schema",
+    "target": "http://stackauth.com/1.0/",
+    "description": "Stack Auth API V1",
+    "transport": "GET",
+    "envelope": "URL",
+    "throttleScope": "stackoverflow30p5",
+    "responseContentType": "application/json",
+    "additionalParameters": true,
+    "custom_formats": {
+        "guid-scsv": {
+            "description": "semicolon-delimited list of guid format string"
+        }
+    },
+    "services":
+    {
+        "sites": {
+            "description": "",
+            "target": "sites",
+            "group": "Administration",
+            "returns": {
+                "$ref": "#.SiteCollection"
+            },
+            "parameters": []
+        },
+        "usersByIdAssociated": {
+            "description": "",
+            "target": "users",
+            "uriTemplate": "/{id}/associated",
+            "group": "Administration",
+            "returns": {
+                "$ref": "#.UserCollection"
+            },
+            "parameters": [{
+                "name": "id",
+                "type": "string",
+                "format": "guid-scsv",
+                "description": ""
+            }]
+        }
+    }
+}

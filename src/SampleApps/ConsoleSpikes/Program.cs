@@ -10,12 +10,15 @@ using CityIndex.RestWebServices.DTO;
 
 namespace ConsoleSpikes
 {
+ 
     class Program
     {
 
 
         static void Main(string[] args)
         {
+     
+
             RawJsonClient.SimpleRequest();
 
             RawJsonClient.ParameterizedRequest();

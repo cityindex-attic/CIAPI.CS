@@ -1,0 +1,310 @@
+﻿<#@ template hostspecific="True" debug="True" #>
+<#@ output extension="cs" #>
+<#@ Assembly Name="$(SolutionDir)packages\Newtonsoft.Json.3.5.8\lib\35\Newtonsoft.Json.dll" #>
+<#@ Assembly Name="System.Core.dll" #>
+<#@ Assembly Name="System.Xml.dll" #>
+<#@ Assembly Name="System.Xml.Linq.dll" #>
+<#@ Assembly Name="System.Windows.Forms.dll" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Xml.Linq" #>
+<#@ import namespace="System.Collections" #>
+<#@ import namespace="System.Collections.Generic" #> 
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Net" #>
+<#@ import namespace="System.Diagnostics" #>
+<#@ import namespace="Newtonsoft.Json" #>
+<#@ import namespace="Newtonsoft.Json.Linq" #>
+<#@ import namespace="Microsoft.VisualStudio.TextTemplating" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Text.RegularExpressions" #>
+
+<#+ 
+
+void RenderUsings(IEnumerable<string> namespaces){
+	foreach(string namespaceName in namespaces){
+		this.GenerationEnvironment.AppendLine("using " + namespaceName + ";");
+	}
+}
+void RenderSummary(string value, string spacing){
+	if(!string.IsNullOrWhiteSpace(value))
+	{
+		this.GenerationEnvironment.AppendLine(spacing + "/// <summary>");
+		
+		string[] lines = Regex.Split(value, "\r\n");
+		foreach(var line in lines){
+			this.GenerationEnvironment.AppendLine(spacing + "/// " + line);		
+		}
+
+		this.GenerationEnvironment.AppendLine(spacing + "/// </summary>");		
+	}
+
+}
+void RenderOpenNamespace(string name){
+	this.GenerationEnvironment.AppendLine("namespace " + name +  "\r\n{");
+}
+
+void RenderCloseNamespace(){
+	this.GenerationEnvironment.AppendLine("}");	
+}
+
+void RenderOpenEnum(string name,JObject obj){
+	this.GenerationEnvironment.AppendLine(string.Format("\tpublic enum {0}{{",name));
+}
+
+
+
+void RenderOpenClass(string name,JObject obj,TypeDescription typeDescription,DtoGeneratorSettings settings){
+	this.GenerationEnvironment.AppendFormat("\tpublic class {0}",name);
+	string baseName=null;
+	if(obj["extends"]!=null){
+		baseName= GetTypeNameFromExtends(obj["extends"]["$ref"].Value<string>());
+	}
+	if(typeDescription!=null && !string.IsNullOrEmpty(typeDescription.BaseTypeName))
+	{
+			baseName=typeDescription.BaseTypeName;
+	}
+	if(!string.IsNullOrEmpty(baseName)){
+		this.GenerationEnvironment.AppendFormat(" : {0}",baseName);
+	}		
+	this.GenerationEnvironment.AppendLine("\r\n\t{");
+}
+
+
+
+void RenderClassProperties(string classTypeName,JObject obj,TypeDescription typeDescription,DtoGeneratorSettings settings){
+	
+	JObject properties = (JObject)obj["properties"];
+	
+	foreach (KeyValuePair<string,JToken> kvp in properties) { 
+		var property = kvp.Value;
+		var name = kvp.Key;
+		var attributes = new StringBuilder();
+		foreach (var attribute in property) {
+			if (attribute is JProperty) {
+				switch (((JProperty)attribute).Name) { 
+				    case "type":
+				    case "description":
+				    case "enum":
+				    case "options":
+				    case "items":
+				    case "$ref":
+				      	break;
+				    default:
+					attributes.AppendLine(string.Format("{0}: {1}",((JProperty)attribute).Name,((JProperty)attribute).Value));	
+						break;
+				}				
+			}
+		}
+		
+		RenderSummary(GetValue<string>(property,"description") + "\r\n" +  attributes.ToString(), "\t\t");
+		
+		var typeName = GetTypeName((JObject)property);
+		this.GenerationEnvironment.AppendLine(string.Format("\t\t[JsonProperty(\"{0}\")]",name));
+		
+		
+		string propertyName = name;
+		if(typeDescription!=null){
+			var propertyDescription = typeDescription.Properties.FirstOrDefault(p=>p.JsonName==propertyName);
+			if(propertyDescription!=null){
+				propertyName = propertyDescription.RenderedName;
+			}
+		}
+		else
+		{
+			if(settings.PascalCaseProperties){
+			propertyName = PascalCase(name);
+		}
+		}
+		
+		
+		
+		this.GenerationEnvironment.AppendLine(string.Format("\t\tpublic {0} {1} {{get;set;}}",typeName,propertyName));
+		
+	}
+}
+
+void RenderCloseType(){
+	this.GenerationEnvironment.AppendLine("\t}\r\n\r\n");
+}
+
+void RenderEnumOptions(JObject obj){
+	int fieldIndex = 0;
+	// allow for badly designed enums ala stackexchange
+	bool generateFieldValue = GetValue<string>(obj,"type")=="string";
+	JArray options = (JArray)obj["options"];
+	foreach (JObject field in options){
+		RenderSummary(GetValue<string>(field,"description"), "\t\t");
+		string fieldLabel = GetValue<string>(field,"label");
+		string fieldValue = generateFieldValue?(fieldIndex++).ToString():GetValue<string>(field,"value");
+		this.GenerationEnvironment.AppendFormat("\t\t{0} = {1}",fieldLabel,fieldValue);
+		
+		if(fieldIndex < options.Count){
+			this.GenerationEnvironment.Append(",");
+		}
+		
+		this.GenerationEnvironment.AppendLine();
+		
+	}	
+}
+
+string GetTypeNameFromExtends(string typename){
+	if(typename.StartsWith("#.")){
+		typename=typename.Substring(2);
+	}
+	return typename;
+}
+
+
+JObject GetJObject(string path){
+	Uri uri;
+	string json;
+	if(Uri.TryCreate(path,UriKind.Absolute,out uri)){
+		var request = WebRequest.Create(path);
+		if(request is HttpWebRequest){
+			((HttpWebRequest)request).AutomaticDecompression=DecompressionMethods.Deflate|DecompressionMethods.GZip;
+		}
+		var response = request.GetResponse();
+		var stream = response.GetResponseStream();
+		var reader = new StreamReader(stream);
+		json = reader.ReadToEnd();
+	}
+	else
+	{
+		json =  File.ReadAllText(Path.GetFullPath(path));
+	}
+	return JObject.Parse(json);
+}
+
+
+
+T GetValue<T>(JToken obj, string name){
+	T value = default(T);
+	if(obj[name]!=null){
+		value=obj[name].Value<T>();
+	}
+	return value;
+}
+
+string GetTypeName(JObject obj){
+	
+	 JToken reference = obj["$ref"];
+    if (reference != null)
+    {
+        var referenceValue = reference.Value<string>();
+        // get rid of the "#." delimiter
+        return referenceValue.Substring(2);
+    }
+    
+    string typename;
+    var jsonTypename = obj["type"].Value<string>();
+    switch (jsonTypename)
+    {
+        case "string":
+            typename = "string";
+            if (obj["format"] != null) {
+				var format = obj["format"].Value<string>();																																																
+                switch (format)
+                {
+                    case "wcf-date":
+                      typename = "DateTime";
+                      break;
+                    case "guid":
+                      typename = "Guid";
+                      break;
+					case "color":
+					case "uri":
+                      typename = "string";
+                      break;						
+                    default:
+                      throw new NotImplementedException("format " + format);
+                }																																														
+            }
+            break;
+        case "number":
+            typename = "Decimal";
+            // TODO: check constraints to determine if this is a Single, Double or Decimal
+            break;
+        case "integer":
+            typename = "Int32";
+            // TODO: check constraints to determine if this is an int64, int32 or int16
+            break;
+        case "boolean":
+            typename = "Boolean";
+            break;
+        case "array":
+
+            // NOTE: currently we only support single schema or scalar types, no union or tuple types
+            string itemTypeName = GetTypeName(obj["items"].Value<JObject>());
+            typename = itemTypeName + "[]";
+            break;
+        case "object":
+            throw new NotImplementedException("Nested schema, " + jsonTypename +
+                                              " not implemented. Only $ref references implemented");
+        default:
+            throw new NotImplementedException(jsonTypename + " not implemented");
+    }
+    return typename;	       
+}	  
+
+string PascalCase(string value){
+	value = value.Substring(0,1).ToUpper()+value.Substring(1);
+	value = Regex.Replace(value,"_\\w",m=>{
+		return m.Value.Substring(1).ToUpper();		
+	});
+	return value;
+}
+
+TypeDescription FindTypeDescription(string typename,XDocument doc){
+	
+	var typeDescription = doc.Root.Descendants("types").First().Descendants("type").FirstOrDefault(n=>n.Attribute("name").Value==typename);	
+	if(typeDescription!=null){
+		return new TypeDescription(typeDescription);		
+	}
+	return null;
+}
+
+class DtoGeneratorSettings{
+	public XDocument Document {get;set;}
+	public string Namespace {get;set;}
+	public string SchemaPath{get;set;}
+	public string TemplateDirectory{get;set;}
+	public bool PascalCaseProperties{get;set;}
+	public ITextTemplatingEngineHost Host {get;set;}
+	public DtoGeneratorSettings(ITextTemplatingEngineHost host){
+		Host=host;
+		TemplateDirectory = System.IO.Path.GetDirectoryName(host.TemplateFile);
+		var path = Path.Combine(TemplateDirectory,Path.GetFileNameWithoutExtension(host.TemplateFile) + ".xml");
+		Document = XDocument.Load(path);
+		Namespace = Document.Root.Descendants("namespace").First().Value;	
+		PascalCaseProperties = Convert.ToBoolean(Document.Root.Descendants("types").First().Attribute("pascalCaseProperties").Value);	
+		SchemaPath = Document.Root.Descendants("schemaPath").First().Value.Replace("~/",TemplateDirectory + "\\");
+	}
+}
+class TypeDescription
+{
+	public TypeDescription(XElement element){
+		TypeName=element.Attribute("name").Value;
+		BaseTypeName=element.Attribute("base").Value;
+		Properties=new List<PropertyDescription>();
+		foreach(XElement propertyElement in element.Descendants("property")){
+			var prop = new PropertyDescription(propertyElement);
+			Properties.Add(prop);
+		}
+	}
+	public string TypeName{get;set;}
+	public string BaseTypeName{get;set;}
+	
+	public List<PropertyDescription> Properties{get;set;}
+	
+	public class PropertyDescription{
+		public PropertyDescription(XElement element){
+			JsonName=element.Attribute("jsonName").Value;
+			RenderedName=element.Attribute("renderedName").Value;
+		}
+		public string JsonName{get;set;}
+		public string RenderedName{get;set;}
+	}
+}
+
+#>

@@ -1,0 +1,68 @@
+﻿<#@ template debug="true" hostSpecific="true" #>
+<#@ output extension=".cs" #>
+<#@ include file="Meta.ttinclude" #>
+<#@ Assembly Name="System.Core.dll" #>
+<#@ Assembly Name="System.Xml.dll" #>
+<#@ Assembly Name="System.Xml.Linq.dll" #>
+<#@ Assembly Name="System.Windows.Forms.dll" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Diagnostics" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Xml.Linq" #>
+<#@ import namespace="System.Collections" #>
+<#@ import namespace="System.Collections.Generic" #> 
+
+<#   
+	// basis for general json schema dto generation
+	// using the odd jschema of stackexchange to stimulate configurability
+	// and customization.
+
+	
+	// TODO: rather than using json.net to parse
+	// the meta, use JavaSCriptSerializer to parse it into
+	// a simple dictionary structure so that we can
+	// offer a seam where users of this (as a compiled template)
+	// can make adjustments to the shape of the resultant
+	// code.
+	// dealing with jtokens is painful and unnecessary
+	
+	
+	var settings = new DtoGeneratorSettings(this.Host);
+	
+	JObject schema = GetJObject(settings.SchemaPath);
+	
+	RenderUsings(new String[]{"System","Newtonsoft.Json"});
+	RenderOpenNamespace(settings.Namespace);
+	
+	
+	foreach(KeyValuePair<string,JToken> kvp in schema){
+		string name = kvp.Key;
+		JObject obj = (JObject)kvp.Value;
+		
+		RenderSummary(GetValue<string>(obj,"description"), "\t");
+		
+		if(obj["enum"]!=null){
+			RenderOpenEnum(name,obj);
+			RenderEnumOptions(obj);
+			RenderCloseType();
+		}
+		else{
+			var typeDescription = FindTypeDescription(name,settings.Document);
+			RenderOpenClass(name,obj,typeDescription,settings);
+			RenderClassProperties(name,obj,typeDescription,settings);			
+			RenderCloseType();
+		}
+			
+		
+	}
+	
+	RenderCloseNamespace();
+#>
+ 
+<#+  
+	
+
+
+
+#>
