@@ -11,7 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using CityIndex.RestWebServices;
+using CIAPI;
 using CityIndex.JsonClient;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;

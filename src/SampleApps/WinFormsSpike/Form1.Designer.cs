@@ -164,7 +164,7 @@ namespace WinFormsSpike
             // 
             // NewsDTOBindingSource
             // 
-            this.NewsDTOBindingSource.DataSource = typeof(CityIndex.RestWebServices.DTO.NewsDTO);
+            this.NewsDTOBindingSource.DataSource = typeof(CIAPI.DTO.NewsDTO);
             // 
             // tabPage2
             // 

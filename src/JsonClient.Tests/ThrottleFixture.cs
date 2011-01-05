@@ -13,7 +13,8 @@ namespace CityIndex.JsonClient.Tests
     [TestFixture]
     public class ThrottleFixture
     {
-        [Test]
+
+        [Test, MTAThreadAttribute]
         public void CanThrottle1Per3Seconds()
         {
             var f = new TestRequestFactory();

@@ -9,7 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using CityIndex.RestWebServices;
+using CIAPI;
 using CityIndex.JsonClient;
 
 namespace SilverlightSpike

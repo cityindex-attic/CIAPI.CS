@@ -8,9 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
-using CityIndex.RestWebServices;
+using CIAPI;
 using CityIndex.JsonClient;
-using CityIndex.RestWebServices.DTO;
+using CIAPI.DTO;
 
 
 namespace WinFormsSpike

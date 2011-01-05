@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using CityIndex.RestWebServices;
+using CIAPI;
 using CityIndex.JsonClient;
-using CityIndex.RestWebServices.DTO;
+using CIAPI.DTO;
 
 
 namespace ConsoleSpikes
