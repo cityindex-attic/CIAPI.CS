@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{811F0005-3E88-4550-AC81-47F8B398101B}</ProjectGuid>
+    <ProjectGuid>{DF519AB4-10A8-4E8E-9CA9-0A119A8168DC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>JsonClient.CodeGeneration</RootNamespace>
-    <AssemblyName>JsonClient.CodeGeneration</AssemblyName>
+    <RootNamespace>CIAPI.IntegrationTests</RootNamespace>
+    <AssemblyName>CIAPI.IntegrationTests</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,24 +31,37 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.3.5.8\lib\35\Newtonsoft.Json.dll</HintPath>
-    </Reference>
+    <Reference Include="nunit.framework, Version=2.5.7.10213, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="T4Toolbox.10.0, Version=10.3.7.1, Culture=neutral, PublicKeyToken=7e313accbcce84dc, processorArchitecture=x86" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="NetworkFile.cs" />
+    <Compile Include="Streaming\PriceFixture.cs" />
+    <Compile Include="Streaming\NewsFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SchemaItem.cs" />
-    <Compile Include="SchemaItemType.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\JsonClient\JsonClient.csproj">
+      <Project>{D80E56C8-8DD6-4911-9A99-F534C9497D6A}</Project>
+      <Name>JsonClient</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CIAPI\CIAPI.csproj">
+      <Project>{B40E6F1C-453E-44A2-BA9D-1692378B355C}</Project>
+      <Name>RestWebServicesClient</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\StreamingClient\StreamingClient.csproj">
+      <Project>{EE5023DC-A20F-4358-9DF1-7D69BB1C322E}</Project>
+      <Name>StreamingClient</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

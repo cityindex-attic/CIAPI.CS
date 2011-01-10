@@ -32,7 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Common.Logging">
-      <HintPath>..\packages\Common.Logging-2.0.0\2.0\release\Common.Logging.dll</HintPath>
+      <HintPath>..\packages\Common.Logging.2.0.0\lib\2.0\Common.Logging.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.TextTemplating.10.0, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Newtonsoft.Json">
@@ -72,6 +72,7 @@
   <ItemGroup>
     <None Include="DataClassDescription.ttinclude" />
     <None Include="Meta.ttinclude" />
+    <None Include="packages.config" />
     <None Include="StackAuthDTO.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>StackAuthDTO.cs</LastGenOutput>

@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{EE5023DC-A20F-4358-9DF1-7D69BB1C322E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>StreamingClient</RootNamespace>
+    <AssemblyName>StreamingClient</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Common.Logging">
+      <HintPath>..\packages\Common.Logging.2.0.0\lib\2.0\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ClientDTO\News.cs" />
+    <Compile Include="ClientDTO\NewsUpdate.cs" />
+    <Compile Include="ClientDTO\NullNews.cs" />
+    <Compile Include="ClientDTO\NullPrice.cs" />
+    <Compile Include="ClientDTO\Price.cs" />
+    <Compile Include="ClientDTO\PriceUpdate.cs" />
+    <Compile Include="JSONParser.cs" />
+    <Compile Include="Lightstreamer\DotNet\Client\BatchingHttpProvider.cs" />
+    <Compile Include="Lightstreamer\DotNet\Client\BatchManager.cs" />
+    <Compile Include="Lightstreamer\DotNet\Client\BatchMonitor.cs" />
+    <Compile Include="Lightstreamer\DotNet\Client\ConnectionConstraints.cs" />
+    <Compile Include="Lightstreamer\DotNet\Client\ConnectionInfo.cs" />
+    <Compile Include="Lightstreamer\DotNet\Client\Constants.cs" />
+    <Compile Include="Lightstreamer\DotNet\Client\ExtendedTableInfo.cs" />
+    <Compile Include="Lightstreamer\DotNet\Client\ExtendedTableManager.cs" />
+    <Compile Include="Lightstreamer\DotNet\Client\FullTableManager.cs" />
+    <Compile Include="Lightstreamer\DotNet\Client\HttpProvider.cs" />
+    <Compile Include="Lightstreamer\DotNet\Client\IConnectionListener.cs" />
+    <Compile Include="Lightstreamer\DotNet\Client\IExtendedTableListener.cs" />
+    <Compile Include="Lightstreamer\DotNet\Client\IFastItemsListener.cs" />
+    <Compile Include="Lightstreamer\DotNet\Client\IHandyTableListener.cs" />
+    <Compile Include="Lightstreamer\DotNet\Client\ISimpleTableListener.cs" />
+    <Compile Include="Lightstreamer\DotNet\Client\ITableManager.cs" />
+    <Compile Include="Lightstreamer\DotNet\Client\LSClient.cs" />
+    <Compile Include="Lightstreamer\DotNet\Client\PhaseException.cs" />
+    <Compile Include="Lightstreamer\DotNet\Client\PushConnException.cs" />
+    <Compile Include="Lightstreamer\DotNet\Client\PushLengthException.cs" />
+    <Compile Include="Lightstreamer\DotNet\Client\PushServerException.cs" />
+    <Compile Include="Lightstreamer\DotNet\Client\PushServerProxy.cs" />
+    <Compile Include="Lightstreamer\DotNet\Client\PushServerTranslator.cs" />
+    <Compile Include="Lightstreamer\DotNet\Client\PushUserException.cs" />
+    <Compile Include="Lightstreamer\DotNet\Client\ServerManager.cs" />
+    <Compile Include="Lightstreamer\DotNet\Client\ServerUpdateEvent.cs" />
+    <Compile Include="Lightstreamer\DotNet\Client\SimpleTableInfo.cs" />
+    <Compile Include="Lightstreamer\DotNet\Client\SimpleTableManager.cs" />
+    <Compile Include="Lightstreamer\DotNet\Client\SubscrException.cs" />
+    <Compile Include="Lightstreamer\DotNet\Client\SubscribedTableKey.cs" />
+    <Compile Include="Lightstreamer\DotNet\Client\Support\CollectionsSupport.cs" />
+    <Compile Include="Lightstreamer\DotNet\Client\Support\HashSetSupport.cs" />
+    <Compile Include="Lightstreamer\DotNet\Client\Support\ISetSupport.cs" />
+    <Compile Include="Lightstreamer\DotNet\Client\Support\IThreadRunnable.cs" />
+    <Compile Include="Lightstreamer\DotNet\Client\Support\ThreadSupport.cs" />
+    <Compile Include="Lightstreamer\DotNet\Client\Support\TimerSupport.cs" />
+    <Compile Include="Lightstreamer\DotNet\Client\UpdateInfo.cs" />
+    <Compile Include="Lightstreamer\DotNet\Client\VirtualTableManager.cs" />
+    <Compile Include="Lightstreamer\LightstreamerConnection.cs" />
+    <Compile Include="Lightstreamer\LightstreamerDictionaryIndices.cs" />
+    <Compile Include="Lightstreamer\LightstreamerEventArgs.cs" />
+    <Compile Include="Lightstreamer\LightstreamerListener.cs" />
+    <Compile Include="Lightstreamer\RawStreamingUpdateLost.cs" />
+    <Compile Include="Lightstreamer\StatusEventArgs.cs" />
+    <Compile Include="Lightstreamer\StreamingUpdate.cs" />
+    <Compile Include="Lightstreamer\Subscription.cs" />
+    <Compile Include="Lightstreamer\UpdateDetails.cs" />
+    <Compile Include="NewsListener.cs" />
+    <Compile Include="PriceListener.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
