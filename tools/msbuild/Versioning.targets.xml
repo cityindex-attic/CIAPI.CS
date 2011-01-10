@@ -28,8 +28,11 @@
                 ReplacementText="AssemblyFileVersion(&quot;$(Major).$(Minor).$(Build).$(Revision)&quot;)"/>
 
     <Message Text="Updating NuGet package version"/>
-    <FileUpdate Files="$(SrcDirectory)\Package.nuspec.xml"
+    <FileUpdate Files="$(SrcDirectory)\Package.CIAPI.nuspec.xml"
                 Regex="&lt;version&gt;(.*?)&lt;/version&gt;"
                 ReplacementText="&lt;version&gt;$(Major).$(Minor).$(Build).$(Revision)&lt;/version&gt;" />
+    <FileUpdate Files="$(SrcDirectory)\Package.JsonClient.nuspec.xml"
+                Regex="&lt;version&gt;(.*?)&lt;/version&gt;"
+                ReplacementText="&lt;version&gt;$(Major).$(Minor).$(Build).$(Revision)&lt;/version&gt;" />                
   </Target>
 </Project>

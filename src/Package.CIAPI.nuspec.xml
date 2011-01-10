@@ -9,4 +9,8 @@
     <language>en-GB</language>
     <licenseUrl>https://github.com/cityindex/CIAPI.CS/raw/master/LICENSE.txt</licenseUrl>
   </metadata>
+  <files>
+  	<file src="lib\ciapi\bin\release\*.dll" target="lib"/>
+  	<file src="lib\ciapi\bin\release\*.pdb" target="lib"/>
+  </files>
 </package>
