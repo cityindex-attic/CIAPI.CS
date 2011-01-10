@@ -4,7 +4,7 @@
     <ReportsDirectory>$(RootDirectory)\reports</ReportsDirectory>
     
     <NunitEXE>$(RootDirectory)\tools\nunit-runner\nunit-console-x86.exe</NunitEXE>
-    <NUnitArgs>/process=Single /domain=Single /nothread /framework=4.0.30319</NUnitArgs>
+    <NUnitArgs>/process=Single /domain=Single /thread /framework=4.0.30319</NUnitArgs>
 
     <PartCover4Directory>$(ProgramFiles86)\PartCover\PartCover .NET 4.0</PartCover4Directory>
   </PropertyGroup>
