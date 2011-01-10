@@ -60,6 +60,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common.Logging.Phone7\Common.Logging.Phone7.csproj">
+      <Project>{06CA6C00-672E-4B49-8FD4-A4A9AB453C5A}</Project>
+      <Name>Common.Logging.Phone7</Name>
+    </ProjectReference>
     <ProjectReference Include="..\JsonClient.Phone7\JsonClient.Phone7.csproj">
       <Project>{DB3089D5-44AC-441C-845C-3596C21C5E34}</Project>
       <Name>JsonClient.Phone7</Name>

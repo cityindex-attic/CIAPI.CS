@@ -33,8 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Common.Logging, Version=2.0.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Common.Logging">
       <HintPath>..\packages\Common.Logging-2.0.0\2.0\release\Common.Logging.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
@@ -66,19 +65,14 @@
     <Compile Include="ThrottedRequestQueue.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
-    <None Include="RequestCache_GetOrCreate_2.sequencediagram" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Notes.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="RequestCache_GetOrCreate_2.sequencediagram.layout">
-      <DependentUpon>RequestCache_GetOrCreate_2.sequencediagram</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
