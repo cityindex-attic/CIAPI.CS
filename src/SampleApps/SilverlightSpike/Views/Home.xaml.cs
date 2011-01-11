@@ -30,11 +30,11 @@ namespace SilverlightSpike
 
             List<string> datasource;
 
-            App.ctx.BeginLogIn(loginResult =>
+            App.ctx.BeginLogIn("CC735158", "password", loginResult =>
             {
                 App.ctx.EndLogIn(loginResult);
 
-                App.ctx.BeginListNewsHeadlines(headlinesResult =>
+                App.ctx.BeginListNewsHeadlines("UK", 20, headlinesResult =>
                 {
                     var response = App.ctx.EndListNewsHeadlines(headlinesResult);
                     datasource = response.Headlines.Select(item => item.Headline).ToList();
@@ -45,8 +45,8 @@ namespace SilverlightSpike
                         listBox1.ItemsSource = datasource;
                     });
 
-                }, null, "UK", 20);
-            }, null, "CC735158", "password");
+                }, null);
+            }, null);
         }
     }
 }

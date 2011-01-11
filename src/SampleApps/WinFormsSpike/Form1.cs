@@ -42,7 +42,7 @@ namespace WinFormsSpike
         {
             DisableUi();
             _ctx = new ApiClient(new Uri(ApiEndpointTextBox.Text));
-            _ctx.BeginLogIn(result =>
+            _ctx.BeginLogIn(UidTextBox.Text, PwdTextBox.Text, result =>
                 {
                     try
                     {
@@ -65,7 +65,7 @@ namespace WinFormsSpike
                     {
                         Cursor = Cursors.Default;
                     }
-                }, null, UidTextBox.Text, PwdTextBox.Text);
+                }, null);
 
         }
 
