@@ -5,13 +5,22 @@ namespace CityIndex.JsonClient
 {
     public static class TestConfig
     {
-        public static string ApiUrl
+        public static string RpcUrl
         {
             get
             {
                 return ConfigurationManager.AppSettings["apiUrl"];
             }
         }
+
+        public static string StreamingUrl
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["streamingUrl"];
+            }
+        }
+
         public static string ApiUsername
         {
             get
@@ -26,11 +35,11 @@ namespace CityIndex.JsonClient
                 return ConfigurationManager.AppSettings["apiPassword"];
             }
         }
-        public static Guid ApiTestSessionId
+        public static string ApiTestSessionId
         {
             get
             {
-                return new Guid(ConfigurationManager.AppSettings["apiTestSessionId"]);
+                return ConfigurationManager.AppSettings["apiTestSessionId"];
             }
         }
 

@@ -1,4 +1,6 @@
 ﻿using System;
+using CityIndex.JsonClient.Converters;
+using Newtonsoft.Json;
 namespace CIAPI.DTO
 { 
  
@@ -15,15 +17,20 @@ namespace CIAPI.DTO
         /// minimum : 1
         /// maximum : 2147483647
         /// </summary>
+		
 		public  Int32 StoryId{get;set;}
         /// <summary>
         /// The News story headline
         /// </summary>
+		
 		public  String Headline{get;set;}
         /// <summary>
         /// The date on which the news story was published. Always in UTC
+        /// format : "wcf-date"
         /// </summary>
-		public  String PublishDate{get;set;}
+        [JsonConverter(typeof(UnixDateTimeOffsetConverter))]
+		
+		public  DateTime PublishDate{get;set;}
 	}
 
 	#endregion
@@ -42,12 +49,14 @@ namespace CIAPI.DTO
         /// minimum : 1000000
         /// maximum : 9999999
         /// </summary>
+		
 		public  Int32 MarketId{get;set;}
         /// <summary>
         /// The market name
         /// minLength : 1
         /// maxLength : 120
         /// </summary>
+		
 		public  String Name{get;set;}
 	}
 
@@ -65,19 +74,25 @@ namespace CIAPI.DTO
         /// <summary>
         /// The price at which the stop order will be filled
         /// </summary>
+		
 		public  StopLimitOrderDTO Stop{get;set;}
         /// <summary>
         /// The price at which the limit order will be filled
         /// </summary>
+		
 		public  StopLimitOrderDTO Limit{get;set;}
         /// <summary>
         /// Identifier which relates to the expiry of the order/trade, i.e. GoodTillTime (GTT), GoodTillCancelled (GTC) or GoodTillDay (GTD)
         /// </summary>
+		
 		public  String Applicability{get;set;}
         /// <summary>
         /// The associated expiry DateTime for a pair of GoodTillTime IfDone orders
+        /// format : "wcf-date"
         /// </summary>
-		public  String ExpiryDateTimeUTC{get;set;}
+        [JsonConverter(typeof(UnixDateTimeOffsetConverter))]
+		
+		public  DateTime ExpiryDateTimeUTC{get;set;}
 	}
 
 	#endregion
@@ -95,22 +110,28 @@ namespace CIAPI.DTO
         /// The date of the start of the price bar interval
         /// format : "wcf-date"
         /// </summary>
+        [JsonConverter(typeof(UnixDateTimeOffsetConverter))]
+		
 		public  DateTime BarDate{get;set;}
         /// <summary>
         /// The price at the open of the price bar interval
         /// </summary>
+		
 		public  Decimal Open{get;set;}
         /// <summary>
         /// The highest price occuring during the interval of the price bar
         /// </summary>
+		
 		public  Decimal High{get;set;}
         /// <summary>
         /// The lowest price occuring during the interval of the price bar
         /// </summary>
+		
 		public  Decimal Low{get;set;}
         /// <summary>
         /// The price at the end of the price bar interval
         /// </summary>
+		
 		public  Decimal Close{get;set;}
 	}
 
@@ -156,6 +177,7 @@ namespace CIAPI.DTO
         /// minLength : 0
         /// maxLength : 2147483647
         /// </summary>
+		
 		public  String Story{get;set;}
 	}
 
@@ -174,11 +196,14 @@ namespace CIAPI.DTO
         /// The datetime at which a price tick occured. Accurate to the millisecond
         /// format : "wcf-date"
         /// </summary>
+        [JsonConverter(typeof(UnixDateTimeOffsetConverter))]
+		
 		public  DateTime TickDate{get;set;}
         /// <summary>
         /// The mid price
         /// minimum : 0.0
         /// </summary>
+		
 		public  Decimal Price{get;set;}
 	}
 
@@ -196,6 +221,7 @@ namespace CIAPI.DTO
         /// <summary>
         /// A list of CFD markets
         /// </summary>
+		
 		public  MarketDTO[] Markets{get;set;}
 	}
 
@@ -254,6 +280,7 @@ namespace CIAPI.DTO
         /// <summary>
         /// A list of Spread Betting markets
         /// </summary>
+		
 		public  MarketDTO[] Markets{get;set;}
 	}
 
@@ -273,30 +300,37 @@ namespace CIAPI.DTO
         /// minimum : 1000000
         /// maximum : 9999999
         /// </summary>
+		
 		public  Int32 MarketId{get;set;}
         /// <summary>
         /// Direction identifier for order/trade, values supported are buy or sell
         /// </summary>
+		
 		public  String Direction{get;set;}
         /// <summary>
         /// Size of the order/trade
         /// </summary>
+		
 		public  Decimal Quantity{get;set;}
         /// <summary>
         /// Market prices are quoted as a pair (buy/sell or bid/offer), the BidPrice is the lower of the two
         /// </summary>
+		
 		public  Decimal BidPrice{get;set;}
         /// <summary>
         /// Market prices are quote as a pair (buy/sell or bid/offer), the OfferPrice is the higher of the market price pair
         /// </summary>
+		
 		public  Decimal OfferPrice{get;set;}
         /// <summary>
         /// Unique identifier for a price tick
         /// </summary>
+		
 		public  String AuditId{get;set;}
         /// <summary>
         /// TradingAccount associated with the trade/order request
         /// </summary>
+		
 		public  Int32 TradingAccountId{get;set;}
 	}
 
@@ -329,6 +363,7 @@ namespace CIAPI.DTO
         /// minLength : 36
         /// maxLength : 100
         /// </summary>
+		
 		public  String Session{get;set;}
 	}
 
@@ -346,6 +381,7 @@ namespace CIAPI.DTO
         /// <summary>
         /// An array of price ticks, sorted in ascending order by PriceTick.TickDate
         /// </summary>
+		
 		public  PriceTickDTO[] PriceTicks{get;set;}
 	}
 
@@ -363,14 +399,17 @@ namespace CIAPI.DTO
         /// <summary>
         /// The status of the order (Pending, Accepted, Open, etc)
         /// </summary>
+		
 		public  Int32 Status{get;set;}
         /// <summary>
         /// The id corresponding to a more descriptive reason for the order status
         /// </summary>
+		
 		public  Int32 StatusReason{get;set;}
         /// <summary>
         /// The unique identifier associated to the order returned from the underlying trading system
         /// </summary>
+		
 		public  Int32 OrderId{get;set;}
 	}
 
@@ -388,6 +427,7 @@ namespace CIAPI.DTO
         /// <summary>
         /// An array of finalized price bars, sorted in ascending order based on PriceBar.BarDate
         /// </summary>
+		
 		public  PriceBarDTO[] PriceBars{get;set;}
 	}
 
@@ -405,10 +445,12 @@ namespace CIAPI.DTO
         /// <summary>
         /// This is a description of the ErrorMessage property
         /// </summary>
+		
 		public  String ErrorMessage{get;set;}
         /// <summary>
         /// The error code
         /// </summary>
+		
 		public  ErrorCode ErrorCode{get;set;}
 	}
 
@@ -426,35 +468,44 @@ namespace CIAPI.DTO
         /// <summary>
         /// Unique orderId as provided by the external provider
         /// </summary>
+		
 		public  String Reference{get;set;}
         /// <summary>
         /// External provider (Eg. currenex, ubs, pru bache, etc)
         /// </summary>
+		
 		public  String Source{get;set;}
         /// <summary>
         /// The dealer's user name for the given external provider
         /// </summary>
+		
 		public  String Trader{get;set;}
         /// <summary>
         /// Direction identifier for hedge, values supported are buy or sell
         /// </summary>
+		
 		public  String Direction{get;set;}
         /// <summary>
         /// Size of the hedge trade
         /// </summary>
+		
 		public  Decimal Quantity{get;set;}
         /// <summary>
         /// The price at which the hedge trade is to be placed
         /// </summary>
+		
 		public  Decimal Price{get;set;}
         /// <summary>
         /// Value date (expressed as UTC)
         /// format : "wcf-date"
         /// </summary>
+        [JsonConverter(typeof(UnixDateTimeOffsetConverter))]
+		
 		public  DateTime ValueDate{get;set;}
         /// <summary>
         /// Additional info (Eg. A/B book)
         /// </summary>
+		
 		public  String AdditionalInfo{get;set;}
 	}
 
@@ -472,6 +523,7 @@ namespace CIAPI.DTO
         /// <summary>
         /// A list of News headlines
         /// </summary>
+		
 		public  NewsDTO[] Headlines{get;set;}
 	}
 
@@ -489,6 +541,7 @@ namespace CIAPI.DTO
         /// <summary>
         /// LogOut status
         /// </summary>
+		
 		public  Boolean LoggedOut{get;set;}
 	}
 
@@ -506,14 +559,17 @@ namespace CIAPI.DTO
         /// <summary>
         /// ClientAccountIds that this session is authorized to work with
         /// </summary>
+		
 		public  Int32[] ClientAccountIds{get;set;}
         /// <summary>
         /// TradingAccountIds that this session is authorized to work with
         /// </summary>
+		
 		public  Int32[] TradingAccountIds{get;set;}
         /// <summary>
         /// Whether this session token is still valid
         /// </summary>
+		
 		public  Boolean IsValid{get;set;}
 	}
 
@@ -533,12 +589,14 @@ namespace CIAPI.DTO
         /// minLength : 6
         /// maxLength : 20
         /// </summary>
+		
 		public  String UserName{get;set;}
         /// <summary>
         /// Password is case sensitive
         /// minLength : 6
         /// maxLength : 20
         /// </summary>
+		
 		public  String Password{get;set;}
 	}
 
@@ -556,6 +614,7 @@ namespace CIAPI.DTO
         /// <summary>
         /// The details of the news item
         /// </summary>
+		
 		public  NewsDetailDTO NewsDetail{get;set;}
 	}
 

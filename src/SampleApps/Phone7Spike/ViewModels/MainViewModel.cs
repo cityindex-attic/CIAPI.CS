@@ -72,7 +72,7 @@ namespace Phone7Spike
                     {
                         foreach (var item in response.Headlines)
                         {
-                            Items.Add(new ItemViewModel() { LineOne = item.Headline, LineTwo = item.PublishDate, StoryId = item.StoryId });
+                            Items.Add(new ItemViewModel() { LineOne = item.Headline, LineTwo = item.PublishDate.ToString(), StoryId = item.StoryId });
                         }
                     });
                     

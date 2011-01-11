@@ -36,7 +36,7 @@ namespace ConsoleSpikes
 
         private static void GetNewsAsynchronously()
         {
-            _ctx = new ApiClient(new Uri(TestConfig.ApiUrl));
+            _ctx = new ApiClient(new Uri(TestConfig.RpcUrl));
 
             _gate = new ManualResetEvent(false);
             BeginLogIn(TestConfig.ApiUsername, TestConfig.ApiPassword);
@@ -106,7 +106,7 @@ namespace ConsoleSpikes
         {
             try
             {
-                var ctx = new ApiClient(new Uri(TestConfig.ApiUrl));
+                var ctx = new ApiClient(new Uri(TestConfig.RpcUrl));
 
                 ctx.LogIn(TestConfig.ApiUsername, TestConfig.ApiPassword);
 

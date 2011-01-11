@@ -24,9 +24,9 @@ namespace TradingApi.Client.Core
             _category = category;
         }
 
-        public event EventHandler<LightstreamerEventArgs<NewsUpdate>> Update;
+        public event EventHandler<StreamingEventArgs<NewsUpdate>> Update;
 
-        protected internal override void OnUpdate(LightstreamerEventArgs<StreamingUpdate> e)
+        protected internal override void OnUpdate(StreamingEventArgs<StreamingUpdate> e)
         {
             if (Update != null && !e.Item.Update.IsNull())
             {
@@ -34,7 +34,7 @@ namespace TradingApi.Client.Core
             }
         }
 
-        private LightstreamerEventArgs<NewsUpdate> ConvertStreamingUpdateToNewsUpdate(LightstreamerEventArgs<StreamingUpdate> args)
+        private StreamingEventArgs<NewsUpdate> ConvertStreamingUpdateToNewsUpdate(StreamingEventArgs<StreamingUpdate> args)
         {
             var update = new NewsUpdate();
             try
@@ -66,7 +66,7 @@ namespace TradingApi.Client.Core
                 throw;
             }
 
-            return new LightstreamerEventArgs<NewsUpdate> {Item = update};
+            return new StreamingEventArgs<NewsUpdate> {Item = update};
         }
 
         protected override SimpleTableInfo GetTableInfo()

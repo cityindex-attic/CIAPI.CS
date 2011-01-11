@@ -25,7 +25,7 @@ namespace TradingApi.Client.Core.Lightstreamer
             _subscribedTableKey = _connection.LSClient.SubscribeTable(GetTableInfo(), this, false);
         }
 
-        protected internal abstract void OnUpdate(LightstreamerEventArgs<StreamingUpdate> lightstreamerEventArgs);
+        protected internal abstract void OnUpdate(StreamingEventArgs<StreamingUpdate> lightstreamerEventArgs);
 
         protected abstract SimpleTableInfo GetTableInfo();
 
@@ -39,7 +39,7 @@ namespace TradingApi.Client.Core.Lightstreamer
 
         public virtual void OnUpdate(int itemPos, string itemName, UpdateInfo update)
         {
-            OnUpdate(new LightstreamerEventArgs<StreamingUpdate> { Item = new StreamingUpdate { ItemName = itemName, ItemPosition = itemPos, Update = UpdateDetails.From(update) } });
+            OnUpdate(new StreamingEventArgs<StreamingUpdate> { Item = new StreamingUpdate { ItemName = itemName, ItemPosition = itemPos, Update = UpdateDetails.From(update) } });
         }
 
         public virtual void OnSnapshotEnd(int itemPos, string itemName)

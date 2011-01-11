@@ -63,9 +63,6 @@
     <Compile Include="Domain\SiteState.cs" />
     <Compile Include="Domain\Statistics.cs" />
     <Compile Include="Domain\Styling.cs" />
-    <Compile Include="Json\ApiEnumConverter.cs" />
-    <Compile Include="Json\UnixDateTimeConverter.cs" />
-    <Compile Include="Json\UnixDateTimeHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StackAuthRoutes.cs" />
     <Compile Include="StackExchangeRoutes.cs" />
@@ -79,6 +76,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Json\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -53,6 +53,9 @@
     <Compile Include="ApiException.cs" />
     <Compile Include="CacheCallBack.cs" />
     <Compile Include="CacheItem.cs" />
+    <Compile Include="Converters\ApiEnumConverter.cs" />
+    <Compile Include="Converters\UnixDateTimeConverter.cs" />
+    <Compile Include="Converters\UnixDateTimeHelper.cs" />
     <Compile Include="IJsonClient.cs" />
     <Compile Include="IRequestCache.cs" />
     <Compile Include="IRequestFactory.cs" />

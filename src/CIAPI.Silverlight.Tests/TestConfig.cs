@@ -43,11 +43,11 @@ namespace CIAPI.Silverlight.Tests
                 return "password";
             }
         }
-        public static Guid ApiTestSessionId
+        public static string ApiTestSessionId
         {
             get
             {
-                return new Guid("D2FF3E4D-01EA-4741-86F0-437C919B5559");
+                return "D2FF3E4D-01EA-4741-86F0-437C919B5559";
             }
         }
 

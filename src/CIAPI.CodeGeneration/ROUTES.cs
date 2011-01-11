@@ -50,7 +50,7 @@ namespace CIAPI
 		/// <param name="userName">Username is case sensitive. May be set as a service parameter or as a request header.</param>
 		/// <param name="session">The session token. May be set as a service parameter or as a request header.</param>
         /// <returns></returns>
-        public SessionDeletionResponseDTO DeleteSession(String userName, Guid session)
+        public SessionDeletionResponseDTO DeleteSession(String userName, string session)
         {
        
             return Request<SessionDeletionResponseDTO>("session","/deleteSession?userName={userName}&session={session}", "POST", new Dictionary<string, object>
@@ -67,7 +67,7 @@ namespace CIAPI
 		/// <param name="userName">Username is case sensitive. May be set as a service parameter or as a request header.</param>
 		/// <param name="session">The session token. May be set as a service parameter or as a request header.</param>
         /// <returns></returns>
-        public void BeginDeleteSession(String userName, Guid session, ApiAsyncCallback<SessionDeletionResponseDTO> callback, object state)
+        public void BeginDeleteSession(String userName, string session, ApiAsyncCallback<SessionDeletionResponseDTO> callback, object state)
         {
             BeginRequest(callback, state, "session","/deleteSession?userName={userName}&session={session}", "POST",new Dictionary<string, object>
                                 {

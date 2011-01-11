@@ -27,7 +27,7 @@ namespace WinFormsSpike
 
         private void Form1Load(object sender, EventArgs e)
         {
-            ApiEndpointTextBox.Text = TestConfig.ApiUrl;
+            ApiEndpointTextBox.Text = TestConfig.RpcUrl;
             UidTextBox.Text = TestConfig.ApiUsername;
             PwdTextBox.Text = TestConfig.ApiPassword;
             NewsHeadlinesGridView.SelectionChanged += NewsHeadlinesGridViewSelectionChanged;

@@ -8,13 +8,17 @@
 <#@ import namespace="Newtonsoft.Json" #>
 <#@ import namespace="Newtonsoft.Json.Linq" #>
 using System;
+using CityIndex.JsonClient.Converters;
+using Newtonsoft.Json;
 namespace CIAPI.DTO
 { 
 <#
 
-	var request = new Request(new Uri("http://ec2-174-129-8-69.compute-1.amazonaws.com/RESTWebServices/schema"), "api", "cityindexapi");
-    var source = request.Execute();
- 
+	// var request = new Request(new Uri("http://ec2-174-129-8-69.compute-1.amazonaws.com/RESTWebServices/schema"), "api", "cityindexapi");
+    // var source = request.Execute();
+ 	
+	string dir = System.IO.Path.GetDirectoryName(this.Host.TemplateFile);
+	string source = System.IO.File.ReadAllText(System.IO.Path.Combine(dir,"schema.txt"));
     JObject schema = (JObject)JsonConvert.DeserializeObject(source);
     foreach (var typeObj in schema)
     { 
@@ -90,6 +94,18 @@ break;
                 }
 #>
         /// </summary>
+<# 
+				string format = kvp.Value["format"] != null ? FixText(kvp.Value["format"].Value<string>()) : "";
+				switch(format){
+					case "wcf-date":
+#>
+        [JsonConverter(typeof(UnixDateTimeOffsetConverter))]
+<#
+						break;
+					default:
+						break;
+				}
+				#>		
 		public  <#=  GetTypeName((JObject)kvp.Value) #> <#=  kvp.Key #>{get;set;}
 <#
 
