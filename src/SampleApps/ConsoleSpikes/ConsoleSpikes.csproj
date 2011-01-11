@@ -51,6 +51,7 @@
     <Compile Include="..\..\common\TestConfig.cs">
       <Link>TestConfig.cs</Link>
     </Compile>
+    <Compile Include="Example.FetchNews.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RawJsonClient.cs" />

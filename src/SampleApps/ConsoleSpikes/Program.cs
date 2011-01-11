@@ -51,7 +51,7 @@ namespace ConsoleSpikes
 
         static void BeginLogIn(string userName, string password)
         {
-            _ctx.BeginLogIn(EndLoggedIn, null, userName, password);
+            _ctx.BeginLogIn(userName, password, EndLoggedIn, null);
         }
 
         static void EndLoggedIn(ApiAsyncResult<CreateSessionResponseDTO> result)
