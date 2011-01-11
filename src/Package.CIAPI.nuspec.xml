@@ -12,5 +12,6 @@
   <files>
   	<file src="lib\ciapi\bin\release\*.dll" target="lib"/>
   	<file src="lib\ciapi\bin\release\*.pdb" target="lib"/>
+    <file src="..\src\SampleApps\ConsoleSpikes\Example.FetchNews.cs" target="content"/>
   </files>
 </package>
