@@ -65,7 +65,7 @@ namespace Phone7Spike
 
 
 
-            App.ctx.BeginListNewsHeadlines(result =>
+            App.ctx.BeginListNewsHeadlines("UK", 20, result =>
                 {
                     var response = App.ctx.EndListNewsHeadlines(result);
                     Deployment.Current.Dispatcher.BeginInvoke(() =>
@@ -77,7 +77,7 @@ namespace Phone7Spike
                     });
                     
                     IsDataLoaded = true;
-                }, null, "UK", 20);
+                }, null);
 
                         
         }

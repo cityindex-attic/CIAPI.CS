@@ -77,7 +77,7 @@ namespace Phone7Spike
 
             SetBackground();
 
-            App.ctx.BeginGetNewsDetail(result =>
+            App.ctx.BeginGetNewsDetail(((ItemViewModel)DataContext).StoryId.ToString(), result =>
             {
                 var response = App.ctx.EndGetNewsDetail(result);
 
@@ -103,7 +103,7 @@ namespace Phone7Spike
 
                 });
 
-            }, null, ((ItemViewModel)DataContext).StoryId.ToString());
+            }, null);
 
 
 

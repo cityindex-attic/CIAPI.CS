@@ -88,7 +88,7 @@ namespace Phone7Spike
             //TODO: why? does the viewmodel get disposed?
 
             // Ensure that application state is restored appropriately
-            ctx.BeginLogIn(result =>
+            ctx.BeginLogIn( "CC735158", "password", result =>
                 {
                     ctx.EndLogIn(result);
 
@@ -96,7 +96,7 @@ namespace Phone7Spike
                     {
                         ViewModel.LoadData();
                     }
-                }, null, "CC735158", "password");
+                }, null);
         }
 
         // Code to execute when the application is deactivated (sent to background)
