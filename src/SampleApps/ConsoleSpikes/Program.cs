@@ -64,7 +64,7 @@ namespace ConsoleSpikes
 
         static void BeginListNewsHeadlines(string category, int maxResults)
         {
-            _ctx.BeginListNewsHeadlines(EndListNewsHeadlines, null, category, maxResults);
+            _ctx.BeginListNewsHeadlines(category, maxResults, EndListNewsHeadlines, null);
         }
 
         static void EndListNewsHeadlines(ApiAsyncResult<ListNewsHeadlinesResponseDTO> result)

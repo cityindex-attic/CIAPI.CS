@@ -35,7 +35,7 @@ namespace WinFormsSpike
             LogOutButton.Enabled = false;
             LoginButton.Enabled = true;
         }
-        
+
 
         #region Authentication
         private void LoginButtonClick(object sender, EventArgs e)
@@ -121,12 +121,12 @@ namespace WinFormsSpike
         {
             var item = (NewsDTO)NewsDTOBindingSource.Current;
 
-            _ctx.BeginGetNewsDetail(r =>
+            _ctx.BeginGetNewsDetail(item.StoryId.ToString(), r =>
             {
                 var response = _ctx.EndGetNewsDetail(r);
                 Invoke(() => DisplayHtml(response.NewsDetail.Story, NewsDetailWebBrowser));
 
-            }, null, item.StoryId.ToString());
+            }, null);
         }
 
         #endregion

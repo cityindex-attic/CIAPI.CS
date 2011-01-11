@@ -138,12 +138,12 @@ namespace CityIndex.JsonClient.Tests
 
 
 
-                ctx.BeginListNewsHeadlines(ar =>
+                ctx.BeginListNewsHeadlines("UK", 14, ar =>
                     {
                         ListNewsHeadlinesResponseDTO response = ctx.EndListNewsHeadlines(ar);
                         Assert.AreEqual(14, response.Headlines.Length);
                         gate.Set();
-                    }, null, "UK", 14);
+                    }, null);
 
                 gate.WaitOne();
             }
@@ -174,7 +174,7 @@ namespace CityIndex.JsonClient.Tests
                 requestFactory.CreateTestRequest(NewsHeadlines14, 300, null, null, new WebException("intentional"));
                 Exception exception = null;
                 
-                ctx.BeginListNewsHeadlines(ar =>
+                ctx.BeginListNewsHeadlines("UK", 14, ar =>
                     {
                         try
                         {
@@ -190,7 +190,7 @@ namespace CityIndex.JsonClient.Tests
                             gate.Set();
                         }
 
-                    }, null, "UK", 14);
+                    }, null);
                 gate.WaitOne();
                 Assert.IsNotNull(exception);
                 Assert.AreEqual("intentional\r\nretried 3 times",exception.Message);

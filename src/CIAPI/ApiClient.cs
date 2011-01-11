@@ -77,8 +77,7 @@ namespace CIAPI
         /// <param name="userName">Username is case sensitive</param>
         /// <param name="password">Password is case sensitive</param>
         /// <returns></returns>
-        public void BeginLogIn(ApiAsyncCallback<CreateSessionResponseDTO> callback, object state, String userName,
-                               String password)
+        public void BeginLogIn(String userName,String password, ApiAsyncCallback<CreateSessionResponseDTO> callback, object state)
         {
             UserName = userName;
             SessionId = Guid.Empty;
