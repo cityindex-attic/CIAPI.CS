@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using CityIndex.JsonClient;
+using CityIndex.JsonClient.Converters;
 using SOAPI.CS2.Domain;
-using Soapi.Json;
+
 
 namespace SOAPI.CS2
 {

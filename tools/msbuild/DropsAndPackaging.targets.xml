@@ -11,10 +11,13 @@
 
   <Target Name="Package" DependsOnTargets="CreateDropDirectories;CopyMSBuildOutputToDropDirectory;CopyLicenseToAllDirectories;CopyReportsToDropFolder">
     <Message Text="Packaging with NuGet" />
-    <Copy SourceFiles="$(RootDirectory)\src\Package.nuspec.xml" DestinationFolder="$(DropDirectory)"/>
-    <Exec Command='"$(NuGetEXE)" pack $(DropDirectory)\Package.nuspec.xml' ContinueOnError='false'
-          WorkingDirectory='$(DropDirectory)'/>
+    <Copy SourceFiles="$(RootDirectory)\src\Package.CIAPI.nuspec.xml" DestinationFolder="$(DropDirectory)"/>
+    <Copy SourceFiles="$(RootDirectory)\src\Package.JsonClient.nuspec.xml" DestinationFolder="$(DropDirectory)"/>
+    <Exec Command='"$(NuGetEXE)" pack $(DropDirectory)\Package.CIAPI.nuspec.xml' ContinueOnError='false' WorkingDirectory='$(DropDirectory)'/>
+    <Exec Command='"$(NuGetEXE)" pack $(DropDirectory)\Package.JsonClient.nuspec.xml' ContinueOnError='false' WorkingDirectory='$(DropDirectory)'/>
   </Target>
+
+  
   
   <Target Name="CreateDropDirectories">
     <Message Text="Making the drop directories at '$(DropDirectory)'." />
@@ -27,9 +30,9 @@
   
   <Target Name="CopyMSBuildOutputToDropDirectory">
     <ItemGroup>
-      <MSBuildOutputItems Exclude="$(SrcDirectory)\**\*.pdb" Include="$(SrcDirectory)\**\bin\$(Configuration)\*.*" />
+      <MSBuildOutputItems Exclude="$(SrcDirectory)\**\*.xml" Include="$(SrcDirectory)\**\bin\$(Configuration)\*.*" />
     </ItemGroup>
-    <Message Text="Copying dll output to $(DropLibDirectory)" />
+    <Message Text="Copying $(Configuration) dlls output to $(DropLibDirectory)" />
     <Copy ContinueOnError="false" SourceFiles="@(MSBuildOutputItems)" DestinationFiles="@(MSBuildOutputItems ->'$(DropLibDirectory)\%(RecursiveDir)%(Filename)%(Extension)')" />
   </Target>
 

@@ -20,8 +20,8 @@ namespace TradingApi.Client.Core
         protected int MarketId { get; private set; }
         protected string ItemPrefix { get; private set; }
 
-        public event EventHandler<LightstreamerEventArgs<PriceUpdate>> Update;
-        protected internal override void OnUpdate(LightstreamerEventArgs<StreamingUpdate> e)
+        public event EventHandler<StreamingEventArgs<PriceUpdate>> Update;
+        protected internal override void OnUpdate(StreamingEventArgs<StreamingUpdate> e)
         {
             if (Update != null && !e.Item.Update.IsNull())
             {
@@ -29,7 +29,7 @@ namespace TradingApi.Client.Core
             }
         }
 
-        private LightstreamerEventArgs<PriceUpdate> ConvertStreamingUpdateToPriceUpdate(LightstreamerEventArgs<StreamingUpdate> args)
+        private StreamingEventArgs<PriceUpdate> ConvertStreamingUpdateToPriceUpdate(StreamingEventArgs<StreamingUpdate> args)
         {
             var update = new PriceUpdate();
             try
@@ -70,7 +70,7 @@ namespace TradingApi.Client.Core
                         });
             }
 
-            return new LightstreamerEventArgs<PriceUpdate>{ Item = update };
+            return new StreamingEventArgs<PriceUpdate>{ Item = update };
         }
 
 

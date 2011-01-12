@@ -84,14 +84,14 @@ namespace CIAPI
 <#			
 		}
 #>        /// <returns></returns>
-        public void Begin<#= service.Name #>(ApiAsyncCallback<<#= method["returns"]["$ref"].Value<string>().Substring(2) #>> callback, object state, <#
+        public void Begin<#= service.Name #>(<#
 	    first = true;
 	    foreach (JObject parameter in method["parameters"])
 	    {
 #><#=(first ? "" : ", ") + GetTypeName(parameter) +" " + parameter["name"].Value<string>() #><#			
 	        first = false;
 		}
-#>)
+#>, ApiAsyncCallback<<#= method["returns"]["$ref"].Value<string>().Substring(2) #>> callback, object state)
         {
             BeginRequest(callback, state, "<#= method["target"].Value<string>() #>","<#= method["uriTemplate"].Value<string>() #>", "<#= method["transport"].Value<string>() #>",new Dictionary<string, object>
                                 {

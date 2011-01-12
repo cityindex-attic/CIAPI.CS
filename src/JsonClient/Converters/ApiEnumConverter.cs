@@ -1,10 +1,9 @@
-﻿
-using System;
+﻿using System;
 using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace Soapi.Json
+namespace CityIndex.JsonClient.Converters
 {
     /// <summary>
     /// Converts an <see cref="Enum"/> to and from its name string value.

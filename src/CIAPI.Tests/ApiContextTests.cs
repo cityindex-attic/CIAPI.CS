@@ -32,7 +32,7 @@ namespace CityIndex.JsonClient.Tests
 
             requestFactory.CreateTestRequest(LoggedIn);
 
-            var ctx = new ApiClient(new Uri(TestConfig.ApiUrl), new RequestCache(), requestFactory, throttleScopes, 3);
+            var ctx = new ApiClient(new Uri(TestConfig.RpcUrl), new RequestCache(), requestFactory, throttleScopes, 3);
 
             CreateSessionResponseDTO response = ctx.CreateSession(TestConfig.ApiUsername, TestConfig.ApiPassword);
             Assert.IsNotNullOrEmpty(response.Session);
@@ -54,7 +54,7 @@ namespace CityIndex.JsonClient.Tests
 
             requestFactory.CreateTestRequest(LoggedIn);
 
-            var ctx = new ApiClient(new Uri(TestConfig.ApiUrl), new RequestCache(), requestFactory, throttleScopes, 3);
+            var ctx = new ApiClient(new Uri(TestConfig.RpcUrl), new RequestCache(), requestFactory, throttleScopes, 3);
 
             try
             {
@@ -83,7 +83,7 @@ namespace CityIndex.JsonClient.Tests
 
             requestFactory.CreateTestRequest(LoggedOut);
 
-            var ctx = new ApiClient(new Uri(TestConfig.ApiUrl), new RequestCache(), requestFactory, throttleScopes, 3);
+            var ctx = new ApiClient(new Uri(TestConfig.RpcUrl), new RequestCache(), requestFactory, throttleScopes, 3);
 
             SessionDeletionResponseDTO response = ctx.DeleteSession(TestConfig.ApiUsername, TestConfig.ApiTestSessionId);
             Assert.IsTrue(response.LoggedOut);
@@ -103,7 +103,7 @@ namespace CityIndex.JsonClient.Tests
 
             requestFactory.CreateTestRequest(NewsHeadlines12);
 
-            var ctx = new ApiClient(new Uri(TestConfig.ApiUrl), new RequestCache(), requestFactory, throttleScopes, 3)
+            var ctx = new ApiClient(new Uri(TestConfig.RpcUrl), new RequestCache(), requestFactory, throttleScopes, 3)
             {
                 UserName = TestConfig.ApiUsername,
                 SessionId = TestConfig.ApiTestSessionId
@@ -130,7 +130,7 @@ namespace CityIndex.JsonClient.Tests
 
                 requestFactory.CreateTestRequest(NewsHeadlines14);
 
-                var ctx = new ApiClient(new Uri(TestConfig.ApiUrl), new RequestCache(), requestFactory, throttleScopes, 3)
+                var ctx = new ApiClient(new Uri(TestConfig.RpcUrl), new RequestCache(), requestFactory, throttleScopes, 3)
                 {
                     UserName = TestConfig.ApiUsername,
                     SessionId = TestConfig.ApiTestSessionId
@@ -138,12 +138,12 @@ namespace CityIndex.JsonClient.Tests
 
 
 
-                ctx.BeginListNewsHeadlines(ar =>
+                ctx.BeginListNewsHeadlines("UK", 14, ar =>
                     {
                         ListNewsHeadlinesResponseDTO response = ctx.EndListNewsHeadlines(ar);
                         Assert.AreEqual(14, response.Headlines.Length);
                         gate.Set();
-                    }, null, "UK", 14);
+                    }, null);
 
                 gate.WaitOne();
             }
@@ -163,7 +163,7 @@ namespace CityIndex.JsonClient.Tests
                     {"trading", new ThrottedRequestQueue(TimeSpan.FromSeconds(3), 1, 10)}
                 };
 
-                var ctx = new ApiClient(new Uri(TestConfig.ApiUrl), new RequestCache(), requestFactory, throttleScopes, 3)
+                var ctx = new ApiClient(new Uri(TestConfig.RpcUrl), new RequestCache(), requestFactory, throttleScopes, 3)
                 {
                     UserName = TestConfig.ApiUsername,
                     SessionId = TestConfig.ApiTestSessionId
@@ -174,7 +174,7 @@ namespace CityIndex.JsonClient.Tests
                 requestFactory.CreateTestRequest(NewsHeadlines14, 300, null, null, new WebException("intentional"));
                 Exception exception = null;
                 
-                ctx.BeginListNewsHeadlines(ar =>
+                ctx.BeginListNewsHeadlines("UK", 14, ar =>
                     {
                         try
                         {
@@ -190,7 +190,7 @@ namespace CityIndex.JsonClient.Tests
                             gate.Set();
                         }
 
-                    }, null, "UK", 14);
+                    }, null);
                 gate.WaitOne();
                 Assert.IsNotNull(exception);
                 Assert.AreEqual("intentional\r\nretried 3 times",exception.Message);

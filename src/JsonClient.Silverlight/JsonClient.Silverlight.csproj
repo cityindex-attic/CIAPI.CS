@@ -85,6 +85,15 @@
     <Compile Include="..\JsonClient\Client.cs">
       <Link>Client.cs</Link>
     </Compile>
+    <Compile Include="..\JsonClient\Converters\ApiEnumConverter.cs">
+      <Link>Converters\ApiEnumConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\JsonClient\Converters\UnixDateTimeConverter.cs">
+      <Link>Converters\UnixDateTimeConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\JsonClient\Converters\UnixDateTimeHelper.cs">
+      <Link>Converters\UnixDateTimeHelper.cs</Link>
+    </Compile>
     <Compile Include="..\JsonClient\IJsonClient.cs">
       <Link>IJsonClient.cs</Link>
     </Compile>

@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="CityIndex.JsonClient.ApiAsyncResult&lt;TDTO&gt;" Collapsed="true">
+    <Position X="3.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEICAAIEAAAQAQIAAABAEAEAAAAAIDBQAAAAAAAAAAA=</HashCode>
+      <FileName>ApiAsyncResult.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CityIndex.JsonClient.ApiAsyncResultBase" Collapsed="true">
+    <Position X="3.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ApiAsyncResultBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CityIndex.JsonClient.ApiException" Collapsed="true">
+    <Position X="6" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ApiException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CityIndex.JsonClient.CacheCallBack&lt;TDTO&gt;" Collapsed="true">
+    <Position X="7.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAQAA=</HashCode>
+      <FileName>CacheCallBack.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CityIndex.JsonClient.CacheItem&lt;TDTO&gt;" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>CacheItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CityIndex.JsonClient.CacheItemBase" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QIAAAAAAAAAAAAAAAAgAAAAABAAAAAAAAABAACAARCA=</HashCode>
+      <FileName>CacheItemBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CityIndex.JsonClient.Client" BaseTypeListCollapsed="true">
+    <Position X="12" Y="5.5" Width="3.75" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>gAAEAAAAAqAABAQBAEAAAAAAACgCgAAAAAAAAAgAAAI=</HashCode>
+      <FileName>Client.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="CityIndex.JsonClient.RequestCache" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="6" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAFBgAAAABAEAABwAAAAAAAAAAQIAAAA=</HashCode>
+      <FileName>RequestCache.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="CityIndex.JsonClient.RequestFactory" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAAAAAAAAAAAAAAAAAgAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>RequestFactory.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="CityIndex.JsonClient.RequestHolder" Collapsed="true">
+    <Position X="9.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAAAAAAAAAAAAAAIAAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>RequestHolder.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CityIndex.JsonClient.ThrottedRequestQueue" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="6" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gABAAAAgAAAkACQAQAAAAAACBAgggAQAAQQEgAAAAAA=</HashCode>
+      <FileName>ThrottedRequestQueue.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Interface Name="CityIndex.JsonClient.IJsonClient">
+    <Position X="12" Y="3.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAAAAAAAAAAAAAgAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IJsonClient.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CityIndex.JsonClient.IRequestCache" Collapsed="true">
+    <Position X="7.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAABAAAAABAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IRequestCache.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CityIndex.JsonClient.IRequestFactory" Collapsed="true">
+    <Position X="9.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>IRequestFactory.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CityIndex.JsonClient.IThrottedRequestQueue" Collapsed="true">
+    <Position X="6" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAgACAAAAAAAAAAAAAAAAAAAQQAgAAAAAA=</HashCode>
+      <FileName>IThrottedRequestQueue.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="CityIndex.JsonClient.CacheItemState" Collapsed="true">
+    <Position X="6" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAACIAAAAAAAACAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>CacheItemState.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="CityIndex.JsonClient.RequestNotificationStatus" Collapsed="true">
+    <Position X="7.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>RequestNotificationStatus.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Delegate Name="CityIndex.JsonClient.ApiAsyncCallback&lt;TDTO&gt;" Collapsed="true">
+    <Position X="6" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ApiAsyncCallback.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -42,7 +42,7 @@ namespace Phone7Spike
         // Load data for the ViewModel Items
         private void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
-            App.ctx.BeginLogIn(result =>
+            App.ctx.BeginLogIn("CC735158", "password", result =>
             {
                 App.ctx.EndLogIn(result);
 
@@ -50,7 +50,7 @@ namespace Phone7Spike
                 {
                     App.ViewModel.LoadData();
                 }
-            }, null, "CC735158", "password");
+            }, null);
         }
     }
 }

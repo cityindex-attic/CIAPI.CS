@@ -36,7 +36,7 @@ namespace ConsoleSpikes
 
         private static void GetNewsAsynchronously()
         {
-            _ctx = new ApiClient(new Uri(TestConfig.ApiUrl));
+            _ctx = new ApiClient(new Uri(TestConfig.RpcUrl));
 
             _gate = new ManualResetEvent(false);
             BeginLogIn(TestConfig.ApiUsername, TestConfig.ApiPassword);
@@ -51,7 +51,7 @@ namespace ConsoleSpikes
 
         static void BeginLogIn(string userName, string password)
         {
-            _ctx.BeginLogIn(EndLoggedIn, null, userName, password);
+            _ctx.BeginLogIn(userName, password, EndLoggedIn, null);
         }
 
         static void EndLoggedIn(ApiAsyncResult<CreateSessionResponseDTO> result)
@@ -64,7 +64,7 @@ namespace ConsoleSpikes
 
         static void BeginListNewsHeadlines(string category, int maxResults)
         {
-            _ctx.BeginListNewsHeadlines(EndListNewsHeadlines, null, category, maxResults);
+            _ctx.BeginListNewsHeadlines(category, maxResults, EndListNewsHeadlines, null);
         }
 
         static void EndListNewsHeadlines(ApiAsyncResult<ListNewsHeadlinesResponseDTO> result)
@@ -106,7 +106,7 @@ namespace ConsoleSpikes
         {
             try
             {
-                var ctx = new ApiClient(new Uri(TestConfig.ApiUrl));
+                var ctx = new ApiClient(new Uri(TestConfig.RpcUrl));
 
                 ctx.LogIn(TestConfig.ApiUsername, TestConfig.ApiPassword);
 

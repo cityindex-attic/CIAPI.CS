@@ -2,10 +2,10 @@
 #region
 
 using System;
-
+using CityIndex.JsonClient.Converters;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using Soapi.Json;
+
 
 
 #endregion

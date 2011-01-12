@@ -19,6 +19,7 @@ namespace CityIndex.JsonClient
     /// </summary>
     public sealed class ThrottedRequestQueue : IThrottedRequestQueue
     {
+
         #region Fields
 
         private static readonly ILog Log = LogManager.GetLogger(typeof(ThrottedRequestQueue));

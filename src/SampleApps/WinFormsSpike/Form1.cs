@@ -27,7 +27,7 @@ namespace WinFormsSpike
 
         private void Form1Load(object sender, EventArgs e)
         {
-            ApiEndpointTextBox.Text = TestConfig.ApiUrl;
+            ApiEndpointTextBox.Text = TestConfig.RpcUrl;
             UidTextBox.Text = TestConfig.ApiUsername;
             PwdTextBox.Text = TestConfig.ApiPassword;
             NewsHeadlinesGridView.SelectionChanged += NewsHeadlinesGridViewSelectionChanged;
@@ -35,14 +35,14 @@ namespace WinFormsSpike
             LogOutButton.Enabled = false;
             LoginButton.Enabled = true;
         }
-        
+
 
         #region Authentication
         private void LoginButtonClick(object sender, EventArgs e)
         {
             DisableUi();
             _ctx = new ApiClient(new Uri(ApiEndpointTextBox.Text));
-            _ctx.BeginLogIn(result =>
+            _ctx.BeginLogIn(UidTextBox.Text, PwdTextBox.Text, result =>
                 {
                     try
                     {
@@ -65,7 +65,7 @@ namespace WinFormsSpike
                     {
                         Cursor = Cursors.Default;
                     }
-                }, null, UidTextBox.Text, PwdTextBox.Text);
+                }, null);
 
         }
 
@@ -121,12 +121,12 @@ namespace WinFormsSpike
         {
             var item = (NewsDTO)NewsDTOBindingSource.Current;
 
-            _ctx.BeginGetNewsDetail(r =>
+            _ctx.BeginGetNewsDetail(item.StoryId.ToString(), r =>
             {
                 var response = _ctx.EndGetNewsDetail(r);
                 Invoke(() => DisplayHtml(response.NewsDetail.Story, NewsDetailWebBrowser));
 
-            }, null, item.StoryId.ToString());
+            }, null);
         }
 
         #endregion

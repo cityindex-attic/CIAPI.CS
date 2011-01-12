@@ -1,0 +1,461 @@
+﻿
+{
+  "NewsDTO": {
+    "id": "NewsDTO",
+    "type": "object",
+    "description": "A news headline",
+    "properties": {
+      "StoryId": {
+        "type": "integer",
+        "description": "The unique identifier for a news story",
+        "minimum": 1,
+        "maximum": 2147483647
+      },
+      "Headline": {
+        "type": "string",
+        "description": "The News story headline"
+      },
+      "PublishDate": {
+        "type": "string",		"format":"wcf-date",
+        "description": "The date on which the news story was published. Always in UTC"
+      }
+    }
+  },
+  "MarketDTO": {
+    "id": "MarketDTO",
+    "type": "object",
+    "description": "Information about a Market",
+    "properties": {
+      "MarketId": {
+        "type": "integer",
+        "description": "A market's unique identifier",
+        "minimum": 1000000,
+        "maximum": 9999999
+      },
+      "Name": {
+        "type": "string",
+        "description": "The market name",
+        "minLength": 1,
+        "maxLength": 120
+      }
+    }
+  },
+  "IfDoneDTO": {
+    "id": "IfDoneDTO",
+    "type": "object",
+    "description": "An IfDone order represents an order which is placed when the corresponding order is filled, e.g attaching a stop/limit to a trade or order",
+    "properties": {
+      "Stop": {
+        "$ref": "#.StopLimitOrderDTO",
+        "description": "The price at which the stop order will be filled"
+      },
+      "Limit": {
+        "$ref": "#.StopLimitOrderDTO",
+        "description": "The price at which the limit order will be filled"
+      },
+      "Applicability": {
+        "type": "string",
+        "description": "Identifier which relates to the expiry of the order/trade, i.e. GoodTillTime (GTT), GoodTillCancelled (GTC) or GoodTillDay (GTD)"
+      },
+      "ExpiryDateTimeUTC": {
+        "type": "string",		"format":"wcf-date",
+        "description": "The associated expiry DateTime for a pair of GoodTillTime IfDone orders"
+      }
+    }
+  },
+  "PriceBarDTO": {
+    "id": "PriceBarDTO",
+    "type": "object",
+    "description": "The details of a specific price bar, useful for plotting candlestick charts",
+    "properties": {
+      "BarDate": {
+        "type": "string",
+        "description": "The date of the start of the price bar interval",
+        "format": "wcf-date"
+      },
+      "Open": {
+        "type": "number",
+        "description": "The price at the open of the price bar interval"
+      },
+      "High": {
+        "type": "number",
+        "description": "The highest price occuring during the interval of the price bar"
+      },
+      "Low": {
+        "type": "number",
+        "description": "The lowest price occuring during the interval of the price bar"
+      },
+      "Close": {
+        "type": "number",
+        "description": "The price at the end of the price bar interval"
+      }
+    }
+  },
+  "OrderDTO": {
+    "id": "OrderDTO",
+    "type": "object",
+    "description": "",
+    "properties": {}
+  },
+  "StopLimitOrderDTO": {
+    "id": "StopLimitOrderDTO",
+    "type": "object",
+    "description": "",
+    "extends": {
+      "$ref": "#.OrderDTO"
+    },
+    "properties": {}
+  },
+  "NewsDetailDTO": {
+    "id": "NewsDetailDTO",
+    "type": "object",
+    "description": "Contains details of a specific news story",
+    "extends": {
+      "$ref": "#.NewsDTO"
+    },
+    "properties": {
+      "Story": {
+        "type": "string",
+        "description": "The detail of the story. This can contain HTML characters.",
+        "minLength": 0,
+        "maxLength": 2147483647
+      }
+    }
+  },
+  "PriceTickDTO": {
+    "id": "PriceTickDTO",
+    "type": "object",
+    "description": "The mid price at a particular point in time.",
+    "properties": {
+      "TickDate": {
+        "type": "string",
+        "description": "The datetime at which a price tick occured. Accurate to the millisecond",
+        "format": "wcf-date"
+      },
+      "Price": {
+        "type": "number",
+        "description": "The mid price",
+        "minimum": 0.0
+      }
+    }
+  },
+  "ListCfdMarketsResponseDTO": {
+    "id": "ListCfdMarketsResponseDTO",
+    "type": "object",
+    "description": "Contains the result of a ListCfdMarkets query",
+    "properties": {
+      "Markets": {
+        "type": "array",
+        "items": {
+          "$ref": "#.MarketDTO"
+        },
+        "description": "A list of CFD markets"
+      }
+    }
+  },
+  "ErrorCode": {
+    "type": "integer",
+    "description": "This is a description of the ErrorCode enum",
+    "enum": [
+      403,
+      500,
+      4000,
+      4001,
+      4002,
+      4003,
+      4004
+    ],
+    "options": [
+      {
+        "value": 403,
+        "label": "Forbidden",
+        "description": "This is a description of Forbidden"
+      },
+      {
+        "value": 500,
+        "label": "InternalServerError",
+        "description": "This is a description of InternalServerError"
+      },
+      {
+        "value": 4000,
+        "label": "InvalidParameterType",
+        "description": "This is a description of InvalidParameterType"
+      },
+      {
+        "value": 4001,
+        "label": "ParameterMissing",
+        "description": "This is a description of ParameterMissing"
+      },
+      {
+        "value": 4002,
+        "label": "InvalidParameterValue",
+        "description": "This is a description of InvalidParameterValue"
+      },
+      {
+        "value": 4003,
+        "label": "InvalidJsonRequest",
+        "description": "This is a description of InvalidJsonRequest"
+      },
+      {
+        "value": 4004,
+        "label": "InvalidJsonRequestCaseFormat",
+        "description": "This is a description of InvalidJsonRequestCaseFormat"
+      }
+    ]
+  },
+  "ListSpreadMarketsResponseDTO": {
+    "id": "ListSpreadMarketsResponseDTO",
+    "type": "object",
+    "description": "Contains the result of a ListSpreadMarketsResponseDTO query",
+    "properties": {
+      "Markets": {
+        "type": "array",
+        "items": {
+          "$ref": "#.MarketDTO"
+        },
+        "description": "A list of Spread Betting markets"
+      }
+    }
+  },
+  "NewTradeOrderRequestDTO": {
+    "id": "NewTradeOrderRequestDTO",
+    "type": "object",
+    "description": "Is not officialy part of the API yet, so don't generate documentation TODO: DAVID: omit jschema on the type to prevent meta generation",
+    "properties": {
+      "MarketId": {
+        "type": "integer",
+        "description": "A market's unique identifier",
+        "minimum": 1000000,
+        "maximum": 9999999
+      },
+      "Direction": {
+        "type": "string",
+        "description": "Direction identifier for order/trade, values supported are buy or sell"
+      },
+      "Quantity": {
+        "type": "number",
+        "description": "Size of the order/trade"
+      },
+      "BidPrice": {
+        "type": "number",
+        "description": "Market prices are quoted as a pair (buy/sell or bid/offer), the BidPrice is the lower of the two"
+      },
+      "OfferPrice": {
+        "type": "number",
+        "description": "Market prices are quote as a pair (buy/sell or bid/offer), the OfferPrice is the higher of the market price pair"
+      },
+      "AuditId": {
+        "type": "string",
+        "description": "Unique identifier for a price tick"
+      },
+      "TradingAccountId": {
+        "type": "integer",
+        "description": "TradingAccount associated with the trade/order request"
+      }
+    }
+  },
+  "OcoOrderRequestDTO": {
+    "id": "OcoOrderRequestDTO",
+    "type": "object",
+    "description": "An trade/order in a 'one cancels the other' relationship",
+    "extends": {
+      "$ref": "#.NewTradeOrderRequestDTO"
+    },
+    "properties": {}
+  },
+  "CreateSessionResponseDTO": {
+    "id": "CreateSessionResponseDTO",
+    "type": "object",
+    "description": "Response to a CreateSessionRequest",
+    "properties": {
+      "Session": {
+        "type": "string",
+        "description": "Your session token (treat as a random string) <BR /> Session tokens are valid for a set period (7 days) from the time of their creation. <BR /> The period is subject to change, and may vary depending on who you logon as.",
+        "minLength": 36,
+        "maxLength": 100
+      }
+    }
+  },
+  "GetPriceTickResponseDTO": {
+    "id": "GetPriceTickResponseDTO",
+    "type": "object",
+    "description": "The response from a request for Price Ticks",
+    "properties": {
+      "PriceTicks": {
+        "type": "array",
+        "items": {
+          "$ref": "#.PriceTickDTO"
+        },
+        "description": "An array of price ticks, sorted in ascending order by PriceTick.TickDate"
+      }
+    }
+  },
+  "NewTradeOrderResponseDTO": {
+    "id": "NewTradeOrderResponseDTO",
+    "type": "object",
+    "description": "The response returned from the underlying trading system",
+    "properties": {
+      "Status": {
+        "type": "integer",
+        "description": "The status of the order (Pending, Accepted, Open, etc)"
+      },
+      "StatusReason": {
+        "type": "integer",
+        "description": "The id corresponding to a more descriptive reason for the order status"
+      },
+      "OrderId": {
+        "type": "integer",
+        "description": "The unique identifier associated to the order returned from the underlying trading system"
+      }
+    }
+  },
+  "GetPriceBarResponseDTO": {
+    "id": "GetPriceBarResponseDTO",
+    "type": "object",
+    "description": "The response from a GET price bar history request. Contains both an array of finalized price bars, and a partial (not finalized) bar for the current period",
+    "properties": {
+      "PriceBars": {
+        "type": "array",
+        "items": {
+          "$ref": "#.PriceBarDTO"
+        },
+        "description": "An array of finalized price bars, sorted in ascending order based on PriceBar.BarDate"
+      }
+    }
+  },
+  "ErrorResponseDTO": {
+    "id": "ErrorResponseDTO",
+    "type": "object",
+    "description": "This is a description of ErrorResponseDTO",
+    "properties": {
+      "ErrorMessage": {
+        "type": "string",
+        "description": "This is a description of the ErrorMessage property"
+      },
+      "ErrorCode": {
+        "$ref": "#.ErrorCode",
+        "description": "The error code"
+      }
+    }
+  },
+  "HedgeRequestDTO": {
+    "id": "HedgeRequestDTO",
+    "type": "object",
+    "description": "Represents an incoming message for booking hedge instructions to the IP",
+    "properties": {
+      "Reference": {
+        "type": "string",
+        "description": "Unique orderId as provided by the external provider"
+      },
+      "Source": {
+        "type": "string",
+        "description": "External provider (Eg. currenex, ubs, pru bache, etc)"
+      },
+      "Trader": {
+        "type": "string",
+        "description": "The dealer's user name for the given external provider"
+      },
+      "Direction": {
+        "type": "string",
+        "description": "Direction identifier for hedge, values supported are buy or sell"
+      },
+      "Quantity": {
+        "type": "number",
+        "description": "Size of the hedge trade"
+      },
+      "Price": {
+        "type": "number",
+        "description": "The price at which the hedge trade is to be placed"
+      },
+      "ValueDate": {
+        "type": "string",
+        "description": "Value date (expressed as UTC)",
+        "format": "wcf-date"
+      },
+      "AdditionalInfo": {
+        "type": "string",
+        "description": "Additional info (Eg. A/B book)"
+      }
+    }
+  },
+  "ListNewsHeadlinesResponseDTO": {
+    "id": "ListNewsHeadlinesResponseDTO",
+    "type": "object",
+    "description": "The response from a GET request for News headlines",
+    "properties": {
+      "Headlines": {
+        "type": "array",
+        "items": {
+          "$ref": "#.NewsDTO"
+        },
+        "description": "A list of News headlines"
+      }
+    }
+  },
+  "SessionDeletionResponseDTO": {
+    "id": "SessionDeletionResponseDTO",
+    "type": "object",
+    "description": "",
+    "properties": {
+      "LoggedOut": {
+        "type": "boolean",
+        "description": "LogOut status"
+      }
+    }
+  },
+  "G2SessionValidationResponseDTO": {
+    "id": "G2SessionValidationResponseDTO",
+    "type": "object",
+    "description": "",
+    "properties": {
+      "ClientAccountIds": {
+        "type": "array",
+        "items": {
+          "type": "integer"
+        },
+        "description": "ClientAccountIds that this session is authorized to work with"
+      },
+      "TradingAccountIds": {
+        "type": "array",
+        "items": {
+          "type": "integer"
+        },
+        "description": "TradingAccountIds that this session is authorized to work with"
+      },
+      "IsValid": {
+        "type": "boolean",
+        "description": "Whether this session token is still valid"
+      }
+    }
+  },
+  "LogOnRequestDTO": {
+    "id": "LogOnRequestDTO",
+    "type": "object",
+    "description": "",
+    "properties": {
+      "UserName": {
+        "type": "string",
+        "description": "Username is case sensitive",
+        "minLength": 6,
+        "maxLength": 20
+      },
+      "Password": {
+        "type": "string",
+        "description": "Password is case sensitive",
+        "minLength": 6,
+        "maxLength": 20
+      }
+    }
+  },
+  "GetNewsDetailResponseDTO": {
+    "id": "GetNewsDetailResponseDTO",
+    "type": "object",
+    "description": "JSON returned from News Detail GET request",
+    "properties": {
+      "NewsDetail": {
+        "$ref": "#.NewsDetailDTO",
+        "description": "The details of the news item"
+      }
+    }
+  }
+}

@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package>
+  <metadata>
+    <id>CIAPI.CS</id>
+    <title>CIAPI.CS</title>
+    <version>1.0.0.0</version>
+    <authors>CityIndex Ltd, Sky Sanders, David Laing</authors>
+    <description>.NET client library for CityIndex Trading API</description>
+    <language>en-GB</language>
+    <licenseUrl>https://github.com/cityindex/CIAPI.CS/raw/master/LICENSE.txt</licenseUrl>
+  </metadata>
+  <files>
+  	<file src="lib\ciapi\bin\release\*.dll" target="lib"/>
+  	<file src="lib\ciapi\bin\release\*.pdb" target="lib"/>
+    <file src="..\src\SampleApps\ConsoleSpikes\Example.FetchNews.cs" target="content"/>
+  </files>
+</package>

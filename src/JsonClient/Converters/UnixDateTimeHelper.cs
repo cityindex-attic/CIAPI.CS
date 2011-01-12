@@ -12,7 +12,7 @@
 // 
 using System;
 
-namespace Soapi.Json
+namespace CityIndex.JsonClient.Converters
 {
     ///<summary>
     ///</summary>

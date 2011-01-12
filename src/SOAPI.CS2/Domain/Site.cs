@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using CityIndex.JsonClient.Converters;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using Soapi.Json;
+
 
 namespace SOAPI.CS2.Domain
 {

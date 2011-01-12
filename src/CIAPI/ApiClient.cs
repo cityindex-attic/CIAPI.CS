@@ -4,10 +4,12 @@ using System.Net;
 using CityIndex.JsonClient;
 using CIAPI.DTO;
 
+
 namespace CIAPI
 {
     public partial class ApiClient : Client
     {
+        
         public ApiClient(Uri uri)
             : base(uri, new RequestCache(), new RequestFactory(), new Dictionary<string, IThrottedRequestQueue>
                 {
@@ -18,12 +20,13 @@ namespace CIAPI
         }
 
         public ApiClient(Uri uri, IRequestCache cache, IRequestFactory requestFactory, Dictionary<string, IThrottedRequestQueue> throttleScopes, int retryCount)
-            : base(uri, cache, requestFactory, throttleScopes, retryCount)
+            : base(uri,cache, requestFactory, throttleScopes, retryCount)
         {
         }
 
+
         public string UserName { get; set; }
-        public Guid SessionId { get; set; }
+        public string SessionId { get; set; }
 
         /// <summary>
         /// Authenticates the request with the API using request headers.
@@ -59,14 +62,14 @@ namespace CIAPI
         public void LogIn(String userName, String password)
         {
             UserName = userName;
-            SessionId = Guid.Empty;
+            SessionId = null;
 
             var response = Request<CreateSessionResponseDTO>("session", "/", "POST", new Dictionary<string, object>
                 {
                     {"UserName", userName},
                     {"Password", password},
                 }, TimeSpan.FromMilliseconds(0), "data");
-            SessionId = new Guid(response.Session);
+            SessionId = response.Session;
         }
 
         /// <summary>
@@ -77,11 +80,10 @@ namespace CIAPI
         /// <param name="userName">Username is case sensitive</param>
         /// <param name="password">Password is case sensitive</param>
         /// <returns></returns>
-        public void BeginLogIn(ApiAsyncCallback<CreateSessionResponseDTO> callback, object state, String userName,
-                               String password)
+        public void BeginLogIn(String userName,String password, ApiAsyncCallback<CreateSessionResponseDTO> callback, object state)
         {
             UserName = userName;
-            SessionId = Guid.Empty;
+            SessionId = null;
 
             BeginRequest(callback, state, "session", "/", "POST", new Dictionary<string, object>
                 {
@@ -93,7 +95,7 @@ namespace CIAPI
         public void EndLogIn(ApiAsyncResult<CreateSessionResponseDTO> asyncResult)
         {
             CreateSessionResponseDTO response = EndRequest(asyncResult);
-            SessionId = new Guid(response.Session);
+            SessionId = response.Session;
         }
 
         /// <summary>
@@ -111,7 +113,7 @@ namespace CIAPI
                                                                    }, TimeSpan.FromMilliseconds(0), "data");
             if (response.LoggedOut)
             {
-                SessionId = Guid.Empty;
+                SessionId = null;
             }
 
             return response.LoggedOut;
@@ -139,12 +141,14 @@ namespace CIAPI
 
             if (response.LoggedOut)
             {
-                SessionId = Guid.Empty;
+                SessionId = null;
             }
 
             return response.LoggedOut;
         }
 
         #endregion
+
+
     }
 }

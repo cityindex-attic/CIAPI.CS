@@ -65,19 +65,19 @@ namespace Phone7Spike
 
 
 
-            App.ctx.BeginListNewsHeadlines(result =>
+            App.ctx.BeginListNewsHeadlines("UK", 20, result =>
                 {
                     var response = App.ctx.EndListNewsHeadlines(result);
                     Deployment.Current.Dispatcher.BeginInvoke(() =>
                     {
                         foreach (var item in response.Headlines)
                         {
-                            Items.Add(new ItemViewModel() { LineOne = item.Headline, LineTwo = item.PublishDate, StoryId = item.StoryId });
+                            Items.Add(new ItemViewModel() { LineOne = item.Headline, LineTwo = item.PublishDate.ToString(), StoryId = item.StoryId });
                         }
                     });
                     
                     IsDataLoaded = true;
-                }, null, "UK", 20);
+                }, null);
 
                         
         }

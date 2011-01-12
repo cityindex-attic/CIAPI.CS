@@ -31,7 +31,7 @@ namespace CIAPI
 		/// <param name="UserName">Username is case sensitive</param>
 		/// <param name="Password">Password is case sensitive</param>
         /// <returns></returns>
-        public void BeginCreateSession(ApiAsyncCallback<CreateSessionResponseDTO> callback, object state, String UserName, String Password)
+        public void BeginCreateSession(String UserName, String Password, ApiAsyncCallback<CreateSessionResponseDTO> callback, object state)
         {
             BeginRequest(callback, state, "session","/", "POST",new Dictionary<string, object>
                                 {
@@ -50,7 +50,7 @@ namespace CIAPI
 		/// <param name="userName">Username is case sensitive. May be set as a service parameter or as a request header.</param>
 		/// <param name="session">The session token. May be set as a service parameter or as a request header.</param>
         /// <returns></returns>
-        public SessionDeletionResponseDTO DeleteSession(String userName, Guid session)
+        public SessionDeletionResponseDTO DeleteSession(String userName, string session)
         {
        
             return Request<SessionDeletionResponseDTO>("session","/deleteSession?userName={userName}&session={session}", "POST", new Dictionary<string, object>
@@ -67,7 +67,7 @@ namespace CIAPI
 		/// <param name="userName">Username is case sensitive. May be set as a service parameter or as a request header.</param>
 		/// <param name="session">The session token. May be set as a service parameter or as a request header.</param>
         /// <returns></returns>
-        public void BeginDeleteSession(ApiAsyncCallback<SessionDeletionResponseDTO> callback, object state, String userName, Guid session)
+        public void BeginDeleteSession(String userName, string session, ApiAsyncCallback<SessionDeletionResponseDTO> callback, object state)
         {
             BeginRequest(callback, state, "session","/deleteSession?userName={userName}&session={session}", "POST",new Dictionary<string, object>
                                 {
@@ -109,7 +109,7 @@ namespace CIAPI
 		/// <param name="span">The number of each interval per pricebar.</param>
 		/// <param name="priceBars">The total number of pricebars to return</param>
         /// <returns></returns>
-        public void BeginGetPriceBars(ApiAsyncCallback<GetPriceBarResponseDTO> callback, object state, String marketId, String interval, Int32 span, String priceBars)
+        public void BeginGetPriceBars(String marketId, String interval, Int32 span, String priceBars, ApiAsyncCallback<GetPriceBarResponseDTO> callback, object state)
         {
             BeginRequest(callback, state, "market","/{marketId}/barhistory?interval={interval}&span={span}&pricebars={priceBars}", "GET",new Dictionary<string, object>
                                 {
@@ -147,7 +147,7 @@ namespace CIAPI
 		/// <param name="marketId">The marketId</param>
 		/// <param name="priceTicks">The total number of price ticks to return</param>
         /// <returns></returns>
-        public void BeginGetPriceTicks(ApiAsyncCallback<GetPriceTickResponseDTO> callback, object state, String marketId, String priceTicks)
+        public void BeginGetPriceTicks(String marketId, String priceTicks, ApiAsyncCallback<GetPriceTickResponseDTO> callback, object state)
         {
             BeginRequest(callback, state, "market","/{marketId}/tickhistory?priceticks={priceTicks}", "GET",new Dictionary<string, object>
                                 {
@@ -183,7 +183,7 @@ namespace CIAPI
 		/// <param name="category">Filter headlines by category</param>
 		/// <param name="maxResults">Restrict the number of headlines returned</param>
         /// <returns></returns>
-        public void BeginListNewsHeadlines(ApiAsyncCallback<ListNewsHeadlinesResponseDTO> callback, object state, String category, Int32 maxResults)
+        public void BeginListNewsHeadlines(String category, Int32 maxResults, ApiAsyncCallback<ListNewsHeadlinesResponseDTO> callback, object state)
         {
             BeginRequest(callback, state, "news","?Category={category}&MaxResults={maxResults}", "GET",new Dictionary<string, object>
                                 {
@@ -216,7 +216,7 @@ namespace CIAPI
 		/// <param name="callback"></param>
 		/// <param name="storyId">The news story Id</param>
         /// <returns></returns>
-        public void BeginGetNewsDetail(ApiAsyncCallback<GetNewsDetailResponseDTO> callback, object state, String storyId)
+        public void BeginGetNewsDetail(String storyId, ApiAsyncCallback<GetNewsDetailResponseDTO> callback, object state)
         {
             BeginRequest(callback, state, "news","/{storyId}", "GET",new Dictionary<string, object>
                                 {
@@ -257,7 +257,7 @@ namespace CIAPI
 		/// <param name="clientAccountId">The logged on user's ClientAccountId.  (This only shows you markets that you can trade on)</param>
 		/// <param name="maxResults">The maximum number of markets to return.</param>
         /// <returns></returns>
-        public void BeginListCfdMarkets(ApiAsyncCallback<ListCfdMarketsResponseDTO> callback, object state, String searchByMarketName, String searchByMarketCode, Int32 clientAccountId, Int32 maxResults)
+        public void BeginListCfdMarkets(String searchByMarketName, String searchByMarketCode, Int32 clientAccountId, Int32 maxResults, ApiAsyncCallback<ListCfdMarketsResponseDTO> callback, object state)
         {
             BeginRequest(callback, state, "cfd/markets","?MarketName={searchByMarketName}&MarketCode={searchByMarketCode}&ClientAccountId={clientAccountId}&MaxResults={maxResults}", "GET",new Dictionary<string, object>
                                 {
@@ -301,7 +301,7 @@ namespace CIAPI
 		/// <param name="clientAccountId">The logged on user's ClientAccountId.  (This only shows you markets that you can trade on)</param>
 		/// <param name="maxResults">The maximum number of markets to return.</param>
         /// <returns></returns>
-        public void BeginListSpreadMarkets(ApiAsyncCallback<ListSpreadMarketsResponseDTO> callback, object state, String searchByMarketName, String searchByMarketCode, Int32 clientAccountId, Int32 maxResults)
+        public void BeginListSpreadMarkets(String searchByMarketName, String searchByMarketCode, Int32 clientAccountId, Int32 maxResults, ApiAsyncCallback<ListSpreadMarketsResponseDTO> callback, object state)
         {
             BeginRequest(callback, state, "spread/markets","?MarketName={searchByMarketName}&MarketCode={searchByMarketCode}&ClientAccountId={clientAccountId}&MaxResults={maxResults}", "GET",new Dictionary<string, object>
                                 {
@@ -354,7 +354,7 @@ namespace CIAPI
 		/// <param name="AuditId">Unique identifier for a price tick</param>
 		/// <param name="TradingAccountId">TradingAccount associated with the trade/order request</param>
         /// <returns></returns>
-        public void BeginOrder(ApiAsyncCallback<NewTradeOrderResponseDTO> callback, object state, Int32 MarketId, String Direction, Decimal Quantity, Decimal BidPrice, Decimal OfferPrice, String AuditId, Int32 TradingAccountId)
+        public void BeginOrder(Int32 MarketId, String Direction, Decimal Quantity, Decimal BidPrice, Decimal OfferPrice, String AuditId, Int32 TradingAccountId, ApiAsyncCallback<NewTradeOrderResponseDTO> callback, object state)
         {
             BeginRequest(callback, state, "order","/", "POST",new Dictionary<string, object>
                                 {
@@ -410,7 +410,7 @@ namespace CIAPI
 		/// <param name="AuditId">Unique identifier for a price tick</param>
 		/// <param name="TradingAccountId">TradingAccount associated with the trade/order request</param>
         /// <returns></returns>
-        public void BeginTrade(ApiAsyncCallback<NewTradeOrderResponseDTO> callback, object state, Int32 MarketId, String Direction, Decimal Quantity, Decimal BidPrice, Decimal OfferPrice, String AuditId, Int32 TradingAccountId)
+        public void BeginTrade(Int32 MarketId, String Direction, Decimal Quantity, Decimal BidPrice, Decimal OfferPrice, String AuditId, Int32 TradingAccountId, ApiAsyncCallback<NewTradeOrderResponseDTO> callback, object state)
         {
             BeginRequest(callback, state, "trade","/", "POST",new Dictionary<string, object>
                                 {
@@ -448,7 +448,7 @@ namespace CIAPI
 		/// <param name="callback"></param>
 		/// <param name="errorCode">Simulates an error condition.</param>
         /// <returns></returns>
-        public void BeginGenerateException(ApiAsyncCallback<ErrorResponseDTO> callback, object state, Int32 errorCode)
+        public void BeginGenerateException(Int32 errorCode, ApiAsyncCallback<ErrorResponseDTO> callback, object state)
         {
             BeginRequest(callback, state, "errors","?errorCode={errorCode}", "GET",new Dictionary<string, object>
                                 {

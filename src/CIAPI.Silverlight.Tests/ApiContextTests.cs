@@ -43,12 +43,12 @@ namespace CIAPI.Silverlight.Tests
 
             requestFactory.CreateTestRequest(LoggedIn);
 
-            ctx.BeginCreateSession(ar =>
+            ctx.BeginCreateSession( TestConfig.ApiUsername, TestConfig.ApiPassword, ar =>
             {
                 var response = ctx.EndCreateSession(ar);
                 Assert.IsNotNullOrEmpty(response.Session);
                 EnqueueTestComplete();
-            }, null, TestConfig.ApiUsername, TestConfig.ApiPassword);
+            }, null);
 
         }
 
@@ -69,12 +69,12 @@ namespace CIAPI.Silverlight.Tests
 
             var ctx = new ApiClient(new Uri(TestConfig.ApiUrl), new RequestCache(), requestFactory, throttleScopes, 3);
 
-            ctx.BeginDeleteSession(ar =>
+            ctx.BeginDeleteSession(TestConfig.ApiUsername, TestConfig.ApiTestSessionId, ar =>
             {
                 var response = ctx.EndDeleteSession(ar);
                 Assert.IsTrue(response.LoggedOut);
                 EnqueueTestComplete();
-            }, null, TestConfig.ApiUsername, TestConfig.ApiTestSessionId);
+            }, null);
         }
 
 
@@ -100,12 +100,12 @@ namespace CIAPI.Silverlight.Tests
             };
 
 
-            ctx.BeginListNewsHeadlines(ar =>
+            ctx.BeginListNewsHeadlines("UK", 14, ar =>
             {
                 ListNewsHeadlinesResponseDTO response = ctx.EndListNewsHeadlines(ar);
                 Assert.AreEqual(14, response.Headlines.Length);
                 EnqueueTestComplete();
-            }, null, "UK", 14);
+            }, null);
 
         }
     }
