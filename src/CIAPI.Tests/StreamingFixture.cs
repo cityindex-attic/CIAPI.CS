@@ -38,8 +38,7 @@ namespace CIAPI.Tests
             const string path = "foo";
             ApiClient ctx = CreateAuthenticatedApiClient();
             var actual = ctx.CreateNewsSubscription(path);
-            Type expected = typeof(NewsHeadlineSubscription);
-            Assert.IsInstanceOf(expected, actual);
+            Assert.IsInstanceOf(typeof(NewsHeadlineSubscription), actual);
         }
 
 

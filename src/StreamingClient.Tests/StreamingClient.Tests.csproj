@@ -47,7 +47,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="NUnitSampleTests.cs" />
+    <Compile Include="StreamingListenerFixture.cs" />
+    <Compile Include="StreamingConnectionFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
