@@ -1,0 +1,6 @@
+1) Install Visual Web Developer 2010 Express - http://www.microsoft.com/express/Web/
+
+=== Command line build ===
+1) Install MSBuild community tasks - download and install as per tools/msbuildcommunitytasks
+2) Install PartCover - tools/partcover4
+3) Run reflector - tools\reflector - select .NET4.0 client; then go Options > Add ins and include tools\reflector\plugins\Reflector.CodeMetrics.dll

@@ -1,0 +1,724 @@
+<!-- Header Start -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Oleg Sych  -   &raquo; Understanding T4: MSBuild Integration</title>
+	<meta name="generator" content="WordPress 2.3.3" /> <!-- leave this for stats -->
+
+    <link href="http://www.olegsych.com/wp-content/themes/gluedideas_subtle/assets/css/layout.css" rel="stylesheet" media="screen" type="text/css" />
+    <link href="http://www.olegsych.com/wp-content/themes/gluedideas_subtle/assets/css/print.css" rel="stylesheet" media="print" type="text/css" />
+    <link href="http://www.olegsych.com/wp-content/themes/gluedideas_subtle/assets/css/icons.css" rel="stylesheet" media="all" type="text/css" />
+    <link href="http://www.olegsych.com/wp-content/themes/gluedideas_subtle/styles/SubtleGlue/default.css" rel="stylesheet" media="all" type="text/css" />
+
+<style type="text/css">
+<!--
+
+
+-->
+</style>
+
+		<link rel="alternate" type="application/rss+xml" title="RSS 2.0 - Feedburner" href="http://feeds.olegsych.com/olegsych" />
+	
+		
+
+	<link rel="pingback" href="http://www.olegsych.com/xmlrpc.php" />
+	<link rel="shortcut icon" type="image/x-icon" href="http://www.olegsych.com/wp-content/themes/gluedideas_subtle/favicon.ico" />
+
+	<script language="JavaScript" type="text/javascript" src="http://www.olegsych.com/wp-content/themes/gluedideas_subtle/assets/js/core.js"></script>
+	<script language="JavaScript" type="text/javascript" src="http://www.olegsych.com/wp-content/themes/gluedideas_subtle/assets/js/dom.js"></script>
+
+
+		<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.olegsych.com/xmlrpc.php?rsd" />
+ <link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.olegsych.com/wp-includes/wlwmanifest.xml" /> <script type='text/javascript' src='http://www.olegsych.com/wp-includes/js/jquery/jquery.js?ver=1.1.4'></script>
+<script type='text/javascript' src='http://www.olegsych.com/wp-includes/js/jquery/jquery.form.js?ver=1.0.3'></script>
+<link rel="stylesheet" href="http://www.olegsych.com/wp-content/plugins/contact-form-7/stylesheet.css" type="text/css" /><script type='text/javascript' src='http://www.olegsych.com/wp-content/plugins/contact-form-7/contact-form-7.js'></script>
+</head>
+
+<body>
+
+<div id="container">
+
+	<div id="header">
+		<div class="style_content">
+
+			<form action="http://www.olegsych.com/" name="search_box" id="search_box" method="get">
+				<label for="input_search" id="label_search">Find this</label> <input type="text" id="input_search" class="input" name="s" /><input type="image" src="http://www.olegsych.com/wp-content/themes/gluedideas_subtle/assets/images/icon_search.gif" align="top" id="button_search" value="Search" />
+			</form>
+			
+			<h1 id="title"><a href="http://www.olegsych.com/"><span>Oleg Sych</span></a></h1>
+			<p id="tagline"><span>Interfaces are like alcohol - they are a lot of fun when used in moderation.</span></p>
+			
+			<ul id="menu">
+				<li class="page_item"><a href="http://www.olegsych.com/">Home</a></li>
+				<li class="page_item page-item-25"><a href="http://www.olegsych.com/articles/" title="Articles">Articles</a></li>
+<li class="page_item page-item-21"><a href="http://www.olegsych.com/presentations/" title="Presentations">Presentations</a></li>
+<li class="page_item page-item-2"><a href="http://www.olegsych.com/about/" title="About">About</a></li>
+			</ul>
+
+		</div>
+	</div>
+
+
+	<div id="content">
+		<div class="style_content">
+				
+<!-- Header End --><!-- Content Start -->
+
+			<div id="loop_single">
+			
+
+				<div id="post_537" class="post">
+
+					<h3 class="title"><a href="http://www.olegsych.com/2010/04/understanding-t4-msbuild-integration/"><span>Understanding T4: MSBuild Integration</span></a></h3>
+					<ul class="metalinks reduced">
+						<li class="icon author">Posted by <a href="http://www.olegsych.com/author/olegsych/" title="Posts by Oleg Sych">Oleg Sych</a></li>
+						<li class="icon date">April 11, 2010</li>
+					</ul>
+					<br class="clear" />
+					<div class="content">
+						<p>Visual Studio 2010 offers a new capability to perform template-based code generation at build-time with a set of MSBuild extensions available as part of the Visualization and Modeling SDK. </p>
+<h4>Contents</h4>
+<ul>
+<li><a href="#Overview">Overview</a> </li>
+<li><a href="#ConfiguringProject">Configuring project for build-time template transformation</a> </li>
+<li><a href="#UnderTheHood">Under the hood</a> </li>
+<li><a href="#ProjectAndSourceControlIntegration">Project and Source Control Integration</a> </li>
+<li><a href="#ConfiguringTransformationEnvironment">Configuring transformation environment</a>
+<ul>
+<li><a href="#IncludeFolders">$(IncludeFolders) property</a> </li>
+<li><a href="#T4ReferencePath">@(T4ReferencePath) items</a> </li>
+<li><a href="#DirectiveProcessor">@(DirectiveProcessor) items</a> </li>
+<li><a href="#T4ParameterValues">@(T4ParameterValues) items</a> </li>
+<li><a href="#OutputFilePath">.OutputFilePath metadata</a> </li>
+<li><a href="#OutputFileName">.OutputFileName metadata</a> </li>
+<li><a href="#InludeDslT4Settings">$(IncludeDslT4Settings) property</a> </li>
+</ul>
+</li>
+<li><a href="#ControllingTransformationProcess">Controlling transformation process</a>
+<ul>
+<li><a href="#TransformOnBuild">$(TransformOnBuild) property</a> </li>
+<li><a href="#TransformOutOfDateOnly">$(TransformOutOfDateOnly) property</a> </li>
+<li><a href="#TrackFileAccess">$(TrackFileAccess) property</a> </li>
+<li><a href="#OverwriteReadOnlyOutputFiles">$(OverwriteReadOnlyOutputFiles) property</a> </li>
+<li><a href="#BeforeTransform">$(BeforeTransform) property</a> </li>
+<li><a href="#AfterTransform">$(AfterTransform) property</a> </li>
+<li><a href="#GeneratedFiles">@(GeneratedFiles) items</a> </li>
+<li><a href="#NonGeneratedFiles">@(NonGeneratedFiles) items</a> </li>
+</ul>
+</li>
+<li><a href="#CallingMSBuildExplicitly">Transforming templates by calling MSBuild explicitly</a>
+<ul>
+<li><a href="#TransformAll">TransformAll target</a> </li>
+<li><a href="#Transform">Transform target</a> </li>
+</ul>
+</li>
+<li><a href="#Conclusion">Conclusion</a> </li>
+<li><a href="#Download">Download</a> </li>
+</ul>
+<h4 id="Overview">Overview</h4>
+<p>Since its initial release, <a href="http://www.olegsych.com/2007/12/text-template-transformation-toolkit/" target="_blank">T4</a> has followed a well-established pattern of integrating code generators in Visual Studio and providing two different ways to generate code. The first and primary method of triggering template transformation process is at design time, by saving the template file. When a template (.tt) file is added to a C# or Visual Basic project, it is automatically associated with a <a href="http://msdn.microsoft.com/en-us/library/bb166817.aspx" target="_blank">custom tool</a> called <em>TextTemplatingFileGenerator</em>. Visual Studio invokes the custom tool whenever the associated file is saved, causing the output file to be regenerated whenever the template file is modified. The second and alternative method of triggering template transformation process is at build time, with a command line utility called <a href="http://msdn.microsoft.com/en-us/library/bb126245.aspx" target="_blank">TextTransform</a>. In order to generate code at build time, a developer needs to modify the MSBuild definition of a Visual Studio project and invoke this command utility for each of the template files that need to be transformed.</p>
+<p>The main benefits of design-time code generation are its simplicity and automatic addition of the generated files in Visual Studio projects and source control. This approach works well when template files are self contained. However, when templates <a href="http://www.olegsych.com/2008/02/t4-include-directive/" target="_blank">include</a> other files or use external sources of metadata, such as model files or databases, the generated files may become out of date even if their templates don’t change. Build-time code generation ensures that output files are always current and makes sense in complex scenarios when keeping track of multiple templates becomes error prone. The main drawbacks of build-time code generation are the additional effort required to implement it, and more importantly, the set of challenges it presents around integration with Visual Studio projects and source control.</p>
+<p>Visual Studio 2010 offers a new option for generating code from <a href="http://www.olegsych.com/2007/12/text-template-transformation-toolkit/" target="_blank">text templates</a> at build time. This capability is implemented as a set of <a href="http://msdn.microsoft.com/en-us/library/wea2sca5.aspx" target="_blank">MSBuild</a> tasks and targets that come with the <a href="http://code.msdn.microsoft.com/vsvmsdk" target="_blank">Visual Studio Modeling and Visualization SDK</a>. Here is where the files are located.</p>
+<pre class="code">C:\&gt;dir &quot;C:\Program Files (x86)\MSBuild\Microsoft\VisualStudio\TextTemplating\v10.0&quot; /b
+Microsoft.TextTemplating.Build.Tasks.dll
+Microsoft.TextTemplating.targets
+Microsoft.VisualStudio.TextTemplating.Sdk.Host.10.0.dll</pre>
+<p>The new MSBuild integration feature of T4 significantly reduces the effort required to implement and maintain build-time code generation and solves some of the challenges around integration with Visual Studio projects and source control. </p>
+<h4 id="ConfiguringProject">Configuring project for build-time template transformation</h4>
+<p>In order to configure a Visual Studio project for build-time template transformation, you have to manually modify the MSBuild definition in the project file. At a minimum, you need to import <em>Microsoft.TextTemplating.targets</em> file and set <em>TransformOnBuild</em> property to true. Here is an extract from a C# project file that was modified this way.</p>
+<pre class="code"><span style="color: blue">&lt;</span><span style="color: #a31515">Import </span><span style="color: red">Project</span><span style="color: blue">=</span>&quot;<span style="color: blue">$(MSBuildToolsPath)\Microsoft.CSharp.targets</span>&quot; <span style="color: blue">/&gt;
+&lt;</span><span style="color: #a31515">PropertyGroup</span><span style="color: blue">&gt;
+  &lt;</span><span style="color: #a31515">TransformOnBuild</span><span style="color: blue">&gt;</span>true<span style="color: blue">&lt;/</span><span style="color: #a31515">TransformOnBuild</span><span style="color: blue">&gt;
+&lt;/</span><span style="color: #a31515">PropertyGroup</span><span style="color: blue">&gt;
+&lt;</span><span style="color: #a31515">Import </span><span style="color: red">Project</span><span style="color: blue">=</span>&quot;<span style="color: blue">$(MSBuildExtensionsPath)\Microsoft\VisualStudio\TextTemplating\v10.0\Microsoft.TextTemplating.targets</span>&quot; <span style="color: blue">/&gt;
+</span></pre>
+<p>Note that <em>Microsoft.TextTemplating.targets</em> file has to be imported <em>after</em> the standard import – <em>Microsoft.CSharp.targets</em> for C# or <em>Microsoft.VisualBasic.targets </em>for Visual Basic projects. The TransformOnBuild variable can be defined anywhere in the file, such as in the main <em>PropertyGroup</em> of the project.</p>
+<p>Here is a typical output you will see when building a customized project.</p>
+<pre class="code">------ Build started: Project: T4MSBuild, Configuration: Debug x86 ------
+Build started 4/10/2010 1:30:38 PM.
+ExecuteTransformations:
+  Performing incremental T4 transformation
+  Calculating whether transformed output is out of date...
+  Transforming template Template.tt...
+  Performing incremental T4 preprocessing
+  Calculating whether preprocessed output is out of date...
+  Preprocessing template PreprocessedTemplate.tt...
+GenerateTargetFrameworkMonikerAttribute:
+Skipping target &quot;GenerateTargetFrameworkMonikerAttribute&quot; because all output files are up-to-date with respect to the input files.
+CoreCompile:
+  C:\Windows\Microsoft.NET\Framework\v4.0.30319\Csc.exe /noconfig /nowarn:1701,1702 /nostdlib+ /platform:x86 /reference:&quot;C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\mscorlib.dll&quot; /reference:&quot;C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Core.dll&quot; /reference:&quot;C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.dll&quot; /debug+ /out:obj\x86\Debug\T4MSBuild.dll /target:library PreprocessedTemplate.cs Template.cs &quot;C:\Users\osych\AppData\Local\Temp\.NETFramework,Version=v4.0.AssemblyAttributes.cs&quot;
+CopyFilesToOutputDirectory:
+  Copying file from &quot;obj\x86\Debug\T4MSBuild.dll&quot; to &quot;bin\Debug\T4MSBuild.dll&quot;.
+  T4MSBuild -&gt; C:\T4MSBuild\T4MSBuild\bin\Debug\T4MSBuild.dll
+  Copying file from &quot;obj\x86\Debug\T4MSBuild.pdb&quot; to &quot;bin\Debug\T4MSBuild.pdb&quot;.
+
+Build succeeded.
+
+Time Elapsed 00:00:00.55
+========== Build: 1 succeeded or up-to-date, 0 failed, 0 skipped ==========</pre>
+<p><a href="http://11011.net/software/vspaste"></a>In this sample output, note that a file called <em>Template.tt</em> was transformed and another file called <em>PreprocessedTemplate.tt</em> was preprocessed. In other words, the MSBuild functionality fully supports the <a href="http://www.olegsych.com/2009/09/t4-preprocessed-text-templates/" target="_blank">preprocessed templates</a> introduced in Visual Studio 2010.</p>
+<h4 id="UnderTheHood">Under the hood</h4>
+<p>When imported, <em>Microsoft.TextTemplating.targets </em>file modifies the normal project build process defined in <em>Microsoft.Common.targets</em> by inserting the following steps (targets) in the beginning of the build sequence.</p>
+<ul>
+<li>Create a list of candidate files for transformation </li>
+<li>Execute user-defined target before transformation </li>
+<li>Select template files for processing </li>
+<li>Transform and/or preprocess templates </li>
+<li>Execute user-defined target after transformation </li>
+</ul>
+<p>T4 creates a list of candidate files for transformation by selecting <em>all</em> files in the project that have <a href="http://msdn.microsoft.com/en-us/library/0c6xyb66.aspx" target="_blank">build action</a> of <em>None</em>, <em>Compile</em>, <em>Content </em>or <em>EmbeddedResource</em>. Normally, .tt files have build action of <em>None</em> and get included automatically. </p>
+<p>After the initial list of candidate files has been created, T4 invokes a user-defined target specified in the <em>$(BeforeTransform)</em> property. You can assign this property and provide a custom target if you need to perform any actions before the templates are processed.</p>
+<p>After executing the user-defined <em>BeforeTransform </em>target, T4 will use the initial candidate list of files to select those associated with the <em>TextTemplatingFileGenerator</em> custom tool to be transformed in a set of items called <em>@(T4TransformInputs)</em> and those associated with the <em>TextTemplatingFilePreprocessor</em> custom tool to be pre-processed in a set of items called <em>@(T4PreprocessInputs)</em>. It is important to remember that template files are selected for processing based on their association with one of the T4’s custom tools; the file extension or build action have no effect in this process. </p>
+<p>After determining the actual lists of templates, T4 transforms and pre-processes them. This is done by the MSBuild tasks called <em>TransformTemplates</em> and <em>PreprocessTemplates </em>implemented in <em>Microsoft.TextTemplating.Build.Tasks.dll</em>. These tasks use a <a href="http://msdn.microsoft.com/en-us/library/microsoft.visualstudio.texttemplating.itexttemplatingenginehost.aspx" target="_blank">custom T4 host</a> implemented in <em>Microsoft.VisualStudio.TextTemplating.Sdk.Host.10.0.dll</em>. </p>
+<p>In <a href="http://www.olegsych.com/2008/05/t4-architecture/">T4 architecture</a>,&#160; the host plays a very important role in the template transformation process. It provides the compilation and run-time environment for the code generation and determines how the included files are located, how the assembly references are resolved, how directive processors are selected and more. Each of the existing T4 hosts is implemented and configured differently, which can make them incompatible with templates that take advantage of the unique functionality of a particular host. For example, T4 templates in ASP.NET MVC and <a href="http://t4toolbox.codeplex.com/" target="_blank">T4 Toolbox</a> rely on the unique features of the MVC and Visual Studio hosts respectively. They are currently incompatible with the MSBuild host described here. </p>
+<p>Even templates that don’t have hard-coded dependencies on a particular host will often require additional steps to configure the transformation environment before they can be processed by the MSBuild host. Detailed description of the configuration options is available later in this article.</p>
+<p>After transforming and preprocessing templates, T4 invokes a second user-defined target specified in the <em>$(AfterTransform)</em> property. You can assign this variable and provide a custom target if you need to perform any actions when the templates are transformed but before the build starts.</p>
+<h4 id="ProjectAndSourceControlIntegration">Project and Source Control Integration</h4>
+<p>Unlike the standard Visual Studio host of T4, the MSBuild host described here does not integrate generated files with Visual Studio projects or source control. In particular, the generated files are not added to the project and source control automatically; the regenerated files are not checked out from source control automatically. This integration functionality relies on services provided by Visual Studio, which is not available in the MSBuild host.</p>
+<p>Luckily, a limited awareness of source control exists in the MSBuild host of T4. By default, it will issue a warning for each read-only output file that could not be regenerated and an error, making sure that build will fail if one or more files could not be regenerated.</p>
+<p><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="" border="0" alt="" src="http://www.olegsych.com/wp-content/uploads/2010/04/image.png" width="580" height="176" /> </p>
+<p>In order to resolve these errors, you can either locate and check out all required files manually, or transform all templates from the toolbar in Solution Explorer, which will process them using the Visual Studio host and check out all files automatically. Once the files have been regenerated, you will typically want to check them back in source control. </p>
+<p>You can also instruct T4 to automatically overwrite read-only files during code generation by setting the <em>$(OverwriteReadOnlyOutputFiles) </em>property to true. </p>
+<pre class="code"><span style="color: blue">&lt;</span><span style="color: #a31515">PropertyGroup</span><span style="color: blue">&gt;
+  &lt;</span><span style="color: #a31515">TransformOnBuild</span><span style="color: blue">&gt;</span>true<span style="color: blue">&lt;/</span><span style="color: #a31515">TransformOnBuild</span><span style="color: blue">&gt;
+  &lt;</span><span style="color: #a31515">OverwriteReadOnlyOutputFiles</span><span style="color: blue">&gt;</span>true<span style="color: blue">&lt;/</span><span style="color: #a31515">OverwriteReadOnlyOutputFiles</span><span style="color: blue">&gt;
+&lt;/</span><span style="color: #a31515">PropertyGroup</span><span style="color: blue">&gt;
+&lt;</span><span style="color: #a31515">Import </span><span style="color: red">Project</span><span style="color: blue">=</span>&quot;<span style="color: blue">$(MSBuildExtensionsPath)\Microsoft\VisualStudio\TextTemplating\v10.0\Microsoft.TextTemplating.targets</span>&quot; <span style="color: blue">/&gt;
+</span></pre>
+<p>This setting eliminates build errors, but introduces discrepancies between the code checked in the source control repository and the actual code compiled during the build. With this approach you can no longer rely on the source control repository alone to recreate a particular labeled build. If you want to debug or troubleshoot a particular build of the application later, you will have to save the complete source code in addition to the binary and symbol files produced by each build. This is necessary for all but trivial scenarios, and especially for packaged commercial software products and enterprise applications.</p>
+<h4 id="ConfiguringTransformationEnvironment">Configuring transformation environment</h4>
+<p>MSBuild functionality of T4 relies on a new engine host, which is different from both the default host used by the T4 custom tools in Visual Studio and the command line host used by <em>TextTransform.exe</em>. It relies on MSBuild items and properties to configure normal settings such as include search path, directive processors and assembly references, as well as settings unique to the MSBuild host. </p>
+<h5 id="IncludeFolders">$(IncludeFolders) property</h5>
+<p>Specifies a coma-separated list of directories that T4 will search to resolve files referenced by <a href="http://www.olegsych.com/2008/02/t4-include-directive/">include directives</a>. This property is empty by default.</p>
+<pre class="code"><span style="color: blue">&lt;</span><span style="color: #a31515">PropertyGroup</span><span style="color: blue">&gt;
+</span><span style="color: blue">  &lt;</span><span style="color: #a31515">IncludeFolders</span><span style="color: blue">&gt;</span>$(MSBuildProjectDirectory)\Include<span style="color: blue">&lt;/</span><span style="color: #a31515">IncludeFolders</span><span style="color: blue">&gt;
+&lt;/</span><span style="color: #a31515">PropertyGroup</span><span style="color: blue">&gt;
+</span></pre>
+<p><em>$(IncludeFolders)</em> property is an equivalent of the –I parameter of the <a href="http://msdn.microsoft.com/en-us/library/bb126245.aspx">command-line host</a> and the HKLM\Software\Microsoft\VisualStudio\10.0\TextTemplating\IncludeFolders registry setting of the Visual Studio host of T4. </p>
+<h5 id="T4ReferencePath">@(T4ReferencePath) items</h5>
+<p>Specify individual folders where T4 will search to resolve assemblies referenced by <a href="http://www.olegsych.com/2008/02/t4-assembly-directive/">assembly directives</a> and custom directive processors. This item list is empty by default. </p>
+<pre class="code"><span style="color: blue">&lt;</span><span style="color: #a31515">ItemGroup</span><span style="color: blue">&gt;
+  &lt;</span><span style="color: #a31515">T4ReferencePath </span><span style="color: red">Include</span><span style="color: blue">=</span>&quot;<span style="color: blue">$(VsInstallDir)PublicAssemblies\</span>&quot; <span style="color: blue">/&gt;
+&lt;/</span><span style="color: #a31515">ItemGroup</span><span style="color: blue">&gt;</span></pre>
+<p><em>@(T4ReferencePath)</em> items are an equivalent of the –P parameter of the <a href="http://msdn.microsoft.com/en-us/library/bb126245.aspx">command-line host</a> and have no direct equivalent in the Visual Studio host of T4, which uses global assembly cache, assemblies referenced by the project and some hard-coded search paths. </p>
+<h5 id="DirectiveProcessor">@(DirectiveProcessor) items</h5>
+<p>Specify definitions of the directive processors T4 will use when processing custom directives. This item list is empty by default.</p>
+<pre class="code"><span style="color: blue">&lt;</span><span style="color: #a31515">ItemGroup</span><span style="color: blue">&gt;
+  &lt;</span><span style="color: #a31515">DirectiveProcessor </span><span style="color: red">Include</span><span style="color: blue">=</span>&quot;<span style="color: blue">T4Toolbox.XsdProcessor</span>&quot; <span style="color: blue">&gt;
+    &lt;</span><span style="color: #a31515">Class</span><span style="color: blue">&gt;</span>T4Toolbox.XsdProcessor<span style="color: blue">&lt;/</span><span style="color: #a31515">Class</span><span style="color: blue">&gt;
+    &lt;</span><span style="color: #a31515">CodeBase</span><span style="color: blue">&gt;</span>C:\Program Files (x86)\T4 Toolbox\Bin\T4Toolbox.10.0.dll<span style="color: blue">&lt;/</span><span style="color: #a31515">CodeBase</span><span style="color: blue">&gt;
+  &lt;/</span><span style="color: #a31515">DirectiveProcessor</span><span style="color: blue">&gt;
+&lt;/</span><span style="color: #a31515">ItemGroup</span><span style="color: blue">&gt;
+</span></pre>
+<p>Assembly location can be specified using either <em>CodeBase</em> or <em>Assembly</em> metadata item which allows you to reference the assembly from disk or from global assembly cache respectively.</p>
+<pre class="code"><span style="color: blue">&lt;</span><span style="color: #a31515">ItemGroup</span><span style="color: blue">&gt;
+  &lt;</span><span style="color: #a31515">DirectiveProcessor </span><span style="color: red">Include</span><span style="color: blue">=</span>&quot;<span style="color: blue">T4Toolbox.XsdProcessor</span>&quot; <span style="color: blue">&gt;
+    &lt;</span><span style="color: #a31515">Class</span><span style="color: blue">&gt;</span>T4Toolbox.XsdProcessor<span style="color: blue">&lt;/</span><span style="color: #a31515">Class</span><span style="color: blue">&gt;
+    &lt;</span><span style="color: #a31515">Assembly</span><span style="color: blue">&gt;</span>T4Toolbox.10.0, Version=10.3.7.1, Culture=neutral, PublicKeyToken=7e313accbcce84dc<span style="color: blue">&lt;/</span><span style="color: #a31515">Assembly</span><span style="color: blue">&gt;
+  &lt;/</span><span style="color: #a31515">DirectiveProcessor</span><span style="color: blue">&gt;
+&lt;/</span><span style="color: #a31515">ItemGroup</span><span style="color: blue">&gt;
+</span></pre>
+<p><em>@(DirectiveProcessor)</em> items are an equivalent of the –db option of the <a href="http://msdn.microsoft.com/en-us/library/bb126245.aspx">command-line host</a> and the HKLM\Software\Microsoft\VisualStudio\10.0\TextTemplating\DirectiveProcessors registry setting of the Visual Studio host of T4. </p>
+<h5 id="T4ParameterValues">@(T4ParameterValues) items</h5>
+<p>Specify parameters that custom directive processors and templates themselves can query using <a href="http://msdn.microsoft.com/en-us/library/microsoft.visualstudio.texttemplating.itexttemplatingenginehost.resolveparametervalue.aspx">ResolveParameterValue</a> method. This item list is empty by default.</p>
+<pre class="code"><span style="color: blue">&lt;</span><span style="color: #a31515">ItemGroup</span><span style="color: blue">&gt;
+  &lt;</span><span style="color: #a31515">T4ParameterValues </span><span style="color: red">Include</span><span style="color: blue">=</span>&quot;<span style="color: blue">ParameterName</span>&quot;<span style="color: blue">&gt;
+    &lt;</span><span style="color: #a31515">Value</span><span style="color: blue">&gt;</span>ParameterValue<span style="color: blue">&lt;/</span><span style="color: #a31515">Value</span><span style="color: blue">&gt;
+  &lt;/</span><span style="color: #a31515">T4ParameterValues</span><span style="color: blue">&gt;
+&lt;/</span><span style="color: #a31515">ItemGroup</span><span style="color: blue">&gt;</span></pre>
+<p><em>@(T4ParameterValues)</em> items are an equivalent of the –a option of the <a href="http://msdn.microsoft.com/en-us/library/bb126245.aspx">command-line host</a> and have no direct equivalent in the Visual Studio host of T4.</p>
+<h5 id="OutputFilePath">.OutputFilePath metadata</h5>
+<p>Specifies the directory where template’s output file will be generated. This metadata item is empty by default.</p>
+<pre class="code"><span style="color: blue">&lt;</span><span style="color: #a31515">ItemGroup</span><span style="color: blue">&gt;
+  &lt;</span><span style="color: #a31515">None </span><span style="color: red">Include</span><span style="color: blue">=</span>&quot;<span style="color: blue">Template.tt</span>&quot;<span style="color: blue">&gt;
+    &lt;</span><span style="color: #a31515">Generator</span><span style="color: blue">&gt;</span>TextTemplatingFileGenerator<span style="color: blue">&lt;/</span><span style="color: #a31515">Generator</span><span style="color: blue">&gt;
+    &lt;</span><span style="color: #a31515">OutputFilePath</span><span style="color: blue">&gt;</span>$(IntermediateOutputPath)<span style="color: blue">&lt;/</span><span style="color: #a31515">OutputFilePath</span><span style="color: blue">&gt;
+    &lt;</span><span style="color: #a31515">LastGenOutput</span><span style="color: blue">&gt;</span>Template.cs<span style="color: blue">&lt;/</span><span style="color: #a31515">LastGenOutput</span><span style="color: blue">&gt;
+  &lt;/</span><span style="color: #a31515">None</span><span style="color: blue">&gt;
+&lt;/</span><span style="color: #a31515">ItemGroup</span><span style="color: blue">&gt;</span></pre>
+<p>By default, T4 will place generated output file in the same directory with the template file. You can set this property to redirect generated output files to a different directory during build-time code generation. This property has no effect on design-time code generation performed by the <em>TextTemplatingFileGenerator</em> or <em>TextTemplatingFilePreprocessor</em> when the template file is saved in Visual Studio editor. Setting this property will result in different behavior in code generation at design time vs. build time.</p>
+<p><em>.OutputFilePath</em> metadata is an equivalent of the –out option of the <a href="http://msdn.microsoft.com/en-us/library/bb126245.aspx">command-line host</a> and has no direct equivalent in the Visual Studio host of T4.</p>
+<p><font color="#ff0000"></font></p>
+<h5 id="OutputFileName">.OutputFileName metadata</h5>
+<p>Specifies the name of the generated output file. This metadata item is empty by default.</p>
+<pre class="code"><span style="color: blue">&lt;</span><span style="color: #a31515">ItemGroup</span><span style="color: blue">&gt;
+  &lt;</span><span style="color: #a31515">None </span><span style="color: red">Include</span><span style="color: blue">=</span>&quot;<span style="color: blue">Template.tt</span>&quot;<span style="color: blue">&gt;
+    &lt;</span><span style="color: #a31515">Generator</span><span style="color: blue">&gt;</span>TextTemplatingFileGenerator<span style="color: blue">&lt;/</span><span style="color: #a31515">Generator</span><span style="color: blue">&gt;
+    &lt;</span><span style="color: #a31515">OutputFileName</span><span style="color: blue">&gt;</span>Generated.cs<span style="color: blue">&lt;/</span><span style="color: #a31515">OutputFileName</span><span style="color: blue">&gt;
+    &lt;</span><span style="color: #a31515">LastGenOutput</span><span style="color: blue">&gt;</span>Template.cs<span style="color: blue">&lt;/</span><span style="color: #a31515">LastGenOutput</span><span style="color: blue">&gt;
+  &lt;/</span><span style="color: #a31515">None</span><span style="color: blue">&gt;
+&lt;/</span><span style="color: #a31515">ItemGroup</span><span style="color: blue">&gt;</span></pre>
+<p>By default, T4 will name generated output file with the name of the template file and the extension specified in the <a href="http://www.olegsych.com/2008/02/t4-output-directive/" target="_blank">output directive</a> in the template. You can set this property to change the default file name during build-time code generation. This property has no effect on design-time code generation performed by the <em>TextTemplatingFileGenerator</em> or <em>TextTemplatingFilePreprocessor</em> when the template file is saved in Visual Studio editor. Setting this property will result in different behavior in code generation at design time vs. build time.</p>
+<p><em>.OutputFileName</em> metadata is an equivalent of the –out option of the <a href="http://msdn.microsoft.com/en-us/library/bb126245.aspx">command-line host</a> and has no direct equivalent in the Visual Studio host of T4.</p>
+<h5 id="InludeDslT4Settings">$(IncludeDslT4Settings) property</h5>
+<p>Determines whether DSL-specific settings should be turned on. This property can be set to true or false and has a default value of false.</p>
+<pre class="code"><span style="color: blue">&lt;</span><span style="color: #a31515">PropertyGroup</span><span style="color: blue">&gt;
+  &lt;</span><span style="color: #a31515">IncludeDslT4Settings</span><span style="color: blue">&gt;</span>true<span style="color: blue">&lt;/</span><span style="color: #a31515">IncludeDslT4Settings</span><span style="color: blue">&gt;
+&lt;/</span><span style="color: #a31515">PropertyGroup</span><span style="color: blue">&gt;</span></pre>
+<p>This is a convenience property that configures various settings required for performing build-time template transformation in DSL projects.</p>
+<h4 id="ControllingTransformationProcess">Controlling transformation process</h4>
+<p>This section lists the various configuration settings that can be used to control the T4 template transformation process in MSBuild project files.</p>
+<h5 id="TransformOnBuild">$(TransformOnBuild) property</h5>
+<p>Determines whether templates will be transformed at build-time automatically. This property can be set to true or false and has a default value of false. When <em>$(TransformOnBuild)</em> is false, templates will be transformed at design-time in Visual Studio and can also be transformed by <a href="#CallingMSBuildExplicitly">calling MSBuild explicitly</a>.</p>
+<pre class="code"><span style="color: blue">&lt;</span><span style="color: #a31515">PropertyGroup</span><span style="color: blue">&gt;
+  &lt;</span><span style="color: #a31515">TransformOnBuild</span><span style="color: blue">&gt;</span>true<span style="color: blue">&lt;/</span><span style="color: #a31515">TransformOnBuild</span><span style="color: blue">&gt;
+&lt;/</span><span style="color: #a31515">PropertyGroup</span><span style="color: blue">&gt;</span></pre>
+<h5 id="TransformOutOfDateOnly">$(TransformOutOfDateOnly) property</h5>
+<p>Controls incremental template transformation and indicates whether only out of date or all templates should be processed. This property can be set to true or false and has a default value of true.</p>
+<pre class="code"><span style="color: blue">&lt;</span><span style="color: #a31515">PropertyGroup</span><span style="color: blue">&gt;
+  &lt;</span><span style="color: #a31515">TransformOutOfDateOnly</span><span style="color: blue">&gt;</span>false<span style="color: blue">&lt;/</span><span style="color: #a31515">TransformOutOfDateOnly</span><span style="color: blue">&gt;
+&lt;/</span><span style="color: #a31515">PropertyGroup</span><span style="color: blue">&gt;</span></pre>
+<p>An out-of-date file is one where any of the input files used to generated the file were modified more recently than the file itself. The input files are the <a href="http://www.olegsych.com/2008/02/t4-include-directive/" target="_blank">included</a> template files and the files referenced by custom directive processors. In addition, a file that contains only “ErrorGeneratingOutput” written to it when the last transformation failed is also treated as being out of date. </p>
+<p>T4 relies on the file tracking feature in MSBuild by logging all of the file read / write operations as they occur when generating an output file. If the tracking logs do not exist for a project, T4 assumes that the template is out of date and transforms it.</p>
+<h5 id="TrackFileAccess">$(TrackFileAccess) property</h5>
+<p>Determines whether T4 will log file read / write operations to allow subsequent incremental template transformations. This property can be set to true or false and has a default value of true.</p>
+<pre class="code"><span style="color: blue">&lt;</span><span style="color: #a31515">PropertyGroup</span><span style="color: blue">&gt;
+  &lt;</span><span style="color: #a31515">TrackFileAccess</span><span style="color: blue">&gt;</span>false<span style="color: blue">&lt;/</span><span style="color: #a31515">TrackFileAccess</span><span style="color: blue">&gt;
+&lt;/</span><span style="color: #a31515">PropertyGroup</span><span style="color: blue">&gt;</span></pre>
+<p>If you don’t rely on incremental template transformations, you may want to set this property to false to reduce the amount of space taken by the log files in the intermediate output directory (obj\Debug).</p>
+<h5 id="OverwriteReadOnlyOutputFiles">$(OverwriteReadOnlyOutputFiles) property</h5>
+<p>Indicates whether read-only output files will be overwritten during template transformation. This property can be set to true or false and has a default value of false.</p>
+<pre class="code"><span style="color: blue">&lt;</span><span style="color: #a31515">PropertyGroup</span><span style="color: blue">&gt;
+  &lt;</span><span style="color: #a31515">OverwriteReadOnlyOutputFiles</span><span style="color: blue">&gt;</span>true<span style="color: blue">&lt;/</span><span style="color: #a31515">OverwriteReadOnlyOutputFiles</span><span style="color: blue">&gt;
+&lt;/</span><span style="color: #a31515">PropertyGroup</span><span style="color: blue">&gt;</span></pre>
+<p>When <em>$(OverwriteReadOnlyOutputFiles)</em> is false, T4 issues a warning for each output file that could not be regenerated because it is read-only and the build will fail. When <em>$(OverwriteReadOnlyOutputFiles)</em> is true, T4 will overwrite read-only files and report a warning for each overwritten file. These warnings are not considered to be compiler warnings for the purpose of the “Treat warnings as errors” project setting.</p>
+<h5 id="BeforeTransform">$(BeforeTransform) property</h5>
+<p>Specifies a user-defined MSBuild target that will be executed before template transformation. This property is empty by default.</p>
+<pre class="code"><span style="color: blue">&lt;</span><span style="color: #a31515">PropertyGroup</span><span style="color: blue">&gt;
+  &lt;</span><span style="color: #a31515">TransformOnBuild</span><span style="color: blue">&gt;</span>true<span style="color: blue">&lt;/</span><span style="color: #a31515">TransformOnBuild</span><span style="color: blue">&gt;
+  &lt;</span><span style="color: #a31515">BeforeTransform</span><span style="color: blue">&gt;</span>OnBeforeTransform<span style="color: blue">&lt;/</span><span style="color: #a31515">BeforeTransform</span><span style="color: blue">&gt;
+&lt;/</span><span style="color: #a31515">PropertyGroup</span><span style="color: blue">&gt;
+&lt;</span><span style="color: #a31515">Import </span><span style="color: red">Project</span><span style="color: blue">=</span>&quot;<span style="color: blue">$(MSBuildExtensionsPath)\Microsoft\VisualStudio\TextTemplating\v10.0\Microsoft.TextTemplating.targets</span>&quot; <span style="color: blue">/&gt;
+&lt;</span><span style="color: #a31515">Target </span><span style="color: red">Name</span><span style="color: blue">=</span>&quot;<span style="color: blue">OnBeforeTransform</span>&quot;<span style="color: blue">&gt;
+  &lt;</span><span style="color: #a31515">Message </span><span style="color: red">Text</span><span style="color: blue">=</span>&quot;<span style="color: blue">This executes before templates are transformed</span>&quot; <span style="color: red">Importance</span><span style="color: blue">=</span>&quot;<span style="color: blue">high</span>&quot;<span style="color: blue">/&gt;
+&lt;/</span><span style="color: #a31515">Target</span><span style="color: blue">&gt;
+</span></pre>
+<h5 id="AfterTransform">$(AfterTransform) property</h5>
+<p>Specifies a user-defined MSBuild target that will be executed before template transformation. This property is empty by default.</p>
+<pre class="code"><span style="color: blue">&lt;</span><span style="color: #a31515">PropertyGroup</span><span style="color: blue">&gt;
+  &lt;</span><span style="color: #a31515">TransformOnBuild</span><span style="color: blue">&gt;</span>true<span style="color: blue">&lt;/</span><span style="color: #a31515">TransformOnBuild</span><span style="color: blue">&gt;
+  &lt;</span><span style="color: #a31515">AfterTransform</span><span style="color: blue">&gt;</span>OnAfterTransform<span style="color: blue">&lt;/</span><span style="color: #a31515">AfterTransform</span><span style="color: blue">&gt;
+&lt;/</span><span style="color: #a31515">PropertyGroup</span><span style="color: blue">&gt;
+&lt;</span><span style="color: #a31515">Import </span><span style="color: red">Project</span><span style="color: blue">=</span>&quot;<span style="color: blue">$(MSBuildExtensionsPath)\Microsoft\VisualStudio\TextTemplating\v10.0\Microsoft.TextTemplating.targets</span>&quot; <span style="color: blue">/&gt;
+&lt;</span><span style="color: #a31515">Target </span><span style="color: red">Name</span><span style="color: blue">=</span>&quot;<span style="color: blue">OnAfterTransform</span>&quot;<span style="color: blue">&gt;
+  &lt;</span><span style="color: #a31515">Message </span><span style="color: red">Text</span><span style="color: blue">=</span>&quot;<span style="color: blue">This executes after templates are transformed</span>&quot; <span style="color: red">Importance</span><span style="color: blue">=</span>&quot;<span style="color: blue">high</span>&quot;<span style="color: blue">/&gt;
+&lt;/</span><span style="color: #a31515">Target</span><span style="color: blue">&gt;
+</span></pre>
+<h5 id="GeneratedFiles">@(GeneratedFiles) items</h5>
+<p>Are produced by by the <em>TransformTemplates </em>and <em>PreprocessTemplates</em> to indicate output files that were successfully generated. <em>@(GeneratedFiles)</em> have <em>.ReadOnlyFileOverwritten</em> metadata item set to true when <em>$(OverwriteReadOnlyOutputFiles)</em> property is set to true and a particular read-only output file was overwritten during code generation. <em>@(GeneratedFiles)</em> items can be used in the user-defined <em>AfterTransform</em> target.</p>
+<h5 id="NonGeneratedFiles">@(NonGeneratedFiles) items</h5>
+<p>Are produced by by the <em>TransformTemplates </em>and <em>PreprocessTemplates</em> to indicate output files that could not be regenerated. The list of <em>@(NonGeneratedFiles)</em> can be examined in the user-defined <em>AfterTransform</em> target.</p>
+<h4 id="CallingMSBuildExplicitly">Transforming templates by calling MSBuild explicitly</h4>
+<p>In addition to automatically transforming templates at build time, T4 provides two targets you can call explicitly to transform or preprocess templates in a particular project by invoking MSBuild from command line. </p>
+<h5 id="TransformAll">TransformAll target</h5>
+<p>Calling the TransformAll target will transform all files associated with <em>TextTemplatingFileGenerator</em> and <em>TextTemplatingFilePreprocessor</em> in the specified project. It is an equivalent of setting <em>$(TransformOnBuild)</em> to true and performing template transformation at build time.</p>
+<h6>Syntax</h6>
+<pre class="code">msbuild t4msbuild.csproj /t:TransformAll</pre>
+<h6>Sample Output</h6>
+<p><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image_thumb14[3]" border="0" alt="image_thumb14[3]" src="http://www.olegsych.com/wp-content/uploads/2010/04/image-thumb143.png" width="580" height="401" /> </p>
+</p>
+<h5 id="Transform">Transform target</h5>
+<p>Transform target allows you to specify which file or files have to be transformed. It expects you to provide a value for <em>TransformFile</em> property, which accepts individual file names as well as <a href="http://msdn.microsoft.com/en-us/library/ms171454.aspx" target="_blank">MSBuild wildcards</a>.</p>
+<h6>Syntax</h6>
+<pre class="code">msbuild t4msbuild.csproj /t:Transform /p:TransformFile=*.tt</pre>
+<h6>Sample Output</h6>
+<p><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="" border="0" alt="" src="http://www.olegsych.com/wp-content/uploads/2010/04/image-thumb133.png" width="580" height="401" /> </p>
+<h4 id="Conclusion">Conclusion</h4>
+<p>Visual Studio 2010 introduced a new capability based on MSBuild extensions for transforming and preprocessing text templates at build time. The new capability comes with a set of distinct advantages and drawbacks. Compared to the existing command line tool, <em>TextTransform</em>, it makes implementation and maintenance of build-time template transformation easier. However, compared to the existing Visual Studio tools, it does not support project and source control integration. The MSBuild extensions also rely on a brand-new T4 engine host, with a unique compilation and run-time environment for text templates. Templates that take advantage of specific capabilities provided by a particular host (such as ASP.NET MVC and T4 Toolbox templates) are not be compatible with the new MSBuild host. Templates designed to be host-agnostic, may require you to configure the MSBuild host before they can be processed correctly. In particular, locations of the included files, .NET assemblies and definitions of custom directive processors have to be supplied explicitly. </p>
+<h4 id="Download">Download</h4>
+<ul>
+<li><a href="http://www.microsoft.com/downloads/details.aspx?FamilyID=47305cf4-2bea-43c0-91cd-1b853602dcc5" target="_blank">Visual Studio 2010 SDK</a> (pre-requisite) </li>
+<li><a href="http://www.microsoft.com/downloads/details.aspx?FamilyID=0def949d-2933-49c3-ac50-e884e0ff08a7" target="_blank">Visual Studio 2010 Modeling and Visualization SDK</a> (pre-requisite) </li>
+</ul>
+					</div>
+
+				</div>
+
+			</div>
+
+
+			<div id="post_meta" class="prominent reduced"><div class="inner">
+				<h2>Information and Links</h2>
+				<dl class="metadata odd">
+					<dt class="">Information</dt>
+					<dd class="icon date"><a href="http://www.olegsych.com/2010/04/">April 11th, 2010</a></dd>
+					<dd class="icon comment"><a href="#comments">16 Responses</a></dd>
+				</dl>
+	
+				<dl class="metadata even">
+					<dt>Feeds and Links</dt>
+					<dd class="icon feed"><a href='http://www.olegsych.com/2010/04/understanding-t4-msbuild-integration/feed/'>Comment Feed</a></dd>
+					<dd class="icon dotnetkicks"><a href="http://www.dotnetkicks.com/kick/?url=http://www.olegsych.com/2010/04/understanding-t4-msbuild-integration/&amp;title=Understanding+T4%3A+MSBuild+Integration">DotNetKicks</a></li>
+					<dd class="icon delicious"><a href="http://del.icio.us/post?url=http://www.olegsych.com/2010/04/understanding-t4-msbuild-integration/&amp;title=Understanding+T4%3A+MSBuild+Integration">Del.icio.us</a></dd>
+					<dd class="icon digg"><a href="http://www.digg.com/submit" target="_new">Digg</a></dd>
+					<dd class="icon technorati"><a href="http://technorati.com/cosmos/search.html?url=http://www.olegsych.com/2010/04/understanding-t4-msbuild-integration/">Technorati</a></dd>
+				</dl>
+	
+				<dl class="metadata odd">
+					<dt>Categories</dt>
+					<dd class="icon category"><a href="http://www.olegsych.com/category/articles/" title="View all posts in Articles" rel="category tag">Articles</a></dd>
+				</dl>
+				
+				<br class="clear" />
+	
+				<dl class="other">
+					<dt>Other Posts</dt>
+					<dd class="icon jump"><a href="http://www.olegsych.com/2010/05/t4-parameter-directive/">Understanding T4: &lt;#@ parameter #&gt; directive</a></dd>
+					<dd class="icon jump"><a href="http://www.olegsych.com/2010/03/t4-tutorial-integrating-generated-files-in-visual-studio-projects/">T4 Tutorial: Integrating Generated Files in Visual Studio Projects</a></dd>
+				</dl>
+	
+			</div></div>
+
+			<div id="widgets" class="widgets_single">
+	
+		<div id="text-2" class="advert widget_text">						<div class="textwidget"><div id="adzerk">
+    <div id="adzerk_ad_div">
+        <script type="text/javascript" src="http://engine.theloungenet.com/Server/DOTNETSP/SYCH/HORIZ"></script>
+    </div>
+    <p id="adzerk_by">
+        <a href='http://theloungenet.com'>Ads by The Lounge</a>
+    </p>
+</div></div>
+		</div>
+				<div id="widgets_single_a" class="widget_set reduced"></div>
+				<div id="widgets_single_b" class="widget_set reduced"></div>
+			</div>
+		
+<br class="clear" />
+
+
+<div id="comment_area">
+
+
+	<form action="http://www.olegsych.com/wp-comments-post.php" method="post" id="form_comments" class="prominent reduced"><div class="inner">
+	
+		<h2>Write a Comment</h2>
+		<p>Take a moment to comment and tell us what you think.  Some basic HTML is allowed for formatting.</p>
+	
+	
+	
+		<p><input type="text" id="input_comments_name" name="author" value="" class="input standard" /> <label for="input_comments_name">Name (required)</label></p>
+		<p><input type="text" id="input_comments_email" name="email" value="" class="input standard" /> <label for="input_comments_email">E-mail (required)</label></p>
+		<p><input type="text" id="input_comments_url" name="url" value="" class="input standard" /> <label for="input_comments_url">Website</label></p>
+		
+	
+		<p><input type="checkbox" id="input_allow_float" name="allow_float" value="true" /> <label for="input_allow_float">Allow comment box to float next to comments.</label></p>
+
+		<p><textarea name="comment" id="input_comment" rows="10" cols="40" class="input textarea" >Type your comment here.</textarea></p>
+	  
+		<p><input type="submit" id="input_comments_submit" name="submit" value="Submit Comment"/> <input type="hidden" name="comment_post_ID" value="537" /></p>
+	
+	
+
+	</div></form>
+
+
+	<div id="loop_comments">
+	
+		<a name="comments"></a>
+		
+		<h2>Reader Comments</h2>
+		
+	
+		<a name="comment-2986"></a>
+		<div id="comment_2986" class="comment">
+			<dl class="metadata reduced">
+				<dt class="comment_number">Comment Number:</dt> <dd class="comment_number">1</dd>
+				<dt class="writer">Written by:</dt> <dd class="writer"><a href='http://www.alvinashcraft.com/2010/04/12/dew-drop-april-12-2010/' rel='external nofollow'>Dew Drop &ndash; April 12, 2010 | Alvin Ashcraft&#39;s Morning Dew</a><br /></dd>
+				<dt class="timedate">Posted on:</dt> <dd class="timedate">April 12, 2010 at 7:17 am </dd>
+			</dl>
+			<div class="content">
+								<p>[&#8230;] Understanding T4: MSBuild Integration (Oleg Sych) [&#8230;]</p>
+			</div>
+		</div>
+	
+		<a name="comment-3019"></a>
+		<div id="comment_3019" class="comment">
+			<dl class="metadata reduced">
+				<dt class="comment_number">Comment Number:</dt> <dd class="comment_number">2</dd>
+				<dt class="writer">Written by:</dt> <dd class="writer">Pavel Henkin<br /></dd>
+				<dt class="timedate">Posted on:</dt> <dd class="timedate">April 26, 2010 at 12:17 pm </dd>
+			</dl>
+			<div class="content">
+								<p>Excellent write-up, thanks!</p>
+<p>We just set up TFS 2010 at work, and are faced with an interesting problem. If you have any thoughts on it, we would appreciate the input. </p>
+<p>We have a solution that has 3 web applications and a &#8217;shared&#8217; control library project (ascx + server controls). the old way was to do a pre-build task in every web project that copies the controls into an empty directory in the web project. </p>
+<p>Going with TFS 2010 that didn&#8217;t seem to work - so we made an &#8216;include&#8217; .targets file in the solution (it enumerates all the files in the control library), and each web .csproj references. That does work, but now we have to maintain that .targets file.<br />
+I was looking into T4 and trying to generate the file, but after reading some of MSDN and your stuff, i&#8217;m thinking that what would work in VS (with T4 Toolbox and Modeling + Vis SDK) won&#8217;t work so well with TFS.</p>
+<p>Is there any advice you might have?</p>
+			</div>
+		</div>
+	
+		<a name="comment-3029"></a>
+		<div id="comment_3029" class="comment">
+			<dl class="metadata reduced">
+				<dt class="comment_number">Comment Number:</dt> <dd class="comment_number">3</dd>
+				<dt class="writer">Written by:</dt> <dd class="writer">Oleg Sych<br /></dd>
+				<dt class="timedate">Posted on:</dt> <dd class="timedate">May 1, 2010 at 4:07 pm </dd>
+			</dl>
+			<div class="content">
+								<p>Pavel,</p>
+<p>There are many different ways to address this problem, with T4 or without it. I would need to learn more about your situation before I can make a recommendation. Please contact me privately if you are interested in my assistance. </p>
+<p>Oleg</p>
+			</div>
+		</div>
+	
+		<a name="comment-3032"></a>
+		<div id="comment_3032" class="comment">
+			<dl class="metadata reduced">
+				<dt class="comment_number">Comment Number:</dt> <dd class="comment_number">4</dd>
+				<dt class="writer">Written by:</dt> <dd class="writer"><a href='http://www.bober-beratung.de' rel='external nofollow'>Viktor Bober</a><br /></dd>
+				<dt class="timedate">Posted on:</dt> <dd class="timedate">May 3, 2010 at 4:28 am </dd>
+			</dl>
+			<div class="content">
+								<p>Hello Oleg,</p>
+<p>Firstly thanks a lot for your great T4-blog and very interesting findings. </p>
+<p>I habe a question to you. T4 seems to be a great technology to be used for @development of development tools@, but can it be used for industial purposes, say for mass  reports generation, extensive logging or for generation of mail bodies. </p>
+<p>Can you imagine writing a custom directive processor supporting multithreading, which is used by 100 different clients, which generate 100000 text files each? Are there any limitations for applying T4 technology for industrial applications?</p>
+<p>Is there any advice you might have?</p>
+			</div>
+		</div>
+	
+		<a name="comment-3080"></a>
+		<div id="comment_3080" class="comment">
+			<dl class="metadata reduced">
+				<dt class="comment_number">Comment Number:</dt> <dd class="comment_number">5</dd>
+				<dt class="writer">Written by:</dt> <dd class="writer"><a href='http://www.ikriv.com/blog/?p=498' rel='external nofollow'>Ivan Krivyakov&#39;s Blog &raquo; T4 &#8211; Too Troublesome to Tackle?</a><br /></dd>
+				<dt class="timedate">Posted on:</dt> <dd class="timedate">May 17, 2010 at 3:56 pm </dd>
+			</dl>
+			<div class="content">
+								<p>[&#8230;] suffer from this problem, but it does not make developer&#8217;s life any easier. There is some build integration in VS 2010, but &#8220;in order to configure a Visual Studio project for build-time template [&#8230;]</p>
+			</div>
+		</div>
+	
+		<a name="comment-3083"></a>
+		<div id="comment_3083" class="comment">
+			<dl class="metadata reduced">
+				<dt class="comment_number">Comment Number:</dt> <dd class="comment_number">6</dd>
+				<dt class="writer">Written by:</dt> <dd class="writer"><a href='http://lessisthenewmore.wordpress.com/' rel='external nofollow'>Filipe Romano</a><br /></dd>
+				<dt class="timedate">Posted on:</dt> <dd class="timedate">May 18, 2010 at 11:54 am </dd>
+			</dl>
+			<div class="content">
+								<p>Another great article, it really helps in understanding how this feature works.</p>
+<p>However, it seems to be missing support for custom code generators. I&#8217;ve been trying to get this to work, and it seems that creating a custom task to invoke the custom code generator is the only way to go&#8230; Do you have any ideas that could help in supporting this scenario?</p>
+			</div>
+		</div>
+	
+		<a name="comment-3084"></a>
+		<div id="comment_3084" class="comment">
+			<dl class="metadata reduced">
+				<dt class="comment_number">Comment Number:</dt> <dd class="comment_number">7</dd>
+				<dt class="writer">Written by:</dt> <dd class="writer">Oleg Sych<br /></dd>
+				<dt class="timedate">Posted on:</dt> <dd class="timedate">May 18, 2010 at 1:56 pm </dd>
+			</dl>
+			<div class="content">
+								<p>Filipe,</p>
+<p>I agree - the current implementation of MSBuild integration is rather limited. I would like to learn more about the scenario you have in mind. Can you post more details here or contact me privately?</p>
+<p>Thanks,<br />
+Oleg</p>
+			</div>
+		</div>
+	
+		<a name="comment-3091"></a>
+		<div id="comment_3091" class="comment">
+			<dl class="metadata reduced">
+				<dt class="comment_number">Comment Number:</dt> <dd class="comment_number">8</dd>
+				<dt class="writer">Written by:</dt> <dd class="writer"><a href='http://lessisthenewmore.wordpress.com/' rel='external nofollow'>Filipe Romano</a><br /></dd>
+				<dt class="timedate">Posted on:</dt> <dd class="timedate">May 19, 2010 at 12:25 pm </dd>
+			</dl>
+			<div class="content">
+								<p>Hi Oleg,</p>
+<p>After thinking about it, the custom code generator is not actually an issue. I&#8217;m able to generate code using the default tool with the command line (TextTransform.exe). With the lessons learned by making this work with the command line tool, I found out what needs to be done. The target &#8220;CreateT4ItemLists&#8221; must be redefined to consider the templates that have my code generator and not just the default ones.</p>
+<p>Thanks,<br />
+Filipe</p>
+			</div>
+		</div>
+	
+		<a name="comment-3110"></a>
+		<div id="comment_3110" class="comment">
+			<dl class="metadata reduced">
+				<dt class="comment_number">Comment Number:</dt> <dd class="comment_number">9</dd>
+				<dt class="writer">Written by:</dt> <dd class="writer"><a href='http://lessisthenewmore.wordpress.com/2010/05/25/source-control-and-t4-msbuild-integration/' rel='external nofollow'>Source Control and T4 MSBuild Integration &laquo; Less is the new More</a><br /></dd>
+				<dt class="timedate">Posted on:</dt> <dd class="timedate">May 25, 2010 at 6:24 pm </dd>
+			</dl>
+			<div class="content">
+								<p>[&#8230;] new feature that has been introduced in Visual Studio 2010. I&#8217;ve been reading this in-depth analysis on this feature, and being the first version it&#8217;s obviously not without it&#8217;s [&#8230;]</p>
+			</div>
+		</div>
+	
+		<a name="comment-3111"></a>
+		<div id="comment_3111" class="comment">
+			<dl class="metadata reduced">
+				<dt class="comment_number">Comment Number:</dt> <dd class="comment_number">10</dd>
+				<dt class="writer">Written by:</dt> <dd class="writer"><a href='http://lessisthenewmore.wordpress.com/' rel='external nofollow'>Filipe Romano</a><br /></dd>
+				<dt class="timedate">Posted on:</dt> <dd class="timedate">May 25, 2010 at 6:32 pm </dd>
+			</dl>
+			<div class="content">
+								<p>Hello again,</p>
+<p>I&#8217;ve been thinking about the lack of source control integration in T4 MSBuild and just posted a possible solution to this issue.</p>
+<p><a href="http://lessisthenewmore.wordpress.com/2010/05/25/source-control-and-t4-msbuild-integration/" rel="nofollow">http://lessisthenewmore.wordpress.com/2010/05/25/source-control-and-t4-msbuild-integration/</a></p>
+<p>Let me know what you think about it.</p>
+<p>Thanks.</p>
+			</div>
+		</div>
+	
+		<a name="comment-3157"></a>
+		<div id="comment_3157" class="comment">
+			<dl class="metadata reduced">
+				<dt class="comment_number">Comment Number:</dt> <dd class="comment_number">11</dd>
+				<dt class="writer">Written by:</dt> <dd class="writer">Oleg Sych<br /></dd>
+				<dt class="timedate">Posted on:</dt> <dd class="timedate">June 13, 2010 at 10:41 am </dd>
+			</dl>
+			<div class="content">
+								<p>Filipe, </p>
+<p>The example you posted is a great starting point. I&#8217;m not sure you would want to check generated files in automatically in the AfterTransform target though. This operation is something I typically want a developer to perform after reviewing the changes in case there is a problem with the generated code.</p>
+<p>Oleg</p>
+			</div>
+		</div>
+	
+		<a name="comment-3213"></a>
+		<div id="comment_3213" class="comment">
+			<dl class="metadata reduced">
+				<dt class="comment_number">Comment Number:</dt> <dd class="comment_number">12</dd>
+				<dt class="writer">Written by:</dt> <dd class="writer">Doug<br /></dd>
+				<dt class="timedate">Posted on:</dt> <dd class="timedate">August 16, 2010 at 10:51 pm </dd>
+			</dl>
+			<div class="content">
+								<p>I&#8217;m guessing I&#8217;ve missed something fundamental, but i can&#8217;t get this to work. I created a new Project, added a hello world tt script, which also contains the current date time. Added the XML as defined in the &#8220;Configuring for build-time template transformation&#8221;, the effect of this is the output window doesn&#8217;t appear as you described, and the output file is not overwritten. I then added the OnBeforeTransform and OnAfterTransform messages, they trigger in the output window, but  the .cs file isn&#8217;t overwritten? Do you have a sample hello world solution you could share which demonstrates the Build integration? I&#8217;m wondering if i&#8217;ve fundamentally misinterpretted what the build integration is capable of doing?</p>
+			</div>
+		</div>
+	
+		<a name="comment-3214"></a>
+		<div id="comment_3214" class="comment">
+			<dl class="metadata reduced">
+				<dt class="comment_number">Comment Number:</dt> <dd class="comment_number">13</dd>
+				<dt class="writer">Written by:</dt> <dd class="writer">Doug<br /></dd>
+				<dt class="timedate">Posted on:</dt> <dd class="timedate">August 17, 2010 at 6:06 am </dd>
+			</dl>
+			<div class="content">
+								<p>Hi Oleg,<br />
+I&#8217;ve managed to fix my problem, i&#8217;m not sure why it didn&#8217;t occur to me to try it earlier, but i just needed to set the TransformOutOfDateOnly property to false.<br />
+Thanks for your blog, it&#8217;s a wonderfully comprehensive resource.</p>
+			</div>
+		</div>
+	
+		<a name="comment-3239"></a>
+		<div id="comment_3239" class="comment">
+			<dl class="metadata reduced">
+				<dt class="comment_number">Comment Number:</dt> <dd class="comment_number">14</dd>
+				<dt class="writer">Written by:</dt> <dd class="writer">Maxim<br /></dd>
+				<dt class="timedate">Posted on:</dt> <dd class="timedate">September 20, 2010 at 12:45 pm </dd>
+			</dl>
+			<div class="content">
+								<p>Cannot make it work. I updated my project file and I got the following error:<br />
+&#8220;Running transformation: System.ArgumentNullException: Value cannot be null.<br />
+Parameter name: Could not obtain DTE from host&#8221;</p>
+<p>I might miss something very important, but I don&#8217;t know what. Could you please publish your &#8220;t4msbuild&#8221; project so I could compare with my project and fix the problem.</p>
+<p>Maxim</p>
+			</div>
+		</div>
+	
+		<a name="comment-3307"></a>
+		<div id="comment_3307" class="comment">
+			<dl class="metadata reduced">
+				<dt class="comment_number">Comment Number:</dt> <dd class="comment_number">15</dd>
+				<dt class="writer">Written by:</dt> <dd class="writer">Kendall<br /></dd>
+				<dt class="timedate">Posted on:</dt> <dd class="timedate">November 11, 2010 at 2:17 am </dd>
+			</dl>
+			<div class="content">
+								<p>Hi Oleg</p>
+<p>I am trying to use the MSBuild extentions however some of my templates use VS variables in reference assembly directive, i.e </p>
+<p>This works fine is VS2010 but not in the msbuild host.  Any suggestion how I can reference an assembly with a relative path and work in both the VS2010 host and the msbuild host.</p>
+<p>thanks<br />
+Kendall</p>
+			</div>
+		</div>
+	
+		<a name="comment-3318"></a>
+		<div id="comment_3318" class="comment">
+			<dl class="metadata reduced">
+				<dt class="comment_number">Comment Number:</dt> <dd class="comment_number">16</dd>
+				<dt class="writer">Written by:</dt> <dd class="writer"><a href='http://www.ctg.com' rel='external nofollow'>Olivier Van Hege</a><br /></dd>
+				<dt class="timedate">Posted on:</dt> <dd class="timedate">December 14, 2010 at 6:00 am </dd>
+			</dl>
+			<div class="content">
+								<p>Hi Oleg,</p>
+<p>First of all let me thank you for your extended article on the subject and your general contribution to the T4 community.<br />
+Now, I am facing the same problem as Maxim (see comment number 14) and get the following exception when the transformation is run from within my Visual Studio when the project builds:<br />
+Error 1	Running transformation: System.ArgumentNullException: Value cannot be null.<br />
+Parameter name: Could not obtain DTE from host<br />
+   at Microsoft.VisualStudio.TextTemplating41FDF5B3010E4E4C9D7658B293ACAB45.GeneratedTextTransformation.EntityFrameworkTemplateFileManager.VsEntityFrameworkTemplateFileManager..ctor(Object textTemplating) in c:\Program Files\Microsoft Visual Studio 10.0\Common7\IDE\Extensions\Microsoft\Entity Framework Tools\Templates\Includes\EF.Utility.CS.ttinclude:line 1867<br />
+   at Microsoft.VisualStudio.TextTemplating41FDF5B3010E4E4C9D7658B293ACAB45.GeneratedTextTransformation.EntityFrameworkTemplateFileManager.Create(Object textTransformation) in c:\Program Files\Microsoft Visual Studio 10.0\Common7\IDE\Extensions\Microsoft\Entity Framework Tools\Templates\Includes\EF.Utility.CS.ttinclude:line 1702<br />
+   at Microsoft.VisualStudio.TextTemplating41FDF5B3010E4E4C9D7658B293ACAB45.GeneratedTextTransformation.TransformText() in c:\Projects\Afda\Main\Afda\Afda.DAL\AfdaModel.Context.tt:line 288<br />
+   at Microsoft.VisualStudio.TextTemplating.TransformationRunner.RunTransformation(TemplateProcessingSession session, String source, ITextTemplatingEngineHost host, String&amp; result). Line=0, Column=0	Afda.DAL</p>
+<p>All files have been previously checked out but it doesn&#8217;t help.</p>
+<p>Any support would be appreciated.</p>
+<p>Thank you in advance, kind regards,<br />
+Olivier</p>
+			</div>
+		</div>
+	
+	
+	
+	</div>
+	
+	<br class="clear" />
+
+	<script language="JavaScript" type="text/javascript" src="http://www.olegsych.com/wp-content/themes/gluedideas_subtle/assets/js/form_comments.js"></script>
+
+</div>
+
+
+
+<!-- Content End -->
+<!-- Footer Start -->
+			<br class="clear" />
+		
+				
+		</div>
+	</div>
+
+</div>
+
+<div id="footer">
+	<div class="style_content">
+
+
+		<form action="http://www.feedburner.com/fb/a/emailverify" id="newsletter_signup" method="post" target="popupwindow" onsubmit="window.open('http://www.feedburner.com', 'popupwindow', 'scrollbars=yes,width=550,height=520');return true">
+			<label for="input_email_address" id="label_email_address">E-mail Subscription</label> <input type="text" id="input_email_address" name="email" class="input" value="" /><input type="image" id="button_email_address" src="http://www.olegsych.com/wp-content/themes/gluedideas_subtle/assets/images/icon_email.gif" align="top" name="submit" value="submit" />
+			<input type="hidden" value="http://feeds.feedburner.com/~e?ffid=1694598" name="url"/>
+			<input type="hidden" value="Oleg Sych" name="title"/>
+		</form>
+
+		
+		<h3 id="footer_title"><a href="http://www.olegsych.com/"><span>Oleg Sych</span></a></h3>
+		
+		<div id="logos">
+			<a href="http://wordpress.org/" class="logo"><img src="http://www.olegsych.com/wp-content/themes/gluedideas_subtle/assets/images/logo_wp.gif" alt="Powered by WordPress" align="top" border="0" /></a>
+			<a href="http://gluedideas.com/" class="logo"><img src="http://www.olegsych.com/wp-content/themes/gluedideas_subtle/assets/images/logo_gluedideas.gif" alt="Design by Glued Ideas" align="top" border="0" /></a>
+			<a href="http://www.famfamfam.com/" class="logo"><img src="http://www.olegsych.com/wp-content/themes/gluedideas_subtle/assets/images/logo_famfamfam.gif" alt="Icons by Fam Fam Fam" align="top" border="0" /></a>
+		</div>
+	
+		<div id="copyright_notice" class="reduced"><p>Copyright © 2010 Oleg Sych. Unless otherwise specified, all content is made available under the <a href="http://creativecommons.org/licenses/by/2.5/">Creative Commons License</a>.</p></div>
+		
+	</div>
+</div>
+	
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-3661602-1");
+pageTracker._initData();
+pageTracker._trackPageview();
+</script>
+
+</body>
+</html>
+
+<!-- Footer End -->
