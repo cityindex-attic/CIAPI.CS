@@ -17,18 +17,18 @@ namespace CIAPI.Tests
         private const string LoggedIn = "{\"Session\":\"D2FF3E4D-01EA-4741-86F0-437C919B5559\"}";
         private const string LoggedOut = "{\"LoggedOut\":true}";
 
-        private static ApiClient BuildDefaultTestClient()
+        private static Rpc.Client BuildDefaultTestClient()
         {
             Uri rpcUri = new Uri("https://rpc.com/TradigApi");
             Uri streamingUri = new Uri("https://streaming.com");
-            return new ApiClient(rpcUri, streamingUri);
+            return new RpcClient(rpcUri, streamingUri);
         }
 
         [Test]
         public void ApiClientCannotCreateSubscriptionIfNotAuthenticated()
         {
             const string path = "foo";
-            ApiClient ctx = BuildDefaultTestClient();
+            RpcClient ctx = BuildDefaultTestClient();
             Assert.Throws<InvalidOperationException>(() => ctx.CreateNewsSubscription(path));
         }
 
@@ -36,7 +36,7 @@ namespace CIAPI.Tests
         public void ApiClientCanCreateSubscriptionWhenLoggedIn()
         {
             const string path = "foo";
-            ApiClient ctx = CreateAuthenticatedApiClient();
+            RpcClient ctx = CreateAuthenticatedApiClient();
             var actual = ctx.CreateNewsSubscription(path);
             Assert.IsInstanceOf(typeof(NewsHeadlineSubscription), actual);
         }
@@ -46,7 +46,7 @@ namespace CIAPI.Tests
         public void ASubscriptionWillRaiseUpdateEvents()
         {
             const string path = "foo";
-            ApiClient ctx = CreateAuthenticatedApiClient();
+            Rpc.Client ctx = CreateAuthenticatedApiClient();
 
             var sub = ctx.CreateNewsSubscription(path);
 
@@ -58,7 +58,7 @@ namespace CIAPI.Tests
 
 
 
-        private ApiClient CreateAuthenticatedApiClient()
+        private RpcClient CreateAuthenticatedApiClient()
         {
             var requestFactory = new TestRequestFactory();
 
@@ -72,7 +72,7 @@ namespace CIAPI.Tests
 
             _testStreamingConnectionFactory = new TestStreamingConnectionFactory();
 
-            var ctx = new ApiClient(new Uri(TestConfig.RpcUrl), new Uri(TestConfig.StreamingUrl), new RequestCache(), requestFactory, _testStreamingConnectionFactory, throttleScopes, 3);
+            var ctx = new RpcClient(new Uri(TestConfig.RpcUrl), new Uri(TestConfig.StreamingUrl), new RequestCache(), requestFactory, _testStreamingConnectionFactory, throttleScopes, 3);
 
             ctx.LogIn(TestConfig.ApiUsername, TestConfig.ApiPassword);
             return ctx;

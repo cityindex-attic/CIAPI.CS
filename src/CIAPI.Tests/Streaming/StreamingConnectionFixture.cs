@@ -1,4 +1,5 @@
 using System;
+using CIAPI.Streaming;
 using NUnit.Framework;
 
 namespace StreamingClient.Tests
@@ -10,7 +11,7 @@ namespace StreamingClient.Tests
         public void RaisesMessageEvents()
         {
             MessageEventArgs<string> recievedMessage = null;
-            IStreamingConnection connection = new MockStreamingConnection();
+            IStreamingClient connection = new MockStreamingConnection();
            
             connection.MessageRecieved += (s, message) =>
                                      {
@@ -25,25 +26,9 @@ namespace StreamingClient.Tests
         }
     }
 
-    public interface IStreamingConnection
-    {
-        event EventHandler<MessageEventArgs<string>> MessageRecieved;
-    }
+    
 
-    public class MessageEventArgs<T> : EventArgs 
-    {
-        public MessageEventArgs(string topic, T messageData)
-        {
-            Topic = topic;
-            Data = messageData;
-        }
-
-        public string Topic { get; set; }
-        public T Data { get; set; }
-    }
-
-
-    public class MockStreamingConnection : IStreamingConnection
+    public class MockStreamingConnection : IStreamingClient
     {
         public event EventHandler<MessageEventArgs<string>> MessageRecieved;
         public void RaiseMessageRecieved(string topic, string messageData)

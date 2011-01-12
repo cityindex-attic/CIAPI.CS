@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using CIAPI;
+using CIAPI.Tests;
 using CityIndex.JsonClient;
 using CIAPI.DTO;
 
@@ -31,12 +32,12 @@ namespace ConsoleSpikes
 
         #region Async Implementation
 
-        static ApiClient _ctx;
+        static CIAPI.Rpc.Client _ctx;
         private static ManualResetEvent _gate;
 
         private static void GetNewsAsynchronously()
         {
-            _ctx = new ApiClient(new Uri(TestConfig.RpcUrl));
+            _ctx = new CIAPI.Rpc.Client(new Uri(TestConfig.RpcUrl));
 
             _gate = new ManualResetEvent(false);
             BeginLogIn(TestConfig.ApiUsername, TestConfig.ApiPassword);
@@ -106,7 +107,7 @@ namespace ConsoleSpikes
         {
             try
             {
-                var ctx = new ApiClient(new Uri(TestConfig.RpcUrl));
+                var ctx = new CIAPI.Rpc.Client(new Uri(TestConfig.RpcUrl));
 
                 ctx.LogIn(TestConfig.ApiUsername, TestConfig.ApiPassword);
 

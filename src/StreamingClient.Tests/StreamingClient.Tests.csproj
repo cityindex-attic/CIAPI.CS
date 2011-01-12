@@ -47,17 +47,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="StreamingListenerFixture.cs" />
-    <Compile Include="StreamingConnectionFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\StreamingClient\StreamingClient.csproj">
-      <Project>{EE5023DC-A20F-4358-9DF1-7D69BB1C322E}</Project>
-      <Name>StreamingClient</Name>
+    <ProjectReference Include="..\CIAPI\CIAPI.csproj">
+      <Project>{B40E6F1C-453E-44A2-BA9D-1692378B355C}</Project>
+      <Name>CIAPI</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

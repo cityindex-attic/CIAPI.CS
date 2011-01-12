@@ -1,9 +1,8 @@
 using System;
 using System.Threading;
+using CIAPI.DTO;
+using CIAPI.Streaming;
 using NUnit.Framework;
-using TradingApi.Client.Core;
-using TradingApi.Client.Core.ClientDTO;
-using TradingApi.Client.Core.Lightstreamer;
 
 namespace CIAPI.IntegrationTests.Streaming
 {
@@ -16,31 +15,51 @@ namespace CIAPI.IntegrationTests.Streaming
             var gate = new ManualResetEvent(false);
 
             const string apiUrl = "https://ciapipreprod.cityindextest9.co.uk/TradingApi/";
-            const string streamingUrl = "https://pushpreprod.cityindextest9.co.uk/";
-            const string userName = "0X234";
+            const string userName = "0x234";
             const string password = "password";
-            const string adapterName = "CITYINDEXSTREAMING";
 
-            var ctx = new ApiClient(new Uri(apiUrl));
-            ctx.LogIn(userName, password);
+            var authenticatedClient = new Rpc.Client(new Uri(apiUrl));
+            authenticatedClient.LogIn(userName, password);
 
-            ILightstreamerConnection connection = new LightstreamerConnection(streamingUrl, userName, ctx.SessionId.ToString(), adapterName);
-            var newsClient = new NewsListener("MOCKHEADLINES.", "UK", connection);
-            newsClient.Subscribe();
+            Uri streamingUri = new Uri("https://pushpreprod.cityindextest9.co.uk/CITYINDEXSTREAMING");
 
-            News latestNewsHeadline = new NullNews();
+            var streamingClient = new Client(streamingUri, authenticatedClient);
+            streamingClient.Connect();
+
+            const string newsTopic = "MOCKHEADLINES.UK";
+
+            var newsListener = streamingClient.Build<NewsDTO, SampleNewsDTOConverter>(newsTopic);
+            newsListener.Start();
+
+            NewsDTO actual = null;
+
             //Trap the Price given by the update event for checking
-            newsClient.Update += (s, e) =>
+
+            newsListener.MessageRecieved += (s, e) =>
             {
-                latestNewsHeadline = e.Item.News;
-                Console.WriteLine(latestNewsHeadline.ToString());
+                actual = e.Data;
                 gate.Set();
             };
 
-            gate.WaitOne(TimeSpan.FromSeconds(5));
-            newsClient.Unsubscribe();
 
-            Assert.AreNotEqual(new NullNews().ToString(), latestNewsHeadline.ToString());
+            if (!gate.WaitOne(TimeSpan.FromSeconds(5)))
+            {
+                Assert.Fail("timed out");
+            }
+
+            newsListener.Stop();
+
+            Assert.IsNotNull(actual);
         }
     }
+
+
+    public class SampleNewsDTOConverter : IMessageConverter<NewsDTO>
+    {
+        public NewsDTO Convert(string data)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
 }

@@ -20,7 +20,7 @@ namespace Phone7Spike
 {
     public partial class App : Application
     {
-        public static ApiClient ctx;
+        public static CIAPI.Rpc.Client ctx;
         private static MainViewModel viewModel = null;
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace Phone7Spike
         // This code will not execute when the application is reactivated
         private void Application_Launching(object sender, LaunchingEventArgs e)
         {
-            ctx = new ApiClient(new Uri("http://ec2-174-129-8-69.compute-1.amazonaws.com/RESTWebServices/"));
+            ctx = new CIAPI.Rpc.Client(new Uri("http://ec2-174-129-8-69.compute-1.amazonaws.com/RESTWebServices/"));
         }
 
         // Code to execute when the application is activated (brought to foreground)

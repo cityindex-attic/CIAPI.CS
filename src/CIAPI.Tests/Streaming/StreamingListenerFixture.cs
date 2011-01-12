@@ -1,4 +1,5 @@
 using System;
+using CIAPI.Streaming;
 using NUnit.Framework;
 
 namespace StreamingClient.Tests
@@ -11,8 +12,8 @@ namespace StreamingClient.Tests
         {
             SampleDTO aDto = null;
 
-            IStreamingConnection connection = new MockStreamingConnection();
-            var listener = new StreamingListener<SampleDTO, CommaStringToSampleDtoConverter>("topic1",connection);
+            IStreamingClient connection = new MockStreamingConnection();
+            StreamingListener<SampleDTO, CommaStringToSampleDtoConverter> listener = new StreamingListener<SampleDTO, CommaStringToSampleDtoConverter>("topic1",connection);
             listener.MessageRecieved += (s, messageDto) =>
                                             {
                                                 aDto = messageDto.Data;
@@ -29,7 +30,7 @@ namespace StreamingClient.Tests
         {
             var recievedMessages = 0;
 
-            IStreamingConnection connection = new MockStreamingConnection();
+            IStreamingClient connection = new MockStreamingConnection();
             var listener = new StreamingListener<SampleDTO, CommaStringToSampleDtoConverter>("topic1", connection);
             listener.MessageRecieved += (s, messageDto) =>
                                             {
@@ -53,32 +54,7 @@ namespace StreamingClient.Tests
         }
     }
 
-    public class StreamingListener<TDto, TMessageConverter> 
-        where TDto:class,new()
-        where TMessageConverter:IMessageConverter<TDto>, new()
-    {
-        private readonly string _topic;
 
-        public StreamingListener(string topic, IStreamingConnection connection)
-        {
-            _topic = topic;
-            connection.MessageRecieved += (s, e) =>
-                                              {
-                                                  if (MessageRecieved == null) return;
-                                                  if (e.Topic != _topic) return;
-                                                  var messageData = new TMessageConverter().Convert(e.Data);
-                                                  MessageRecieved(this,
-                                                                  new MessageEventArgs<TDto>(e.Topic,messageData));
-                                              };
-        }
-
-        public event EventHandler<MessageEventArgs<TDto>> MessageRecieved;
-    }
-
-    public interface IMessageConverter<T>
-    {
-        T Convert(string data);
-    }
 
     public class SampleDTO
     {

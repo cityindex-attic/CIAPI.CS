@@ -57,7 +57,9 @@ namespace CityIndex.JsonClient
                     while (_callbacks.Count > 0)
                     {
                         CacheCallBack<TDTO> callback = _callbacks.Dequeue();
+
                         new ApiAsyncResult<TDTO>(callback.Callback, callback.State, true, ResponseText, exception);
+
                     }
                 }
                 catch (Exception ex)

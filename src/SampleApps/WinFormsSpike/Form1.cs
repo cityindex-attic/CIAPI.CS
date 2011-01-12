@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using CIAPI;
+using CIAPI.Tests;
 using CityIndex.JsonClient;
 using CIAPI.DTO;
 
@@ -17,7 +18,7 @@ namespace WinFormsSpike
 {
     public partial class Form1 : Form
     {
-        ApiClient _ctx;
+        CIAPI.Rpc.Client _ctx;
 
         public Form1()
         {
@@ -41,7 +42,7 @@ namespace WinFormsSpike
         private void LoginButtonClick(object sender, EventArgs e)
         {
             DisableUi();
-            _ctx = new ApiClient(new Uri(ApiEndpointTextBox.Text));
+            _ctx = new CIAPI.Rpc.Client(new Uri(ApiEndpointTextBox.Text));
             _ctx.BeginLogIn(UidTextBox.Text, PwdTextBox.Text, result =>
                 {
                     try

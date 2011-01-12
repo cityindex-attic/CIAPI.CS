@@ -12,19 +12,22 @@ using System.Collections.Generic;
 using CityIndex.JsonClient;
 using CIAPI.DTO;
 
-namespace CIAPI
+namespace CIAPI.Rpc
 {
-	public partial class ApiClient
+	public partial class Client 
 	{ 
-
+ 
 <#
 
 // TODO: handle default values
 // TODO: handle nullable (required=false) and defaults if present
 
-	var request = new Request(new Uri("http://ec2-174-129-8-69.compute-1.amazonaws.com/RESTWebServices/smd"), "api", "cityindexapi");
-    var source = request.Execute();
+	// var request = new Request(new Uri("http://ec2-174-129-8-69.compute-1.amazonaws.com/RESTWebServices/smd"), "api", "cityindexapi");
+    // var source = request.Execute();
  
+	string dir = System.IO.Path.GetDirectoryName(this.Host.TemplateFile);
+	string source = System.IO.File.ReadAllText(System.IO.Path.Combine(dir,"smd.txt"));
+	
     JObject smd = (JObject)JsonConvert.DeserializeObject(source);
     foreach (JProperty service in smd["services"])
     {

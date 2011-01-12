@@ -56,6 +56,7 @@
     <Compile Include="Converters\ApiEnumConverter.cs" />
     <Compile Include="Converters\UnixDateTimeConverter.cs" />
     <Compile Include="Converters\UnixDateTimeHelper.cs" />
+    <Compile Include="HttpUtility.cs" />
     <Compile Include="IJsonClient.cs" />
     <Compile Include="IRequestCache.cs" />
     <Compile Include="IRequestFactory.cs" />

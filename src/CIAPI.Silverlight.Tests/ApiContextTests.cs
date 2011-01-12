@@ -39,7 +39,7 @@ namespace CIAPI.Silverlight.Tests
                     {"trading", new ThrottedRequestQueue(TimeSpan.FromSeconds(3), 1, 10)}
                 };
 
-            var ctx = new ApiClient(new Uri(TestConfig.ApiUrl), new RequestCache(),requestFactory, throttleScopes,3);
+            var ctx = new CIAPI.Rpc.Client(new Uri(TestConfig.ApiUrl), new RequestCache(), requestFactory, throttleScopes, 3);
 
             requestFactory.CreateTestRequest(LoggedIn);
 
@@ -67,7 +67,7 @@ namespace CIAPI.Silverlight.Tests
 
             requestFactory.CreateTestRequest(LoggedOut);
 
-            var ctx = new ApiClient(new Uri(TestConfig.ApiUrl), new RequestCache(), requestFactory, throttleScopes, 3);
+            var ctx = new CIAPI.Rpc.Client(new Uri(TestConfig.ApiUrl), new RequestCache(), requestFactory, throttleScopes, 3);
 
             ctx.BeginDeleteSession(TestConfig.ApiUsername, TestConfig.ApiTestSessionId, ar =>
             {
@@ -93,7 +93,7 @@ namespace CIAPI.Silverlight.Tests
 
             requestFactory.CreateTestRequest(NewsHeadlines14);
 
-            var ctx = new ApiClient(new Uri(TestConfig.ApiUrl), new RequestCache(), requestFactory, throttleScopes, 3)
+            var ctx = new CIAPI.Rpc.Client(new Uri(TestConfig.ApiUrl), new RequestCache(), requestFactory, throttleScopes, 3)
             {
                 UserName = TestConfig.ApiUsername,
                 SessionId = TestConfig.ApiTestSessionId

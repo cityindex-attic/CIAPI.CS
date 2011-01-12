@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using CityIndex.JsonClient;
+using CIAPI.Tests;
+
 using JsonClient.CodeGeneration.IO;
 using NUnit.Framework;
 
@@ -24,7 +25,7 @@ namespace JsonClient.CodeGeneration.Tests
         public void NetworkFileCanReadRemote()
         {
             const string expected = "SMDVersion";
-            string actual = NetworkFile.ReadAllText(new Uri(new Uri(TestConfig.ApiUrl), "smd").AbsoluteUri);
+            string actual = NetworkFile.ReadAllText(new Uri(new Uri(TestConfig.RpcUrl), "smd").AbsoluteUri);
             StringAssert.Contains(expected,actual);
         }
 

@@ -16,7 +16,7 @@ namespace SilverlightSpike
 {
     public partial class App : Application
     {
-        public static ApiClient ctx;
+        public static CIAPI.Rpc.Client ctx;
         public App()
         {
             this.Startup += this.Application_Startup;
@@ -27,7 +27,7 @@ namespace SilverlightSpike
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            ctx = new ApiClient(new Uri("http://ec2-174-129-8-69.compute-1.amazonaws.com/RESTWebServices/"));
+            ctx = new CIAPI.Rpc.Client(new Uri("http://ec2-174-129-8-69.compute-1.amazonaws.com/RESTWebServices/"));
             this.RootVisual = new MainPage();
         }
 

@@ -5,14 +5,15 @@ using CityIndex.JsonClient;
 using StreamingClient;
 using TradingApi.Client.Core.Lightstreamer;
 
-namespace CIAPI
+namespace CIAPI.Rpc
+
 {
-    public partial class ApiClient : IStreamingClient
+    public partial class RpcClient : IStreamingClient
     {
         private readonly Uri _streamingUri;
         private readonly IStreamingConnectionFactory _streamingConnectionFactory;
 
-        public ApiClient(Uri uri, Uri streamingUri, IRequestCache cache, IRequestFactory requestFactory,IStreamingConnectionFactory streamingConnectionFactory,
+        public RpcClient(Uri uri, Uri streamingUri, IRequestCache cache, IRequestFactory requestFactory,IStreamingConnectionFactory streamingConnectionFactory,
                          Dictionary<string, IThrottedRequestQueue> throttleScopes, int retryCount)
             : base(uri, cache, requestFactory, throttleScopes, retryCount)
         {
@@ -20,7 +21,7 @@ namespace CIAPI
             _streamingUri = streamingUri;
         }
 
-        public ApiClient(Uri rpcUri, Uri streamingUri)
+        public RpcClient(Uri rpcUri, Uri streamingUri)
             : base(rpcUri)
         {
             _streamingUri = streamingUri;

@@ -28,7 +28,6 @@ namespace CIAPI.DTO
         /// The date on which the news story was published. Always in UTC
         /// format : "wcf-date"
         /// </summary>
-        [JsonConverter(typeof(UnixDateTimeOffsetConverter))]
 		
 		public  DateTime PublishDate{get;set;}
 	}
@@ -90,7 +89,6 @@ namespace CIAPI.DTO
         /// The associated expiry DateTime for a pair of GoodTillTime IfDone orders
         /// format : "wcf-date"
         /// </summary>
-        [JsonConverter(typeof(UnixDateTimeOffsetConverter))]
 		
 		public  DateTime ExpiryDateTimeUTC{get;set;}
 	}
@@ -110,7 +108,6 @@ namespace CIAPI.DTO
         /// The date of the start of the price bar interval
         /// format : "wcf-date"
         /// </summary>
-        [JsonConverter(typeof(UnixDateTimeOffsetConverter))]
 		
 		public  DateTime BarDate{get;set;}
         /// <summary>
@@ -196,7 +193,6 @@ namespace CIAPI.DTO
         /// The datetime at which a price tick occured. Accurate to the millisecond
         /// format : "wcf-date"
         /// </summary>
-        [JsonConverter(typeof(UnixDateTimeOffsetConverter))]
 		
 		public  DateTime TickDate{get;set;}
         /// <summary>
@@ -499,7 +495,6 @@ namespace CIAPI.DTO
         /// Value date (expressed as UTC)
         /// format : "wcf-date"
         /// </summary>
-        [JsonConverter(typeof(UnixDateTimeOffsetConverter))]
 		
 		public  DateTime ValueDate{get;set;}
         /// <summary>

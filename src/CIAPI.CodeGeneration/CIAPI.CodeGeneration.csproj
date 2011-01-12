@@ -53,6 +53,7 @@
   <ItemGroup>
     <Content Include="ReadMe.txt" />
     <Content Include="schema.txt" />
+    <Content Include="smd.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DTO.tt">

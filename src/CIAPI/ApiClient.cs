@@ -5,12 +5,12 @@ using CityIndex.JsonClient;
 using CIAPI.DTO;
 
 
-namespace CIAPI
+namespace CIAPI.Rpc
 {
-    public partial class ApiClient : Client
+    public partial class Client : CityIndex.JsonClient.Client
     {
         
-        public ApiClient(Uri uri)
+        public Client(Uri uri)
             : base(uri, new RequestCache(), new RequestFactory(), new Dictionary<string, IThrottedRequestQueue>
                 {
                     { "data", new ThrottedRequestQueue(TimeSpan.FromSeconds(5),30,10) }, 
@@ -19,7 +19,7 @@ namespace CIAPI
         {
         }
 
-        public ApiClient(Uri uri, IRequestCache cache, IRequestFactory requestFactory, Dictionary<string, IThrottedRequestQueue> throttleScopes, int retryCount)
+        public Client(Uri uri, IRequestCache cache, IRequestFactory requestFactory, Dictionary<string, IThrottedRequestQueue> throttleScopes, int retryCount)
             : base(uri,cache, requestFactory, throttleScopes, retryCount)
         {
         }
