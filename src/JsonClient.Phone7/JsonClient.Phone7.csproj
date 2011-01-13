@@ -111,6 +111,9 @@
     <Compile Include="..\JsonClient\RequestNotificationStatus.cs">
       <Link>RequestNotificationStatus.cs</Link>
     </Compile>
+    <Compile Include="..\JsonClient\RequestRetryDiscriminator.cs">
+      <Link>RequestRetryDiscriminator.cs</Link>
+    </Compile>
     <Compile Include="..\JsonClient\ThrottedRequestQueue.cs">
       <Link>ThrottedRequestQueue.cs</Link>
     </Compile>
