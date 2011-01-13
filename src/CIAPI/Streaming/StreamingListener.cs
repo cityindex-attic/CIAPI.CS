@@ -4,12 +4,12 @@ using Lightstreamer.DotNet.Client;
 
 namespace CIAPI.Streaming
 {
-    public abstract class StreamingListener<TDto, TMessageConverter> : IStreamingListener<TDto>, IHandyTableListener
-        where TDto : class,new()
-        where TMessageConverter : IMessageConverter<TDto>, new()
+    public abstract class StreamingListener<TDto> : IStreamingListener<TDto>, IHandyTableListener
+        where TDto : class
     {
+        protected IMessageConverter<TDto> MessageConverter;
         protected SimpleTableInfo TableInfo;
-        private static readonly ILog Logger = LogManager.GetLogger(typeof (StreamingListener<TDto, TMessageConverter>));
+        private static readonly ILog Logger = LogManager.GetLogger(typeof (StreamingListener<TDto>));
         protected readonly string Topic;
         private readonly LSClient _lsClient;
         private SubscribedTableKey _subscribedTableKey;
@@ -58,17 +58,17 @@ namespace CIAPI.Streaming
 
         void IHandyTableListener.OnUpdate(int itemPos, string itemName, UpdateInfo update)
         {
-            // TODO: lightstreamer swallows errors thrown here - live with it or fix lightstreamer client code
             try
             {
                 if (MessageRecieved == null) return;
 
-                var messageDto = new TMessageConverter().Convert(update);
-                MessageRecieved(this, new MessageEventArgs<TDto>(Topic, messageDto));
+                MessageRecieved(this, new MessageEventArgs<TDto>(Topic, MessageConverter.Convert(update)));
             }
             catch (Exception ex)
             {
                 Logger.Error(ex);
+
+                // TODO: lightstreamer swallows errors thrown here - live with it or fix lightstreamer client code
                 throw;
             }
         }

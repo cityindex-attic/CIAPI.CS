@@ -56,8 +56,6 @@ namespace CIAPI.Tests
 
         }
 
-
-
         private RpcClient CreateAuthenticatedApiClient()
         {
             var requestFactory = new TestRequestFactory();

@@ -47,10 +47,9 @@ namespace CIAPI.Streaming
             _internalClient.CloseConnection();
         }
 
-        public IStreamingListener<NewsDTO> BuildNews<TMessageConverter>(string newsTopic)
-            where TMessageConverter : IMessageConverter<NewsDTO>, new()
+        public IStreamingListener<NewsDTO> BuildNew(string newsTopic)
         {
-            return new StreamingNewsListener<TMessageConverter>(newsTopic, _internalClient);
+            return new StreamingNewsListener(newsTopic, _internalClient);
         }
 
         public void OnStatusChanged(StatusEventArgs e)
