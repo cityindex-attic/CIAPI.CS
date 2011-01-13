@@ -23,7 +23,7 @@ namespace CityIndex.JsonClient.Tests
         public void ShouldNotRetryRequestForArgumentErrors()
         {
             var decider = new RequestRetryDiscriminator();
-            var authException = new WebException("(403)", WebExceptionStatus.);
+            var authException = new WebException("(403)", WebExceptionStatus.UnknownError);
 
             Assert.IsFalse(decider.ShouldRetry(authException));
         }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Threading;
+using System.Web;
 using CIAPI;
 using CIAPI.DTO;
 using CIAPI.Tests;
@@ -131,6 +132,7 @@ namespace CIAPI.Rpc.Tests
             }
         }
 
+
         [Test]
         public void SpecificRequestExceptionsAreRetried()
         {
@@ -179,6 +181,27 @@ namespace CIAPI.Rpc.Tests
                 
             }
         }
+
+
+
+
+        [Test]
+        public void FOO()
+        {
+
+            var requestFactory = new TestRequestFactory();
+
+            var throttleScopes = new Dictionary<string, IThrottedRequestQueue>
+                {
+                    {"data", new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10)},
+                    {"trading", new ThrottedRequestQueue(TimeSpan.FromSeconds(3), 1, 10)}
+                };
+
+            var ctx = new CIAPI.Rpc.Client(new Uri(TestConfig.RpcUrl), new RequestCache(), requestFactory, throttleScopes, 3);
+            requestFactory.CreateTestRequest("", 300, null, null, new WebException("(401) Unauthorized"));
+            ctx.LogIn("foo", "bar");
+        }
+
         #region Plumbing
 
         private static CIAPI.Rpc.Client BuildAuthenticatedClientAndSetupResponse(string expectedJson)

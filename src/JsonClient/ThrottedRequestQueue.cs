@@ -213,24 +213,34 @@ namespace CityIndex.JsonClient
 
                     int requestIndex = _dispatchedCount;
 
-                    // TODO: should not get an exception here but need to allow for one
 
-                    request.WebRequest.BeginGetResponse(ar =>
-                        {
-                            string msgIssued = string.Format("Recieved #{0} : {1} ", requestIndex, request.Url);
-                            Log.Debug(msgIssued);
+                    try
+                    {
+                        request.WebRequest.BeginGetResponse(ar =>
+                            {
+                                string msgIssued = string.Format("Recieved #{0} : {1} ", requestIndex, request.Url);
+                                Log.Debug(msgIssued);
 
-                            _outstandingRequests--;
+                                _outstandingRequests--;
 
-                            request.AsyncResultHandler(ar, request);
-                        }, null);
+                                request.AsyncResultHandler(ar, request);
+                            }, null);
+                        string msgDispatched = string.Format("Dispatched #{0} : {1} ", _dispatchedCount, request.Url);
+                        Log.Debug(msgDispatched);
+                    }
+                    catch (Exception ex)
+                    {
+                        string msgDispatched = string.Format("Error dispatching #{0} : {1} \r\n{2}", _dispatchedCount, request.Url,ex.Message);
+                        Log.Debug(msgDispatched);
 
-                    string msgDispatched = string.Format("Dispatched #{0} : {1} ", _dispatchedCount, request.Url);
-                    Log.Debug(msgDispatched);
+                        throw;
+                    }
+                    finally
+                    {
+                        _requests.Dequeue();
+                        _outstandingRequests++;
+                    }
 
-                    _requests.Dequeue();
-
-                    _outstandingRequests++;
                 }
                 finally
                 {

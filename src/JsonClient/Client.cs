@@ -269,6 +269,11 @@ namespace CityIndex.JsonClient
                         BeforeIssueRequest(request, url, target, uriTemplate, method, parameters, cacheDuration,
                                            throttleScope);
 
+
+
+
+                        item.ItemState = CacheItemState.Pending;
+
                         if (method.ToUpper() == "POST")
                         {
                             SetPostEntityAndEnqueueRequest<TDTO>(url, request, parameters, throttleScope);
@@ -277,6 +282,10 @@ namespace CityIndex.JsonClient
                         {
                             EnqueueRequest<TDTO>(url, request, throttleScope);
                         }
+
+                        
+                        
+
                         break;
                     case CacheItemState.Pending:
                         item.AddCallback(cb, state);
@@ -458,7 +467,7 @@ namespace CityIndex.JsonClient
 
                             if (shouldRetry && item.RetryCount <= _retryCount)
                             {
-                                // TODO: TEST THIS
+                                // FIXME: We need to rebuild the request CANNOT REUSE HTTPWEBREQUEST
                                 item.RetryCount++;
                                 item.ItemState = CacheItemState.New; // should already be New - check this
 

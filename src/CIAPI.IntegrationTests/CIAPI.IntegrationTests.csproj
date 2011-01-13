@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Rpc\ErrorHandlingFixture.cs" />
     <Compile Include="Streaming\PriceFixture.cs" />
     <Compile Include="Streaming\NewsFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

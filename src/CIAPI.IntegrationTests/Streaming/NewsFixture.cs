@@ -40,5 +40,16 @@ namespace CIAPI.IntegrationTests.Streaming
 
             Assert.IsNotNull(actual);
         }
+
+        [Test]
+        public void FOO()
+        {
+            const string apiUrl = "https://ciapipreprod.cityindextest9.co.uk/TradingApi/";
+
+            var authenticatedClient = new CIAPI.Rpc.Client(new Uri(apiUrl));
+            authenticatedClient.LogIn("invalid", "invalid");
+
+            
+        }
     }
 }
