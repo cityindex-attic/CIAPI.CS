@@ -2,6 +2,6 @@
 {
     public interface IMessageConverter<T>
     {
-        T Convert(string data);
+        T Convert(object data);
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Threading;
 using CIAPI.DTO;
 using CIAPI.Streaming;
+using Lightstreamer.DotNet.Client;
 using NUnit.Framework;
 
 namespace CIAPI.IntegrationTests.Streaming
@@ -20,15 +21,17 @@ namespace CIAPI.IntegrationTests.Streaming
 
             var authenticatedClient = new Rpc.Client(new Uri(apiUrl));
             authenticatedClient.LogIn(userName, password);
+            //TODO: test retry mechanism - seems to get stuck in a closed loop
 
             Uri streamingUri = new Uri("https://pushpreprod.cityindextest9.co.uk/CITYINDEXSTREAMING");
 
-            var streamingClient = new Client(streamingUri, authenticatedClient);
+            var streamingClient = new Client(streamingUri, userName,authenticatedClient.SessionId);
+
             streamingClient.Connect();
 
             const string newsTopic = "MOCKHEADLINES.UK";
 
-            var newsListener = streamingClient.Build<NewsDTO, SampleNewsDTOConverter>(newsTopic);
+            var newsListener = streamingClient.BuildNews<SampleNewsDTOConverter>(newsTopic);
             newsListener.Start();
 
             NewsDTO actual = null;
@@ -56,9 +59,38 @@ namespace CIAPI.IntegrationTests.Streaming
 
     public class SampleNewsDTOConverter : IMessageConverter<NewsDTO>
     {
-        public NewsDTO Convert(string data)
+        public NewsDTO Convert(object data)
         {
-            throw new NotImplementedException();
+            var updateInfo = (UpdateInfo)data;
+            return new NewsDTO
+                {
+                    StoryId = GetAsInt(updateInfo, 1),
+                    Headline = GetAsString(updateInfo, 2),
+                    PublishDate = GetAsJSONDateTimeUtc(updateInfo, 3)
+                };
+        }
+
+        private static DateTime GetAsJSONDateTimeUtc(UpdateInfo updateInfo, int pos)
+        {
+            //TODO: DO proper conversion
+            return DateTime.Now;
+        }
+
+        private static string GetAsString(UpdateInfo updateInfo, int pos)
+        {
+            return GetCurrentValue(updateInfo, pos);
+        }
+
+        private static int GetAsInt(UpdateInfo updateInfo, int pos)
+        {
+            return System.Convert.ToInt32(GetCurrentValue(updateInfo, pos));
+        }
+
+        private static string GetCurrentValue(UpdateInfo updateInfo, int pos)
+        {
+            return updateInfo.IsValueChanged(pos)
+                       ? updateInfo.GetNewValue(pos)
+                       : updateInfo.GetOldValue(pos);
         }
     }
 

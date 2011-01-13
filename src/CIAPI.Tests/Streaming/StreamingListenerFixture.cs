@@ -48,9 +48,9 @@ namespace StreamingClient.Tests
 
     public class CommaStringToSampleDtoConverter: IMessageConverter<SampleDTO>
     {
-        public SampleDTO Convert(string data)
+        public SampleDTO Convert(object data)
         {
-            return new SampleDTO{ Title = data.Split(',')[0]};
+            return new SampleDTO{ Title = ((string)data).Split(',')[0]};
         }
     }
 
