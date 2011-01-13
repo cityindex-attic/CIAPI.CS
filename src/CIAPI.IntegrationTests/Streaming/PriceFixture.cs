@@ -1,43 +1,49 @@
-//using System;
-//using System.Threading;
-//using NUnit.Framework;
+using System;
+using System.Threading;
+using CIAPI.DTO;
+using CIAPI.Streaming;
+using NUnit.Framework;
 
-//namespace CIAPI.IntegrationTests.Streaming
-//{
-//    [TestFixture]
-//    public class PriceFixture
-//    {
-//        [Test]
-//        public void CanConsumePriceStream()
-//        {
-//            var gate = new ManualResetEvent(false);
+namespace CIAPI.IntegrationTests.Streaming
+{
+    [TestFixture]
+    public class PriceFixture
+    {
+        [Test]
+        public void CanConsumePriceStream()
+        {
+            var gate = new ManualResetEvent(false);
 
-//            const string apiUrl = "https://ciapipreprod.cityindextest9.co.uk/TradingApi/";
-//            const string streamingUrl = "https://pushpreprod.cityindextest9.co.uk:443";
-//            const string userName = "0X234";
-//            const string password = "password";
-//            const string adapterName = "CITYINDEXSTREAMING";
+            var streamingClient = StreamingClientBuilder.BuildStreamingClient();
 
-//            var ctx = new CIAPI.Rpc.Client(new Uri(apiUrl));
-//            ctx.LogIn(userName, password);
+            streamingClient.Connect();
 
-//            ILightstreamerConnection connection = new LightstreamerConnection(streamingUrl, userName, ctx.SessionId.ToString(), adapterName);
-//            var priceListener = new PriceListener("MOCKPRICE.", 1000, connection);
-//            priceListener.Subscribe();
-            
-//            //Trap the Price given by the update event for checking
-//            Price latestPrice = new NullPrice();
-//            priceListener.Update += (s, e) =>
-//            {
-//                latestPrice = e.Item.Price;
-//                Console.WriteLine(latestPrice.ToString());
-//                gate.Set();
-//            };
+            const string priceTopic = "MOCKPRICE.1000";
 
-//            gate.WaitOne(TimeSpan.FromSeconds(5));
-//            priceListener.Unsubscribe();
+            var priceListener = streamingClient.BuildPriceListener(priceTopic);
+            priceListener.Start();
 
-//            Assert.AreNotEqual(new NullPrice().ToString(), latestPrice.ToString());
-//        }
-//    }
-//}
+            PriceDTO actual = null;
+
+            //Trap the Price given by the update event for checking
+
+            priceListener.MessageRecieved += (s, e) =>
+            {
+                actual = e.Data;
+                gate.Set();
+            };
+
+
+            if (!gate.WaitOne(TimeSpan.FromSeconds(5)))
+            {
+                Assert.Fail("A price updated wasn't recieved in time");
+            }
+
+            priceListener.Stop();
+            streamingClient.Disconnect();
+
+            Assert.IsNotNull(actual);
+
+        }
+    }
+}
