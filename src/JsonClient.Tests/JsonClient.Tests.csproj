@@ -52,6 +52,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CacheFixture.cs" />
+    <Compile Include="ClientFixture.cs" />
+    <Compile Include="RequestRetryDiscriminatorFixture.cs" />
     <Compile Include="TestRequestFactoryFixture.cs" />
     <Compile Include="TestRequestInfo.cs" />
     <Compile Include="TestWebReponse.cs" />
