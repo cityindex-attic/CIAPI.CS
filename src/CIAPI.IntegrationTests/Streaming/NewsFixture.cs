@@ -15,7 +15,6 @@ namespace CIAPI.IntegrationTests.Streaming
             var gate = new ManualResetEvent(false);
 
             var streamingClient = StreamingClientBuilder.BuildStreamingClient();
-
             streamingClient.Connect();
 
             var newsListener = streamingClient.BuildNewsListener("MOCKHEADLINES.UK");

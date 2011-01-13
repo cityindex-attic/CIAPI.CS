@@ -10,7 +10,7 @@ namespace StreamingClient.Tests
         [Test]
         public void RaisesMessageEvents()
         {
-            MessageEventArgs<string> recievedMessage = null;
+            MessageEventArgs<object> recievedMessage = null;
             IStreamingClient connection = new MockStreamingConnection();
            
             connection.MessageRecieved += (s, message) =>
@@ -30,10 +30,21 @@ namespace StreamingClient.Tests
 
     public class MockStreamingConnection : IStreamingClient
     {
-        public event EventHandler<MessageEventArgs<string>> MessageRecieved;
+        public event EventHandler<MessageEventArgs<object>> MessageRecieved;
+        public event EventHandler<StatusEventArgs> StatusChanged;
+        public void Connect()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Disconnect()
+        {
+            throw new NotImplementedException();
+        }
+
         public void RaiseMessageRecieved(string topic, string messageData)
         {
-            if (MessageRecieved != null) MessageRecieved(this,new MessageEventArgs<string>(topic, messageData));
+            if (MessageRecieved != null) MessageRecieved(this,new MessageEventArgs<object>(topic, messageData));
         }
     }
 

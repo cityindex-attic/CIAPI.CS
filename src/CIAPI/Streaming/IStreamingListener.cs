@@ -7,6 +7,5 @@ namespace CIAPI.Streaming
         event EventHandler<MessageEventArgs<TDto>> MessageRecieved;
         void Start();
         void Stop();
-        
     }
 }

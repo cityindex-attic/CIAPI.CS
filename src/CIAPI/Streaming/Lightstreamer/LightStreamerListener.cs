@@ -2,19 +2,19 @@
 using Common.Logging;
 using Lightstreamer.DotNet.Client;
 
-namespace CIAPI.Streaming
+namespace CIAPI.Streaming.Lightstreamer
 {
-    public abstract class StreamingListener<TDto> : IStreamingListener<TDto>, IHandyTableListener
+    public abstract class LightStreamerListener<TDto> : IStreamingListener<TDto>, IHandyTableListener
         where TDto : class
     {
         protected IMessageConverter<TDto> MessageConverter;
         protected SimpleTableInfo TableInfo;
-        private static readonly ILog Logger = LogManager.GetLogger(typeof (StreamingListener<TDto>));
+        private static readonly ILog Logger = LogManager.GetLogger(typeof (LightStreamerListener<TDto>));
         protected readonly string Topic;
         private readonly LSClient _lsClient;
         private SubscribedTableKey _subscribedTableKey;
 
-        protected StreamingListener(string topic, LSClient lsClient)
+        protected LightStreamerListener(string topic, LSClient lsClient)
         {
             Topic = topic;
             _lsClient = lsClient;

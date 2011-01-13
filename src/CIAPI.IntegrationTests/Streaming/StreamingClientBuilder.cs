@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using CIAPI.Streaming;
+using CIAPI.Streaming.Lightstreamer;
 
 namespace CIAPI.IntegrationTests.Streaming
 {
     public class StreamingClientBuilder
     {
-        public static Client BuildStreamingClient()
+        public static LightStreamerClient BuildStreamingClient()
         {
             const string apiUrl = "https://ciapipreprod.cityindextest9.co.uk/TradingApi/";
             const string userName = "0x234";
@@ -19,7 +20,7 @@ namespace CIAPI.IntegrationTests.Streaming
            
             var streamingUri = new Uri("https://pushpreprod.cityindextest9.co.uk/CITYINDEXSTREAMING");
 
-            return new Client(streamingUri, userName, authenticatedClient.SessionId);
+            return new LightStreamerClient(streamingUri, userName, authenticatedClient.SessionId);
         }
     }
 }

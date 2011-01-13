@@ -2,28 +2,23 @@
 using CIAPI.DTO;
 using Lightstreamer.DotNet.Client;
 
-namespace CIAPI.Streaming
+namespace CIAPI.Streaming.Lightstreamer
 {
-    public class Client : IStreamingClient, IConnectionListener
+    public class LightStreamerClient : IStreamingClient, IConnectionListener
     {
         private readonly string _sessionId;
         private readonly Uri _streamingUri;
         private readonly string _userName;
         private LSClient _internalClient;
 
-        public Client(Uri streamingUri, string userName, string sessionId)
+        public LightStreamerClient(Uri streamingUri, string userName, string sessionId)
         {
             _streamingUri = streamingUri;
             _sessionId = sessionId;
             _userName = userName;
         }
 
-        #region IStreamingClient Members
-
-        public event EventHandler<MessageEventArgs<string>> MessageRecieved;
-
-        #endregion
-
+        public event EventHandler<MessageEventArgs<object>> MessageRecieved;
         public event EventHandler<StatusEventArgs> StatusChanged;
 
         public void Connect()
@@ -49,12 +44,12 @@ namespace CIAPI.Streaming
 
         public IStreamingListener<NewsDTO> BuildNewsListener(string newsTopic)
         {
-            return new StreamingNewsListener(newsTopic, _internalClient);
+            return new LightStreamerNewsListener(newsTopic, _internalClient);
         }
 
         public IStreamingListener<PriceDTO> BuildPriceListener(string priceTopic)
         {
-            return new StreamingPriceListener(priceTopic, _internalClient);
+            return new LightStreamerPriceListener(priceTopic, _internalClient);
         }
 
         public void OnStatusChanged(StatusEventArgs e)

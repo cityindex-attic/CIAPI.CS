@@ -1,11 +1,11 @@
 ﻿using CIAPI.DTO;
 using Lightstreamer.DotNet.Client;
 
-namespace CIAPI.Streaming
+namespace CIAPI.Streaming.Lightstreamer
 {
-    public class StreamingNewsListener : StreamingListener<NewsDTO>
+    public class LightStreamerNewsListener : LightStreamerListener<NewsDTO>
     {
-        public StreamingNewsListener(string topic, LSClient lsClient)
+        public LightStreamerNewsListener(string topic, LSClient lsClient)
             : base(topic, lsClient)
         {
 

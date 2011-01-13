@@ -58,12 +58,12 @@
     <Compile Include="ApiClient.cs" />
     <Compile Include="PriceDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Streaming\Client.cs" />
+    <Compile Include="Streaming\Lightstreamer\LightStreamerClient.cs" />
     <Compile Include="Streaming\IMessageConverter.cs" />
     <Compile Include="Streaming\IStreamingClient.cs" />
     <Compile Include="Streaming\IStreamingListener.cs" />
-    <Compile Include="Streaming\LightstreamerDtoConverterBase.cs" />
-    <Compile Include="Streaming\LightstreamerNewsDtoConverter.cs" />
+    <Compile Include="Streaming\Lightstreamer\LightstreamerDtoConverterBase.cs" />
+    <Compile Include="Streaming\Lightstreamer\LightstreamerNewsDtoConverter.cs" />
     <Compile Include="Streaming\Lightstreamer\DotNet\Client\BatchingHttpProvider.cs" />
     <Compile Include="Streaming\Lightstreamer\DotNet\Client\BatchManager.cs" />
     <Compile Include="Streaming\Lightstreamer\DotNet\Client\BatchMonitor.cs" />
@@ -102,11 +102,12 @@
     <Compile Include="Streaming\Lightstreamer\DotNet\Client\Support\TimerSupport.cs" />
     <Compile Include="Streaming\Lightstreamer\DotNet\Client\UpdateInfo.cs" />
     <Compile Include="Streaming\Lightstreamer\DotNet\Client\VirtualTableManager.cs" />
+    <Compile Include="Streaming\Lightstreamer\LightstreamerPriceDtoConverter.cs" />
     <Compile Include="Streaming\MessageEventArgs.cs" />
     <Compile Include="Streaming\StatusEventArgs.cs" />
-    <Compile Include="Streaming\StreamingListener.cs" />
-    <Compile Include="Streaming\StreamingNewsListener.cs" />
-    <Compile Include="Streaming\StreamingPriceListener.cs" />
+    <Compile Include="Streaming\Lightstreamer\LightStreamerListener.cs" />
+    <Compile Include="Streaming\Lightstreamer\LightStreamerNewsListener.cs" />
+    <Compile Include="Streaming\Lightstreamer\LightStreamerPriceListener.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\JsonClient\JsonClient.csproj">

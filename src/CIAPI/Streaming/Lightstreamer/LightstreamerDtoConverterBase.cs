@@ -2,7 +2,7 @@
 using Lightstreamer.DotNet.Client;
 using Newtonsoft.Json;
 
-namespace CIAPI.Streaming
+namespace CIAPI.Streaming.Lightstreamer
 {
     public class LightstreamerDtoConverterBase
     {

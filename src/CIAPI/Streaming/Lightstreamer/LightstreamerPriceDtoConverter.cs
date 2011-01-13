@@ -1,26 +1,8 @@
 ﻿using CIAPI.DTO;
 using Lightstreamer.DotNet.Client;
 
-namespace CIAPI.Streaming
+namespace CIAPI.Streaming.Lightstreamer
 {
-    public class StreamingPriceListener : StreamingListener<PriceDTO>
-    {
-        public StreamingPriceListener(string priceTopic, LSClient lsClient) :
-            base(priceTopic, lsClient)
-        {
-        }
-
-        protected override void BeforeStart()
-        {
-            MessageConverter = new LightstreamerPriceDtoConverter();
-            TableInfo = new SimpleTableInfo(Topic.ToUpper(), "RAW", "MarketId TickDate Price Bid Offer Direction Change",
-                                            false)
-                            {
-                                DataAdapter = "PRICES"
-                            };
-        }
-    }
-
     public class LightstreamerPriceDtoConverter : LightstreamerDtoConverterBase, IMessageConverter<PriceDTO>
     {
         public PriceDTO Convert(object data)
