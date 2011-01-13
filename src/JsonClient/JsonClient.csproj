@@ -66,6 +66,7 @@
     <Compile Include="RequestCache.cs" />
     <Compile Include="RequestFactory.cs" />
     <Compile Include="RequestNotificationStatus.cs" />
+    <Compile Include="RequestRetryDiscriminator.cs" />
     <Compile Include="ThrottedRequestQueue.cs" />
   </ItemGroup>
   <ItemGroup>
