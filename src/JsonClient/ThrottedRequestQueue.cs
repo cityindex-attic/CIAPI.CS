@@ -121,6 +121,8 @@ namespace CityIndex.JsonClient
             get { return _throttleWindowTime; }
         }
 
+        
+
 
         /// <summary>
         /// Adds a request to the end of the queue.

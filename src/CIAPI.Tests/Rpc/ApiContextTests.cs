@@ -134,7 +134,7 @@ namespace CIAPI.Rpc.Tests
 
 
         [Test]
-        public void SpecificRequestExceptionsAreRetried()
+        public void SpecificRequestExceptionsAreRetriedTheCorrectNumberOfTimes()
         {
 
             using (var gate = new ManualResetEvent(false))
@@ -148,13 +148,13 @@ namespace CIAPI.Rpc.Tests
                     {"trading", new ThrottedRequestQueue(TimeSpan.FromSeconds(3), 1, 10)}
                 };
 
-                var ctx = new CIAPI.Rpc.Client(new Uri(TestConfig.RpcUrl), new RequestCache(), requestFactory, throttleScopes, 3)
+                var ctx = new CIAPI.Rpc.Client(new Uri(TestConfig.RpcUrl), new RequestCache(), requestFactory, throttleScopes, 2)
                 {
                     UserName = TestConfig.ApiUsername,
                     SessionId = TestConfig.ApiTestSessionId
                 };
 
-                requestFactory.CreateTestRequest(NewsHeadlines14, 300, null, null, new WebException("intentional"));
+                requestFactory.CreateTestRequest(NewsHeadlines14, 300, null, null, new WebException("(500) internal server error"));
 
                 Exception exception = null;
                 
@@ -177,7 +177,7 @@ namespace CIAPI.Rpc.Tests
                     }, null);
                 gate.WaitOne();
                 Assert.IsNotNull(exception);
-                Assert.AreEqual("intentional\r\nretried 3 times",exception.Message);
+                Assert.AreEqual("(500) internal server error\r\nretried 2 times",exception.Message);
                 
             }
         }
@@ -186,7 +186,7 @@ namespace CIAPI.Rpc.Tests
 
 
         [Test]
-        public void FOO()
+        public void NonRetryableExceptionFailsInsteadOfRetrying()
         {
 
             var requestFactory = new TestRequestFactory();
@@ -197,9 +197,10 @@ namespace CIAPI.Rpc.Tests
                     {"trading", new ThrottedRequestQueue(TimeSpan.FromSeconds(3), 1, 10)}
                 };
 
-            var ctx = new CIAPI.Rpc.Client(new Uri(TestConfig.RpcUrl), new RequestCache(), requestFactory, throttleScopes, 3);
+            var ctx = new Client(new Uri(TestConfig.RpcUrl), new RequestCache(), requestFactory, throttleScopes, 3);
             requestFactory.CreateTestRequest("", 300, null, null, new WebException("(401) Unauthorized"));
-            ctx.LogIn("foo", "bar");
+
+            Assert.Throws<ApiException>(() => ctx.LogIn("foo", "bar"));
         }
 
         #region Plumbing

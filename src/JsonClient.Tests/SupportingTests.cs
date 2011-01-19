@@ -11,6 +11,9 @@ namespace CityIndex.JsonClient.Tests
     [TestFixture]
     public class SupportingTests
     {
+        /// <summary>
+        /// proves that closing the response of a request does not enable reuse.
+        /// </summary>
         [Test]
         public void ReusingHttpWebRequest()
         {
@@ -32,17 +35,21 @@ namespace CityIndex.JsonClient.Tests
 
             response.Close();
 
-            
 
-            response = request.GetResponse();
-            using (var stream = response.GetResponseStream())
-            {
-                using (var reader = new StreamReader(stream))
+            Assert.Throws<ArgumentException>(() =>
                 {
-                    var responseText = reader.ReadToEnd();
-                    Assert.IsNotNullOrEmpty(responseText);
-                }
-            }
+
+                    response = request.GetResponse();
+                    using (var stream = response.GetResponseStream())
+                    {
+                        using (var reader = new StreamReader(stream))
+                        {
+                            var responseText = reader.ReadToEnd();
+                            Assert.IsNotNullOrEmpty(responseText);
+                        }
+                    }
+
+                });
         }
     }
 }

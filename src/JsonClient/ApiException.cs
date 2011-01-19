@@ -4,6 +4,35 @@ using System.Net;
 
 namespace CityIndex.JsonClient
 {
+    ///<summary>
+    ///</summary>
+    public class ResponseHandlerException:ApiException
+    {
+        public ResponseHandlerException()
+        {
+            
+        }
+        public ResponseHandlerException(Exception inner)
+            : base(inner)
+        {
+            
+        }
+        public ResponseHandlerException(string message, WebException inner)
+            : base(message, inner)
+        {
+            
+        }
+        public ResponseHandlerException(string message)
+            : base(message)
+        {
+            
+        }
+        public ResponseHandlerException(string message, Exception innerException)
+            : base(message, innerException)
+        {
+            
+        }
+     }
     /// <summary>
     /// An exception class that will retrieve the response text of the inner exception if it is a WebException
     /// </summary>

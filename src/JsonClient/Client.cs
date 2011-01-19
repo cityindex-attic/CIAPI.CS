@@ -64,7 +64,7 @@ namespace CityIndex.JsonClient
         ///</summary>
         ///<param name="uri"></param>
         public Client(Uri uri)
-            : this(uri, new RequestCache(), new RequestFactory(), new Dictionary<string, IThrottedRequestQueue> { { "default", new ThrottedRequestQueue() } }, 3)
+            : this(uri, new RequestCache(), new RequestFactory(), new Dictionary<string, IThrottedRequestQueue> { { "default", new ThrottedRequestQueue() } }, 2)
         {
 
         }
@@ -75,7 +75,7 @@ namespace CityIndex.JsonClient
         /// <param name="uri"></param>
         /// <param name="requestFactory"></param>
         public Client(Uri uri, IRequestFactory requestFactory)
-            : this(uri, new RequestCache(), requestFactory, new Dictionary<string, IThrottedRequestQueue> { { "default", new ThrottedRequestQueue() } }, 3)
+            : this(uri, new RequestCache(), requestFactory, new Dictionary<string, IThrottedRequestQueue> { { "default", new ThrottedRequestQueue() } }, 2)
         {
 
         }
@@ -126,7 +126,7 @@ namespace CityIndex.JsonClient
 
         #region Synchronous Wrapper
 
-        
+
 
 
         /// <summary>
@@ -256,6 +256,13 @@ namespace CityIndex.JsonClient
 
                         item.AddCallback(cb, state);
                         item.CacheDuration = cacheDuration;
+                        item.Method = method;
+                        item.Parameters = parameters;
+                        item.Target = target;
+                        item.ThrottleScope = throttleScope;
+                        item.UriTemplate = uriTemplate;
+                        item.Url = url;
+
 
                         WebRequest request = _requestFactory.Create(url);
 
@@ -266,25 +273,11 @@ namespace CityIndex.JsonClient
                         request.ContentType = "application/json";
 #endif
 
-                        BeforeIssueRequest(request, url, target, uriTemplate, method, parameters, cacheDuration,
-                                           throttleScope);
-
-
-
-
                         item.ItemState = CacheItemState.Pending;
 
-                        if (method.ToUpper() == "POST")
-                        {
-                            SetPostEntityAndEnqueueRequest<TDTO>(url, request, parameters, throttleScope);
-                        }
-                        else
-                        {
-                            EnqueueRequest<TDTO>(url, request, throttleScope);
-                        }
+                        CreateRequest<TDTO>(url);
 
-                        
-                        
+
 
                         break;
                     case CacheItemState.Pending:
@@ -361,28 +354,31 @@ namespace CityIndex.JsonClient
         /// <param name="request"></param>
         /// <param name="parameters"></param>
         /// <param name="throttleScope"></param>
-        private void SetPostEntityAndEnqueueRequest<TDTO>(string url, WebRequest request,
-                                                          Dictionary<string, object> parameters,
-                                                          string throttleScope)
+        private void SetPostEntityAndEnqueueRequest<TDTO>(string url)
             where TDTO : class, new()
         {
-            byte[] bodyValue = CreatePostEntity(parameters);
+            CacheItem<TDTO> item = _cache.Get<TDTO>(url);
 
-            request.BeginGetRequestStream(ac =>
+
+            byte[] bodyValue = CreatePostEntity(item.Parameters);
+
+            item.Request.BeginGetRequestStream(ac =>
                 {
-                    try
+                    lock (_cache)
                     {
-                        using (Stream requestStream = request.EndGetRequestStream(ac))
+                        try
                         {
-                            requestStream.Write(bodyValue, 0, bodyValue.Length);
+                            using (Stream requestStream = item.Request.EndGetRequestStream(ac))
+                            {
+                                requestStream.Write(bodyValue, 0, bodyValue.Length);
+                            }
+
+                            EnqueueRequest<TDTO>(url);
                         }
-                        EnqueueRequest<TDTO>(url, request, throttleScope);
-                    }
-                    catch (Exception ex)
-                    {
-                        lock (_cache)
+                        catch (Exception ex)
                         {
-                            CacheItem<TDTO> item = _cache.Remove<TDTO>(request.RequestUri.AbsoluteUri);
+
+                            _cache.Remove<TDTO>(item.Url);
                             item.CompleteResponse(null, new ApiException(ex));
                         }
                     }
@@ -417,26 +413,51 @@ namespace CityIndex.JsonClient
         }
 
 
+
+        private void CreateRequest<TDTO>(string url)
+            where TDTO : class, new()
+        {
+            CacheItem<TDTO> item = _cache.Get<TDTO>(url);
+
+
+            item.Request = _requestFactory.Create(url);
+            item.Request.Method = item.Method.ToUpper();
+
+            BeforeIssueRequest(item.Request, item.Url, item.Target, item.UriTemplate, item.Method, item.Parameters, item.CacheDuration, item.ThrottleScope);
+
+            if (item.Method.ToUpper() == "POST")
+            {
+                SetPostEntityAndEnqueueRequest<TDTO>(url);
+            }
+            else
+            {
+                EnqueueRequest<TDTO>(url);
+            }
+        }
+
         /// <summary>
         /// 
         /// </summary>
         /// <typeparam name="TDTO"></typeparam>
-        /// <param name="url"></param>
-        /// <param name="webRequest"></param>
-        /// <param name="throttleScope"></param>
-        private void EnqueueRequest<TDTO>(string url, WebRequest webRequest, string throttleScope)
+        private void EnqueueRequest<TDTO>(string url)
             where TDTO : class, new()
         {
-            IThrottedRequestQueue throttle = _throttleScopes[throttleScope];
+            CacheItem<TDTO> outerItem = _cache.Get<TDTO>(url);
+            IThrottedRequestQueue throttle = _throttleScopes[outerItem.ThrottleScope];
+
+            WebRequest request = outerItem.Request;
 
             // TODO: this anonymous method is used to create a closure to reduce
             // coupling to the throttle implementation. Would a non-anonymous technique
             // make understanding and porting of this method easier?
 
-            throttle.Enqueue(url, webRequest, (ar, requestHolder) =>
+            throttle.Enqueue(url, request, (ar, requestHolder) =>
                 {
+
                     lock (_cache)
                     {
+                        RequestHolder holder = requestHolder;
+
                         // the item had better be in the cache because if it is not
                         // and this throws then we have a deadlock as the callbacks are int
                         // the cache item that does not exist so no where to send the exception.
@@ -445,7 +466,7 @@ namespace CityIndex.JsonClient
                         WebResponse response = null;
                         try
                         {
-                            using (response = webRequest.EndGetResponse(ar))
+                            using (response = holder.WebRequest.EndGetResponse(ar))
                             using (Stream stream = response.GetResponseStream())
                             using (var reader = new StreamReader(stream))
                             {
@@ -454,7 +475,15 @@ namespace CityIndex.JsonClient
                                 // TODO: check json for exception 
                                 Exception seralizedException = null;
 
-                                item.CompleteResponse(json, seralizedException);
+                                try
+                                {
+                                    item.CompleteResponse(json, seralizedException);
+                                }
+                                catch (Exception ex)
+                                {
+
+                                    throw new ResponseHandlerException("Unhandled exception in caller's response handler", ex);
+                                }
                             }
                         }
                         catch (WebException wex)
@@ -464,18 +493,18 @@ namespace CityIndex.JsonClient
                             // DO NOT RETRY THROTTLE, AUTHENTICATION OR ARGUMENT EXCEPTIONS ETC
                             bool shouldRetry = new RequestRetryDiscriminator().ShouldRetry(wex);
 
-                            if (shouldRetry && item.RetryCount <= _retryCount)
+                            if (shouldRetry && item.RetryCount < _retryCount)
                             {
                                 // FIXME: We need to rebuild the request CANNOT REUSE HTTPWEBREQUEST
                                 item.RetryCount++;
-                                item.ItemState = CacheItemState.New; // should already be New - check this
+                                item.ItemState = CacheItemState.Pending; // should already be pending - check this
 
                                 if (response != null)
                                 {
                                     response.Close();
                                 }
 
-                                EnqueueRequest<TDTO>(url, webRequest, throttleScope);
+                                CreateRequest<TDTO>(url);
                             }
                             else
                             {
@@ -485,7 +514,7 @@ namespace CityIndex.JsonClient
                                     exception =
                                         new ApiException(
                                             exception.Message +
-                                            String.Format("\r\nretried {0} times", item.RetryCount - 1), exception);
+                                            String.Format("\r\nretried {0} times", item.RetryCount), exception);
                                 }
                                 item.CompleteResponse(null, exception);
                             }

@@ -41,7 +41,7 @@ namespace CityIndex.JsonClient
         /// The temporal portion (yyy) of the of 30 requests per 5 seconds
         /// </summary>
         TimeSpan ThrottleWindowTime { get; }
-        
+
 
         /// <summary>
         /// Adds a request to the end of the queue.

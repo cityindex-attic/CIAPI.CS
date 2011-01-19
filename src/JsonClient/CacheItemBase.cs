@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Net;
 using System.Threading;
 
 namespace CityIndex.JsonClient
@@ -14,6 +16,18 @@ namespace CityIndex.JsonClient
         {
             ProcessingWaitHandle = new AutoResetEvent(false);
         }
+
+        ///<summary>
+        /// The url of this request
+        ///</summary>
+        public string Url { get; set; }
+
+        public Dictionary<string, object> Parameters { get; set; }
+        public string Method { get; set; }
+        public string ThrottleScope { get; set; }
+        public string Target { get; set; }
+        public string UriTemplate { get; set; }
+        public WebRequest Request { get; set; }        
 
         /// <summary>
         /// The result of this item's request, if any
