@@ -10,6 +10,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "README", "README", "{236D3C
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{845AC73C-EACC-4F7C-A9DC-251F09E55708}"
+	ProjectSection(SolutionItems) = preProject
+		build.xml = build.xml
+		Package.CIAPI.nuspec.xml = Package.CIAPI.nuspec.xml
+		Package.JsonClient.nuspec.xml = Package.JsonClient.nuspec.xml
+		PartCover4.settings.xml = PartCover4.settings.xml
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SampleApps", "SampleApps", "{358F3488-9C36-4B4C-B593-1A21D1B18E35}"
 EndProject
@@ -40,6 +46,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Logging.Phone7", "Common.Logging.Phone7\Common.Logging.Phone7.csproj", "{06CA6C00-672E-4B49-8FD4-A4A9AB453C5A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{96966057-1B2F-4775-B363-F6A14D854B1E}"
+	ProjectSection(SolutionItems) = preProject
+		..\DEV_SETUP.txt = ..\DEV_SETUP.txt
+		..\LICENSE.txt = ..\LICENSE.txt
+		..\NOTICES.txt = ..\NOTICES.txt
+		..\README.markdown = ..\README.markdown
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SOAPI.CS2.CodeGeneration", "SOAPI.CS2.CodeGeneration\SOAPI.CS2.CodeGeneration.csproj", "{F82EA47A-42F7-4E3F-AF6D-8CE04DCD96B4}"
 EndProject
