@@ -48,7 +48,6 @@
     <Compile Include="Streaming\PriceFixture.cs" />
     <Compile Include="Streaming\NewsFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Streaming\StreamingClientBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CIAPI\CIAPI.csproj">

@@ -1,17 +1,16 @@
 ﻿using System;
-using CIAPI.DTO;
 using Lightstreamer.DotNet.Client;
 
 namespace CIAPI.Streaming.Lightstreamer
 {
-    public class LightStreamerClient : IStreamingClient, IConnectionListener
+    public class LightstreamerClient : IStreamingClient, IConnectionListener
     {
         private readonly string _sessionId;
         private readonly Uri _streamingUri;
         private readonly string _userName;
         private LSClient _internalClient;
 
-        public LightStreamerClient(Uri streamingUri, string userName, string sessionId)
+        public LightstreamerClient(Uri streamingUri, string userName, string sessionId)
         {
             _streamingUri = streamingUri;
             _sessionId = sessionId;
@@ -40,16 +39,6 @@ namespace CIAPI.Streaming.Lightstreamer
         public void Disconnect()
         {
             _internalClient.CloseConnection();
-        }
-
-        public IStreamingListener<NewsDTO> BuildNewsListener(string newsTopic)
-        {
-            return new LightStreamerNewsListener(newsTopic, _internalClient);
-        }
-
-        public IStreamingListener<PriceDTO> BuildPriceListener(string priceTopic)
-        {
-            return new LightStreamerPriceListener(priceTopic, _internalClient);
         }
 
         public void OnStatusChanged(StatusEventArgs e)
@@ -111,5 +100,10 @@ namespace CIAPI.Streaming.Lightstreamer
         }
 
         #endregion
+
+        public IStreamingListener<TDto> BuildListener<TDto>(string topic) where TDto : class, new()
+        {
+            return new LightstreamerListener<TDto>(topic, _internalClient);
+        }
     }
 }

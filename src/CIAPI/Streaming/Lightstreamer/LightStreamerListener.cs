@@ -1,39 +1,61 @@
 ﻿using System;
+using System.Linq;
 using Common.Logging;
 using Lightstreamer.DotNet.Client;
 
 namespace CIAPI.Streaming.Lightstreamer
 {
-    public abstract class LightStreamerListener<TDto> : IStreamingListener<TDto>, IHandyTableListener
-        where TDto : class
+    public class LightstreamerListener<TDto> : IStreamingListener<TDto>, IHandyTableListener
+        where TDto : class, new()
     {
-        protected LightstreamerDtoConverter<TDto> MessageConverter;
-        protected SimpleTableInfo TableInfo;
-        private static readonly ILog Logger = LogManager.GetLogger(typeof (LightStreamerListener<TDto>));
-        protected readonly string Topic;
+        private readonly LightstreamerDtoConverter<TDto> _messageConverter = new LightstreamerDtoConverter<TDto>();
+        private static readonly ILog Logger = LogManager.GetLogger(typeof (LightstreamerListener<TDto>));
+        private readonly string _groupOrItemName;
         private readonly LSClient _lsClient;
         private SubscribedTableKey _subscribedTableKey;
+        private readonly string _dataAdapter;
 
-        protected LightStreamerListener(string topic, LSClient lsClient)
+        public LightstreamerListener(string fullTopic, LSClient lsClient)
         {
-            Topic = topic;
             _lsClient = lsClient;
+            _dataAdapter = fullTopic.Split('.').First();
+            _groupOrItemName = fullTopic.Replace(_dataAdapter + ".", "");
         }
 
         public event EventHandler<MessageEventArgs<TDto>> MessageRecieved;
 
-        protected abstract void BeforeStart();
-
         public void Start()
         {
-            BeforeStart();
-            _subscribedTableKey = _lsClient.SubscribeTable(TableInfo, this, false);
+            var simpleTableInfo = new SimpleTableInfo(
+                _groupOrItemName.ToUpper(), 
+                mode: "RAW", 
+                schema: _messageConverter.GetFieldList(), 
+                snap: false)
+                { DataAdapter = _dataAdapter.ToUpper() };
+            _subscribedTableKey = _lsClient.SubscribeTable(simpleTableInfo, this, false);
         }
 
         public  void Stop()
         {
              if (_subscribedTableKey!=null)
                 _lsClient.UnsubscribeTable(_subscribedTableKey);
+        }
+
+        void IHandyTableListener.OnUpdate(int itemPos, string itemName, UpdateInfo update)
+        {
+            try
+            {
+                if (MessageRecieved == null) return;
+
+                MessageRecieved(this, new MessageEventArgs<TDto>(_groupOrItemName, _messageConverter.Convert(update)));
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex);
+
+                // TODO: lightstreamer swallows errors thrown here - live with it or fix lightstreamer client code
+                throw;
+            }
         }
 
         void IHandyTableListener.OnRawUpdatesLost(int itemPos, string itemName, int lostUpdates)
@@ -54,23 +76,6 @@ namespace CIAPI.Streaming.Lightstreamer
         void IHandyTableListener.OnUnsubscrAll()
         {
             throw new NotImplementedException();
-        }
-
-        void IHandyTableListener.OnUpdate(int itemPos, string itemName, UpdateInfo update)
-        {
-            try
-            {
-                if (MessageRecieved == null) return;
-
-                MessageRecieved(this, new MessageEventArgs<TDto>(Topic, MessageConverter.Convert(update)));
-            }
-            catch (Exception ex)
-            {
-                Logger.Error(ex);
-
-                // TODO: lightstreamer swallows errors thrown here - live with it or fix lightstreamer client code
-                throw;
-            }
         }
     }
 }
