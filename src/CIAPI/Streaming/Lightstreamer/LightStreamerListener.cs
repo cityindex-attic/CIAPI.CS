@@ -7,7 +7,7 @@ namespace CIAPI.Streaming.Lightstreamer
     public abstract class LightStreamerListener<TDto> : IStreamingListener<TDto>, IHandyTableListener
         where TDto : class
     {
-        protected IMessageConverter<TDto> MessageConverter;
+        protected LightstreamerDtoConverter<TDto> MessageConverter;
         protected SimpleTableInfo TableInfo;
         private static readonly ILog Logger = LogManager.GetLogger(typeof (LightStreamerListener<TDto>));
         protected readonly string Topic;

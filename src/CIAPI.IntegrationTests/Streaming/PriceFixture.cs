@@ -36,14 +36,14 @@ namespace CIAPI.IntegrationTests.Streaming
 
             if (!gate.WaitOne(TimeSpan.FromSeconds(5)))
             {
-                Assert.Fail("A price updated wasn't recieved in time");
+                Assert.Fail("A price update wasn't recieved in time");
             }
 
             priceListener.Stop();
             streamingClient.Disconnect();
 
             Assert.IsNotNull(actual);
-
+            Assert.Greater(actual.TickDate, DateTime.UtcNow.AddSeconds(-10), "We're expecting a recent price");
         }
     }
 }

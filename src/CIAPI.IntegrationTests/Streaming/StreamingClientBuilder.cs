@@ -9,7 +9,9 @@ namespace CIAPI.IntegrationTests.Streaming
 {
     public class StreamingClientBuilder
     {
-        public static LightStreamerClient BuildStreamingClient(string userName = "0x234", string password = "password")
+        public static LightStreamerClient BuildStreamingClient(
+            string userName = "0x234", 
+            string password = "password")
         {
             const string apiUrl = "https://ciapipreprod.cityindextest9.co.uk/TradingApi/";
             

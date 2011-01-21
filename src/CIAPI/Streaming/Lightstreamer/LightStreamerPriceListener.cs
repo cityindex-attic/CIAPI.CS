@@ -13,7 +13,7 @@ namespace CIAPI.Streaming.Lightstreamer
         protected override void BeforeStart()
         {
             MessageConverter = new LightstreamerPriceDtoConverter();
-            TableInfo = new SimpleTableInfo(Topic.ToUpper(), "RAW", "MarketId TickDate Price Bid Offer Direction Change",
+            TableInfo = new SimpleTableInfo(Topic.ToUpper(), "RAW", MessageConverter.GetFieldList(),
                                             false)
                             {
                                 DataAdapter = "PRICES"

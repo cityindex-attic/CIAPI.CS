@@ -39,6 +39,10 @@ namespace CIAPI.IntegrationTests.Streaming
             streamingClient.Disconnect();
 
             Assert.IsNotNull(actual);
+            Assert.IsNotEmpty(actual.Headline);
+            Assert.Greater(actual.PublishDate, DateTime.UtcNow.AddMonths(-1));
+            Assert.Greater(actual.StoryId, 0);
+            
         }
 
  

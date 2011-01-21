@@ -14,7 +14,8 @@ namespace CIAPI.Streaming.Lightstreamer
         protected override void BeforeStart()
         {
             MessageConverter = new LightstreamerNewsDtoConverter();
-            TableInfo = new SimpleTableInfo(Topic.ToUpper(),"RAW","StoryId Headline PublishDate",false)
+
+            TableInfo = new SimpleTableInfo(Topic.ToUpper(),"RAW", MessageConverter.GetFieldList(), false)
                 {
                     DataAdapter = "NEWS"
                 };

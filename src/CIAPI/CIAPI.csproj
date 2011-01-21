@@ -62,7 +62,7 @@
     <Compile Include="Streaming\IMessageConverter.cs" />
     <Compile Include="Streaming\IStreamingClient.cs" />
     <Compile Include="Streaming\IStreamingListener.cs" />
-    <Compile Include="Streaming\Lightstreamer\LightstreamerDtoConverterBase.cs" />
+    <Compile Include="Streaming\Lightstreamer\LightstreamerDtoConverter.cs" />
     <Compile Include="Streaming\Lightstreamer\LightstreamerNewsDtoConverter.cs" />
     <Compile Include="Streaming\Lightstreamer\DotNet\Client\BatchingHttpProvider.cs" />
     <Compile Include="Streaming\Lightstreamer\DotNet\Client\BatchManager.cs" />

@@ -3,16 +3,16 @@ using Lightstreamer.DotNet.Client;
 
 namespace CIAPI.Streaming.Lightstreamer
 {
-    public class LightstreamerNewsDtoConverter : LightstreamerDtoConverterBase, IMessageConverter<NewsDTO>
+    public class LightstreamerNewsDtoConverter : LightstreamerDtoConverter<NewsDTO>
     {
-        public NewsDTO Convert(object data)
+        public override NewsDTO Convert(object data)
         {
             var updateInfo = (UpdateInfo)data;
             return new NewsDTO
                        {
-                           StoryId = GetAsInt(updateInfo, 1),
-                           Headline = GetAsString(updateInfo, 2),
-                           PublishDate = GetAsJSONDateTimeUtc(updateInfo, 3)
+                           StoryId = GetAsInt(updateInfo, GetFieldIndex(typeof(NewsDTO).GetProperty("StoryId"))),
+                           Headline = GetAsString(updateInfo, GetFieldIndex(typeof(NewsDTO).GetProperty("Headline"))),
+                           PublishDate = GetAsJSONDateTimeUtc(updateInfo, GetFieldIndex(typeof(NewsDTO).GetProperty("PublishDate")))
                        };
         }
     }
