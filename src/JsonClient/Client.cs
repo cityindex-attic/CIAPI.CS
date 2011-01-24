@@ -148,7 +148,7 @@ namespace CityIndex.JsonClient
         {
 #if SILVERLIGHT
             if (System.Windows.Application.Current.RootVisual.Dispatcher.CheckAccess())
-                throw new ApiException("You cannot call this method from the UI thread.  Either using the asynchronous method; .Begin..., or call this from a background thread");
+                throw new ApiException("You cannot call this method from the UI thread.  Either use the asynchronous method: .Begin{name}, or call this from a background thread");
 #endif
             uriTemplate = uriTemplate ?? "";
             parameters = parameters ?? new Dictionary<string, object>();
