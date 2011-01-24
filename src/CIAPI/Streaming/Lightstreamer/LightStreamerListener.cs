@@ -41,7 +41,7 @@ namespace CIAPI.Streaming.Lightstreamer
                 _lsClient.UnsubscribeTable(_subscribedTableKey);
         }
 
-        void IHandyTableListener.OnUpdate(int itemPos, string itemName, UpdateInfo update)
+        void IHandyTableListener.OnUpdate(int itemPos, string itemName, IUpdateInfo update)
         {
             try
             {

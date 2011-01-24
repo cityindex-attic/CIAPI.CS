@@ -11,7 +11,7 @@ namespace CIAPI.Streaming.Lightstreamer
     {
         public virtual TDto Convert(object data)
         {
-            var updateInfo = (UpdateInfo) data;
+            var updateInfo = (IUpdateInfo) data;
             var dto = new TDto();
             foreach (var property in typeof(TDto).GetProperties())
             {
@@ -23,12 +23,17 @@ namespace CIAPI.Streaming.Lightstreamer
 
         public string GetFieldList()
         {
-            return string.Join(" ", DtoPropertyNames);
+            return string.Join(" ", DtoPropertyNames.ToArray());
         }
 
         public int GetFieldIndex(PropertyInfo fieldPropertyInfo)
         {
-            return DtoPropertyNames.FindIndex(item => item == fieldPropertyInfo.Name) + 1;
+            for (var i = 0; i < DtoPropertyNames.Count; i++)
+            {
+                if (DtoPropertyNames[i] == fieldPropertyInfo.Name)
+                    return i + 1;
+            }
+            throw new ArgumentException(string.Format("Not able to find a property with name {0}", fieldPropertyInfo.Name));
         }
 
         private List<string> _dtoPropertyNames;
@@ -46,7 +51,7 @@ namespace CIAPI.Streaming.Lightstreamer
             }
         }
 
-        private static string GetCurrentValue(UpdateInfo updateInfo, int pos)
+        private static string GetCurrentValue(IUpdateInfo updateInfo, int pos)
         {
             return updateInfo.IsValueChanged(pos)
                        ? updateInfo.GetNewValue(pos)

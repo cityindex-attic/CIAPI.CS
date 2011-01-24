@@ -5,7 +5,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "README", "README", "{236D3C
 	ProjectSection(SolutionItems) = preProject
 		DEV_SETUP.txt = DEV_SETUP.txt
 		..\LICENSE.txt = ..\LICENSE.txt
-		..\NOTICES.txt = ..\NOTICES.txt
 		..\README.markdown = ..\README.markdown
 	EndProjectSection
 EndProject

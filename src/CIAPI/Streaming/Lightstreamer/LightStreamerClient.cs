@@ -26,8 +26,8 @@ namespace CIAPI.Streaming.Lightstreamer
 
             var connectionInfo = new ConnectionInfo
                 {
-                    pushServerUrl = _streamingUri.GetLeftPart(UriPartial.Authority),
-                    adapter = _streamingUri.PathAndQuery.TrimStart('/'),
+                    pushServerUrl = _streamingUri.GetComponents(UriComponents.SchemeAndServer | UriComponents.UserInfo, UriFormat.UriEscaped),
+                    adapter = _streamingUri.GetComponents(UriComponents.PathAndQuery, UriFormat.UriEscaped).TrimStart('/'),
                     user = _userName,
                     password = _sessionId,
                     constraints = {maxBandwidth = 999999}
@@ -53,14 +53,14 @@ namespace CIAPI.Streaming.Lightstreamer
             OnStatusChanged(new StatusEventArgs {Status = " Connection established"});
         }
 
-        void IConnectionListener.OnSessionStarted()
-        {
-            OnStatusChanged(new StatusEventArgs {Status = "Session started"});
-        }
-
         void IConnectionListener.OnNewBytes(long bytes)
         {
             OnStatusChanged(new StatusEventArgs {Status = string.Format("{0} new bytes recieved", bytes)});
+        }
+
+        void IConnectionListener.OnSessionStarted(bool isPolling)
+        {
+            OnStatusChanged(new StatusEventArgs { Status = string.Format("Session started (isPolling: {0})", isPolling) });
         }
 
         void IConnectionListener.OnDataError(PushServerException e)
@@ -71,6 +71,11 @@ namespace CIAPI.Streaming.Lightstreamer
                                 string.Format("Data Error: {0}:{1}\r\n({2}){3}\r\n{4}", e.GetType(), e.Message,
                                               e.ErrorCode, e.Data, e.StackTrace)
                 });
+        }
+
+        void IConnectionListener.OnEnd(int cause)
+        {
+            OnStatusChanged(new StatusEventArgs { Status = string.Format("Connection ended: cause {0}", cause) });
         }
 
         void IConnectionListener.OnActivityWarning(bool warningOn)
