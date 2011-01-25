@@ -55,8 +55,12 @@
     <Reference Include="System.Windows.Browser" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AbstractLogger.cs" />
+    <Compile Include="AbstractSimpleLogger.cs" />
+    <Compile Include="BrowserConsoleLogger.cs" />
     <Compile Include="FormatMessageHandler.cs" />
     <Compile Include="ILog.cs" />
+    <Compile Include="LogLevel.cs" />
     <Compile Include="LogManager.cs" />
     <Compile Include="NullLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

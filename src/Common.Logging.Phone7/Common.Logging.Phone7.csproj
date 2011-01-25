@@ -54,12 +54,10 @@
     <Compile Include="..\Common.Logging.Silverlight\ILog.cs">
       <Link>ILog.cs</Link>
     </Compile>
-    <Compile Include="..\Common.Logging.Silverlight\LogManager.cs">
-      <Link>LogManager.cs</Link>
-    </Compile>
     <Compile Include="..\Common.Logging.Silverlight\NullLogger.cs">
       <Link>NullLogger.cs</Link>
     </Compile>
+    <Compile Include="LogManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
