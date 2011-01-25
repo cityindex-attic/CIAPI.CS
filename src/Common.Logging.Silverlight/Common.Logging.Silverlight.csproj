@@ -57,7 +57,7 @@
   <ItemGroup>
     <Compile Include="AbstractLogger.cs" />
     <Compile Include="AbstractSimpleLogger.cs" />
-    <Compile Include="BrowserConsoleLogger.cs" />
+    <Compile Include="BrowserConsoleAppender.cs" />
     <Compile Include="FormatMessageHandler.cs" />
     <Compile Include="ILog.cs" />
     <Compile Include="LogLevel.cs" />

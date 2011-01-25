@@ -5,10 +5,10 @@ using System.Windows.Browser;
 
 namespace Common.Logging
 {
-    public class BrowserConsoleLogger : AbstractSimpleLogger
+    public class BrowserConsoleAppender : AbstractSimpleLogger
     {
         // Methods
-        public BrowserConsoleLogger(string logName, LogLevel logLevel, bool showLevel, bool showDateTime, bool showLogName, string dateTimeFormat)
+        public BrowserConsoleAppender(string logName, LogLevel logLevel, bool showLevel, bool showDateTime, bool showLogName, string dateTimeFormat)
             : base(logName, logLevel, showLevel, showDateTime, showLogName, dateTimeFormat)
         {
         }
@@ -23,8 +23,8 @@ namespace Common.Logging
 
         private void WriteToConsole(string message)
         {
-            if (Application.Current.RootVisual.Dispatcher.CheckAccess())
-                Application.Current.RootVisual.Dispatcher.BeginInvoke(() => WriteToConsole(message));
+            if (!System.Windows.Deployment.Current.Dispatcher.CheckAccess())
+                System.Windows.Deployment.Current.Dispatcher.BeginInvoke(() => WriteToConsole(message));
             try
             {
                 var isConsoleAvailable = (bool)HtmlPage.Window.Eval("typeof(console) != 'undefined' && typeof(console.log) != 'undefined'");
