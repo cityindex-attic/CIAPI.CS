@@ -9,7 +9,7 @@ namespace CIAPI.Streaming.Lightstreamer
         where TDto : class, new()
     {
         private readonly LightstreamerDtoConverter<TDto> _messageConverter = new LightstreamerDtoConverter<TDto>();
-        private static readonly ILog Logger = LogManager.GetLogger(typeof (LightstreamerListener<TDto>));
+        private static readonly ILog _logger = LogManager.GetLogger(typeof (LightstreamerListener<TDto>));
         private readonly string _groupOrItemName;
         private readonly LSClient _lsClient;
         private SubscribedTableKey _subscribedTableKey;
@@ -26,19 +26,33 @@ namespace CIAPI.Streaming.Lightstreamer
 
         public void Start()
         {
+            var groupOrItemName = _groupOrItemName.ToUpper();
+            var schema = _messageConverter.GetFieldList();
+            var dataAdapter = _dataAdapter.ToUpper();
+            _logger.DebugFormat("Subscribing to group:{0}, schema {1}, dataAdapter {2}", groupOrItemName, schema, dataAdapter);
             var simpleTableInfo = new SimpleTableInfo(
-                _groupOrItemName.ToUpper(), 
+                groupOrItemName, 
                 mode: "RAW", 
-                schema: _messageConverter.GetFieldList(), 
+                schema: schema, 
                 snap: false)
-                { DataAdapter = _dataAdapter.ToUpper() };
+                { DataAdapter = dataAdapter };
             _subscribedTableKey = _lsClient.SubscribeTable(simpleTableInfo, this, false);
+            _logger.DebugFormat("Subscribed to table with key: {0}", _subscribedTableKey.KeyValue);
         }
 
         public  void Stop()
         {
-             if (_subscribedTableKey!=null)
+            if (_subscribedTableKey == null) return;
+
+            _logger.DebugFormat("Unsubscribing from table with key: {0}", _subscribedTableKey.KeyValue);
+            try
+            {
                 _lsClient.UnsubscribeTable(_subscribedTableKey);
+            }
+            catch (Exception exception)
+            {
+                _logger.ErrorFormat("Exception occurred when stopping listener:", exception);
+            }
         }
 
         void IHandyTableListener.OnUpdate(int itemPos, string itemName, IUpdateInfo update)
@@ -51,7 +65,7 @@ namespace CIAPI.Streaming.Lightstreamer
             }
             catch (Exception ex)
             {
-                Logger.Error(ex);
+                _logger.Error(ex);
 
                 // TODO: lightstreamer swallows errors thrown here - live with it or fix lightstreamer client code
                 throw;
@@ -60,22 +74,22 @@ namespace CIAPI.Streaming.Lightstreamer
 
         void IHandyTableListener.OnRawUpdatesLost(int itemPos, string itemName, int lostUpdates)
         {
-            throw new NotImplementedException();
+            /* do nothing */
         }
 
         void IHandyTableListener.OnSnapshotEnd(int itemPos, string itemName)
         {
-            throw new NotImplementedException();
+            /* do nothing */
         }
 
         void IHandyTableListener.OnUnsubscr(int itemPos, string itemName)
         {
-            throw new NotImplementedException();
+            /* do nothing */
         }
 
         void IHandyTableListener.OnUnsubscrAll()
         {
-            throw new NotImplementedException();
+            /* do nothing */
         }
     }
 }
