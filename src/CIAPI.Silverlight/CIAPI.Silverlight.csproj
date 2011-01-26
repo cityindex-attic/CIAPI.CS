@@ -65,6 +65,9 @@
     <Compile Include="..\CIAPI\ApiClient.cs">
       <Link>ApiClient.cs</Link>
     </Compile>
+    <Compile Include="..\CIAPI\PriceDTO.cs">
+      <Link>PriceDTO.cs</Link>
+    </Compile>
     <Compile Include="..\CIAPI\Streaming\IMessageConverter.cs">
       <Link>Streaming\IMessageConverter.cs</Link>
     </Compile>
