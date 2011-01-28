@@ -9,6 +9,7 @@
 	
 	<PropertyGroup>
     <Configuration>Release</Configuration>
+    <Platform>Any CPU</Platform>
   </PropertyGroup>
 
   <ItemGroup>
@@ -25,6 +26,6 @@
 
   <Target Name="Build">
     <MSBuild Projects="$(SrcDirectory)\CIAPI.CS.sln" Targets="Rebuild" 
-             Properties="Configuration=$(Configuration);EnableCodeAnalysis=true;GenerateDocumentation=true" />
+             Properties="Configuration=$(Configuration);Platform=$(Platform);EnableCodeAnalysis=true;GenerateDocumentation=true" />
   </Target>
 </Project>

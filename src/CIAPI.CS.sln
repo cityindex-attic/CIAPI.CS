@@ -11,6 +11,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{845AC73C-EACC-4F7C-A9DC-251F09E55708}"
 	ProjectSection(SolutionItems) = preProject
 		build.xml = build.xml
+		CIAPI.CS.nunit = CIAPI.CS.nunit
 		Package.CIAPI.nuspec.xml = Package.CIAPI.nuspec.xml
 		Package.JsonClient.nuspec.xml = Package.JsonClient.nuspec.xml
 		PartCover4.settings.xml = PartCover4.settings.xml

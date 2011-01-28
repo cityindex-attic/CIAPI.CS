@@ -3,9 +3,6 @@
   <PropertyGroup>
     <ReportsDirectory>$(RootDirectory)\reports</ReportsDirectory>
     
-    <NunitEXE>$(RootDirectory)\tools\nunit-runner\nunit-console-x86.exe</NunitEXE>
-    <NUnitArgs>/process=Single /domain=Single /framework=4.0.30319</NUnitArgs>
-
     <PartCover4Directory>$(ProgramFiles86)\PartCover\PartCover .NET 4.0</PartCover4Directory>
   </PropertyGroup>
   
@@ -14,10 +11,8 @@
   <!-- %40 = @  %25 = % %24 = $ -->
   <Target Name="RunTests" DependsOnTargets="CreateReportDirectories; UpdatePartCover4Settings">
 
-    
-
     <Exec Command="&quot;$(PartCover4Directory)\PartCover.exe&quot; --settings $(SrcDirectory)\PartCover4.settings.xml --output $(ReportsDirectory)\PartCover-results.xml"
-      ContinueOnError="true"
+      ContinueOnError="false"
       WorkingDirectory="$(ReportsDirectory)">
       <Output TaskParameter="ExitCode" ItemName="ExitCodes"/>
     </Exec>
