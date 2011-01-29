@@ -13,7 +13,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Assemblies     Include="$(SrcDirectory)\JsonClient\bin\$(Configuration)\CityIndex.JsonClient.dll"/>
+    <Assemblies     Include="$(SrcDirectory)\JsonClient\bin\$(Configuration)\CityIndex.JsonClient.dll;
+                             $(SrcDirectory)\CIAPI\bin\$(Configuration)\CIAPI.dll;"/>
     <TestAssemblies Include="$(SrcDirectory)\JsonClient.Tests\bin\$(Configuration)\CityIndex.JsonClient.Tests.dll"/>
   </ItemGroup>
 

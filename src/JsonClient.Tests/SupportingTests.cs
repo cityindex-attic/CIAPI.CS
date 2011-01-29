@@ -14,7 +14,7 @@ namespace CityIndex.JsonClient.Tests
         /// <summary>
         /// proves that closing the response of a request does not enable reuse.
         /// </summary>
-        [Test]
+        [Test, Category("DependsOnExternalResource")]
         public void ReusingHttpWebRequest()
         {
             HttpWebRequest request;

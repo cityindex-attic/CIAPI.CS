@@ -43,6 +43,23 @@
     <Exec Command="&quot;$(RootDirectory)\tools\crap4net\Crap4Net-Console.exe&quot;"
       ContinueOnError="false"
       WorkingDirectory="$(ReportsDirectory)" />
+	<MakeDir Directories="$(ReportsDirectory)\Crap"/>
+	
+	<XslTransformation XslInputPath="$(RootDirectory)\tools\crap4net\xslt\Crap4j\Crap4JSummaryReport.xslt"
+                      XmlInputPaths="$(ReportsDirectory)\CrapReport.xml"
+                      OutputPaths="$(ReportsDirectory)\Crap\index.html" />
+	<XslTransformation XslInputPath="$(RootDirectory)\tools\crap4net\xslt\Crap4j\Crap4jDetails.xslt"
+                      XmlInputPaths="$(ReportsDirectory)\CrapReport.xml"
+                      OutputPaths="$(ReportsDirectory)\Crap\detail_crap.html" />
+	<XslTransformation XslInputPath="$(RootDirectory)\tools\crap4net\xslt\Crap4j\detail_complexity.xslt"
+                      XmlInputPaths="$(ReportsDirectory)\CrapReport.xml"
+                      OutputPaths="$(ReportsDirectory)\Crap\detail_complexity.html" />
+	<XslTransformation XslInputPath="$(RootDirectory)\tools\crap4net\xslt\Crap4j\detail_coverage.xslt"
+                      XmlInputPaths="$(ReportsDirectory)\CrapReport.xml"
+                      OutputPaths="$(ReportsDirectory)\Crap\detail_coverage.html" />
+	<XslTransformation XslInputPath="$(RootDirectory)\tools\crap4net\xslt\Crap4j\detail_crap_load.xslt"
+                      XmlInputPaths="$(ReportsDirectory)\CrapReport.xml"
+                      OutputPaths="$(ReportsDirectory)\Crap\detail_crap_load.html" />
   </Target>
   
   <Target Name="UpdatePartCover4Settings">
