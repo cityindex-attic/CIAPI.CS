@@ -1,113 +1,180 @@
-﻿using System;
+﻿// 
+// System.Web.HttpUtility (subset of)
+//
+// Authors:
+//   Patrik Torstensson (Patrik.Torstensson@labs2.com)
+//   Wictor Wilén (decode/encode functions) (wictor@ibizkit.se)
+//   Tim Coleman (tim@timcoleman.com)
+//   Gonzalo Paniagua Javier (gonzalo@ximian.com)
+//
+// Copyright (C) 2005-2010 Novell, Inc (http://www.novell.com)
+//
+// Permission is hereby granted, free of charge, to any person obtaining
+// a copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to
+// permit persons to whom the Software is furnished to do so, subject to
+// the following conditions:
+// 
+// The above copyright notice and this permission notice shall be
+// included in all copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+// LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+// OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+// WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//
+
+using System;
+using System.IO;
 using System.Text;
 
 namespace CityIndex.JsonClient
 {
-    public class HttpUtility
-    {
+	public sealed class HttpUtility
+	{
         public static string UrlEncode(string str)
         {
-            if (str == null)
-            {
-                return null;
-            }
             return UrlEncode(str, Encoding.UTF8);
-
         }
 
-        private static string UrlEncode(string str, Encoding e)
+        public static string UrlEncode(string s, Encoding Enc)
         {
-            if (str == null)
-            {
+            if (s == null)
                 return null;
+
+            if (s == String.Empty)
+                return String.Empty;
+
+            bool needEncode = false;
+            int len = s.Length;
+            for (int i = 0; i < len; i++)
+            {
+                char c = s[i];
+                if ((c < '0') || (c < 'A' && c > '9') || (c > 'Z' && c < 'a') || (c > 'z'))
+                {
+                    if (HttpEncoder.NotEncoded(c))
+                        continue;
+
+                    needEncode = true;
+                    break;
+                }
             }
-            return Encoding.ASCII.GetString(UrlEncodeToBytes(str, e));
+
+            if (!needEncode)
+                return s;
+
+            // avoided GetByteCount call
+            byte[] bytes = new byte[Enc.GetMaxByteCount(s.Length)];
+            int realLen = Enc.GetBytes(s, 0, s.Length, bytes, 0);
+            return Encoding.ASCII.GetString(UrlEncodeToBytes(bytes, 0, realLen));
         }
 
-        private static byte[] UrlEncodeToBytes(string str, Encoding e)
-        {
-            if (str == null)
-            {
-                return null;
-            }
-            byte[] bytes = e.GetBytes(str);
-            return UrlEncodeBytesToBytesInternal(bytes, 0, bytes.Length, false);
-        }
+		public static byte [] UrlEncodeToBytes (byte [] bytes, int offset, int count)
+		{
+			if (bytes == null)
+				return null;
+			return HttpEncoder.UrlEncodeToBytes (bytes, offset, count);
+		}
 
-        private static byte[] UrlEncodeBytesToBytesInternal(byte[] bytes, int offset, int count, bool alwaysCreateReturnValue)
+        private class HttpEncoder
         {
-            int num = 0;
-            int num2 = 0;
-            for (int i = 0; i < count; i++)
+            static char[] hexChars = "0123456789abcdef".ToCharArray();
+
+            internal static byte[] UrlEncodeToBytes(byte[] bytes, int offset, int count)
             {
-                var ch = (char) bytes[offset + i];
-                if (ch == ' ')
-                {
-                    num++;
-                }
-                else if (!IsSafe(ch))
-                {
-                    num2++;
-                }
+                if (bytes == null)
+                    throw new ArgumentNullException("bytes");
+
+                int blen = bytes.Length;
+                if (blen == 0)
+                    return new byte[0];
+
+                if (offset < 0 || offset >= blen)
+                    throw new ArgumentOutOfRangeException("offset");
+
+                if (count < 0 || count > blen - offset)
+                    throw new ArgumentOutOfRangeException("count");
+
+                MemoryStream result = new MemoryStream(count);
+                int end = offset + count;
+                for (int i = offset; i < end; i++)
+                    UrlEncodeChar((char)bytes[i], result, false);
+
+                return result.ToArray();
             }
-            if ((!alwaysCreateReturnValue && (num == 0)) && (num2 == 0))
+
+            internal static bool NotEncoded(char c)
             {
-                return bytes;
+                return (c == '!' || c == '(' || c == ')' || c == '*' || c == '-' || c == '.' || c == '_'
+#if !NET_4_0
+ || c == '\''
+#endif
+);
             }
-            var buffer = new byte[count + (num2*2)];
-            int num4 = 0;
-            for (int j = 0; j < count; j++)
+
+            internal static void UrlEncodeChar(char c, Stream result, bool isUnicode)
             {
-                byte num6 = bytes[offset + j];
-                var ch2 = (char) num6;
-                if (IsSafe(ch2))
+                if (c > 255)
                 {
-                    buffer[num4++] = num6;
+                    //FIXME: what happens when there is an internal error?
+                    //if (!isUnicode)
+                    //	throw new ArgumentOutOfRangeException ("c", c, "c must be less than 256");
+                    int idx;
+                    int i = (int)c;
+
+                    result.WriteByte((byte)'%');
+                    result.WriteByte((byte)'u');
+                    idx = i >> 12;
+                    result.WriteByte((byte)hexChars[idx]);
+                    idx = (i >> 8) & 0x0F;
+                    result.WriteByte((byte)hexChars[idx]);
+                    idx = (i >> 4) & 0x0F;
+                    result.WriteByte((byte)hexChars[idx]);
+                    idx = i & 0x0F;
+                    result.WriteByte((byte)hexChars[idx]);
+                    return;
                 }
-                else if (ch2 == ' ')
+
+                if (c > ' ' && NotEncoded(c))
                 {
-                    buffer[num4++] = 0x2b;
+                    result.WriteByte((byte)c);
+                    return;
+                }
+                if (c == ' ')
+                {
+                    result.WriteByte((byte)'+');
+                    return;
+                }
+                if ((c < '0') ||
+                    (c < 'A' && c > '9') ||
+                    (c > 'Z' && c < 'a') ||
+                    (c > 'z'))
+                {
+                    if (isUnicode && c > 127)
+                    {
+                        result.WriteByte((byte)'%');
+                        result.WriteByte((byte)'u');
+                        result.WriteByte((byte)'0');
+                        result.WriteByte((byte)'0');
+                    }
+                    else
+                        result.WriteByte((byte)'%');
+
+                    int idx = ((int)c) >> 4;
+                    result.WriteByte((byte)hexChars[idx]);
+                    idx = ((int)c) & 0x0F;
+                    result.WriteByte((byte)hexChars[idx]);
                 }
                 else
-                {
-                    buffer[num4++] = 0x25;
-                    buffer[num4++] = (byte) IntToHex((num6 >> 4) & 15);
-                    buffer[num4++] = (byte) IntToHex(num6 & 15);
-                }
+                    result.WriteByte((byte)c);
             }
-            return buffer;
         }
-
-
-        private static bool IsSafe(char ch)
-        {
-            if ((((ch >= 'a') && (ch <= 'z')) || ((ch >= 'A') && (ch <= 'Z'))) || ((ch >= '0') && (ch <= '9')))
-            {
-                return true;
-            }
-            switch (ch)
-            {
-                case '\'':
-                case '(':
-                case ')':
-                case '*':
-                case '-':
-                case '.':
-                case '_':
-                case '!':
-                    return true;
-            }
-            return false;
-        }
-
-
-        private static char IntToHex(int n)
-        {
-            if (n <= 9)
-            {
-                return (char) (n + 0x30);
-            }
-            return (char) ((n - 10) + 0x61);
-        }
-    }
+	}
+      
+	
 }
