@@ -26,7 +26,7 @@ namespace CIAPI.Rpc.Tests
         [Test]
         public void CanLogin()
         {
-
+            Console.WriteLine("CanLogin");
             var ctx = BuildAuthenticatedClientAndSetupResponse(LoggedIn);
 
             CreateSessionResponseDTO response = ctx.CreateSession(TestConfig.ApiUsername, TestConfig.ApiPassword);
@@ -44,14 +44,11 @@ namespace CIAPI.Rpc.Tests
 
             try
             {
-
                 ctx.CreateSession("foo", "bar");
                 Assert.Fail("Expected exception");
             }
             catch (ApiException ex)
             {
-
-
                 Assert.AreEqual("[insert api unauthrized]", ex.Message, "FIXME: the API is just setting 401. it needs to send ErrorResponseDTO json as well.");
                 Assert.AreEqual("[insert error response dto json]", ex.ResponseText);
             }
@@ -60,6 +57,8 @@ namespace CIAPI.Rpc.Tests
         [Test]
         public void CanLogout()
         {
+            Console.WriteLine("CanLogout");
+
             var ctx = BuildAuthenticatedClientAndSetupResponse(LoggedOut);
 
             SessionDeletionResponseDTO response = ctx.DeleteSession(TestConfig.ApiUsername, TestConfig.ApiTestSessionId);
@@ -69,6 +68,8 @@ namespace CIAPI.Rpc.Tests
         [Test]
         public void CanGetNewsHeadlines()
         {
+            Console.WriteLine("CanGetNewsHeadlines");
+
             var ctx = BuildAuthenticatedClientAndSetupResponse(NewsHeadlines12);
 
             ListNewsHeadlinesResponseDTO response = ctx.ListNewsHeadlines("UK", 12);
@@ -80,6 +81,7 @@ namespace CIAPI.Rpc.Tests
         [Test]
         public void DeserializationExceptionIsProperlySurfacedBySyncRequests()
         {
+            Console.WriteLine("DeserializationExceptionIsProperlySurfacedBySyncRequests");
             CIAPI.Rpc.Client ctx = BuildAuthenticatedClientAndSetupResponse(BogusJson);
             Assert.Throws<Newtonsoft.Json.JsonReaderException>(() => ctx.GetNewsDetail("foobar"));
         }
@@ -88,6 +90,8 @@ namespace CIAPI.Rpc.Tests
         [Test]
         public void DeserializationExceptionIsProperlySurfacedByAsyncRequests()
         {
+            Console.WriteLine("DeserializationExceptionIsProperlySurfacedByAsyncRequests");
+
             CIAPI.Rpc.Client ctx = BuildAuthenticatedClientAndSetupResponse(BogusJson);
 
             using (var gate = new ManualResetEvent(false))
@@ -110,13 +114,15 @@ namespace CIAPI.Rpc.Tests
                     
                 }, null);
 
-                gate.WaitOne();
+                gate.WaitOne(TimeSpan.FromSeconds(3));
             }
         }
 
         [Test]
         public void CanGetNewsHeadlinesAsync()
         {
+            Console.WriteLine("CanGetNewsHeadlinesAsync");
+
             CIAPI.Rpc.Client ctx = BuildAuthenticatedClientAndSetupResponse(NewsHeadlines14);
 
             using (var gate = new ManualResetEvent(false))
@@ -128,7 +134,7 @@ namespace CIAPI.Rpc.Tests
                         gate.Set();
                     }, null);
 
-                gate.WaitOne();
+                gate.WaitOne(TimeSpan.FromSeconds(3));
             }
         }
 
@@ -136,6 +142,7 @@ namespace CIAPI.Rpc.Tests
         [Test]
         public void SpecificRequestExceptionsAreRetriedTheCorrectNumberOfTimes()
         {
+            Console.WriteLine("SpecificRequestExceptionsAreRetriedTheCorrectNumberOfTimes");
 
             using (var gate = new ManualResetEvent(false))
             {
@@ -175,7 +182,7 @@ namespace CIAPI.Rpc.Tests
                         }
 
                     }, null);
-                gate.WaitOne();
+                gate.WaitOne(TimeSpan.FromSeconds(3));
                 Assert.IsNotNull(exception);
                 Assert.AreEqual("(500) internal server error\r\nretried 2 times",exception.Message);
                 
@@ -188,6 +195,7 @@ namespace CIAPI.Rpc.Tests
         [Test]
         public void NonRetryableExceptionFailsInsteadOfRetrying()
         {
+            Console.WriteLine("NonRetryableExceptionFailsInsteadOfRetrying");
 
             var requestFactory = new TestRequestFactory();
 

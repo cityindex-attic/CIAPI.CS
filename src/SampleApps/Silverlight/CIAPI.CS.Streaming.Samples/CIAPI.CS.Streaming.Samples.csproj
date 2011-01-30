@@ -104,6 +104,14 @@
       <Project>{0156697E-DEFE-47CF-9EB0-11F120780356}</Project>
       <Name>JsonClient.Silverlight</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\StreamingClient.Silverlight.Lightstreamer\StreamingClient.Silverlight.Lightstreamer.csproj">
+      <Project>{7CDFD09D-B156-483E-8969-E38926629CC4}</Project>
+      <Name>StreamingClient.Silverlight.Lightstreamer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\StreamingClient.Silverlight\StreamingClient.Silverlight.csproj">
+      <Project>{C552DD3D-3738-4194-95F3-5A988E7D4647}</Project>
+      <Name>StreamingClient.Silverlight</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

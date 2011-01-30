@@ -5,12 +5,12 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{B26AA333-051A-4C11-B6CD-CECA8FD656E0}</ProjectGuid>
+    <ProjectGuid>{C552DD3D-3738-4194-95F3-5A988E7D4647}</ProjectGuid>
     <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CIAPI</RootNamespace>
-    <AssemblyName>CIAPI.Silverlight</AssemblyName>
+    <RootNamespace>StreamingClient.Silverlight</RootNamespace>
+    <AssemblyName>StreamingClient.Silverlight</AssemblyName>
     <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
@@ -47,7 +47,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />
-    <Reference Include="Newtonsoft.Json.Silverlight, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
     <Reference Include="System.Windows" />
     <Reference Include="system" />
     <Reference Include="System.Core" />
@@ -56,46 +55,22 @@
     <Reference Include="System.Windows.Browser" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\CIAPI.CodeGeneration\DTO.cs">
-      <Link>DTO.cs</Link>
+    <Compile Include="..\StreamingClient\IMessageConverter.cs">
+      <Link>IMessageConverter.cs</Link>
     </Compile>
-    <Compile Include="..\CIAPI.CodeGeneration\ROUTES.cs">
-      <Link>ROUTES.cs</Link>
+    <Compile Include="..\StreamingClient\IStreamingClient.cs">
+      <Link>IStreamingClient.cs</Link>
     </Compile>
-    <Compile Include="..\CIAPI\ApiClient.cs">
-      <Link>ApiClient.cs</Link>
+    <Compile Include="..\StreamingClient\IStreamingListener.cs">
+      <Link>IStreamingListener.cs</Link>
     </Compile>
-    <Compile Include="..\CIAPI\PriceDTO.cs">
-      <Link>PriceDTO.cs</Link>
+    <Compile Include="..\StreamingClient\MessageEventArgs.cs">
+      <Link>MessageEventArgs.cs</Link>
     </Compile>
-    <Compile Include="..\CIAPI\Streaming\LightStreamerClient.cs">
-      <Link>Streaming\LightStreamerClient.cs</Link>
-    </Compile>
-    <Compile Include="..\CIAPI\Streaming\LightstreamerDtoConverter.cs">
-      <Link>Streaming\LightstreamerDtoConverter.cs</Link>
-    </Compile>
-    <Compile Include="..\CIAPI\Streaming\LightStreamerListener.cs">
-      <Link>Streaming\LightStreamerListener.cs</Link>
+    <Compile Include="..\StreamingClient\StatusEventArgs.cs">
+      <Link>StatusEventArgs.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Common.Logging.Silverlight\Common.Logging.Silverlight.csproj">
-      <Project>{74036434-D18E-4404-B854-51395CE40B6C}</Project>
-      <Name>Common.Logging.Silverlight</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\JsonClient.Silverlight\JsonClient.Silverlight.csproj">
-      <Project>{0156697E-DEFE-47CF-9EB0-11F120780356}</Project>
-      <Name>JsonClient.Silverlight</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\StreamingClient.Silverlight.Lightstreamer\StreamingClient.Silverlight.Lightstreamer.csproj">
-      <Project>{7CDFD09D-B156-483E-8969-E38926629CC4}</Project>
-      <Name>StreamingClient.Silverlight.Lightstreamer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\StreamingClient.Silverlight\StreamingClient.Silverlight.csproj">
-      <Project>{C552DD3D-3738-4194-95F3-5A988E7D4647}</Project>
-      <Name>StreamingClient.Silverlight</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>

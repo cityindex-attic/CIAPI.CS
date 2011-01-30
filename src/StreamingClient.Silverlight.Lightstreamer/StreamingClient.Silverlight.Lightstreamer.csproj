@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7CDFD09D-B156-483E-8969-E38926629CC4}</ProjectGuid>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>StreamingClient.Silverlight.Lightstreamer</RootNamespace>
+    <AssemblyName>StreamingClient.Silverlight.Lightstreamer</AssemblyName>
+    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <SilverlightApplication>false</SilverlightApplication>
+    <ValidateXaml>true</ValidateXaml>
+    <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+  </PropertyGroup>
+  <!-- This property group is only here to support building this project using the 
+       MSBuild 3.5 toolset. In order to work correctly with this older toolset, it needs 
+       to set the TargetFrameworkVersion to v3.5 -->
+  <PropertyGroup Condition="'$(MSBuildToolsVersion)' == '3.5'">
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib" />
+    <Reference Include="System.Windows" />
+    <Reference Include="system" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Windows.Browser" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Lightstreamer.Silverlight\BatchingHttpProvider.cs" />
+    <Compile Include="Lightstreamer.Silverlight\BatchManager.cs" />
+    <Compile Include="Lightstreamer.Silverlight\BatchMonitor.cs" />
+    <Compile Include="Lightstreamer.Silverlight\ClientException.cs" />
+    <Compile Include="Lightstreamer.Silverlight\CollectionsSupport.cs" />
+    <Compile Include="Lightstreamer.Silverlight\ConnectionConstraints.cs" />
+    <Compile Include="Lightstreamer.Silverlight\ConnectionInfo.cs" />
+    <Compile Include="Lightstreamer.Silverlight\Constants.cs" />
+    <Compile Include="Lightstreamer.Silverlight\ExtConnectionListener.cs" />
+    <Compile Include="Lightstreamer.Silverlight\ExtendedTableInfo.cs" />
+    <Compile Include="Lightstreamer.Silverlight\ExtendedTableManager.cs" />
+    <Compile Include="Lightstreamer.Silverlight\FullTableManager.cs" />
+    <Compile Include="Lightstreamer.Silverlight\HttpProvider.cs" />
+    <Compile Include="Lightstreamer.Silverlight\IConnectionListener.cs" />
+    <Compile Include="Lightstreamer.Silverlight\IExtendedTableListener.cs" />
+    <Compile Include="Lightstreamer.Silverlight\IFastItemsListener.cs" />
+    <Compile Include="Lightstreamer.Silverlight\IHandyTableListener.cs" />
+    <Compile Include="Lightstreamer.Silverlight\ISetSupport.cs" />
+    <Compile Include="Lightstreamer.Silverlight\ISimpleTableListener.cs" />
+    <Compile Include="Lightstreamer.Silverlight\ITableManager.cs" />
+    <Compile Include="Lightstreamer.Silverlight\IThreadRunnable.cs" />
+    <Compile Include="Lightstreamer.Silverlight\IUpdateInfo.cs" />
+    <Compile Include="Lightstreamer.Silverlight\LoggingTypes\com\lightstreamer\ls_client\actions.cs" />
+    <Compile Include="Lightstreamer.Silverlight\LoggingTypes\com\lightstreamer\ls_client\protocol.cs" />
+    <Compile Include="Lightstreamer.Silverlight\LoggingTypes\com\lightstreamer\ls_client\session.cs" />
+    <Compile Include="Lightstreamer.Silverlight\LoggingTypes\com\lightstreamer\ls_client\stream.cs" />
+    <Compile Include="Lightstreamer.Silverlight\LSClient.cs" />
+    <Compile Include="Lightstreamer.Silverlight\MyServerListener.cs" />
+    <Compile Include="Lightstreamer.Silverlight\NotificationQueue.cs" />
+    <Compile Include="Lightstreamer.Silverlight\PhaseException.cs" />
+    <Compile Include="Lightstreamer.Silverlight\PushConnException.cs" />
+    <Compile Include="Lightstreamer.Silverlight\PushEndException.cs" />
+    <Compile Include="Lightstreamer.Silverlight\PushLengthException.cs" />
+    <Compile Include="Lightstreamer.Silverlight\PushServerException.cs" />
+    <Compile Include="Lightstreamer.Silverlight\PushServerProxy.cs" />
+    <Compile Include="Lightstreamer.Silverlight\PushServerTranslator.cs" />
+    <Compile Include="Lightstreamer.Silverlight\PushUserException.cs" />
+    <Compile Include="Lightstreamer.Silverlight\ServerManager.cs" />
+    <Compile Include="Lightstreamer.Silverlight\ServerUpdateEvent.cs" />
+    <Compile Include="Lightstreamer.Silverlight\SimpleTableInfo.cs" />
+    <Compile Include="Lightstreamer.Silverlight\SimpleTableManager.cs" />
+    <Compile Include="Lightstreamer.Silverlight\SubscrException.cs" />
+    <Compile Include="Lightstreamer.Silverlight\SubscribedTableKey.cs" />
+    <Compile Include="Lightstreamer.Silverlight\ThreadSupport.cs" />
+    <Compile Include="Lightstreamer.Silverlight\TimerSupport.cs" />
+    <Compile Include="Lightstreamer.Silverlight\UpdateInfoImpl.cs" />
+    <Compile Include="Lightstreamer.Silverlight\VirtualTableManager.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common.Logging.Silverlight\Common.Logging.Silverlight.csproj">
+      <Project>{74036434-D18E-4404-B854-51395CE40B6C}</Project>
+      <Name>Common.Logging.Silverlight</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
+        <SilverlightProjectProperties />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
