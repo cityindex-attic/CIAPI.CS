@@ -58,57 +58,22 @@
     <Compile Include="Rpc\ApiClient.cs" />
     <Compile Include="PriceDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Streaming\Lightstreamer\LightstreamerClient.cs" />
-    <Compile Include="Streaming\IMessageConverter.cs" />
-    <Compile Include="Streaming\IStreamingClient.cs" />
-    <Compile Include="Streaming\IStreamingListener.cs" />
-    <Compile Include="Streaming\Lightstreamer\LightstreamerDtoConverter.cs" />
-    <Compile Include="Streaming\Lightstreamer\DotNet\Client\BatchingHttpProvider.cs" />
-    <Compile Include="Streaming\Lightstreamer\DotNet\Client\BatchManager.cs" />
-    <Compile Include="Streaming\Lightstreamer\DotNet\Client\BatchMonitor.cs" />
-    <Compile Include="Streaming\Lightstreamer\DotNet\Client\ConnectionConstraints.cs" />
-    <Compile Include="Streaming\Lightstreamer\DotNet\Client\ConnectionInfo.cs" />
-    <Compile Include="Streaming\Lightstreamer\DotNet\Client\Constants.cs" />
-    <Compile Include="Streaming\Lightstreamer\DotNet\Client\ExtendedTableInfo.cs" />
-    <Compile Include="Streaming\Lightstreamer\DotNet\Client\ExtendedTableManager.cs" />
-    <Compile Include="Streaming\Lightstreamer\DotNet\Client\FullTableManager.cs" />
-    <Compile Include="Streaming\Lightstreamer\DotNet\Client\HttpProvider.cs" />
-    <Compile Include="Streaming\Lightstreamer\DotNet\Client\IConnectionListener.cs" />
-    <Compile Include="Streaming\Lightstreamer\DotNet\Client\IExtendedTableListener.cs" />
-    <Compile Include="Streaming\Lightstreamer\DotNet\Client\IFastItemsListener.cs" />
-    <Compile Include="Streaming\Lightstreamer\DotNet\Client\IHandyTableListener.cs" />
-    <Compile Include="Streaming\Lightstreamer\DotNet\Client\ISimpleTableListener.cs" />
-    <Compile Include="Streaming\Lightstreamer\DotNet\Client\ITableManager.cs" />
-    <Compile Include="Streaming\Lightstreamer\DotNet\Client\LSClient.cs" />
-    <Compile Include="Streaming\Lightstreamer\DotNet\Client\PhaseException.cs" />
-    <Compile Include="Streaming\Lightstreamer\DotNet\Client\PushConnException.cs" />
-    <Compile Include="Streaming\Lightstreamer\DotNet\Client\PushLengthException.cs" />
-    <Compile Include="Streaming\Lightstreamer\DotNet\Client\PushServerException.cs" />
-    <Compile Include="Streaming\Lightstreamer\DotNet\Client\PushServerProxy.cs" />
-    <Compile Include="Streaming\Lightstreamer\DotNet\Client\PushServerTranslator.cs" />
-    <Compile Include="Streaming\Lightstreamer\DotNet\Client\PushUserException.cs" />
-    <Compile Include="Streaming\Lightstreamer\DotNet\Client\ServerManager.cs" />
-    <Compile Include="Streaming\Lightstreamer\DotNet\Client\ServerUpdateEvent.cs" />
-    <Compile Include="Streaming\Lightstreamer\DotNet\Client\SimpleTableInfo.cs" />
-    <Compile Include="Streaming\Lightstreamer\DotNet\Client\SimpleTableManager.cs" />
-    <Compile Include="Streaming\Lightstreamer\DotNet\Client\SubscrException.cs" />
-    <Compile Include="Streaming\Lightstreamer\DotNet\Client\SubscribedTableKey.cs" />
-    <Compile Include="Streaming\Lightstreamer\DotNet\Client\Support\CollectionsSupport.cs" />
-    <Compile Include="Streaming\Lightstreamer\DotNet\Client\Support\HashSetSupport.cs" />
-    <Compile Include="Streaming\Lightstreamer\DotNet\Client\Support\ISetSupport.cs" />
-    <Compile Include="Streaming\Lightstreamer\DotNet\Client\Support\IThreadRunnable.cs" />
-    <Compile Include="Streaming\Lightstreamer\DotNet\Client\Support\ThreadSupport.cs" />
-    <Compile Include="Streaming\Lightstreamer\DotNet\Client\Support\TimerSupport.cs" />
-    <Compile Include="Streaming\Lightstreamer\DotNet\Client\UpdateInfo.cs" />
-    <Compile Include="Streaming\Lightstreamer\DotNet\Client\VirtualTableManager.cs" />
-    <Compile Include="Streaming\MessageEventArgs.cs" />
-    <Compile Include="Streaming\StatusEventArgs.cs" />
-    <Compile Include="Streaming\Lightstreamer\LightstreamerListener.cs" />
+    <Compile Include="Streaming\LightStreamerClient.cs" />
+    <Compile Include="Streaming\LightstreamerDtoConverter.cs" />
+    <Compile Include="Streaming\LightStreamerListener.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\JsonClient\JsonClient.csproj">
       <Project>{D80E56C8-8DD6-4911-9A99-F534C9497D6A}</Project>
       <Name>JsonClient %28JsonClient\JsonClient%29</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\StreamingClient.Lightstreamer\StreamingClient.Lightstreamer.csproj">
+      <Project>{572A308B-634F-48CF-926D-CFEFB8D00C46}</Project>
+      <Name>StreamingClient.Lightstreamer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\StreamingClient\StreamingClient.csproj">
+      <Project>{EE5023DC-A20F-4358-9DF1-7D69BB1C322E}</Project>
+      <Name>StreamingClient</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

@@ -153,7 +153,8 @@ namespace CityIndex.JsonClient
         public TDTO Request<TDTO>(string target, string uriTemplate, string method, Dictionary<string, object> parameters, TimeSpan cacheDuration, string throttleScope) where TDTO : class, new()
         {
 #if SILVERLIGHT
-            //TODO: add UI thread check and throw forbidden exception if so
+            if (System.Windows.Application.Current.RootVisual.Dispatcher.CheckAccess())
+                throw new ApiException("You cannot call this method from the UI thread.  Either use the asynchronous method: .Begin{name}, or call this from a background thread");
 #endif
             uriTemplate = uriTemplate ?? "";
             parameters = parameters ?? new Dictionary<string, object>();

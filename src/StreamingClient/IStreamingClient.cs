@@ -1,11 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace StreamingClient
+namespace CIAPI.Streaming
 {
     public interface IStreamingClient
     {
+        event EventHandler<MessageEventArgs<object>> MessageRecieved;
+        event EventHandler<StatusEventArgs> StatusChanged;
+        void Connect();
+        void Disconnect();
     }
 }

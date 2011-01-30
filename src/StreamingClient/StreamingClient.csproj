@@ -12,8 +12,7 @@
     <AssemblyName>StreamingClient</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -38,7 +37,6 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,66 +44,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IStreamingConnectionFactory.cs" />
-    <Compile Include="ClientDTO\News.cs" />
-    <Compile Include="ClientDTO\NewsUpdate.cs" />
-    <Compile Include="ClientDTO\NullNews.cs" />
-    <Compile Include="ClientDTO\NullPrice.cs" />
-    <Compile Include="ClientDTO\Price.cs" />
-    <Compile Include="ClientDTO\PriceUpdate.cs" />
+    <Compile Include="IMessageConverter.cs" />
     <Compile Include="IStreamingClient.cs" />
-    <Compile Include="JSONParser.cs" />
-    <Compile Include="Lightstreamer\DotNet\Client\BatchingHttpProvider.cs" />
-    <Compile Include="Lightstreamer\DotNet\Client\BatchManager.cs" />
-    <Compile Include="Lightstreamer\DotNet\Client\BatchMonitor.cs" />
-    <Compile Include="Lightstreamer\DotNet\Client\ConnectionConstraints.cs" />
-    <Compile Include="Lightstreamer\DotNet\Client\ConnectionInfo.cs" />
-    <Compile Include="Lightstreamer\DotNet\Client\Constants.cs" />
-    <Compile Include="Lightstreamer\DotNet\Client\ExtendedTableInfo.cs" />
-    <Compile Include="Lightstreamer\DotNet\Client\ExtendedTableManager.cs" />
-    <Compile Include="Lightstreamer\DotNet\Client\FullTableManager.cs" />
-    <Compile Include="Lightstreamer\DotNet\Client\HttpProvider.cs" />
-    <Compile Include="Lightstreamer\DotNet\Client\IConnectionListener.cs" />
-    <Compile Include="Lightstreamer\DotNet\Client\IExtendedTableListener.cs" />
-    <Compile Include="Lightstreamer\DotNet\Client\IFastItemsListener.cs" />
-    <Compile Include="Lightstreamer\DotNet\Client\IHandyTableListener.cs" />
-    <Compile Include="Lightstreamer\DotNet\Client\ISimpleTableListener.cs" />
-    <Compile Include="Lightstreamer\DotNet\Client\ITableManager.cs" />
-    <Compile Include="Lightstreamer\DotNet\Client\LSClient.cs" />
-    <Compile Include="Lightstreamer\DotNet\Client\PhaseException.cs" />
-    <Compile Include="Lightstreamer\DotNet\Client\PushConnException.cs" />
-    <Compile Include="Lightstreamer\DotNet\Client\PushLengthException.cs" />
-    <Compile Include="Lightstreamer\DotNet\Client\PushServerException.cs" />
-    <Compile Include="Lightstreamer\DotNet\Client\PushServerProxy.cs" />
-    <Compile Include="Lightstreamer\DotNet\Client\PushServerTranslator.cs" />
-    <Compile Include="Lightstreamer\DotNet\Client\PushUserException.cs" />
-    <Compile Include="Lightstreamer\DotNet\Client\ServerManager.cs" />
-    <Compile Include="Lightstreamer\DotNet\Client\ServerUpdateEvent.cs" />
-    <Compile Include="Lightstreamer\DotNet\Client\SimpleTableInfo.cs" />
-    <Compile Include="Lightstreamer\DotNet\Client\SimpleTableManager.cs" />
-    <Compile Include="Lightstreamer\DotNet\Client\SubscrException.cs" />
-    <Compile Include="Lightstreamer\DotNet\Client\SubscribedTableKey.cs" />
-    <Compile Include="Lightstreamer\DotNet\Client\Support\CollectionsSupport.cs" />
-    <Compile Include="Lightstreamer\DotNet\Client\Support\HashSetSupport.cs" />
-    <Compile Include="Lightstreamer\DotNet\Client\Support\ISetSupport.cs" />
-    <Compile Include="Lightstreamer\DotNet\Client\Support\IThreadRunnable.cs" />
-    <Compile Include="Lightstreamer\DotNet\Client\Support\ThreadSupport.cs" />
-    <Compile Include="Lightstreamer\DotNet\Client\Support\TimerSupport.cs" />
-    <Compile Include="Lightstreamer\DotNet\Client\UpdateInfo.cs" />
-    <Compile Include="Lightstreamer\DotNet\Client\VirtualTableManager.cs" />
-    <Compile Include="Lightstreamer\LightstreamerConnection.cs" />
-    <Compile Include="Lightstreamer\LightstreamerDictionaryIndices.cs" />
-    <Compile Include="Lightstreamer\LightstreamerEventArgs.cs" />
-    <Compile Include="Lightstreamer\LightstreamerListener.cs" />
-    <Compile Include="Lightstreamer\RawStreamingUpdateLost.cs" />
-    <Compile Include="Lightstreamer\StatusEventArgs.cs" />
-    <Compile Include="Lightstreamer\StreamingUpdate.cs" />
-    <Compile Include="Lightstreamer\Subscription.cs" />
-    <Compile Include="Lightstreamer\UpdateDetails.cs" />
-    <Compile Include="NewsListener.cs" />
-    <Compile Include="PriceListener.cs" />
+    <Compile Include="IStreamingListener.cs" />
+    <Compile Include="MessageEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StreamingConnectionFactory.cs" />
+    <Compile Include="StatusEventArgs.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

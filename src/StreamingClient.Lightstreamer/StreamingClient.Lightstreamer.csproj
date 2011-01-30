@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{572A308B-634F-48CF-926D-CFEFB8D00C46}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>StreamingClient.Lightstreamer</RootNamespace>
+    <AssemblyName>StreamingClient.Lightstreamer</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Common.Logging">
+      <HintPath>..\packages\Common.Logging-2.0.0\2.0\release\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="HttpUtility.cs" />
+    <Compile Include="Lightstreamer.dotNetClient_N2\BatchingHttpProvider.cs" />
+    <Compile Include="Lightstreamer.dotNetClient_N2\BatchManager.cs" />
+    <Compile Include="Lightstreamer.dotNetClient_N2\BatchMonitor.cs" />
+    <Compile Include="Lightstreamer.dotNetClient_N2\ClientException.cs" />
+    <Compile Include="Lightstreamer.dotNetClient_N2\CollectionsSupport.cs" />
+    <Compile Include="Lightstreamer.dotNetClient_N2\ConnectionConstraints.cs" />
+    <Compile Include="Lightstreamer.dotNetClient_N2\ConnectionInfo.cs" />
+    <Compile Include="Lightstreamer.dotNetClient_N2\Constants.cs" />
+    <Compile Include="Lightstreamer.dotNetClient_N2\ExtConnectionListener.cs" />
+    <Compile Include="Lightstreamer.dotNetClient_N2\ExtendedTableInfo.cs" />
+    <Compile Include="Lightstreamer.dotNetClient_N2\ExtendedTableManager.cs" />
+    <Compile Include="Lightstreamer.dotNetClient_N2\FullTableManager.cs" />
+    <Compile Include="Lightstreamer.dotNetClient_N2\HttpProvider.cs" />
+    <Compile Include="Lightstreamer.dotNetClient_N2\IConnectionListener.cs" />
+    <Compile Include="Lightstreamer.dotNetClient_N2\IExtendedTableListener.cs" />
+    <Compile Include="Lightstreamer.dotNetClient_N2\IFastItemsListener.cs" />
+    <Compile Include="Lightstreamer.dotNetClient_N2\IHandyTableListener.cs" />
+    <Compile Include="Lightstreamer.dotNetClient_N2\ISetSupport.cs" />
+    <Compile Include="Lightstreamer.dotNetClient_N2\ISimpleTableListener.cs" />
+    <Compile Include="Lightstreamer.dotNetClient_N2\ITableManager.cs" />
+    <Compile Include="Lightstreamer.dotNetClient_N2\IThreadRunnable.cs" />
+    <Compile Include="Lightstreamer.dotNetClient_N2\IUpdateInfo.cs" />
+    <Compile Include="Lightstreamer.dotNetClient_N2\LSClient.cs" />
+    <Compile Include="Lightstreamer.dotNetClient_N2\MyServerListener.cs" />
+    <Compile Include="Lightstreamer.dotNetClient_N2\NotificationQueue.cs" />
+    <Compile Include="Lightstreamer.dotNetClient_N2\PhaseException.cs" />
+    <Compile Include="Lightstreamer.dotNetClient_N2\PushConnException.cs" />
+    <Compile Include="Lightstreamer.dotNetClient_N2\PushEndException.cs" />
+    <Compile Include="Lightstreamer.dotNetClient_N2\PushLengthException.cs" />
+    <Compile Include="Lightstreamer.dotNetClient_N2\PushServerException.cs" />
+    <Compile Include="Lightstreamer.dotNetClient_N2\PushServerProxy.cs" />
+    <Compile Include="Lightstreamer.dotNetClient_N2\PushServerTranslator.cs" />
+    <Compile Include="Lightstreamer.dotNetClient_N2\PushUserException.cs" />
+    <Compile Include="Lightstreamer.dotNetClient_N2\ServerManager.cs" />
+    <Compile Include="Lightstreamer.dotNetClient_N2\ServerUpdateEvent.cs" />
+    <Compile Include="Lightstreamer.dotNetClient_N2\SimpleTableInfo.cs" />
+    <Compile Include="Lightstreamer.dotNetClient_N2\SimpleTableManager.cs" />
+    <Compile Include="Lightstreamer.dotNetClient_N2\SubscrException.cs" />
+    <Compile Include="Lightstreamer.dotNetClient_N2\SubscribedTableKey.cs" />
+    <Compile Include="Lightstreamer.dotNetClient_N2\ThreadSupport.cs" />
+    <Compile Include="Lightstreamer.dotNetClient_N2\TimerSupport.cs" />
+    <Compile Include="Lightstreamer.dotNetClient_N2\UpdateInfoImpl.cs" />
+    <Compile Include="Lightstreamer.dotNetClient_N2\VirtualTableManager.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

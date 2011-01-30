@@ -3,9 +3,6 @@
   <PropertyGroup>
     <ReportsDirectory>$(RootDirectory)\reports</ReportsDirectory>
     
-    <NunitEXE>$(RootDirectory)\tools\nunit-runner\nunit-console-x86.exe</NunitEXE>
-    <NUnitArgs>/process=Single /domain=Single /framework=4.0.30319</NUnitArgs>
-
     <PartCover4Directory>$(ProgramFiles86)\PartCover\PartCover .NET 4.0</PartCover4Directory>
   </PropertyGroup>
   
@@ -14,10 +11,8 @@
   <!-- %40 = @  %25 = % %24 = $ -->
   <Target Name="RunTests" DependsOnTargets="CreateReportDirectories; UpdatePartCover4Settings">
 
-    
-
     <Exec Command="&quot;$(PartCover4Directory)\PartCover.exe&quot; --settings $(SrcDirectory)\PartCover4.settings.xml --output $(ReportsDirectory)\PartCover-results.xml"
-      ContinueOnError="true"
+      ContinueOnError="false"
       WorkingDirectory="$(ReportsDirectory)">
       <Output TaskParameter="ExitCode" ItemName="ExitCodes"/>
     </Exec>
@@ -38,16 +33,47 @@
   <Target Name="CalculateMetrics" DependsOnTargets="CalculateComplexityMetrics; CalculateCRAPMetrics"></Target>
   
   <Target Name="CalculateComplexityMetrics">
-    
-    <Exec Command="&quot;$(RootDirectory)\tools\reflector\Reflector.exe&quot; /Run:Reflector.CodeMetrics /Assembly:&quot;%(Assemblies.Identity)&quot; /OutputPath:&quot;CodeMetrics.xml&quot;"
+    <Message Text="Calculating complexity metrics"/>
+    <Exec Command="&quot;$(RootDirectory)\tools\reflector\Reflector.exe&quot; /Run:Reflector.CodeMetrics /Assembly:&quot;%(Assemblies.Identity)&quot; /OutputPath:&quot;CodeMetrics-%(Assemblies.Filename).xml&quot;"
       ContinueOnError="false"
       WorkingDirectory="$(ReportsDirectory)" />
+
+    <Message Text="Merging metrics into single file"/>
+
+    <ReadLinesFromFile File="$(ReportsDirectory)\CodeMetrics-%(Assemblies.FileName).xml">
+      <Output TaskParameter="Lines" ItemName="lines"/>
+    </ReadLinesFromFile>
+    <WriteLinesToFile File="$(ReportsDirectory)\CodeMetrics-Concatted.xml" Lines="&lt;all&gt;;@(Lines);&lt;/all&gt;" Overwrite="true" />
+
+    <XslTransformation XslInputPath="$(RootDirectory)\tools\reflector\mergeCodeMetrics.xslt"
+                      XmlInputPaths="$(ReportsDirectory)\CodeMetrics-Concatted.xml"
+                      OutputPaths="$(ReportsDirectory)\CodeMetrics.xml" />
+
+    <Message Text="Deleting un-merged files"/>
+    <Delete Files="$(ReportsDirectory)\CodeMetrics-%(Assemblies.FileName).xml;$(ReportsDirectory)\CodeMetrics-Concatted.xml" />
   </Target>
 
   <Target Name="CalculateCRAPMetrics">
     <Exec Command="&quot;$(RootDirectory)\tools\crap4net\Crap4Net-Console.exe&quot;"
       ContinueOnError="false"
       WorkingDirectory="$(ReportsDirectory)" />
+	<MakeDir Directories="$(ReportsDirectory)\Crap"/>
+	
+	<XslTransformation XslInputPath="$(RootDirectory)\tools\crap4net\xslt\Crap4j\Crap4JSummaryReport.xslt"
+                      XmlInputPaths="$(ReportsDirectory)\CrapReport.xml"
+                      OutputPaths="$(ReportsDirectory)\Crap\index.html" />
+	<XslTransformation XslInputPath="$(RootDirectory)\tools\crap4net\xslt\Crap4j\Crap4jDetails.xslt"
+                      XmlInputPaths="$(ReportsDirectory)\CrapReport.xml"
+                      OutputPaths="$(ReportsDirectory)\Crap\detail_crap.html" />
+	<XslTransformation XslInputPath="$(RootDirectory)\tools\crap4net\xslt\Crap4j\detail_complexity.xslt"
+                      XmlInputPaths="$(ReportsDirectory)\CrapReport.xml"
+                      OutputPaths="$(ReportsDirectory)\Crap\detail_complexity.html" />
+	<XslTransformation XslInputPath="$(RootDirectory)\tools\crap4net\xslt\Crap4j\detail_coverage.xslt"
+                      XmlInputPaths="$(ReportsDirectory)\CrapReport.xml"
+                      OutputPaths="$(ReportsDirectory)\Crap\detail_coverage.html" />
+	<XslTransformation XslInputPath="$(RootDirectory)\tools\crap4net\xslt\Crap4j\detail_crap_load.xslt"
+                      XmlInputPaths="$(ReportsDirectory)\CrapReport.xml"
+                      OutputPaths="$(ReportsDirectory)\Crap\detail_crap_load.html" />
   </Target>
   
   <Target Name="UpdatePartCover4Settings">

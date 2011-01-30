@@ -1,0 +1,9 @@
+﻿<NUnitProject>
+  <Settings activeconfig="Release" />
+  <Config name="Debug" binpathtype="Auto" />
+  <Config name="Release" binpathtype="Auto">
+    <assembly path="JsonClient.Tests\bin\Release\CityIndex.JsonClient.Tests.dll" /> 
+    <assembly path="StreamingClient.Tests\bin\Release\StreamingClient.Tests.dll" />
+    <assembly path="CIAPI.Tests\bin\Release\CIAPI.Tests.dll" />
+  </Config>
+</NUnitProject>
