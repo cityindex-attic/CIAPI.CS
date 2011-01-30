@@ -87,6 +87,10 @@ namespace CityIndex.JsonClient
         /// for execution.
         /// Derived classes may take this opportunity to modify the <paramref name="request"/>, <paramref name="cacheDuration"/> or the <paramref name="throttleScope"/>.
         /// The remaining parameters are for reference only and modification will have no effect on the execution of the request.
+        /// 
+        /// TODO: perhaps a container object for the read-only reference values to avoid any confusion?
+        ///       it could be argued that you can read the url of the request but having the components used to create
+        ///       the url could make life a lot easier. ?
         /// </summary>
         /// <param name="request"></param>
         /// <param name="url"></param>
@@ -100,6 +104,7 @@ namespace CityIndex.JsonClient
                                                   string method, Dictionary<string, object> parameters,
                                                   TimeSpan cacheDuration, string throttleScope)
         {
+            // derived class implements this
         }
 
 
@@ -118,6 +123,7 @@ namespace CityIndex.JsonClient
                                               string method, Dictionary<string, object> parameters,
                                               TimeSpan cacheDuration, string throttleScope)
         {
+            // derived class implements this
         }
 
         #endregion
@@ -251,7 +257,8 @@ namespace CityIndex.JsonClient
 
                         if (!_throttleScopes.ContainsKey(throttleScope))
                         {
-                            throw new Exception(string.Format("throttle for scope '{0}' not found", throttleScope));
+                            _cache.Remove<TDTO>(url);
+                            throw new Exception(string.Format("Throttle for scope '{0}' not found.\r\n{1}", throttleScope, item));
                         }
 
                         item.AddCallback(cb, state);
@@ -263,32 +270,21 @@ namespace CityIndex.JsonClient
                         item.UriTemplate = uriTemplate;
                         item.Url = url;
 
-
                         WebRequest request = _requestFactory.Create(url);
-
                         request.Method = method.ToUpper();
 
 #if !SILVERLIGHT
                         // silverlight crossdomain request does not support content type (?!)
                         request.ContentType = "application/json";
 #endif
-
                         item.ItemState = CacheItemState.Pending;
-
                         CreateRequest<TDTO>(url);
-
-
-
                         break;
                     case CacheItemState.Pending:
                         item.AddCallback(cb, state);
                         break;
                     case CacheItemState.Complete:
                         new ApiAsyncResult<TDTO>(cb, state, true, item.ResponseText, null);
-                        break;
-                    default:
-                        new ApiAsyncResult<TDTO>(cb, state, true, null,
-                                                 new Exception("invalid item state, should never see this"));
                         break;
                 }
             }
@@ -305,7 +301,7 @@ namespace CityIndex.JsonClient
         ///<typeparam name="TDTO"></typeparam>
         public void BeginRequest<TDTO>(ApiAsyncCallback<TDTO> cb, object state, string target, string method) where TDTO : class, new()
         {
-            BeginRequest<TDTO>(cb, state, target, null, method, null, TimeSpan.FromMilliseconds(0), "default");
+            BeginRequest(cb, state, target, null, method, null, TimeSpan.FromMilliseconds(0), "default");
         }
 
 
@@ -351,9 +347,6 @@ namespace CityIndex.JsonClient
         /// Builds a JSOB from parameters and asynchronously feeds the request stream with the resultant JSON before sending the request
         /// </summary>
         /// <param name="url"></param>
-        /// <param name="request"></param>
-        /// <param name="parameters"></param>
-        /// <param name="throttleScope"></param>
         private void SetPostEntityAndEnqueueRequest<TDTO>(string url)
             where TDTO : class, new()
         {

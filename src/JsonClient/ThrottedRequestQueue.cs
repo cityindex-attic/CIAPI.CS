@@ -220,12 +220,13 @@ namespace CityIndex.JsonClient
                     {
                         request.WebRequest.BeginGetResponse(ar =>
                             {
-                                string msgIssued = string.Format("Recieved #{0} : {1} ", requestIndex, request.Url);
-                                Log.Debug(msgIssued);
-
+                                
                                 _outstandingRequests--;
 
                                 request.AsyncResultHandler(ar, request);
+
+                                string msgIssued = string.Format("Recieved #{0} : {1} ", requestIndex, request.Url);
+                                Log.Debug(msgIssued);
                             }, null);
                         string msgDispatched = string.Format("Dispatched #{0} : {1} ", _dispatchedCount, request.Url);
                         Log.Debug(msgDispatched);

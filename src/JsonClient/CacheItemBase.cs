@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Text;
 using System.Threading;
 
 namespace CityIndex.JsonClient
@@ -81,6 +82,55 @@ namespace CityIndex.JsonClient
             {
                 handler(this, EventArgs.Empty);
             }
+        }
+
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+            sb.AppendFormat("ItemState       : {0}\r\n", this.ItemState);
+            sb.AppendFormat("Url             : {0}\r\n", this.Url ?? "NULL");
+            sb.AppendFormat("Method          : {0}\r\n", this.Method ?? "NULL");
+            sb.AppendFormat("Target          : {0}\r\n", this.Target ?? "NULL");
+            sb.AppendFormat("UriTemplate     : {0}\r\n", this.UriTemplate ?? "NULL");
+
+            if (this.Parameters != null)
+            {
+            sb.AppendFormat("Parameters      : \r\n");
+                foreach (KeyValuePair<string, object> kvp in this.Parameters)
+                {
+                    sb.AppendFormat("\t{0}: {1}\r\n", kvp.Key, kvp.Value ?? "NULL");
+                }
+
+            }
+
+            if (this.Request != null)
+            {
+            sb.AppendFormat("Request URI     : {0}\r\n", this.Request.RequestUri.AbsoluteUri);
+
+                if (this.Request.Headers != null)
+                {
+            sb.AppendFormat("Request Headers : \r\n");
+                    foreach (string header in this.Request.Headers)
+                    {
+                        sb.AppendFormat("\t{0}: {1}\r\n", header, this.Request.Headers[header] ?? "NULL");
+                    }
+                }
+
+            }
+
+            sb.AppendFormat("CacheDuration   : {0}\r\n", this.CacheDuration);
+            sb.AppendFormat("RetryCount      : {0}\r\n", this.RetryCount);
+            sb.AppendFormat("ThrottleScope   : {0}\r\n", this.ThrottleScope ?? "NULL");
+            sb.AppendFormat("Expiration      : {0}\r\n", this.Expiration);
+            sb.AppendFormat("ResponseText    : {0}\r\n", this.ResponseText ?? "NULL");
+
+            if (this.Exception != null)
+            {
+                sb.AppendFormat("Exception       : {0}\r\n", this.Exception);
+            }
+
+
+            return sb.ToString();
         }
     }
 }

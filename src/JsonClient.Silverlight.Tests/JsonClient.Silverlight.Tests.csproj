@@ -100,17 +100,17 @@
     <Reference Include="System.Windows.Browser" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\JsonClient.Tests\TestRequestFactory.cs">
-      <Link>TestRequestFactory.cs</Link>
+    <Compile Include="..\jsonclient.tests\jsonclientmocks\TestRequestFactory.cs">
+      <Link>JsonClientMocks\TestRequestFactory.cs</Link>
     </Compile>
-    <Compile Include="..\JsonClient.Tests\TestRequestInfo.cs">
-      <Link>TestRequestInfo.cs</Link>
+    <Compile Include="..\jsonclient.tests\jsonclientmocks\TestRequestInfo.cs">
+      <Link>JsonClientMocks\TestRequestInfo.cs</Link>
     </Compile>
-    <Compile Include="..\JsonClient.Tests\TestWebReponse.cs">
-      <Link>TestWebReponse.cs</Link>
+    <Compile Include="..\jsonclient.tests\jsonclientmocks\TestWebReponse.cs">
+      <Link>JsonClientMocks\TestWebReponse.cs</Link>
     </Compile>
-    <Compile Include="..\JsonClient.Tests\TestWebRequest.cs">
-      <Link>TestWebRequest.cs</Link>
+    <Compile Include="..\jsonclient.tests\jsonclientmocks\TestWebRequest.cs">
+      <Link>JsonClientMocks\TestWebRequest.cs</Link>
     </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>

@@ -1,8 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace CityIndex.JsonClient
 {
+    ///<summary>
+    /// Provides a formatted dump of a CacheItem for inclusion in exception messages.
+    ///</summary>
+
     /// <summary>
     /// Provides a generic composition element for request state.
     /// Contains a callback queue to service identical concurrent requests. 
