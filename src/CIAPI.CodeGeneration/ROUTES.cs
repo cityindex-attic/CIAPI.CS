@@ -326,11 +326,13 @@ namespace CIAPI.Rpc
 		/// <param name="OfferPrice">Market prices are quote as a pair (buy/sell or bid/offer),             the OfferPrice is the higher of the market price pair</param>
 		/// <param name="AuditId">Unique identifier for a price tick</param>
 		/// <param name="TradingAccountId">TradingAccount associated with the trade/order request</param>
+		/// <param name="Applicability">Identifier which relates to the expiry of the             order/trade, i.e. GoodTillDate (GTD),              GoodTillCancelled (GTC) or GoodForDay (GFD)</param>
+		/// <param name="ExpiryDateTimeUTC">The associated expiry DateTime for a              pair of GoodTillDate IfDone orders</param>
         /// <returns></returns>
-        public NewTradeOrderResponseDTO Order(Int32 MarketId, String Direction, Decimal Quantity, Decimal BidPrice, Decimal OfferPrice, String AuditId, Int32 TradingAccountId)
+        public ApiTradeOrderResponseDTO Order(Int32 MarketId, String Direction, Decimal Quantity, Decimal BidPrice, Decimal OfferPrice, String AuditId, Int32 TradingAccountId, String Applicability, String ExpiryDateTimeUTC)
         {
        
-            return Request<NewTradeOrderResponseDTO>("order","/", "POST", new Dictionary<string, object>
+            return Request<ApiTradeOrderResponseDTO>("order","/order", "POST", new Dictionary<string, object>
                                 {
 									{"MarketId",MarketId},
 									{"Direction",Direction},
@@ -339,6 +341,8 @@ namespace CIAPI.Rpc
 									{"OfferPrice",OfferPrice},
 									{"AuditId",AuditId},
 									{"TradingAccountId",TradingAccountId},
+									{"Applicability",Applicability},
+									{"ExpiryDateTimeUTC",ExpiryDateTimeUTC},
                                 }, TimeSpan.FromMilliseconds(0),"trading");
         }
 
@@ -353,10 +357,12 @@ namespace CIAPI.Rpc
 		/// <param name="OfferPrice">Market prices are quote as a pair (buy/sell or bid/offer),             the OfferPrice is the higher of the market price pair</param>
 		/// <param name="AuditId">Unique identifier for a price tick</param>
 		/// <param name="TradingAccountId">TradingAccount associated with the trade/order request</param>
+		/// <param name="Applicability">Identifier which relates to the expiry of the             order/trade, i.e. GoodTillDate (GTD),              GoodTillCancelled (GTC) or GoodForDay (GFD)</param>
+		/// <param name="ExpiryDateTimeUTC">The associated expiry DateTime for a              pair of GoodTillDate IfDone orders</param>
         /// <returns></returns>
-        public void BeginOrder(Int32 MarketId, String Direction, Decimal Quantity, Decimal BidPrice, Decimal OfferPrice, String AuditId, Int32 TradingAccountId, ApiAsyncCallback<NewTradeOrderResponseDTO> callback, object state)
+        public void BeginOrder(Int32 MarketId, String Direction, Decimal Quantity, Decimal BidPrice, Decimal OfferPrice, String AuditId, Int32 TradingAccountId, String Applicability, String ExpiryDateTimeUTC, ApiAsyncCallback<ApiTradeOrderResponseDTO> callback, object state)
         {
-            BeginRequest(callback, state, "order","/", "POST",new Dictionary<string, object>
+            BeginRequest(callback, state, "order","/order", "POST",new Dictionary<string, object>
                                 {
 									{"MarketId",MarketId},
 									{"Direction",Direction},
@@ -365,10 +371,220 @@ namespace CIAPI.Rpc
 									{"OfferPrice",OfferPrice},
 									{"AuditId",AuditId},
 									{"TradingAccountId",TradingAccountId},
+									{"Applicability",Applicability},
+									{"ExpiryDateTimeUTC",ExpiryDateTimeUTC},
                                 }, TimeSpan.FromMilliseconds(0),"trading");
         }
 
-        public NewTradeOrderResponseDTO EndOrder(ApiAsyncResult<NewTradeOrderResponseDTO> asyncResult)
+        public ApiTradeOrderResponseDTO EndOrder(ApiAsyncResult<ApiTradeOrderResponseDTO> asyncResult)
+        {
+            return EndRequest(asyncResult);
+        }
+        /// <summary>
+        /// Cancel an order
+        /// </summary>		
+		/// <param name="OrderId">The order identifier</param>
+        /// <returns></returns>
+        public ApiTradeOrderResponseDTO CancelOrder(Int32 OrderId)
+        {
+       
+            return Request<ApiTradeOrderResponseDTO>("order","/cancel", "POST", new Dictionary<string, object>
+                                {
+									{"OrderId",OrderId},
+                                }, TimeSpan.FromMilliseconds(0),"");
+        }
+
+        /// <summary>
+        /// Cancel an order
+        /// </summary>		
+		/// <param name="callback"></param>
+		/// <param name="OrderId">The order identifier</param>
+        /// <returns></returns>
+        public void BeginCancelOrder(Int32 OrderId, ApiAsyncCallback<ApiTradeOrderResponseDTO> callback, object state)
+        {
+            BeginRequest(callback, state, "order","/cancel", "POST",new Dictionary<string, object>
+                                {
+									{"OrderId",OrderId},
+                                }, TimeSpan.FromMilliseconds(0),"");
+        }
+
+        public ApiTradeOrderResponseDTO EndCancelOrder(ApiAsyncResult<ApiTradeOrderResponseDTO> asyncResult)
+        {
+            return EndRequest(asyncResult);
+        }
+        /// <summary>
+        /// TODO
+        /// </summary>		
+		/// <param name="tradingAccountId">TODO</param>
+		/// <param name="openOrders">TODO</param>
+		/// <param name="acceptedOrders">TODO</param>
+        /// <returns></returns>
+        public ListOrdersResponseDTO ListOrders(Int32 tradingAccountId, Boolean openOrders, Boolean acceptedOrders)
+        {
+       
+            return Request<ListOrdersResponseDTO>("order","/orders?TradingAccountId={tradingAccountId}&OpenOrders={openOrders}&AcceptedOrders={acceptedOrders}", "GET", new Dictionary<string, object>
+                                {
+									{"tradingAccountId",tradingAccountId},
+									{"openOrders",openOrders},
+									{"acceptedOrders",acceptedOrders},
+                                }, TimeSpan.FromMilliseconds(0),"");
+        }
+
+        /// <summary>
+        /// TODO
+        /// </summary>		
+		/// <param name="callback"></param>
+		/// <param name="tradingAccountId">TODO</param>
+		/// <param name="openOrders">TODO</param>
+		/// <param name="acceptedOrders">TODO</param>
+        /// <returns></returns>
+        public void BeginListOrders(Int32 tradingAccountId, Boolean openOrders, Boolean acceptedOrders, ApiAsyncCallback<ListOrdersResponseDTO> callback, object state)
+        {
+            BeginRequest(callback, state, "order","/orders?TradingAccountId={tradingAccountId}&OpenOrders={openOrders}&AcceptedOrders={acceptedOrders}", "GET",new Dictionary<string, object>
+                                {
+									{"tradingAccountId",tradingAccountId},
+									{"openOrders",openOrders},
+									{"acceptedOrders",acceptedOrders},
+                                }, TimeSpan.FromMilliseconds(0),"");
+        }
+
+        public ListOrdersResponseDTO EndListOrders(ApiAsyncResult<ListOrdersResponseDTO> asyncResult)
+        {
+            return EndRequest(asyncResult);
+        }
+        /// <summary>
+        /// TODO
+        /// </summary>		
+		/// <param name="tradingAccountId">TODO</param>
+        /// <returns></returns>
+        public ListOpenPositionsResponseDTO ListOpenPositions(Int32 tradingAccountId)
+        {
+       
+            return Request<ListOpenPositionsResponseDTO>("order","/order/openpositions?TradingAccountId={tradingAccountId}", "GET", new Dictionary<string, object>
+                                {
+									{"tradingAccountId",tradingAccountId},
+                                }, TimeSpan.FromMilliseconds(0),"");
+        }
+
+        /// <summary>
+        /// TODO
+        /// </summary>		
+		/// <param name="callback"></param>
+		/// <param name="tradingAccountId">TODO</param>
+        /// <returns></returns>
+        public void BeginListOpenPositions(Int32 tradingAccountId, ApiAsyncCallback<ListOpenPositionsResponseDTO> callback, object state)
+        {
+            BeginRequest(callback, state, "order","/order/openpositions?TradingAccountId={tradingAccountId}", "GET",new Dictionary<string, object>
+                                {
+									{"tradingAccountId",tradingAccountId},
+                                }, TimeSpan.FromMilliseconds(0),"");
+        }
+
+        public ListOpenPositionsResponseDTO EndListOpenPositions(ApiAsyncResult<ListOpenPositionsResponseDTO> asyncResult)
+        {
+            return EndRequest(asyncResult);
+        }
+        /// <summary>
+        /// TODO
+        /// </summary>		
+		/// <param name="tradingAccountId">TODO</param>
+        /// <returns></returns>
+        public ListActiveStopLimitOrderResponseDTO ListActiveStopLimitOrders(Int32 tradingAccountId)
+        {
+       
+            return Request<ListActiveStopLimitOrderResponseDTO>("order","/order/activestoplimitorders?TradingAccountId={tradingAccountId}", "GET", new Dictionary<string, object>
+                                {
+									{"tradingAccountId",tradingAccountId},
+                                }, TimeSpan.FromMilliseconds(0),"");
+        }
+
+        /// <summary>
+        /// TODO
+        /// </summary>		
+		/// <param name="callback"></param>
+		/// <param name="tradingAccountId">TODO</param>
+        /// <returns></returns>
+        public void BeginListActiveStopLimitOrders(Int32 tradingAccountId, ApiAsyncCallback<ListActiveStopLimitOrderResponseDTO> callback, object state)
+        {
+            BeginRequest(callback, state, "order","/order/activestoplimitorders?TradingAccountId={tradingAccountId}", "GET",new Dictionary<string, object>
+                                {
+									{"tradingAccountId",tradingAccountId},
+                                }, TimeSpan.FromMilliseconds(0),"");
+        }
+
+        public ListActiveStopLimitOrderResponseDTO EndListActiveStopLimitOrders(ApiAsyncResult<ListActiveStopLimitOrderResponseDTO> asyncResult)
+        {
+            return EndRequest(asyncResult);
+        }
+        /// <summary>
+        /// TODO
+        /// </summary>		
+		/// <param name="tradingAccountId">TODO</param>
+		/// <param name="maxResults">TODO</param>
+        /// <returns></returns>
+        public ListTradeHistoryResponseDTO ListTradeHistory(Int32 tradingAccountId, Int32 maxResults)
+        {
+       
+            return Request<ListTradeHistoryResponseDTO>("order","/order/tradehistory?TradingAccountId={tradingAccountId}&MaxResults={maxResults}", "GET", new Dictionary<string, object>
+                                {
+									{"tradingAccountId",tradingAccountId},
+									{"maxResults",maxResults},
+                                }, TimeSpan.FromMilliseconds(0),"");
+        }
+
+        /// <summary>
+        /// TODO
+        /// </summary>		
+		/// <param name="callback"></param>
+		/// <param name="tradingAccountId">TODO</param>
+		/// <param name="maxResults">TODO</param>
+        /// <returns></returns>
+        public void BeginListTradeHistory(Int32 tradingAccountId, Int32 maxResults, ApiAsyncCallback<ListTradeHistoryResponseDTO> callback, object state)
+        {
+            BeginRequest(callback, state, "order","/order/tradehistory?TradingAccountId={tradingAccountId}&MaxResults={maxResults}", "GET",new Dictionary<string, object>
+                                {
+									{"tradingAccountId",tradingAccountId},
+									{"maxResults",maxResults},
+                                }, TimeSpan.FromMilliseconds(0),"");
+        }
+
+        public ListTradeHistoryResponseDTO EndListTradeHistory(ApiAsyncResult<ListTradeHistoryResponseDTO> asyncResult)
+        {
+            return EndRequest(asyncResult);
+        }
+        /// <summary>
+        /// TODO
+        /// </summary>		
+		/// <param name="tradingAccountId">TODO</param>
+		/// <param name="maxResults">TODO</param>
+        /// <returns></returns>
+        public ListStopLimitOrderHistoryResponseDTO ListStopLimitOrderHistory(Int32 tradingAccountId, Int32 maxResults)
+        {
+       
+            return Request<ListStopLimitOrderHistoryResponseDTO>("order","/order/stoplimitorderhistory?TradingAccountId={tradingAccountId}&MaxResults={maxResults}", "GET", new Dictionary<string, object>
+                                {
+									{"tradingAccountId",tradingAccountId},
+									{"maxResults",maxResults},
+                                }, TimeSpan.FromMilliseconds(0),"");
+        }
+
+        /// <summary>
+        /// TODO
+        /// </summary>		
+		/// <param name="callback"></param>
+		/// <param name="tradingAccountId">TODO</param>
+		/// <param name="maxResults">TODO</param>
+        /// <returns></returns>
+        public void BeginListStopLimitOrderHistory(Int32 tradingAccountId, Int32 maxResults, ApiAsyncCallback<ListStopLimitOrderHistoryResponseDTO> callback, object state)
+        {
+            BeginRequest(callback, state, "order","/order/stoplimitorderhistory?TradingAccountId={tradingAccountId}&MaxResults={maxResults}", "GET",new Dictionary<string, object>
+                                {
+									{"tradingAccountId",tradingAccountId},
+									{"maxResults",maxResults},
+                                }, TimeSpan.FromMilliseconds(0),"");
+        }
+
+        public ListStopLimitOrderHistoryResponseDTO EndListStopLimitOrderHistory(ApiAsyncResult<ListStopLimitOrderHistoryResponseDTO> asyncResult)
         {
             return EndRequest(asyncResult);
         }
@@ -383,10 +599,10 @@ namespace CIAPI.Rpc
 		/// <param name="AuditId">Unique identifier for a price tick</param>
 		/// <param name="TradingAccountId">TradingAccount associated with the trade/order request</param>
         /// <returns></returns>
-        public NewTradeOrderResponseDTO Trade(Int32 MarketId, String Direction, Decimal Quantity, Decimal BidPrice, Decimal OfferPrice, String AuditId, Int32 TradingAccountId)
+        public ApiTradeOrderResponseDTO Trade(Int32 MarketId, String Direction, Decimal Quantity, Decimal BidPrice, Decimal OfferPrice, String AuditId, Int32 TradingAccountId)
         {
        
-            return Request<NewTradeOrderResponseDTO>("trade","/", "POST", new Dictionary<string, object>
+            return Request<ApiTradeOrderResponseDTO>("order","/trade", "POST", new Dictionary<string, object>
                                 {
 									{"MarketId",MarketId},
 									{"Direction",Direction},
@@ -410,9 +626,9 @@ namespace CIAPI.Rpc
 		/// <param name="AuditId">Unique identifier for a price tick</param>
 		/// <param name="TradingAccountId">TradingAccount associated with the trade/order request</param>
         /// <returns></returns>
-        public void BeginTrade(Int32 MarketId, String Direction, Decimal Quantity, Decimal BidPrice, Decimal OfferPrice, String AuditId, Int32 TradingAccountId, ApiAsyncCallback<NewTradeOrderResponseDTO> callback, object state)
+        public void BeginTrade(Int32 MarketId, String Direction, Decimal Quantity, Decimal BidPrice, Decimal OfferPrice, String AuditId, Int32 TradingAccountId, ApiAsyncCallback<ApiTradeOrderResponseDTO> callback, object state)
         {
-            BeginRequest(callback, state, "trade","/", "POST",new Dictionary<string, object>
+            BeginRequest(callback, state, "order","/trade", "POST",new Dictionary<string, object>
                                 {
 									{"MarketId",MarketId},
 									{"Direction",Direction},
@@ -424,7 +640,7 @@ namespace CIAPI.Rpc
                                 }, TimeSpan.FromMilliseconds(0),"trading");
         }
 
-        public NewTradeOrderResponseDTO EndTrade(ApiAsyncResult<NewTradeOrderResponseDTO> asyncResult)
+        public ApiTradeOrderResponseDTO EndTrade(ApiAsyncResult<ApiTradeOrderResponseDTO> asyncResult)
         {
             return EndRequest(asyncResult);
         }
