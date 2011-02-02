@@ -31,23 +31,19 @@ namespace CityIndex.JsonClient.Tests
         }
 
         [Test, ExpectedException(ExpectedMessage = "item for foo was not found in the cache")]
-        [Ignore("FIXME: Why does this only fail on the build server?")]
         public void ItemCanExpireAndBePurged()
         {
-
             var c = new RequestCache(TimeSpan.FromMilliseconds(10), TimeSpan.MinValue);
             lock (c)
             {
                 var item = c.GetOrCreate<FooDTO>("foo");
-                item.Expiration = DateTimeOffset.UtcNow.AddSeconds(2);
+                item.Expiration = DateTimeOffset.UtcNow.AddSeconds(1);
                 item.ItemState = CacheItemState.Complete;
 
                 new AutoResetEvent(false).WaitOne(3000);
                 c.Get<FooDTO>("foo");
                 Assert.Fail("Expected exception");
             }
-            
-            
         }
 
     }
