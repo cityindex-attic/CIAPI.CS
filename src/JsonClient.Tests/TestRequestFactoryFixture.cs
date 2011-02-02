@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Net;
+using System.Threading;
 using NUnit.Framework;
 
 namespace CityIndex.JsonClient.Tests
@@ -24,25 +25,58 @@ namespace CityIndex.JsonClient.Tests
         }
 
         [Test]
-        public void CanInduceLatency()
+        public void CanInduceLatencyInSyncGetResponse()
         {
+            const int desiredLatencyMs = 200;
+
             var f = new TestRequestFactory();
             const string expected = "foo";
-            f.CreateTestRequest(expected, 200, null, null,null);
+            f.CreateTestRequest(expected, TimeSpan.FromMilliseconds(desiredLatencyMs), null, null, null);
+            WebRequest webRequest = f.Create("");
+            var sw = new Stopwatch();
+            sw.Start();
+            var actual = new StreamReader(webRequest.GetResponse().GetResponseStream()).ReadToEnd();
+            sw.Stop();
+            
+            Assert.AreEqual(expected, actual);
+            Assert.GreaterOrEqual(sw.ElapsedMilliseconds, desiredLatencyMs - 50, "incorrect latency");
+            Assert.LessOrEqual(sw.ElapsedMilliseconds, desiredLatencyMs + 50, "incorrect latency");
+        }
+
+        [Test]
+        public void CanInduceLatencyInAsyncGetResponse()
+        {
+            const int desiredLatencyMs = 200;
+
+            var f = new TestRequestFactory();
+            const string expected = "foo";
+            f.CreateTestRequest(expected, TimeSpan.FromMilliseconds(desiredLatencyMs), null, null, null);
             WebRequest r = f.Create("");
             var sw = new Stopwatch();
             sw.Start();
-            string actual = new StreamReader(r.GetResponse().GetResponseStream()).ReadToEnd();
+            string actual = "";
+            using (var gate = new ManualResetEvent(false))
+            {
+                r.BeginGetResponse(ar =>
+                                       {
+                                           WebResponse response = r.EndGetResponse(ar);
+                                           actual = new StreamReader(response.GetResponseStream()).ReadToEnd();
+                                           gate.Set();
+                                       }, null);
+                gate.WaitOne(TimeSpan.FromSeconds(2));
+            }
+           
             sw.Stop();
             Assert.AreEqual(expected, actual);
-            Assert.GreaterOrEqual(sw.ElapsedMilliseconds, 150, "incorrect latency");
+            Assert.GreaterOrEqual(sw.ElapsedMilliseconds, desiredLatencyMs - 50, "incorrect latency");
+            Assert.LessOrEqual(sw.ElapsedMilliseconds, desiredLatencyMs + 50, "incorrect latency");
         }
 
         [Test, ExpectedException(typeof (Exception), ExpectedMessage = "request stream exception")]
         public void CanThrowExceptionOnRequestStream()
         {
             var f = new TestRequestFactory();
-            f.CreateTestRequest("", 0, new Exception("request stream exception"), null, null);
+            f.CreateTestRequest("", TimeSpan.FromMilliseconds(0), new Exception("request stream exception"), null, null);
             WebRequest r = f.Create("");
             r.GetRequestStream();
             Assert.Fail("Expected exception");
@@ -52,7 +86,7 @@ namespace CityIndex.JsonClient.Tests
         public void CanThrowExceptionOnResponseStream()
         {
             var f = new TestRequestFactory();
-            f.CreateTestRequest("", 0, null, new Exception("response stream exception"), null);
+            f.CreateTestRequest("", TimeSpan.FromMilliseconds(0), null, new Exception("response stream exception"), null);
             WebRequest r = f.Create("");
             r.GetResponse();
             Assert.Fail("Expected exception");
@@ -63,7 +97,7 @@ namespace CityIndex.JsonClient.Tests
         public void CanThrowExceptionOnEndGetResponse()
         {
             var f = new TestRequestFactory();
-            f.CreateTestRequest("", 0, null, new Exception("response exception"), null);
+            f.CreateTestRequest("", TimeSpan.FromMilliseconds(0), null, new Exception("response exception"), null);
             WebRequest r = f.Create("");
             r.GetResponse();
             Assert.Fail("Expected exception");

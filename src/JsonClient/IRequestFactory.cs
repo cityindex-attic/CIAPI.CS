@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 
 namespace CityIndex.JsonClient
 {
@@ -13,5 +14,10 @@ namespace CityIndex.JsonClient
         ///<param name="uri"></param>
         ///<returns></returns>
         WebRequest Create(string uri);
+
+        /// <summary>
+        /// The amount of time to wait for a response before throwing an exception
+        /// </summary>
+        TimeSpan RequestTimeout { get; set; }
     }
 }

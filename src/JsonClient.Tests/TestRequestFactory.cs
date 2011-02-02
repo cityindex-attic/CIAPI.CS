@@ -14,6 +14,11 @@ namespace CityIndex.JsonClient.Tests
         WebRequest _nextRequest;
         readonly object _lock = new object();
 
+        public TestRequestFactory()
+        {
+            RequestTimeout = TimeSpan.FromSeconds(30);
+        }
+
         public WebRequest NextRequest
         {
             get { return _nextRequest; }
@@ -40,25 +45,29 @@ namespace CityIndex.JsonClient.Tests
             return _nextRequest;
         }
 
-
-
+        public TimeSpan RequestTimeout { get; set;  }
 
         /// <summary>Utility method for creating a TestWebRequest and setting
         /// it to be the next WebRequest to use.</summary>
         /// <param name="response">The response the TestWebRequest will return.</param>
         public TestWebRequest CreateTestRequest(string response)
         {
-            return CreateTestRequest(response, 10);
+            return CreateTestRequest(response, TimeSpan.FromMilliseconds(10));
         }
 
-        public TestWebRequest CreateTestRequest(string response, int latency)
+        public TestWebRequest CreateTestRequest(string response, TimeSpan latency)
         {
             return CreateTestRequest(response, latency, null, null, null);
         }
 
-        public TestWebRequest CreateTestRequest(string response, int latency, Exception requestStreamException, Exception responseStreamException, Exception endGetResponseException)
+        public TestWebRequest CreateTestRequest(string response, TimeSpan latency, Exception requestStreamException, Exception responseStreamException, Exception endGetResponseException)
         {
             var request = new TestWebRequest(response, latency, requestStreamException, responseStreamException, endGetResponseException);
+#if !SILVERLIGHT
+            request.Timeout = Convert.ToInt32(RequestTimeout.TotalMilliseconds);
+#else
+            //FIXME: Need a way to timeout requests in Silverlight
+#endif
             NextRequest = request;
             return request;
         }

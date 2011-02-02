@@ -2,8 +2,9 @@
 using System.Linq;
 using Common.Logging;
 using Lightstreamer.DotNet.Client;
+using StreamingClient;
 
-namespace CIAPI.Streaming.Lightstreamer
+namespace CIAPI.Streaming
 {
     public class LightstreamerListener<TDto> : IStreamingListener<TDto>, IHandyTableListener
         where TDto : class, new()

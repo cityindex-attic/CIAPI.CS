@@ -150,15 +150,8 @@ namespace CityIndex.JsonClient
         {
             lock (_requests)
             {
-                if (_processingQueue)
-                {
-                    return;
-                }
-
-                if (_requests.Count == 0)
-                {
-                    return;
-                }
+                if (_processingQueue) return;
+                if (_requests.Count == 0) return;
 
                 RequestHolder request = _requests.Peek();
 
@@ -166,20 +159,7 @@ namespace CityIndex.JsonClient
 
                 try
                 {
-                    if (_outstandingRequests > MaxPendingRequests)
-                    {
-                        if (!_notifiedWaitingOnMaxPending)
-                        {
-                            string msgMaxPending = string.Format("Waiting: pending requests {0}", _outstandingRequests);
-                            Log.Debug(msgMaxPending);
-
-                            _notifiedWaitingOnMaxPending = true;
-                        }
-
-                        return;
-                    }
-
-                    _notifiedWaitingOnMaxPending = false;
+                    if (ThereAreMoreOutstandingRequestsThanIsAllowed()) return;
 
                     if (_requestTimes.Count > ThrottleWindowCount)
                     {
@@ -212,28 +192,27 @@ namespace CityIndex.JsonClient
                     _requestTimes.Enqueue(DateTimeOffset.UtcNow);
                     _dispatchedCount += 1;
 
-
-                    int requestIndex = _dispatchedCount;
-
+                    request.RequestIndex = _dispatchedCount;
 
                     try
                     {
-                        request.WebRequest.BeginGetResponse(ar =>
+                        var webRequestAsyncResult = request.WebRequest.BeginGetResponse(ar =>
                             {
-                                string msgIssued = string.Format("Recieved #{0} : {1} ", requestIndex, request.Url);
-                                Log.Debug(msgIssued);
+                                Log.Debug(string.Format("Recieved #{0} : {1} ", request.RequestIndex, request.Url));
 
                                 _outstandingRequests--;
 
                                 request.AsyncResultHandler(ar, request);
                             }, null);
-                        string msgDispatched = string.Format("Dispatched #{0} : {1} ", _dispatchedCount, request.Url);
-                        Log.Debug(msgDispatched);
+
+
+                        EnsureRequestWillAbortAfterTimeout(request, webRequestAsyncResult);
+
+                        Log.Debug(string.Format("Dispatched #{0} : {1} ", request.RequestIndex, request.Url));
                     }
                     catch (Exception ex)
                     {
-                        string msgDispatched = string.Format("Error dispatching #{0} : {1} \r\n{2}", _dispatchedCount, request.Url,ex.Message);
-                        Log.Debug(msgDispatched);
+                        Log.Debug(string.Format("Error dispatching #{0} : {1} \r\n{2}", request.RequestIndex, request.Url, ex.Message));
 
                         throw;
                     }
@@ -249,6 +228,43 @@ namespace CityIndex.JsonClient
                     _processingQueue = false;
                 }
             }
+        }
+
+        private bool ThereAreMoreOutstandingRequestsThanIsAllowed()
+        {
+            if (_outstandingRequests > MaxPendingRequests)
+            {
+                if (!_notifiedWaitingOnMaxPending)
+                {
+                    string msgMaxPending = string.Format("Waiting: pending requests {0}", _outstandingRequests);
+                    Log.Debug(msgMaxPending);
+
+                    _notifiedWaitingOnMaxPending = true;
+                }
+
+                return true;
+            }
+
+            _notifiedWaitingOnMaxPending = false;
+            return false;
+        }
+
+        private void EnsureRequestWillAbortAfterTimeout(RequestHolder request, IAsyncResult result)
+        {
+            ThreadPool.RegisterWaitForSingleObject(
+                    waitObject:result.AsyncWaitHandle,
+                    callBack:(state, isTimedOut) =>
+                        {
+                            if (!isTimedOut) return;
+                            if (state.GetType() != typeof(RequestHolder)) return;
+                            
+                            var rh = (RequestHolder)state;
+                            Log.Error(string.Format("Aborting #{0} : {1} because it has exceeded timeout {2}", rh.RequestIndex, rh.WebRequest.RequestUri, rh.RequestTimeout));
+                            rh.WebRequest.Abort();
+                        },
+                    state: request, 
+                    timeout: request.RequestTimeout,
+                    executeOnlyOnce: true);
         }
     }
 }

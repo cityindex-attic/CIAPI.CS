@@ -2,7 +2,7 @@
 using System.Threading;
 using CIAPI;
 using CIAPI.DTO;
-using CIAPI.Streaming.Lightstreamer;
+using CIAPI.Streaming;
 
 namespace ConsoleSpikes
 {
