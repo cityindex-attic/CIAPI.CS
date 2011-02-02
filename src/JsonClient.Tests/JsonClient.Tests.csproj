@@ -61,6 +61,7 @@
     <Compile Include="TestRequestInfo.cs" />
     <Compile Include="TestWebReponse.cs" />
     <Compile Include="TestRequestFactory.cs" />
+    <None Include="App.config" />
     <None Include="CodeGen\ActionScript\NewsDTO.as">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
