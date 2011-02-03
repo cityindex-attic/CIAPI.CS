@@ -21,7 +21,7 @@ namespace CIAPI
                 var formattedValue = "";
                 switch (propertyInfo.PropertyType.Name)
                 {
-                    case "System.DateTime":
+                    case "DateTime":
                         formattedValue = ((DateTime)propertyInfo.GetValue(dto, null)).ToString("u");
                         break;
                     default:
