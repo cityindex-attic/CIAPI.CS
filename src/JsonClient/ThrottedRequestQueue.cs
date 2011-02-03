@@ -251,6 +251,9 @@ namespace CityIndex.JsonClient
 
         private void EnsureRequestWillAbortAfterTimeout(RequestHolder request, IAsyncResult result)
         {
+            //TODO: How can we timeout a request for Silverlight, when calls to AsyncWaitHandle throw the following:
+            //   Specified method is not supported. at System.Net.Browser.OHWRAsyncResult.get_AsyncWaitHandle() 
+            #if !SILVERLIGHT
             ThreadPool.RegisterWaitForSingleObject(
                     waitObject:result.AsyncWaitHandle,
                     callBack:(state, isTimedOut) =>
@@ -265,6 +268,7 @@ namespace CityIndex.JsonClient
                     state: request, 
                     timeout: request.RequestTimeout,
                     executeOnlyOnce: true);
+            #endif
         }
     }
 }
