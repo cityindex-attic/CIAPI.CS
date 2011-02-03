@@ -65,6 +65,9 @@
     <Compile Include="..\CIAPI\ApiClient.cs">
       <Link>ApiClient.cs</Link>
     </Compile>
+    <Compile Include="..\CIAPI\PrettyPrinterExtensions.cs">
+      <Link>PrettyPrinterExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\CIAPI\Streaming\LightStreamerClient.cs">
       <Link>Streaming\LightStreamerClient.cs</Link>
     </Compile>
