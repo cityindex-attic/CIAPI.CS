@@ -109,5 +109,10 @@ namespace CIAPI.CS.Streaming.Samples
             ResultsTextbox.Text += message + "\n";
             ResultsTextboxScrollViewer.ScrollToVerticalOffset(ResultsTextbox.ActualHeight);
         }
+
+        private void UserNameTextbox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }
