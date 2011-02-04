@@ -18,22 +18,34 @@ namespace Common.Logging
             var stringBuilder = new StringBuilder();
             this.FormatOutput(stringBuilder, level, message, e);
 
-            WriteToConsole(stringBuilder.ToString());
+            WriteToConsole(level, stringBuilder.ToString());
         }
 
-        private void WriteToConsole(string message)
+        private void WriteToConsole(LogLevel level, string message)
         {
-            if (!System.Windows.Deployment.Current.Dispatcher.CheckAccess())
-                System.Windows.Deployment.Current.Dispatcher.BeginInvoke(() => WriteToConsole(message));
+            if (!Deployment.Current.Dispatcher.CheckAccess())
+                Deployment.Current.Dispatcher.BeginInvoke(delegate { WriteToConsole(level, message); });
             try
             {
-                var isConsoleAvailable = (bool)HtmlPage.Window.Eval("typeof(console) != 'undefined' && typeof(console.log) != 'undefined'");
-                if (!isConsoleAvailable) return;
-
-                var console = (HtmlPage.Window.Eval("console.log") as ScriptObject);
-                if (console != null)
+                var safeMessage = message.Replace('"', '\'').Replace("\r\n", @"\n");
+                switch (level)
                 {
-                    console.InvokeSelf(message);
+                    case LogLevel.Fatal:
+                    case LogLevel.Error:
+                        HtmlPage.Window.Eval("try {console.error(\"" + safeMessage + "\") } catch(e) { try {console.log(\"" + safeMessage + "\") } catch(e) { /* no logging available, so do nothing */ } }");
+                        break;
+                    case LogLevel.Warn:
+                        HtmlPage.Window.Eval("try {console.warn(\"" + safeMessage + "\") } catch(e)  { try {console.log(\"" + safeMessage + "\") } catch(e) { /* no logging available, so do nothing */ } }");
+                        break;
+                    case LogLevel.Debug:
+                        HtmlPage.Window.Eval("try {console.debug(\"" + safeMessage + "\") } catch(e)  { try {console.log(\"" + safeMessage + "\") } catch(e) { /* no logging available, so do nothing */ } }");
+                        break;
+                    case LogLevel.Info:
+                        HtmlPage.Window.Eval("try {console.info(\"" + safeMessage + "\") } catch(e)  { try {console.log(\"" + safeMessage + "\") } catch(e) { /* no logging available, so do nothing */ } }");
+                        break;
+                    default:
+                        HtmlPage.Window.Eval("try {console.log(\"" + safeMessage + "\") } catch(e) { /* no logging available, so do nothing */ }");
+                        break;
                 }
             }
             catch
