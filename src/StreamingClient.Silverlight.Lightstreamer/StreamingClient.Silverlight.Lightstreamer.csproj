@@ -55,6 +55,9 @@
     <Reference Include="System.Windows.Browser" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\StreamingClient.Lightstreamer\LightstreamerDefaults.cs">
+      <Link>LightstreamerDefaults.cs</Link>
+    </Compile>
     <Compile Include="Lightstreamer.Silverlight\BatchingHttpProvider.cs" />
     <Compile Include="Lightstreamer.Silverlight\BatchManager.cs" />
     <Compile Include="Lightstreamer.Silverlight\BatchMonitor.cs" />

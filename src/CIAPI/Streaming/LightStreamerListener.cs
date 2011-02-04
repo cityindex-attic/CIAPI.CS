@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using Common.Logging;
 using Lightstreamer.DotNet.Client;
 using StreamingClient;
+using StreamingClient.Lightstreamer;
 
 namespace CIAPI.Streaming
 {
@@ -25,6 +27,9 @@ namespace CIAPI.Streaming
 
         public event EventHandler<MessageEventArgs<TDto>> MessageRecieved;
 
+        /// <summary>
+        /// Start listening.  This is syncronous, and blocks until the server subscription has started
+        /// </summary>
         public void Start()
         {
             var groupOrItemName = _groupOrItemName.ToUpper();
@@ -41,19 +46,32 @@ namespace CIAPI.Streaming
             _logger.DebugFormat("Subscribed to table with key: {0}", _subscribedTableKey.KeyValue);
         }
 
-        public  void Stop()
+        /// <summary>
+        /// Stop listening.  This is syncronous, and blocks until the server has been informed of the unsubscription; or the timeout is reached
+        /// </summary>
+        public void Stop()
         {
             if (_subscribedTableKey == null) return;
 
-            _logger.DebugFormat("Unsubscribing from table with key: {0}", _subscribedTableKey.KeyValue);
-            try
+            var message = String.Format("Unsubscribing from table with key: {0}", _subscribedTableKey.KeyValue);
+            _logger.DebugFormat(message);
+            
+            using (var gate = new ManualResetEvent(false))
             {
-                _lsClient.UnsubscribeTable(_subscribedTableKey);
+                
+                new Thread(() =>{   
+                                    _lsClient.UnsubscribeTable(_subscribedTableKey);
+                                    gate.Set();
+                                }) 
+                                { Name = "Thread for " + message }
+                                .Start();
+                if (!gate.WaitOne(LightstreamerDefaults.DEFAULT_TIMEOUT_MS+1000))
+                {
+                    _logger.WarnFormat(string.Format("Giving up after {0}ms attempting to stop listener: {1}." +
+                        "Client has stopped listening, but there might be a zombie process left on the server", LightstreamerDefaults.DEFAULT_TIMEOUT_MS, GetType().Name));
+                }
             }
-            catch (Exception exception)
-            {
-                _logger.ErrorFormat("Exception occurred when stopping listener:", exception);
-            }
+           
         }
 
         void IHandyTableListener.OnUpdate(int itemPos, string itemName, IUpdateInfo update)
@@ -75,21 +93,25 @@ namespace CIAPI.Streaming
 
         void IHandyTableListener.OnRawUpdatesLost(int itemPos, string itemName, int lostUpdates)
         {
+            _logger.DebugFormat("OnRawUpdatesLost fired -> itemPos: {0} ietmName: {1} lostUpdates:{2}", itemPos, itemName, lostUpdates);
             /* do nothing */
         }
 
         void IHandyTableListener.OnSnapshotEnd(int itemPos, string itemName)
         {
+            _logger.DebugFormat("OnSnapshotEnd fired -> itemPos: {0} ietmName: {1}", itemPos, itemName);
             /* do nothing */
         }
 
         void IHandyTableListener.OnUnsubscr(int itemPos, string itemName)
         {
+            _logger.DebugFormat("OnUnsubscr fired -> itemPos: {0} ietmName: {1}", itemPos, itemName);
             /* do nothing */
         }
 
         void IHandyTableListener.OnUnsubscrAll()
         {
+            _logger.DebugFormat("OnUnsubscrAll fired");
             /* do nothing */
         }
     }

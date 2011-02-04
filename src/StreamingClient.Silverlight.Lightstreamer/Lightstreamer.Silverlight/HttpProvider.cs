@@ -1,4 +1,6 @@
 ﻿
+using StreamingClient.Lightstreamer;
+
 namespace Lightstreamer.DotNet.Client
 {
     using Common.Logging;
@@ -63,6 +65,7 @@ namespace Lightstreamer.DotNet.Client
                 };
                 IAsyncResult result = request.BeginGetResponse(new AsyncCallback(HttpProvider.ReadCallback), state);
                 state.allDone.WaitOne();
+                
                 if (state.ioException != null)
                 {
                     throw state.ioException;
@@ -195,8 +198,16 @@ namespace Lightstreamer.DotNet.Client
             MyRequestState state = new MyRequestState {
                 request = request
             };
+
             IAsyncResult result = request.BeginGetRequestStream(new AsyncCallback(HttpProvider.WriteCallback), state);
-            state.allDone.WaitOne();
+            //BEGIN_CI_EDIT
+            if (!state.allDone.WaitOne(LightstreamerDefaults.DEFAULT_TIMEOUT_MS))
+            {
+                state.ioException = new IOException(string.Format("Timed out after {0}ms waiting for request.BeginGetRequestStream for {1}", LightstreamerDefaults.DEFAULT_TIMEOUT_MS, address)); 
+                streamLogger.Warn(state.ioException.Message);
+            }
+            //END_CI_EDIT
+
             if (state.ioException != null)
             {
                 throw state.ioException;
@@ -222,7 +233,7 @@ namespace Lightstreamer.DotNet.Client
 
         private static void WriteCallback(IAsyncResult asynchronousResult)
         {
-            MyRequestState asyncState = (MyRequestState) asynchronousResult.AsyncState;
+            MyRequestState asyncState = (MyRequestState)asynchronousResult.AsyncState;
             try
             {
                 Stream stream = asyncState.request.EndGetRequestStream(asynchronousResult);
