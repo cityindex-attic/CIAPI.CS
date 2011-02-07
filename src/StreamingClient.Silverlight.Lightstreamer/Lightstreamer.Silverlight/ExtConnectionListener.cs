@@ -1,4 +1,5 @@
-﻿namespace Lightstreamer.DotNet.Client
+﻿
+namespace Lightstreamer.DotNet.Client
 {
     using System;
     using System.Threading;
@@ -110,7 +111,7 @@
 
         public bool WaitStreamingTimeoutAnswer()
         {
-            this.streamingTested.WaitOne();
+            streamingTested.WaitOne();
             if (this.connFailure != null)
             {
                 throw this.connFailure;

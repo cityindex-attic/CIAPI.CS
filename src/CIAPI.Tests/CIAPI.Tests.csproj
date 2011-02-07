@@ -58,16 +58,16 @@
     <Compile Include="..\common\TestConfig.cs">
       <Link>TestConfig.cs</Link>
     </Compile>
-    <Compile Include="..\JsonClient.Tests\TestRequestFactory.cs">
+    <Compile Include="..\JsonClient.Tests\JsonClientMocks\TestRequestFactory.cs">
       <Link>JsonClientMocks\TestRequestFactory.cs</Link>
     </Compile>
-    <Compile Include="..\JsonClient.Tests\TestRequestInfo.cs">
+    <Compile Include="..\JsonClient.Tests\JsonClientMocks\TestRequestInfo.cs">
       <Link>JsonClientMocks\TestRequestInfo.cs</Link>
     </Compile>
-    <Compile Include="..\JsonClient.Tests\TestWebReponse.cs">
+    <Compile Include="..\JsonClient.Tests\JsonClientMocks\TestWebReponse.cs">
       <Link>JsonClientMocks\TestWebReponse.cs</Link>
     </Compile>
-    <Compile Include="..\JsonClient.Tests\TestWebRequest.cs">
+    <Compile Include="..\JsonClient.Tests\JsonClientMocks\TestWebRequest.cs">
       <Link>JsonClientMocks\TestWebRequest.cs</Link>
     </Compile>
     <Compile Include="PrettyPrinterExtensionsFixture.cs" />
@@ -77,11 +77,11 @@
   <ItemGroup>
     <ProjectReference Include="..\CIAPI\CIAPI.csproj">
       <Project>{B40E6F1C-453E-44A2-BA9D-1692378B355C}</Project>
-      <Name>CIAPI</Name>
+      <Name>CIAPI %28CIAPI\CIAPI%29</Name>
     </ProjectReference>
     <ProjectReference Include="..\JsonClient\JsonClient.csproj">
       <Project>{D80E56C8-8DD6-4911-9A99-F534C9497D6A}</Project>
-      <Name>JsonClient</Name>
+      <Name>JsonClient %28JsonClient\JsonClient%29</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -202,7 +202,10 @@ namespace CityIndex.JsonClient
 
                                 _outstandingRequests--;
 
+                                
                                 request.AsyncResultHandler(ar, request);
+
+                                var breakTarget = 0;
                             }, null);
 
 
@@ -253,6 +256,11 @@ namespace CityIndex.JsonClient
         {
             //TODO: How can we timeout a request for Silverlight, when calls to AsyncWaitHandle throw the following:
             //   Specified method is not supported. at System.Net.Browser.OHWRAsyncResult.get_AsyncWaitHandle() 
+
+            // DAVID: i don't think that the async methods have a timeout parameter. we will need to build one into 
+            // it. will not be terribly clean as it will prolly have to span both the throttle and the cache. I will look into it
+
+
             #if !SILVERLIGHT
             ThreadPool.RegisterWaitForSingleObject(
                     waitObject:result.AsyncWaitHandle,

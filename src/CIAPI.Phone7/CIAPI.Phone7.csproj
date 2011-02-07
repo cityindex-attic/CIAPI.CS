@@ -55,8 +55,8 @@
     <Compile Include="..\CIAPI.CodeGeneration\ROUTES.cs">
       <Link>ROUTES.cs</Link>
     </Compile>
-    <Compile Include="..\CIAPI\ApiClient.cs">
-      <Link>ApiClient.cs</Link>
+    <Compile Include="..\ciapi\rpc\ApiClient.cs">
+      <Link>Rpc\ApiClient.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -6,6 +6,7 @@ using CityIndex.JsonClient;
 namespace SOAPI.CS2
 {
     /// <summary>
+    /// TODO: implement the private key 
     /// </summary>
     public partial class StackExchangeClient : Client
     {
