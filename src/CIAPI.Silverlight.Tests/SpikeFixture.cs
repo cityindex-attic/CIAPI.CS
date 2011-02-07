@@ -30,16 +30,13 @@ namespace CIAPI.Silverlight.Tests
         [Asynchronous]
         public void RawWebRequestPOST()
         {
-            var request = WebRequest.Create("http://ec2-174-129-8-69.compute-1.amazonaws.com/RESTWebServices/session");
+            var request = WebRequest.Create(TestConfig.ApiUrl + "session");
 
-            // everyone says this works - doesn't fail but still pops a login
-            request.Credentials = new NetworkCredential("api", "cityindexapi");
-            request.UseDefaultCredentials = false;
 
             request.Method = "POST";
             request.BeginGetRequestStream(ac =>
                 {
-                    const string parameterJson = "{\"UserName\": \"CC735158\", \"Password\": \"password\"}";
+                    const string parameterJson = "{\"UserName\": \"xx189949\", \"Password\": \"password\"}";
                     var body = Encoding.UTF8.GetBytes(parameterJson);
                     using (Stream stream = request.EndGetRequestStream(ac))
                     {
