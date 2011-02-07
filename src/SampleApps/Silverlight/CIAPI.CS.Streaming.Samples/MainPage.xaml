@@ -31,7 +31,7 @@
         <TextBox x:Name="TopicTextbox" Text="NEWS.MOCKHEADLINES.UK" Grid.Column="3" Grid.Row="1" />
 
         <TextBlock x:Name="UserNameLabel" Text="UserName:" Grid.Column="0" Grid.Row="2"/>
-        <TextBox x:Name="UserNameTextbox" Text="0x234" Grid.Column="1" Grid.Row="2" />
+        <TextBox x:Name="UserNameTextbox" Text="xx189949" Grid.Column="1" Grid.Row="2" TextChanged="UserNameTextbox_TextChanged" />
         <TextBlock x:Name="PasswordLabel" Text="Password:" Grid.Column="2" Grid.Row="2"/>
         <TextBox x:Name="PasswordTextbox" Text="password" Grid.Column="3" Grid.Row="2" />
 

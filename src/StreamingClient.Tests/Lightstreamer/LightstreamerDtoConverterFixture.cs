@@ -1,8 +1,8 @@
 ﻿using System;
-using CIAPI.Streaming.Lightstreamer;
+using CIAPI.Streaming;
 using NUnit.Framework;
 
-namespace CIAPI.Tests.Streaming.Lightstreamer
+namespace StreamingClient.Tests.Lightstreamer
 {
     [TestFixture]
     public class LightstreamerDtoConverterFixture

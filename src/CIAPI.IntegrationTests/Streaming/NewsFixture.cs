@@ -2,7 +2,6 @@ using System;
 using System.Threading;
 using CIAPI.DTO;
 using CIAPI.Streaming;
-using CIAPI.Streaming.Lightstreamer;
 using NUnit.Framework;
 
 namespace CIAPI.IntegrationTests.Streaming

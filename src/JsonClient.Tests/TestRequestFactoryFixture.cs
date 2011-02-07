@@ -13,205 +13,96 @@ namespace CityIndex.JsonClient.Tests
     [TestFixture]
     public class TestRequestFactoryFixture
     {
-        #region Synchronous
         [Test]
-        public void CanCreateTestRequest_Synchronous()
+        public void CanCreateTestRequest()
         {
             var f = new TestRequestFactory();
             const string expected = "foo";
             f.CreateTestRequest(expected);
-            WebRequest r = f.Create("http://testuri.org");
+            WebRequest r = f.Create("");
             string actual = new StreamReader(r.GetResponse().GetResponseStream()).ReadToEnd();
             Assert.AreEqual(expected, actual);
         }
 
         [Test]
-        public void CanInduceLatency_Synchronous()
+        public void CanInduceLatencyInSyncGetResponse()
         {
+            const int desiredLatencyMs = 200;
+
             var f = new TestRequestFactory();
             const string expected = "foo";
-            f.CreateTestRequest(expected, 200, null, null, null);
-            WebRequest r = f.Create("http://testuri.org");
+            f.CreateTestRequest(expected, TimeSpan.FromMilliseconds(desiredLatencyMs), null, null, null);
+            WebRequest webRequest = f.Create("");
             var sw = new Stopwatch();
             sw.Start();
-            string actual = new StreamReader(r.GetResponse().GetResponseStream()).ReadToEnd();
+            var actual = new StreamReader(webRequest.GetResponse().GetResponseStream()).ReadToEnd();
             sw.Stop();
+            
             Assert.AreEqual(expected, actual);
-            Assert.GreaterOrEqual(sw.ElapsedMilliseconds, 150, "incorrect latency");
+            Assert.GreaterOrEqual(sw.ElapsedMilliseconds, desiredLatencyMs - 50, "incorrect latency");
+            // TODO: Sometimes this seems to take *much* longer on the build server
+            // Assert.LessOrEqual(sw.ElapsedMilliseconds, desiredLatencyMs + 50, "incorrect latency");
         }
 
+        [Test]
+        public void CanInduceLatencyInAsyncGetResponse()
+        {
+            const int desiredLatencyMs = 200;
 
-        [Test, ExpectedException(typeof(Exception), ExpectedMessage = "request stream exception")]
-        public void CanThrowExceptionOnRequestStream_Synchronous()
+            var f = new TestRequestFactory();
+            const string expected = "foo";
+            f.CreateTestRequest(expected, TimeSpan.FromMilliseconds(desiredLatencyMs), null, null, null);
+            WebRequest r = f.Create("");
+            var sw = new Stopwatch();
+            sw.Start();
+            string actual = "";
+            using (var gate = new ManualResetEvent(false))
+            {
+                r.BeginGetResponse(ar =>
+                                       {
+                                           WebResponse response = r.EndGetResponse(ar);
+                                           actual = new StreamReader(response.GetResponseStream()).ReadToEnd();
+                                           gate.Set();
+                                       }, null);
+                gate.WaitOne(TimeSpan.FromSeconds(2));
+            }
+           
+            sw.Stop();
+            Assert.AreEqual(expected, actual);
+            Assert.GreaterOrEqual(sw.ElapsedMilliseconds, desiredLatencyMs - 50, "incorrect latency");
+            // TODO: Sometimes this seems to take *much* longer on the build server
+            // Assert.LessOrEqual(sw.ElapsedMilliseconds, desiredLatencyMs + 50, "incorrect latency");
+        }
+
+        [Test, ExpectedException(typeof (Exception), ExpectedMessage = "request stream exception")]
+        public void CanThrowExceptionOnRequestStream()
         {
             var f = new TestRequestFactory();
-            f.CreateTestRequest("", 0, new Exception("request stream exception"), null, null);
-            WebRequest r = f.Create("http://testuri.org");
+            f.CreateTestRequest("", TimeSpan.FromMilliseconds(0), new Exception("request stream exception"), null, null);
+            WebRequest r = f.Create("");
             r.GetRequestStream();
             Assert.Fail("Expected exception");
         }
 
-        [Test, ExpectedException(typeof(Exception), ExpectedMessage = "response stream exception")]
-        public void CanThrowExceptionOnResponseStream_Synchronous()
+        [Test, ExpectedException(typeof (Exception), ExpectedMessage = "response stream exception")]
+        public void CanThrowExceptionOnResponseStream()
         {
             var f = new TestRequestFactory();
-            f.CreateTestRequest("", 0, null, new Exception("response stream exception"), null);
-            WebRequest r = f.Create("http://testuri.org");
+            f.CreateTestRequest("", TimeSpan.FromMilliseconds(0), null, new Exception("response stream exception"), null);
+            WebRequest r = f.Create("");
             r.GetResponse();
             Assert.Fail("Expected exception");
         }
 
 
         [Test, ExpectedException(typeof(Exception), ExpectedMessage = "response exception")]
-        public void CanThrowExceptionOnEndGetResponse_Synchronous()
+        public void CanThrowExceptionOnEndGetResponse()
         {
             var f = new TestRequestFactory();
-            f.CreateTestRequest("", 0, null, new Exception("response exception"), null);
-            WebRequest r = f.Create("http://testuri.org");
+            f.CreateTestRequest("", TimeSpan.FromMilliseconds(0), null, new Exception("response exception"), null);
+            WebRequest r = f.Create("");
             r.GetResponse();
             Assert.Fail("Expected exception");
-        } 
-        #endregion
-
-
-        #region Asynchronous
-        [Test]
-        public void CanCreateTestRequest_Asynchronous()
-        {
-
-
-            using (var gate = new AutoResetEvent(true))
-            {
-                var f = new TestRequestFactory();
-                const string expected = "foo";
-                f.CreateTestRequest(expected);
-                WebRequest r = f.Create("http://testuri.org");
-                r.BeginGetResponse(ar =>
-                                       {
-                                           
-                                       }, null);
-                string actual = new StreamReader(r.GetResponse().GetResponseStream()).ReadToEnd();
-                
-
-                if(!gate.WaitOne(1000))
-                {
-                    Assert.Fail("timed out");
-                }
-                Assert.AreEqual(expected, actual);
-            }
         }
-
-        [Test]
-        public void CanInduceLatency_Asynchronous()
-        {
-            using (var gate = new AutoResetEvent(true))
-            {
-
-                var f = new TestRequestFactory();
-                const string expected = "foo";
-                f.CreateTestRequest(expected, 200, null, null, null);
-                WebRequest r = f.Create("http://testuri.org");
-                var sw = new Stopwatch();
-                sw.Start();
-                r.BeginGetResponse(ar =>
-                {
-
-                }, null);
-
-                string actual = new StreamReader(r.GetResponse().GetResponseStream()).ReadToEnd();
-                
-                
-                if (!gate.WaitOne(1000))
-                {
-                    Assert.Fail("timed out");
-                }
-
-                sw.Stop();
-                Assert.AreEqual(expected, actual);
-                Assert.GreaterOrEqual(sw.ElapsedMilliseconds, 150, "incorrect latency");
-
-            }
-
-            
-        }
-
-
-        [Test, ExpectedException(typeof(Exception), ExpectedMessage = "request stream exception")]
-        public void CanThrowExceptionOnRequestStream_Asynchronous()
-        {
-            using (var gate = new AutoResetEvent(true))
-            {
-                var f = new TestRequestFactory();
-                f.CreateTestRequest("", 0, new Exception("request stream exception"), null, null);
-                WebRequest r = f.Create("http://testuri.org");
-                r.BeginGetResponse(ar =>
-                {
-
-                }, null);
-
-                r.GetRequestStream();
-                Assert.Fail("Expected exception");
-
-                if (!gate.WaitOne(1000))
-                {
-                    Assert.Fail("timed out");
-                }
-            }
-
-            
-        }
-
-        [Test, ExpectedException(typeof(Exception), ExpectedMessage = "response stream exception")]
-        public void CanThrowExceptionOnResponseStream_Asynchronous()
-        {
-            using (var gate = new AutoResetEvent(true))
-            {
-                var f = new TestRequestFactory();
-                f.CreateTestRequest("", 0, null, new Exception("response stream exception"), null);
-                WebRequest r = f.Create("http://testuri.org");
-                r.BeginGetResponse(ar =>
-                {
-
-                }, null);
-                r.GetResponse();
-                Assert.Fail("Expected exception");
-
-
-                if (!gate.WaitOne(1000))
-                {
-                    Assert.Fail("timed out");
-                }
-            }
-
-
-        }
-
-
-        [Test, ExpectedException(typeof(Exception), ExpectedMessage = "response exception")]
-        public void CanThrowExceptionOnEndGetResponse_Asynchronous()
-        {
-            using (var gate = new AutoResetEvent(true))
-            {
-                var f = new TestRequestFactory();
-                f.CreateTestRequest("", 0, null, new Exception("response exception"), null);
-                WebRequest r = f.Create("http://testuri.org");
-
-                r.BeginGetResponse(ar =>
-                {
-
-                }, null);
-
-                r.GetResponse();
-                Assert.Fail("Expected exception");
-
-                if (!gate.WaitOne(1000))
-                {
-                    Assert.Fail("timed out");
-                }
-            }
-
-            
-        }
-        #endregion
     }
 }

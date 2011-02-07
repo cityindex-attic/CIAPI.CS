@@ -5,8 +5,8 @@ using System.Windows.Controls;
 using CIAPI.DTO;
 using CIAPI.Rpc;
 using CIAPI.Streaming;
-using CIAPI.Streaming.Lightstreamer;
 using Common.Logging;
+using StreamingClient;
 
 namespace CIAPI.CS.Streaming.Samples
 {
@@ -108,6 +108,11 @@ namespace CIAPI.CS.Streaming.Samples
         {
             ResultsTextbox.Text += message + "\n";
             ResultsTextboxScrollViewer.ScrollToVerticalOffset(ResultsTextbox.ActualHeight);
+        }
+
+        private void UserNameTextbox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
     }
 }

@@ -65,8 +65,8 @@
     <Compile Include="..\CIAPI\Rpc\ApiClient.cs">
       <Link>Rpc\ApiClient.cs</Link>
     </Compile>
-    <Compile Include="..\CIAPI\PriceDTO.cs">
-      <Link>PriceDTO.cs</Link>
+    <Compile Include="..\CIAPI\PrettyPrinterExtensions.cs">
+      <Link>PrettyPrinterExtensions.cs</Link>
     </Compile>
     <Compile Include="..\CIAPI\Streaming\LightStreamerClient.cs">
       <Link>Streaming\LightStreamerClient.cs</Link>

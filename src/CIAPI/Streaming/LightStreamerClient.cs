@@ -1,7 +1,8 @@
 ﻿using System;
 using Lightstreamer.DotNet.Client;
+using StreamingClient;
 
-namespace CIAPI.Streaming.Lightstreamer
+namespace CIAPI.Streaming
 {
     public class LightstreamerClient : IStreamingClient, IConnectionListener
     {

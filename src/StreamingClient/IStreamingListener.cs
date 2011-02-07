@@ -1,11 +1,15 @@
 ﻿using System;
 
-namespace CIAPI.Streaming
+namespace StreamingClient
 {
-    public interface IStreamingListener<TDto> where TDto : class
+    public interface IStreamingListener
     {
-        event EventHandler<MessageEventArgs<TDto>> MessageRecieved;
         void Start();
         void Stop();
+    }
+
+    public interface IStreamingListener<TDto> : IStreamingListener where TDto : class
+    {
+        event EventHandler<MessageEventArgs<TDto>> MessageRecieved;
     }
 }

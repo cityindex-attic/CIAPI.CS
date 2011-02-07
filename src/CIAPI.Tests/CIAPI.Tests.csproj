@@ -70,6 +70,7 @@
     <Compile Include="..\JsonClient.Tests\JsonClientMocks\TestWebRequest.cs">
       <Link>JsonClientMocks\TestWebRequest.cs</Link>
     </Compile>
+    <Compile Include="PrettyPrinterExtensionsFixture.cs" />
     <Compile Include="Rpc\ApiContextTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

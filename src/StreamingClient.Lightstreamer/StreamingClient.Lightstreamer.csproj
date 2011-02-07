@@ -29,7 +29,7 @@
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Common.Logging">
@@ -88,6 +88,7 @@
     <Compile Include="Lightstreamer.dotNetClient_N2\TimerSupport.cs" />
     <Compile Include="Lightstreamer.dotNetClient_N2\UpdateInfoImpl.cs" />
     <Compile Include="Lightstreamer.dotNetClient_N2\VirtualTableManager.cs" />
+    <Compile Include="LightstreamerDefaults.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
