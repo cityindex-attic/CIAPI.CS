@@ -86,13 +86,18 @@ namespace CityIndex.JsonClient.Tests
                 const string expected = "foo";
                 f.CreateTestRequest(expected);
                 WebRequest r = f.Create("http://testuri.org");
+                r.BeginGetResponse(ar =>
+                                       {
+                                           
+                                       }, null);
                 string actual = new StreamReader(r.GetResponse().GetResponseStream()).ReadToEnd();
-                Assert.AreEqual(expected, actual);
+                
 
                 if(!gate.WaitOne(1000))
                 {
                     Assert.Fail("timed out");
                 }
+                Assert.AreEqual(expected, actual);
             }
         }
 
@@ -102,22 +107,32 @@ namespace CityIndex.JsonClient.Tests
             using (var gate = new AutoResetEvent(true))
             {
 
+                var f = new TestRequestFactory();
+                const string expected = "foo";
+                f.CreateTestRequest(expected, 200, null, null, null);
+                WebRequest r = f.Create("http://testuri.org");
+                var sw = new Stopwatch();
+                sw.Start();
+                r.BeginGetResponse(ar =>
+                {
+
+                }, null);
+
+                string actual = new StreamReader(r.GetResponse().GetResponseStream()).ReadToEnd();
+                
+                
                 if (!gate.WaitOne(1000))
                 {
                     Assert.Fail("timed out");
                 }
+
+                sw.Stop();
+                Assert.AreEqual(expected, actual);
+                Assert.GreaterOrEqual(sw.ElapsedMilliseconds, 150, "incorrect latency");
+
             }
 
-            var f = new TestRequestFactory();
-            const string expected = "foo";
-            f.CreateTestRequest(expected, 200, null, null, null);
-            WebRequest r = f.Create("http://testuri.org");
-            var sw = new Stopwatch();
-            sw.Start();
-            string actual = new StreamReader(r.GetResponse().GetResponseStream()).ReadToEnd();
-            sw.Stop();
-            Assert.AreEqual(expected, actual);
-            Assert.GreaterOrEqual(sw.ElapsedMilliseconds, 150, "incorrect latency");
+            
         }
 
 
@@ -126,6 +141,16 @@ namespace CityIndex.JsonClient.Tests
         {
             using (var gate = new AutoResetEvent(true))
             {
+                var f = new TestRequestFactory();
+                f.CreateTestRequest("", 0, new Exception("request stream exception"), null, null);
+                WebRequest r = f.Create("http://testuri.org");
+                r.BeginGetResponse(ar =>
+                {
+
+                }, null);
+
+                r.GetRequestStream();
+                Assert.Fail("Expected exception");
 
                 if (!gate.WaitOne(1000))
                 {
@@ -133,11 +158,7 @@ namespace CityIndex.JsonClient.Tests
                 }
             }
 
-            var f = new TestRequestFactory();
-            f.CreateTestRequest("", 0, new Exception("request stream exception"), null, null);
-            WebRequest r = f.Create("http://testuri.org");
-            r.GetRequestStream();
-            Assert.Fail("Expected exception");
+            
         }
 
         [Test, ExpectedException(typeof(Exception), ExpectedMessage = "response stream exception")]
@@ -145,6 +166,16 @@ namespace CityIndex.JsonClient.Tests
         {
             using (var gate = new AutoResetEvent(true))
             {
+                var f = new TestRequestFactory();
+                f.CreateTestRequest("", 0, null, new Exception("response stream exception"), null);
+                WebRequest r = f.Create("http://testuri.org");
+                r.BeginGetResponse(ar =>
+                {
+
+                }, null);
+                r.GetResponse();
+                Assert.Fail("Expected exception");
+
 
                 if (!gate.WaitOne(1000))
                 {
@@ -152,11 +183,7 @@ namespace CityIndex.JsonClient.Tests
                 }
             }
 
-            var f = new TestRequestFactory();
-            f.CreateTestRequest("", 0, null, new Exception("response stream exception"), null);
-            WebRequest r = f.Create("http://testuri.org");
-            r.GetResponse();
-            Assert.Fail("Expected exception");
+
         }
 
 
@@ -165,6 +192,17 @@ namespace CityIndex.JsonClient.Tests
         {
             using (var gate = new AutoResetEvent(true))
             {
+                var f = new TestRequestFactory();
+                f.CreateTestRequest("", 0, null, new Exception("response exception"), null);
+                WebRequest r = f.Create("http://testuri.org");
+
+                r.BeginGetResponse(ar =>
+                {
+
+                }, null);
+
+                r.GetResponse();
+                Assert.Fail("Expected exception");
 
                 if (!gate.WaitOne(1000))
                 {
@@ -172,11 +210,7 @@ namespace CityIndex.JsonClient.Tests
                 }
             }
 
-            var f = new TestRequestFactory();
-            f.CreateTestRequest("", 0, null, new Exception("response exception"), null);
-            WebRequest r = f.Create("http://testuri.org");
-            r.GetResponse();
-            Assert.Fail("Expected exception");
+            
         }
         #endregion
     }

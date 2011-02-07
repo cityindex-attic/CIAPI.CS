@@ -54,9 +54,11 @@
   <ItemGroup>
     <Compile Include="CacheFixture.cs" />
     <Compile Include="ClientFixture.cs" />
+<<<<<<< HEAD
     <Compile Include="CacheItemFixture.cs" />
-    <Compile Include="ExceptionHandlingFixture.cs" />
+=======
     <Compile Include="HttpUtilityFixture.cs" />
+>>>>>>> cb3daf702062cb13641a85cced7ea7eeeaca9ea7
     <Compile Include="RequestRetryDiscriminatorFixture.cs" />
     <Compile Include="SupportingTests.cs" />
     <Compile Include="TestRequestFactoryFixture.cs" />
