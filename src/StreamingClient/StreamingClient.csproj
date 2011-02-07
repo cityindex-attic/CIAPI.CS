@@ -50,6 +50,7 @@
     <Compile Include="MessageEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StatusEventArgs.cs" />
+    <Compile Include="Websocket\WebsocketClient.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
