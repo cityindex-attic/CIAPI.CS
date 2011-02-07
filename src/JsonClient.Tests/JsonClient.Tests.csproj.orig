@@ -54,17 +54,22 @@
   <ItemGroup>
     <Compile Include="CacheFixture.cs" />
     <Compile Include="ClientFixture.cs" />
-<<<<<<< HEAD
     <Compile Include="CacheItemFixture.cs" />
-=======
+    <Compile Include="ExceptionHandlingFixture.cs" />
     <Compile Include="HttpUtilityFixture.cs" />
->>>>>>> cb3daf702062cb13641a85cced7ea7eeeaca9ea7
     <Compile Include="RequestRetryDiscriminatorFixture.cs" />
     <Compile Include="SupportingTests.cs" />
     <Compile Include="TestRequestFactoryFixture.cs" />
+<<<<<<< HEAD
     <Compile Include="JsonClientMocks\TestRequestInfo.cs" />
     <Compile Include="JsonClientMocks\TestWebReponse.cs" />
     <Compile Include="JsonClientMocks\TestRequestFactory.cs" />
+=======
+    <Compile Include="TestRequestInfo.cs" />
+    <Compile Include="TestWebReponse.cs" />
+    <Compile Include="TestRequestFactory.cs" />
+    <None Include="App.config" />
+>>>>>>> e2af88ed7303a99c1944fdf44b88ed9a1b87e06e
     <None Include="CodeGen\ActionScript\NewsDTO.as">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

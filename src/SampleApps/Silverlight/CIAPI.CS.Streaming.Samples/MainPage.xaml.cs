@@ -83,11 +83,37 @@ namespace CIAPI.CS.Streaming.Samples
                 try
                 {
                     Log("Stopping listening to news stream...");
-                    if (_newsListener!=null) _newsListener.Stop();
+
+                    // D: abbreviating conditionals makes it hard to step 
+                    // and is also a good way to get bugs. you may notice that I always use
+                    // blocks. 
+
+                    if (_newsListener != null)
+                    {
+                        _newsListener.Stop();
+                    }
                     Log("Disconnecting from streaming server...");
-                    if (_streamingClient!=null) _streamingClient.Disconnect();
+
+                    if (_streamingClient != null)
+                    {
+                       _streamingClient.Disconnect();
+                    }
+
                     Log("Deleting session...");
-                    if (_rcpClient != null) _rcpClient.BeginLogOut(logoutResult => { /*do nothing*/ } , null);
+
+                    if (_rcpClient != null )
+                    {
+                        // REMOVEME: i commented this out and still getting the ObjectDisposed exception
+                        // so it is not in the RpcClient
+
+                        _rcpClient.BeginLogOut(logoutResult =>
+                                                   {
+                                                       // FIXME: id/session invalid - getting back LoggedOut: false
+
+                                                        /*do nothing*/
+                                                       var breakTarget = 0;
+                                                   }, null);
+                    }
                 }
                 catch (Exception exception)
                 {
