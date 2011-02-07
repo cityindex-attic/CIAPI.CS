@@ -10,7 +10,7 @@ namespace ConsoleSpikes
     {
         private static readonly Uri RPC_URI = new Uri("https://ciapipreprod.cityindextest9.co.uk/tradingapi");
         private static readonly Uri STREAMING_URI = new Uri("https://pushpreprod.cityindextest9.co.uk/CITYINDEXSTREAMING");
-        private const string USERNAME = "0x234";
+        private const string USERNAME = "xx189949";
         private const string PASSWORD = "password";
 
         public void FetchNews_sync()
