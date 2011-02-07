@@ -17,8 +17,11 @@ namespace CIAPI.Silverlight.TestsMS
     public class Tests : SilverlightTest
     {
         [TestMethod]
+        [Asynchronous]
         public void TestMethod1()
         {
+            EnqueueConditional(() => true);
+            EnqueueTestComplete();
         }
     }
 }
