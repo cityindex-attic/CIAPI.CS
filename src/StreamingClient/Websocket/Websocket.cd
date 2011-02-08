@@ -3,12 +3,12 @@
   <Class Name="StreamingClient.Websocket.WebsocketClient">
     <Position X="0.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAQAAAAMAAIICAIIQAAAAAAAQAGACAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAQAAAAYAAAIAAYAQAAAAAAAQAGACAAAA=</HashCode>
       <FileName>Websocket\WebsocketClient.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="StreamingClient.Websocket.StompOverWebsocketConnection" BaseTypeListCollapsed="true">
-    <Position X="4" Y="0.5" Width="1.5" />
+    <Position X="2.5" Y="0.5" Width="1.5" />
     <Compartments>
       <Compartment Name="Nested Types" Collapsed="false" />
     </Compartments>
@@ -30,5 +30,27 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
+  <Class Name="StreamingClient.Websocket.StompMessage">
+    <Position X="4.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAACAAJAAAAAQAAAAAEAAAABAAAAAA=</HashCode>
+      <FileName>Websocket\StompMessage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StreamingClient.Websocket.TcpClientFacade" BaseTypeListCollapsed="true">
+    <Position X="4.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAAAIAAAAAAAAAACCAAAAAAgAAQAAAGIABA=</HashCode>
+      <FileName>Websocket\TcpClientFacade.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="StreamingClient.Websocket.ITcpClient">
+    <Position X="6.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAAAIAAAAAAAAAACCAAAAAAgAAAAAAGIAAA=</HashCode>
+      <FileName>Websocket\ITcpClient.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

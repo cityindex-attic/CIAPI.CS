@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using CIAPI.Streaming;
 using Common.Logging;
 using NUnit.Framework;
 using StreamingClient.Websocket;
@@ -42,7 +42,7 @@ namespace StreamingClient.Tests.Websocket
             PrepareStreamWithWebSocketHandshake(_mockIncomingStream);
 
             var client = CreateWebsocketClient(new Uri("ws://validscheme.com"));
-            client.Connect();
+            client.Connect(new Dictionary<string, string>{{"extraHeader1", "value1"}});
 
             _mockOutgoingStream.Position = 0;
             var streamReader = new StreamReader(_mockOutgoingStream);
@@ -56,12 +56,46 @@ namespace StreamingClient.Tests.Websocket
             client.Close();
         }
 
+        [Test]
+        public void ThrowsExceptionIfConnectionResponseIsInvalid()
+        {
+            PrepareStream(_mockIncomingStream, new List<string>
+                                      {
+                                          "HTTP/1.1 403 Invalid connection",
+                                          "Upgrade: WebSocket",
+                                          "Connection: Upgrade"
+                                      });
+            var client = CreateWebsocketClient(new Uri("ws://validscheme.com"));
+
+            Assert.Throws<IOException>(client.Connect);
+        }
+
+        [Test]
+        public void ThrowsExceptionIfConnectionResponseIsNull()
+        {
+            PrepareStream(_mockIncomingStream, new List<string>());
+            var client = CreateWebsocketClient(new Uri("ws://validscheme.com"));
+
+            Assert.Throws<IOException>(client.Connect);
+        }
+
         private static void PrepareStreamWithWebSocketHandshake(Stream stream)
         {
+            PrepareStream(stream, new List<string>
+                                      {
+                                          "HTTP/1.1 101 Web Socket Protocol Handshake",
+                                          "Upgrade: WebSocket",
+                                          "Connection: Upgrade"
+                                      });
+        }
+
+        private static void PrepareStream(Stream stream, IEnumerable<string> lines)
+        {
             var streamWriter = new StreamWriter(stream);
-            streamWriter.WriteLine("HTTP/1.1 101 Web Socket Protocol Handshake");
-            streamWriter.WriteLine("Upgrade: WebSocket");
-            streamWriter.WriteLine("Connection: Upgrade");
+            foreach (var line in lines)
+            {
+                streamWriter.WriteLine(line);
+            }
             streamWriter.Flush();
             stream.Position = 0;
         }
