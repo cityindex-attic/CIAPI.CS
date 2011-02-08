@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="StreamingClient.Websocket.WebsocketClient">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQAAAAMAAIICAIIQAAAAAAAQAGACAAAA=</HashCode>
+      <FileName>Websocket\WebsocketClient.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StreamingClient.Websocket.StompOverWebsocketConnection" BaseTypeListCollapsed="true">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Delegate Name="StreamingClient.Websocket.StompOverWebsocketConnection.MessageDelegate">
+        <TypeIdentifier>
+          <NewMemberFileName>Websocket\WebsocketClient.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Class Name="StreamingClient.Websocket.StompOverWebsocketConnection.Packet">
+        <TypeIdentifier>
+          <NewMemberFileName>Websocket\WebsocketClient.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAADAAACAAAEAAAAAAIAACEAAwQAAABAAAAAA=</HashCode>
+      <FileName>Websocket\StompOverWebsocketConnection.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

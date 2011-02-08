@@ -1,104 +1,111 @@
-﻿namespace StreamingClient.Websocket
-{
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Net;
-    using System.Net.Sockets;
-    using System.Text;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Net;
+using System.Net.Sockets;
+using System.Text;
+using Common.Logging;
 
+namespace StreamingClient.Websocket
+{
     public class WebsocketClient
     {
-        private Uri mUrl;
-        private TcpClient mClient;
-        private NetworkStream mStream;
-        private bool mHandshakeComplete;
-        private Dictionary<string, string> mHeaders;
+        private readonly Uri _url;
+        private ITcpClient _tcpClient;
+        private bool _handshakeComplete;
+        private readonly ILog _logger = LogManager.GetLogger(typeof(WebsocketClient));
 
-        public WebsocketClient(Uri url)
+        public WebsocketClient(Uri url) : this(url, new TcpClientFacade())
         {
-            mUrl = url;
-
-            string protocol = mUrl.Scheme;
-            if (!protocol.Equals("ws") && !protocol.Equals("wss"))
-                throw new ArgumentException("Unsupported protocol: " + protocol);
         }
 
-        public void SetHeaders(Dictionary<string, string> headers)
+        public WebsocketClient(Uri url, ITcpClient tcpClient)
         {
-            mHeaders = headers;
+            _url = url;
+            _tcpClient = tcpClient;
+
+            if (!_url.Scheme.Equals("ws") && !_url.Scheme.Equals("wss"))
+                throw new ArgumentException("Unsupported scheme: " + _url.Scheme);
         }
 
         public void Connect()
         {
-            string host = mUrl.DnsSafeHost;
-            string path = mUrl.PathAndQuery;
-            string origin = "http://" + host;
+            Connect(null);
+        }
+        public void Connect(Dictionary<string, string> headers)
+        {
+            var host = _url.DnsSafeHost;
+            var path = _url.PathAndQuery;
 
-            mClient = CreateSocket(mUrl);
-            mStream = mClient.GetStream();
+            OpenStream(_url);
 
-            int port = ((IPEndPoint)mClient.Client.RemoteEndPoint).Port;
-            if (port != 80)
-                host = host + ":" + port;
-
-            StringBuilder extraHeaders = new StringBuilder();
-            if (mHeaders != null)
+            var extraHeaders = new StringBuilder();
+            if (headers != null)
             {
-                foreach (KeyValuePair<string, string> header in mHeaders)
+                foreach (KeyValuePair<string, string> header in headers)
                     extraHeaders.Append(header.Key + ": " + header.Value + "\r\n");
             }
 
-            string request = "GET " + path + " HTTP/1.1\r\n" +
+            var request = "GET " + path + " HTTP/1.1\r\n" +
                              "Upgrade: WebSocket\r\n" +
                              "Connection: Upgrade\r\n" +
-                             "Host: " + host + "\r\n" +
-                             "Origin: " + origin + "\r\n" +
-                             extraHeaders.ToString() + "\r\n";
-            byte[] sendBuffer = Encoding.UTF8.GetBytes(request);
+                             "Host: " + GetFullHostName(host, _tcpClient.Port) + "\r\n" +
+                             "Origin: " + GetOrigin(host) + "\r\n" +
+                             extraHeaders + "\r\n";
+            
+            _tcpClient.Write(request);
 
-            mStream.Write(sendBuffer, 0, sendBuffer.Length);
+            var reader = _tcpClient.GetTextReaderForResponseStream();
+            EnsureNextLineIs(reader, "HTTP/1.1 101 Web Socket Protocol Handshake");
+            EnsureNextLineIs(reader, "Upgrade: WebSocket");
+            EnsureNextLineIs(reader, "Connection: Upgrade");
 
-            StreamReader reader = new StreamReader(mStream);
-            {
-                string header = reader.ReadLine();
-                if (!header.Equals("HTTP/1.1 101 Web Socket Protocol Handshake"))
-                    throw new IOException("Invalid handshake response");
-
-                header = reader.ReadLine();
-                if (!header.Equals("Upgrade: WebSocket"))
-                    throw new IOException("Invalid handshake response");
-
-                header = reader.ReadLine();
-                if (!header.Equals("Connection: Upgrade"))
-                    throw new IOException("Invalid handshake response");
-            }
-
-            mHandshakeComplete = true;
+            _handshakeComplete = true;
         }
 
-        public void Send(string str)
+        private static void EnsureNextLineIs(TextReader reader, string expectedLineValue)
         {
-            if (!mHandshakeComplete)
-                throw new InvalidOperationException("Handshake not complete");
-
-            byte[] sendBuffer = Encoding.UTF8.GetBytes(str);
-
-            mStream.WriteByte(0x00);
-            mStream.Write(sendBuffer, 0, sendBuffer.Length);
-            mStream.WriteByte(0xff);
-            mStream.Flush();
+            var line = reader.ReadLine();
+            if (string.IsNullOrEmpty(line))
+                throw new IOException("Invalid handshake response: line was empty");
+            if (!line.Equals(expectedLineValue))
+                throw new IOException(string.Format("Invalid handshake response: expected: {0} actual: {1}", expectedLineValue, line));
         }
 
-        public string Recv()
+        private static string GetOrigin(string host)
         {
-            if (!mHandshakeComplete)
+            return "http://" + host;
+        }
+
+        private static string GetFullHostName(string host, int port)
+        {
+            var fullHostName = host;
+            if (port != 80)
+                fullHostName = host + ":" + port;
+            return fullHostName;
+        }
+
+        public void SendFrame(string frameData)
+        {
+            if (!_handshakeComplete)
                 throw new InvalidOperationException("Handshake not complete");
 
-            StringBuilder recvBuffer = new StringBuilder();
+            _logger.DebugFormat("Sending frame data: \n{0}", frameData);
 
-            BinaryReader reader = new BinaryReader(mStream);
-            byte b = reader.ReadByte();
+            _tcpClient.WriteByte(0x00);
+            _tcpClient.Write(frameData);
+            _tcpClient.WriteByte(0xff);
+            _tcpClient.Flush();
+        }
+
+        public string RecieveFrame()
+        {
+            if (!_handshakeComplete)
+                throw new InvalidOperationException("Handshake not complete");
+
+            var recvBuffer = new List<byte>();
+            var reader = _tcpClient.GetBinaryReaderForResponseStream();
+            var b = reader.ReadByte();
             if ((b & 0x80) == 0x80)
             {
                 // Skip data frame
@@ -119,26 +126,27 @@
                 if (b == 0xff)
                     break;
 
-                recvBuffer.Append(b);
+                recvBuffer.Add(b);
             }
 
-            return recvBuffer.ToString();
+            var recievedFrame = Encoding.UTF8.GetString(recvBuffer.ToArray());
+            _logger.DebugFormat("Recieved frame data: {0}", recievedFrame);
+            
+            return recievedFrame;
         }
 
         public void Close()
         {
-            mStream.Dispose();
-            mClient.Close();
-            mStream = null;
-            mClient = null;
+            _tcpClient.Close();
+            _tcpClient = null;
         }
 
-        private static TcpClient CreateSocket(Uri url)
+        private void OpenStream(Uri url)
         {
-            string scheme = url.Scheme;
-            string host = url.DnsSafeHost;
+            var scheme = url.Scheme;
+            var host = url.DnsSafeHost;
 
-            int port = url.Port;
+            var port = url.Port;
             if (port <= 0)
             {
                 if (scheme.Equals("wss"))
@@ -151,9 +159,73 @@
 
             if (scheme.Equals("wss"))
                 throw new NotImplementedException("SSL support not implemented yet");
-            else
-                return new TcpClient(host, port);
+            
+            _tcpClient.Open(host, port);
         }
     }
 
+    public interface ITcpClient
+    {
+        Stream Open(string host, int port);
+        void Close();
+        int Port { get; }
+        void Write(string data);
+        TextReader GetTextReaderForResponseStream();
+        void WriteByte(byte b);
+        void Flush();
+        BinaryReader GetBinaryReaderForResponseStream();
+    }
+
+    public class TcpClientFacade: ITcpClient
+    {
+        private TcpClient _tcpClient;
+        private NetworkStream _stream;
+
+        public Stream Open(string host, int port)
+        {
+            _tcpClient = new TcpClient(host, port);
+             _stream = _tcpClient.GetStream();
+            return _stream;
+        }
+
+        public void Close()
+        {
+            _stream.Close();
+            _stream.Dispose();
+            _tcpClient.Close();
+            _tcpClient = null;
+            _stream = null;
+        }
+
+        public int Port
+        {
+            get { return ((IPEndPoint) _tcpClient.Client.RemoteEndPoint).Port; }
+        }
+
+        public void Write(string data)
+        {
+            var sendBuffer = Encoding.UTF8.GetBytes(data);
+            _stream.Write(sendBuffer, 0, sendBuffer.Length);
+        }
+
+        public TextReader GetTextReaderForResponseStream()
+        {
+            return new StreamReader(_stream);
+        }
+
+        public void WriteByte(byte b)
+        {
+            _stream.WriteByte(b);
+        }
+
+        public void Flush()
+        {
+            _stream.Flush();
+        }
+
+        public BinaryReader GetBinaryReaderForResponseStream()
+        {
+            return new BinaryReader(_stream);
+        }
+    }
 }

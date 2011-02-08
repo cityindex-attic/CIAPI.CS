@@ -50,10 +50,13 @@
     <Compile Include="MessageEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StatusEventArgs.cs" />
+    <Compile Include="Websocket\StompMessage.cs" />
+    <Compile Include="Websocket\StompOverWebsocketConnection.cs" />
     <Compile Include="Websocket\WebsocketClient.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Websocket\Websocket.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
