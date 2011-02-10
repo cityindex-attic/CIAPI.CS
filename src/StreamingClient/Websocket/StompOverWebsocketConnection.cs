@@ -1,18 +1,15 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using Common.Logging;
 
 namespace StreamingClient.Websocket
 {
     public class StompOverWebsocketConnection : IDisposable
     {
-        private readonly object transmissionLock = new object();
+        private readonly object _transmissionLock = new object();
         private readonly IWebsocketClient _websocketClient;
-        private readonly ILog _logger = LogManager.GetLogger(typeof(StompOverWebsocketConnection));
-
-        public delegate void MessageDelegate(string destination, string body, IDictionary headers);
 
         public StompOverWebsocketConnection(Uri host): 
             this(new WebsocketClient(host))
@@ -27,8 +24,13 @@ namespace StreamingClient.Websocket
         public void Connect(string userName, string password)
         {
             _websocketClient.Connect();
-            Transmit("CONNECT", null, null, "login", userName, "passcode", password);
-            Packet ack = Receive();
+            TransmitPacket("CONNECT", null, 
+                new Dictionary<string, string>
+                    {
+                        {"login", userName}, 
+                        {"passcode", password}
+                    });
+            var ack = ReceivePacket();
             if (ack.command != "CONNECTED")
             {
                 throw new ApplicationException("Could not connect : " + ack);
@@ -37,13 +39,13 @@ namespace StreamingClient.Websocket
 
         public void Dispose()
         {
-            Transmit("DISCONNECT", null, null);
+            TransmitPacket("DISCONNECT", null, null);
             _websocketClient.Close();
         }
 
         public void Send(string destination, string body, IDictionary headers)
         {
-            Transmit("SEND", body, headers, "destination", destination);
+            TransmitPacket("SEND", body, AddHeader(headers, "destination", destination));
         }
 
         public void Send(string destination, string body)
@@ -53,22 +55,22 @@ namespace StreamingClient.Websocket
 
         public void Begin()
         {
-            Transmit("BEGIN", null, null);
+            TransmitPacket("BEGIN", null, null);
         }
 
         public void Commit()
         {
-            Transmit("COMMIT", null, null);
+            TransmitPacket("COMMIT", null, null);
         }
 
         public void Abort()
         {
-            Transmit("ABORT", null, null);
+            TransmitPacket("ABORT", null, null);
         }
 
         public void Subscribe(string destination, IDictionary headers)
         {
-            Transmit("SUBSCRIBE", null, headers, "destination", destination);
+            TransmitPacket("SUBSCRIBE", null, AddHeader(headers, "destination", destination));
         }
 
         public void Subscribe(string destination)
@@ -79,7 +81,7 @@ namespace StreamingClient.Websocket
         public void Unsubscribe(string destination, IDictionary headers)
         {
             // James says: if you supplied a consumerID in the message then you will still be subbed
-            Transmit("UNSUBSCRIBE", null, headers, "destination", destination);
+            TransmitPacket("UNSUBSCRIBE", null, AddHeader(headers, "destination", destination));
         }
 
         public void Unsubscribe(string destination)
@@ -87,27 +89,25 @@ namespace StreamingClient.Websocket
             Unsubscribe(destination, null);
         }
 
-        private void Transmit(string command, string body, IDictionary headers, params string[] additionalHeaderPairs)
+        private IDictionary AddHeader(IDictionary headers, string key, string value)
         {
-            lock (transmissionLock)
+            if (headers == null) headers = new Dictionary<string, string>();
+            headers.Remove(key);
+            headers.Add(key, value);
+
+            return headers;
+        }
+        private void TransmitPacket(string command, string body, IDictionary headers)
+        {
+            lock (_transmissionLock)
             {
                 var message = new StringBuilder();
                 message.AppendLine(command);
-                for (int i = 0; i < additionalHeaderPairs.Length; i += 2)
-                {
-                    string key = additionalHeaderPairs[i];
-                    string val = additionalHeaderPairs[i + 1];
-                    message.AppendFormat("{0}:{1}\r\n", key, val);
-                    if (headers != null)
-                    {
-                        headers.Remove(key); // just in case headers dictionary contains duplicate entry
-                    }
-                }
                 if (headers != null)
                 {
-                    foreach (object key in headers.Keys)
+                    foreach (var key in headers.Keys)
                     {
-                        object val = headers[key];
+                        var val = headers[key];
                         message.AppendFormat("{0}:{1}\r\n", key, val);
                     }
                 }
@@ -120,18 +120,14 @@ namespace StreamingClient.Websocket
 
         public StompMessage WaitForMessage()
         {
-            Packet packet = Receive();
-            if (packet.command == "MESSAGE")
-            {
-                return new StompMessage((string)packet.headers["destination"], packet.body, packet.headers);
-            }
-            else
-            {
-                return null;
-            }
+            var packet = ReceivePacket();
+            if (packet.command != "MESSAGE") 
+                throw new InvalidDataException(string.Format("Expected packet command MESSAGE, but recieved packet with command: {0}", packet.command));
+
+            return new StompMessage((string)packet.headers["destination"], packet.body, packet.headers);
         }
 
-        private Packet Receive()
+        private Packet ReceivePacket()
         {
             var response = _websocketClient.RecieveFrame();
             var stringReader = new StringReader(response);
