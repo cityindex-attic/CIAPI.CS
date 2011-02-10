@@ -6,7 +6,16 @@ using Common.Logging;
 
 namespace StreamingClient.Websocket
 {
-    public class WebsocketClient
+    public interface IWebsocketClient
+    {
+        void Connect();
+        void Connect(Dictionary<string, string> headers);
+        void SendFrame(string frameData);
+        string RecieveFrame();
+        void Close();
+    }
+
+    public class WebsocketClient : IWebsocketClient
     {
         private readonly Uri _url;
         private ITcpClient _tcpClient;

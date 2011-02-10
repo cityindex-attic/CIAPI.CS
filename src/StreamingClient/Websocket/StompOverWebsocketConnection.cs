@@ -8,16 +8,24 @@ namespace StreamingClient.Websocket
     public class StompOverWebsocketConnection : IDisposable
     {
         private readonly object transmissionLock = new object();
-        private readonly WebsocketClient websocket;
+        private readonly IWebsocketClient _websocketClient;
 
         public delegate void MessageDelegate(string destination, string body, IDictionary headers);
 
-        public StompOverWebsocketConnection(Uri host, string login, string passcode)
+        public StompOverWebsocketConnection(Uri host): 
+            this(new WebsocketClient(host))
         {
-            websocket = new WebsocketClient(host);
-            websocket.Connect();
+        }
 
-            Transmit("CONNECT", null, null, "login", login, "passcode", passcode);
+        public StompOverWebsocketConnection(IWebsocketClient websocketClient)
+        {
+            _websocketClient = websocketClient;
+        }
+
+        public void Connect(string userName, string password)
+        {
+            _websocketClient.Connect();
+            Transmit("CONNECT", null, null, "login", userName, "passcode", password);
             Packet ack = Receive();
             if (ack.command != "CONNECTED")
             {
@@ -28,7 +36,7 @@ namespace StreamingClient.Websocket
         public void Dispose()
         {
             Transmit("DISCONNECT", null, null);
-            websocket.Close();
+            _websocketClient.Close();
         }
 
         public void Send(string destination, string body, IDictionary headers)
@@ -104,7 +112,7 @@ namespace StreamingClient.Websocket
                 message.AppendLine();
                 message.AppendLine(body);
                 message.Append('\u0000');
-                websocket.SendFrame(message.ToString());
+                _websocketClient.SendFrame(message.ToString());
             }
         }
 
@@ -123,7 +131,7 @@ namespace StreamingClient.Websocket
 
         private Packet Receive()
         {
-            var response = websocket.RecieveFrame();
+            var response = _websocketClient.RecieveFrame();
             var stringReader = new StringReader(response);
             Packet packet = new Packet();
             packet.command = stringReader.ReadLine(); // MESSAGE, ERROR or RECEIPT
