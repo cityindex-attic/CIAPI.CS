@@ -2,6 +2,7 @@
 using System.Collections;
 using System.IO;
 using System.Text;
+using Common.Logging;
 
 namespace StreamingClient.Websocket
 {
@@ -9,6 +10,7 @@ namespace StreamingClient.Websocket
     {
         private readonly object transmissionLock = new object();
         private readonly IWebsocketClient _websocketClient;
+        private readonly ILog _logger = LogManager.GetLogger(typeof(StompOverWebsocketConnection));
 
         public delegate void MessageDelegate(string destination, string body, IDictionary headers);
 
@@ -147,7 +149,6 @@ namespace StreamingClient.Websocket
 
             packet.body = stringReader.ReadToEnd().TrimEnd('\r', '\n');
 
-            Console.Out.WriteLine(packet);
             return packet;
         }
 
@@ -156,20 +157,6 @@ namespace StreamingClient.Websocket
             public string command;
             public string body;
             public IDictionary headers = new Hashtable();
-
-            public override string ToString()
-            {
-                StringBuilder result = new StringBuilder();
-                result.Append(command).Append(Environment.NewLine);
-                foreach (DictionaryEntry entry in headers)
-                {
-                    result.Append(entry.Key).Append(':').Append(entry.Value).Append(Environment.NewLine);
-                }
-                result.Append("----").Append(Environment.NewLine); ;
-                result.Append(body);
-                result.Append("====").Append(Environment.NewLine);
-                return result.ToString();
-            }
         }
 
     }

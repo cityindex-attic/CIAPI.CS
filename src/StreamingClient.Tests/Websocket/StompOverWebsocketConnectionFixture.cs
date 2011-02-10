@@ -90,17 +90,20 @@ namespace StreamingClient.Tests.Websocket
         public void CanConnectToExternal()
         {
             _logger.InfoFormat("Ready to subscribe");
-            StompMessage stompMessage;
+            var stompMessages = new List<StompMessage>();
             using (var stomp = new StompOverWebsocketConnection(
                 new Uri("ws://ec2-50-16-152-101.compute-1.amazonaws.com:80")))
             {
                 stomp.Connect("", "");
                 stomp.Subscribe("/topic/mock.news");
-                stompMessage = stomp.WaitForMessage();
+                for (var i = 0; i < 3; i++)
+                {
+                    stompMessages.Add(stomp.WaitForMessage());
+                }
+                stomp.Unsubscribe("/topic/mock.news");
             }
 
-            _logger.InfoFormat("Message body is: {0}", stompMessage.Body);
-            Assert.IsNotNull(stompMessage.Body);
+            Assert.AreEqual(3, stompMessages.Count);
         }
     }
 

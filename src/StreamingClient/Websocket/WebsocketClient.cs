@@ -97,12 +97,17 @@ namespace StreamingClient.Websocket
             if (!_handshakeComplete)
                 throw new InvalidOperationException("Handshake not complete");
 
-            _logger.DebugFormat("Sending frame data: \n{0}", frameData);
+            _logger.DebugFormat("Sending frame data: \n{0}", PrettyLog(frameData));
 
             _tcpClient.WriteByte(0x00);
             _tcpClient.Write(frameData);
             _tcpClient.WriteByte(0xff);
             _tcpClient.Flush();
+        }
+
+        private string PrettyLog(string frameData)
+        {
+            return frameData.Replace("\0", "").TrimEnd('\r', '\n');
         }
 
         public string RecieveFrame()
@@ -137,7 +142,7 @@ namespace StreamingClient.Websocket
             }
 
             var recievedFrame = Encoding.UTF8.GetString(recvBuffer.ToArray());
-            _logger.DebugFormat("Recieved frame data: {0}", recievedFrame);
+            _logger.DebugFormat("Recieved frame data: \n{0}", PrettyLog(recievedFrame));
             
             return recievedFrame;
         }
