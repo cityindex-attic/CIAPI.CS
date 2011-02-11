@@ -112,11 +112,36 @@ namespace StreamingClient.Websocket
 
         public string RecieveFrame()
         {
-            if (!_handshakeComplete)
-                throw new InvalidOperationException("Handshake not complete");
+            EnsureConnected();
 
             var recvBuffer = new List<byte>();
             var reader = _tcpClient.GetBinaryReaderForResponseStream();
+            
+            SkipDataFrame(reader);
+
+            for (var i = 0; i < int.MaxValue; i++)
+            {
+                var b = reader.ReadByte();
+                if (b == 0xff)
+                    break;
+
+                recvBuffer.Add(b);
+            } 
+
+            var recievedFrame = Encoding.UTF8.GetString(recvBuffer.ToArray());
+            _logger.DebugFormat("Recieved frame data: \n{0}", PrettyLog(recievedFrame));
+            
+            return recievedFrame;
+        }
+
+        private void EnsureConnected()
+        {
+            if (!_handshakeComplete)
+                throw new InvalidOperationException("Handshake not complete");
+        }
+
+        private void SkipDataFrame(BinaryReader reader)
+        {
             var b = reader.ReadByte();
             if ((b & 0x80) == 0x80)
             {
@@ -131,20 +156,6 @@ namespace StreamingClient.Websocket
                 for (int i = 0; i < len; i++)
                     reader.ReadByte();
             }
-
-            while (true)
-            {
-                b = reader.ReadByte();
-                if (b == 0xff)
-                    break;
-
-                recvBuffer.Add(b);
-            }
-
-            var recievedFrame = Encoding.UTF8.GetString(recvBuffer.ToArray());
-            _logger.DebugFormat("Recieved frame data: \n{0}", PrettyLog(recievedFrame));
-            
-            return recievedFrame;
         }
 
         public void Close()

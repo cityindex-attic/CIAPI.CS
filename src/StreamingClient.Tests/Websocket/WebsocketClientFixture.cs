@@ -61,9 +61,7 @@ namespace StreamingClient.Tests.Websocket
         {
             PrepareStream(_mockIncomingStream, new List<string>
                                       {
-                                          "HTTP/1.1 403 Invalid connection",
-                                          "Upgrade: WebSocket",
-                                          "Connection: Upgrade"
+                                          "HTTP/1.1 403 Invalid connection"
                                       });
             var client = CreateWebsocketClient(new Uri("ws://validscheme.com"));
 
@@ -71,9 +69,16 @@ namespace StreamingClient.Tests.Websocket
         }
 
         [Test]
+        public void ThrowsExceptionIfTryToSendBeforeConnecting()
+        {
+            var client = CreateWebsocketClient(new Uri("ws://validscheme.com"));
+
+            Assert.Throws<InvalidOperationException>(() => client.SendFrame("some data"));
+        }
+
+        [Test]
         public void ThrowsExceptionIfConnectionResponseIsNull()
         {
-            PrepareStream(_mockIncomingStream, new List<string>());
             var client = CreateWebsocketClient(new Uri("ws://validscheme.com"));
 
             Assert.Throws<IOException>(client.Connect);
@@ -98,6 +103,70 @@ namespace StreamingClient.Tests.Websocket
             }
             streamWriter.Flush();
             stream.Position = 0;
+        }
+         [Test]
+        public void FrameDataIsSentWithCorrectLeadingAndTrailingBytes()
+        {
+            const string sampleFrameData = "some frame data";
+
+            var client = GetConnectedClient();
+
+            var posBeforeSend = _mockOutgoingStream.Position;
+            client.SendFrame(sampleFrameData);
+
+            _mockOutgoingStream.Position = posBeforeSend;
+            var streamReader = new BinaryReader(_mockOutgoingStream);
+
+            Assert.AreEqual(0x00, streamReader.ReadByte());
+            Assert.AreEqual(sampleFrameData, ReadUntil(streamReader, 0xff));
+
+            client.Close();
+        }
+
+        private WebsocketClient GetConnectedClient()
+        {
+            PrepareStreamWithWebSocketHandshake(_mockIncomingStream);
+
+            var client = CreateWebsocketClient(new Uri("ws://validscheme.com"));
+            client.Connect();
+            return client;
+        }
+
+        [Test]
+        public void RecieveFrameGetsData()
+        {
+            const string sampleFrameData = "some frame data";
+
+            var client = GetConnectedClient();
+
+            var posBeforeWrite = _mockIncomingStream.Position;
+            
+            _mockIncomingStream.WriteByte(0x00);
+
+            var buf = Encoding.UTF8.GetBytes(sampleFrameData);
+            _mockIncomingStream.Write(buf, 0, buf.Length);
+
+            _mockIncomingStream.WriteByte(0xff);
+
+            _mockIncomingStream.Position = posBeforeWrite;
+            var recieved = client.RecieveFrame();
+
+            Assert.AreEqual(sampleFrameData, recieved);
+        }
+
+        private static string ReadUntil(BinaryReader streamReader, int terminator)
+        {
+            var recvBuffer = new List<byte>();
+            while (true)
+            {
+                var b = streamReader.ReadByte();
+                if (b == terminator)
+                    break;
+
+                recvBuffer.Add(b);
+            }
+
+            return Encoding.UTF8.GetString(recvBuffer.ToArray());
         }
     }
 
