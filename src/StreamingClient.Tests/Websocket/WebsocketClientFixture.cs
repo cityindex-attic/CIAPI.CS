@@ -104,8 +104,7 @@ namespace StreamingClient.Tests.Websocket
             streamWriter.Flush();
             stream.Position = 0;
         }
-
-        [Test]
+         [Test]
         public void FrameDataIsSentWithCorrectLeadingAndTrailingBytes()
         {
             const string sampleFrameData = "some frame data";
@@ -168,23 +167,6 @@ namespace StreamingClient.Tests.Websocket
             }
 
             return Encoding.UTF8.GetString(recvBuffer.ToArray());
-        }
-
-
-
-        [Test, Category("DependsOnExternalResource")]
-        public void CanConnectToExternal()
-        {
-            StompMessage stompMessage;
-            using (var stomp = new StompOverWebsocketConnection(
-                new Uri("ws://ec2-50-16-152-101.compute-1.amazonaws.com:80"), "", ""))
-               {
-                    stomp.Subscribe("/topic/mock.news");
-                    stompMessage = stomp.WaitForMessage();
-               }
-
-            _logger.InfoFormat("Message body is: {0}", stompMessage.Body);
-            Assert.IsNotNull(stompMessage.Body);
         }
     }
 
