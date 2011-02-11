@@ -1,4 +1,6 @@
 1) Install Visual Web Developer 2010 Express - http://www.microsoft.com/express/Web/
+2) Install Windows 7 SKD
+3) Copy C:\Program Files (x86)\MSBuild\Microsoft\VisualStudio\v10.0\WebApplications\* from a machine with full VS10 installation to C:\Program Files\MSBuild\Microsoft\VisualStudio\v10.0\WebApplications\
 
 === Command line build ===
 1) Install MSBuild community tasks - download and install as per tools/msbuildcommunitytasks
