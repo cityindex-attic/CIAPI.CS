@@ -2,7 +2,7 @@
 <Project ToolsVersion="4.0" DefaultTargets="Go" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ReportsDirectory>$(RootDirectory)\reports</ReportsDirectory>
-    
+    <SimianEXE>$(RootDirectory)\tools\simian-2.3.31\bin\simian-2.3.31.exe</SimianEXE>
     <PartCover4Directory>$(ProgramFiles86)\PartCover\PartCover .NET 4.0</PartCover4Directory>
   </PropertyGroup>
   
@@ -30,7 +30,7 @@
     <MakeDir Directories="$(ReportsDirectory)"/>
   </Target>
 
-  <Target Name="CalculateMetrics" DependsOnTargets="CalculateComplexityMetrics; CalculateCRAPMetrics"></Target>
+  <Target Name="CalculateMetrics" DependsOnTargets="CalculateComplexityMetrics; CalculateCRAPMetrics; CalculateDuplicationMetrics"></Target>
   
   <Target Name="CalculateComplexityMetrics">
     <Message Text="Calculating complexity metrics"/>
@@ -52,7 +52,7 @@
     <Message Text="Deleting un-merged files"/>
     <Delete Files="$(ReportsDirectory)\CodeMetrics-%(Assemblies.FileName).xml;$(ReportsDirectory)\CodeMetrics-Concatted.xml" />
   </Target>
-
+  
   <Target Name="CalculateCRAPMetrics">
     <Exec Command="&quot;$(RootDirectory)\tools\crap4net\Crap4Net-Console.exe&quot;"
       ContinueOnError="false"
@@ -74,6 +74,13 @@
 	<XslTransformation XslInputPath="$(RootDirectory)\tools\crap4net\xslt\Crap4j\detail_crap_load.xslt"
                       XmlInputPaths="$(ReportsDirectory)\CrapReport.xml"
                       OutputPaths="$(ReportsDirectory)\Crap\detail_crap_load.html" />
+  </Target>
+  
+   <Target Name="CalculateDuplicationMetrics">
+    <Exec Command="&quot;$(SimianEXE)&quot; -formatter=xml:&quot;$(ReportsDirectory)\Simian.Result.xml&quot; -excludes=&quot;$(SrcDirectory)/**/*.Test/**/*.cs&quot; -excludes=&quot;$(SrcDirectory)**/*.Designer.cs&quot; -excludes=&quot;$(SrcDirectory)**/StreamingClient.Lightstreamer/**&quot; -excludes=&quot;$(SrcDirectory)**/StreamingClient.Silverlight.Lightstreamer/**&quot; -excludes=&quot;$(SrcDirectory)**/obj/**&quot; -threshold=10 &quot;$(SrcDirectory)**/*.cs&quot; "
+      IgnoreExitCode="true"
+	  ContinueOnError="true"
+      WorkingDirectory="$(ReportsDirectory)" />
   </Target>
   
   <Target Name="UpdatePartCover4Settings">
