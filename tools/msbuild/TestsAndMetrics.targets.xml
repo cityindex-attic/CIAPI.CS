@@ -77,7 +77,7 @@
   </Target>
   
    <Target Name="CalculateDuplicationMetrics">
-    <Exec Command="&quot;$(SimianEXE)&quot; -formatter=xml:&quot;$(ReportsDirectory)\Simian.Result.xml&quot; -excludes=&quot;$(SrcDirectory)/**/*.Test/**/*.cs&quot; -excludes=&quot;$(SrcDirectory)**/*.Designer.cs&quot; -excludes=&quot;$(SrcDirectory)**/StreamingClient.Lightstreamer/**&quot; -excludes=&quot;$(SrcDirectory)**/StreamingClient.Silverlight.Lightstreamer/**&quot; -excludes=&quot;$(SrcDirectory)**/obj/**&quot; -threshold=10 &quot;$(SrcDirectory)**/*.cs&quot; "
+    <Exec Command="&quot;$(SimianEXE)&quot; -formatter=xml:&quot;$(ReportsDirectory)\Simian.Result.xml&quot; -excludes=&quot;$(SrcDirectory)/**/*.Test/**/*.cs&quot; -excludes=&quot;$(SrcDirectory)/**/*.Designer.cs&quot; -excludes=&quot;$(SrcDirectory)/**/StreamingClient.Lightstreamer/**&quot; -excludes=&quot;$(SrcDirectory)/**/StreamingClient.Silverlight.Lightstreamer/**&quot; -excludes=&quot;$(SrcDirectory)/**/obj/**&quot; -threshold=10 &quot;$(SrcDirectory)/**/*.cs&quot; "
       IgnoreExitCode="true"
 	  ContinueOnError="true"
       WorkingDirectory="$(ReportsDirectory)" />
