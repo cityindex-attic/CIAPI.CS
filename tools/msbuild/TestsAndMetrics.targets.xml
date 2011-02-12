@@ -77,10 +77,10 @@
   </Target>
   
    <Target Name="CalculateDuplicationMetrics">
-    <Exec Command="&quot;$(SimianEXE)&quot; -formatter=xml:&quot;$(ReportsDirectory)\Simian.Result.xml&quot; -excludes=&quot;$(SrcDirectory)/**/*.Test/**/*.cs&quot; -excludes=&quot;$(SrcDirectory)/**/*.Designer.cs&quot; -excludes=&quot;$(SrcDirectory)/**/StreamingClient.Lightstreamer/**&quot; -excludes=&quot;$(SrcDirectory)/**/StreamingClient.Silverlight.Lightstreamer/**&quot; -excludes=&quot;$(SrcDirectory)/**/obj/**&quot; -threshold=10 &quot;$(SrcDirectory)/**/*.cs&quot; "
+    <Exec Command="&quot;$(SimianEXE)&quot; -formatter=xml:&quot;$(ReportsDirectory)\Simian.Result.xml&quot; -excludes=**/*.Designer.cs -excludes=**/StreamingClient.Lightstreamer/** -excludes=**/StreamingClient.Silverlight.Lightstreamer/** -excludes=**/obj/ -threshold=10 -reportDuplicateText+ **/*.cs"
       IgnoreExitCode="true"
-	  ContinueOnError="true"
-      WorkingDirectory="$(ReportsDirectory)" />
+	    ContinueOnError="true"
+      WorkingDirectory="$(SrcDirectory)" />
   </Target>
   
   <Target Name="UpdatePartCover4Settings">
