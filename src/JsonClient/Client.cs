@@ -441,10 +441,6 @@ namespace CityIndex.JsonClient
 
             WebRequest request = outerItem.Request;
 
-            // TODO: this anonymous method is used to create a closure to reduce
-            // coupling to the throttle implementation. Would a non-anonymous technique
-            // make understanding and porting of this method easier?
-
             throttle.Enqueue(url, request, (ar, requestHolder) =>
                 {
 
