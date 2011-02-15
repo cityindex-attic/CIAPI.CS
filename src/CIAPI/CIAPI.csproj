@@ -58,9 +58,13 @@
     <Compile Include="PrettyPrinterExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rpc\ApiClient.cs" />
-    <Compile Include="Streaming\LightStreamerClient.cs" />
-    <Compile Include="Streaming\LightstreamerDtoConverter.cs" />
-    <Compile Include="Streaming\LightStreamerListener.cs" />
+    <Compile Include="Streaming\Lightstreamer\LightStreamerClient.cs" />
+    <Compile Include="Streaming\Lightstreamer\LightstreamerDtoConverter.cs" />
+    <Compile Include="Streaming\Lightstreamer\LightStreamerListener.cs" />
+    <Compile Include="Streaming\StreamingClientFactory.cs" />
+    <Compile Include="Streaming\Websocket\StompDtoConverter.cs" />
+    <Compile Include="Streaming\Websocket\StompListener.cs" />
+    <Compile Include="Streaming\Websocket\StompOverWebsocketClient.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\JsonClient\JsonClient.csproj">

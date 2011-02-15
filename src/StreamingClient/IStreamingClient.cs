@@ -8,5 +8,6 @@ namespace StreamingClient
         event EventHandler<StatusEventArgs> StatusChanged;
         void Connect();
         void Disconnect();
+        IStreamingListener<TDto> BuildListener<TDto>(string topic) where TDto : class, new();
     }
 }

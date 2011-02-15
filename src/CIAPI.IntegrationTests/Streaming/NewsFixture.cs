@@ -3,13 +3,14 @@ using System.Threading;
 using CIAPI.DTO;
 using CIAPI.Streaming;
 using NUnit.Framework;
+using StreamingClient;
 
 namespace CIAPI.IntegrationTests.Streaming
 {
     [TestFixture]
     public class NewsFixture
     {
-        public static LightstreamerClient BuildStreamingClient(
+        public static IStreamingClient BuildStreamingClient(
             string userName = "0x234",
             string password = "password")
         {
@@ -20,7 +21,7 @@ namespace CIAPI.IntegrationTests.Streaming
 
             var streamingUri = new Uri("https://pushpreprod.cityindextest9.co.uk/CITYINDEXSTREAMING");
 
-            return new LightstreamerClient(streamingUri, userName, authenticatedClient.SessionId);
+            return StreamingClientFactory.CreateStreamingClient(streamingUri, userName, authenticatedClient.SessionId);
         }
 
         [Test]

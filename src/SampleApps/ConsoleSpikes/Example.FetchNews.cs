@@ -59,7 +59,7 @@ namespace ConsoleSpikes
 
             //Next we create a connection to the streaming api, using the authenticated session
             //You application should only ever have one of these
-            var streamingClient = new LightstreamerClient(STREAMING_URI, USERNAME, ctx.SessionId);
+            var streamingClient = StreamingClientFactory.CreateStreamingClient(STREAMING_URI, USERNAME, ctx.SessionId);
             streamingClient.Connect();
 
             //And instantiate a listener for news headlines on the appropriate topic

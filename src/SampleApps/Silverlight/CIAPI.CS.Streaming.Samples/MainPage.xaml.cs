@@ -15,7 +15,7 @@ namespace CIAPI.CS.Streaming.Samples
         private ILog _logger = LogManager.GetLogger(typeof (MainPage));
 
         private Client _rcpClient;
-        private LightstreamerClient _streamingClient;
+        private IStreamingClient _streamingClient;
         private IStreamingListener<NewsDTO> _newsListener;
 
         public MainPage()
@@ -43,7 +43,7 @@ namespace CIAPI.CS.Streaming.Samples
 
                         _logger.DebugFormat("Session is: {0}", _rcpClient.SessionId);
                         Log("Creating streaming client...");
-                        _streamingClient = new LightstreamerClient(streamingUri, userName, _rcpClient.SessionId);
+                        _streamingClient = StreamingClientFactory.CreateStreamingClient(streamingUri, userName, _rcpClient.SessionId);
                         _streamingClient.StatusChanged += (s, message) 
                                                           => Log(string.Format("Status update: {0}", message.Status));
                         _streamingClient.Connect();

@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="StreamingClient.Websocket.WebsocketClient">
-    <Position X="0.5" Y="0.5" Width="1.5" />
+    <Position X="4.75" Y="0.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAQAAAAYAAAIAAYAQAAIAAAAQAGACAAAA=</HashCode>
+      <HashCode>AAAAAAAAgAAAQAAAAYAAAIAAYAQAAIAEAAQAGACAAAA=</HashCode>
       <FileName>Websocket\WebsocketClient.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -21,20 +21,20 @@
       </Class>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AAAAAEAAACAAACAAAEAAAIAAIAACEAAwQAAEBAAAAAA=</HashCode>
+      <HashCode>AAAAAEEAACAAACAAAEAAAIAAIAACEAAkQAAEAAAACAA=</HashCode>
       <FileName>Websocket\StompOverWebsocketConnection.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="StreamingClient.Websocket.StompMessage">
-    <Position X="4.75" Y="0.5" Width="1.5" />
+    <Position X="0.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAACAAJAAAAAQAAAAAEAAAABAAAAAA=</HashCode>
       <FileName>Websocket\StompMessage.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="StreamingClient.Websocket.TcpClientFacade" BaseTypeListCollapsed="true">
-    <Position X="4.75" Y="4.75" Width="1.5" />
+  <Class Name="StreamingClient.Websocket.TcpClientFacade" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="6.5" Y="5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>CAAAAAAAAAAAIAAAAAAAAAACCAAAAAAgAAQAAAGIABA=</HashCode>
       <FileName>Websocket\TcpClientFacade.cs</FileName>
@@ -42,7 +42,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Interface Name="StreamingClient.Websocket.ITcpClient">
-    <Position X="6.5" Y="4.75" Width="1.5" />
+    <Position X="6.5" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>CAAAAAAAAAAAIAAAAAAAAAACCAAAAAAgAAAAAAGIAAA=</HashCode>
       <FileName>Websocket\ITcpClient.cs</FileName>

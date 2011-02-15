@@ -32,3 +32,4 @@ _ReSharper*/
 .VisualState.xml
 PrecompiledWeb
 *.VisualState.xml
+*.xap

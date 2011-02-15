@@ -2,7 +2,7 @@
 using Lightstreamer.DotNet.Client;
 using StreamingClient;
 
-namespace CIAPI.Streaming
+namespace CIAPI.Streaming.Lightstreamer
 {
     public class LightstreamerClient : IStreamingClient, IConnectionListener
     {
@@ -11,7 +11,7 @@ namespace CIAPI.Streaming
         private readonly string _userName;
         private LSClient _internalClient;
 
-        public LightstreamerClient(Uri streamingUri, string userName, string sessionId)
+        internal LightstreamerClient(Uri streamingUri, string userName, string sessionId)
         {
             _streamingUri = streamingUri;
             _sessionId = sessionId;

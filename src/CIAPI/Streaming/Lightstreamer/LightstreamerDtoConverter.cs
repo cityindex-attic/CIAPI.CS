@@ -6,7 +6,7 @@ using Lightstreamer.DotNet.Client;
 using Newtonsoft.Json;
 using StreamingClient;
 
-namespace CIAPI.Streaming
+namespace CIAPI.Streaming.Lightstreamer
 {
     public class LightstreamerDtoConverter<TDto> : IMessageConverter<TDto> where TDto : new()
     {

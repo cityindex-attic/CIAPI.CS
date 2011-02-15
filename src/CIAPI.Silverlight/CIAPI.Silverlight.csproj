@@ -68,14 +68,17 @@
     <Compile Include="..\CIAPI\PrettyPrinterExtensions.cs">
       <Link>PrettyPrinterExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\CIAPI\Streaming\LightStreamerClient.cs">
-      <Link>Streaming\LightStreamerClient.cs</Link>
+    <Compile Include="..\CIAPI\Streaming\Lightstreamer\LightStreamerClient.cs">
+      <Link>Streaming\Lightstreamer\LightStreamerClient.cs</Link>
     </Compile>
-    <Compile Include="..\CIAPI\Streaming\LightstreamerDtoConverter.cs">
-      <Link>Streaming\LightstreamerDtoConverter.cs</Link>
+    <Compile Include="..\CIAPI\Streaming\Lightstreamer\LightstreamerDtoConverter.cs">
+      <Link>Streaming\Lightstreamer\LightstreamerDtoConverter.cs</Link>
     </Compile>
-    <Compile Include="..\CIAPI\Streaming\LightStreamerListener.cs">
-      <Link>Streaming\LightStreamerListener.cs</Link>
+    <Compile Include="..\CIAPI\Streaming\Lightstreamer\LightStreamerListener.cs">
+      <Link>Streaming\Lightstreamer\LightStreamerListener.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\Streaming\StreamingClientFactory.cs">
+      <Link>Streaming\StreamingClientFactory.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -97,6 +100,7 @@
       <Name>StreamingClient.Silverlight</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>

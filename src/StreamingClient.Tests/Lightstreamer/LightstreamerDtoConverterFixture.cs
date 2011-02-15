@@ -1,5 +1,6 @@
 ﻿using System;
 using CIAPI.Streaming;
+using CIAPI.Streaming.Lightstreamer;
 using NUnit.Framework;
 
 namespace StreamingClient.Tests.Lightstreamer
