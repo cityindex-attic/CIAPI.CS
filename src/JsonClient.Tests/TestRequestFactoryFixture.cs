@@ -19,7 +19,7 @@ namespace CityIndex.JsonClient.Tests
             var f = new TestRequestFactory();
             const string expected = "foo";
             f.CreateTestRequest(expected);
-            WebRequest r = f.Create("");
+            WebRequest r = f.Create("http://testuri.org");
             string actual = new StreamReader(r.GetResponse().GetResponseStream()).ReadToEnd();
             Assert.AreEqual(expected, actual);
         }
@@ -32,7 +32,7 @@ namespace CityIndex.JsonClient.Tests
             var f = new TestRequestFactory();
             const string expected = "foo";
             f.CreateTestRequest(expected, TimeSpan.FromMilliseconds(desiredLatencyMs), null, null, null);
-            WebRequest webRequest = f.Create("");
+            WebRequest webRequest = f.Create("http://testuri.org");
             var sw = new Stopwatch();
             sw.Start();
             var actual = new StreamReader(webRequest.GetResponse().GetResponseStream()).ReadToEnd();
@@ -52,7 +52,7 @@ namespace CityIndex.JsonClient.Tests
             var f = new TestRequestFactory();
             const string expected = "foo";
             f.CreateTestRequest(expected, TimeSpan.FromMilliseconds(desiredLatencyMs), null, null, null);
-            WebRequest r = f.Create("");
+            WebRequest r = f.Create("http://testuri.org");
             var sw = new Stopwatch();
             sw.Start();
             string actual = "";
@@ -79,7 +79,7 @@ namespace CityIndex.JsonClient.Tests
         {
             var f = new TestRequestFactory();
             f.CreateTestRequest("", TimeSpan.FromMilliseconds(0), new Exception("request stream exception"), null, null);
-            WebRequest r = f.Create("");
+            WebRequest r = f.Create("http://testuri.org");
             r.GetRequestStream();
             Assert.Fail("Expected exception");
         }
@@ -89,7 +89,7 @@ namespace CityIndex.JsonClient.Tests
         {
             var f = new TestRequestFactory();
             f.CreateTestRequest("", TimeSpan.FromMilliseconds(0), null, new Exception("response stream exception"), null);
-            WebRequest r = f.Create("");
+            WebRequest r = f.Create("http://testuri.org");
             r.GetResponse();
             Assert.Fail("Expected exception");
         }
@@ -100,7 +100,7 @@ namespace CityIndex.JsonClient.Tests
         {
             var f = new TestRequestFactory();
             f.CreateTestRequest("", TimeSpan.FromMilliseconds(0), null, new Exception("response exception"), null);
-            WebRequest r = f.Create("");
+            WebRequest r = f.Create("http://testuri.org");
             r.GetResponse();
             Assert.Fail("Expected exception");
         }
