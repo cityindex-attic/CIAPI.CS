@@ -21,11 +21,19 @@
                              $(SrcDirectory)\CIAPI.Tests\bin\$(Configuration)\CIAPI.Tests.dll"/>
   </ItemGroup>
 
+  <!-- Used to build the stable master branch -->
   <Target Name="Go" DependsOnTargets="UpdateVersion; 
                                       Build; 
                                       RunTests; 
                                       CalculateMetrics;
                                       Package">
+  </Target>
+  
+  <!-- Used to build the Dev branch - everything except packaging -->
+  <Target Name="GoDev" DependsOnTargets="UpdateVersion; 
+                                      Build; 
+                                      RunTests; 
+                                      CalculateMetrics">
   </Target>
 
   <Target Name="Build">
