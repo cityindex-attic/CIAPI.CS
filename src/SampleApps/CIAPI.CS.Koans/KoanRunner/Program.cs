@@ -13,11 +13,11 @@ namespace CIAPI.CS.Koans.KoanRunner
             try
             {
                 var assemblyTypes = Assembly.GetExecutingAssembly().GetTypes();
-                foreach (var type in assemblyTypes.Where(type => HasAttribute(type, typeof(KoanCategoryAttribute))))
+                foreach (var type in assemblyTypes.Where(IsRunnableKoanCategory))
                 {
                     WriteGoodLine("Learning about {0}", type.Name);
                     var koanCategory = Activator.CreateInstance(type);
-                    foreach (var method in type.GetMethods().Where(method => HasAttribute(method, typeof(KoanAttribute))))
+                    foreach (var method in type.GetMethods().Where(IsRunnableKoan))
                     {
                         var koan = (Action)Delegate.CreateDelegate(typeof(Action), koanCategory, method);
                         koan();
@@ -56,14 +56,21 @@ namespace CIAPI.CS.Koans.KoanRunner
             Console.ResetColor();
         }
 
-        private static bool HasAttribute(Type type, Type attributeType)
+        private static bool IsRunnableKoanCategory(Type type)
         {
-            return type.GetCustomAttributes(false).Count(x => x.GetType().FullName == attributeType.FullName)!=0;
+
+            return type.GetCustomAttributes(false).Count(attribute => 
+                    attribute.GetType().FullName == typeof(KoanCategoryAttribute).FullName
+                 && !((KoanCategoryAttribute)attribute).Ignore
+                ) != 0;
         }
 
-        private static bool HasAttribute(MethodInfo method, Type attributeType)
+        private static bool IsRunnableKoan(MethodInfo method)
         {
-            return method.GetCustomAttributes(false).Count(x => x.GetType().FullName == attributeType.FullName) != 0;
+            return method.GetCustomAttributes(false).Count(attribute => 
+                   attribute.GetType().FullName == typeof(KoanAttribute).FullName
+                && !((KoanAttribute)attribute).Ignore
+                ) != 0;
         }
     }
 }
