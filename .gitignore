@@ -33,3 +33,4 @@ _ReSharper*/
 PrecompiledWeb
 *.VisualState.xml
 *.xap
+.wave-vs.net.backup
