@@ -15,7 +15,7 @@ namespace CIAPI.CS.Koans
         public void ButGenerallyYouWillNeedToChangeTheCodeToMakeTheKoanPass()
         {
             //Fix this sum so that the Koan assertion is correct
-            var answer = "42";
+            var answer = "???";
 
             Assert.That(answer == "42", "the assertion should be true");
         }

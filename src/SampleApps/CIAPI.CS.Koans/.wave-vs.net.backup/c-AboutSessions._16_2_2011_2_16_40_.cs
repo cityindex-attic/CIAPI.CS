@@ -17,7 +17,6 @@ namespace CIAPI.CS.Koans
             
             //See TODO for details of the available endpoints
             _rpcClient = new Rpc.Client(new Uri("http://enter.endpoint.server/TradingApi"));
-            _rpcClient.LogIn("your_user_name", "your_password");
             _rpcClient.ListNewsHeadlines("UK", 10);
         }
 

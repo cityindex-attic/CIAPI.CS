@@ -12,7 +12,7 @@ using Newtonsoft.Json.Linq;
 #if SILVERLIGHT
 using System.Net.Browser;
 #endif
-// TODO: make all applicable public methods virtual
+
 namespace CityIndex.JsonClient
 {
     /// <summary>
@@ -331,11 +331,10 @@ namespace CityIndex.JsonClient
         /// <exception cref="ApiException">the exception, if any, that occurred during execution of the request</exception>
         // ReSharper disable MemberCanBeMadeStatic.Local
         // this method currently qualifies as a static member. please do not make it so, we will be doing housekeeping in here at a later date.
-        public virtual TDTO EndRequest<TDTO>(ApiAsyncResult<TDTO> asyncResult) where TDTO : class, new()
+        public TDTO EndRequest<TDTO>(ApiAsyncResult<TDTO> asyncResult) where TDTO : class, new()
         // ReSharper restore MemberCanBeMadeStatic.Local
-        { 
-
-            return asyncResult.End();          
+        {
+            return asyncResult.End();
         }
 
 

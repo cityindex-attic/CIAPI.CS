@@ -82,19 +82,12 @@ namespace CityIndex.JsonClient
         {
         }
 
-       
-
-        public string ResponseText { get; protected set; }
-
-    }
-
-
-    public class ApiSerializationException:ApiException
-    {
-        public ApiSerializationException(string message, string responseText)
-            : base(message)
+        public ApiException(string message, string responseText)
         {
-            ResponseText = responseText;
+            throw new NotImplementedException();
         }
+
+        public string ResponseText { get; private set; }
+
     }
 }

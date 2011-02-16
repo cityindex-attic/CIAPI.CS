@@ -6,7 +6,6 @@ using CIAPI.DTO;
 using Newtonsoft.Json;
 
 
-
 namespace CIAPI.Rpc
 {
     public partial class Client : CityIndex.JsonClient.Client
@@ -21,7 +20,6 @@ namespace CIAPI.Rpc
         {
         }
 
-        
         public Client(Uri uri, IRequestCache cache, IRequestFactory requestFactory, Dictionary<string, IThrottedRequestQueue> throttleScopes, int retryCount)
             : base(uri,cache, requestFactory, throttleScopes, retryCount)
         {
@@ -108,11 +106,16 @@ namespace CIAPI.Rpc
                 TDTO response = base.EndRequest(asyncResult);
                 return response;    
             }
-            catch(ApiSerializationException ex)
+            catch(Exception ex)
             {
-              throw new ServerConnectionException("Invalid response recieved.  Are you connecting to the correct server Url?  See ResponseText property for further details of response recieved.",ex.ResponseText);
-            }
+                
+                if(ex.InnerException is JsonSerializationException)
+                {
+                    throw new ApiException(string.Format("Response was not json."),ex);
+                }
 
+                throw;
+            }
         }
       
         
@@ -174,13 +177,5 @@ namespace CIAPI.Rpc
         #endregion
 
 
-    }
-
-
-    public class ServerConnectionException:ApiSerializationException
-    {
-        public ServerConnectionException(string message, string responseText) : base(message, responseText)
-        {
-        }
     }
 }

@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Net;
 using CityIndex.JsonClient;
 using CIAPI.DTO;
-using Newtonsoft.Json;
-
 
 
 namespace CIAPI.Rpc
@@ -21,7 +19,6 @@ namespace CIAPI.Rpc
         {
         }
 
-        
         public Client(Uri uri, IRequestCache cache, IRequestFactory requestFactory, Dictionary<string, IThrottedRequestQueue> throttleScopes, int retryCount)
             : base(uri,cache, requestFactory, throttleScopes, retryCount)
         {
@@ -48,13 +45,8 @@ namespace CIAPI.Rpc
         {
             if (url.IndexOf("/session", StringComparison.OrdinalIgnoreCase) == -1)
             {
-
-                request.Headers["UserName"] = UserName; 
+                request.Headers["UserName"] = UserName;
                 // API advertises session id as a GUID but treats as a string internally so we need to ucase here.
-                if (SessionId==null)
-                {
-                    throw new Exception("SessionId is null. Have you created a session? (logged in)");
-                }
                 request.Headers["Session"] = SessionId.ToString().ToUpper();
             }
         }
@@ -90,10 +82,9 @@ namespace CIAPI.Rpc
         /// <returns></returns>
         public void BeginLogIn(String userName,String password, ApiAsyncCallback<CreateSessionResponseDTO> callback, object state)
         {
-            
             UserName = userName;
             SessionId = null;
-            
+
             BeginRequest(callback, state, "session", "/", "POST", new Dictionary<string, object>
                 {
                     {"UserName", userName},
@@ -101,21 +92,6 @@ namespace CIAPI.Rpc
                 }, TimeSpan.FromMilliseconds(0), "data");
         }
 
-        public override TDTO EndRequest<TDTO>(ApiAsyncResult<TDTO> asyncResult)
-        {
-            try
-            {
-                TDTO response = base.EndRequest(asyncResult);
-                return response;    
-            }
-            catch(ApiSerializationException ex)
-            {
-              throw new ServerConnectionException("Invalid response recieved.  Are you connecting to the correct server Url?  See ResponseText property for further details of response recieved.",ex.ResponseText);
-            }
-
-        }
-      
-        
         public void EndLogIn(ApiAsyncResult<CreateSessionResponseDTO> asyncResult)
         {
             CreateSessionResponseDTO response = EndRequest(asyncResult);
@@ -174,13 +150,5 @@ namespace CIAPI.Rpc
         #endregion
 
 
-    }
-
-
-    public class ServerConnectionException:ApiSerializationException
-    {
-        public ServerConnectionException(string message, string responseText) : base(message, responseText)
-        {
-        }
     }
 }
