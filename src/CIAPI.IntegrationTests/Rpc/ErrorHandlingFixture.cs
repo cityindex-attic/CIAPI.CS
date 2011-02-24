@@ -79,5 +79,16 @@ namespace CIAPI.IntegrationTests.Rpc
             }
             return errorMessage;
         }
+
+        [Test]
+        public void ErrorMessageShouldContainDetailsOfErrorResponseDTO()
+        {
+            var rpcClient = new Client(Settings.RpcUri);
+            rpcClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);
+
+            var error1 = GetBadRequestErrorMessage(rpcClient);
+
+            Assert.That(error1, Is.StringContaining("You cannot request more than 500 news headlines"));
+        }
     }
 }
