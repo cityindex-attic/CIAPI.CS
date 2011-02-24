@@ -51,6 +51,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Common.Logging, Version=2.0.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL" />
+    <Reference Include="nunit.framework">
+      <HintPath>..\..\packages\NUnit.2.5.7.10213\lib\nunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -62,9 +65,12 @@
   <ItemGroup>
     <Compile Include="c-AboutSessions.cs" />
     <Compile Include="b-AboutKoans.cs" />
+    <Compile Include="e-AboutStreamingNews.cs" />
+    <Compile Include="d-AboutNews.cs" />
+    <Compile Include="KoanRunner\AnimatedFireworks.cs" />
     <Compile Include="KoanRunner\KoanAttribute.cs" />
     <Compile Include="KoanRunner\KoanCategoryAttribute.cs" />
-    <Compile Include="KoanRunner\Assert.cs" />
+    <Compile Include="KoanRunner\KoanAssert.cs" />
     <Compile Include="KoanRunner\FailedToReachEnlightenmentException.cs" />
     <Compile Include="KoanRunner\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -81,6 +87,10 @@
     <ProjectReference Include="..\..\StreamingClient.Lightstreamer\StreamingClient.Lightstreamer.csproj">
       <Project>{572A308B-634F-48CF-926D-CFEFB8D00C46}</Project>
       <Name>StreamingClient.Lightstreamer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\StreamingClient\StreamingClient.csproj">
+      <Project>{EE5023DC-A20F-4358-9DF1-7D69BB1C322E}</Project>
+      <Name>StreamingClient</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

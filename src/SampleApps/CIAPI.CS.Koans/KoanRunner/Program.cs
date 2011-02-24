@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using Common.Logging;
 
 namespace CIAPI.CS.Koans.KoanRunner
@@ -10,23 +11,28 @@ namespace CIAPI.CS.Koans.KoanRunner
         private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
         static void Main(string[] args)
         {
+            PrepareConsole();
+            object koanCategory = null;
             try
             {
                 var assemblyTypes = Assembly.GetExecutingAssembly().GetTypes();
                 foreach (var type in assemblyTypes.Where(IsRunnableKoanCategory))
                 {
-                    WriteGoodLine("Learning about {0}", type.Name);
-                    var koanCategory = Activator.CreateInstance(type);
+                    WriteGoodLine("Learning about {0}", Spacify(type.Name));
+                    koanCategory = Activator.CreateInstance(type);
                     foreach (var method in type.GetMethods().Where(IsRunnableKoan))
                     {
+                        WriteGoodLine("{0}...", Spacify(method.Name));
                         var koan = (Action)Delegate.CreateDelegate(typeof(Action), koanCategory, method);
                         koan();
-                        WriteGoodLine("\t+1 Your karma has increased by learning {0}", method.Name);
+                        WriteGoodLine(" +1 Your karma has increased by learning about {0}", Spacify(method.Name));
                     }
+
                     WriteGoodLine("\n=====================================\n");
                 }
 
                 WriteGoodLine("\n\nYou have reached enlightenment!");
+                new AnimatedFireworks().Animate();
             }
             catch (FailedToReachEnlightenmentException e)
             {
@@ -39,8 +45,23 @@ namespace CIAPI.CS.Koans.KoanRunner
             {
                 _logger.Error(e);
             }
+            finally
+            {
+                if (koanCategory is IDisposable) ((IDisposable)koanCategory).Dispose();
+            }
 
             Console.ReadKey();
+        }
+
+        private static void PrepareConsole()
+        {
+            Console.BufferWidth = 250;
+            Console.Title = "CIAPI.CS.Koans > searching for CIAPI enlightenment";
+        }
+
+        private static string Spacify(string pascalCaseString)
+        {
+            return Regex.Replace(pascalCaseString, "([A-Z]{1,1}|[0-9]+)", " $1").TrimStart();
         }
 
         private static void WriteGoodLine(string text, params string[] args)
@@ -49,6 +70,7 @@ namespace CIAPI.CS.Koans.KoanRunner
             Console.WriteLine(String.Format(text, args));
             Console.ResetColor();
         }
+
         private static void WriteBadLine(string text, params string[] args)
         {
             Console.ForegroundColor = ConsoleColor.Red;
