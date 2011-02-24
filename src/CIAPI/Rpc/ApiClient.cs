@@ -53,7 +53,7 @@ namespace CIAPI.Rpc
                 // API advertises session id as a GUID but treats as a string internally so we need to ucase here.
                 if (SessionId==null)
                 {
-                    throw new Exception("SessionId is null. Have you created a session? (logged in)");
+                    throw new ApiException("SessionId is null. Have you created a session? (logged in)");
                 }
                 request.Headers["Session"] = SessionId.ToString().ToUpper();
             }

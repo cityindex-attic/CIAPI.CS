@@ -46,7 +46,11 @@ namespace CIAPI.Silverlight.TestsMS
             ctx.BeginCreateSession(TestConfig.ApiUsername, TestConfig.ApiPassword, ar =>
             {
                 var response = ctx.EndCreateSession(ar);
-                EnqueueCallback(() => Assert.IsFalse(string.IsNullOrEmpty(response.Session)));
+                EnqueueCallback(() =>
+                                    {
+                                        Assert.IsFalse(string.IsNullOrEmpty(response.Session));
+                                    }
+                    );
 
                 EnqueueTestComplete();
             }, null);

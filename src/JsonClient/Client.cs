@@ -154,7 +154,9 @@ namespace CityIndex.JsonClient
         {
 #if SILVERLIGHT
             if (System.Windows.Application.Current.RootVisual.Dispatcher.CheckAccess())
+            {
                 throw new ApiException("You cannot call this method from the UI thread.  Either use the asynchronous method: .Begin{name}, or call this from a background thread");
+            }
 #endif
             uriTemplate = uriTemplate ?? "";
             parameters = parameters ?? new Dictionary<string, object>();
@@ -245,7 +247,7 @@ namespace CityIndex.JsonClient
 
                 string url = BuildUrl(target, uriTemplate, _uri.AbsoluteUri);
 
-                if (method.ToUpper() == "GET")
+                //if (method.ToUpper() == "GET") NOTE: not sure why I was limiting this to GET. must have had a reason. let's see where it bites us....
                 {
                     url = ApplyUriTemplateParameters(parameters, url);
                 }

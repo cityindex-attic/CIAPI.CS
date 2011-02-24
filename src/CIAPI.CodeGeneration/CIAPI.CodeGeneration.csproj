@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTO_hardcoded.cs" />
+    <Compile Include="Routes_hardcoded.cs" />
     <None Include="DTO.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

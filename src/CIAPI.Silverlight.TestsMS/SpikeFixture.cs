@@ -32,10 +32,6 @@ namespace CIAPI.Silverlight.TestsMS
         {
             var request = WebRequest.Create(TestConfig.ApiUrl +  "session");
 
-            // everyone says this works - doesn't fail but still pops a login
-            request.Credentials = new NetworkCredential("api", "cityindexapi");
-            request.UseDefaultCredentials = false;
-
             request.Method = "POST";
             request.BeginGetRequestStream(ac =>
             {
