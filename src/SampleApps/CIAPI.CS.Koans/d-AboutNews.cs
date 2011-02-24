@@ -11,11 +11,8 @@ namespace CIAPI.CS.Koans
     [KoanCategory]
     public class AboutNews
     {
-        private Client _rpcClient;
-        private string USERNAME = "DM904310";
+        private string USERNAME = "enter_your_username";
         private string PASSWORD = "password";
-        private ListNewsHeadlinesResponseDTO _ukHeadlines;
-        private ListNewsHeadlinesResponseDTO _ausHeadlines;
 
         [Koan]
         public void UsingNewsRequiresAValidSession()
@@ -38,8 +35,8 @@ namespace CIAPI.CS.Koans
 
             //Each headline contains a StoryId, a Headline and a PublishDate
             KoanAssert.That(_ukHeadlines.Headlines[0].StoryId, Is.GreaterThan(0).And.LessThan(int.MaxValue), "StoryId is a positive integer");
-            KoanAssert.That(_ukHeadlines.Headlines[0].Headline, Is.StringStarting("Swiss"), "Headline is a short string");
-            KoanAssert.That(_ukHeadlines.Headlines[0].PublishDate, Is.GreaterThan(DateTime.UtcNow.AddYears(-1)), "PublishDate is in UTC");
+            KoanAssert.That(_ukHeadlines.Headlines[0].Headline, Is.StringStarting(FILL_ME_IN), "Headline is a short string");
+            KoanAssert.That(_ukHeadlines.Headlines[0].PublishDate, Is.GreaterThan(FILL_ME_IN_DATE), "PublishDate is in UTC");
         }
 
         [Koan]
@@ -47,7 +44,7 @@ namespace CIAPI.CS.Koans
         {
             var newsStory = _rpcClient.GetNewsDetail(_ukHeadlines.Headlines[0].StoryId.ToString());
             KoanAssert.That(newsStory.NewsDetail.Story, Is.Not.Null.Or.Empty, "You now have the full body of the news story");
-            KoanAssert.That(newsStory.NewsDetail.Story, Is.StringContaining("<p>"), "which contains simple HTML");
+            KoanAssert.That(newsStory.NewsDetail.Story, Is.StringContaining(FILL_ME_IN), "which contains simple HTML");
         }
 
         [Koan]
@@ -60,7 +57,7 @@ namespace CIAPI.CS.Koans
             }
             catch (Exception ex)
             {
-                KoanAssert.That(ex.Message, Is.StringContaining("(400)"), "The error will talk about (400) Bad Request");
+                KoanAssert.That(ex.Message, Is.StringContaining(FILL_ME_IN), "The error will talk about (400) Bad Request");
             }
         }
 
@@ -70,7 +67,7 @@ namespace CIAPI.CS.Koans
             const int invalidStoryId = Int32.MaxValue;
             var newsStory = _rpcClient.GetNewsDetail(storyId: invalidStoryId.ToString());
 
-            KoanAssert.That(newsStory.NewsDetail, Is.Null, "There are no details for an invalid story Id");
+            KoanAssert.That(newsStory.NewsDetail, Is.EqualTo(FILL_ME_IN), "There are no details for an invalid story Id");
         }
 
         [Koan]
@@ -92,7 +89,7 @@ namespace CIAPI.CS.Koans
 
             gate.WaitOne(TimeSpan.FromSeconds(30)); //Never wait indefinately
 
-            KoanAssert.That(newsDetailResponseDto.NewsDetail.Story, Is.Not.Empty, "You now have the full body of the news story");
+            KoanAssert.That(newsDetailResponseDto.NewsDetail.Story, Is.StringContaining(FILL_ME_IN), "You now have the full body of the news story");
         }
 
         private static void DoStuffInCurrentThreadyWhilstRequestHappensInBackground()
@@ -123,7 +120,7 @@ namespace CIAPI.CS.Koans
                     catch (ApiException ex)
                     {
                         Console.WriteLine("ResponseTest: {0}", ex.ResponseText);
-                        KoanAssert.That(ex.Message, Is.StringContaining("Invalid"), "The error will talk about (400) Bad Request");
+                        KoanAssert.That(ex.Message, Is.StringContaining(FILL_ME_IN), "The error will talk about (400) Bad Request");
                     }
                     
                     gate.Set();
@@ -132,5 +129,11 @@ namespace CIAPI.CS.Koans
 
             gate.WaitOne(TimeSpan.FromSeconds(60)); //Never wait indefinately
         }
+
+        private Client _rpcClient;
+        private ListNewsHeadlinesResponseDTO _ukHeadlines;
+        private ListNewsHeadlinesResponseDTO _ausHeadlines;
+        private string FILL_ME_IN = "replace FILL_ME_IN with the correct value";
+        private DateTime FILL_ME_IN_DATE = DateTime.UtcNow;
     }
 }

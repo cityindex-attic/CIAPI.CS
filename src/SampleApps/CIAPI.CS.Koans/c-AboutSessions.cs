@@ -23,10 +23,18 @@ namespace CIAPI.CS.Koans
             _rpcClient = new Rpc.Client(new Uri("http://ciapipreprod.cityindextest9.co.uk/TradingApi"));
             
             //And then create a session by creating a username & password
-            //You can get test credentials by requesting them at {CIAPI.docs}/#test-credentials.htm
-            USERNAME = "DM904310";
+            //You can get test credentials by requesting them at http://ciapipreprod.cityindextest9.co.uk/CIAPI.docs/#content.test-credentials
+            USERNAME = "enter_your_username";
             PASSWORD = "password";
-            _rpcClient.LogIn(USERNAME, PASSWORD);
+
+            try
+            {
+                _rpcClient.LogIn(USERNAME, PASSWORD);
+            }
+            catch (ApiException apiException)
+            {
+                KoanAssert.Fail(string.Format("cannot login because {0}", apiException.Message));
+            }
 
             KoanAssert.That(_rpcClient.SessionId != "", "after logging in, you should have a valid session");
         }
@@ -50,7 +58,7 @@ namespace CIAPI.CS.Koans
             }
             catch (ApiException e)
             {
-                KoanAssert.That(e.Message, Is.StringContaining("401"), "The error message should contain something about (401) Unauthorized");
+                KoanAssert.That(e.Message, Is.StringContaining(FILL_ME_IN), "The error message should contain something about (401) Unauthorized");
             }
         }
 
@@ -74,9 +82,10 @@ namespace CIAPI.CS.Koans
             }
             catch (ApiException e)
             {
-                KoanAssert.That(e.Message, Is.StringContaining("401"), "The error message should contain something about (401) Unauthorized");
+                KoanAssert.That(e.Message, Is.StringContaining(FILL_ME_IN), "The error message should contain something about (401) Unauthorized");
             }
         }
 
+        private string FILL_ME_IN = "replace FILL_ME_IN with the correct value";
     }
 }

@@ -13,9 +13,7 @@ namespace CIAPI.CS.Koans
     [KoanCategory]
     public class AboutStreamingNews: IDisposable
     {
-        private Client _rpcClient;
-        private IStreamingClient _streamingClient;
-        private string USERNAME = "DM904310";
+        private string USERNAME = "enter_your_username";
         private string PASSWORD = "password";
 
         [Koan]
@@ -50,7 +48,7 @@ namespace CIAPI.CS.Koans
 
             gate.WaitOne(TimeSpan.FromSeconds(10));
 
-            KoanAssert.That(isConnected, "it takes a few seconds for the steam to get connected");
+            KoanAssert.That(isConnected, Is.EqualTo(FILL_ME_IN), "it takes a few seconds for the steam to get connected");
         }
 
         [Koan]
@@ -69,12 +67,13 @@ namespace CIAPI.CS.Koans
             //You call start to begin listening
             ukNewsListener.Start();
 
+            //Wait whilst some data is connected
             Thread.Sleep(TimeSpan.FromSeconds(5));
 
             //And stop to finish
             ukNewsListener.Stop();
 
-            Assert.That(ukNewsHeadlines.Count, Is.GreaterThan(2), "On the mock news headlines stream we should get 1 headline per second");
+            KoanAssert.That(ukNewsHeadlines.Count, Is.GreaterThan(FILL_IN_THE_CORRECT_VALUE), "On the mock news headlines stream we should get 1 headline per second");
         }
 
         [Koan]
@@ -83,21 +82,24 @@ namespace CIAPI.CS.Koans
             var ukNewsListener = _streamingClient.BuildListener<NewsDTO>("NEWS.MOCKHEADLINES.UK");
             var gbpusdPriceListener = _streamingClient.BuildListener<PriceDTO>("PRICES.PRICE.154297");
 
+            //Build as many listeners as you want
             var ukNewsHeadlines = new List<NewsDTO>();
             ukNewsListener.MessageRecieved += (sender, message) => ukNewsHeadlines.Add(message.Data);
+            ukNewsListener.Start();
+
             var gbpusdPrices = new List<PriceDTO>();
             gbpusdPriceListener.MessageRecieved += (sender, message) => gbpusdPrices.Add(message.Data);
-
-            ukNewsListener.Start();
             gbpusdPriceListener.Start();
 
+            //Wait whilst some data is connected
             Thread.Sleep(TimeSpan.FromSeconds(10));
 
+            //Remember to stop them when you are done
             ukNewsListener.Stop();
             gbpusdPriceListener.Stop();
 
-            Assert.That(ukNewsHeadlines.Count, Is.GreaterThan(2), "On the mock news headlines stream we should get 1 headline per second");
-            Assert.That(gbpusdPrices.Count, Is.GreaterThanOrEqualTo(1), "GBP/USD Prices should come through fairly regularly");
+            KoanAssert.That(ukNewsHeadlines.Count, Is.GreaterThan(FILL_IN_THE_CORRECT_VALUE), "On the mock news headlines stream we should get 1 headline per second");
+            KoanAssert.That(gbpusdPrices.Count, Is.GreaterThanOrEqualTo(FILL_IN_THE_CORRECT_VALUE), "GBP/USD Prices should come through fairly regularly");
         }
 
         public void Dispose()
@@ -105,5 +107,10 @@ namespace CIAPI.CS.Koans
             //After you are done with the connection, you need to disconnect
             if (_streamingClient != null) _streamingClient.Disconnect();
         }
+
+        private Client _rpcClient;
+        private IStreamingClient _streamingClient;
+        private int FILL_IN_THE_CORRECT_VALUE = 999;
+        private object FILL_ME_IN = false;
     }
 }
