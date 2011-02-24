@@ -12,9 +12,7 @@ namespace CIAPI.IntegrationTests.Rpc
     [TestFixture]
     public class ErrorHandlingFixture
     {
-        private static Uri RPC_URI = new Uri("http://ciapipreprod.cityindextest9.co.uk/TradingApi");
-        private const string USERNAME_VALID = "DM904310";
-        private const string PASSWORD_VALID = "password";
+
 
         [Test]
         public void ShouldGiveGuidanceWhenSpecifyingInvalidServerName()
@@ -34,8 +32,8 @@ namespace CIAPI.IntegrationTests.Rpc
         [Test]
         public void LogOutShouldInvalidateSession()
         {
-            var rpcClient = new Client(RPC_URI);
-            rpcClient.LogIn(USERNAME_VALID, PASSWORD_VALID);
+            var rpcClient = new Client(Settings.RpcUri);
+            rpcClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);
 
             var headlines = rpcClient.ListNewsHeadlines("UK", 3);
             Assert.That(headlines.Headlines.Length, Is.GreaterThan(0), "you should have a set of headlines");
@@ -45,11 +43,11 @@ namespace CIAPI.IntegrationTests.Rpc
             try
             {
                 rpcClient.ListNewsHeadlines("AUS", 4);
-                Assert.Fail("the previous line should have thrown an (401) Unauthorized exception");
+                Assert.Fail("the previous line should have thrown an 'SessionId is null. Have you created a session? (logged in)' exception");
             }
             catch (ApiException e)
             {
-                Assert.That(e.Message, Is.StringContaining("(401) Unauthorized"), "The session token should be invalid after logging out");
+                Assert.That(e.Message, Is.StringContaining("SessionId is null. Have you created a session? (logged in)"), "The client should have rejected the request");
             }
         }
     }

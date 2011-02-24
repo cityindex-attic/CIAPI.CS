@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Rpc\AccountInformationFixture.cs" />
     <Compile Include="Rpc\FaqIssueResolutionFixture.cs" />
     <Compile Include="Rpc\ErrorHandlingFixture.cs" />
     <Compile Include="Settings.cs" />

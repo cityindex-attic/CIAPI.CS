@@ -21,7 +21,7 @@ namespace JsonClient.CodeGeneration.Tests
 
         }
 
-        [Test, Category("DependsOnExternalResource")]
+        [Test, Category("DependsOnExternalResource"),Ignore("function not used yet, no need to support")]
         public void NetworkFileCanReadRemote()
         {
             const string expected = "SMDVersion";

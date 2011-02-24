@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace CityIndex.JsonClient.Tests
 {
-    [TestFixture]
+    [TestFixture,Ignore("research")]
     public class ClientFixture
     {
         [Test]
