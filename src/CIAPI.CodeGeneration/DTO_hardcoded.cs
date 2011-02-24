@@ -1,6 +1,6 @@
 ﻿using System;
 using CityIndex.JsonClient.Converters;
-using Newtonsoft.Json;
+
 namespace CIAPI.DTO
 {
 
