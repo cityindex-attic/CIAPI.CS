@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using CIAPI.Rpc;
 using CityIndex.JsonClient;
 using NUnit.Framework;
@@ -12,8 +13,6 @@ namespace CIAPI.IntegrationTests.Rpc
     [TestFixture]
     public class ErrorHandlingFixture
     {
-
-
         [Test]
         public void ShouldGiveGuidanceWhenSpecifyingInvalidServerName()
         {
@@ -49,6 +48,36 @@ namespace CIAPI.IntegrationTests.Rpc
             {
                 Assert.That(e.Message, Is.StringContaining("SessionId is null. Have you created a session? (logged in)"), "The client should have rejected the request");
             }
+        }
+
+        [Test]
+        public void TheSameErrorShouldhaveTheSameErrorMessage()
+        {
+            var rpcClient = new Client(Settings.RpcUri);
+            rpcClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);
+
+            var error1 = GetBadRequestErrorMessage(rpcClient);
+            var error2 = GetBadRequestErrorMessage(rpcClient);
+            var error3 = GetBadRequestErrorMessage(rpcClient);
+
+            Console.WriteLine("Error1:{0}\nError2:{1}\nError3:{2}", error1, error2, error3);
+            Assert.That(error1, Is.EqualTo(error2), "errors should be the same");
+            Assert.That(error2, Is.EqualTo(error3), "errors should be the same");
+        }
+
+        private string GetBadRequestErrorMessage(Client rpcClient)
+        {
+            var errorMessage = "No error thrown";
+            try
+            {
+                const int moreThanMaxHeadlines = 1000;
+                rpcClient.ListNewsHeadlines(category: "UK", maxResults: moreThanMaxHeadlines);
+            }
+            catch (ApiException ex)
+            {
+                errorMessage = "Message: " + ex.Message + "\nResponseText: " + ex.ResponseText;
+            }
+            return errorMessage;
         }
     }
 }
