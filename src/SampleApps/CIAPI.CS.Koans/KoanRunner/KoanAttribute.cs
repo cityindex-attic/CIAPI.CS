@@ -10,5 +10,6 @@ namespace CIAPI.CS.Koans.KoanRunner
         }
         
         public bool Ignore { get; set; }
+        public int Order { get; set; }
     }
 }

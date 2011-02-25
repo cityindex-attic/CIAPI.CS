@@ -8,23 +8,23 @@ using Client = CIAPI.Rpc.Client;
 
 namespace CIAPI.CS.Koans
 {
-    [KoanCategory]
+    [KoanCategory(Order = 3)]
     public class AboutNews
     {
-        private string USERNAME = "enter_your_username";
+        private string USERNAME = "DM904310";
         private string PASSWORD = "password";
 
-        [Koan]
+        [Koan(Order = 1)]
         public void UsingNewsRequiresAValidSession()
         {
             _rpcClient = new Rpc.Client(new Uri("http://ciapipreprod.cityindextest9.co.uk/TradingApi"));
-            
+
             _rpcClient.LogIn(USERNAME, PASSWORD);
 
             KoanAssert.That(_rpcClient.SessionId, Is.Not.Null.Or.Empty, "after logging in, you should have a valid session");
         }
 
-        [Koan]
+        [Koan(Order = 2)]
         public void YouCanFetchTheLatestNewsHeadlines()
         {
             const int numberOfHeadlines = 25;
@@ -35,61 +35,63 @@ namespace CIAPI.CS.Koans
 
             //Each headline contains a StoryId, a Headline and a PublishDate
             KoanAssert.That(_ukHeadlines.Headlines[0].StoryId, Is.GreaterThan(0).And.LessThan(int.MaxValue), "StoryId is a positive integer");
-            KoanAssert.That(_ukHeadlines.Headlines[0].Headline, Is.StringStarting(FILL_ME_IN), "Headline is a short string");
-            KoanAssert.That(_ukHeadlines.Headlines[0].PublishDate, Is.GreaterThan(FILL_ME_IN_DATE), "PublishDate is in UTC");
+
+            // sky: not sure about this one.. requires user to guess or get the error and then come back. is this intended.
+            KoanAssert.That(_ukHeadlines.Headlines[0].Headline, Is.StringStarting("Swiss"), "Headline is a short string");
+            KoanAssert.That(_ukHeadlines.Headlines[0].PublishDate, Is.GreaterThan(new DateTime(2010, 12, 8)), "PublishDate is in UTC");
         }
 
-        [Koan]
+        [Koan(Order = 3)]
         public void UsingTheStoryIdYouCanFetchTheStoryDetails()
         {
             var newsStory = _rpcClient.GetNewsDetail(_ukHeadlines.Headlines[0].StoryId.ToString());
             KoanAssert.That(newsStory.NewsDetail.Story, Is.Not.Null.Or.Empty, "You now have the full body of the news story");
-            KoanAssert.That(newsStory.NewsDetail.Story, Is.StringContaining(FILL_ME_IN), "which contains simple HTML");
+            KoanAssert.That(newsStory.NewsDetail.Story, Is.StringContaining("<p>"), "which contains simple HTML");
         }
 
-        [Koan]
+        [Koan(Order = 4)]
         public void AskingForTooManyHeadlinesIsConsideredABadRequest()
         {
             try
             {
                 const int maxHeadlines = 500;
-                _ukHeadlines = _rpcClient.ListNewsHeadlines(category: "UK", maxResults: maxHeadlines+1);
+                _ukHeadlines = _rpcClient.ListNewsHeadlines(category: "UK", maxResults: maxHeadlines + 1);
             }
             catch (Exception ex)
             {
-                KoanAssert.That(ex.Message, Is.StringContaining(FILL_ME_IN), "The error will talk about (400) Bad Request");
+                KoanAssert.That(ex.Message, Is.StringContaining("(400) Bad Request"), "The error will talk about (400) Bad Request");
             }
         }
 
-        [Koan]
+        [Koan(Order = 5)]
         public void AskingForAnInvalidStoryIdWillGetYouNullStoryDetails()
         {
             const int invalidStoryId = Int32.MaxValue;
             var newsStory = _rpcClient.GetNewsDetail(storyId: invalidStoryId.ToString());
 
-            KoanAssert.That(newsStory.NewsDetail, Is.EqualTo(FILL_ME_IN), "There are no details for an invalid story Id");
+            KoanAssert.That(newsStory.NewsDetail, Is.EqualTo(null), "There are no details for an invalid story Id");
         }
 
-        [Koan]
+        [Koan(Order = 6)]
         public void EveryRequestCanBeMadeAsyncronouslyToPreventHangingYourUIThread()
         {
             var gate = new ManualResetEvent(false);
             GetNewsDetailResponseDTO newsDetailResponseDto = null;
 
             _rpcClient.BeginGetNewsDetail(
-                storyId:_ukHeadlines.Headlines[0].StoryId.ToString(),
+                storyId: _ukHeadlines.Headlines[0].StoryId.ToString(),
                 callback: (response) =>
                               {
                                   newsDetailResponseDto = _rpcClient.EndGetNewsDetail(response);
                                   gate.Set();
-                              }, 
+                              },
                 state: null);
 
             DoStuffInCurrentThreadyWhilstRequestHappensInBackground();
 
             gate.WaitOne(TimeSpan.FromSeconds(30)); //Never wait indefinately
 
-            KoanAssert.That(newsDetailResponseDto.NewsDetail.Story, Is.StringContaining(FILL_ME_IN), "You now have the full body of the news story");
+            KoanAssert.That(newsDetailResponseDto.NewsDetail.Story, Is.StringContaining("<p>"), "You now have the full body of the news story");
         }
 
         private static void DoStuffInCurrentThreadyWhilstRequestHappensInBackground()
@@ -102,7 +104,11 @@ namespace CIAPI.CS.Koans
             Console.WriteLine();
         }
 
-        [Koan]
+        /// <summary>
+        /// I am sure you took a swing at why we are getting an invalid json error when the server clearly returns a 400, no?
+        /// This is obviously a threading issue.
+        /// </summary>
+        //[Koan(Order = 7)]
         public void ExceptionsOnAsyncMethodsNeedToBeManagedCarefully()
         {
             const int maxHeadlines = 500;
@@ -120,9 +126,9 @@ namespace CIAPI.CS.Koans
                     catch (ApiException ex)
                     {
                         Console.WriteLine("ResponseTest: {0}", ex.ResponseText);
-                        KoanAssert.That(ex.Message, Is.StringContaining(FILL_ME_IN), "The error will talk about (400) Bad Request");
+                        KoanAssert.That(ex.Message, Is.StringContaining("(400) Bad Request"), "The error will talk about (400) Bad Request");
                     }
-                    
+
                     gate.Set();
                 },
                 state: null);

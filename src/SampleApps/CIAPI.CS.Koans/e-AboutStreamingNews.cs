@@ -10,13 +10,13 @@ using Client = CIAPI.Rpc.Client;
 
 namespace CIAPI.CS.Koans
 {
-    [KoanCategory]
+    [KoanCategory(Order = 4)]
     public class AboutStreamingNews: IDisposable
     {
-        private string USERNAME = "enter_your_username";
+        private string USERNAME = "DM904310";
         private string PASSWORD = "password";
 
-        [Koan]
+        [Koan(Order = 1)]
         public void ConnectingToTheNewsStreamRequiresAValidSession()
         {
             _rpcClient = new Rpc.Client(new Uri("http://ciapipreprod.cityindextest9.co.uk/TradingApi"));
@@ -48,10 +48,10 @@ namespace CIAPI.CS.Koans
 
             gate.WaitOne(TimeSpan.FromSeconds(10));
 
-            KoanAssert.That(isConnected, Is.EqualTo(FILL_ME_IN), "it takes a few seconds for the steam to get connected");
+            KoanAssert.That(isConnected, Is.EqualTo(true), "it takes a few seconds for the steam to get connected");
         }
 
-        [Koan]
+        [Koan(Order = 2)]
         public void YouListenToAStreamsOverAConnection()
         {
             //Beginning with a connected streamingClient, you create a listener expected a specific message type on a certain channel/topic
@@ -73,10 +73,10 @@ namespace CIAPI.CS.Koans
             //And stop to finish
             ukNewsListener.Stop();
 
-            KoanAssert.That(ukNewsHeadlines.Count, Is.GreaterThan(FILL_IN_THE_CORRECT_VALUE), "On the mock news headlines stream we should get 1 headline per second");
+            KoanAssert.That(ukNewsHeadlines.Count, Is.GreaterThan(3), "On the mock news headlines stream we should get 1 headline per second");
         }
 
-        [Koan]
+        [Koan(Order = 3)]
         public void YouCanListenToMultipleStreamsOverASingleConnection()
         {
             var ukNewsListener = _streamingClient.BuildListener<NewsDTO>("NEWS.MOCKHEADLINES.UK");
@@ -98,8 +98,8 @@ namespace CIAPI.CS.Koans
             ukNewsListener.Stop();
             gbpusdPriceListener.Stop();
 
-            KoanAssert.That(ukNewsHeadlines.Count, Is.GreaterThan(FILL_IN_THE_CORRECT_VALUE), "On the mock news headlines stream we should get 1 headline per second");
-            KoanAssert.That(gbpusdPrices.Count, Is.GreaterThanOrEqualTo(FILL_IN_THE_CORRECT_VALUE), "GBP/USD Prices should come through fairly regularly");
+            KoanAssert.That(ukNewsHeadlines.Count, Is.GreaterThan(8), "On the mock news headlines stream we should get 1 headline per second");
+            KoanAssert.That(gbpusdPrices.Count, Is.GreaterThanOrEqualTo(1), "GBP/USD Prices should come through fairly regularly");
         }
 
         public void Dispose()

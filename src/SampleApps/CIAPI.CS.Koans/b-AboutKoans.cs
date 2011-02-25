@@ -3,16 +3,16 @@ using NUnit.Framework;
 
 namespace CIAPI.CS.Koans
 {
-    [KoanCategory]
+    [KoanCategory(Order = 1)]
     public class AboutKoans
     {
-        [Koan]
+        [Koan(Order = 1)]
         public void WhenAKoanPassesYouIncreaseYourKarma()
         {
             KoanAssert.That(true, "true is true");
         }
 
-        [Koan]
+        [Koan(Order = 2)]
         public void ButGenerallyYouWillNeedToChangeTheCodeToMakeTheKoanPass()
         {
             //Fix this sum so that the Koan assertion is correct
@@ -21,6 +21,6 @@ namespace CIAPI.CS.Koans
             KoanAssert.That(answer, Is.EqualTo(FILL_ME_IN), "the assertion should be true");
         }
 
-        private string FILL_ME_IN = "replace FILL_ME_IN with the correct value";
+        private string FILL_ME_IN = "42";
     }
 }

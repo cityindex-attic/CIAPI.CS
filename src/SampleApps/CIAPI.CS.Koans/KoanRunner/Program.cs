@@ -16,11 +16,11 @@ namespace CIAPI.CS.Koans.KoanRunner
             try
             {
                 var assemblyTypes = Assembly.GetExecutingAssembly().GetTypes();
-                foreach (var type in assemblyTypes.Where(IsRunnableKoanCategory))
+                foreach (var type in assemblyTypes.Where(IsRunnableKoanCategory).OrderBy(t => t.GetCustomAttributes(typeof(KoanCategoryAttribute), false).Cast<KoanCategoryAttribute>().First().Order))
                 {
                     WriteGoodLine("Learning about {0}", Spacify(type.Name));
                     koanCategory = Activator.CreateInstance(type);
-                    foreach (var method in type.GetMethods().Where(IsRunnableKoan))
+                    foreach (var method in type.GetMethods().Where(IsRunnableKoan).OrderBy(t => t.GetCustomAttributes(typeof(KoanAttribute), false).Cast<KoanAttribute>().First().Order))
                     {
                         WriteGoodLine("{0}...", Spacify(method.Name));
                         var koan = (Action)Delegate.CreateDelegate(typeof(Action), koanCategory, method);
@@ -81,7 +81,7 @@ namespace CIAPI.CS.Koans.KoanRunner
         private static bool IsRunnableKoanCategory(Type type)
         {
 
-            return type.GetCustomAttributes(false).Count(attribute => 
+            return type.GetCustomAttributes(false).Count(attribute =>
                     attribute.GetType().FullName == typeof(KoanCategoryAttribute).FullName
                  && !((KoanCategoryAttribute)attribute).Ignore
                 ) != 0;
@@ -89,7 +89,7 @@ namespace CIAPI.CS.Koans.KoanRunner
 
         private static bool IsRunnableKoan(MethodInfo method)
         {
-            return method.GetCustomAttributes(false).Count(attribute => 
+            return method.GetCustomAttributes(false).Count(attribute =>
                    attribute.GetType().FullName == typeof(KoanAttribute).FullName
                 && !((KoanAttribute)attribute).Ignore
                 ) != 0;

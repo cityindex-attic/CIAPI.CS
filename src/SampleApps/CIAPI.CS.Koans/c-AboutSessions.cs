@@ -6,14 +6,14 @@ using Client = CIAPI.Rpc.Client;
 
 namespace CIAPI.CS.Koans
 {
-    [KoanCategory]
+    [KoanCategory(Order = 2)]
     public class AboutSessions
     {
         private Client _rpcClient;
         private string USERNAME;
         private string PASSWORD;
 
-        [Koan]
+        [Koan(Order = 1)]
         public void CreatingASession()
         {
             //Interaction with the API is done via a top level "client" object 
@@ -24,7 +24,7 @@ namespace CIAPI.CS.Koans
             
             //And then create a session by creating a username & password
             //You can get test credentials by requesting them at http://ciapipreprod.cityindextest9.co.uk/CIAPI.docs/#content.test-credentials
-            USERNAME = "enter_your_username";
+            USERNAME = "DM904310";
             PASSWORD = "password";
 
             try
@@ -39,7 +39,7 @@ namespace CIAPI.CS.Koans
             KoanAssert.That(_rpcClient.SessionId != "", "after logging in, you should have a valid session");
         }
 
-        [Koan]
+        [Koan(Order = 2)]
         public void EveryRequestUsesYourSession()
         {
             //The rpcClient stores your current session details, and uses it to authenticate
@@ -58,11 +58,11 @@ namespace CIAPI.CS.Koans
             }
             catch (ApiException e)
             {
-                KoanAssert.That(e.Message, Is.StringContaining(FILL_ME_IN), "The error message should contain something about (401) Unauthorized");
+                KoanAssert.That(e.Message, Is.StringContaining("(401) Unauthorized"), "The error message should contain something about (401) Unauthorized");
             }
         }
 
-        [Koan]
+        [Koan(Order = 3)]
         public void YouCanForceYourSessionToExpireByLoggingOut()
         {
             _rpcClient.LogIn(USERNAME, PASSWORD);
@@ -82,7 +82,7 @@ namespace CIAPI.CS.Koans
             }
             catch (ApiException e)
             {
-                KoanAssert.That(e.Message, Is.StringContaining(FILL_ME_IN), "The error message should contain something about (401) Unauthorized");
+                KoanAssert.That(e.Message, Is.StringContaining("(401) Unauthorized"), "The error message should contain something about (401) Unauthorized");
             }
         }
 
