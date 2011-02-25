@@ -14,7 +14,7 @@ namespace CIAPI.CS.Koans
         private string USERNAME = "DM904310";
         private string PASSWORD = "password";
 
-        [Koan(Order = 1)]
+        [Koan(Order = 0)]
         public void UsingNewsRequiresAValidSession()
         {
             _rpcClient = new Rpc.Client(new Uri("http://ciapipreprod.cityindextest9.co.uk/TradingApi"));
@@ -24,7 +24,7 @@ namespace CIAPI.CS.Koans
             KoanAssert.That(_rpcClient.SessionId, Is.Not.Null.Or.Empty, "after logging in, you should have a valid session");
         }
 
-        [Koan(Order = 2)]
+        [Koan(Order = 1)]
         public void YouCanFetchTheLatestNewsHeadlines()
         {
             const int numberOfHeadlines = 25;
@@ -49,7 +49,9 @@ namespace CIAPI.CS.Koans
             KoanAssert.That(newsStory.NewsDetail.Story, Is.StringContaining("<p>"), "which contains simple HTML");
         }
 
-        [Koan(Order = 4)]
+        //[Koan(Order = 4)] 
+        // DAVID: we have a serious issue regarding subsequent exceptions (i am working on it)- as it is you get one exception, pick one. 
+        // I think the 'be diligent catching async errors' is more important.
         public void AskingForTooManyHeadlinesIsConsideredABadRequest()
         {
             try
@@ -62,7 +64,7 @@ namespace CIAPI.CS.Koans
                 KoanAssert.That(ex.Message, Is.StringContaining("(400) Bad Request"), "The error will talk about (400) Bad Request");
             }
         }
-
+ 
         [Koan(Order = 5)]
         public void AskingForAnInvalidStoryIdWillGetYouNullStoryDetails()
         {
@@ -72,7 +74,7 @@ namespace CIAPI.CS.Koans
             KoanAssert.That(newsStory.NewsDetail, Is.EqualTo(null), "There are no details for an invalid story Id");
         }
 
-        [Koan(Order = 6)]
+       [Koan(Order = 6)]
         public void EveryRequestCanBeMadeAsyncronouslyToPreventHangingYourUIThread()
         {
             var gate = new ManualResetEvent(false);
@@ -87,7 +89,7 @@ namespace CIAPI.CS.Koans
                               },
                 state: null);
 
-            DoStuffInCurrentThreadyWhilstRequestHappensInBackground();
+            //DoStuffInCurrentThreadyWhilstRequestHappensInBackground();
 
             gate.WaitOne(TimeSpan.FromSeconds(30)); //Never wait indefinately
 
@@ -108,7 +110,7 @@ namespace CIAPI.CS.Koans
         /// I am sure you took a swing at why we are getting an invalid json error when the server clearly returns a 400, no?
         /// This is obviously a threading issue.
         /// </summary>
-        //[Koan(Order = 7)]
+       [Koan(Order = 7)]
         public void ExceptionsOnAsyncMethodsNeedToBeManagedCarefully()
         {
             const int maxHeadlines = 500;

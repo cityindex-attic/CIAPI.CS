@@ -29,6 +29,7 @@ namespace CityIndex.JsonClient
         private readonly int _retryCount;
         private readonly Dictionary<string, IThrottedRequestQueue> _throttleScopes;
         private readonly Uri _uri;
+        private readonly object _lockObj = new object();
 
         #endregion
 
@@ -167,18 +168,18 @@ namespace CityIndex.JsonClient
             using (var gate = new ManualResetEvent(false))
             {
                 BeginRequest<TDTO>(ar =>
-                    {
-                        try
-                        {
-                            response = EndRequest(ar);
-                        }
-                        catch (Exception ex)
-                        {
-                            exception = ex;
-                        }
+                                       {
+                                           try
+                                           {
+                                               response = EndRequest(ar);
+                                           }
+                                           catch (Exception ex)
+                                           {
+                                               exception = ex;
+                                           }
 
-                        gate.Set();
-                    }, null, target, uriTemplate, method, parameters, cacheDuration, throttleScope);
+                                           gate.Set();
+                                       }, null, target, uriTemplate, method, parameters, cacheDuration, throttleScope);
 
                 gate.WaitOne();
             }
@@ -335,9 +336,9 @@ namespace CityIndex.JsonClient
         // this method currently qualifies as a static member. please do not make it so, we will be doing housekeeping in here at a later date.
         public virtual TDTO EndRequest<TDTO>(ApiAsyncResult<TDTO> asyncResult) where TDTO : class, new()
         // ReSharper restore MemberCanBeMadeStatic.Local
-        { 
+        {
 
-            return asyncResult.End();          
+            return asyncResult.End();
         }
 
 
