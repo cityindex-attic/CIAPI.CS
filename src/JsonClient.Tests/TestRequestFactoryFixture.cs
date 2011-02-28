@@ -37,7 +37,7 @@ namespace CityIndex.JsonClient.Tests
             sw.Start();
             var actual = new StreamReader(webRequest.GetResponse().GetResponseStream()).ReadToEnd();
             sw.Stop();
-            
+
             Assert.AreEqual(expected, actual);
             Assert.GreaterOrEqual(sw.ElapsedMilliseconds, desiredLatencyMs - 50, "incorrect latency");
             // TODO: Sometimes this seems to take *much* longer on the build server
@@ -56,17 +56,15 @@ namespace CityIndex.JsonClient.Tests
             var sw = new Stopwatch();
             sw.Start();
             string actual = "";
-            using (var gate = new ManualResetEvent(false))
-            {
-                r.BeginGetResponse(ar =>
-                                       {
-                                           WebResponse response = r.EndGetResponse(ar);
-                                           actual = new StreamReader(response.GetResponseStream()).ReadToEnd();
-                                           gate.Set();
-                                       }, null);
-                gate.WaitOne(TimeSpan.FromSeconds(2));
-            }
-           
+            var gate = new ManualResetEvent(false);
+            r.BeginGetResponse(ar =>
+                {
+                    WebResponse response = r.EndGetResponse(ar);
+                    actual = new StreamReader(response.GetResponseStream()).ReadToEnd();
+                    gate.Set();
+                }, null);
+            gate.WaitOne(TimeSpan.FromSeconds(2));
+
             sw.Stop();
             Assert.AreEqual(expected, actual);
             Assert.GreaterOrEqual(sw.ElapsedMilliseconds, desiredLatencyMs - 50, "incorrect latency");
@@ -74,7 +72,7 @@ namespace CityIndex.JsonClient.Tests
             // Assert.LessOrEqual(sw.ElapsedMilliseconds, desiredLatencyMs + 50, "incorrect latency");
         }
 
-        [Test, ExpectedException(typeof (Exception), ExpectedMessage = "request stream exception")]
+        [Test, ExpectedException(typeof(Exception), ExpectedMessage = "request stream exception")]
         public void CanThrowExceptionOnRequestStream()
         {
             var f = new TestRequestFactory();
@@ -84,7 +82,7 @@ namespace CityIndex.JsonClient.Tests
             Assert.Fail("Expected exception");
         }
 
-        [Test, ExpectedException(typeof (Exception), ExpectedMessage = "response stream exception")]
+        [Test, ExpectedException(typeof(Exception), ExpectedMessage = "response stream exception")]
         public void CanThrowExceptionOnResponseStream()
         {
             var f = new TestRequestFactory();

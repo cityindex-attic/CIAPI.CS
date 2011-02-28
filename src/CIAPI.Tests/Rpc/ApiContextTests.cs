@@ -25,7 +25,7 @@ namespace CIAPI.Tests.Rpc
         private const string LoggedIn = "{\"Session\":\"D2FF3E4D-01EA-4741-86F0-437C919B5559\"}";
         private const string LoggedOut = "{\"LoggedOut\":true}";
         private const string AuthError = "{ \"ErrorMessage\": \"sample value\", \"ErrorCode\": 403 }";
-        
+
         [Test]
         public void CanLogin()
         {
@@ -95,9 +95,8 @@ namespace CIAPI.Tests.Rpc
 
             CIAPI.Rpc.Client ctx = BuildAuthenticatedClientAndSetupResponse(BogusJson);
 
-            using (var gate = new ManualResetEvent(false))
-            {
-                ctx.BeginListNewsHeadlines("UK", 14, ar =>
+            var gate = new ManualResetEvent(false);
+            ctx.BeginListNewsHeadlines("UK", 14, ar =>
                 {
                     try
                     {
@@ -107,17 +106,16 @@ namespace CIAPI.Tests.Rpc
                     catch (Exception ex)
                     {
                         Assert.IsNotNull(ex);
-                        Assert.IsInstanceOf(typeof(CIAPI.Rpc.ServerConnectionException), ex);
+                        Assert.IsInstanceOf(
+                            typeof(CIAPI.Rpc.ServerConnectionException), ex);
                     }
                     finally
                     {
                         gate.Set();
                     }
-                    
                 }, null);
 
-                gate.WaitOne(TimeSpan.FromSeconds(3));
-            }
+            gate.WaitOne(TimeSpan.FromSeconds(3));
         }
 
         [Test]
@@ -127,17 +125,15 @@ namespace CIAPI.Tests.Rpc
 
             CIAPI.Rpc.Client ctx = BuildAuthenticatedClientAndSetupResponse(NewsHeadlines14);
 
-            using (var gate = new ManualResetEvent(false))
-            {
-                ctx.BeginListNewsHeadlines("UK", 14, ar =>
-                    {
-                        ListNewsHeadlinesResponseDTO response = ctx.EndListNewsHeadlines(ar);
-                        Assert.AreEqual(14, response.Headlines.Length);
-                        gate.Set();
-                    }, null);
+            var gate = new ManualResetEvent(false);
+            ctx.BeginListNewsHeadlines("UK", 14, ar =>
+                {
+                    ListNewsHeadlinesResponseDTO response = ctx.EndListNewsHeadlines(ar);
+                    Assert.AreEqual(14, response.Headlines.Length);
+                    gate.Set();
+                }, null);
 
-                gate.WaitOne(TimeSpan.FromSeconds(3));
-            }
+            gate.WaitOne(TimeSpan.FromSeconds(3));
         }
 
 
@@ -146,43 +142,42 @@ namespace CIAPI.Tests.Rpc
         {
             Console.WriteLine("SpecificRequestExceptionsAreRetriedTheCorrectNumberOfTimes");
 
-            using (var gate = new ManualResetEvent(false))
-            {
-                var requestFactory = new TestRequestFactory();
+            var gate = new ManualResetEvent(false);
+            var requestFactory = new TestRequestFactory();
 
-                const int EXPECTED_RETRY_COUNT = 2;
-                
-                var ctx = new CIAPI.Rpc.Client(new Uri(TestConfig.RpcUrl), new RequestCache(), requestFactory, _standardThrottleScopes, EXPECTED_RETRY_COUNT)
-                {
-                    UserName = TestConfig.ApiUsername,
-                    SessionId = TestConfig.ApiTestSessionId
-                };
+            const int EXPECTED_RETRY_COUNT = 2;
 
-                requestFactory.CreateTestRequest(NewsHeadlines14, TimeSpan.FromMilliseconds(300), null, null, new WebException("(500) internal server error"));
+            var ctx = new Client(new Uri(TestConfig.RpcUrl), new RequestCache(), requestFactory,
+                                           _standardThrottleScopes, EXPECTED_RETRY_COUNT)
+                          {
+                              UserName = TestConfig.ApiUsername,
+                              SessionId = TestConfig.ApiTestSessionId
+                          };
 
-                Exception exception = null;
-                
-                ctx.BeginListNewsHeadlines("UK", 14, ar =>
-                    {
-                        try
-                        {
-                            ctx.EndListNewsHeadlines(ar);
-                        }
-                        catch (Exception ex)
-                        {
-                            exception = ex;
-                        }
-                        finally
-                        {
-                            gate.Set();
-                        }
+            requestFactory.CreateTestRequest(NewsHeadlines14, TimeSpan.FromMilliseconds(300), null, null,
+                                             new WebException("(500) internal server error"));
 
-                    }, null);
-                gate.WaitOne(TimeSpan.FromSeconds(3));
-                Assert.IsNotNull(exception);
-                Assert.AreEqual(string.Format("(500) internal server error\r\nretried {0} times", EXPECTED_RETRY_COUNT),exception.Message);
-                
-            }
+            Exception exception = null;
+
+            ctx.BeginListNewsHeadlines("UK", 14, ar =>
+                                                     {
+                                                         try
+                                                         {
+                                                             ctx.EndListNewsHeadlines(ar);
+                                                         }
+                                                         catch (Exception ex)
+                                                         {
+                                                             exception = ex;
+                                                         }
+                                                         finally
+                                                         {
+                                                             gate.Set();
+                                                         }
+                                                     }, null);
+            gate.WaitOne(TimeSpan.FromSeconds(3));
+            Assert.IsNotNull(exception);
+            Assert.AreEqual(string.Format("(500) internal server error\r\nretried {0} times", EXPECTED_RETRY_COUNT),
+                            exception.Message);
         }
 
         [Test]
@@ -227,12 +222,12 @@ namespace CIAPI.Tests.Rpc
         private CIAPI.Rpc.Client BuildClientAndSetupResponse(string expectedJson)
         {
             var requestFactory = new TestRequestFactory();
-           
+
             requestFactory.CreateTestRequest(expectedJson);
 
             var ctx = new CIAPI.Rpc.Client(new Uri(TestConfig.RpcUrl), new RequestCache(), requestFactory, _standardThrottleScopes, 3);
             return ctx;
-        } 
+        }
         #endregion
     }
 }

@@ -1,7 +1,12 @@
 ﻿using System.Net;
 
 namespace CityIndex.JsonClient
-{
+{      
+    /// <summary>
+    /// allow for retries on select exception types
+    /// e.g. 50* server errors, timeouts and transport errors
+    /// DO NOT RETRY THROTTLE, AUTHENTICATION OR ARGUMENT EXCEPTIONS ETC
+    /// </summary>
     internal class RequestRetryDiscriminator
     {
         public bool ShouldRetry(WebException webException)

@@ -165,24 +165,23 @@ namespace CityIndex.JsonClient
 
             TDTO response = null;
             Exception exception = null;
-            using (var gate = new ManualResetEvent(false))
-            {
-                BeginRequest<TDTO>(ar =>
-                                       {
-                                           try
-                                           {
-                                               response = EndRequest(ar);
-                                           }
-                                           catch (Exception ex)
-                                           {
-                                               exception = ex;
-                                           }
+            var gate = new ManualResetEvent(false);
 
-                                           gate.Set();
-                                       }, null, target, uriTemplate, method, parameters, cacheDuration, throttleScope);
+            BeginRequest<TDTO>(ar =>
+                {
+                    try
+                    {
+                        response = EndRequest(ar);
+                    }
+                    catch (Exception ex)
+                    {
+                        exception = ex;
+                    }
 
-                gate.WaitOne();
-            }
+                    gate.Set();
+                }, null, target, uriTemplate, method, parameters, cacheDuration, throttleScope);
+
+            gate.WaitOne();
 
             if (exception != null)
             {
@@ -376,8 +375,16 @@ namespace CityIndex.JsonClient
                         catch (Exception ex)
                         {
 
-                            _cache.Remove<TDTO>(item.Url);
-                            item.CompleteResponse(null, new ApiException(ex));
+
+                            try
+                            {
+                                item.CompleteResponse(null, ApiException.Create(ex));
+                            }
+                            finally
+                            {
+                                _cache.Remove<TDTO>(item.Url);
+                            }
+                            
                         }
                     }
                 }, null);
@@ -466,32 +473,33 @@ namespace CityIndex.JsonClient
                             {
                                 string json = reader.ReadToEnd();
 
-                                // TODO: check json for exception 
+                                // TODO: check json for exception. question is: how to get the type in? a factory class that accepts json?
                                 Exception seralizedException = null;
 
                                 try
                                 {
+                                    
                                     item.CompleteResponse(json, seralizedException);
                                 }
                                 catch (Exception ex)
                                 {
-
+                                    // TODO: test this
+                                    _cache.Remove<TDTO>(item.Url);
                                     throw new ResponseHandlerException("Unhandled exception in caller's response handler", ex);
                                 }
                             }
                         }
                         catch (WebException wex)
                         {
-                            // TODO: allow for retries on select exception types
-                            // e.g. 50* server errors, timeouts and transport errors
-                            // DO NOT RETRY THROTTLE, AUTHENTICATION OR ARGUMENT EXCEPTIONS ETC
+                            
+
                             bool shouldRetry = new RequestRetryDiscriminator().ShouldRetry(wex);
 
                             if (shouldRetry && item.RetryCount < _retryCount)
                             {
-                                // FIXME: We need to rebuild the request CANNOT REUSE HTTPWEBREQUEST
+
                                 item.RetryCount++;
-                                item.ItemState = CacheItemState.Pending; // should already be pending - check this
+                                item.ItemState = CacheItemState.Pending;
 
                                 if (response != null)
                                 {
@@ -502,7 +510,10 @@ namespace CityIndex.JsonClient
                             }
                             else
                             {
-                                var exception = new ApiException(wex);
+                                
+
+                                var exception = ApiException.Create(wex);
+
                                 if (item.RetryCount > 0)
                                 {
                                     exception =
@@ -510,12 +521,28 @@ namespace CityIndex.JsonClient
                                             exception.Message +
                                             String.Format("\r\nretried {0} times", item.RetryCount), exception);
                                 }
-                                item.CompleteResponse(null, exception);
+
+                                try
+                                {
+                                    item.CompleteResponse(null, exception);
+                                }
+                                finally
+                                {
+                                    _cache.Remove<TDTO>(item.Url);
+                                }
                             }
                         }
                         catch (Exception ex)
                         {
-                            item.CompleteResponse(null, new ApiException(ex));
+
+                            try
+                            {
+                                item.CompleteResponse(null, ApiException.Create(ex));
+                            }
+                            finally
+                            {
+                                _cache.Remove<TDTO>(item.Url);
+                            }
                         }
                     }
                 });

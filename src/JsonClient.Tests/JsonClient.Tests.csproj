@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -31,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CassiniDev4-lib">
+      <HintPath>..\packages\CassiniDev4\CassiniDev4-lib.dll</HintPath>
+    </Reference>
     <Reference Include="Common.Logging">
       <HintPath>..\packages\Common.Logging-2.0.0\2.0\release\Common.Logging.dll</HintPath>
     </Reference>
@@ -63,6 +67,7 @@
     <Compile Include="JsonClientMocks\TestRequestInfo.cs" />
     <Compile Include="JsonClientMocks\TestWebReponse.cs" />
     <Compile Include="JsonClientMocks\TestRequestFactory.cs" />
+    <None Include="App.config" />
     <None Include="CodeGen\ActionScript\NewsDTO.as">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

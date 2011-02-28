@@ -116,20 +116,20 @@ namespace CityIndex.JsonClient
             // if already apiexception just throw
             if (_error != null)
             {
-                throw new ApiException(_error);
+                throw ApiException.Create(_error);
             }
 
             try
             {
                 return JsonConvert.DeserializeObject<TDTO>(_responseText);
-        
+
             }
             catch (Exception ex)
             {
 
                 throw new ApiSerializationException("Invalid JSON.", _responseText);
             }
-            }
+        }
 
         internal void SetComplete()
         {

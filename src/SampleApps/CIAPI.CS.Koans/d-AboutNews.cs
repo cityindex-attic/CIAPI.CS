@@ -49,7 +49,7 @@ namespace CIAPI.CS.Koans
             KoanAssert.That(newsStory.NewsDetail.Story, Is.StringContaining("<p>"), "which contains simple HTML");
         }
 
-        //[Koan(Order = 4)] 
+        [Koan(Order = 4)] 
         // DAVID: we have a serious issue regarding subsequent exceptions (i am working on it)- as it is you get one exception, pick one. 
         // I think the 'be diligent catching async errors' is more important.
         public void AskingForTooManyHeadlinesIsConsideredABadRequest()
