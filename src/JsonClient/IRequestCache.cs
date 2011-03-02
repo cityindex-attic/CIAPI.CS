@@ -6,7 +6,7 @@ namespace CityIndex.JsonClient
     /// <summary>
     /// A thread-safe, self purging cache of <see cref="CacheItem{TDTO}"/>
     /// </summary>
-    public interface IRequestCache
+    public interface IRequestCache : IDisposable
     {
         /// <summary>
         /// Gets or creates a <see cref="CacheItem{TDTO}"/> for supplied url (case insensitive).

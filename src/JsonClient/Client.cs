@@ -606,5 +606,39 @@ namespace CityIndex.JsonClient
 
 
         #endregion
+
+        private bool _disposed;
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    // dispose managed resources here
+                    if (_cache != null)
+                    {
+                        _cache.Dispose();    
+                    }
+                    if(_throttleScopes!=null)
+                    {
+                        foreach (KeyValuePair<string, IThrottedRequestQueue> throttleScope in _throttleScopes)
+                        {
+                            if (throttleScope.Value != null)
+                            {
+                                throttleScope.Value.Dispose();
+                            }
+                            
+                        }
+                    }
+                }
+
+                _disposed = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+        }
     }
 }

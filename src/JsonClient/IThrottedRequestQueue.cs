@@ -6,7 +6,7 @@ namespace CityIndex.JsonClient
     ///<summary>
     /// Describes a self throttling asynchronous request queue.
     ///</summary>
-    public interface IThrottedRequestQueue
+    public interface IThrottedRequestQueue : IDisposable
     {
         /// <summary>
         /// The number of requests that have been dispatched

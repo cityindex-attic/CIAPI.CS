@@ -278,5 +278,25 @@ namespace CityIndex.JsonClient
                     executeOnlyOnce: true);
             #endif
         }
+
+        private bool _disposed;
+
+        private void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    // TODO: stop background thread here
+                }
+
+                _disposed = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+        }
     }
 }

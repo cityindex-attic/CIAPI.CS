@@ -6,7 +6,7 @@ namespace CityIndex.JsonClient
     ///<summary>
     /// Describes a general purpose HTTP JSON API client
     ///</summary>
-    public interface IJsonClient
+    public interface IJsonClient:IDisposable
     {
         /// <summary>
         /// Very simple synchronous wrapper of the begin/end methods.
