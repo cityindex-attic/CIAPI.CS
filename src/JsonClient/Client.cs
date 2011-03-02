@@ -512,14 +512,18 @@ namespace CityIndex.JsonClient
                             {
 
 
-                                var exception = new ApiException(wex.Message + "\r\nREQUEST INFO:\r\n" + item.ToString(), wex);
+                                ApiException exception;
 
                                 if (item.RetryCount > 0)
                                 {
-                                    exception =
-                                        new ApiException(
-                                            exception.Message +
-                                            String.Format(exception.Message + "\r\nretried {0} times" + "\r\nREQUEST INFO:\r\n" + item.ToString(), item.RetryCount), exception);
+
+
+
+                                    exception = new ApiException(wex.Message + String.Format("\r\nretried {0} times", item.RetryCount) + "\r\nREQUEST INFO:\r\n" + item.ToString(), wex);
+                                }
+                                else
+                                {
+                                    exception = new ApiException(wex.Message + "\r\nREQUEST INFO:\r\n" + item.ToString(), wex);
                                 }
 
                                 try

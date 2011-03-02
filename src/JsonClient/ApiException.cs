@@ -67,17 +67,23 @@ namespace CityIndex.JsonClient
         {
             try
             {
-                using (Stream stream = inner.Response.GetResponseStream())
+                // test is breaking this
+                // TODO: add response to test request?
+                if (inner.Response!=null)
                 {
-                    if (stream != null)
+                    using (Stream stream = inner.Response.GetResponseStream())
                     {
-                        using (var reader = new StreamReader(stream))
+                        if (stream != null)
                         {
-                            ResponseText = reader.ReadToEnd();
+                            using (var reader = new StreamReader(stream))
+                            {
+                                ResponseText = reader.ReadToEnd();
 
+                            }
                         }
                     }
                 }
+              
             }
             catch (Exception ex)
             {

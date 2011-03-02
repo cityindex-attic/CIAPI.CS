@@ -163,7 +163,7 @@ namespace CIAPI.Tests.Rpc
                                                      {
                                                          try
                                                          {
-                                                             ctx.EndListNewsHeadlines(ar);
+                                                             var response = ctx.EndListNewsHeadlines(ar);
                                                          }
                                                          catch (Exception ex)
                                                          {
@@ -174,10 +174,9 @@ namespace CIAPI.Tests.Rpc
                                                              gate.Set();
                                                          }
                                                      }, null);
-            gate.WaitOne(TimeSpan.FromSeconds(3));
+            gate.WaitOne(TimeSpan.FromSeconds(30));
             Assert.IsNotNull(exception);
-            Assert.AreEqual(string.Format("(500) internal server error\r\nretried {0} times", EXPECTED_RETRY_COUNT),
-                            exception.Message);
+            Assert.IsTrue(exception.Message.Contains(string.Format("(500) internal server error\r\nretried {0} times", EXPECTED_RETRY_COUNT)));
         }
 
         [Test]

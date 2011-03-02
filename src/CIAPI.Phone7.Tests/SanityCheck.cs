@@ -16,9 +16,8 @@ namespace CIAPI.Phone7.Tests
     [TestClass]
     public class IntegrationTests : SilverlightTest
     {
-        [TestMethod, Ignore]
+        [TestMethod]
         [Asynchronous]
-        [Description("This test is currently failing to to a server issue.")]
         public void CanLoginLogout()
         {
             var rpcClient = new Rpc.Client(App.RpcUri);
