@@ -384,7 +384,7 @@ namespace CityIndex.JsonClient
                             {
                                 _cache.Remove<TDTO>(item.Url);
                             }
-                            
+
                         }
                     }
                 }, null);
@@ -478,7 +478,7 @@ namespace CityIndex.JsonClient
 
                                 try
                                 {
-                                    
+
                                     item.CompleteResponse(json, seralizedException);
                                 }
                                 catch (Exception ex)
@@ -491,7 +491,7 @@ namespace CityIndex.JsonClient
                         }
                         catch (WebException wex)
                         {
-                            
+
 
                             bool shouldRetry = new RequestRetryDiscriminator().ShouldRetry(wex);
 
@@ -510,16 +510,16 @@ namespace CityIndex.JsonClient
                             }
                             else
                             {
-                                
 
-                                var exception = ApiException.Create(wex);
+
+                                var exception = new ApiException(wex.Message + "\r\nREQUEST INFO:\r\n" + item.ToString(), wex);
 
                                 if (item.RetryCount > 0)
                                 {
                                     exception =
                                         new ApiException(
                                             exception.Message +
-                                            String.Format("\r\nretried {0} times", item.RetryCount), exception);
+                                            String.Format(exception.Message + "\r\nretried {0} times" + "\r\nREQUEST INFO:\r\n" + item.ToString(), item.RetryCount), exception);
                                 }
 
                                 try
@@ -537,7 +537,7 @@ namespace CityIndex.JsonClient
 
                             try
                             {
-                                item.CompleteResponse(null, ApiException.Create(ex));
+                                item.CompleteResponse(null, new ApiException(ex.Message + "\r\nREQUEST INFO:\r\n" + item.ToString(), ex));
                             }
                             finally
                             {

@@ -17,8 +17,56 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace CIAPI.Silverlight.TestsMS
 {
     [TestClass]
-    public class IssueResolutionScratchpadFixture
+    public class IssueResolutionScratchpadFixture : SilverlightTest
     {
+        [TestMethod]
+        [Asynchronous]
+        public void EnsureSilverlightCanConnect()
+        {
+            var client = new Rpc.Client(new Uri(TestConfig.ApiUrl));
 
+            client.BeginLogIn(TestConfig.ApiUsername, TestConfig.ApiPassword,
+                ar =>
+                {
+                    EnqueueCallback(() =>
+                    {
+                        try
+                        {
+
+                            client.EndLogIn(ar);
+                            client.BeginListNewsHeadlines("UK", 10, ar2 =>
+                                {
+                                    EnqueueCallback(() =>
+                                                        {
+                                                            var headlines = client.EndListNewsHeadlines(ar2);
+                                                            Assert.IsTrue(headlines.Headlines.Length > 0);
+                                                            client.BeginLogOut(ar3 =>
+                                                                                   {
+
+                                                                                       EnqueueCallback(() =>
+                                                                                                           {
+                                                                                                               var loggedOut = client.EndLogOut(ar3);
+                                                                                                               Assert.
+                                                                                                                   IsTrue
+                                                                                                                   (loggedOut);
+                                                                                                               EnqueueTestComplete();
+                                                                                                           });
+                                                                                   }, null);
+
+                                                        });
+
+
+                                }, null);
+
+                        }
+                        catch (Exception exc)
+                        {
+                            throw;
+                        }
+
+                    });
+
+                }, null);
+        }
     }
 }

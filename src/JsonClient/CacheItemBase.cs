@@ -28,7 +28,7 @@ namespace CityIndex.JsonClient
         public string ThrottleScope { get; set; }
         public string Target { get; set; }
         public string UriTemplate { get; set; }
-        public WebRequest Request { get; set; }        
+        public WebRequest Request { get; set; }
 
         /// <summary>
         /// The result of this item's request, if any
@@ -95,21 +95,21 @@ namespace CityIndex.JsonClient
 
             if (this.Parameters != null)
             {
-            sb.AppendFormat("Parameters      : \r\n");
+                sb.AppendFormat("Parameters      : \r\n");
                 foreach (KeyValuePair<string, object> kvp in this.Parameters)
                 {
-                    sb.AppendFormat("\t{0}: {1}\r\n", kvp.Key, kvp.Value ?? "NULL");
+                    sb.AppendFormat("\t{0}: {1}\r\n", kvp.Key, kvp.Key.ToLower() == "password" ? "*****" : kvp.Value ?? "NULL");
                 }
 
             }
 
             if (this.Request != null)
             {
-            sb.AppendFormat("Request URI     : {0}\r\n", this.Request.RequestUri.AbsoluteUri);
+                sb.AppendFormat("Request URI     : {0}\r\n", this.Request.RequestUri.AbsoluteUri);
 
                 if (this.Request.Headers != null)
                 {
-            sb.AppendFormat("Request Headers : \r\n");
+                    sb.AppendFormat("Request Headers : \r\n");
                     foreach (string header in this.Request.Headers)
                     {
                         sb.AppendFormat("\t{0}: {1}\r\n", header, this.Request.Headers[header] ?? "NULL");

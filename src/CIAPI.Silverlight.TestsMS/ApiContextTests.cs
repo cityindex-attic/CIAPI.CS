@@ -49,10 +49,12 @@ namespace CIAPI.Silverlight.TestsMS
                 EnqueueCallback(() =>
                                     {
                                         Assert.IsFalse(string.IsNullOrEmpty(response.Session));
+                                        EnqueueTestComplete();
                                     }
+
                     );
 
-                EnqueueTestComplete();
+                
             }, null);
 
         }
@@ -80,10 +82,11 @@ namespace CIAPI.Silverlight.TestsMS
                 {
                     var response = ctx.EndDeleteSession(ar);
                     Assert.IsTrue(response.LoggedOut);
+                    EnqueueTestComplete();
                 }
             );
 
-                EnqueueTestComplete();
+                
             }, null);
         }
 
@@ -115,8 +118,9 @@ namespace CIAPI.Silverlight.TestsMS
                                         {
                                             ListNewsHeadlinesResponseDTO response = ctx.EndListNewsHeadlines(ar);
                                             Assert.AreEqual(14, response.Headlines.Length);
+                                            EnqueueTestComplete();
                                         });
-                    EnqueueTestComplete();
+                    
                 }, null);
 
         }
