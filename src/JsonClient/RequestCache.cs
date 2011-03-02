@@ -16,6 +16,8 @@ namespace CityIndex.JsonClient
         private readonly TimeSpan _defaultCacheDuration;
         private readonly Dictionary<string, CacheItemBase> _items;
         private readonly object _lock;
+        private readonly Thread _backgroundThread;
+        private volatile bool _disposing;
 
         #endregion
 
@@ -25,7 +27,7 @@ namespace CityIndex.JsonClient
         /// Instantiates a <see cref="RequestCache"/> with default purge interval of 10 seconds and default cache duration of 0 milliseconds.
         /// </summary>
         public RequestCache()
-            : this(TimeSpan.FromSeconds(10), TimeSpan.FromMilliseconds(0))
+            : this(TimeSpan.FromSeconds(2), TimeSpan.FromMilliseconds(0))
         {
         }
 
@@ -39,11 +41,32 @@ namespace CityIndex.JsonClient
             _defaultCacheDuration = defaultCacheDuration;
             _lock = new object();
             _items = new Dictionary<string, CacheItemBase>();
-            new Timer(PurgeExpiredItems, null, TimeSpan.FromMilliseconds(10), purgeInterval);
+            _backgroundThread = new Thread(() =>
+                                             {
+
+
+                                                 while (true)
+                                                 {
+                                                     if (_disposing)
+                                                     {
+                                                         return;
+                                                     }
+
+                                                     // TODO: how/why/should we surface exceptions on purge?
+
+                                                     PurgeExpiredItems(null);
+
+                                                     Thread.Sleep(purgeInterval);
+                                                 }
+
+                                             });
+
+            _backgroundThread.Start();
+            //new Timer(PurgeExpiredItems, null, TimeSpan.FromMilliseconds(10), purgeInterval);
         }
 
         #endregion
-        
+
         #region IRequestCache Members
 
         /// <summary>
@@ -61,14 +84,14 @@ namespace CityIndex.JsonClient
 
                 EnsureItemCurrency(url);
 
-                return _items.ContainsKey(url) 
-                    ? GetItem<TDTO>(url) 
+                return _items.ContainsKey(url)
+                    ? GetItem<TDTO>(url)
                     : CreateAndAddItem<TDTO>(url);
             }
         }
 
 
-        
+
         /// <summary>
         /// Returns a <see cref="CacheItem{TDTO}"/> keyed by url (case insensitive)
         /// </summary>
@@ -83,7 +106,7 @@ namespace CityIndex.JsonClient
                 url = url.ToLower();
                 if (_items.ContainsKey(url))
                 {
-                    return (CacheItem<TDTO>) _items[url];
+                    return (CacheItem<TDTO>)_items[url];
                 }
                 throw new KeyNotFoundException("item for " + url + " was not found in the cache");
             }
@@ -115,7 +138,7 @@ namespace CityIndex.JsonClient
         }
 
         #endregion
-        
+
         #region Private implementation
 
 
@@ -222,7 +245,11 @@ namespace CityIndex.JsonClient
             {
                 if (disposing)
                 {
-                    // TODO: stop background thread here
+                    _disposing = true;
+                    while (_backgroundThread.IsAlive)
+                    {
+                        Thread.Sleep(100);
+                    }
                 }
 
                 _disposed = true;
@@ -235,5 +262,5 @@ namespace CityIndex.JsonClient
         }
     }
 
- 
+
 }

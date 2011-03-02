@@ -34,7 +34,8 @@ namespace CityIndex.JsonClient
         private bool _notifiedWaitingOnWindow;
         private int _outstandingRequests;
         private bool _processingQueue;
-        private Timer _timer;
+        private volatile bool _disposing;
+        private readonly Thread _backgroundThread;
 
         #endregion
 
@@ -62,7 +63,21 @@ namespace CityIndex.JsonClient
             _throttleWindowTime = throttleWindowTime;
             _throttleWindowCount = throttleWindowCount;
             _maxPendingRequests = maxPendingRequests;
-            _timer = new Timer(ProcessQueue, null, 100, 50);
+            _backgroundThread = new Thread(() =>
+                                               {
+                                                   while (true)
+                                                   {
+                                                       if (_disposed)
+                                                       {
+                                                           return;
+                                                       }
+                                                       // TODO: how/if handle exceptions?
+                                                       ProcessQueue(null);
+                                                       Thread.Sleep(100);
+                                                   }
+                                               });
+            _backgroundThread.Start();
+            
         }
 
         #endregion
@@ -121,7 +136,7 @@ namespace CityIndex.JsonClient
             get { return _throttleWindowTime; }
         }
 
-        
+
 
 
         /// <summary>
@@ -202,7 +217,7 @@ namespace CityIndex.JsonClient
 
                                 _outstandingRequests--;
 
-                                
+
                                 request.AsyncResultHandler(ar, request);
 
                                 var breakTarget = 0;
@@ -261,22 +276,22 @@ namespace CityIndex.JsonClient
             // it. will not be terribly clean as it will prolly have to span both the throttle and the cache. I will look into it
 
 
-            #if !SILVERLIGHT
+#if !SILVERLIGHT
             ThreadPool.RegisterWaitForSingleObject(
-                    waitObject:result.AsyncWaitHandle,
-                    callBack:(state, isTimedOut) =>
+                    waitObject: result.AsyncWaitHandle,
+                    callBack: (state, isTimedOut) =>
                         {
                             if (!isTimedOut) return;
                             if (state.GetType() != typeof(RequestHolder)) return;
-                            
+
                             var rh = (RequestHolder)state;
                             Log.Error(string.Format("Aborting #{0} : {1} because it has exceeded timeout {2}", rh.RequestIndex, rh.WebRequest.RequestUri, rh.RequestTimeout));
                             rh.WebRequest.Abort();
                         },
-                    state: request, 
+                    state: request,
                     timeout: request.RequestTimeout,
                     executeOnlyOnce: true);
-            #endif
+#endif
         }
 
         private bool _disposed;
@@ -287,7 +302,12 @@ namespace CityIndex.JsonClient
             {
                 if (disposing)
                 {
-                    // TODO: stop background thread here
+                    _disposed = true;
+
+                    while (_backgroundThread.IsAlive)
+                    {
+                        Thread.Sleep(100);
+                    }
                 }
 
                 _disposed = true;

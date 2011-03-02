@@ -20,6 +20,9 @@ namespace CityIndex.JsonClient.Tests
 
         }
 
+
+        
+
         public static bool UrlIsValid(string smtpHost)
         {
             bool br = false;

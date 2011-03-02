@@ -22,6 +22,14 @@ namespace CityIndex.JsonClient.Tests
 
         #region expected behavior
 
+        [Test,Description("this test is not really a test. I am using it to dispose the client to interactively check that the background threads are disposed. no reason to get more complicated yet as we may just merge the types")]
+        public void EnsureCacheAndThrottleAreDisposed()
+        {
+            var client = new JsonClient.Client(new Uri("http://apiurl.foo.bar"));
+            client.Dispose();
+            
+            
+        }
         [Test, ExpectedExceptionAttribute(typeof(WebException), ExpectedMessage = "The remote server returned an error: (400) Bad Request."), Category("expected behavior")]
         public void SanityCheckServerIsRunningAndWillServeException()
         {
