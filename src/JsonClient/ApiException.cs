@@ -4,9 +4,6 @@ using System.Net;
 
 namespace CityIndex.JsonClient
 {
-
-
-
     /// <summary>
     /// An exception class that will retrieve the response text of the inner exception if it is a WebException
     /// </summary>
@@ -15,53 +12,55 @@ namespace CityIndex.JsonClient
         internal ApiException(Exception inner)
             : base(inner.Message, inner)
         {
-
             if (inner is WebException)
             {
-                GetResponseText((WebException)inner);
+                GetResponseText((WebException) inner);
             }
         }
 
+        ///<summary>
+        ///</summary>
+        ///<param name="message"></param>
         public ApiException(string message)
             : base(message)
         {
-
         }
 
+        ///<summary>
+        ///</summary>
+        ///<param name="message"></param>
+        ///<param name="inner"></param>
         public ApiException(string message, Exception inner)
             : base(message, inner)
         {
             if (inner is WebException)
             {
-                GetResponseText((WebException)inner);
+                GetResponseText((WebException) inner);
             }
             if (inner is ApiException)
             {
-                ResponseText = ((ApiException)inner).ResponseText;
+                ResponseText = ((ApiException) inner).ResponseText;
             }
         }
 
 
+        ///<summary>
+        ///</summary>
+        public string ResponseText { get; protected set; }
+
+        ///<summary>
+        ///</summary>
+        ///<param name="inner"></param>
+        ///<returns></returns>
         public static ApiException Create(Exception inner)
         {
             if (inner is ApiException)
             {
-                return (ApiException)inner;
+                return (ApiException) inner;
             }
 
             return new ApiException(inner);
         }
-
-
-
-        
-
-
-        
-
-
-
-        public string ResponseText { get; protected set; }
 
         private void GetResponseText(WebException inner)
         {
@@ -69,7 +68,7 @@ namespace CityIndex.JsonClient
             {
                 // test is breaking this
                 // TODO: add response to test request?
-                if (inner.Response!=null)
+                if (inner.Response != null)
                 {
                     using (Stream stream = inner.Response.GetResponseStream())
                     {
@@ -78,14 +77,12 @@ namespace CityIndex.JsonClient
                             using (var reader = new StreamReader(stream))
                             {
                                 ResponseText = reader.ReadToEnd();
-
                             }
                         }
                     }
                 }
-              
             }
-            catch (Exception ex)
+            catch 
             {
                 // should swallow?
                 ResponseText = "Could not parse exception response";
@@ -98,7 +95,10 @@ namespace CityIndex.JsonClient
     ///</summary>
     public class ApiSerializationException : ApiException
     {
-
+        ///<summary>
+        ///</summary>
+        ///<param name="message"></param>
+        ///<param name="responseText"></param>
         public ApiSerializationException(string message, string responseText)
             : base(message)
         {
@@ -116,22 +116,22 @@ namespace CityIndex.JsonClient
         {
             if (inner is ApiException)
             {
-                ResponseText = ((ApiException)inner).ResponseText;
+                ResponseText = ((ApiException) inner).ResponseText;
             }
         }
+
         internal ResponseHandlerException(string message)
             : base(message)
         {
-            
         }
+
         internal ResponseHandlerException(string message, Exception inner)
             : base(message, inner)
         {
             if (inner is ApiException)
             {
-                ResponseText = ((ApiException)inner).ResponseText;
+                ResponseText = ((ApiException) inner).ResponseText;
             }
         }
-         
     }
 }

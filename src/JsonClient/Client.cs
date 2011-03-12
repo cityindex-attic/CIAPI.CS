@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Net;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using Common.Logging;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 #if SILVERLIGHT
 using System.Net.Browser;
@@ -23,13 +19,17 @@ namespace CityIndex.JsonClient
     {
         #region Fields
 
+#pragma warning disable 169
         private static readonly ILog Log = LogManager.GetLogger(typeof(Client));
+#pragma warning restore 169
         private readonly Uri _uri;
         private readonly object _lockObj = new object();
         private readonly IRequestController _requestController;
 
         #endregion
+        // ReSharper disable EmptyConstructor
         static Client()
+        // ReSharper restore EmptyConstructor
         {
 #if SILVERLIGHT
     // this enables the client framework stack - necessary for access to headers
@@ -70,7 +70,7 @@ namespace CityIndex.JsonClient
         ///</summary>
         ///<param name="uri"></param>
         public Client(Uri uri)
-            : this(uri, new RequestController(TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(0), 2, new RequestFactory(), new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10, "default")))
+            : this(uri, new RequestController( TimeSpan.FromSeconds(0), 2, new RequestFactory(), new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10, "default")))
         {
 
         }
@@ -186,7 +186,6 @@ namespace CityIndex.JsonClient
             return response;
         }
 
-
         ///<summary>
         /// Very simple synchronous wrapper of the begin/end methods.
         ///</summary>
@@ -199,8 +198,6 @@ namespace CityIndex.JsonClient
             return Request<TDTO>(target, null, method, null, TimeSpan.FromMilliseconds(0), null);
         }
 
-        //string target, string method
-        //string target, string uriTemplate, string method, Dictionary<string, object> parameters
 
         ///<summary>
         ///</summary>
@@ -249,7 +246,7 @@ namespace CityIndex.JsonClient
             }
         }
 
-        
+
 
         ///<summary>
         ///</summary>

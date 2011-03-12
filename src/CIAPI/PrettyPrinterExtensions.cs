@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using System.Text;
 
 namespace CIAPI
@@ -16,13 +17,13 @@ namespace CIAPI
         public static string ToStringWithValues(this object dto)
         {
             var sb = new StringBuilder();
-            foreach (var propertyInfo in dto.GetType().GetProperties())
+            foreach (PropertyInfo propertyInfo in dto.GetType().GetProperties())
             {
-                var formattedValue = "";
+                string formattedValue = "";
                 switch (propertyInfo.PropertyType.Name)
                 {
                     case "DateTime":
-                        formattedValue = ((DateTime)propertyInfo.GetValue(dto, null)).ToString("u");
+                        formattedValue = ((DateTime) propertyInfo.GetValue(dto, null)).ToString("u");
                         break;
                     default:
                         formattedValue = propertyInfo.GetValue(dto, null).ToString();
@@ -32,6 +33,5 @@ namespace CIAPI
             }
             return string.Format("{0}: \n{1}", dto.GetType().Name, sb);
         }
-
     }
 }

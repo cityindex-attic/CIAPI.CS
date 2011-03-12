@@ -30,6 +30,10 @@ namespace CityIndex.JsonClient.Converters
         }
 
 
+        ///<summary>
+        ///</summary>
+        ///<param name="self"></param>
+        ///<returns></returns>
         public static Int64 ToUnixTime(this DateTimeOffset self)
         {
             return self.ToUnixTime(true);
@@ -65,6 +69,8 @@ namespace CityIndex.JsonClient.Converters
         }
     }
 
+    ///<summary>
+    ///</summary>
     public static class UnixDateTimeHelper
     {
         private const string InvalidUnixEpochErrorMessage = "Unix epoc starts January 1st, 1970";

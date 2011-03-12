@@ -9,6 +9,9 @@ namespace CityIndex.JsonClient
     public interface IThrottedRequestQueue : IDisposable
     {
         
+        ///<summary>
+        ///</summary>
+        ///<param name="ignored"></param>
         void ProcessQueue(object ignored);
 
         ///<summary>

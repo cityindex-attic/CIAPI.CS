@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace CityIndex.JsonClient
 {
@@ -70,13 +69,7 @@ namespace CityIndex.JsonClient
 
                     }
                 }
-                catch (Exception ex)
-                {
-                    // TODO: should we fail on first handler exception or cache the exceptions while the list
-                    // is completed and then throw? My thought is that a broken handler is something that should be addressed
-                    // and just throwing simplifies our logic here. am i being lazy?
-                    throw;
-                }
+                
                 finally
                 {
                     Expiration = DateTimeOffset.UtcNow.Add(CacheDuration);

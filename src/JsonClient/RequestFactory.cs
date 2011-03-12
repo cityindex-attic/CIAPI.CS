@@ -2,7 +2,6 @@
 using System.Net;
 using Common.Logging;
 
-
 namespace CityIndex.JsonClient
 {
     /// <summary>
@@ -10,8 +9,11 @@ namespace CityIndex.JsonClient
     /// </summary>
     public class RequestFactory : IRequestFactory
     {
-        private const int DEFAULT_REQUEST_TIMEOUT_IN_SEC = 30;
-        private static readonly ILog Log = LogManager.GetLogger(typeof(RequestFactory));
+        private const int DefaultRequestTimeoutInSec = 30;
+#pragma warning disable 169
+        private static readonly ILog Log = LogManager.GetLogger(typeof (RequestFactory));
+#pragma warning restore 169
+
         /// <summary>
         /// The amount of time to wait for a response before throwing an exception.
         /// Defaults to 30 seconds
@@ -22,7 +24,7 @@ namespace CityIndex.JsonClient
         ///</summary>
         public RequestFactory()
         {
-            RequestTimeout = TimeSpan.FromSeconds(DEFAULT_REQUEST_TIMEOUT_IN_SEC);
+            RequestTimeout = TimeSpan.FromSeconds(DefaultRequestTimeoutInSec);
 
 #if !SILVERLIGHT
             DecompressionMethods = DecompressionMethods.GZip | DecompressionMethods.Deflate;
@@ -30,8 +32,11 @@ namespace CityIndex.JsonClient
         }
 
 #if !SILVERLIGHT
+        ///<summary>
+        ///</summary>
         public DecompressionMethods DecompressionMethods { get; set; }
-#endif 
+#endif
+
         ///<summary>
         /// Returns instances of <see cref="WebRequest"/>.
         ///</summary>
@@ -39,7 +44,7 @@ namespace CityIndex.JsonClient
         ///<returns></returns>
         public WebRequest Create(string uri)
         {
-            HttpWebRequest request = (HttpWebRequest) WebRequest.Create(uri);
+            var request = (HttpWebRequest) WebRequest.Create(uri);
 #if !SILVERLIGHT
             request.Timeout = Convert.ToInt32(RequestTimeout.TotalMilliseconds);
 #else
@@ -54,7 +59,5 @@ namespace CityIndex.JsonClient
 
             return request;
         }
-
-       
     }
 }

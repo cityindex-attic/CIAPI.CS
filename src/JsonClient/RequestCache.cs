@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading;
 using Common.Logging;
 
 namespace CityIndex.JsonClient
@@ -16,8 +15,6 @@ namespace CityIndex.JsonClient
         private readonly TimeSpan _defaultCacheDuration;
         private readonly Dictionary<string, CacheItemBase> _items;
         private readonly object _lock;
-       
-   
 
         #endregion
 
@@ -27,28 +24,25 @@ namespace CityIndex.JsonClient
         /// Instantiates a <see cref="RequestCache"/> with default purge interval of 10 seconds and default cache duration of 0 milliseconds.
         /// </summary>
         public RequestCache()
-            : this(TimeSpan.FromSeconds(2), TimeSpan.FromMilliseconds(0))
+            : this(TimeSpan.FromMilliseconds(0))
         {
         }
 
         /// <summary>
-        /// Instantiates a <see cref="RequestCache"/> with supplied <paramref name="purgeInterval"/> and <paramref name="defaultCacheDuration"/>
+        /// Instantiates a <see cref="RequestCache"/> with supplied <paramref name="defaultCacheDuration"/>
         /// </summary>
-        /// <param name="purgeInterval">How often to scan the cache and purge expired items.</param>
+
         /// <param name="defaultCacheDuration">The default cache lifespan to apply to <see cref="CacheItem{TDTO}"/></param>
-        public RequestCache(TimeSpan purgeInterval, TimeSpan defaultCacheDuration)
+        public RequestCache(TimeSpan defaultCacheDuration)
         {
             _defaultCacheDuration = defaultCacheDuration;
             _lock = new object();
             _items = new Dictionary<string, CacheItemBase>();
- 
         }
 
         #endregion
 
         #region IRequestCache Members
-
-        
 
         /// <summary>
         /// Gets or creates a <see cref="CacheItem{TDTO}"/> for supplied url (case insensitive).
@@ -66,11 +60,10 @@ namespace CityIndex.JsonClient
                 EnsureItemCurrency(url);
 
                 return _items.ContainsKey(url)
-                    ? GetItem<TDTO>(url)
-                    : CreateAndAddItem<TDTO>(url);
+                           ? GetItem<TDTO>(url)
+                           : CreateAndAddItem<TDTO>(url);
             }
         }
-
 
 
         /// <summary>
@@ -122,7 +115,6 @@ namespace CityIndex.JsonClient
 
         #region Private implementation
 
-
         /// <summary>
         /// Is called on the purge timer to remove completed and expired <see cref="CacheItem{TDTO}"/> from the internal map.
         /// </summary>
@@ -133,7 +125,9 @@ namespace CityIndex.JsonClient
             {
                 var toRemove = new List<string>();
 
+                // ReSharper disable LoopCanBeConvertedToQuery
                 foreach (var item in _items)
+                // ReSharper restore LoopCanBeConvertedToQuery
                 {
                     if (item.Value.Expiration <= DateTimeOffset.UtcNow &&
                         item.Value.ItemState == CacheItemState.Complete)
@@ -157,13 +151,13 @@ namespace CityIndex.JsonClient
         /// <param name="url"></param>
         /// <returns></returns>
         private CacheItem<TDTO> CreateAndAddItem<TDTO>(string url)
-                where TDTO : class, new()
+            where TDTO : class, new()
         {
             var item = new CacheItem<TDTO>
-                                    {
-                                        ItemState = CacheItemState.New,
-                                        CacheDuration = _defaultCacheDuration
-                                    };
+                           {
+                               ItemState = CacheItemState.New,
+                               CacheDuration = _defaultCacheDuration
+                           };
 
             _items.Add(url, item);
 
@@ -210,17 +204,14 @@ namespace CityIndex.JsonClient
         private void EnsureItemCurrency(string url)
         {
             bool itemIsExpired = _items.ContainsKey(url) && _items[url].ItemState == CacheItemState.Complete
-                                && _items[url].Expiration <= DateTimeOffset.UtcNow;
+                                 && _items[url].Expiration <= DateTimeOffset.UtcNow;
 
             if (itemIsExpired)
             {
                 _items.Remove(url);
             }
         }
+
         #endregion
-
- 
     }
-
-
 }

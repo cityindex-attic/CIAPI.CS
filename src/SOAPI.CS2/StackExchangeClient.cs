@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net;
 using CityIndex.JsonClient;
 
 namespace SOAPI.CS2
@@ -14,6 +13,7 @@ namespace SOAPI.CS2
         /// 
         /// </summary>
         public string ApiKey { get; set; }
+
         #region cTor
 
         /// <summary>
@@ -23,8 +23,8 @@ namespace SOAPI.CS2
         /// <param name="url"></param>
         public StackExchangeClient(string apiKey, string url)
             : base(
-                new Uri(url), new RequestCache(), new RequestFactory(),
-                new Dictionary<string, IThrottedRequestQueue> { { "", Throttle.Instance } }, 3)
+                new Uri(url), new RequestController(TimeSpan.FromSeconds(0), 2, new RequestFactory(), Throttle.Instance)
+                )
         {
             ApiKey = apiKey;
         }
@@ -34,20 +34,14 @@ namespace SOAPI.CS2
         /// </summary>
         /// <param name="apiKey"></param>
         /// <param name="uri"></param>
-        /// <param name="cache"></param>
-        /// <param name="requestFactory"></param>
-        /// <param name="throttleScopes"></param>
-        /// <param name="retryCount"></param>
-        public StackExchangeClient(string apiKey, Uri uri, IRequestCache cache, IRequestFactory requestFactory,
-                               Dictionary<string, IThrottedRequestQueue> throttleScopes, int retryCount)
-            : base(uri, cache, requestFactory, throttleScopes, retryCount)
+        /// <param name="requestController"></param>
+        public StackExchangeClient(string apiKey, Uri uri, IRequestController requestController)
+            : base(uri, requestController)
         {
             ApiKey = apiKey;
         }
 
         #endregion
-
- 
 
         /// <summary>
         /// 
@@ -58,7 +52,9 @@ namespace SOAPI.CS2
         /// <param name="parameters"></param>
         /// <param name="cacheDuration"></param>
         /// <param name="throttleScope"></param>
-        protected override void BeforeBuildUrl(string target, string uriTemplate, string method, Dictionary<string, object> parameters, TimeSpan cacheDuration, string throttleScope)
+        protected override void BeforeBuildUrl(string target, string uriTemplate, string method,
+                                               Dictionary<string, object> parameters, TimeSpan cacheDuration,
+                                               string throttleScope)
         {
             if (!string.IsNullOrEmpty(ApiKey))
             {

@@ -3,7 +3,6 @@ using System.Net;
 
 namespace CityIndex.JsonClient
 {
-
     /// <summary>
     /// Composition element for request related fields.
     /// </summary>
@@ -24,19 +23,23 @@ namespace CityIndex.JsonClient
         /// </summary>
         public Action<IAsyncResult, RequestHolder> AsyncResultHandler { get; set; }
 
+        ///<summary>
+        ///</summary>
         public TimeSpan RequestTimeout
         {
             get
             {
-              #if !SILVERLIGHT
-                return  TimeSpan.FromMilliseconds(WebRequest.Timeout);
-              #else
-                //FIXME: Need a way to set this when creating the request Silverlight (see related fix me in RequestFactory.Create
+#if !SILVERLIGHT
+                return TimeSpan.FromMilliseconds(WebRequest.Timeout);
+#else
+    //FIXME: Need a way to set this when creating the request Silverlight (see related fix me in RequestFactory.Create
                 return TimeSpan.FromMilliseconds(30*1000);
-              #endif
+#endif
             }
         }
 
+        ///<summary>
+        ///</summary>
         public int RequestIndex { get; set; }
     }
 }

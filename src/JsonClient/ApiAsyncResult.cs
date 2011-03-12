@@ -45,6 +45,8 @@ namespace CityIndex.JsonClient
             }
         }
 
+        ///<summary>
+        ///</summary>
         public Guid Id
         {
             get { return _id; }
@@ -122,11 +124,9 @@ namespace CityIndex.JsonClient
             try
             {
                 return JsonConvert.DeserializeObject<TDTO>(_responseText);
-
             }
-            catch (Exception ex)
+            catch
             {
-
                 throw new ApiSerializationException("Invalid JSON.", _responseText);
             }
         }

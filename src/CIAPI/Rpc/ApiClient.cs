@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
-using CityIndex.JsonClient;
 using CIAPI.DTO;
-using Newtonsoft.Json;
-
-
+using CityIndex.JsonClient;
 
 namespace CIAPI.Rpc
 {
@@ -13,7 +10,7 @@ namespace CIAPI.Rpc
     {
         // TODO: create throttle scope structure and build configuration
         public Client(Uri uri)
-            : base(uri, new RequestController(TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(0), 2, new RequestFactory(), new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10, "data"), new ThrottedRequestQueue(TimeSpan.FromSeconds(3), 1, 3, "trading")))
+            : base(uri,new RequestController(TimeSpan.FromSeconds(0), 2, new RequestFactory(),new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10, "data"),new ThrottedRequestQueue(TimeSpan.FromSeconds(3), 1, 3, "trading")))
         {
         }
 
@@ -44,14 +41,13 @@ namespace CIAPI.Rpc
         {
             if (url.IndexOf("/session", StringComparison.OrdinalIgnoreCase) == -1)
             {
-
                 request.Headers["UserName"] = UserName;
                 // API advertises session id as a GUID but treats as a string internally so we need to ucase here.
                 if (SessionId == null)
                 {
                     throw new ApiException("SessionId is null. Have you created a session? (logged in)");
                 }
-                request.Headers["Session"] = SessionId.ToString().ToUpper();
+                request.Headers["Session"] = SessionId.ToUpper();
             }
         }
 
@@ -69,10 +65,11 @@ namespace CIAPI.Rpc
             SessionId = null;
 
             var response = Request<CreateSessionResponseDTO>("session", "/", "POST", new Dictionary<string, object>
-                {
-                    {"UserName", userName},
-                    {"Password", password},
-                }, TimeSpan.FromMilliseconds(0), "data");
+                                                                                         {
+                                                                                             {"UserName", userName},
+                                                                                             {"Password", password},
+                                                                                         }, TimeSpan.FromMilliseconds(0),
+                                                             "data");
             SessionId = response.Session;
         }
 
@@ -84,17 +81,17 @@ namespace CIAPI.Rpc
         /// <param name="userName">Username is case sensitive</param>
         /// <param name="password">Password is case sensitive</param>
         /// <returns></returns>
-        public void BeginLogIn(String userName, String password, ApiAsyncCallback<CreateSessionResponseDTO> callback, object state)
+        public void BeginLogIn(String userName, String password, ApiAsyncCallback<CreateSessionResponseDTO> callback,
+                               object state)
         {
-
             UserName = userName;
             SessionId = null;
 
             BeginRequest(callback, state, "session", "/", "POST", new Dictionary<string, object>
-                {
-                    {"UserName", userName},
-                    {"Password", password},
-                }, TimeSpan.FromMilliseconds(0), "data");
+                                                                      {
+                                                                          {"UserName", userName},
+                                                                          {"Password", password},
+                                                                      }, TimeSpan.FromMilliseconds(0), "data");
         }
 
         public override TDTO EndRequest<TDTO>(ApiAsyncResult<TDTO> asyncResult)
@@ -106,9 +103,10 @@ namespace CIAPI.Rpc
             }
             catch (ApiSerializationException ex)
             {
-                throw new ServerConnectionException("Invalid response recieved.  Are you connecting to the correct server Url?  See ResponseText property for further details of response recieved.", ex.ResponseText);
+                throw new ServerConnectionException(
+                    "Invalid response recieved.  Are you connecting to the correct server Url?  See ResponseText property for further details of response recieved.",
+                    ex.ResponseText);
             }
-
         }
 
 
@@ -127,10 +125,10 @@ namespace CIAPI.Rpc
             var response = Request<SessionDeletionResponseDTO>("session",
                                                                "/deleteSession?userName={userName}&session={session}",
                                                                "POST", new Dictionary<string, object>
-                                                                   {
-                                                                       {"userName", UserName},
-                                                                       {"session", SessionId},
-                                                                   }, TimeSpan.FromMilliseconds(0), "data");
+                                                                           {
+                                                                               {"userName", UserName},
+                                                                               {"session", SessionId},
+                                                                           }, TimeSpan.FromMilliseconds(0), "data");
             if (response.LoggedOut)
             {
                 SessionId = null;
@@ -168,8 +166,6 @@ namespace CIAPI.Rpc
         }
 
         #endregion
-
-
     }
 
 

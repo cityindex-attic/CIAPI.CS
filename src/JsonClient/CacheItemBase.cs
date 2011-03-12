@@ -8,12 +8,18 @@ namespace CityIndex.JsonClient
 {
     ///<summary>
     ///</summary>
-    public class CacheItemEventArgs:EventArgs
+    public class CacheItemEventArgs : EventArgs
     {
+        ///<summary>
+        ///</summary>
+        ///<param name="item"></param>
         public CacheItemEventArgs(CacheItemBase item)
         {
             Item = item;
         }
+
+        ///<summary>
+        ///</summary>
         public CacheItemBase Item { get; private set; }
     }
 
@@ -34,11 +40,23 @@ namespace CityIndex.JsonClient
         ///</summary>
         public string Url { get; set; }
 
+        ///<summary>
+        ///</summary>
         public Dictionary<string, object> Parameters { get; set; }
+        ///<summary>
+        ///</summary>
         public string Method { get; set; }
+        ///<summary>
+        ///</summary>
         public string ThrottleScope { get; set; }
+        ///<summary>
+        ///</summary>
         public string Target { get; set; }
+        ///<summary>
+        ///</summary>
         public string UriTemplate { get; set; }
+        ///<summary>
+        ///</summary>
         public WebRequest Request { get; set; }
 
         /// <summary>
@@ -98,46 +116,45 @@ namespace CityIndex.JsonClient
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.AppendFormat("ItemState       : {0}\r\n", this.ItemState);
-            sb.AppendFormat("Url             : {0}\r\n", this.Url ?? "NULL");
-            sb.AppendFormat("Method          : {0}\r\n", this.Method ?? "NULL");
-            sb.AppendFormat("Target          : {0}\r\n", this.Target ?? "NULL");
-            sb.AppendFormat("UriTemplate     : {0}\r\n", this.UriTemplate ?? "NULL");
+            sb.AppendFormat("ItemState       : {0}\r\n", ItemState);
+            sb.AppendFormat("Url             : {0}\r\n", Url ?? "NULL");
+            sb.AppendFormat("Method          : {0}\r\n", Method ?? "NULL");
+            sb.AppendFormat("Target          : {0}\r\n", Target ?? "NULL");
+            sb.AppendFormat("UriTemplate     : {0}\r\n", UriTemplate ?? "NULL");
 
-            if (this.Parameters != null)
+            if (Parameters != null)
             {
                 sb.AppendFormat("Parameters      : \r\n");
-                foreach (KeyValuePair<string, object> kvp in this.Parameters)
+                foreach (var kvp in Parameters)
                 {
-                    sb.AppendFormat("\t{0}: {1}\r\n", kvp.Key, kvp.Key.ToLower() == "password" ? "*****" : kvp.Value ?? "NULL");
+                    sb.AppendFormat("\t{0}: {1}\r\n", kvp.Key,
+                                    kvp.Key.ToLower() == "password" ? "*****" : kvp.Value ?? "NULL");
                 }
-
             }
 
-            if (this.Request != null)
+            if (Request != null)
             {
-                sb.AppendFormat("Request URI     : {0}\r\n", this.Request.RequestUri.AbsoluteUri);
+                sb.AppendFormat("Request URI     : {0}\r\n", Request.RequestUri.AbsoluteUri);
 
-                if (this.Request.Headers != null)
+                if (Request.Headers != null)
                 {
                     sb.AppendFormat("Request Headers : \r\n");
-                    foreach (string header in this.Request.Headers)
+                    foreach (string header in Request.Headers)
                     {
-                        sb.AppendFormat("\t{0}: {1}\r\n", header, this.Request.Headers[header] ?? "NULL");
+                        sb.AppendFormat("\t{0}: {1}\r\n", header, Request.Headers[header] ?? "NULL");
                     }
                 }
-
             }
 
-            sb.AppendFormat("CacheDuration   : {0}\r\n", this.CacheDuration);
-            sb.AppendFormat("RetryCount      : {0}\r\n", this.RetryCount);
-            sb.AppendFormat("ThrottleScope   : {0}\r\n", this.ThrottleScope ?? "NULL");
-            sb.AppendFormat("Expiration      : {0}\r\n", this.Expiration);
-            sb.AppendFormat("ResponseText    : {0}\r\n", this.ResponseText ?? "NULL");
+            sb.AppendFormat("CacheDuration   : {0}\r\n", CacheDuration);
+            sb.AppendFormat("RetryCount      : {0}\r\n", RetryCount);
+            sb.AppendFormat("ThrottleScope   : {0}\r\n", ThrottleScope ?? "NULL");
+            sb.AppendFormat("Expiration      : {0}\r\n", Expiration);
+            sb.AppendFormat("ResponseText    : {0}\r\n", ResponseText ?? "NULL");
 
-            if (this.Exception != null)
+            if (Exception != null)
             {
-                sb.AppendFormat("Exception       : {0}\r\n", this.Exception);
+                sb.AppendFormat("Exception       : {0}\r\n", Exception);
             }
 
 

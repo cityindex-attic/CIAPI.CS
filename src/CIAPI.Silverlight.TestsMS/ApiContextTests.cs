@@ -39,8 +39,15 @@ namespace CIAPI.Silverlight.TestsMS
                 var response = ctx.EndCreateSession(ar);
                 EnqueueCallback(() =>
                                     {
-                                        Assert.IsFalse(string.IsNullOrEmpty(response.Session));
-                                        EnqueueTestComplete();
+                                        try
+                                        {
+                                            Assert.IsFalse(string.IsNullOrEmpty(response.Session));
+                                        }
+                                        finally
+                                        {
+                                            EnqueueTestComplete();
+                                        }
+                                        
                                     }
 
                     );
@@ -63,9 +70,16 @@ namespace CIAPI.Silverlight.TestsMS
             {
                 EnqueueCallback(() =>
                 {
-                    var response = ctx.EndDeleteSession(ar);
-                    Assert.IsTrue(response.LoggedOut);
-                    EnqueueTestComplete();
+                    try
+                    {
+                        var response = ctx.EndDeleteSession(ar);
+                        Assert.IsTrue(response.LoggedOut);
+                    }
+                    finally
+                    {
+                        EnqueueTestComplete();
+                    }
+                    
                 }
             );
 
@@ -84,9 +98,16 @@ namespace CIAPI.Silverlight.TestsMS
                 {
                     EnqueueCallback(() =>
                                         {
-                                            ListNewsHeadlinesResponseDTO response = ctx.EndListNewsHeadlines(ar);
-                                            Assert.AreEqual(14, response.Headlines.Length);
-                                            EnqueueTestComplete();
+                                            try
+                                            {
+                                                ListNewsHeadlinesResponseDTO response = ctx.EndListNewsHeadlines(ar);
+                                                Assert.AreEqual(14, response.Headlines.Length);
+                                            }
+                                            finally
+                                            {
+                                                EnqueueTestComplete();
+                                            }
+                                            
                                         });
                     
                 }, null);
@@ -108,7 +129,7 @@ namespace CIAPI.Silverlight.TestsMS
         {
 
             TestRequestFactory factory = new TestRequestFactory();
-            var requestController = new RequestController(TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(0), 2, factory, new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10, "data"), new ThrottedRequestQueue(TimeSpan.FromSeconds(3), 1, 3, "trading"));
+            var requestController = new RequestController(TimeSpan.FromSeconds(0), 2, factory, new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10, "data"), new ThrottedRequestQueue(TimeSpan.FromSeconds(3), 1, 3, "trading"));
 
             var ctx = new CIAPI.Rpc.Client(new Uri(TestConfig.RpcUrl), requestController);
             factory.CreateTestRequest(expectedJson);
