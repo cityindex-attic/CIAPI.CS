@@ -30,7 +30,7 @@ namespace CIAPI.Silverlight.TestsMS
         [Asynchronous]
         public void RawWebRequestPOST()
         {
-            var request = WebRequest.Create(TestConfig.ApiUrl +  "session");
+            var request = WebRequest.Create(TestConfig.RpcUrl +  "session");
 
             request.Method = "POST";
             request.BeginGetRequestStream(ac =>

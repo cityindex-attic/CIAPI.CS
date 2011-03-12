@@ -23,7 +23,7 @@ namespace CIAPI.Silverlight.TestsMS
         [Asynchronous]
         public void EnsureSilverlightCanConnect()
         {
-            var client = new Rpc.Client(new Uri(TestConfig.ApiUrl));
+            var client = new Rpc.Client(new Uri(TestConfig.RpcUrl));
 
             client.BeginLogIn(TestConfig.ApiUsername, TestConfig.ApiPassword,
                 ar =>

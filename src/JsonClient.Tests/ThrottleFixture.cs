@@ -18,11 +18,28 @@ namespace CityIndex.JsonClient.Tests
         public void CanThrottle1Per3Seconds()
         {
             var f = new TestRequestFactory();
-            var t = new ThrottedRequestQueue(TimeSpan.FromSeconds(3), 1, 10);
+            var t = new ThrottedRequestQueue(TimeSpan.FromSeconds(3), 1, 10, "");
+            var handles = new List<WaitHandle>();
+            bool quit = false;
+            var outerGate = new AutoResetEvent(false);
+            new Thread(()=>
+                           {
+                               
+                               
+
+                               while(!quit)
+                               {
+                                   new ManualResetEvent(false).WaitOne(100);
+                                   t.ProcessQueue(null);                                   
+                               }
+
+                               outerGate.Set();
+
+                           }).Start();
 
             var sw = new Stopwatch();
             sw.Start();
-            var handles = new List<WaitHandle>();
+            
 
             for (int i = 0; i < 3; i++)
             {
@@ -45,6 +62,8 @@ namespace CityIndex.JsonClient.Tests
 
             }
             WaitHandle.WaitAll(handles.ToArray());
+            quit = true;
+            outerGate.WaitOne();
             sw.Stop();
 
             Assert.GreaterOrEqual(sw.ElapsedMilliseconds, 5800, "3 requests, 2 throttled - expect almost 6 seconds delay for 3 requests");
@@ -58,7 +77,23 @@ namespace CityIndex.JsonClient.Tests
         public void CanThrottle30Per5Seconds()
         {
             var f = new TestRequestFactory();
-            var t = new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10);
+            var t = new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10, "");
+            bool quit = false;
+            var outerGate = new AutoResetEvent(false);
+            new Thread(() =>
+            {
+
+
+
+                while (!quit)
+                {
+                    new ManualResetEvent(false).WaitOne(100);
+                    t.ProcessQueue(null);
+                }
+
+                outerGate.Set();
+
+            }).Start();
 
             var sw = new Stopwatch();
             sw.Start();
@@ -91,7 +126,8 @@ namespace CityIndex.JsonClient.Tests
 
             }
             gate.WaitOne();
-
+            quit = true;
+            outerGate.WaitOne();
             sw.Stop();
 
             Assert.GreaterOrEqual(sw.ElapsedMilliseconds, 10000, "65 requests - expect > 10 seconds delay for 65 requests");

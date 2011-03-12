@@ -40,7 +40,9 @@ namespace CityIndex.JsonClient.Tests
                 item.Expiration = DateTimeOffset.UtcNow.AddSeconds(1);
                 item.ItemState = CacheItemState.Complete;
 
-                new AutoResetEvent(false).WaitOne(3000);
+                new AutoResetEvent(false).WaitOne(2000);
+                c.PurgeExpiredItems(null);
+                new AutoResetEvent(false).WaitOne(1000);
                 c.Get<FooDTO>("foo");
                 Assert.Fail("Expected exception");
             }

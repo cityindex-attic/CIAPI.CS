@@ -6,8 +6,13 @@ namespace CityIndex.JsonClient
     /// <summary>
     /// A thread-safe, self purging cache of <see cref="CacheItem{TDTO}"/>
     /// </summary>
-    public interface IRequestCache : IDisposable
+    public interface IRequestCache 
     {
+        ///<summary>
+        /// Removes expired items from cache.
+        ///</summary>
+        void PurgeExpiredItems(object ignored);
+
         /// <summary>
         /// Gets or creates a <see cref="CacheItem{TDTO}"/> for supplied url (case insensitive).
         /// If a matching <see cref="CacheItem{TDTO}"/> is found but has expired, it is replaced with a new <see cref="CacheItem{TDTO}"/>.

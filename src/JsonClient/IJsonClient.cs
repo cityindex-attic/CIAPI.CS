@@ -8,6 +8,11 @@ namespace CityIndex.JsonClient
     ///</summary>
     public interface IJsonClient:IDisposable
     {
+
+        ///<summary>
+        ///</summary>
+        IRequestController RequestController { get; }
+
         /// <summary>
         /// Very simple synchronous wrapper of the begin/end methods.
         /// I have chosen not to simply use the synchronous .GetResponse() method of WebRequest to prevent evolution

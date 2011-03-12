@@ -6,6 +6,17 @@ using System.Threading;
 
 namespace CityIndex.JsonClient
 {
+    ///<summary>
+    ///</summary>
+    public class CacheItemEventArgs:EventArgs
+    {
+        public CacheItemEventArgs(CacheItemBase item)
+        {
+            Item = item;
+        }
+        public CacheItemBase Item { get; private set; }
+    }
+
     /// <summary>
     /// Provides a base composition element for <see cref="CacheItem{TDTO}"/> to simplify program logic.
     /// </summary>

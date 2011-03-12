@@ -13,17 +13,13 @@ namespace CIAPI.Rpc
     {
         // TODO: create throttle scope structure and build configuration
         public Client(Uri uri)
-            : base(uri, new RequestCache(), new RequestFactory(), new Dictionary<string, IThrottedRequestQueue>
-                {
-                    { "data", new ThrottedRequestQueue(TimeSpan.FromSeconds(5),30,10) }, 
-                    { "trading", new ThrottedRequestQueue(TimeSpan.FromSeconds(3),1,10) }
-                }, 3)
+            : base(uri, new RequestController(TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(0), 2, new RequestFactory(), new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10, "data"), new ThrottedRequestQueue(TimeSpan.FromSeconds(3), 1, 3, "trading")))
         {
         }
 
-        
-        public Client(Uri uri, IRequestCache cache, IRequestFactory requestFactory, Dictionary<string, IThrottedRequestQueue> throttleScopes, int retryCount)
-            : base(uri,cache, requestFactory, throttleScopes, retryCount)
+
+        public Client(Uri uri, IRequestController requestController)
+            : base(uri, requestController)
         {
         }
 
@@ -49,11 +45,11 @@ namespace CIAPI.Rpc
             if (url.IndexOf("/session", StringComparison.OrdinalIgnoreCase) == -1)
             {
 
-                request.Headers["UserName"] = UserName; 
+                request.Headers["UserName"] = UserName;
                 // API advertises session id as a GUID but treats as a string internally so we need to ucase here.
-                if (SessionId==null)
+                if (SessionId == null)
                 {
-                    throw new ApiException ("SessionId is null. Have you created a session? (logged in)");
+                    throw new ApiException("SessionId is null. Have you created a session? (logged in)");
                 }
                 request.Headers["Session"] = SessionId.ToString().ToUpper();
             }
@@ -88,12 +84,12 @@ namespace CIAPI.Rpc
         /// <param name="userName">Username is case sensitive</param>
         /// <param name="password">Password is case sensitive</param>
         /// <returns></returns>
-        public void BeginLogIn(String userName,String password, ApiAsyncCallback<CreateSessionResponseDTO> callback, object state)
+        public void BeginLogIn(String userName, String password, ApiAsyncCallback<CreateSessionResponseDTO> callback, object state)
         {
-            
+
             UserName = userName;
             SessionId = null;
-            
+
             BeginRequest(callback, state, "session", "/", "POST", new Dictionary<string, object>
                 {
                     {"UserName", userName},
@@ -106,16 +102,16 @@ namespace CIAPI.Rpc
             try
             {
                 TDTO response = base.EndRequest(asyncResult);
-                return response;    
+                return response;
             }
-            catch(ApiSerializationException ex)
+            catch (ApiSerializationException ex)
             {
-              throw new ServerConnectionException("Invalid response recieved.  Are you connecting to the correct server Url?  See ResponseText property for further details of response recieved.",ex.ResponseText);
+                throw new ServerConnectionException("Invalid response recieved.  Are you connecting to the correct server Url?  See ResponseText property for further details of response recieved.", ex.ResponseText);
             }
 
         }
-      
-        
+
+
         public void EndLogIn(ApiAsyncResult<CreateSessionResponseDTO> asyncResult)
         {
             CreateSessionResponseDTO response = EndRequest(asyncResult);
@@ -177,9 +173,10 @@ namespace CIAPI.Rpc
     }
 
 
-    public class ServerConnectionException:ApiSerializationException
+    public class ServerConnectionException : ApiSerializationException
     {
-        public ServerConnectionException(string message, string responseText) : base(message, responseText)
+        public ServerConnectionException(string message, string responseText)
+            : base(message, responseText)
         {
         }
     }

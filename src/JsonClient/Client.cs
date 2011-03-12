@@ -24,36 +24,41 @@ namespace CityIndex.JsonClient
         #region Fields
 
         private static readonly ILog Log = LogManager.GetLogger(typeof(Client));
-        private readonly IRequestCache _cache;
-        private readonly IRequestFactory _requestFactory;
-        private readonly int _retryCount;
-        private readonly Dictionary<string, IThrottedRequestQueue> _throttleScopes;
         private readonly Uri _uri;
         private readonly object _lockObj = new object();
+        private readonly IRequestController _requestController;
 
         #endregion
-
-        ///<summary>
-        ///</summary>
-        ///<param name="uri"></param>
-        ///<param name="cache"></param>
-        ///<param name="requestFactory"></param>
-        ///<param name="throttleScopes"></param>
-        ///<param name="retryCount"></param>
-        public Client(Uri uri, IRequestCache cache, IRequestFactory requestFactory,
-                         Dictionary<string, IThrottedRequestQueue> throttleScopes, int retryCount)
+        static Client()
         {
 #if SILVERLIGHT
     // this enables the client framework stack - necessary for access to headers
             WebRequest.RegisterPrefix("http://", WebRequestCreator.ClientHttp);
             WebRequest.RegisterPrefix("https://", WebRequestCreator.ClientHttp);
 #endif
+        }
+        public IRequestController RequestController
+        {
+            get
+            {
+                return _requestController;
+            }
+        }
 
-            _retryCount = retryCount;
-            _requestFactory = requestFactory;
-            _throttleScopes = throttleScopes;
-            _cache = cache;
+        ///<summary>
+        ///</summary>
+        ///<param name="uri"></param>
+        ///<param name="requestController"></param>
+        public Client(Uri uri, IRequestController requestController)
+        {
+
+            _requestController = requestController;
+
+            _requestController.BeforeBuildUrl += (o, e) => BeforeBuildUrl(e.Item.Target, e.Item.UriTemplate, e.Item.Method, e.Item.Parameters, e.Item.CacheDuration, e.Item.ThrottleScope);
+            _requestController.BeforeIssueRequest += (o, e) => BeforeIssueRequest(e.Item.Request, e.Item.Url, e.Item.Target, e.Item.UriTemplate, e.Item.Method, e.Item.Parameters, e.Item.CacheDuration, e.Item.ThrottleScope);
+
             string url = uri.AbsoluteUri;
+
             if (!url.EndsWith("/"))
             {
                 url = uri.AbsoluteUri + "/";
@@ -65,21 +70,11 @@ namespace CityIndex.JsonClient
         ///</summary>
         ///<param name="uri"></param>
         public Client(Uri uri)
-            : this(uri, new RequestCache(), new RequestFactory(), new Dictionary<string, IThrottedRequestQueue> { { "default", new ThrottedRequestQueue() } }, 2)
+            : this(uri, new RequestController(TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(0), 2, new RequestFactory(), new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10, "default")))
         {
 
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="uri"></param>
-        /// <param name="requestFactory"></param>
-        public Client(Uri uri, IRequestFactory requestFactory)
-            : this(uri, new RequestCache(), requestFactory, new Dictionary<string, IThrottedRequestQueue> { { "default", new ThrottedRequestQueue() } }, 2)
-        {
-
-        }
 
         #region Protected Methods
 
@@ -154,7 +149,7 @@ namespace CityIndex.JsonClient
         public TDTO Request<TDTO>(string target, string uriTemplate, string method, Dictionary<string, object> parameters, TimeSpan cacheDuration, string throttleScope) where TDTO : class, new()
         {
 #if SILVERLIGHT
-            if (System.Windows.Application.Current.RootVisual.Dispatcher.CheckAccess())
+            if (System.Windows.Deployment.Current.Dispatcher.CheckAccess())
             {
                 throw new ApiException("You cannot call this method from the UI thread.  Either use the asynchronous method: .Begin{name}, or call this from a background thread");
             }
@@ -241,59 +236,20 @@ namespace CityIndex.JsonClient
                                        string method, Dictionary<string, object> parameters, TimeSpan cacheDuration,
                                        string throttleScope) where TDTO : class, new()
         {
-            lock (_cache)
+            lock (_lockObj)
             {
                 BeforeBuildUrl(target, uriTemplate, method, parameters, cacheDuration, throttleScope);
 
                 string url = BuildUrl(target, uriTemplate, _uri.AbsoluteUri);
 
-                //if (method.ToUpper() == "GET") NOTE: not sure why I was limiting this to GET. must have had a reason. let's see where it bites us....
-                {
-                    url = ApplyUriTemplateParameters(parameters, url);
-                }
+                url = ApplyUriTemplateParameters(parameters, url);
 
-                CacheItem<TDTO> item = _cache.GetOrCreate<TDTO>(url);
 
-                switch (item.ItemState)
-                {
-                    case CacheItemState.New:
-
-                        if (!_throttleScopes.ContainsKey(throttleScope))
-                        {
-                            _cache.Remove<TDTO>(url);
-                            throw new Exception(string.Format("Throttle for scope '{0}' not found.\r\n{1}", throttleScope, item));
-                        }
-
-                        item.AddCallback(cb, state);
-                        item.CacheDuration = cacheDuration;
-                        item.Method = method;
-                        item.Parameters = parameters;
-                        item.Target = target;
-                        item.ThrottleScope = throttleScope;
-                        item.UriTemplate = uriTemplate;
-                        item.Url = url;
-
-                        WebRequest request = _requestFactory.Create(url);
-                        request.Method = method.ToUpper();
-
-#if !SILVERLIGHT
-                        // silverlight crossdomain request does not support content type (?!)
-                        request.ContentType = "application/json";
-#endif
-                        item.ItemState = CacheItemState.Pending;
-                        CreateRequest<TDTO>(url);
-                        break;
-                    case CacheItemState.Pending:
-                        item.AddCallback(cb, state);
-                        break;
-                    case CacheItemState.Complete:
-                        new ApiAsyncResult<TDTO>(cb, state, true, item.ResponseText, null);
-                        break;
-                }
+                _requestController.ProcessCacheItem(target, uriTemplate, method, parameters, cacheDuration, throttleScope, url, cb, state);
             }
         }
 
-
+        
 
         ///<summary>
         ///</summary>
@@ -347,210 +303,7 @@ namespace CityIndex.JsonClient
 
         #region Private implementation
 
-        /// <summary>
-        /// Builds a JSOB from parameters and asynchronously feeds the request stream with the resultant JSON before sending the request
-        /// </summary>
-        /// <param name="url"></param>
-        private void SetPostEntityAndEnqueueRequest<TDTO>(string url)
-            where TDTO : class, new()
-        {
-            CacheItem<TDTO> item = _cache.Get<TDTO>(url);
 
-
-            byte[] bodyValue = CreatePostEntity(item.Parameters);
-
-            item.Request.BeginGetRequestStream(ac =>
-                {
-                    lock (_cache)
-                    {
-                        try
-                        {
-                            using (Stream requestStream = item.Request.EndGetRequestStream(ac))
-                            {
-                                requestStream.Write(bodyValue, 0, bodyValue.Length);
-                            }
-
-                            EnqueueRequest<TDTO>(url);
-                        }
-                        catch (Exception ex)
-                        {
-
-
-                            try
-                            {
-                                item.CompleteResponse(null, ApiException.Create(ex));
-                            }
-                            finally
-                            {
-                                _cache.Remove<TDTO>(item.Url);
-                            }
-
-                        }
-                    }
-                }, null);
-        }
-
-        /// <summary>
-        /// Builds a JSON object from a dictionary and returns encoded bytes
-        /// </summary>
-        /// <param name="parameters"></param>
-        /// <returns></returns>
-        private static byte[] CreatePostEntity(Dictionary<string, object> parameters)
-        {
-            var body = new JObject();
-            foreach (var kvp in parameters)
-            {
-                object value = kvp.Value;
-
-                if (value is Guid)
-                {
-                    // HACK: to deal with "System.ArgumentException : Could not determine JSON object type for type System.Guid."
-                    value = value.ToString();
-                }
-
-                if (value != null)
-                {
-                    body[kvp.Key] = new JValue(value);
-                }
-            }
-            byte[] bodyValue = Encoding.UTF8.GetBytes(body.ToString(Formatting.None, new JsonConverter[] { }));
-            return bodyValue;
-        }
-
-
-
-        private void CreateRequest<TDTO>(string url)
-            where TDTO : class, new()
-        {
-            CacheItem<TDTO> item = _cache.Get<TDTO>(url);
-
-
-            item.Request = _requestFactory.Create(url);
-            item.Request.Method = item.Method.ToUpper();
-
-            BeforeIssueRequest(item.Request, item.Url, item.Target, item.UriTemplate, item.Method, item.Parameters, item.CacheDuration, item.ThrottleScope);
-
-            if (item.Method.ToUpper() == "POST")
-            {
-                SetPostEntityAndEnqueueRequest<TDTO>(url);
-            }
-            else
-            {
-                EnqueueRequest<TDTO>(url);
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <typeparam name="TDTO"></typeparam>
-        private void EnqueueRequest<TDTO>(string url)
-            where TDTO : class, new()
-        {
-            CacheItem<TDTO> outerItem = _cache.Get<TDTO>(url);
-            IThrottedRequestQueue throttle = _throttleScopes[outerItem.ThrottleScope];
-
-            WebRequest request = outerItem.Request;
-
-            throttle.Enqueue(url, request, (ar, requestHolder) =>
-                {
-
-                    lock (_cache)
-                    {
-                        RequestHolder holder = requestHolder;
-
-                        // the item had better be in the cache because if it is not
-                        // and this throws then we have a deadlock as the callbacks are int
-                        // the cache item that does not exist so no where to send the exception.
-                        // TODO: add an OnException event to this class
-                        CacheItem<TDTO> item = _cache.Get<TDTO>(url);
-                        WebResponse response = null;
-                        try
-                        {
-                            using (response = holder.WebRequest.EndGetResponse(ar))
-                            using (Stream stream = response.GetResponseStream())
-                            using (var reader = new StreamReader(stream))
-                            {
-                                string json = reader.ReadToEnd();
-
-                                // TODO: check json for exception. question is: how to get the type in? a factory class that accepts json?
-                                Exception seralizedException = null;
-
-                                try
-                                {
-
-                                    item.CompleteResponse(json, seralizedException);
-                                }
-                                catch (Exception ex)
-                                {
-                                    // TODO: test this
-                                    _cache.Remove<TDTO>(item.Url);
-                                    throw new ResponseHandlerException("Unhandled exception in caller's response handler", ex);
-                                }
-                            }
-                        }
-                        catch (WebException wex)
-                        {
-
-
-                            bool shouldRetry = new RequestRetryDiscriminator().ShouldRetry(wex);
-
-                            if (shouldRetry && item.RetryCount < _retryCount)
-                            {
-
-                                item.RetryCount++;
-                                item.ItemState = CacheItemState.Pending;
-
-                                if (response != null)
-                                {
-                                    response.Close();
-                                }
-
-                                CreateRequest<TDTO>(url);
-                            }
-                            else
-                            {
-
-
-                                ApiException exception;
-
-                                if (item.RetryCount > 0)
-                                {
-
-
-
-                                    exception = new ApiException(wex.Message + String.Format("\r\nretried {0} times", item.RetryCount) + "\r\nREQUEST INFO:\r\n" + item.ToString(), wex);
-                                }
-                                else
-                                {
-                                    exception = new ApiException(wex.Message + "\r\nREQUEST INFO:\r\n" + item.ToString(), wex);
-                                }
-
-                                try
-                                {
-                                    item.CompleteResponse(null, exception);
-                                }
-                                finally
-                                {
-                                    _cache.Remove<TDTO>(item.Url);
-                                }
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-
-                            try
-                            {
-                                item.CompleteResponse(null, new ApiException(ex.Message + "\r\nREQUEST INFO:\r\n" + item.ToString(), ex));
-                            }
-                            finally
-                            {
-                                _cache.Remove<TDTO>(item.Url);
-                            }
-                        }
-                    }
-                });
-        }
 
 
         /// <summary>
@@ -607,6 +360,7 @@ namespace CityIndex.JsonClient
 
         #endregion
 
+        #region IDisposable
         private bool _disposed;
         protected virtual void Dispose(bool disposing)
         {
@@ -614,24 +368,12 @@ namespace CityIndex.JsonClient
             {
                 if (disposing)
                 {
-                    // dispose managed resources here
-                    if (_cache != null)
+
+                    if (_requestController != null)
                     {
-                        _cache.Dispose();    
-                    }
-                    if(_throttleScopes!=null)
-                    {
-                        foreach (KeyValuePair<string, IThrottedRequestQueue> throttleScope in _throttleScopes)
-                        {
-                            if (throttleScope.Value != null)
-                            {
-                                throttleScope.Value.Dispose();
-                            }
-                            
-                        }
+                        _requestController.Dispose();
                     }
                 }
-
                 _disposed = true;
             }
         }
@@ -640,5 +382,6 @@ namespace CityIndex.JsonClient
         {
             Dispose(true);
         }
+        #endregion
     }
 }

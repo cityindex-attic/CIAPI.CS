@@ -52,8 +52,14 @@
     <Compile Include="..\CIAPI.CodeGeneration\DTO.cs">
       <Link>DTO.cs</Link>
     </Compile>
+    <Compile Include="..\CIAPI.CodeGeneration\DTO_hardcoded.cs">
+      <Link>DTO_hardcoded.cs</Link>
+    </Compile>
     <Compile Include="..\CIAPI.CodeGeneration\ROUTES.cs">
       <Link>ROUTES.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI.CodeGeneration\Routes_hardcoded.cs">
+      <Link>Routes_hardcoded.cs</Link>
     </Compile>
     <Compile Include="..\ciapi\rpc\ApiClient.cs">
       <Link>Rpc\ApiClient.cs</Link>

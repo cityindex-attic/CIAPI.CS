@@ -93,6 +93,9 @@
     <Compile Include="..\JsonClient\IRequestCache.cs">
       <Link>IRequestCache.cs</Link>
     </Compile>
+    <Compile Include="..\JsonClient\IRequestController.cs">
+      <Link>IRequestController.cs</Link>
+    </Compile>
     <Compile Include="..\JsonClient\IRequestFactory.cs">
       <Link>IRequestFactory.cs</Link>
     </Compile>
@@ -101,6 +104,9 @@
     </Compile>
     <Compile Include="..\JsonClient\RequestCache.cs">
       <Link>RequestCache.cs</Link>
+    </Compile>
+    <Compile Include="..\JsonClient\RequestController.cs">
+      <Link>RequestController.cs</Link>
     </Compile>
     <Compile Include="..\JsonClient\RequestFactory.cs">
       <Link>RequestFactory.cs</Link>

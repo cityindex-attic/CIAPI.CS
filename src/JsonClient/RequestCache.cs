@@ -16,8 +16,8 @@ namespace CityIndex.JsonClient
         private readonly TimeSpan _defaultCacheDuration;
         private readonly Dictionary<string, CacheItemBase> _items;
         private readonly object _lock;
-        private readonly Thread _backgroundThread;
-        private volatile bool _disposing;
+       
+   
 
         #endregion
 
@@ -41,33 +41,14 @@ namespace CityIndex.JsonClient
             _defaultCacheDuration = defaultCacheDuration;
             _lock = new object();
             _items = new Dictionary<string, CacheItemBase>();
-            _backgroundThread = new Thread(() =>
-                                             {
-
-
-                                                 while (true)
-                                                 {
-                                                     if (_disposing)
-                                                     {
-                                                         return;
-                                                     }
-
-                                                     // TODO: how/why/should we surface exceptions on purge?
-
-                                                     PurgeExpiredItems(null);
-
-                                                     Thread.Sleep(purgeInterval);
-                                                 }
-
-                                             });
-
-            _backgroundThread.Start();
-            //new Timer(PurgeExpiredItems, null, TimeSpan.FromMilliseconds(10), purgeInterval);
+ 
         }
 
         #endregion
 
         #region IRequestCache Members
+
+        
 
         /// <summary>
         /// Gets or creates a <see cref="CacheItem{TDTO}"/> for supplied url (case insensitive).
@@ -146,7 +127,7 @@ namespace CityIndex.JsonClient
         /// Is called on the purge timer to remove completed and expired <see cref="CacheItem{TDTO}"/> from the internal map.
         /// </summary>
         /// <param name="ignored"></param>
-        private void PurgeExpiredItems(object ignored)
+        public void PurgeExpiredItems(object ignored)
         {
             lock (_lock)
             {
@@ -238,28 +219,7 @@ namespace CityIndex.JsonClient
         }
         #endregion
 
-        private bool _disposed;
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!_disposed)
-            {
-                if (disposing)
-                {
-                    _disposing = true;
-                    while (_backgroundThread.IsAlive)
-                    {
-                        Thread.Sleep(100);
-                    }
-                }
-
-                _disposed = true;
-            }
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-        }
+ 
     }
 
 

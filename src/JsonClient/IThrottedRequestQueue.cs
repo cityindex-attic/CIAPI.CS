@@ -8,6 +8,14 @@ namespace CityIndex.JsonClient
     ///</summary>
     public interface IThrottedRequestQueue : IDisposable
     {
+        
+        void ProcessQueue(object ignored);
+
+        ///<summary>
+        /// The name/key of this throttle
+        ///</summary>
+        string Scope { get; }
+
         /// <summary>
         /// The number of requests that have been dispatched
         /// </summary>

@@ -5,7 +5,7 @@
     /// </summary>
     public static class TestConfig
     {
-        public static string ApiUrl
+        public static string RpcUrl
         {
             get
             {

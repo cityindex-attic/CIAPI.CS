@@ -22,6 +22,7 @@ namespace CityIndex.JsonClient
 
         #region Fields
 
+        private readonly string _scope;
         private static readonly ILog Log = LogManager.GetLogger(typeof(ThrottedRequestQueue));
         private readonly int _maxPendingRequests;
         private readonly Queue<DateTimeOffset> _requestTimes = new Queue<DateTimeOffset>();
@@ -34,11 +35,11 @@ namespace CityIndex.JsonClient
         private bool _notifiedWaitingOnWindow;
         private int _outstandingRequests;
         private bool _processingQueue;
-        private volatile bool _disposing;
-        private readonly Thread _backgroundThread;
+        
 
         #endregion
 
+        
         #region Constructors
 
         /// <summary>
@@ -48,7 +49,7 @@ namespace CityIndex.JsonClient
         /// maxPendingRequests = 10
         /// </summary>
         public ThrottedRequestQueue()
-            : this(TimeSpan.FromSeconds(5), 30, 10)
+            : this(TimeSpan.FromSeconds(5), 30, 10, "default")
         {
         }
 
@@ -58,31 +59,23 @@ namespace CityIndex.JsonClient
         /// <param name="throttleWindowTime">The window in which to restrice issued requests to <paramref name="throttleWindowCount"/></param>
         /// <param name="throttleWindowCount">The maximum number of requests to issue in the amount of time described by <paramref name="throttleWindowTime"/></param>
         /// <param name="maxPendingRequests">The maximum allowed number of active requests.</param>
-        public ThrottedRequestQueue(TimeSpan throttleWindowTime, int throttleWindowCount, int maxPendingRequests)
+        /// <param name="scope"></param>
+        public ThrottedRequestQueue(TimeSpan throttleWindowTime, int throttleWindowCount, int maxPendingRequests, string scope)
         {
+            _scope = scope;
             _throttleWindowTime = throttleWindowTime;
             _throttleWindowCount = throttleWindowCount;
             _maxPendingRequests = maxPendingRequests;
-            _backgroundThread = new Thread(() =>
-                                               {
-                                                   while (true)
-                                                   {
-                                                       if (_disposed)
-                                                       {
-                                                           return;
-                                                       }
-                                                       // TODO: how/if handle exceptions?
-                                                       ProcessQueue(null);
-                                                       Thread.Sleep(100);
-                                                   }
-                                               });
-            _backgroundThread.Start();
-            
         }
 
         #endregion
 
         #region IThrottedRequestQueue Members
+
+        public string Scope
+        {
+            get { return _scope; }
+        }
 
         /// <summary>
         /// The number of requests that have been dispatched
@@ -161,7 +154,7 @@ namespace CityIndex.JsonClient
 
         #endregion
 
-        private void ProcessQueue(object ignored)
+        public void ProcessQueue(object ignored)
         {
             lock (_requests)
             {
@@ -294,24 +287,17 @@ namespace CityIndex.JsonClient
 #endif
         }
 
-        private bool _disposed;
+
 
         private void Dispose(bool disposing)
         {
-            if (!_disposed)
+            if (disposing)
             {
-                if (disposing)
-                {
-                    _disposed = true;
-
-                    while (_backgroundThread.IsAlive)
-                    {
-                        Thread.Sleep(100);
-                    }
-                }
-
-                _disposed = true;
+                // TODO: wait for pending requests?
             }
+
+
+
         }
 
         public void Dispose()
