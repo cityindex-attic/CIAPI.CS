@@ -1,8 +1,6 @@
 ﻿using Newtonsoft.Json;
-using StreamingClient;
-using StreamingClient.Websocket;
 
-namespace CIAPI.Streaming.Websocket
+namespace StreamingClient.Websocket
 {
     internal class StompDtoConverter<T>:IMessageConverter<T>
     {

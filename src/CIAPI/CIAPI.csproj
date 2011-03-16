@@ -64,13 +64,10 @@
     <Compile Include="PrettyPrinterExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rpc\ApiClient.cs" />
+    <Compile Include="Streaming\IStreamingClient.cs" />
     <Compile Include="Streaming\Lightstreamer\LightStreamerClient.cs" />
-    <Compile Include="Streaming\Lightstreamer\LightstreamerDtoConverter.cs" />
-    <Compile Include="Streaming\Lightstreamer\LightStreamerListener.cs" />
     <Compile Include="Streaming\StreamingClientFactory.cs" />
-    <Compile Include="Streaming\Websocket\StompDtoConverter.cs" />
-    <Compile Include="Streaming\Websocket\StompListener.cs" />
-    <Compile Include="Streaming\Websocket\StompOverWebsocketClient.cs" />
+    <Compile Include="Streaming\Websocket\WebSocketClient.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\JsonClient\JsonClient.csproj">
@@ -86,7 +83,9 @@
       <Name>StreamingClient</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Streaming\StreamingClientClasses.cd" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

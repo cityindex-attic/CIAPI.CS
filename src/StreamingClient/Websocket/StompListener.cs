@@ -1,7 +1,6 @@
 ﻿using System;
-using StreamingClient;
 
-namespace CIAPI.Streaming.Websocket
+namespace StreamingClient.Websocket
 {
     public class StompListener<T>: IStreamingListener<T> where T : class
     {

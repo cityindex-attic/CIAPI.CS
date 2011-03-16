@@ -4,6 +4,7 @@ using CIAPI.DTO;
 using CIAPI.Streaming;
 using NUnit.Framework;
 using StreamingClient;
+using IStreamingClient = CIAPI.Streaming.IStreamingClient;
 
 namespace CIAPI.IntegrationTests.Streaming
 {
@@ -33,7 +34,7 @@ namespace CIAPI.IntegrationTests.Streaming
 
             streamingClient.Connect();
 
-            var priceListener = streamingClient.BuildListener<PriceDTO>("PRICES.MOCKPRICE.1000");
+            var priceListener = streamingClient.BuildPriceListener("PRICES.MOCKPRICE.1000");
             priceListener.Start();
 
             PriceDTO actual = null;

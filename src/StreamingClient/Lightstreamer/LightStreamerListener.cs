@@ -3,10 +3,8 @@ using System.Linq;
 using System.Threading;
 using Common.Logging;
 using Lightstreamer.DotNet.Client;
-using StreamingClient;
-using StreamingClient.Lightstreamer;
 
-namespace CIAPI.Streaming.Lightstreamer
+namespace StreamingClient.Lightstreamer
 {
     public class LightstreamerListener<TDto> : IStreamingListener<TDto>, IHandyTableListener
         where TDto : class, new()
@@ -18,7 +16,7 @@ namespace CIAPI.Streaming.Lightstreamer
         private SubscribedTableKey _subscribedTableKey;
         private readonly string _dataAdapter;
 
-        internal LightstreamerListener(string fullTopic, LSClient lsClient)
+        public LightstreamerListener(string fullTopic, LSClient lsClient)
         {
             _lsClient = lsClient;
             _dataAdapter = fullTopic.Split('.').First();

@@ -1,12 +1,14 @@
 ﻿using System;
 using CIAPI.DTO;
 using StreamingClient;
+using StreamingClient.Websocket;
 
-namespace CIAPI.Streaming.Lightstreamer
+namespace CIAPI.Streaming.Websocket
 {
-    public class LightstreamerClient: StreamingClient.Lightstreamer.LightstreamerClient, IStreamingClient
+    public class WebSocketClient: StompOverWebsocketClient, IStreamingClient
     {
-        public LightstreamerClient(Uri streamingUri, string userName, string sessionId) : base(streamingUri, userName, sessionId)
+        public WebSocketClient(Uri streamingUri, string userName, string sessionId)
+            : base(streamingUri, userName, sessionId)
         {
         }
 

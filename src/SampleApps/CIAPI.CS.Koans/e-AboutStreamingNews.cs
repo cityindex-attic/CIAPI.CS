@@ -7,6 +7,7 @@ using CIAPI.Streaming;
 using StreamingClient;
 using NUnit.Framework;
 using Client = CIAPI.Rpc.Client;
+using IStreamingClient = CIAPI.Streaming.IStreamingClient;
 
 namespace CIAPI.CS.Koans
 {
@@ -56,7 +57,7 @@ namespace CIAPI.CS.Koans
         {
             //Beginning with a connected streamingClient, you create a listener expected a specific message type on a certain channel/topic
             const string topic = "NEWS.MOCKHEADLINES.UK"; //The mock news headlines stream publishes one "story" per second.
-            var ukNewsListener = _streamingClient.BuildListener<NewsDTO>(topic);
+            var ukNewsListener = _streamingClient.BuildNewsHeadlinesListener(topic);
 
             var ukNewsHeadlines = new List<NewsDTO>();
             ukNewsListener.MessageRecieved += (sender, message) => /* The MessageRecieved event is raised every time a new message arrives */
@@ -79,8 +80,8 @@ namespace CIAPI.CS.Koans
         [Koan(Order = 3)]
         public void YouCanListenToMultipleStreamsOverASingleConnection()
         {
-            var ukNewsListener = _streamingClient.BuildListener<NewsDTO>("NEWS.MOCKHEADLINES.UK");
-            var gbpusdPriceListener = _streamingClient.BuildListener<PriceDTO>("PRICES.PRICE.154297");
+            var ukNewsListener = _streamingClient.BuildNewsHeadlinesListener("NEWS.MOCKHEADLINES.UK");
+            var gbpusdPriceListener = _streamingClient.BuildPriceListener("PRICES.PRICE.154297");
 
             //Build as many listeners as you want
             var ukNewsHeadlines = new List<NewsDTO>();

@@ -4,6 +4,7 @@ using CIAPI.DTO;
 using CIAPI.Streaming;
 using NUnit.Framework;
 using StreamingClient;
+using IStreamingClient = CIAPI.Streaming.IStreamingClient;
 
 namespace CIAPI.IntegrationTests.Streaming
 {
@@ -32,7 +33,7 @@ namespace CIAPI.IntegrationTests.Streaming
             var streamingClient = BuildStreamingClient();
             streamingClient.Connect();
 
-            var newsListener = streamingClient.BuildListener<NewsDTO>("NEWS.MOCKHEADLINES.UK");
+            var newsListener = streamingClient.BuildNewsHeadlinesListener("NEWS.MOCKHEADLINES.UK");
             newsListener.Start();
 
             NewsDTO actual = null;

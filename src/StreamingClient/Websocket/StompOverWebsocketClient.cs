@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Threading;
 using Common.Logging;
-using StreamingClient;
-using StreamingClient.Websocket;
 
-namespace CIAPI.Streaming.Websocket
+namespace StreamingClient.Websocket
 {
     public class StompOverWebsocketClient: IStreamingClient
     {
@@ -12,19 +10,20 @@ namespace CIAPI.Streaming.Websocket
         private readonly string _userName;
         private readonly string _sessionId;
         private StompOverWebsocketConnection _stompConnection;
-        public event EventHandler<MessageEventArgs<object>> MessageRecieved;
-        public event EventHandler<StatusEventArgs> StatusChanged;
         private Thread _messageListeningThread;
         private readonly ILog _logger = LogManager.GetCurrentClassLogger();
 
-        internal StompOverWebsocketClient(Uri host, string userName, string sessionId)
+        protected StompOverWebsocketClient(Uri host, string userName, string sessionId)
         {
             _host = host;
             _userName = userName;
             _sessionId = sessionId;
         }
 
-        public void Connect()
+        public  event EventHandler<MessageEventArgs<object>> MessageRecieved;
+        public  event EventHandler<StatusEventArgs> StatusChanged;
+
+        public  void Connect()
         {
             _stompConnection = new StompOverWebsocketConnection(_host);
             _stompConnection.Connect(_userName, _sessionId);
@@ -59,7 +58,7 @@ namespace CIAPI.Streaming.Websocket
             _stompConnection = null;
         }
 
-        public IStreamingListener<TDto> BuildListener<TDto>(string topic) where TDto : class, new()
+        protected IStreamingListener<TDto> BuildListener<TDto>(string topic) where TDto : class, new()
         {
             var listener = new StompListener<TDto>(topic, this);
             return listener;

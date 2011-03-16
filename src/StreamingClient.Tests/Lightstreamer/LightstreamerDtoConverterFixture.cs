@@ -2,6 +2,7 @@
 using CIAPI.Streaming;
 using CIAPI.Streaming.Lightstreamer;
 using NUnit.Framework;
+using StreamingClient.Lightstreamer;
 
 namespace StreamingClient.Tests.Lightstreamer
 {

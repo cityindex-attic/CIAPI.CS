@@ -1,6 +1,6 @@
 ﻿using System;
 using CIAPI.Streaming.Lightstreamer;
-using StreamingClient;
+using CIAPI.Streaming.Websocket;
 
 namespace CIAPI.Streaming
 {
@@ -9,7 +9,7 @@ namespace CIAPI.Streaming
         public static IStreamingClient CreateStreamingClient(Uri uri, string userName, string sessionId)
         {
             return new LightstreamerClient(uri, userName, sessionId);
-//            return new CIAPI.Streaming.Websocket.StompOverWebsocketClient(uri, userName, sessionId);
+//            return new WebSocketClient(uri, userName, sessionId);
         }
     }
 }
