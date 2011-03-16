@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IMessageConverter.cs" />
+    <Compile Include="InvalidTopicException.cs" />
     <Compile Include="IStreamingClient.cs" />
     <Compile Include="IStreamingListener.cs" />
     <Compile Include="Lightstreamer\LightStreamerClient.cs" />
