@@ -51,53 +51,147 @@
     <Compile Include="..\StreamingClient.Lightstreamer\LightstreamerDefaults.cs">
       <Link>LightstreamerDefaults.cs</Link>
     </Compile>
-    <Compile Include="Lightstreamer.Phone7\BatchingHttpProvider.cs" />
-    <Compile Include="Lightstreamer.Phone7\BatchManager.cs" />
-    <Compile Include="Lightstreamer.Phone7\BatchMonitor.cs" />
-    <Compile Include="Lightstreamer.Phone7\ClientException.cs" />
-    <Compile Include="Lightstreamer.Phone7\CollectionsSupport.cs" />
-    <Compile Include="Lightstreamer.Phone7\ConnectionConstraints.cs" />
-    <Compile Include="Lightstreamer.Phone7\ConnectionInfo.cs" />
-    <Compile Include="Lightstreamer.Phone7\Constants.cs" />
-    <Compile Include="Lightstreamer.Phone7\ExtConnectionListener.cs" />
-    <Compile Include="Lightstreamer.Phone7\ExtendedTableInfo.cs" />
-    <Compile Include="Lightstreamer.Phone7\ExtendedTableManager.cs" />
-    <Compile Include="Lightstreamer.Phone7\FullTableManager.cs" />
-    <Compile Include="Lightstreamer.Phone7\HttpProvider.cs" />
-    <Compile Include="Lightstreamer.Phone7\IConnectionListener.cs" />
-    <Compile Include="Lightstreamer.Phone7\IExtendedTableListener.cs" />
-    <Compile Include="Lightstreamer.Phone7\IFastItemsListener.cs" />
-    <Compile Include="Lightstreamer.Phone7\IHandyTableListener.cs" />
-    <Compile Include="Lightstreamer.Phone7\ISetSupport.cs" />
-    <Compile Include="Lightstreamer.Phone7\ISimpleTableListener.cs" />
-    <Compile Include="Lightstreamer.Phone7\ITableManager.cs" />
-    <Compile Include="Lightstreamer.Phone7\IThreadRunnable.cs" />
-    <Compile Include="Lightstreamer.Phone7\IUpdateInfo.cs" />
-    <Compile Include="Lightstreamer.Phone7\LoggingTypes\com\lightstreamer\ls_client\actions.cs" />
-    <Compile Include="Lightstreamer.Phone7\LoggingTypes\com\lightstreamer\ls_client\protocol.cs" />
-    <Compile Include="Lightstreamer.Phone7\LoggingTypes\com\lightstreamer\ls_client\session.cs" />
-    <Compile Include="Lightstreamer.Phone7\LoggingTypes\com\lightstreamer\ls_client\stream.cs" />
-    <Compile Include="Lightstreamer.Phone7\LSClient.cs" />
-    <Compile Include="Lightstreamer.Phone7\MyServerListener.cs" />
-    <Compile Include="Lightstreamer.Phone7\NotificationQueue.cs" />
-    <Compile Include="Lightstreamer.Phone7\PhaseException.cs" />
-    <Compile Include="Lightstreamer.Phone7\PushConnException.cs" />
-    <Compile Include="Lightstreamer.Phone7\PushEndException.cs" />
-    <Compile Include="Lightstreamer.Phone7\PushLengthException.cs" />
-    <Compile Include="Lightstreamer.Phone7\PushServerException.cs" />
-    <Compile Include="Lightstreamer.Phone7\PushServerProxy.cs" />
-    <Compile Include="Lightstreamer.Phone7\PushServerTranslator.cs" />
-    <Compile Include="Lightstreamer.Phone7\PushUserException.cs" />
-    <Compile Include="Lightstreamer.Phone7\ServerManager.cs" />
-    <Compile Include="Lightstreamer.Phone7\ServerUpdateEvent.cs" />
-    <Compile Include="Lightstreamer.Phone7\SimpleTableInfo.cs" />
-    <Compile Include="Lightstreamer.Phone7\SimpleTableManager.cs" />
-    <Compile Include="Lightstreamer.Phone7\SubscrException.cs" />
-    <Compile Include="Lightstreamer.Phone7\SubscribedTableKey.cs" />
-    <Compile Include="Lightstreamer.Phone7\ThreadSupport.cs" />
-    <Compile Include="Lightstreamer.Phone7\TimerSupport.cs" />
-    <Compile Include="Lightstreamer.Phone7\UpdateInfoImpl.cs" />
-    <Compile Include="Lightstreamer.Phone7\VirtualTableManager.cs" />
+    <Compile Include="..\StreamingClient.Silverlight.Lightstreamer\Lightstreamer.Silverlight\BatchingHttpProvider.cs">
+      <Link>Lightstreamer.Phone7\BatchingHttpProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient.Silverlight.Lightstreamer\Lightstreamer.Silverlight\BatchManager.cs">
+      <Link>Lightstreamer.Phone7\BatchManager.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient.Silverlight.Lightstreamer\Lightstreamer.Silverlight\BatchMonitor.cs">
+      <Link>Lightstreamer.Phone7\BatchMonitor.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient.Silverlight.Lightstreamer\Lightstreamer.Silverlight\ClientException.cs">
+      <Link>Lightstreamer.Phone7\ClientException.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient.Silverlight.Lightstreamer\Lightstreamer.Silverlight\CollectionsSupport.cs">
+      <Link>Lightstreamer.Phone7\CollectionsSupport.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient.Silverlight.Lightstreamer\Lightstreamer.Silverlight\ConnectionConstraints.cs">
+      <Link>Lightstreamer.Phone7\ConnectionConstraints.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient.Silverlight.Lightstreamer\Lightstreamer.Silverlight\ConnectionInfo.cs">
+      <Link>Lightstreamer.Phone7\ConnectionInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient.Silverlight.Lightstreamer\Lightstreamer.Silverlight\Constants.cs">
+      <Link>Lightstreamer.Phone7\Constants.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient.Silverlight.Lightstreamer\Lightstreamer.Silverlight\ExtConnectionListener.cs">
+      <Link>Lightstreamer.Phone7\ExtConnectionListener.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient.Silverlight.Lightstreamer\Lightstreamer.Silverlight\ExtendedTableInfo.cs">
+      <Link>Lightstreamer.Phone7\ExtendedTableInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient.Silverlight.Lightstreamer\Lightstreamer.Silverlight\ExtendedTableManager.cs">
+      <Link>Lightstreamer.Phone7\ExtendedTableManager.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient.Silverlight.Lightstreamer\Lightstreamer.Silverlight\FullTableManager.cs">
+      <Link>Lightstreamer.Phone7\FullTableManager.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient.Silverlight.Lightstreamer\Lightstreamer.Silverlight\HttpProvider.cs">
+      <Link>Lightstreamer.Phone7\HttpProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient.Silverlight.Lightstreamer\Lightstreamer.Silverlight\IConnectionListener.cs">
+      <Link>Lightstreamer.Phone7\IConnectionListener.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient.Silverlight.Lightstreamer\Lightstreamer.Silverlight\IExtendedTableListener.cs">
+      <Link>Lightstreamer.Phone7\IExtendedTableListener.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient.Silverlight.Lightstreamer\Lightstreamer.Silverlight\IFastItemsListener.cs">
+      <Link>Lightstreamer.Phone7\IFastItemsListener.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient.Silverlight.Lightstreamer\Lightstreamer.Silverlight\IHandyTableListener.cs">
+      <Link>Lightstreamer.Phone7\IHandyTableListener.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient.Silverlight.Lightstreamer\Lightstreamer.Silverlight\ISetSupport.cs">
+      <Link>Lightstreamer.Phone7\ISetSupport.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient.Silverlight.Lightstreamer\Lightstreamer.Silverlight\ISimpleTableListener.cs">
+      <Link>Lightstreamer.Phone7\ISimpleTableListener.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient.Silverlight.Lightstreamer\Lightstreamer.Silverlight\ITableManager.cs">
+      <Link>Lightstreamer.Phone7\ITableManager.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient.Silverlight.Lightstreamer\Lightstreamer.Silverlight\IThreadRunnable.cs">
+      <Link>Lightstreamer.Phone7\IThreadRunnable.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient.Silverlight.Lightstreamer\Lightstreamer.Silverlight\IUpdateInfo.cs">
+      <Link>Lightstreamer.Phone7\IUpdateInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient.Silverlight.Lightstreamer\Lightstreamer.Silverlight\LoggingTypes\com\lightstreamer\ls_client\actions.cs">
+      <Link>Lightstreamer.Phone7\LoggingTypes\com\lightstreamer\ls_client\actions.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient.Silverlight.Lightstreamer\Lightstreamer.Silverlight\LoggingTypes\com\lightstreamer\ls_client\protocol.cs">
+      <Link>Lightstreamer.Phone7\LoggingTypes\com\lightstreamer\ls_client\protocol.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient.Silverlight.Lightstreamer\Lightstreamer.Silverlight\LoggingTypes\com\lightstreamer\ls_client\session.cs">
+      <Link>Lightstreamer.Phone7\LoggingTypes\com\lightstreamer\ls_client\session.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient.Silverlight.Lightstreamer\Lightstreamer.Silverlight\LoggingTypes\com\lightstreamer\ls_client\stream.cs">
+      <Link>Lightstreamer.Phone7\LoggingTypes\com\lightstreamer\ls_client\stream.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient.Silverlight.Lightstreamer\Lightstreamer.Silverlight\LSClient.cs">
+      <Link>Lightstreamer.Phone7\LSClient.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient.Silverlight.Lightstreamer\Lightstreamer.Silverlight\MyServerListener.cs">
+      <Link>Lightstreamer.Phone7\MyServerListener.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient.Silverlight.Lightstreamer\Lightstreamer.Silverlight\NotificationQueue.cs">
+      <Link>Lightstreamer.Phone7\NotificationQueue.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient.Silverlight.Lightstreamer\Lightstreamer.Silverlight\PhaseException.cs">
+      <Link>Lightstreamer.Phone7\PhaseException.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient.Silverlight.Lightstreamer\Lightstreamer.Silverlight\PushConnException.cs">
+      <Link>Lightstreamer.Phone7\PushConnException.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient.Silverlight.Lightstreamer\Lightstreamer.Silverlight\PushEndException.cs">
+      <Link>Lightstreamer.Phone7\PushEndException.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient.Silverlight.Lightstreamer\Lightstreamer.Silverlight\PushLengthException.cs">
+      <Link>Lightstreamer.Phone7\PushLengthException.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient.Silverlight.Lightstreamer\Lightstreamer.Silverlight\PushServerException.cs">
+      <Link>Lightstreamer.Phone7\PushServerException.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient.Silverlight.Lightstreamer\Lightstreamer.Silverlight\PushServerProxy.cs">
+      <Link>Lightstreamer.Phone7\PushServerProxy.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient.Silverlight.Lightstreamer\Lightstreamer.Silverlight\PushServerTranslator.cs">
+      <Link>Lightstreamer.Phone7\PushServerTranslator.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient.Silverlight.Lightstreamer\Lightstreamer.Silverlight\PushUserException.cs">
+      <Link>Lightstreamer.Phone7\PushUserException.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient.Silverlight.Lightstreamer\Lightstreamer.Silverlight\ServerManager.cs">
+      <Link>Lightstreamer.Phone7\ServerManager.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient.Silverlight.Lightstreamer\Lightstreamer.Silverlight\ServerUpdateEvent.cs">
+      <Link>Lightstreamer.Phone7\ServerUpdateEvent.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient.Silverlight.Lightstreamer\Lightstreamer.Silverlight\SimpleTableInfo.cs">
+      <Link>Lightstreamer.Phone7\SimpleTableInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient.Silverlight.Lightstreamer\Lightstreamer.Silverlight\SimpleTableManager.cs">
+      <Link>Lightstreamer.Phone7\SimpleTableManager.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient.Silverlight.Lightstreamer\Lightstreamer.Silverlight\SubscrException.cs">
+      <Link>Lightstreamer.Phone7\SubscrException.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient.Silverlight.Lightstreamer\Lightstreamer.Silverlight\SubscribedTableKey.cs">
+      <Link>Lightstreamer.Phone7\SubscribedTableKey.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient.Silverlight.Lightstreamer\Lightstreamer.Silverlight\ThreadSupport.cs">
+      <Link>Lightstreamer.Phone7\ThreadSupport.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient.Silverlight.Lightstreamer\Lightstreamer.Silverlight\TimerSupport.cs">
+      <Link>Lightstreamer.Phone7\TimerSupport.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient.Silverlight.Lightstreamer\Lightstreamer.Silverlight\UpdateInfoImpl.cs">
+      <Link>Lightstreamer.Phone7\UpdateInfoImpl.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient.Silverlight.Lightstreamer\Lightstreamer.Silverlight\VirtualTableManager.cs">
+      <Link>Lightstreamer.Phone7\VirtualTableManager.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -106,9 +200,14 @@
       <Name>Common.Logging.Phone7</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
-  <ProjectExtensions />
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties ProjectLinkerExcludeFilter="\\?desktop(\\.*)?$;\\?silverlight(\\.*)?$;\.desktop;\.silverlight;\.xaml;^service references(\\.*)?$;\.clientconfig;^web references(\\.*)?$" ProjectLinkReference="7cdfd09d-b156-483e-8969-e38926629cc4" />
+    </VisualStudio>
+  </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -55,8 +55,23 @@
     <Compile Include="..\CIAPI.CodeGeneration\ROUTES.cs">
       <Link>ROUTES.cs</Link>
     </Compile>
+    <Compile Include="..\CIAPI\PrettyPrinterExtensions.cs">
+      <Link>PrettyPrinterExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\ciapi\rpc\ApiClient.cs">
       <Link>Rpc\ApiClient.cs</Link>
+    </Compile>
+    <Compile Include="..\ciapi\streaming\lightstreamer\LightStreamerClient.cs">
+      <Link>Streaming\Lightstreamer\LightStreamerClient.cs</Link>
+    </Compile>
+    <Compile Include="..\ciapi\streaming\lightstreamer\LightstreamerDtoConverter.cs">
+      <Link>Streaming\Lightstreamer\LightstreamerDtoConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\ciapi\streaming\lightstreamer\LightStreamerListener.cs">
+      <Link>Streaming\Lightstreamer\LightStreamerListener.cs</Link>
+    </Compile>
+    <Compile Include="..\ciapi\streaming\StreamingClientFactory.cs">
+      <Link>Streaming\StreamingClientFactory.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -68,6 +83,14 @@
     <ProjectReference Include="..\JsonClient.Phone7\JsonClient.Phone7.csproj">
       <Project>{DB3089D5-44AC-441C-845C-3596C21C5E34}</Project>
       <Name>JsonClient.Phone7</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\StreamingClient.Phone7.Lightstreamer\StreamingClient.Phone7.Lightstreamer.csproj">
+      <Project>{C37541C1-15D3-4A67-A885-95E84CE486CA}</Project>
+      <Name>StreamingClient.Phone7.Lightstreamer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\StreamingClient.Phone7\StreamingClient.Phone7.csproj">
+      <Project>{D3078D16-B8F3-4E0B-80ED-EAC7CD4F9046}</Project>
+      <Name>StreamingClient.Phone7</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
