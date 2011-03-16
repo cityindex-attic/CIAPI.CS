@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Lightstreamer.DotNet.Client;
 
 namespace StreamingClient.Lightstreamer
@@ -9,6 +10,7 @@ namespace StreamingClient.Lightstreamer
         private readonly Uri _streamingUri;
         private readonly string _userName;
         private LSClient _internalClient;
+        private Dictionary<string, IStreamingListener> _currentListeners = new Dictionary<string, IStreamingListener>();
 
         protected LightstreamerClient(Uri streamingUri, string userName, string sessionId)
         {
@@ -108,7 +110,12 @@ namespace StreamingClient.Lightstreamer
 
         public IStreamingListener<TDto> BuildListener<TDto>(string topic) where TDto : class, new()
         {
-            return new LightstreamerListener<TDto>(topic, _internalClient);
+            if (!_currentListeners.ContainsKey(topic))
+            {
+                _currentListeners.Add(topic, new LightstreamerListener<TDto>(topic, _internalClient));
+            }
+           
+            return (IStreamingListener<TDto>) _currentListeners[topic];
         }
     }
 }
