@@ -48,7 +48,7 @@ Request Headers :
 CacheDuration   : 00:00:01
 RetryCount      : 3
 ThrottleScope   : throttleScope
-Expiration      : 1/1/0001 12:00:00 AM +00:00
+Expiration      : 0001-01-01 00:00:00Z
 ResponseText    : ResponseText
 Exception       : System.Exception: exception message
 ";
@@ -95,7 +95,7 @@ Request Headers :
 CacheDuration   : 00:00:01
 RetryCount      : 3
 ThrottleScope   : throttleScope
-Expiration      : 1/1/0001 12:00:00 AM +00:00
+Expiration      : 0001-01-01 00:00:00Z
 ResponseText    : ResponseText
 ";
 
@@ -133,7 +133,7 @@ Parameters      :
 CacheDuration   : 00:00:01
 RetryCount      : 3
 ThrottleScope   : throttleScope
-Expiration      : 1/1/0001 12:00:00 AM +00:00
+Expiration      : 0001-01-01 00:00:00Z
 ResponseText    : ResponseText
 ";
 

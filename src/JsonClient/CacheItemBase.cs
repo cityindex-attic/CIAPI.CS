@@ -149,7 +149,7 @@ namespace CityIndex.JsonClient
             sb.AppendFormat("CacheDuration   : {0}\r\n", CacheDuration);
             sb.AppendFormat("RetryCount      : {0}\r\n", RetryCount);
             sb.AppendFormat("ThrottleScope   : {0}\r\n", ThrottleScope ?? "NULL");
-            sb.AppendFormat("Expiration      : {0}\r\n", Expiration);
+            sb.AppendFormat("Expiration      : {0:u}\r\n", Expiration);
             sb.AppendFormat("ResponseText    : {0}\r\n", ResponseText ?? "NULL");
 
             if (Exception != null)
