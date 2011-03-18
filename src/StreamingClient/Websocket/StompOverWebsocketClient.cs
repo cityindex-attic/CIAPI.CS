@@ -20,7 +20,7 @@ namespace StreamingClient.Websocket
             _sessionId = sessionId;
         }
 
-        public  event EventHandler<MessageEventArgs<object>> MessageRecieved;
+        public  event EventHandler<MessageEventArgs<object>> MessageReceived;
         public  event EventHandler<StatusEventArgs> StatusChanged;
 
         public  void Connect()
@@ -38,10 +38,10 @@ namespace StreamingClient.Websocket
                 try
                 {
                     var msg = _stompConnection.WaitForMessage();
-                    if (MessageRecieved != null)
+                    if (MessageReceived != null)
                     {
-                        _logger.DebugFormat("Recieved STOMP message on topic: {0}, {1}", msg.Destination, msg.Body);
-                        MessageRecieved(this, new MessageEventArgs<object>(msg.Destination, msg));
+                        _logger.DebugFormat("Received STOMP message on topic: {0}, {1}", msg.Destination, msg.Body);
+                        MessageReceived(this, new MessageEventArgs<object>(msg.Destination, msg));
                     }
                 }
                 catch (Exception e)

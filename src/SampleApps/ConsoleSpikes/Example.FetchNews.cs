@@ -67,13 +67,13 @@ namespace ConsoleSpikes
             var newsListener = streamingClient.BuildListener<NewsDTO>("NEWS.MOCKHEADLINES.UK");
             newsListener.Start();
 
-            //The MessageRecieved event will be triggered every time a new News headline is available,
+            //The MessageReceived event will be triggered every time a new News headline is available,
             //so attach a handler for that event, and wait until something comes through
             var gate = new ManualResetEvent(false);
-            NewsDTO recievedNewsHeadline = null;
-            newsListener.MessageRecieved += (s, e) =>
+            NewsDTO receivedNewsHeadline = null;
+            newsListener.MessageReceived += (s, e) =>
             {
-                recievedNewsHeadline = e.Data;
+                receivedNewsHeadline = e.Data;
                 //Do something with the new News headline data - perhaps update a news ticker?
                 gate.Set();
             };

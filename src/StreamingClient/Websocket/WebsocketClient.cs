@@ -11,7 +11,7 @@ namespace StreamingClient.Websocket
         void Connect();
         void Connect(Dictionary<string, string> headers);
         void SendFrame(string frameData);
-        string RecieveFrame();
+        string ReceiveFrame();
         void Close();
     }
 
@@ -110,7 +110,7 @@ namespace StreamingClient.Websocket
             return frameData.Replace("\0", "").TrimEnd('\r', '\n');
         }
 
-        public string RecieveFrame()
+        public string ReceiveFrame()
         {
             EnsureConnected();
 
@@ -128,10 +128,10 @@ namespace StreamingClient.Websocket
                 recvBuffer.Add(b);
             } 
 
-            var recievedFrame = Encoding.UTF8.GetString(recvBuffer.ToArray());
-            _logger.DebugFormat("Recieved frame data: \n{0}", PrettyLog(recievedFrame));
+            var receivedFrame = Encoding.UTF8.GetString(recvBuffer.ToArray());
+            _logger.DebugFormat("Received frame data: \n{0}", PrettyLog(receivedFrame));
             
-            return recievedFrame;
+            return receivedFrame;
         }
 
         private void EnsureConnected()

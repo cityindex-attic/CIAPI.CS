@@ -23,7 +23,7 @@ namespace StreamingClient.Lightstreamer
             _groupOrItemName = fullTopic.Replace(_dataAdapter + ".", "");
         }
 
-        public event EventHandler<MessageEventArgs<TDto>> MessageRecieved;
+        public event EventHandler<MessageEventArgs<TDto>> MessageReceived;
 
         /// <summary>
         /// Start listening.  This is syncronous, and blocks until the server subscription has started
@@ -93,9 +93,9 @@ namespace StreamingClient.Lightstreamer
         {
             try
             {
-                if (MessageRecieved == null) return;
+                if (MessageReceived == null) return;
 
-                MessageRecieved(this, new MessageEventArgs<TDto>(_groupOrItemName, _messageConverter.Convert(update)));
+                MessageReceived(this, new MessageEventArgs<TDto>(_groupOrItemName, _messageConverter.Convert(update)));
             }
             catch (Exception ex)
             {

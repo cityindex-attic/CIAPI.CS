@@ -201,14 +201,14 @@ namespace CityIndex.JsonClient
 <<<<<<< HEAD
                                 
 =======
-                                Log.Debug(string.Format("Recieved #{0} : {1} ", request.RequestIndex, request.Url));
+                                Log.Debug(string.Format("Received #{0} : {1} ", request.RequestIndex, request.Url));
 
 >>>>>>> e2af88ed7303a99c1944fdf44b88ed9a1b87e06e
                                 _outstandingRequests--;
 
                                 request.AsyncResultHandler(ar, request);
 
-                                string msgIssued = string.Format("Recieved #{0} : {1} ", requestIndex, request.Url);
+                                string msgIssued = string.Format("Received #{0} : {1} ", requestIndex, request.Url);
                                 Log.Debug(msgIssued);
                             }, null);
 

@@ -39,7 +39,7 @@ namespace CIAPI.IntegrationTests.Streaming
             NewsDTO actual = null;
 
             //Trap the Price given by the update event for checking
-            newsListener.MessageRecieved += (s, e) =>
+            newsListener.MessageReceived += (s, e) =>
             {
                 actual = e.Data;
                 gate.Set();

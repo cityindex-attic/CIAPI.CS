@@ -49,7 +49,7 @@ namespace StreamingClient.Tests.Websocket
 
         private void SetupWebsocketToAllowConnect()
         {
-            _mockWebSocket.Expect(x => x.RecieveFrame()).Return("CONNECTED\nsession:ID:ip-10-245-134-150-39319-1297138182156-4:20\n\n");
+            _mockWebSocket.Expect(x => x.ReceiveFrame()).Return("CONNECTED\nsession:ID:ip-10-245-134-150-39319-1297138182156-4:20\n\n");
         }
 
         [Test]

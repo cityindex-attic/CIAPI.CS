@@ -133,7 +133,7 @@ namespace StreamingClient.Tests.Websocket
         }
 
         [Test]
-        public void RecieveFrameGetsData()
+        public void ReceiveFrameGetsData()
         {
             const string sampleFrameData = "some frame data";
 
@@ -149,9 +149,9 @@ namespace StreamingClient.Tests.Websocket
             _mockIncomingStream.WriteByte(0xff);
 
             _mockIncomingStream.Position = posBeforeWrite;
-            var recieved = client.RecieveFrame();
+            var received = client.ReceiveFrame();
 
-            Assert.AreEqual(sampleFrameData, recieved);
+            Assert.AreEqual(sampleFrameData, received);
         }
 
         private static string ReadUntil(BinaryReader streamReader, int terminator)

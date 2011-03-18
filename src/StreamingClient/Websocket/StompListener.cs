@@ -11,17 +11,17 @@ namespace StreamingClient.Websocket
         {
             _topic = topic;
             _stompClient = stompClient;
-            _stompClient.MessageRecieved+=OnMessageRecieved;
+            _stompClient.MessageReceived+=OnMessageReceived;
         }
 
-        private void OnMessageRecieved(object sender, MessageEventArgs<object> e)
+        private void OnMessageReceived(object sender, MessageEventArgs<object> e)
         {
             if (e.Topic == _topic)
             {
-                if (MessageRecieved!=null)
+                if (MessageReceived!=null)
                 {
                     T dto = new StompDtoConverter<T>().Convert(e.Data);
-                    MessageRecieved(this, new MessageEventArgs<T>(e.Topic, dto));
+                    MessageReceived(this, new MessageEventArgs<T>(e.Topic, dto));
                 }
             }
         }
@@ -36,6 +36,6 @@ namespace StreamingClient.Websocket
             _stompClient.Unsubscribe(_topic);
         }
 
-        public event EventHandler<MessageEventArgs<T>> MessageRecieved;
+        public event EventHandler<MessageEventArgs<T>> MessageReceived;
     }
 }

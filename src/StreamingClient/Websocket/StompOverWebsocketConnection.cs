@@ -122,14 +122,14 @@ namespace StreamingClient.Websocket
         {
             var packet = ReceivePacket();
             if (packet.command != "MESSAGE") 
-                throw new InvalidDataException(string.Format("Expected packet command MESSAGE, but recieved packet with command: {0}", packet.command));
+                throw new InvalidDataException(string.Format("Expected packet command MESSAGE, but received packet with command: {0}", packet.command));
 
             return new StompMessage((string)packet.headers["destination"], packet.body, packet.headers);
         }
 
         private Packet ReceivePacket()
         {
-            var response = _websocketClient.RecieveFrame();
+            var response = _websocketClient.ReceiveFrame();
             var stringReader = new StringReader(response);
             Packet packet = new Packet();
             packet.command = stringReader.ReadLine(); // MESSAGE, ERROR or RECEIPT

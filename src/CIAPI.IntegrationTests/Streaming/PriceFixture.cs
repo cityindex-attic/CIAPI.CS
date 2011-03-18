@@ -41,7 +41,7 @@ namespace CIAPI.IntegrationTests.Streaming
 
             //Trap the Price given by the update event for checking
 
-            priceListener.MessageRecieved += (s, e) =>
+            priceListener.MessageReceived += (s, e) =>
             {
                 actual = e.Data;
                 gate.Set();
@@ -50,7 +50,7 @@ namespace CIAPI.IntegrationTests.Streaming
 
             if (!gate.WaitOne(TimeSpan.FromSeconds(5)))
             {
-                Assert.Fail("A price update wasn't recieved in time");
+                Assert.Fail("A price update wasn't received in time");
             }
 
             priceListener.Stop();

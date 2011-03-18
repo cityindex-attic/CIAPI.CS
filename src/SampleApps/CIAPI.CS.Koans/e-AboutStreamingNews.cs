@@ -60,7 +60,7 @@ namespace CIAPI.CS.Koans
             var ukNewsListener = _streamingClient.BuildNewsHeadlinesListener(topic);
 
             var ukNewsHeadlines = new List<NewsDTO>();
-            ukNewsListener.MessageRecieved += (sender, message) => /* The MessageRecieved event is raised every time a new message arrives */
+            ukNewsListener.MessageReceived += (sender, message) => /* The MessageReceived event is raised every time a new message arrives */
                                                   {
                                                       ukNewsHeadlines.Add(message.Data); //Its data property contains a typed DTO
                                                   };
@@ -85,11 +85,11 @@ namespace CIAPI.CS.Koans
 
             //Build as many listeners as you want
             var ukNewsHeadlines = new List<NewsDTO>();
-            ukNewsListener.MessageRecieved += (sender, message) => ukNewsHeadlines.Add(message.Data);
+            ukNewsListener.MessageReceived += (sender, message) => ukNewsHeadlines.Add(message.Data);
             ukNewsListener.Start();
 
             var gbpusdPrices = new List<PriceDTO>();
-            gbpusdPriceListener.MessageRecieved += (sender, message) => gbpusdPrices.Add(message.Data);
+            gbpusdPriceListener.MessageReceived += (sender, message) => gbpusdPrices.Add(message.Data);
             gbpusdPriceListener.Start();
 
             //Wait whilst some data is connected

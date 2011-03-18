@@ -52,16 +52,16 @@ namespace CIAPI.CS.Streaming.Samples
                         _newsListener = _streamingClient.BuildListener<NewsDTO>(topic);
                         _newsListener.Start();
 
-                        _newsListener.MessageRecieved += (s, message) =>
+                        _newsListener.MessageReceived += (s, message) =>
                                                              {
                                                                  try
                                                                  {
-                                                                     NewsDTO recievedNewsHeadline = message.Data;
+                                                                     NewsDTO receivedNewsHeadline = message.Data;
                                                                      Log(
                                                                          string.Format(
-                                                                             "Recieved: NewsDTO: StoryId {0}, Headline {1}, PublishDate = {2}",
-                                                                             recievedNewsHeadline.StoryId, recievedNewsHeadline.Headline,
-                                                                             recievedNewsHeadline.PublishDate.ToString("u")));
+                                                                             "Received: NewsDTO: StoryId {0}, Headline {1}, PublishDate = {2}",
+                                                                             receivedNewsHeadline.StoryId, receivedNewsHeadline.Headline,
+                                                                             receivedNewsHeadline.PublishDate.ToString("u")));
                                                                  }
                                                                  catch (Exception exception)
                                                                  {

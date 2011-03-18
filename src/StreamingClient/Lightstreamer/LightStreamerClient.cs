@@ -19,7 +19,7 @@ namespace StreamingClient.Lightstreamer
             _userName = userName;
         }
 
-        public event EventHandler<MessageEventArgs<object>> MessageRecieved;
+        public event EventHandler<MessageEventArgs<object>> MessageReceived;
         public event EventHandler<StatusEventArgs> StatusChanged;
 
         public void Connect()
@@ -57,7 +57,7 @@ namespace StreamingClient.Lightstreamer
 
         void IConnectionListener.OnNewBytes(long bytes)
         {
-            OnStatusChanged(new StatusEventArgs {Status = string.Format("{0} new bytes recieved", bytes)});
+            OnStatusChanged(new StatusEventArgs {Status = string.Format("{0} new bytes received", bytes)});
         }
 
         void IConnectionListener.OnSessionStarted(bool isPolling)

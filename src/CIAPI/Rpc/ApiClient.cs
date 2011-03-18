@@ -104,7 +104,7 @@ namespace CIAPI.Rpc
             catch (ApiSerializationException ex)
             {
                 throw new ServerConnectionException(
-                    "Invalid response recieved.  Are you connecting to the correct server Url?  See ResponseText property for further details of response recieved.",
+                    "Invalid response received.  Are you connecting to the correct server Url?  See ResponseText property for further details of response received.",
                     ex.ResponseText);
             }
         }

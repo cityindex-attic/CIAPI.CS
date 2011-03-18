@@ -206,7 +206,7 @@ namespace CityIndex.JsonClient
                     {
                         var webRequestAsyncResult = request.WebRequest.BeginGetResponse(ar =>
                             {
-                                Log.Debug(string.Format("Recieved #{0} : {1} ", request.RequestIndex, request.Url));
+                                Log.Debug(string.Format("Received #{0} : {1} ", request.RequestIndex, request.Url));
 
                                 _outstandingRequests--;
 

@@ -10,6 +10,6 @@ namespace StreamingClient
 
     public interface IStreamingListener<TDto> : IStreamingListener where TDto : class
     {
-        event EventHandler<MessageEventArgs<TDto>> MessageRecieved;
+        event EventHandler<MessageEventArgs<TDto>> MessageReceived;
     }
 }
