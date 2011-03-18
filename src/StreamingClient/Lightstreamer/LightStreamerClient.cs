@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using Lightstreamer.DotNet.Client;
 
 namespace StreamingClient.Lightstreamer
@@ -108,14 +109,22 @@ namespace StreamingClient.Lightstreamer
 
         #endregion
 
-        public IStreamingListener<TDto> BuildListener<TDto>(string topic) where TDto : class, new()
+        public IStreamingListener<TDto> BuildListener<TDto>(string topic, Regex topicMask) where TDto : class, new()
         {
             if (!_currentListeners.ContainsKey(topic))
             {
+                EnsureIsValidTopic(topic, topicMask);
                 _currentListeners.Add(topic, new LightstreamerListener<TDto>(topic, _internalClient));
             }
            
             return (IStreamingListener<TDto>) _currentListeners[topic];
+        }
+
+        protected static void EnsureIsValidTopic(string topic, Regex topicMask)
+        {
+            if (!topicMask.IsMatch(topic))
+                throw new InvalidTopicException(
+                    string.Format("The topic for this listener must match the following regex {0}", topicMask));
         }
     }
 }

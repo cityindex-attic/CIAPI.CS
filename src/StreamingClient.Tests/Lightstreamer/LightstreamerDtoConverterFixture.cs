@@ -1,54 +1,9 @@
 ﻿using System;
 using NUnit.Framework;
 using StreamingClient.Lightstreamer;
-using LightstreamerClient = StreamingClient.Lightstreamer.LightstreamerClient;
 
 namespace StreamingClient.Tests.Lightstreamer
 {
-    [TestFixture]
-    public class LightStreamerClientTests
-    {
-        private LightstreamerClient _lightstreamerClient;
-
-        [SetUp]
-        public void SetUp()
-        {
-            _lightstreamerClient = new PartialLightstreamerClient(new Uri("http://some.sever.com/"), "", "" );
-        }
-
-        [Test]
-        public void OnlyCreatesOneListenerPerTopic()
-        {
-            var listener1 = _lightstreamerClient.BuildListener<AMessageTypeDto>("TOPIC.ONE");
-            var listener2 = _lightstreamerClient.BuildListener<AMessageTypeDto>("TOPIC.ONE");
-
-            Assert.That(listener1, Is.EqualTo(listener2), "Different listener instances should not be created.  There should only ever be one listener / topic");
-        }
-
-        [Test]
-        public void CreatesDifferentListenersForDifferentTopics()
-        {
-            var listener1 = _lightstreamerClient.BuildListener<AMessageTypeDto>("TOPIC.ONE");
-            var listener2 = _lightstreamerClient.BuildListener<AMessageTypeDto>("TOPIC.TWO");
-
-            Assert.That(listener1, Is.Not.EqualTo(listener2), "Different topics should have different listeners");
-        }
-
-        public class AMessageTypeDto
-        {
-        }
-
-        private class PartialLightstreamerClient : LightstreamerClient
-        {
-            public PartialLightstreamerClient(Uri streamingUri, string userName, string sessionId)
-                : base(streamingUri, userName, sessionId)
-            {
-            }
-        }
-    }
-
-    
-
     [TestFixture]
     public class LightstreamerDtoConverterFixture
     {

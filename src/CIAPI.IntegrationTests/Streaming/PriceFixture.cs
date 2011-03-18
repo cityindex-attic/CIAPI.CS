@@ -3,7 +3,6 @@ using System.Threading;
 using CIAPI.DTO;
 using CIAPI.Streaming;
 using NUnit.Framework;
-using StreamingClient;
 using IStreamingClient = CIAPI.Streaming.IStreamingClient;
 
 namespace CIAPI.IntegrationTests.Streaming
