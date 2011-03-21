@@ -4,9 +4,41 @@ using System.Collections.Generic;
 namespace CityIndex.JsonClient
 {
     ///<summary>
+    /// Converts json text to service specific exception
+    ///</summary>
+    public interface IJsonExceptionFactory
+    {
+        ///<summary>
+        ///</summary>
+        ///<param name="json"></param>
+        ///<returns>Null if json is not recognized as an exception</returns>
+        Exception ParseException(string json);
+
+        Exception ParseException(string extraInfo, string json, Exception inner);
+    }
+
+
+    ///<summary>
+    /// Returns null in all cases
+    ///</summary>
+    public class NullJsonExceptionFactory : IJsonExceptionFactory
+    {
+        public Exception ParseException(string json)
+        {
+            return null;
+        }
+
+        public Exception ParseException(string extraInfo, string json, Exception inner)
+        {
+            return null;
+        }
+
+
+    }
+    ///<summary>
     /// Describes a general purpose HTTP JSON API client
     ///</summary>
-    public interface IJsonClient:IDisposable
+    public interface IJsonClient : IDisposable
     {
 
         ///<summary>

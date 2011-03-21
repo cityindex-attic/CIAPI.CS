@@ -36,7 +36,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>..\common\ciapi.snk</AssemblyOriginatorKeyFile>
-  </PropertyGroup>  
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="CassiniDev4-lib">
       <HintPath>..\packages\CassiniDev4\CassiniDev4-lib.dll</HintPath>
@@ -67,6 +67,7 @@
     <Compile Include="CacheItemFixture.cs" />
     <Compile Include="ExceptionHandlingFixture.cs" />
     <Compile Include="HttpUtilityFixture.cs" />
+    <Compile Include="JsonExceptionFactoryFixture.cs" />
     <Compile Include="RequestRetryDiscriminatorFixture.cs" />
     <Compile Include="SupportingTests.cs" />
     <Compile Include="TestRequestFactoryFixture.cs" />

@@ -17,7 +17,7 @@ namespace SOAPI.CS2
         /// 
         /// </summary>
         public StackAuthClient()
-            : base(new Uri("http://stackauth.com/1.0/"),new RequestController(TimeSpan.FromSeconds(0), 2, new RequestFactory(),Throttle.Instance))
+            : base(new Uri("http://stackauth.com/1.0/"), new RequestController(TimeSpan.FromSeconds(0), 2, new RequestFactory(), new NullJsonExceptionFactory(), Throttle.Instance))
             
         {
         }

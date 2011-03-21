@@ -16,6 +16,7 @@ namespace CityIndex.JsonClient
     ///</summary>
     public class RequestController : IRequestController
     {
+        private IJsonExceptionFactory _jsonExceptionFactory;
         private const int BackgroundInterval = 50;
         private readonly Thread _backgroundThread;
         private readonly IRequestCache _cache;
@@ -31,8 +32,9 @@ namespace CityIndex.JsonClient
 
         ///<summary>
         ///</summary>
-        public RequestController(TimeSpan defaultCacheDuration, int retryCount,IRequestFactory requestFactory, params IThrottedRequestQueue[] scopes)
+        public RequestController(TimeSpan defaultCacheDuration, int retryCount, IRequestFactory requestFactory, IJsonExceptionFactory jsonExceptionFactory, params IThrottedRequestQueue[] scopes)
         {
+            _jsonExceptionFactory = jsonExceptionFactory;
             _requestFactory = requestFactory;
             _retryCount = retryCount;
             _scopes = scopes.ToDictionary(d => d.Scope);
@@ -295,10 +297,8 @@ namespace CityIndex.JsonClient
 
                                 item.ResponseText = json;
 
-                                // TODO: check json for exception. question is: how to get the type in? a factory class that accepts json?
-                                Exception seralizedException = null;
+                                Exception seralizedException = _jsonExceptionFactory.ParseException(json); 
                                 
-
                                 Log.Debug(string.Format("request completed:\r\nITEM\r\n{0}", item));
 
                                 try

@@ -31,6 +31,7 @@ namespace CityIndex.JsonClient
         {
         }
 
+
         ///<summary>
         ///</summary>
         ///<param name="message"></param>
@@ -63,7 +64,7 @@ namespace CityIndex.JsonClient
 
         ///<summary>
         ///</summary>
-        public string ResponseText { get; protected set; }
+        public string ResponseText { get; set; }
 
         ///<summary>
         ///</summary>
@@ -79,7 +80,7 @@ namespace CityIndex.JsonClient
             return new ApiException(inner);
         }
 
-        public static string GetResponseText(WebException inner)
+        private static string GetResponseText(WebException inner)
         {
             string json = null;
             try

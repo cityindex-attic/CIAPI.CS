@@ -19,6 +19,7 @@ namespace CityIndex.JsonClient
     {
         #region Fields
 
+        
 #pragma warning disable 169
         private static readonly ILog Log = LogManager.GetLogger(typeof(Client));
 #pragma warning restore 169
@@ -45,13 +46,15 @@ namespace CityIndex.JsonClient
             }
         }
 
+
         ///<summary>
         ///</summary>
         ///<param name="uri"></param>
         ///<param name="requestController"></param>
+        
         public Client(Uri uri, IRequestController requestController)
         {
-
+            
             _requestController = requestController;
 
             _requestController.BeforeBuildUrl += (o, e) => BeforeBuildUrl(e.Item.Target, e.Item.UriTemplate, e.Item.Method, e.Item.Parameters, e.Item.CacheDuration, e.Item.ThrottleScope);
@@ -70,7 +73,7 @@ namespace CityIndex.JsonClient
         ///</summary>
         ///<param name="uri"></param>
         public Client(Uri uri)
-            : this(uri, new RequestController( TimeSpan.FromSeconds(0), 2, new RequestFactory(), new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10, "default")))
+            : this(uri, new RequestController(TimeSpan.FromSeconds(0), 2, new RequestFactory(),new NullJsonExceptionFactory(), new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10, "default")))
         {
 
         }

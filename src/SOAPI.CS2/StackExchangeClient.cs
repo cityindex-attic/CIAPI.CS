@@ -23,7 +23,7 @@ namespace SOAPI.CS2
         /// <param name="url"></param>
         public StackExchangeClient(string apiKey, string url)
             : base(
-                new Uri(url), new RequestController(TimeSpan.FromSeconds(0), 2, new RequestFactory(), Throttle.Instance)
+                new Uri(url), new RequestController(TimeSpan.FromSeconds(0), 2, new RequestFactory(), new NullJsonExceptionFactory(), Throttle.Instance)
                 )
         {
             ApiKey = apiKey;
