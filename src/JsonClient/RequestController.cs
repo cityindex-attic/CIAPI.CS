@@ -315,8 +315,7 @@ namespace CityIndex.JsonClient
                         }
                         catch (WebException wex)
                         {
-                            bool shouldRetry =
-                                new RequestRetryDiscriminator().ShouldRetry(wex);
+                            bool shouldRetry = new RequestRetryDiscriminator().ShouldRetry(wex);
 
                             if (shouldRetry && item.RetryCount < RetryCount)
                             {
@@ -333,14 +332,17 @@ namespace CityIndex.JsonClient
                             else
                             {
                                 ApiException exception;
-                                
+                                string responseText=null;
+
+                                responseText = ApiException.GetResponseText(wex);
+                                item.ResponseText = responseText;
 
                                 if (item.RetryCount > 0)
                                 {
                                     exception =
                                         new ApiException(
                                             wex.Message +
-                                            String.Format("\r\nretried {0} times", item.RetryCount) + "\r\nREQUEST INFO:\r\n" + item.ToString(), wex);
+                                            String.Format("\r\nretried {0} times", item.RetryCount) + "\r\nREQUEST INFO:\r\n" + item.ToString(),wex);
                                 }
                                 else
                                 {
@@ -349,7 +351,9 @@ namespace CityIndex.JsonClient
                                             wex.Message + "\r\nREQUEST INFO:\r\n" + item.ToString(), wex);
                                     
                                 }
-                                
+
+                                exception.ResponseText = responseText;
+
                                 Log.Debug(string.Format("request completed with error:\r\n{0}", exception));
 
                                 try

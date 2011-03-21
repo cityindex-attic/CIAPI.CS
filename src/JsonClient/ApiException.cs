@@ -42,10 +42,7 @@ namespace CityIndex.JsonClient
 
             try
             {
-                if (inner is WebException)
-                {
-                    ResponseText = GetResponseText((WebException)inner);
-                }
+ 
                 if (inner is ApiException)
                 {
                     ResponseText = ((ApiException)inner).ResponseText;
@@ -80,16 +77,15 @@ namespace CityIndex.JsonClient
             return new ApiException(inner);
         }
 
-        private static string GetResponseText(WebException inner)
+        public static string GetResponseText(WebException exception)
         {
             string json = null;
             try
             {
-                // test is breaking this
-                // TODO: add response to test request?
-                if (inner.Response != null)
+ 
+                if (exception.Response != null)
                 {
-                    using (Stream stream = inner.Response.GetResponseStream())
+                    using (Stream stream = exception.Response.GetResponseStream())
                     {
                         if (stream != null)
                         {
