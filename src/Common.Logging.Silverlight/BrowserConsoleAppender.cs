@@ -24,34 +24,40 @@ namespace Common.Logging
         private void WriteToConsole(LogLevel level, string message)
         {
             if (!Deployment.Current.Dispatcher.CheckAccess())
-                Deployment.Current.Dispatcher.BeginInvoke(delegate { WriteToConsole(level, message); });
-            try
             {
-                var safeMessage = message.Replace('"', '\'').Replace("\r\n", @"\n");
-                switch (level)
+                Deployment.Current.Dispatcher.BeginInvoke(delegate { WriteToConsole(level, message); });
+            }
+            else
+            {
+                try
                 {
-                    case LogLevel.Fatal:
-                    case LogLevel.Error:
-                        HtmlPage.Window.Eval("try {console.error(\"" + safeMessage + "\") } catch(e) { try {console.log(\"" + safeMessage + "\") } catch(e) { /* no logging available, so do nothing */ } }");
-                        break;
-                    case LogLevel.Warn:
-                        HtmlPage.Window.Eval("try {console.warn(\"" + safeMessage + "\") } catch(e)  { try {console.log(\"" + safeMessage + "\") } catch(e) { /* no logging available, so do nothing */ } }");
-                        break;
-                    case LogLevel.Debug:
-                        HtmlPage.Window.Eval("try {console.debug(\"" + safeMessage + "\") } catch(e)  { try {console.log(\"" + safeMessage + "\") } catch(e) { /* no logging available, so do nothing */ } }");
-                        break;
-                    case LogLevel.Info:
-                        HtmlPage.Window.Eval("try {console.info(\"" + safeMessage + "\") } catch(e)  { try {console.log(\"" + safeMessage + "\") } catch(e) { /* no logging available, so do nothing */ } }");
-                        break;
-                    default:
-                        HtmlPage.Window.Eval("try {console.log(\"" + safeMessage + "\") } catch(e) { /* no logging available, so do nothing */ }");
-                        break;
+                    var safeMessage = message.Replace('"', '\'').Replace("\r\n", @"\n");
+                    switch (level)
+                    {
+                        case LogLevel.Fatal:
+                        case LogLevel.Error:
+                            HtmlPage.Window.Eval("try {console.error(\"" + safeMessage + "\") } catch(e) { try {console.log(\"" + safeMessage + "\") } catch(e) { /* no logging available, so do nothing */ } }");
+                            break;
+                        case LogLevel.Warn:
+                            HtmlPage.Window.Eval("try {console.warn(\"" + safeMessage + "\") } catch(e)  { try {console.log(\"" + safeMessage + "\") } catch(e) { /* no logging available, so do nothing */ } }");
+                            break;
+                        case LogLevel.Debug:
+                            HtmlPage.Window.Eval("try {console.debug(\"" + safeMessage + "\") } catch(e)  { try {console.log(\"" + safeMessage + "\") } catch(e) { /* no logging available, so do nothing */ } }");
+                            break;
+                        case LogLevel.Info:
+                            HtmlPage.Window.Eval("try {console.info(\"" + safeMessage + "\") } catch(e)  { try {console.log(\"" + safeMessage + "\") } catch(e) { /* no logging available, so do nothing */ } }");
+                            break;
+                        default:
+                            HtmlPage.Window.Eval("try {console.log(\"" + safeMessage + "\") } catch(e) { /* no logging available, so do nothing */ }");
+                            break;
+                    }
+                }
+                catch
+                {
+                    //ignore
                 }
             }
-            catch
-            {
-                //ignore
-            }
+
         }
 
     }

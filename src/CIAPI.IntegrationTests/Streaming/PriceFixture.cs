@@ -33,6 +33,8 @@ namespace CIAPI.IntegrationTests.Streaming
 
             streamingClient.Connect();
 
+            // FIXME: your regex topic filter is croaking here
+
             var priceListener = streamingClient.BuildPriceListener("PRICES.MOCKPRICE.1000");
             priceListener.Start();
 
