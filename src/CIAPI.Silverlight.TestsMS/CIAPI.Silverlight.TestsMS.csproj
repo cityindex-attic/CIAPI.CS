@@ -74,10 +74,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Silverlight.Testing">
-      <HintPath>..\..\..\..\CIAPI.CS\src\packages\SL4_Testing\Microsoft.Silverlight.Testing.dll</HintPath>
+      <HintPath>..\packages\SL4_Testing\Microsoft.Silverlight.Testing.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTesting.Silverlight">
-      <HintPath>..\..\..\..\CIAPI.CS\src\packages\SL4_Testing\Microsoft.VisualStudio.QualityTools.UnitTesting.Silverlight.dll</HintPath>
+      <HintPath>..\packages\SL4_Testing\Microsoft.VisualStudio.QualityTools.UnitTesting.Silverlight.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json.Silverlight">
       <HintPath>..\packages\Newtonsoft.Json.3.5.8\lib\SL\Newtonsoft.Json.Silverlight.dll</HintPath>

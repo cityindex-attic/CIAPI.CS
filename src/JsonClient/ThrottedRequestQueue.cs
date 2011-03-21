@@ -184,7 +184,7 @@ namespace CityIndex.JsonClient
                             if (!_notifiedWaitingOnWindow)
                             {
                                 string msgWaiting = string.Format("Waiting: " + waitTime + " to send " + request.Url);
-                                Log.Debug(msgWaiting);
+                                Log.Info(msgWaiting);
 
                                 _notifiedWaitingOnWindow = true;
                             }
@@ -206,7 +206,7 @@ namespace CityIndex.JsonClient
                     {
                         var webRequestAsyncResult = request.WebRequest.BeginGetResponse(ar =>
                             {
-                                Log.Debug(string.Format("Received #{0} : {1} ", request.RequestIndex, request.Url));
+                                Log.Info(string.Format("Received #{0} : {1} ", request.RequestIndex, request.Url));
 
                                 _outstandingRequests--;
 
@@ -217,11 +217,11 @@ namespace CityIndex.JsonClient
 
                         EnsureRequestWillAbortAfterTimeout(request, webRequestAsyncResult);
 
-                        Log.Debug(string.Format("Dispatched #{0} : {1} ", request.RequestIndex, request.Url));
+                        Log.Info(string.Format("Dispatched #{0} : {1} ", request.RequestIndex, request.Url));
                     }
                     catch (Exception ex)
                     {
-                        Log.Debug(string.Format("Error dispatching #{0} : {1} \r\n{2}", request.RequestIndex, request.Url, ex.Message));
+                        Log.Error(string.Format("Error dispatching #{0} : {1} \r\n{2}", request.RequestIndex, request.Url, ex.Message));
 
                         throw;
                     }
@@ -246,7 +246,7 @@ namespace CityIndex.JsonClient
                 if (!_notifiedWaitingOnMaxPending)
                 {
                     string msgMaxPending = string.Format("Waiting: pending requests {0}", _outstandingRequests);
-                    Log.Debug(msgMaxPending);
+                    Log.Info(msgMaxPending);
 
                     _notifiedWaitingOnMaxPending = true;
                 }

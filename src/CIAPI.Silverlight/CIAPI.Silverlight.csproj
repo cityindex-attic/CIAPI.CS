@@ -74,14 +74,11 @@
     <Compile Include="..\CIAPI\PrettyPrinterExtensions.cs">
       <Link>PrettyPrinterExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\CIAPI\Streaming\IStreamingClient.cs">
+      <Link>Streaming\IStreamingClient.cs</Link>
+    </Compile>
     <Compile Include="..\CIAPI\Streaming\Lightstreamer\LightStreamerClient.cs">
       <Link>Streaming\Lightstreamer\LightStreamerClient.cs</Link>
-    </Compile>
-    <Compile Include="..\CIAPI\Streaming\Lightstreamer\LightstreamerDtoConverter.cs">
-      <Link>Streaming\Lightstreamer\LightstreamerDtoConverter.cs</Link>
-    </Compile>
-    <Compile Include="..\CIAPI\Streaming\Lightstreamer\LightStreamerListener.cs">
-      <Link>Streaming\Lightstreamer\LightStreamerListener.cs</Link>
     </Compile>
     <Compile Include="..\CIAPI\Streaming\StreamingClientFactory.cs">
       <Link>Streaming\StreamingClientFactory.cs</Link>

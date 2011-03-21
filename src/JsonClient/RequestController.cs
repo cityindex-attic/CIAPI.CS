@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading;
+using Common.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -23,6 +24,7 @@ namespace CityIndex.JsonClient
         private readonly int _retryCount;
         private readonly Dictionary<string, IThrottedRequestQueue> _scopes;
         private readonly AutoResetEvent _waitHandle;
+        private static ILog Log = LogManager.GetLogger(typeof (RequestController));
 
         private bool _disposed;
         private volatile bool _disposing;
@@ -291,8 +293,13 @@ namespace CityIndex.JsonClient
                             {
                                 string json = reader.ReadToEnd();
 
+                                item.ResponseText = json;
+
                                 // TODO: check json for exception. question is: how to get the type in? a factory class that accepts json?
                                 Exception seralizedException = null;
+                                
+
+                                Log.Debug(string.Format("request completed:\r\nITEM\r\n{0}", item));
 
                                 try
                                 {
@@ -326,6 +333,7 @@ namespace CityIndex.JsonClient
                             else
                             {
                                 ApiException exception;
+                                
 
                                 if (item.RetryCount > 0)
                                 {
@@ -339,7 +347,10 @@ namespace CityIndex.JsonClient
                                     exception =
                                         new ApiException(
                                             wex.Message + "\r\nREQUEST INFO:\r\n" + item.ToString(), wex);
+                                    
                                 }
+                                
+                                Log.Debug(string.Format("request completed with error:\r\n{0}", exception));
 
                                 try
                                 {
@@ -355,6 +366,8 @@ namespace CityIndex.JsonClient
                         {
                             try
                             {
+                                Log.Debug(string.Format("request completed with error:\r\n{0}", ex));
+
                                 item.CompleteResponse(null, new ApiException(ex.Message + "\r\nREQUEST INFO:\r\n" + item.ToString(), ex));
                             }
                             finally

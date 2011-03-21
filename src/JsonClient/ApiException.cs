@@ -9,12 +9,17 @@ namespace CityIndex.JsonClient
     /// </summary>
     public class ApiException : Exception
     {
+        public override string ToString()
+        {
+            return base.ToString() + "\r\nException ResponseText:\r\n" + ResponseText;
+        }
+
         internal ApiException(Exception inner)
             : base(inner.Message, inner)
         {
             if (inner is WebException)
             {
-                GetResponseText((WebException) inner);
+                ResponseText = GetResponseText((WebException)inner);
             }
         }
 
@@ -33,13 +38,25 @@ namespace CityIndex.JsonClient
         public ApiException(string message, Exception inner)
             : base(message, inner)
         {
-            if (inner is WebException)
+
+            try
             {
-                GetResponseText((WebException) inner);
+                if (inner is WebException)
+                {
+                    ResponseText = GetResponseText((WebException)inner);
+                }
+                if (inner is ApiException)
+                {
+                    ResponseText = ((ApiException)inner).ResponseText;
+                }
             }
-            if (inner is ApiException)
+            // ReSharper disable EmptyGeneralCatchClause
+
+            catch
+            // ReSharper restore EmptyGeneralCatchClause
             {
-                ResponseText = ((ApiException) inner).ResponseText;
+
+
             }
         }
 
@@ -56,14 +73,15 @@ namespace CityIndex.JsonClient
         {
             if (inner is ApiException)
             {
-                return (ApiException) inner;
+                return (ApiException)inner;
             }
 
             return new ApiException(inner);
         }
 
-        private void GetResponseText(WebException inner)
+        public static string GetResponseText(WebException inner)
         {
+            string json = null;
             try
             {
                 // test is breaking this
@@ -76,17 +94,19 @@ namespace CityIndex.JsonClient
                         {
                             using (var reader = new StreamReader(stream))
                             {
-                                ResponseText = reader.ReadToEnd();
+                                json = reader.ReadToEnd();
                             }
                         }
                     }
                 }
             }
-            catch 
+            catch
             {
                 // should swallow?
-                ResponseText = "Could not parse exception response";
+                json = "Could not parse exception response";
             }
+
+            return json;
         }
     }
 
@@ -116,7 +136,7 @@ namespace CityIndex.JsonClient
         {
             if (inner is ApiException)
             {
-                ResponseText = ((ApiException) inner).ResponseText;
+                ResponseText = ((ApiException)inner).ResponseText;
             }
         }
 
@@ -130,7 +150,7 @@ namespace CityIndex.JsonClient
         {
             if (inner is ApiException)
             {
-                ResponseText = ((ApiException) inner).ResponseText;
+                ResponseText = ((ApiException)inner).ResponseText;
             }
         }
     }

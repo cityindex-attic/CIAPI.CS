@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text;
 using System.Threading;
+using Common.Logging;
 
 namespace CityIndex.JsonClient
 {
@@ -35,6 +36,7 @@ namespace CityIndex.JsonClient
             ProcessingWaitHandle = new AutoResetEvent(false);
         }
 
+        
         ///<summary>
         /// The url of this request
         ///</summary>

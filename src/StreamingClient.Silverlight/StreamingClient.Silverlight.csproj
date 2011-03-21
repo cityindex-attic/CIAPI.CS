@@ -47,6 +47,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />
+    <Reference Include="Newtonsoft.Json.Silverlight">
+      <HintPath>..\packages\Newtonsoft.Json.3.5.8\lib\SL\Newtonsoft.Json.Silverlight.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows" />
     <Reference Include="system" />
     <Reference Include="System.Core" />
@@ -58,11 +61,23 @@
     <Compile Include="..\StreamingClient\IMessageConverter.cs">
       <Link>IMessageConverter.cs</Link>
     </Compile>
+    <Compile Include="..\StreamingClient\InvalidTopicException.cs">
+      <Link>InvalidTopicException.cs</Link>
+    </Compile>
     <Compile Include="..\StreamingClient\IStreamingClient.cs">
       <Link>IStreamingClient.cs</Link>
     </Compile>
     <Compile Include="..\StreamingClient\IStreamingListener.cs">
       <Link>IStreamingListener.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient\Lightstreamer\LightStreamerClient.cs">
+      <Link>Lightstreamer\LightStreamerClient.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient\Lightstreamer\LightstreamerDtoConverter.cs">
+      <Link>Lightstreamer\LightstreamerDtoConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient\Lightstreamer\LightStreamerListener.cs">
+      <Link>Lightstreamer\LightStreamerListener.cs</Link>
     </Compile>
     <Compile Include="..\StreamingClient\MessageEventArgs.cs">
       <Link>MessageEventArgs.cs</Link>
@@ -71,6 +86,16 @@
       <Link>StatusEventArgs.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common.Logging.Silverlight\Common.Logging.Silverlight.csproj">
+      <Project>{74036434-D18E-4404-B854-51395CE40B6C}</Project>
+      <Name>Common.Logging.Silverlight</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\StreamingClient.Silverlight.Lightstreamer\StreamingClient.Silverlight.Lightstreamer.csproj">
+      <Project>{7CDFD09D-B156-483E-8969-E38926629CC4}</Project>
+      <Name>StreamingClient.Silverlight.Lightstreamer</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>

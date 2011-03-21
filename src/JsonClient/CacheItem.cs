@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Common.Logging;
 
 namespace CityIndex.JsonClient
 {
@@ -17,6 +18,8 @@ namespace CityIndex.JsonClient
     /// <typeparam name="TDTO">The expected DTO type</typeparam>
     public class CacheItem<TDTO> : CacheItemBase where TDTO : class, new()
     {
+        
+
         private readonly Queue<CacheCallBack<TDTO>> _callbacks;
 
         ///<summary>
@@ -55,6 +58,8 @@ namespace CityIndex.JsonClient
             {
                 ResponseText = json;
                 ItemState = CacheItemState.Processing;
+
+
 
                 try
                 {

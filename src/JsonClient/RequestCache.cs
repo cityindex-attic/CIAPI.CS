@@ -139,7 +139,7 @@ namespace CityIndex.JsonClient
                 foreach (string item in toRemove)
                 {
                     _items.Remove(item);
-                    Log.DebugFormat("Removed {0} from cache", item);
+                    Log.Info(string.Format("Removed {0} from cache", item));
                 }
             }
         }

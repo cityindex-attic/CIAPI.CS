@@ -7,6 +7,8 @@ using CIAPI.Rpc;
 using CIAPI.Streaming;
 using Common.Logging;
 using StreamingClient;
+using IStreamingClient = CIAPI.Streaming.IStreamingClient;
+
 
 namespace CIAPI.CS.Streaming.Samples
 {
@@ -49,7 +51,7 @@ namespace CIAPI.CS.Streaming.Samples
                         _streamingClient.Connect();
 
                         Log("Listening to news stream...");
-                        _newsListener = _streamingClient.BuildListener<NewsDTO>(topic);
+                        _newsListener = _streamingClient.BuildNewsHeadlinesListener(topic);
                         _newsListener.Start();
 
                         _newsListener.MessageReceived += (s, message) =>

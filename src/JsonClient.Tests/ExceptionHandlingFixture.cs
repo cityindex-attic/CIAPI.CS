@@ -55,8 +55,8 @@ namespace CityIndex.JsonClient.Tests
                                                  }
                                                  catch (ApiException ex)
                                                  {
-
-                                                     Assert.AreEqual("The remote server returned an error: (400) Bad Request.", ex.Message);
+                                                     Assert.IsTrue(ex.Message.StartsWith("The remote server returned an error: (400) Bad Request."));
+                                                     
 
                                                      actual = ex.ResponseText;
 
@@ -120,7 +120,7 @@ namespace CityIndex.JsonClient.Tests
                 catch (ApiException ex)
                 {
 
-                    Assert.AreEqual("The remote server returned an error: (400) Bad Request.", ex.Message);
+                    Assert.IsTrue(ex.Message.StartsWith("The remote server returned an error: (400) Bad Request."));
 
                     actual = ex.ResponseText;
 
@@ -177,7 +177,7 @@ namespace CityIndex.JsonClient.Tests
                 catch (ApiException ex)
                 {
 
-                    Assert.AreEqual("The remote server returned an error: (400) Bad Request.", ex.Message);
+                    Assert.IsTrue(ex.Message.StartsWith("The remote server returned an error: (400) Bad Request."));
 
                     actual = ex.ResponseText;
 
@@ -204,7 +204,7 @@ namespace CityIndex.JsonClient.Tests
                 catch (ApiException ex)
                 {
 
-                    Assert.AreEqual("The remote server returned an error: (400) Bad Request.", ex.Message);
+                    Assert.IsTrue(ex.Message.StartsWith("The remote server returned an error: (400) Bad Request."));
 
                     actual = ex.ResponseText;
 
@@ -231,7 +231,7 @@ namespace CityIndex.JsonClient.Tests
                 catch (ApiException ex)
                 {
 
-                    Assert.AreEqual("The remote server returned an error: (400) Bad Request.", ex.Message);
+                    Assert.IsTrue(ex.Message.StartsWith("The remote server returned an error: (400) Bad Request."));
 
                     actual = ex.ResponseText;
 
@@ -264,7 +264,7 @@ namespace CityIndex.JsonClient.Tests
             catch (ApiException ex)
             {
 
-                Assert.AreEqual("The remote server returned an error: (400) Bad Request.", ex.Message);
+                Assert.IsTrue(ex.Message.StartsWith("The remote server returned an error: (400) Bad Request."));
 
                 actual = ex.ResponseText;
 
@@ -287,7 +287,7 @@ namespace CityIndex.JsonClient.Tests
             catch (ApiException ex)
             {
 
-                Assert.AreEqual("The remote server returned an error: (400) Bad Request.", ex.Message);
+                Assert.IsTrue(ex.Message.StartsWith("The remote server returned an error: (400) Bad Request."));
 
                 actual = ex.ResponseText;
 
@@ -302,7 +302,7 @@ namespace CityIndex.JsonClient.Tests
             catch (ApiException ex)
             {
 
-                Assert.AreEqual("The remote server returned an error: (400) Bad Request.", ex.Message);
+                Assert.IsTrue(ex.Message.StartsWith("The remote server returned an error: (400) Bad Request."));
 
                 actual = ex.ResponseText;
 
@@ -326,7 +326,7 @@ namespace CityIndex.JsonClient.Tests
             catch (ApiException ex)
             {
 
-                Assert.AreEqual("The remote server returned an error: (400) Bad Request.", ex.Message);
+                Assert.IsTrue(ex.Message.StartsWith("The remote server returned an error: (400) Bad Request."));
 
                 actual = ex.ResponseText;
 
@@ -346,7 +346,7 @@ namespace CityIndex.JsonClient.Tests
                 catch (ApiException ex)
                 {
 
-                    Assert.AreEqual("The remote server returned an error: (400) Bad Request.", ex.Message);
+                    Assert.IsTrue(ex.Message.StartsWith("The remote server returned an error: (400) Bad Request."));
 
                     actual = ex.ResponseText;
 
@@ -384,7 +384,7 @@ namespace CityIndex.JsonClient.Tests
             catch (ApiException ex)
             {
 
-                Assert.AreEqual("The remote server returned an error: (400) Bad Request.", ex.Message);
+                Assert.IsTrue(ex.Message.StartsWith("The remote server returned an error: (400) Bad Request."));
 
                 actual = ex.ResponseText;
 
@@ -404,7 +404,7 @@ namespace CityIndex.JsonClient.Tests
                 catch (ApiException ex)
                 {
 
-                    Assert.AreEqual("The remote server returned an error: (400) Bad Request.", ex.Message);
+                    Assert.IsTrue(ex.Message.StartsWith("The remote server returned an error: (400) Bad Request."));
 
                     actual = ex.ResponseText;
 
@@ -442,7 +442,7 @@ namespace CityIndex.JsonClient.Tests
             catch (ApiException ex)
             {
 
-                Assert.AreEqual("The remote server returned an error: (400) Bad Request.", ex.Message);
+                Assert.IsTrue(ex.Message.StartsWith("The remote server returned an error: (400) Bad Request."));
 
                 actual = ex.ResponseText;
 
