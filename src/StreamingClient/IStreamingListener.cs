@@ -6,6 +6,7 @@ namespace StreamingClient
     {
         void Start();
         void Stop();
+        string Topic { get; }
     }
 
     public interface IStreamingListener<TDto> : IStreamingListener where TDto : class

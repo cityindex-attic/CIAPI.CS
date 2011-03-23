@@ -16,6 +16,11 @@ namespace CIAPI.Streaming.Lightstreamer
             return BuildListener<PriceDTO>(topic, new Regex(@"^PRICES\.PRICE\.(\d+)$"));
         }
 
+        public IStreamingListener<PriceDTO> BuildPriceListener(string[] topics)
+        {
+            return BuildListener<PriceDTO>(topics, new Regex(@"^PRICES\.PRICE\.(\d+)$"));
+        }
+
         public IStreamingListener<NewsDTO> BuildNewsHeadlinesListener(string topic)
         {
             return BuildListener<NewsDTO>(topic, new Regex(@"^NEWS\.(\w+)\.(\w+)$"));

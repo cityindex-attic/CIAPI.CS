@@ -87,6 +87,7 @@ namespace StreamingClient.Tests.Websocket
         }
 
         [Test, Category("DependsOnExternalResource")]
+        [Ignore("Required external Websockets server.  Run manually")]
         public void CanConnectToExternal()
         {
             _logger.InfoFormat("Ready to subscribe");

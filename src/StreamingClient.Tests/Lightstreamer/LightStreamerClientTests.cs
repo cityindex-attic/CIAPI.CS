@@ -48,6 +48,38 @@ namespace StreamingClient.Tests.Lightstreamer
             Assert.That(ex.Message.Contains(sampleLightstreamerClient.SAMPLE_TOPIC_MASK.ToString()), "error message should indicate the expected regex mask");
         }
 
+        [Test]
+        public void SubscriptionToMultipleTopicsSubscribesToSingleSpaceSeparatedTopic()
+        {
+            var sampleLightstreamerClient = ((PartialLightstreamerClient)_lightstreamerClient);
+
+            var multiListener = sampleLightstreamerClient.BuildSampleListener(new[]
+                                                                                  {
+                                                                                      "SAMPLES.SAMPLE.1",
+                                                                                      "SAMPLES.SAMPLE.2",
+                                                                                      "SAMPLES.SAMPLE.3"
+                                                                                  });
+            Assert.That(multiListener.Topic, Is.EqualTo("SAMPLES.SAMPLE.1 SAMPLES.SAMPLE.2 SAMPLES.SAMPLE.3"));
+        }
+
+        [Test]
+        public void ValidatesEveryTopicWhenBuildingMultiListener()
+        {
+            var sampleLightstreamerClient = ((PartialLightstreamerClient)_lightstreamerClient);
+
+            var ex =
+                Assert.Throws<InvalidTopicException>(
+                    () =>  sampleLightstreamerClient.BuildSampleListener(new[]
+                                                                                  {
+                                                                                      "SAMPLES.SAMPLE.1",
+                                                                                      "INVALID.TOPIC",
+                                                                                      "SAMPLES.SAMPLE.3"
+                                                                                  }));
+
+            Assert.That(ex.Message.Contains("topic"), "error message should talk about the topic");
+            Assert.That(ex.Message.Contains(sampleLightstreamerClient.SAMPLE_TOPIC_MASK.ToString()), "error message should indicate the expected regex mask");
+        }
+
         public class AMessageTypeDto
         {
         }
@@ -63,6 +95,11 @@ namespace StreamingClient.Tests.Lightstreamer
             public IStreamingListener<AMessageTypeDto> BuildSampleListener(string topic)
             {
                 return BuildListener<AMessageTypeDto>(topic, SAMPLE_TOPIC_MASK);
+            }
+
+            public IStreamingListener<AMessageTypeDto> BuildSampleListener(string[] topics)
+            {
+                return BuildListener<AMessageTypeDto>(topics, SAMPLE_TOPIC_MASK);
             }
         }
     }

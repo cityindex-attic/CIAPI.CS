@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using CIAPI.DTO;
 using CIAPI.Streaming;
+using Common.Logging;
 using NUnit.Framework;
 using IStreamingClient = CIAPI.Streaming.IStreamingClient;
 
@@ -10,6 +12,8 @@ namespace CIAPI.IntegrationTests.Streaming
     [TestFixture]
     public class PriceFixture
     {
+        private ILog _logger = LogManager.GetCurrentClassLogger();
+
         public static IStreamingClient BuildStreamingClient(
             string userName = "0x234",
             string password = "password")
@@ -60,5 +64,61 @@ namespace CIAPI.IntegrationTests.Streaming
             Assert.IsNotNull(actual);
             Assert.Greater(actual.TickDate, DateTime.UtcNow.AddSeconds(-10), "We're expecting a recent price");
         }
+
+
+        /* 24/5 fast pricing FX markets
+
+            {"MarketId":400481115,"Name":"AUD\/JPY"},
+            {"MarketId":400481116,"Name":"AUD\/NZD"},
+            {"MarketId":400481117,"Name":"AUD\/USD"},
+            {"MarketId":400481118,"Name":"CAD\/CHF"},
+            {"MarketId":400481119,"Name":"CAD\/JPY"},
+            {"MarketId":400481120,"Name":"CHF\/JPY"},
+            {"MarketId":400481121,"Name":"EUR\/AUD"},
+            {"MarketId":400481122,"Name":"EUR\/CAD"},
+        */
+
+        [Test, Ignore("Only works during market opening hours.  Run manually")]
+        public void CanSubscribeToMultiplePriceStreamsAtOnce()
+        {
+            var streamingClient = BuildStreamingClient();
+            streamingClient.Connect();
+            var priceListener = streamingClient.BuildPriceListener(new[]{
+                                                                         "PRICES.PRICE.400481115",
+                                                                         "PRICES.PRICE.400481116",
+                                                                         "PRICES.PRICE.400481118",
+                                                                         "PRICES.PRICE.400481119",
+                                                                         "PRICES.PRICE.400481120",
+                                                                         "PRICES.PRICE.400481121",
+                                                                         "PRICES.PRICE.400481122"
+                                                                    });
+            
+            var prices = new List<PriceDTO>();
+            priceListener.MessageReceived += (s, e) => prices.Add(e.Data);
+
+            try
+            {
+                priceListener.Start();
+
+                Thread.Sleep(TimeSpan.FromSeconds(15));
+                
+                if (prices.Count == 0)
+                {
+                    Assert.Fail("No price updates were recieved");
+                }
+
+                foreach (var price in prices)
+                {
+                    _logger.DebugFormat(price.ToStringWithValues());
+                }
+            }
+            finally
+            {
+                priceListener.Stop();
+                streamingClient.Disconnect();
+            }
+        }
+
+
     }
 }
