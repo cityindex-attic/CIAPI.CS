@@ -5,7 +5,7 @@ using Lightstreamer.DotNet.Client;
 
 namespace StreamingClient.Lightstreamer
 {
-    public class LightstreamerClient : IStreamingClient, IConnectionListener
+    public abstract class LightstreamerClient : IStreamingClient, IConnectionListener
     {
         private readonly string _sessionId;
         private readonly Uri _streamingUri;
@@ -120,11 +120,27 @@ namespace StreamingClient.Lightstreamer
             return (IStreamingListener<TDto>) _currentListeners[topic];
         }
 
+        public IStreamingListener<TDto> BuildListener<TDto>(string[] topics, Regex topicMask) where TDto : class, new()
+        {
+            var multiTopic = string.Join(" ", topics);
+            if (!_currentListeners.ContainsKey(multiTopic))
+            {
+                foreach (var topic in topics)
+                {
+                    EnsureIsValidTopic(topic, topicMask);
+                }
+                _currentListeners.Add(multiTopic, new LightstreamerListener<TDto>(multiTopic, _internalClient));
+            }
+
+            return (IStreamingListener<TDto>)_currentListeners[multiTopic];
+        }
+
         protected static void EnsureIsValidTopic(string topic, Regex topicMask)
         {
             if (!topicMask.IsMatch(topic))
                 throw new InvalidTopicException(
                     string.Format("The topic for this listener must match the following regex {0}", topicMask));
         }
+
     }
 }

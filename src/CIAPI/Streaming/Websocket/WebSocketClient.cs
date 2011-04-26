@@ -17,6 +17,11 @@ namespace CIAPI.Streaming.Websocket
             return BuildListener<PriceDTO>(topic);
         }
 
+        public IStreamingListener<PriceDTO> BuildPriceListener(string[] topics)
+        {
+            throw new NotImplementedException();
+        }
+
         public IStreamingListener<NewsDTO> BuildNewsHeadlinesListener(string topic)
         {
             return BuildListener<NewsDTO>(topic);

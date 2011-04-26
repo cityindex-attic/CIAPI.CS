@@ -36,6 +36,11 @@ namespace StreamingClient.Websocket
             _stompClient.Unsubscribe(_topic);
         }
 
+        public string Topic
+        {
+            get { return _topic; }
+        }
+
         public event EventHandler<MessageEventArgs<T>> MessageReceived;
     }
 }

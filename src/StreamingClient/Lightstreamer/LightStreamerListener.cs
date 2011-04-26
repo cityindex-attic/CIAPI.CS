@@ -12,12 +12,14 @@ namespace StreamingClient.Lightstreamer
         private readonly LightstreamerDtoConverter<TDto> _messageConverter = new LightstreamerDtoConverter<TDto>();
         private static readonly ILog _logger = LogManager.GetLogger(typeof(LightstreamerListener<TDto>));
         private readonly string _groupOrItemName;
+        private readonly string _fullTopic;
         private readonly LSClient _lsClient;
         private SubscribedTableKey _subscribedTableKey;
         private readonly string _dataAdapter;
 
         public LightstreamerListener(string fullTopic, LSClient lsClient)
         {
+            _fullTopic = fullTopic;
             _lsClient = lsClient;
             _dataAdapter = fullTopic.Split('.').First();
             _groupOrItemName = fullTopic.Replace(_dataAdapter + ".", "");
@@ -87,6 +89,11 @@ namespace StreamingClient.Lightstreamer
                                                  "Client has stopped listening, but there might be a zombie process left on the server",
                                                  LightstreamerDefaults.DEFAULT_TIMEOUT_MS, GetType().Name));
             }
+        }
+
+        public string Topic
+        {
+            get { return _fullTopic; }
         }
 
         void IHandyTableListener.OnUpdate(int itemPos, string itemName, IUpdateInfo update)
