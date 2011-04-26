@@ -24,7 +24,7 @@ namespace CIAPI.IntegrationTests.Streaming
             return StreamingClientFactory.CreateStreamingClient(streamingUri, userName, authenticatedClient.SessionId);
         }
 
-        [Test]
+        [Test,Ignore("this test is best run interactively when market is responsive. after hours there is no pricing so test will fail")]
         public void CanConsumePriceStream()
         {
             var gate = new ManualResetEvent(false);
@@ -33,9 +33,9 @@ namespace CIAPI.IntegrationTests.Streaming
 
             streamingClient.Connect();
 
-            // FIXME: your regex topic filter is croaking here
+            
 
-            var priceListener = streamingClient.BuildPriceListener("PRICES.MOCKPRICE.1000");
+            var priceListener = streamingClient.BuildPriceListener("PRICES.PRICE.71442");
             priceListener.Start();
 
             PriceDTO actual = null;
