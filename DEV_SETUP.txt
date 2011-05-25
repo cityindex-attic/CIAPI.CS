@@ -8,3 +8,4 @@
 3) Run reflector - tools\reflector - select .NET4.0 client; then go Options > Add ins and include tools\reflector\plugins\Reflector.CodeMetrics.dll
 
 .
+;
