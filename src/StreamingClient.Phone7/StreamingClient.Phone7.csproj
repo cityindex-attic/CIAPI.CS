@@ -9,7 +9,7 @@
     <ProjectTypeGuids>{C089C8C0-30E0-4E22-80C0-CE093F111A43};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>StreamingClient.Phone7</RootNamespace>
+    <RootNamespace>StreamingClient</RootNamespace>
     <AssemblyName>StreamingClient.Phone7</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
@@ -41,6 +41,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json.Silverlight">
+      <HintPath>..\packages\Newtonsoft.Json.3.5.8\lib\SL\Newtonsoft.Json.Silverlight.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows" />
     <Reference Include="system" />
     <Reference Include="System.Core" />
@@ -51,11 +54,23 @@
     <Compile Include="..\StreamingClient\IMessageConverter.cs">
       <Link>IMessageConverter.cs</Link>
     </Compile>
+    <Compile Include="..\StreamingClient\InvalidTopicException.cs">
+      <Link>InvalidTopicException.cs</Link>
+    </Compile>
     <Compile Include="..\StreamingClient\IStreamingClient.cs">
       <Link>IStreamingClient.cs</Link>
     </Compile>
     <Compile Include="..\StreamingClient\IStreamingListener.cs">
       <Link>IStreamingListener.cs</Link>
+    </Compile>
+    <Compile Include="..\streamingclient\lightstreamer\LightStreamerClient.cs">
+      <Link>Lightstreamer\LightStreamerClient.cs</Link>
+    </Compile>
+    <Compile Include="..\streamingclient\lightstreamer\LightstreamerDtoConverter.cs">
+      <Link>Lightstreamer\LightstreamerDtoConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\streamingclient\lightstreamer\LightStreamerListener.cs">
+      <Link>Lightstreamer\LightStreamerListener.cs</Link>
     </Compile>
     <Compile Include="..\StreamingClient\MessageEventArgs.cs">
       <Link>MessageEventArgs.cs</Link>
@@ -69,6 +84,10 @@
     <ProjectReference Include="..\Common.Logging.Phone7\Common.Logging.Phone7.csproj">
       <Project>{06CA6C00-672E-4B49-8FD4-A4A9AB453C5A}</Project>
       <Name>Common.Logging.Phone7</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\StreamingClient.Phone7.Lightstreamer\StreamingClient.Phone7.Lightstreamer.csproj">
+      <Project>{A0676126-F911-47FE-9BBC-4E0350BCCA9E}</Project>
+      <Name>StreamingClient.Phone7.Lightstreamer</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />

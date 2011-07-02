@@ -566,37 +566,69 @@ namespace CIAPI.Rpc
         }
 
         
-        ///// <summary>
-        ///// <p>Update an order (for adding a stop/limit or attaching an OCO relationship). Post an <a onclick="dojo.hash('#type.UpdateStopLimitOrderRequestDTO'); return false;" class="json-link" href="#">UpdateStopLimitOrderRequestDTO</a> to the uri specified below</p>
-        ///// </summary>		
-        ///// <returns></returns>
-        //public ApiTradeOrderResponseDTO UpdateOrder()
-        //{
-       
-        //    return Request<ApiTradeOrderResponseDTO>("order","/updatestoplimitorder", "POST", new Dictionary<string, object>
-        //                        {
-        //                        }, TimeSpan.FromMilliseconds(0),"");
-        //}
+        /// <summary>
+        /// <p>Update an order (for adding a stop/limit or attaching an OCO relationship). Post an <a onclick="dojo.hash('#type.UpdateStopLimitOrderRequestDTO'); return false;" class="json-link" href="#">UpdateStopLimitOrderRequestDTO</a> to the uri specified below</p>
+        /// </summary>		
+        /// <returns></returns>
+        public ApiTradeOrderResponseDTO UpdateOrder(Int32 OrderId, Int32 MarketId, String Currency, Boolean AutoRollover, String Direction, Decimal Quantity, Decimal BidPrice, Decimal OfferPrice, String AuditId, Int32 TradingAccountId, ApiIfDoneDTO[] IfDone, NewStopLimitOrderRequestDTO OcoOrder, String Applicability, DateTime? ExpiryDateTimeUTC, Boolean Guaranteed, Decimal TriggerPrice)
+        {
+
+            return Request<ApiTradeOrderResponseDTO>("order", "/updatestoplimitorder", "POST", new Dictionary<string, object>
+                                {
+									{"OrderId",OrderId},
+									{"MarketId",MarketId},
+									{"Currency",Currency},
+									{"AutoRollover",AutoRollover},
+									{"Direction",Direction},
+									{"Quantity",Quantity},
+									{"BidPrice",BidPrice},
+									{"OfferPrice",OfferPrice},
+									{"AuditId",AuditId},
+									{"TradingAccountId",TradingAccountId},
+									{"IfDone",IfDone},
+									{"OcoOrder",OcoOrder},
+									{"Applicability",Applicability},
+									{"ExpiryDateTimeUTC",ExpiryDateTimeUTC},
+									{"Guaranteed",Guaranteed},
+									{"TriggerPrice",TriggerPrice},
+                                }, TimeSpan.FromMilliseconds(0), "");
+        }
 
 
-        // #BUG: parameter list not being generated properly
+ 
 
-        ///// <summary>
-        ///// <p>Update an order (for adding a stop/limit or attaching an OCO relationship). Post an <a onclick="dojo.hash('#type.UpdateStopLimitOrderRequestDTO'); return false;" class="json-link" href="#">UpdateStopLimitOrderRequestDTO</a> to the uri specified below</p>
-        ///// </summary>		
-        ///// <param name="callback"></param>
-        ///// <returns></returns>
-        //public void BeginUpdateOrder(, ApiAsyncCallback<ApiTradeOrderResponseDTO> callback, object state)
-        //{
-        //    BeginRequest(callback, state, "order","/updatestoplimitorder", "POST",new Dictionary<string, object>
-        //                        {
-        //                        }, TimeSpan.FromMilliseconds(0),"");
-        //}
+        /// <summary>
+        /// <p>Update an order (for adding a stop/limit or attaching an OCO relationship). Post an <a onclick="dojo.hash('#type.UpdateStopLimitOrderRequestDTO'); return false;" class="json-link" href="#">UpdateStopLimitOrderRequestDTO</a> to the uri specified below</p>
+        /// </summary>		
+        /// <param name="callback"></param>
+        /// <returns></returns>
+        public void BeginUpdateOrder(Int32 OrderId, Int32 MarketId, String Currency, Boolean AutoRollover, String Direction, Decimal Quantity, Decimal BidPrice, Decimal OfferPrice, String AuditId, Int32 TradingAccountId, ApiIfDoneDTO[] IfDone, NewStopLimitOrderRequestDTO OcoOrder, String Applicability, DateTime? ExpiryDateTimeUTC, Boolean Guaranteed, Decimal TriggerPrice, ApiAsyncCallback<ApiTradeOrderResponseDTO> callback, object state)
+        {
+            BeginRequest(callback, state, "order", "/updatestoplimitorder", "POST", new Dictionary<string, object>
+                                {
+									{"OrderId",OrderId},
+									{"MarketId",MarketId},
+									{"Currency",Currency},
+									{"AutoRollover",AutoRollover},
+									{"Direction",Direction},
+									{"Quantity",Quantity},
+									{"BidPrice",BidPrice},
+									{"OfferPrice",OfferPrice},
+									{"AuditId",AuditId},
+									{"TradingAccountId",TradingAccountId},
+									{"IfDone",IfDone},
+									{"OcoOrder",OcoOrder},
+									{"Applicability",Applicability},
+									{"ExpiryDateTimeUTC",ExpiryDateTimeUTC},
+									{"Guaranteed",Guaranteed},
+									{"TriggerPrice",TriggerPrice},
+                                }, TimeSpan.FromMilliseconds(0), "");
+        }
 
-        //public ApiTradeOrderResponseDTO EndUpdateOrder(ApiAsyncResult<ApiTradeOrderResponseDTO> asyncResult)
-        //{
-        //    return EndRequest(asyncResult);
-        //}
+        public ApiTradeOrderResponseDTO EndUpdateOrder(ApiAsyncResult<ApiTradeOrderResponseDTO> asyncResult)
+        {
+            return EndRequest(asyncResult);
+        }
         /// <summary>
         /// <p>Queries for a specified trading account's trades / open positions.</p> <p>This uri is intended to be used to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call <a onclick="dojo.hash('#service.GetOpenPosition'); return false;" class="json-link" href="#">GetOpenPosition</a> when you get updates on the order stream to get the updated data in this format.</p>
         /// </summary>		
@@ -1001,34 +1033,34 @@ namespace CIAPI.Rpc
         //{
         //    return EndRequest(asyncResult);
         //}
-        ///// <summary>
-        ///// Returns the Users ClientAccountId and a list of their TradingAccounts. There are no parameters for this call.
-        ///// </summary>		
-        ///// <returns></returns>
-        //public AccountInformationResponseDTO GetClientAndTradingAccount()
-        //{
+        /// <summary>
+        /// Returns the Users ClientAccountId and a list of their TradingAccounts. There are no parameters for this call.
+        /// </summary>		
+        /// <returns></returns>
+        public AccountInformationResponseDTO GetClientAndTradingAccount()
+        {
        
-        //    return Request<AccountInformationResponseDTO>("useraccount","/UserAccount/ClientAndTradingAccount", "GET", new Dictionary<string, object>
-        //                        {
-        //                        }, TimeSpan.FromMilliseconds(0),"data");
-        //}
+            return Request<AccountInformationResponseDTO>("useraccount","/UserAccount/ClientAndTradingAccount", "GET", new Dictionary<string, object>
+                                {
+                                }, TimeSpan.FromMilliseconds(0),"data");
+        }
 
-        ///// <summary>
-        ///// Returns the Users ClientAccountId and a list of their TradingAccounts. There are no parameters for this call.
-        ///// </summary>		
-        ///// <param name="callback"></param>
-        ///// <returns></returns>
-        //public void BeginGetClientAndTradingAccount(, ApiAsyncCallback<AccountInformationResponseDTO> callback, object state)
-        //{
-        //    BeginRequest(callback, state, "useraccount","/UserAccount/ClientAndTradingAccount", "GET",new Dictionary<string, object>
-        //                        {
-        //                        }, TimeSpan.FromMilliseconds(0),"data");
-        //}
+        /// <summary>
+        /// Returns the Users ClientAccountId and a list of their TradingAccounts. There are no parameters for this call.
+        /// </summary>		
+        /// <param name="callback"></param>
+        /// <returns></returns>
+        public void BeginGetClientAndTradingAccount(ApiAsyncCallback<AccountInformationResponseDTO> callback, object state)
+        {
+            BeginRequest(callback, state, "useraccount","/UserAccount/ClientAndTradingAccount", "GET",new Dictionary<string, object>
+                                {
+                                }, TimeSpan.FromMilliseconds(0),"data");
+        }
 
-        //public AccountInformationResponseDTO EndGetClientAndTradingAccount(ApiAsyncResult<AccountInformationResponseDTO> asyncResult)
-        //{
-        //    return EndRequest(asyncResult);
-        //}
+        public AccountInformationResponseDTO EndGetClientAndTradingAccount(ApiAsyncResult<AccountInformationResponseDTO> asyncResult)
+        {
+            return EndRequest(asyncResult);
+        }
         /// <summary>
         /// Simulates an error condition.
         /// </summary>		
