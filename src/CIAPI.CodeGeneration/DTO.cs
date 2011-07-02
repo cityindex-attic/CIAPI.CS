@@ -74,9 +74,10 @@ namespace CIAPI.DTO
 		public  Int32 StatusId{get;set;}
         /// <summary>
         /// The last time that the order changed. Note - Does not include things such as the current market price.
+        /// format : "wcf-date"
         /// </summary>
 		
-		public  String LastChangedDateTimeUtc{get;set;}
+		public  DateTime LastChangedDateTimeUtc{get;set;}
 	}
 
 	#endregion
@@ -322,9 +323,10 @@ namespace CIAPI.DTO
 		public  String Currency{get;set;}
         /// <summary>
         /// The last time that the order changed. Note - Does not include things such as the current market price.
+        /// format : "wcf-date"
         /// </summary>
 		
-		public  String LastChangedDateTimeUtc{get;set;}
+		public  DateTime LastChangedDateTimeUtc{get;set;}
 	}
 
 	#endregion
@@ -963,9 +965,10 @@ namespace CIAPI.DTO
         /// <summary>
         /// Identifier which relates to the expiry of the order/trade, i.e. GoodTillDate (GTD), GoodTillCancelled (GTC) or GoodForDay (GFD)
         /// demoValue : "GTC"
+        /// format : "wcf-date"
         /// </summary>
 		
-		public  String Applicability{get;set;}
+		public  DateTime Applicability{get;set;}
 	}
 
 	#endregion
@@ -1792,15 +1795,17 @@ namespace CIAPI.DTO
         /// <summary>
         /// Identifier which relates to the expiry of the order/trade, i.e. GoodTillDate (GTD), GoodTillCancelled (GTC) or GoodForDay (GFD)
         /// demoValue : "GTC"
+        /// format : "wcf-date"
         /// </summary>
 		
-		public  String Applicability{get;set;}
+		public  DateTime Applicability{get;set;}
         /// <summary>
         /// The associated expiry DateTime for a pair of GoodTillDate IfDone orders
         /// demoValue : "\\/Date(1290164280000)\\/"
+        /// format : "wcf-date"
         /// </summary>
 		
-		public  String ExpiryDateTimeUTC{get;set;}
+		public  DateTime ExpiryDateTimeUTC{get;set;}
         /// <summary>
         /// Flag to determine whether an order is guaranteed to trigger and fill at the associated trigger price
         /// </summary>

@@ -14,7 +14,7 @@ namespace CIAPI.Rpc
 		/// <param name="UserName">Username is case sensitive</param>
 		/// <param name="Password">Password is case sensitive</param>
         /// <returns></returns>
-        public ApiLogOnResponseDTO LogOn(String UserName, String Password)
+        internal ApiLogOnResponseDTO LogOn(String UserName, String Password)
         {
        
             return Request<ApiLogOnResponseDTO>("session","/", "POST", new Dictionary<string, object>
@@ -31,7 +31,7 @@ namespace CIAPI.Rpc
 		/// <param name="UserName">Username is case sensitive</param>
 		/// <param name="Password">Password is case sensitive</param>
         /// <returns></returns>
-        public void BeginLogOn(String UserName, String Password, ApiAsyncCallback<ApiLogOnResponseDTO> callback, object state)
+        internal void BeginLogOn(String UserName, String Password, ApiAsyncCallback<ApiLogOnResponseDTO> callback, object state)
         {
             BeginRequest(callback, state, "session","/", "POST",new Dictionary<string, object>
                                 {
@@ -40,7 +40,7 @@ namespace CIAPI.Rpc
                                 }, TimeSpan.FromMilliseconds(0),"data");
         }
 
-        public ApiLogOnResponseDTO EndLogOn(ApiAsyncResult<ApiLogOnResponseDTO> asyncResult)
+        internal ApiLogOnResponseDTO EndLogOn(ApiAsyncResult<ApiLogOnResponseDTO> asyncResult)
         {
             return EndRequest(asyncResult);
         }
@@ -50,7 +50,7 @@ namespace CIAPI.Rpc
 		/// <param name="userName">Username is case sensitive. May be set as a service parameter or as a request header.</param>
 		/// <param name="session">The session token. May be set as a service parameter or as a request header.</param>
         /// <returns></returns>
-        public ApiLogOffResponseDTO DeleteSession(String userName, String session)
+        internal ApiLogOffResponseDTO DeleteSession(String userName, Guid session)
         {
        
             return Request<ApiLogOffResponseDTO>("session","/deleteSession?userName={userName}&session={session}", "POST", new Dictionary<string, object>
@@ -67,7 +67,7 @@ namespace CIAPI.Rpc
 		/// <param name="userName">Username is case sensitive. May be set as a service parameter or as a request header.</param>
 		/// <param name="session">The session token. May be set as a service parameter or as a request header.</param>
         /// <returns></returns>
-        public void BeginDeleteSession(String userName, String session, ApiAsyncCallback<ApiLogOffResponseDTO> callback, object state)
+        internal void BeginDeleteSession(String userName, Guid session, ApiAsyncCallback<ApiLogOffResponseDTO> callback, object state)
         {
             BeginRequest(callback, state, "session","/deleteSession?userName={userName}&session={session}", "POST",new Dictionary<string, object>
                                 {
@@ -76,7 +76,7 @@ namespace CIAPI.Rpc
                                 }, TimeSpan.FromMilliseconds(0),"data");
         }
 
-        public ApiLogOffResponseDTO EndDeleteSession(ApiAsyncResult<ApiLogOffResponseDTO> asyncResult)
+        internal ApiLogOffResponseDTO EndDeleteSession(ApiAsyncResult<ApiLogOffResponseDTO> asyncResult)
         {
             return EndRequest(asyncResult);
         }
@@ -501,7 +501,7 @@ namespace CIAPI.Rpc
 		/// <param name="Guaranteed">Flag to determine whether an order is guaranteed to trigger and fill at             the associated trigger price</param>
 		/// <param name="TriggerPrice">Price at which the order is intended to be triggered</param>
         /// <returns></returns>
-        public void BeginOrder(Int32 OrderId, Int32 MarketId, String Currency, Boolean AutoRollover, String Direction, Decimal Quantity, Decimal BidPrice, Decimal OfferPrice, String AuditId, Int32 TradingAccountId, ApiIfDoneDTO[] IfDone, NewStopLimitOrderRequestDTO OcoOrder, String Applicability, DateTime? ExpiryDateTimeUTC, Boolean Guaranteed, Decimal TriggerPrice, ApiAsyncCallback<ApiTradeOrderResponseDTO> callback, object state)
+        public void BeginOrder(Int32 OrderId, Int32 MarketId, String Currency, Boolean AutoRollover, String Direction, Decimal Quantity, Decimal BidPrice, Decimal OfferPrice, String AuditId, Int32 TradingAccountId, ApiIfDoneDTO[] IfDone, NewStopLimitOrderRequestDTO OcoOrder, String Applicability, DateTime ExpiryDateTimeUTC, Boolean Guaranteed, Decimal TriggerPrice, ApiAsyncCallback<ApiTradeOrderResponseDTO> callback, object state)
         {
             BeginRequest(callback, state, "order","/newstoplimitorder", "POST",new Dictionary<string, object>
                                 {
@@ -564,16 +564,14 @@ namespace CIAPI.Rpc
         {
             return EndRequest(asyncResult);
         }
-
-        
         /// <summary>
         /// <p>Update an order (for adding a stop/limit or attaching an OCO relationship). Post an <a onclick="dojo.hash('#type.UpdateStopLimitOrderRequestDTO'); return false;" class="json-link" href="#">UpdateStopLimitOrderRequestDTO</a> to the uri specified below</p>
         /// </summary>		
         /// <returns></returns>
-        public ApiTradeOrderResponseDTO UpdateOrder(Int32 OrderId, Int32 MarketId, String Currency, Boolean AutoRollover, String Direction, Decimal Quantity, Decimal BidPrice, Decimal OfferPrice, String AuditId, Int32 TradingAccountId, ApiIfDoneDTO[] IfDone, NewStopLimitOrderRequestDTO OcoOrder, String Applicability, DateTime? ExpiryDateTimeUTC, Boolean Guaranteed, Decimal TriggerPrice)
+        public ApiTradeOrderResponseDTO UpdateOrder(Int32 OrderId, Int32 MarketId, String Currency, Boolean AutoRollover, String Direction, Decimal Quantity, Decimal BidPrice, Decimal OfferPrice, String AuditId, Int32 TradingAccountId, ApiIfDoneDTO[] IfDone, NewStopLimitOrderRequestDTO OcoOrder, String Applicability, DateTime ExpiryDateTimeUTC, Boolean Guaranteed, Decimal TriggerPrice)
         {
-
-            return Request<ApiTradeOrderResponseDTO>("order", "/updatestoplimitorder", "POST", new Dictionary<string, object>
+       
+            return Request<ApiTradeOrderResponseDTO>("order","/updatestoplimitorder", "POST", new Dictionary<string, object>
                                 {
 									{"OrderId",OrderId},
 									{"MarketId",MarketId},
@@ -591,20 +589,17 @@ namespace CIAPI.Rpc
 									{"ExpiryDateTimeUTC",ExpiryDateTimeUTC},
 									{"Guaranteed",Guaranteed},
 									{"TriggerPrice",TriggerPrice},
-                                }, TimeSpan.FromMilliseconds(0), "");
+                                }, TimeSpan.FromMilliseconds(0),"");
         }
 
-
- 
-
         /// <summary>
         /// <p>Update an order (for adding a stop/limit or attaching an OCO relationship). Post an <a onclick="dojo.hash('#type.UpdateStopLimitOrderRequestDTO'); return false;" class="json-link" href="#">UpdateStopLimitOrderRequestDTO</a> to the uri specified below</p>
         /// </summary>		
-        /// <param name="callback"></param>
+		/// <param name="callback"></param>
         /// <returns></returns>
-        public void BeginUpdateOrder(Int32 OrderId, Int32 MarketId, String Currency, Boolean AutoRollover, String Direction, Decimal Quantity, Decimal BidPrice, Decimal OfferPrice, String AuditId, Int32 TradingAccountId, ApiIfDoneDTO[] IfDone, NewStopLimitOrderRequestDTO OcoOrder, String Applicability, DateTime? ExpiryDateTimeUTC, Boolean Guaranteed, Decimal TriggerPrice, ApiAsyncCallback<ApiTradeOrderResponseDTO> callback, object state)
+        public void BeginUpdateOrder(Int32 OrderId, Int32 MarketId, String Currency, Boolean AutoRollover, String Direction, Decimal Quantity, Decimal BidPrice, Decimal OfferPrice, String AuditId, Int32 TradingAccountId, ApiIfDoneDTO[] IfDone, NewStopLimitOrderRequestDTO OcoOrder, String Applicability, DateTime ExpiryDateTimeUTC, Boolean Guaranteed, Decimal TriggerPrice, ApiAsyncCallback<ApiTradeOrderResponseDTO> callback, object state)
         {
-            BeginRequest(callback, state, "order", "/updatestoplimitorder", "POST", new Dictionary<string, object>
+            BeginRequest(callback, state, "order","/updatestoplimitorder", "POST",new Dictionary<string, object>
                                 {
 									{"OrderId",OrderId},
 									{"MarketId",MarketId},
@@ -622,7 +617,7 @@ namespace CIAPI.Rpc
 									{"ExpiryDateTimeUTC",ExpiryDateTimeUTC},
 									{"Guaranteed",Guaranteed},
 									{"TriggerPrice",TriggerPrice},
-                                }, TimeSpan.FromMilliseconds(0), "");
+                                }, TimeSpan.FromMilliseconds(0),"");
         }
 
         public ApiTradeOrderResponseDTO EndUpdateOrder(ApiAsyncResult<ApiTradeOrderResponseDTO> asyncResult)
@@ -1048,9 +1043,9 @@ namespace CIAPI.Rpc
         /// <summary>
         /// Returns the Users ClientAccountId and a list of their TradingAccounts. There are no parameters for this call.
         /// </summary>		
-        /// <param name="callback"></param>
+		/// <param name="callback"></param>
         /// <returns></returns>
-        public void BeginGetClientAndTradingAccount(ApiAsyncCallback<AccountInformationResponseDTO> callback, object state)
+        public void BeginGetClientAndTradingAccount( ApiAsyncCallback<AccountInformationResponseDTO> callback, object state)
         {
             BeginRequest(callback, state, "useraccount","/UserAccount/ClientAndTradingAccount", "GET",new Dictionary<string, object>
                                 {

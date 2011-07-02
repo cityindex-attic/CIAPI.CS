@@ -54,7 +54,8 @@
       },
       "LastChangedDateTimeUtc": {
         "type": "string",
-        "description": "The last time that the order changed. Note - Does not include things such as the current market price."
+        "description": "The last time that the order changed. Note - Does not include things such as the current market price.",
+        "format": "wcf-date"
       }
     }
   },
@@ -145,7 +146,7 @@
         "type": "string",
         "description": "The date of the Price. Always expressed in UTC.",
         "demoValue": "/Date(1289231327280)/",
-		"format": "wcf-date"
+        "format": "wcf-date"
       },
       "Bid": {
         "type": "number",
@@ -242,7 +243,8 @@
       },
       "LastChangedDateTimeUtc": {
         "type": "string",
-        "description": "The last time that the order changed. Note - Does not include things such as the current market price."
+        "description": "The last time that the order changed. Note - Does not include things such as the current market price.",
+        "format": "wcf-date"
       }
     }
   },
@@ -286,7 +288,7 @@
         "type": "string",
         "description": "The date on which the news story was published. Always in UTC",
         "demoValue": "/Date(1289231327280)/",
-		"format": "wcf-date"
+        "format": "wcf-date"
       }
     }
   },
@@ -396,7 +398,7 @@
       "LastChangedDateTimeUTC": {
         "type": "string",
         "description": "The last time that the order changed. Note - Does not include things such as the current market price.",
-		"format": "wcf-date"
+        "format": "wcf-date"
       }
     }
   },
@@ -588,7 +590,7 @@
         "type": "string",
         "description": "The associated expiry DateTime.",
         "demoValue": "\\/Date(1290164280000)\\/",
-		"format": "wcf-date"
+        "format": "wcf-date"
       },
       "Currency": {
         "type": "string",
@@ -613,7 +615,7 @@
       "LastChangedDateTimeUTC": {
         "type": "string",
         "description": "The last time that the order changed. Note - Does not include things such as the current market price.",
-		"format": "wcf-date"
+        "format": "wcf-date"
       }
     }
   },
@@ -710,7 +712,7 @@
         "type": "string",
         "description": "The timestamp the quote was requested. Always expressed in UTC",
         "demoValue": "/Date(1289231327280)/",
-		"format": "wcf-date"
+        "format": "wcf-date"
       }
     }
   },
@@ -726,12 +728,13 @@
         "type": "string",
         "description": "The associated expiry DateTime for a pair of GoodTillDate IfDone orders",
         "demoValue": "\\/Date(1290164280000)\\/",
-		"format": "wcf-date"
+        "format": "wcf-date"
       },
       "Applicability": {
         "type": "string",
         "description": "Identifier which relates to the expiry of the order/trade, i.e. GoodTillDate (GTD), GoodTillCancelled (GTC) or GoodForDay (GFD)",
-        "demoValue": "GTC"
+        "demoValue": "GTC",
+        "format": "wcf-date"
       }
     }
   },
@@ -793,7 +796,7 @@
         "type": "string",
         "description": "The date time that the order was last changed. Always expressed in UTC.",
         "demoValue": "/Date(1289231327280)/",
-		"format": "wcf-date"
+        "format": "wcf-date"
       },
       "OpenPrice": {
         "type": "number",
@@ -806,7 +809,7 @@
         "type": "string",
         "description": "The date of the Order. Always expressed in UTC",
         "demoValue": "/Date(1289231327280)/",
-		"format": "wcf-date"
+        "format": "wcf-date"
       },
       "OriginalQuantity": {
         "type": "number",
@@ -1367,12 +1370,14 @@
       "Applicability": {
         "type": "string",
         "description": "Identifier which relates to the expiry of the order/trade, i.e. GoodTillDate (GTD), GoodTillCancelled (GTC) or GoodForDay (GFD)",
-        "demoValue": "GTC"
+        "demoValue": "GTC",
+        "format": "wcf-date"
       },
       "ExpiryDateTimeUTC": {
         "type": "string",
         "description": "The associated expiry DateTime for a pair of GoodTillDate IfDone orders",
-        "demoValue": "\\/Date(1290164280000)\\/"
+        "demoValue": "\\/Date(1290164280000)\\/",
+        "format": "wcf-date"
       },
       "Guaranteed": {
         "type": "boolean",

@@ -66,6 +66,7 @@
           "name": "session",
           "description": "The session token. May be set as a service parameter or as a request header.",
           "demoValue": "5998CBE8-3594-4232-A57E-09EC3A4E7AA8",
+          "format": "guid",
           "minLength": 36,
           "maxLength": 36
         }
@@ -501,7 +502,8 @@
           "name": "ExpiryDateTimeUTC",
           "description": "The associated expiry DateTime for a \n            pair of GoodTillDate IfDone orders",
           "demoValue": "\\/Date(1290164280000)\\/",
-		  "format": "wcf-date"
+		  "format": "wcf-date",
+		  "required": false
         },
         {
           "type": "boolean",

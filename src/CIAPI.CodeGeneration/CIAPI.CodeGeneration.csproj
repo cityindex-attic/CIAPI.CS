@@ -40,6 +40,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTO.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DTO.tt</DependentUpon>
+    </Compile>
     <Compile Include="DTO_hardcoded.cs" />
     <Compile Include="ROUTES.cs">
       <AutoGen>True</AutoGen>
@@ -47,11 +52,6 @@
       <DependentUpon>ROUTES.tt</DependentUpon>
     </Compile>
     <Compile Include="Routes_hardcoded.cs" />
-    <None Include="DTO.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DTO.tt</DependentUpon>
-    </None>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
