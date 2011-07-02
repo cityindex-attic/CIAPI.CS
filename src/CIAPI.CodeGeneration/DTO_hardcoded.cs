@@ -4,13 +4,6 @@ using CityIndex.JsonClient.Converters;
 namespace CIAPI.DTO
 {
 
-    public class AccountInformationResponseDTO
-    {
-        public string LogonUserName { get; set; }
-        public int ClientAccountId { get; set; }
-        public string ClientAccountCurrency { get; set; }
-        public TradingAccountDTO[] TradingAccounts { get; set; }
-    }
 
     public class TradingAccountDTO
     {

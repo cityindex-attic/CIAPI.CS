@@ -1,4 +1,5 @@
-﻿using CIAPI.DTO;
+﻿using System;
+using CIAPI.DTO;
 using CIAPI.Rpc;
 using NUnit.Framework;
 
@@ -23,5 +24,28 @@ namespace CIAPI.IntegrationTests.Rpc
 
             rpcClient.LogOut();
         }
+
+
+
+        /// <summary>
+        /// https://github.com/cityindex/CIAPI.CS/issues/42
+        /// </summary>
+        [Test]
+        public void Issue42()
+        {
+
+            var rpcClient = new Client(Settings.RpcUri);
+            rpcClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);
+
+            var response = rpcClient.Order(0, 99498, null, false, "buy", 10m, 12094m, 12098m, "20110629-G2PREPROD3-0102794", 400002249, null, null, null, null, false, 0m);
+
+            rpcClient.LogOut();
+        }
+
     }
+
+
+
+
+
 }

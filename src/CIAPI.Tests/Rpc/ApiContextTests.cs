@@ -31,9 +31,9 @@ namespace CIAPI.Tests.Rpc
 
             var ctx = BuildAuthenticatedClientAndSetupResponse(LoggedIn);
 
-            CreateSessionResponseDTO response = ctx.CreateSession(TestConfig.ApiUsername, TestConfig.ApiPassword);
+            ctx.LogIn(TestConfig.ApiUsername, TestConfig.ApiPassword);
 
-            Assert.IsNotNullOrEmpty(response.Session);
+            Assert.IsNotNullOrEmpty(ctx.SessionId);
 
         }
 
@@ -43,7 +43,7 @@ namespace CIAPI.Tests.Rpc
         public void CanRecognize200JsonException()
         {
 
-            var errorDto = new ErrorResponseDTO()
+            var errorDto = new ApiErrorResponseDTO()
                                {
                                    ErrorCode = ErrorCode.InvalidCredentials,
                                    ErrorMessage = "InvalidCredentials"
@@ -52,7 +52,7 @@ namespace CIAPI.Tests.Rpc
 
             var ctx = BuildAuthenticatedClientAndSetupResponse(JsonConvert.SerializeObject(errorDto));
 
-            ctx.CreateSession(TestConfig.ApiUsername, TestConfig.ApiPassword);
+            ctx.LogIn(TestConfig.ApiUsername, TestConfig.ApiPassword);
 
         }
 
@@ -64,7 +64,7 @@ namespace CIAPI.Tests.Rpc
 
             try
             {
-                ctx.CreateSession("foo", "bar");
+                ctx.LogIn("foo", "bar");
                 Assert.Fail("Expected exception");
             }
             catch (ApiException ex)
@@ -81,8 +81,8 @@ namespace CIAPI.Tests.Rpc
 
             var ctx = BuildAuthenticatedClientAndSetupResponse(LoggedOut);
 
-            SessionDeletionResponseDTO response = ctx.DeleteSession(TestConfig.ApiUsername, TestConfig.ApiTestSessionId);
-            Assert.IsTrue(response.LoggedOut);
+            bool response = ctx.LogOut();
+            Assert.IsTrue(response);
         }
 
         [Test]

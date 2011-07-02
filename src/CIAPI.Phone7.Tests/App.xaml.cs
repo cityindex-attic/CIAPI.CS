@@ -19,7 +19,7 @@ namespace CIAPI.Phone7.Tests
     {
         public static Uri RpcUri = new Uri("https://ciapipreprod.cityindextest9.co.uk/tradingapi/");
         public static Uri StreamingUri = new Uri("https://pushpreprod.cityindextest9.co.uk/CITYINDEXSTREAMING");
-        public static string RpcUserName = "DM904310";
+        public static string RpcUserName = "0x234";
         public static string RpcPassword = "password";
 
         /// <summary>

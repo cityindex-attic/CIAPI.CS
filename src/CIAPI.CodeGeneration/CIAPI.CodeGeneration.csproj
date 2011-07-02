@@ -41,6 +41,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DTO_hardcoded.cs" />
+    <Compile Include="ROUTES.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ROUTES.tt</DependentUpon>
+    </Compile>
     <Compile Include="Routes_hardcoded.cs" />
     <None Include="DTO.cs">
       <AutoGen>True</AutoGen>
@@ -61,11 +66,6 @@
     <None Include="DTO.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>DTO.cs</LastGenOutput>
-    </None>
-    <None Include="ROUTES.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ROUTES.tt</DependentUpon>
     </None>
     <None Include="packages.config" />
     <None Include="ROUTES.tt">

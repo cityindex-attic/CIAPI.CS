@@ -11,7 +11,7 @@ namespace CIAPI.CS.Koans
     [KoanCategory(Order = 3)]
     public class AboutNews
     {
-        private string USERNAME = "DM904310";
+        private string USERNAME = "0x234";
         private string PASSWORD = "password";
 
         [Koan(Order = 0)]

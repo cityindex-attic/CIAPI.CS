@@ -62,8 +62,11 @@ namespace CIAPI.CS.Streaming.Samples
                                                                      Log(
                                                                          string.Format(
                                                                              "Received: NewsDTO: StoryId {0}, Headline {1}, PublishDate = {2}",
-                                                                             receivedNewsHeadline.StoryId, receivedNewsHeadline.Headline,
-                                                                             receivedNewsHeadline.PublishDate.ToString("u")));
+                                                                             receivedNewsHeadline.StoryId,
+                                                                             receivedNewsHeadline.Headline,
+                                                                             //receivedNewsHeadline.PublishDate.ToString("u")));
+                                                                             // dates are currently strings
+                                                                             receivedNewsHeadline.PublishDate));
                                                                  }
                                                                  catch (Exception exception)
                                                                  {

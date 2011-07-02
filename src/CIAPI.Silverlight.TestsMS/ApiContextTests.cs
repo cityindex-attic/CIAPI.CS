@@ -34,14 +34,14 @@ namespace CIAPI.Silverlight.TestsMS
             
             var ctx = BuildClientAndSetupResponse(LoggedIn);
 
-            ctx.BeginCreateSession(TestConfig.ApiUsername, TestConfig.ApiPassword, ar =>
+            ctx.BeginLogIn(TestConfig.ApiUsername, TestConfig.ApiPassword, ar =>
             {
-                var response = ctx.EndCreateSession(ar);
+                ctx.EndLogIn(ar);
                 EnqueueCallback(() =>
                                     {
                                         try
                                         {
-                                            Assert.IsFalse(string.IsNullOrEmpty(response.Session));
+                                            Assert.IsFalse(string.IsNullOrEmpty(ctx.SessionId));
                                         }
                                         finally
                                         {
@@ -66,14 +66,14 @@ namespace CIAPI.Silverlight.TestsMS
             var ctx = BuildClientAndSetupResponse(LoggedOut);
             
 
-            ctx.BeginDeleteSession(TestConfig.ApiUsername, TestConfig.ApiTestSessionId, ar =>
+            ctx.BeginLogOut(ar =>
             {
                 EnqueueCallback(() =>
                 {
                     try
                     {
-                        var response = ctx.EndDeleteSession(ar);
-                        Assert.IsTrue(response.LoggedOut);
+                        var response = ctx.EndLogOut(ar);
+                        Assert.IsTrue(response);
                     }
                     finally
                     {

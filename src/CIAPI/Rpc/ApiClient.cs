@@ -24,7 +24,7 @@ namespace CIAPI.Rpc
                     {
                         // we cannot guarantee that for some strange reason a news item will not contain the strings
                         // searched for above so just need to try to parse the json and swallow
-                        ErrorResponseDTO errorResponseDTO = JsonConvert.DeserializeObject<ErrorResponseDTO>(json);
+                        ApiErrorResponseDTO errorResponseDTO = JsonConvert.DeserializeObject<ApiErrorResponseDTO>(json);
                         ApiException ex = new ApiException(errorResponseDTO.ErrorMessage + (!string.IsNullOrEmpty(extraInfo) ? "\r\n" + extraInfo : ""));
                         ex.ResponseText = json;
                         return ex;
@@ -100,7 +100,7 @@ namespace CIAPI.Rpc
             UserName = userName;
             SessionId = null;
 
-            var response = Request<CreateSessionResponseDTO>("session", "/", "POST", new Dictionary<string, object>
+            var response = Request<ApiLogOnResponseDTO>("session", "/", "POST", new Dictionary<string, object>
                                                                                          {
                                                                                              {"UserName", userName},
                                                                                              {"Password", password},
@@ -117,7 +117,7 @@ namespace CIAPI.Rpc
         /// <param name="userName">Username is case sensitive</param>
         /// <param name="password">Password is case sensitive</param>
         /// <returns></returns>
-        public void BeginLogIn(String userName, String password, ApiAsyncCallback<CreateSessionResponseDTO> callback,
+        public void BeginLogIn(String userName, String password, ApiAsyncCallback<ApiLogOnResponseDTO> callback,
                                object state)
         {
             UserName = userName;
@@ -146,9 +146,9 @@ namespace CIAPI.Rpc
         }
 
 
-        public void EndLogIn(ApiAsyncResult<CreateSessionResponseDTO> asyncResult)
+        public void EndLogIn(ApiAsyncResult<ApiLogOnResponseDTO> asyncResult)
         {
-            CreateSessionResponseDTO response = EndRequest(asyncResult);
+            ApiLogOnResponseDTO response = EndRequest(asyncResult);
             SessionId = response.Session;
         }
 
@@ -158,7 +158,7 @@ namespace CIAPI.Rpc
         /// <returns></returns>
         public bool LogOut()
         {
-            var response = Request<SessionDeletionResponseDTO>("session",
+            var response = Request<ApiLogOffResponseDTO>("session",
                                                                "/deleteSession?userName={userName}&session={session}",
                                                                "POST", new Dictionary<string, object>
                                                                            {
@@ -179,7 +179,7 @@ namespace CIAPI.Rpc
         /// <param name="callback"></param>
         /// <param name="state"></param>
         /// <returns></returns>
-        public void BeginLogOut(ApiAsyncCallback<SessionDeletionResponseDTO> callback, object state)
+        public void BeginLogOut(ApiAsyncCallback<ApiLogOffResponseDTO> callback, object state)
         {
             BeginRequest(callback, state, "session", "/deleteSession?userName={userName}&session={session}", "POST",
                          new Dictionary<string, object>
@@ -189,9 +189,9 @@ namespace CIAPI.Rpc
                              }, TimeSpan.FromMilliseconds(0), "data");
         }
 
-        public bool EndLogOut(ApiAsyncResult<SessionDeletionResponseDTO> asyncResult)
+        public bool EndLogOut(ApiAsyncResult<ApiLogOffResponseDTO> asyncResult)
         {
-            SessionDeletionResponseDTO response = EndRequest(asyncResult);
+            ApiLogOffResponseDTO response = EndRequest(asyncResult);
 
             if (response.LoggedOut)
             {

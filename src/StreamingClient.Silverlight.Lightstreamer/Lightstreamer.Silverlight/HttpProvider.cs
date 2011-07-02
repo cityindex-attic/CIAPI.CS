@@ -11,7 +11,9 @@ namespace Lightstreamer.DotNet.Client
     using System.Security;
     using System.Text;
     using System.Threading;
-    using System.Windows.Browser;
+#if SILVERLIGHT && !WINDOWS_PHONE
+using System.Windows.Browser;
+#endif
 
     internal class HttpProvider
     {
@@ -114,7 +116,12 @@ namespace Lightstreamer.DotNet.Client
                 }
                 try
                 {
+#if SILVERLIGHT && !WINDOWS_PHONE
                     str2 = System.Windows.Browser.HttpUtility.UrlEncode(str2);
+#else
+                    str2 = System.Net.HttpUtility.UrlEncode(str2);
+#endif
+
                 }
                 catch (Exception exception)
                 {

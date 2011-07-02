@@ -74,6 +74,7 @@
     </Compile>
     <None Include="..\..\common\App.config">
       <Link>App.config</Link>
+      <SubType>Designer</SubType>
     </None>
     <None Include="Properties\DataSources\CIAPI.DTO.NewsDTO.datasource" />
     <None Include="Properties\Settings.settings">

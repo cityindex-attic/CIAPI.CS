@@ -18,7 +18,7 @@
         {
             get
             {
-                return "DM904310";
+                return "0x234";
             }
         }
         public static string ApiPassword

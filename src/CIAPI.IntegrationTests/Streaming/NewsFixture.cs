@@ -2,6 +2,7 @@ using System;
 using System.Threading;
 using CIAPI.DTO;
 using CIAPI.Streaming;
+using Newtonsoft.Json;
 using NUnit.Framework;
 using StreamingClient;
 using IStreamingClient = CIAPI.Streaming.IStreamingClient;
@@ -56,6 +57,7 @@ namespace CIAPI.IntegrationTests.Streaming
 
             Assert.IsNotNull(actual);
             Assert.IsNotEmpty(actual.Headline);
+
             Assert.Greater(actual.PublishDate, DateTime.UtcNow.AddMonths(-1));
             Assert.Greater(actual.StoryId, 0);
         }

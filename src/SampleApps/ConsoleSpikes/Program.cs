@@ -55,7 +55,7 @@ namespace ConsoleSpikes
             _ctx.BeginLogIn(userName, password, EndLoggedIn, null);
         }
 
-        static void EndLoggedIn(ApiAsyncResult<CreateSessionResponseDTO> result)
+        static void EndLoggedIn(ApiAsyncResult<ApiLogOnResponseDTO> result)
         {
             _ctx.EndLogIn(result);
             Console.WriteLine("\r\nLogged in.\r\n");
@@ -86,7 +86,7 @@ namespace ConsoleSpikes
             _ctx.BeginLogOut(EndLoggedOut, null);
         }
 
-        static void EndLoggedOut(ApiAsyncResult<SessionDeletionResponseDTO> result)
+        static void EndLoggedOut(ApiAsyncResult<ApiLogOffResponseDTO> result)
         {
             _ctx.EndLogOut(result);
             Console.WriteLine("\r\nLogged out.\r\n");
