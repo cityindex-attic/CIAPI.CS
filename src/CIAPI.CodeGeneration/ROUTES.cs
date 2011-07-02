@@ -541,7 +541,7 @@ namespace CIAPI.Rpc
                                 {
 									{"OrderId",OrderId},
 									{"TradingAccountId",TradingAccountId},
-                                }, TimeSpan.FromMilliseconds(0),"");
+                                }, TimeSpan.FromMilliseconds(0),"trading");
         }
 
         /// <summary>
@@ -557,7 +557,7 @@ namespace CIAPI.Rpc
                                 {
 									{"OrderId",OrderId},
 									{"TradingAccountId",TradingAccountId},
-                                }, TimeSpan.FromMilliseconds(0),"");
+                                }, TimeSpan.FromMilliseconds(0),"trading");
         }
 
         public ApiTradeOrderResponseDTO EndCancelOrder(ApiAsyncResult<ApiTradeOrderResponseDTO> asyncResult)
@@ -589,7 +589,7 @@ namespace CIAPI.Rpc
 									{"ExpiryDateTimeUTC",ExpiryDateTimeUTC},
 									{"Guaranteed",Guaranteed},
 									{"TriggerPrice",TriggerPrice},
-                                }, TimeSpan.FromMilliseconds(0),"");
+                                }, TimeSpan.FromMilliseconds(0),"trading");
         }
 
         /// <summary>
@@ -617,7 +617,7 @@ namespace CIAPI.Rpc
 									{"ExpiryDateTimeUTC",ExpiryDateTimeUTC},
 									{"Guaranteed",Guaranteed},
 									{"TriggerPrice",TriggerPrice},
-                                }, TimeSpan.FromMilliseconds(0),"");
+                                }, TimeSpan.FromMilliseconds(0),"trading");
         }
 
         public ApiTradeOrderResponseDTO EndUpdateOrder(ApiAsyncResult<ApiTradeOrderResponseDTO> asyncResult)
@@ -635,7 +635,7 @@ namespace CIAPI.Rpc
             return Request<ListOpenPositionsResponseDTO>("order","/order/openpositions?TradingAccountId={tradingAccountId}", "GET", new Dictionary<string, object>
                                 {
 									{"tradingAccountId",tradingAccountId},
-                                }, TimeSpan.FromMilliseconds(0),"");
+                                }, TimeSpan.FromMilliseconds(0),"trading");
         }
 
         /// <summary>
@@ -649,7 +649,7 @@ namespace CIAPI.Rpc
             BeginRequest(callback, state, "order","/order/openpositions?TradingAccountId={tradingAccountId}", "GET",new Dictionary<string, object>
                                 {
 									{"tradingAccountId",tradingAccountId},
-                                }, TimeSpan.FromMilliseconds(0),"");
+                                }, TimeSpan.FromMilliseconds(0),"trading");
         }
 
         public ListOpenPositionsResponseDTO EndListOpenPositions(ApiAsyncResult<ListOpenPositionsResponseDTO> asyncResult)
@@ -667,7 +667,7 @@ namespace CIAPI.Rpc
             return Request<ListActiveStopLimitOrderResponseDTO>("order","/order/activestoplimitorders?TradingAccountId={tradingAccountId}", "GET", new Dictionary<string, object>
                                 {
 									{"tradingAccountId",tradingAccountId},
-                                }, TimeSpan.FromMilliseconds(0),"");
+                                }, TimeSpan.FromMilliseconds(0),"trading");
         }
 
         /// <summary>
@@ -681,7 +681,7 @@ namespace CIAPI.Rpc
             BeginRequest(callback, state, "order","/order/activestoplimitorders?TradingAccountId={tradingAccountId}", "GET",new Dictionary<string, object>
                                 {
 									{"tradingAccountId",tradingAccountId},
-                                }, TimeSpan.FromMilliseconds(0),"");
+                                }, TimeSpan.FromMilliseconds(0),"trading");
         }
 
         public ListActiveStopLimitOrderResponseDTO EndListActiveStopLimitOrders(ApiAsyncResult<ListActiveStopLimitOrderResponseDTO> asyncResult)
@@ -699,7 +699,7 @@ namespace CIAPI.Rpc
             return Request<GetActiveStopLimitOrderResponseDTO>("order","/{orderId}/activestoplimitorder", "GET", new Dictionary<string, object>
                                 {
 									{"orderId",orderId},
-                                }, TimeSpan.FromMilliseconds(0),"");
+                                }, TimeSpan.FromMilliseconds(0),"trading");
         }
 
         /// <summary>
@@ -713,7 +713,7 @@ namespace CIAPI.Rpc
             BeginRequest(callback, state, "order","/{orderId}/activestoplimitorder", "GET",new Dictionary<string, object>
                                 {
 									{"orderId",orderId},
-                                }, TimeSpan.FromMilliseconds(0),"");
+                                }, TimeSpan.FromMilliseconds(0),"trading");
         }
 
         public GetActiveStopLimitOrderResponseDTO EndGetActiveStopLimitOrder(ApiAsyncResult<GetActiveStopLimitOrderResponseDTO> asyncResult)
@@ -731,7 +731,7 @@ namespace CIAPI.Rpc
             return Request<GetOpenPositionResponseDTO>("order","/{orderId}/openposition", "GET", new Dictionary<string, object>
                                 {
 									{"orderId",orderId},
-                                }, TimeSpan.FromMilliseconds(0),"");
+                                }, TimeSpan.FromMilliseconds(0),"trading");
         }
 
         /// <summary>
@@ -745,7 +745,7 @@ namespace CIAPI.Rpc
             BeginRequest(callback, state, "order","/{orderId}/openposition", "GET",new Dictionary<string, object>
                                 {
 									{"orderId",orderId},
-                                }, TimeSpan.FromMilliseconds(0),"");
+                                }, TimeSpan.FromMilliseconds(0),"trading");
         }
 
         public GetOpenPositionResponseDTO EndGetOpenPosition(ApiAsyncResult<GetOpenPositionResponseDTO> asyncResult)
@@ -765,7 +765,7 @@ namespace CIAPI.Rpc
                                 {
 									{"tradingAccountId",tradingAccountId},
 									{"maxResults",maxResults},
-                                }, TimeSpan.FromMilliseconds(0),"");
+                                }, TimeSpan.FromMilliseconds(0),"trading");
         }
 
         /// <summary>
@@ -781,7 +781,7 @@ namespace CIAPI.Rpc
                                 {
 									{"tradingAccountId",tradingAccountId},
 									{"maxResults",maxResults},
-                                }, TimeSpan.FromMilliseconds(0),"");
+                                }, TimeSpan.FromMilliseconds(0),"trading");
         }
 
         public ListTradeHistoryResponseDTO EndListTradeHistory(ApiAsyncResult<ListTradeHistoryResponseDTO> asyncResult)
@@ -801,7 +801,7 @@ namespace CIAPI.Rpc
                                 {
 									{"tradingAccountId",tradingAccountId},
 									{"maxResults",maxResults},
-                                }, TimeSpan.FromMilliseconds(0),"");
+                                }, TimeSpan.FromMilliseconds(0),"trading");
         }
 
         /// <summary>
@@ -817,7 +817,7 @@ namespace CIAPI.Rpc
                                 {
 									{"tradingAccountId",tradingAccountId},
 									{"maxResults",maxResults},
-                                }, TimeSpan.FromMilliseconds(0),"");
+                                }, TimeSpan.FromMilliseconds(0),"trading");
         }
 
         public ListStopLimitOrderHistoryResponseDTO EndListStopLimitOrderHistory(ApiAsyncResult<ListStopLimitOrderHistoryResponseDTO> asyncResult)
@@ -835,7 +835,7 @@ namespace CIAPI.Rpc
             return Request<GetOrderResponseDTO>("order","/{orderId}", "GET", new Dictionary<string, object>
                                 {
 									{"orderId",orderId},
-                                }, TimeSpan.FromMilliseconds(0),"");
+                                }, TimeSpan.FromMilliseconds(0),"trading");
         }
 
         /// <summary>
@@ -849,7 +849,7 @@ namespace CIAPI.Rpc
             BeginRequest(callback, state, "order","/{orderId}", "GET",new Dictionary<string, object>
                                 {
 									{"orderId",orderId},
-                                }, TimeSpan.FromMilliseconds(0),"");
+                                }, TimeSpan.FromMilliseconds(0),"trading");
         }
 
         public GetOrderResponseDTO EndGetOrder(ApiAsyncResult<GetOrderResponseDTO> asyncResult)

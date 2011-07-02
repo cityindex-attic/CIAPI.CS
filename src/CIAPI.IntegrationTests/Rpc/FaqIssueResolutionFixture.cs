@@ -42,6 +42,23 @@ namespace CIAPI.IntegrationTests.Rpc
             rpcClient.LogOut();
         }
 
+
+        /// <summary>
+        /// https://github.com/cityindex/CIAPI.CS/issues/35
+        /// </summary>
+        [Test]
+        public void Issue35()
+        {
+
+            var rpcClient = new Client(Settings.RpcUri);
+            rpcClient.LogIn("xx189949", "password");
+
+            var accountInfo = rpcClient.GetClientAndTradingAccount();
+            var resp = rpcClient.ListTradeHistory(accountInfo.ClientAccountId, 20);
+
+
+            rpcClient.LogOut();
+        }
     }
 
 
