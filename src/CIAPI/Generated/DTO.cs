@@ -1,10 +1,10 @@
 ﻿using System;
-
 namespace CIAPI.DTO
 {
     /// <summary>
     /// A stop or limit order from a historical perspective.
     /// </summary>
+    [Serializable]
     public class ApiStopLimitOrderHistoryDTO
     {
         public int OrderId { get; set; }
@@ -25,6 +25,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// An IfDone order represents an order which is placed when the corresponding order is filled, e.g attaching a stop/limit to a trade or order
     /// </summary>
+    [Serializable]
     public class ApiIfDoneDTO
     {
         public ApiStopLimitOrderDTO Stop { get; set; }
@@ -34,6 +35,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// Information about a TradingAccount
     /// </summary>
+    [Serializable]
     public class ApiTradingAccountDTO
     {
         public int TradingAccountId { get; set; }
@@ -45,6 +47,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// The details of a specific price bar, useful for plotting candlestick charts
     /// </summary>
+    [Serializable]
     public class PriceBarDTO
     {
         public DateTime BarDate { get; set; }
@@ -57,6 +60,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// A Price for a specific Market.
     /// </summary>
+    [Serializable]
     public class PriceDTO
     {
         public int MarketId { get; set; }
@@ -74,6 +78,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// A Trade from a historical perspective.
     /// </summary>
+    [Serializable]
     public class ApiTradeHistoryDTO
     {
         public int OrderId { get; set; }
@@ -90,6 +95,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// A stop or limit order with a limited number of data fields.
     /// </summary>
+    [Serializable]
     public class ApiBasicStopLimitOrderDTO
     {
         public int OrderId { get; set; }
@@ -100,6 +106,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// A news headline
     /// </summary>
+    [Serializable]
     public class NewsDTO
     {
         public int StoryId { get; set; }
@@ -110,6 +117,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// Api watchlist item
     /// </summary>
+    [Serializable]
     public class ApiClientAccountWatchlistItemDTO
     {
         public int WatchlistId { get; set; }
@@ -120,6 +128,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// Generic look up data.
     /// </summary>
+    [Serializable]
     public class ApiLookupDTO
     {
         public int Id { get; set; }
@@ -134,6 +143,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// A Trade, or order that is currently open.
     /// </summary>
+    [Serializable]
     public class ApiOpenPositionDTO
     {
         public int OrderId { get; set; }
@@ -153,6 +163,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// market end of day information.
     /// </summary>
+    [Serializable]
     public class ApiMarketEodDTO
     {
         public string MarketEodUnit { get; set; }
@@ -162,6 +173,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// Contains market information.
     /// </summary>
+    [Serializable]
     public class ApiMarketInformationDTO
     {
         public int MarketId { get; set; }
@@ -184,6 +196,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// Represents an order
     /// </summary>
+    [Serializable]
     public class ApiOrderDTO
     {
         public int OrderId { get; set; }
@@ -202,6 +215,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// A stop or limit order that is currently active.
     /// </summary>
+    [Serializable]
     public class ApiActiveStopLimitOrderDTO
     {
         public int OrderId { get; set; }
@@ -226,6 +240,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// basic information about a Market
     /// </summary>
+    [Serializable]
     public class ApiMarketDTO
     {
         public int MarketId { get; set; }
@@ -235,6 +250,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// A quote for a specific order request
     /// </summary>
+    [Serializable]
     public class QuoteDTO
     {
         public int QuoteId { get; set; }
@@ -254,6 +270,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// Represents a stop/limit order
     /// </summary>
+    [Serializable]
     public class ApiStopLimitOrderDTO : ApiOrderDTO
     {
         public DateTime? ExpiryDateTimeUTC { get; set; }
@@ -263,6 +280,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// An order for a specific Trading Account
     /// </summary>
+    [Serializable]
     public class OrderDTO
     {
         public int OrderId { get; set; }
@@ -288,6 +306,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// The mid price at a particular point in time.
     /// </summary>
+    [Serializable]
     public class PriceTickDTO
     {
         public DateTime TickDate { get; set; }
@@ -297,6 +316,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// Client account watchlist
     /// </summary>
+    [Serializable]
     public class ApiClientAccountWatchlistDTO
     {
         public int WatchlistId { get; set; }
@@ -308,6 +328,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// The current margin for a specific client account
     /// </summary>
+    [Serializable]
     public class ClientAccountMarginDTO
     {
         public decimal Cash { get; set; }
@@ -326,6 +347,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// Contains details of a specific news story
     /// </summary>
+    [Serializable]
     public class NewsDetailDTO : NewsDTO
     {
         public string Story { get; set; }
@@ -334,6 +356,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// Represents a trade order
     /// </summary>
+    [Serializable]
     public class ApiTradeOrderDTO : ApiOrderDTO
     {
     }
@@ -341,6 +364,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// order response
     /// </summary>
+    [Serializable]
     public class ApiOrderResponseDTO
     {
         public int OrderId { get; set; }
@@ -356,6 +380,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// The response from the stop limit order request
     /// </summary>
+    [Serializable]
     public class ApiStopLimitResponseDTO : ApiOrderResponseDTO
     {
     }
@@ -363,6 +388,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// The response from a GET request for News headlines
     /// </summary>
+    [Serializable]
     public class ListNewsHeadlinesResponseDTO
     {
         public NewsDTO[] Headlines { get; set; }
@@ -371,6 +397,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// request to create a session (log on).
     /// </summary>
+    [Serializable]
     public class ApiLogOnRequestDTO
     {
         public string UserName { get; set; }
@@ -380,6 +407,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// Response containing the order. Only one of the two fields will be populated; this depends upon the type of order (Trade or Stop / Limit).
     /// </summary>
+    [Serializable]
     public class GetOrderResponseDTO
     {
         public ApiTradeOrderDTO TradeOrder { get; set; }
@@ -389,6 +417,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// Response containing the active stop limit order.
     /// </summary>
+    [Serializable]
     public class GetActiveStopLimitOrderResponseDTO
     {
         public ApiActiveStopLimitOrderDTO ActiveStopLimitOrder { get; set; }
@@ -397,6 +426,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// Get market information for a list of markets.
     /// </summary>
+    [Serializable]
     public class UpdateWatchlistDisplayOrderRequestDTO
     {
         public int[] NewDisplayOrderIdSequence { get; set; }
@@ -405,6 +435,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// A cancel order request.
     /// </summary>
+    [Serializable]
     public class CancelOrderRequestDTO
     {
         public int OrderId { get; set; }
@@ -414,6 +445,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// Update watchlist with item
     /// </summary>
+    [Serializable]
     public class InsertWatchlistItemRequestDTO
     {
         public int WatchlistDisplayOrderId { get; set; }
@@ -423,6 +455,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// The response from a request for Price Ticks
     /// </summary>
+    [Serializable]
     public class GetPriceTickResponseDTO
     {
         public PriceTickDTO[] PriceTicks { get; set; }
@@ -431,6 +464,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// request to delete a session (log off)
     /// </summary>
+    [Serializable]
     public class ApiLogOffRequestDTO
     {
         public string UserName { get; set; }
@@ -440,6 +474,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// Get market information for a list of markets.
     /// </summary>
+    [Serializable]
     public class ListMarketInformationRequestDTO
     {
         public int[] MarketIds { get; set; }
@@ -448,6 +483,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// The response from the trade request
     /// </summary>
+    [Serializable]
     public class ApiTradeOrderResponseDTO
     {
         public int Status { get; set; }
@@ -460,6 +496,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// quote response.
     /// </summary>
+    [Serializable]
     public class ApiQuoteResponseDTO
     {
         public int QuoteId { get; set; }
@@ -470,6 +507,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// Response to a CreateSessionRequest
     /// </summary>
+    [Serializable]
     public class ApiLogOnResponseDTO
     {
         public string Session { get; set; }
@@ -478,6 +516,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// Response from am market information request.
     /// </summary>
+    [Serializable]
     public class ListMarketInformationResponseDTO
     {
         public ApiMarketInformationDTO[] MarketInformation { get; set; }
@@ -486,6 +525,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// response from an account information query.
     /// </summary>
+    [Serializable]
     public class AccountInformationResponseDTO
     {
         public string LogonUserName { get; set; }
@@ -497,6 +537,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// A request for a stop/limit order
     /// </summary>
+    [Serializable]
     public class NewStopLimitOrderRequestDTO
     {
         public int OrderId { get; set; }
@@ -520,6 +561,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// A request for updating a stop/limit order
     /// </summary>
+    [Serializable]
     public class UpdateStopLimitOrderRequestDTO : NewStopLimitOrderRequestDTO
     {
     }
@@ -527,6 +569,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// The response from a GET price bar history request. Contains both an array of finalized price bars, and a partial (not finalized) bar for the current period
     /// </summary>
+    [Serializable]
     public class GetPriceBarResponseDTO
     {
         public PriceBarDTO[] PriceBars { get; set; }
@@ -536,6 +579,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// Contains the result of a ListStopLimitOrderHistory query
     /// </summary>
+    [Serializable]
     public class ListStopLimitOrderHistoryResponseDTO
     {
         public ApiStopLimitOrderHistoryDTO[] StopLimitOrderHistory { get; set; }
@@ -544,6 +588,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// Response from am market information request.
     /// </summary>
+    [Serializable]
     public class GetMarketInformationResponseDTO
     {
         public ApiMarketInformationDTO MarketInformation { get; set; }
@@ -552,6 +597,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// Message popup response denoting whether the client application should display a popup notification at startup.
     /// </summary>
+    [Serializable]
     public class GetMessagePopupResponseDTO
     {
         public bool AskForClientApproval { get; set; }
@@ -561,6 +607,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// This is a description of ErrorResponseDTO
     /// </summary>
+    [Serializable]
     public class ApiErrorResponseDTO
     {
         public string ErrorMessage { get; set; }
@@ -570,6 +617,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// Response from a market information search request.
     /// </summary>
+    [Serializable]
     public class ListMarketInformationSearchResponseDTO
     {
         public ApiMarketInformationDTO[] MarketInformation { get; set; }
@@ -578,6 +626,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// Response containing the open position.
     /// </summary>
+    [Serializable]
     public class GetOpenPositionResponseDTO
     {
         public ApiOpenPositionDTO OpenPosition { get; set; }
@@ -586,6 +635,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// Contains the result of a ListSpreadMarkets query
     /// </summary>
+    [Serializable]
     public class ListSpreadMarketsResponseDTO
     {
         public ApiMarketDTO[] Markets { get; set; }
@@ -594,6 +644,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// Contains the result of a ListOpenPositions query
     /// </summary>
+    [Serializable]
     public class ListOpenPositionsResponseDTO
     {
         public ApiOpenPositionDTO[] OpenPositions { get; set; }
@@ -602,6 +653,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// This is a description of the ErrorCode enum
     /// </summary>
+    [Serializable]
     public enum ErrorCode
     {
         NoError = 0,
@@ -620,6 +672,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// This Dto is not currently used
     /// </summary>
+    [Serializable]
     public class ListOrdersResponseDTO
     {
     }
@@ -627,6 +680,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// Contains the result of a ListCfdMarkets query
     /// </summary>
+    [Serializable]
     public class ListCfdMarketsResponseDTO
     {
         public ApiMarketDTO[] Markets { get; set; }
@@ -635,6 +689,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// Response from a session delete request.
     /// </summary>
+    [Serializable]
     public class ApiLogOffResponseDTO
     {
         public bool LoggedOut { get; set; }
@@ -643,6 +698,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// Gets the client watchlist
     /// </summary>
+    [Serializable]
     public class ListWatchlistResponseDTO
     {
         public int ClientAccountId { get; set; }
@@ -651,6 +707,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// Contains the result of a ListTradeHistory query
     /// </summary>
+    [Serializable]
     public class ListTradeHistoryResponseDTO
     {
         public ApiTradeHistoryDTO[] TradeHistory { get; set; }
@@ -659,6 +716,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// Contains the result of a ListActiveStopLimitOrder query
     /// </summary>
+    [Serializable]
     public class ListActiveStopLimitOrderResponseDTO
     {
         public ApiActiveStopLimitOrderDTO[] ActiveStopLimitOrders { get; set; }
@@ -667,6 +725,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// A request for a trade order
     /// </summary>
+    [Serializable]
     public class NewTradeOrderRequestDTO
     {
         public int MarketId { get; set; }
@@ -686,6 +745,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// A request for updating a trade order
     /// </summary>
+    [Serializable]
     public class UpdateTradeOrderRequestDTO : NewTradeOrderRequestDTO
     {
         public int OrderId { get; set; }
@@ -694,6 +754,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// JSON returned from News Detail GET request
     /// </summary>
+    [Serializable]
     public class GetNewsDetailResponseDTO
     {
         public NewsDetailDTO NewsDetail { get; set; }
@@ -702,6 +763,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// Gets the lookup entities from trading database given the lookup name and culture id
     /// </summary>
+    [Serializable]
     public class ApiLookupResponseDTO
     {
         public int CultureId { get; set; }
@@ -712,6 +774,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// if done
     /// </summary>
+    [Serializable]
     public class ApiIfDoneResponseDTO
     {
         public ApiOrderResponseDTO Stop { get; set; }
@@ -721,6 +784,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// system status
     /// </summary>
+    [Serializable]
     public class SystemStatusDTO
     {
         public string StatusMessage { get; set; }
@@ -729,6 +793,7 @@ namespace CIAPI.DTO
     /// <summary>
     /// system status request.
     /// </summary>
+    [Serializable]
     public class SystemStatusRequestDTO
     {
         public string TestDepth { get; set; }

@@ -84,6 +84,7 @@
       <Link>Streaming\StreamingClientFactory.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Serializable.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common.Logging.Silverlight\Common.Logging.Silverlight.csproj">

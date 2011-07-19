@@ -49,6 +49,9 @@
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\CIAPI.Silverlight\Serializable.cs">
+      <Link>Serializable.cs</Link>
+    </Compile>
     <Compile Include="..\CIAPI\Generated\DTO.cs">
       <Link>Generated\DTO.cs</Link>
     </Compile>
