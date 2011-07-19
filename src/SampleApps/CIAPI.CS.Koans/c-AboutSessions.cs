@@ -24,7 +24,7 @@ namespace CIAPI.CS.Koans
             
             //And then create a session by creating a username & password
             //You can get test credentials by requesting them at http://ciapipreprod.cityindextest9.co.uk/CIAPI.docs/#content.test-credentials
-            USERNAME = "0x234";
+            USERNAME = "xx189949";
             PASSWORD = "password";
 
             try
@@ -44,7 +44,7 @@ namespace CIAPI.CS.Koans
         {
             //The rpcClient stores your current session details, and uses it to authenticate
             //every request.
-            var headlines = _rpcClient.ListNewsHeadlines("UK", 10);
+            var headlines = _rpcClient.News.ListNewsHeadlines("UK", 10);
             KoanAssert.That(headlines.Headlines.Length > 0, "you should have a set of headlines");
 
             //When your sessionId expires
@@ -53,7 +53,7 @@ namespace CIAPI.CS.Koans
             //Then future requests will fail.
             try
             {
-                var headlines2 = _rpcClient.ListNewsHeadlines("AUS", 10);
+                var headlines2 = _rpcClient.News.ListNewsHeadlines("AUS", 10);
                 KoanAssert.That(false, "the previous line should have thrown an (401) Unauthorized exception");
             }
             catch (ApiException e)
@@ -77,7 +77,7 @@ namespace CIAPI.CS.Koans
             try
             {
                 _rpcClient.SessionId = oldSessionId;
-                var headlines2 = _rpcClient.ListNewsHeadlines("AUS", 4);
+                var headlines2 = _rpcClient.News.ListNewsHeadlines("AUS", 4);
                 KoanAssert.Fail("the previous line should have thrown an (401) Unauthorized exception");
             }
             catch (ApiException e)

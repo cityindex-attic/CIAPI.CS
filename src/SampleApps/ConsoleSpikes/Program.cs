@@ -65,12 +65,12 @@ namespace ConsoleSpikes
 
         static void BeginListNewsHeadlines(string category, int maxResults)
         {
-            _ctx.BeginListNewsHeadlines(category, maxResults, EndListNewsHeadlines, null);
+            _ctx.News.BeginListNewsHeadlines(category, maxResults, EndListNewsHeadlines, null);
         }
 
         static void EndListNewsHeadlines(ApiAsyncResult<ListNewsHeadlinesResponseDTO> result)
         {
-            var response = _ctx.EndListNewsHeadlines(result);
+            var response = _ctx.News.EndListNewsHeadlines(result);
 
             foreach (var item in response.Headlines)
             {
@@ -111,7 +111,7 @@ namespace ConsoleSpikes
 
                 ctx.LogIn(TestConfig.ApiUsername, TestConfig.ApiPassword);
 
-                var headlinesResponse = ctx.ListNewsHeadlines("UK", 10);
+                var headlinesResponse = ctx.News.ListNewsHeadlines("UK", 10);
 
                 foreach (var item in headlinesResponse.Headlines)
                 {
@@ -119,7 +119,7 @@ namespace ConsoleSpikes
                     Console.WriteLine("{0} {1} {2}\r\n", item.StoryId, item.Headline, item.PublishDate);
 
                     // fetch details to get all of the above and the body of the story
-                    var detailResponse = ctx.GetNewsDetail(item.StoryId.ToString());
+                    var detailResponse = ctx.News.GetNewsDetail(item.StoryId.ToString());
 
                     Console.WriteLine("{0}", detailResponse.NewsDetail.Story.Substring(0, 35) + "...");
                     Console.WriteLine("\r\n-----------------------------------------------------------------------------\r\n");

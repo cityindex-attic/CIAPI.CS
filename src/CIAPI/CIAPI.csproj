@@ -37,7 +37,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>..\common\ciapi.snk</AssemblyOriginatorKeyFile>
-  </PropertyGroup>  
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Common.Logging">
       <HintPath>..\packages\Common.Logging-2.0.0\2.0\release\Common.Logging.dll</HintPath>
@@ -55,21 +55,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\CIAPI.CodeGeneration\DTO.cs">
-      <Link>DTO.cs</Link>
-    </Compile>
-    <Compile Include="..\CIAPI.CodeGeneration\DTO_hardcoded.cs">
-      <Link>DTO_hardcoded.cs</Link>
-    </Compile>
-    <Compile Include="..\CIAPI.CodeGeneration\ROUTES.cs">
-      <Link>ROUTES.cs</Link>
-    </Compile>
-    <Compile Include="..\CIAPI.CodeGeneration\Routes_hardcoded.cs">
-      <Link>Routes_hardcoded.cs</Link>
-    </Compile>
+    <Compile Include="Generated\DTO.cs" />
+    <Compile Include="Generated\Routes.cs" />
     <Compile Include="PrettyPrinterExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rpc\ApiClient.cs" />
+    <Compile Include="Rpc\ErrorResponseDTOJsonExceptionFactory.cs" />
+    <Compile Include="Rpc\ServerConnectionException.cs" />
     <Compile Include="Streaming\IStreamingClient.cs" />
     <Compile Include="Streaming\Lightstreamer\LightStreamerClient.cs" />
     <Compile Include="Streaming\StreamingClientFactory.cs" />

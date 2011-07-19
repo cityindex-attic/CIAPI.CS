@@ -45,9 +45,9 @@ namespace CIAPI.Phone7.Tests
             {
                 rpcClient.EndLogIn(ar);
                 Assert.IsNotNull(rpcClient.SessionId);
-                rpcClient.BeginListNewsHeadlines("UK", 10, ar2 =>
+                rpcClient.News.BeginListNewsHeadlines("UK", 10, ar2 =>
                     {
-                        var response = rpcClient.EndListNewsHeadlines(ar2);
+                        var response = rpcClient.News.EndListNewsHeadlines(ar2);
                         Assert.IsTrue(response.Headlines.Length > 0, "expected headlines");
                         EnqueueTestComplete();
                     }, null);

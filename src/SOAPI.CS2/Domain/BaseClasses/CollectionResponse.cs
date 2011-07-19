@@ -2,7 +2,7 @@
 
 namespace SOAPI.CS2.Domain
 {
-    public abstract class CollectionResponse<TDTO> where TDTO : class,new()
+    public abstract class CollectionResponse<TDTO> 
     {
         public abstract List<TDTO> Items { get; set; }
     }

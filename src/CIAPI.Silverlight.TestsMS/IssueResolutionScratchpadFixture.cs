@@ -34,11 +34,11 @@ namespace CIAPI.Silverlight.TestsMS
                         {
 
                             client.EndLogIn(ar);
-                            client.BeginListNewsHeadlines("UK", 10, ar2 =>
+                            client.News.BeginListNewsHeadlines("UK", 10, ar2 =>
                                 {
                                     EnqueueCallback(() =>
                                                         {
-                                                            var headlines = client.EndListNewsHeadlines(ar2);
+                                                            var headlines = client.News.EndListNewsHeadlines(ar2);
                                                             Assert.IsTrue(headlines.Headlines.Length > 0);
                                                             client.BeginLogOut(ar3 =>
                                                                                    {

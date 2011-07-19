@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace SOAPI.CS2.Domain
 {
-    public abstract class PagedResponse<TDTO> : CollectionResponse<TDTO> where TDTO : class,new()
+    public abstract class PagedResponse<TDTO> : CollectionResponse<TDTO> 
     {
         [JsonProperty("total")]
         public int Total { get; set; }

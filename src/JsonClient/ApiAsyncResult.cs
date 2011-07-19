@@ -7,7 +7,7 @@ namespace CityIndex.JsonClient
     /// <summary>
     /// The asynch request handle that is passed back to the <see cref="Client"/> to retrieve the result of the request.
     /// </summary>
-    public class ApiAsyncResult<TDTO> : ApiAsyncResultBase, IAsyncResult where TDTO : class, new()
+    public class ApiAsyncResult<TDTO> : ApiAsyncResultBase, IAsyncResult 
     {
         // Fields
         private readonly object _asyncState;

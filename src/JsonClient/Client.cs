@@ -149,7 +149,7 @@ namespace CityIndex.JsonClient
         /// <param name="cacheDuration"></param>
         /// <param name="throttleScope"></param>
         /// <returns></returns>
-        public TDTO Request<TDTO>(string target, string uriTemplate, string method, Dictionary<string, object> parameters, TimeSpan cacheDuration, string throttleScope) where TDTO : class, new()
+        public TDTO Request<TDTO>(string target, string uriTemplate, string method, Dictionary<string, object> parameters, TimeSpan cacheDuration, string throttleScope) 
         {
 #if SILVERLIGHT
             if (System.Windows.Deployment.Current.Dispatcher.CheckAccess())
@@ -161,7 +161,7 @@ namespace CityIndex.JsonClient
             parameters = parameters ?? new Dictionary<string, object>();
             throttleScope = throttleScope ?? "default";
 
-            TDTO response = null;
+            TDTO response = default(TDTO);
             Exception exception = null;
             var gate = new ManualResetEvent(false);
 
@@ -196,7 +196,7 @@ namespace CityIndex.JsonClient
         ///<param name="method"></param>
         ///<typeparam name="TDTO"></typeparam>
         ///<returns></returns>
-        public TDTO Request<TDTO>(string target, string method) where TDTO : class, new()
+        public TDTO Request<TDTO>(string target, string method) 
         {
             return Request<TDTO>(target, null, method, null, TimeSpan.FromMilliseconds(0), null);
         }
@@ -210,7 +210,7 @@ namespace CityIndex.JsonClient
         ///<param name="parameters"></param>
         ///<typeparam name="TDTO"></typeparam>
         ///<returns></returns>
-        public TDTO Request<TDTO>(string target, string uriTemplate, string method, Dictionary<string, object> parameters) where TDTO : class, new()
+        public TDTO Request<TDTO>(string target, string uriTemplate, string method, Dictionary<string, object> parameters) 
         {
             return Request<TDTO>(target, uriTemplate, method, parameters, TimeSpan.FromMilliseconds(0), null);
         }
@@ -234,18 +234,21 @@ namespace CityIndex.JsonClient
         /// <param name="throttleScope"></param>
         public void BeginRequest<TDTO>(ApiAsyncCallback<TDTO> cb, object state, string target, string uriTemplate,
                                        string method, Dictionary<string, object> parameters, TimeSpan cacheDuration,
-                                       string throttleScope) where TDTO : class, new()
+                                       string throttleScope) 
         {
             lock (_lockObj)
             {
-                BeforeBuildUrl(target, uriTemplate, method, parameters, cacheDuration, throttleScope);
+                // params gets modified so we will make a local copy
+                var localParams = new Dictionary<string, object>(parameters);
+
+                BeforeBuildUrl(target, uriTemplate, method, localParams, cacheDuration, throttleScope);
 
                 string url = BuildUrl(target, uriTemplate, _uri.AbsoluteUri);
 
-                url = ApplyUriTemplateParameters(parameters, url);
+                url = ApplyUriTemplateParameters(localParams, url);
+                
 
-
-                _requestController.ProcessCacheItem(target, uriTemplate, method, parameters, cacheDuration, throttleScope, url, cb, state);
+                _requestController.ProcessCacheItem(target, uriTemplate, method, localParams, cacheDuration, throttleScope, url, cb, state);
             }
         }
 
@@ -258,7 +261,7 @@ namespace CityIndex.JsonClient
         ///<param name="target"></param>
         ///<param name="method"></param>
         ///<typeparam name="TDTO"></typeparam>
-        public void BeginRequest<TDTO>(ApiAsyncCallback<TDTO> cb, object state, string target, string method) where TDTO : class, new()
+        public void BeginRequest<TDTO>(ApiAsyncCallback<TDTO> cb, object state, string target, string method) 
         {
             BeginRequest(cb, state, target, null, method, null, TimeSpan.FromMilliseconds(0), "default");
         }
@@ -273,7 +276,7 @@ namespace CityIndex.JsonClient
         ///<param name="method"></param>
         ///<param name="parameters"></param>
         ///<typeparam name="TDTO"></typeparam>
-        public void BeginRequest<TDTO>(ApiAsyncCallback<TDTO> cb, object state, string target, string uriTemplate, string method, Dictionary<string, object> parameters) where TDTO : class, new()
+        public void BeginRequest<TDTO>(ApiAsyncCallback<TDTO> cb, object state, string target, string uriTemplate, string method, Dictionary<string, object> parameters) 
         {
             BeginRequest(cb, state, target, uriTemplate, method, parameters, TimeSpan.FromMilliseconds(0), "default");
         }
@@ -289,7 +292,7 @@ namespace CityIndex.JsonClient
         /// <exception cref="ApiException">the exception, if any, that occurred during execution of the request</exception>
         // ReSharper disable MemberCanBeMadeStatic.Local
         // this method currently qualifies as a static member. please do not make it so, we will be doing housekeeping in here at a later date.
-        public virtual TDTO EndRequest<TDTO>(ApiAsyncResult<TDTO> asyncResult) where TDTO : class, new()
+        public virtual TDTO EndRequest<TDTO>(ApiAsyncResult<TDTO> asyncResult) 
         // ReSharper restore MemberCanBeMadeStatic.Local
         {
 
@@ -320,11 +323,13 @@ namespace CityIndex.JsonClient
                     if (parameters.ContainsKey(key))
                     {
                         object paramValue = parameters[key];
+                        parameters.Remove(key);
                         if (paramValue != null)
                         {
-                            parameters.Remove(key);
+                            
                             return paramValue.ToString();
                         }
+                        
                     }
                     return null;
                 });

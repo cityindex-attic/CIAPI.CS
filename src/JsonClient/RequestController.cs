@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -73,7 +74,7 @@ namespace CityIndex.JsonClient
         public void ProcessCacheItem<TDTO>(string target, string uriTemplate, string method,
                                            Dictionary<string, object> parameters, TimeSpan cacheDuration,
                                            string throttleScope, string url, ApiAsyncCallback<TDTO> cb, object state)
-            where TDTO : class, new()
+            
         {
             CacheItem<TDTO> item = Cache.GetOrCreate<TDTO>(url);
 
@@ -125,7 +126,7 @@ namespace CityIndex.JsonClient
         }
 
         public void CreateRequest<TDTO>(string url)
-            where TDTO : class, new()
+            
         {
             CacheItem<TDTO> item = _cache.Get<TDTO>(url);
 
@@ -137,6 +138,13 @@ namespace CityIndex.JsonClient
 
             if (item.Method.ToUpper() == "POST")
             {
+                // if post then parameters should contain zero or one items
+                if(item.Parameters.Count>1)
+                {
+                    
+                    throw new ArgumentException("POST method with too many parameters");
+                    
+                }
                 SetPostEntityAndEnqueueRequest<TDTO>(url);
             }
             else
@@ -193,12 +201,17 @@ namespace CityIndex.JsonClient
         /// </summary>
         /// <param name="url"></param>
         private void SetPostEntityAndEnqueueRequest<TDTO>(string url)
-            where TDTO : class, new()
+            
         {
             CacheItem<TDTO> item = _cache.Get<TDTO>(url);
 
 
-            byte[] bodyValue = CreatePostEntity(item.Parameters);
+            byte[] bodyValue = new byte[]{};
+            if (item.Parameters.Count==1)
+            {
+                bodyValue = CreatePostEntity(item.Parameters.First().Value);    
+            }
+            
 
             item.Request.BeginGetRequestStream(ac =>
                 {
@@ -229,30 +242,17 @@ namespace CityIndex.JsonClient
         }
 
         /// <summary>
-        /// Builds a JSON object from a dictionary and returns encoded bytes
+        /// Serializes post entity
         /// </summary>
-        /// <param name="parameters"></param>
+        /// <param name="value"></param>
         /// <returns></returns>
-        private static byte[] CreatePostEntity(Dictionary<string, object> parameters)
+        private static byte[] CreatePostEntity(object value)
         {
-            var body = new JObject();
-            foreach (var kvp in parameters)
-            {
-                object value = kvp.Value;
+            // #TODO: this could be exposed on interface and made virtual to allow custom serialization
+            
 
-                if (value is Guid)
-                {
-                    // HACK: to deal with "System.ArgumentException : Could not determine JSON object type for type System.Guid."
-                    value = value.ToString();
-                }
-
-                if (value != null)
-                {
-                    body[kvp.Key] = new JValue(value);
-                }
-            }
-
-            byte[] bodyValue = Encoding.UTF8.GetBytes(body.ToString(Formatting.None, new JsonConverter[] { }));
+            var body = JsonConvert.SerializeObject(value, Formatting.None, new JsonConverter[] { });
+            byte[] bodyValue = Encoding.UTF8.GetBytes(body);
 
             return bodyValue;
         }
@@ -263,7 +263,7 @@ namespace CityIndex.JsonClient
         /// </summary>
         /// <typeparam name="TDTO"></typeparam>
         private void EnqueueRequest<TDTO>(string url)
-            where TDTO : class, new()
+            
         {
             CacheItem<TDTO> outerItem = _cache.Get<TDTO>(url);
             IThrottedRequestQueue throttle = this[outerItem.ThrottleScope];

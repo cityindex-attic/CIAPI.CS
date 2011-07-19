@@ -45,7 +45,7 @@ namespace CIAPI.Tests.Rpc
 
             var errorDto = new ApiErrorResponseDTO()
                                {
-                                   ErrorCode = ErrorCode.InvalidCredentials,
+                                   ErrorCode = (int)ErrorCode.InvalidCredentials,
                                    ErrorMessage = "InvalidCredentials"
 
                                };
@@ -56,11 +56,18 @@ namespace CIAPI.Tests.Rpc
 
         }
 
-        [Test, Ignore]
+        [Test]
         public void ApiAuthenticationFailure()
         {
 
-            var ctx = BuildAuthenticatedClientAndSetupResponse(LoggedIn);
+            var errorDto = new ApiErrorResponseDTO()
+            {
+                ErrorCode = (int)ErrorCode.InvalidCredentials,
+                ErrorMessage = "InvalidCredentials"
+
+            };
+
+            var ctx = BuildAuthenticatedClientAndSetupResponse(JsonConvert.SerializeObject(errorDto));
 
             try
             {
@@ -69,8 +76,8 @@ namespace CIAPI.Tests.Rpc
             }
             catch (ApiException ex)
             {
-                Assert.AreEqual("[insert api unauthrized]", ex.Message, "FIXME: the API is just setting 401. it needs to send ErrorResponseDTO json as well.");
-                Assert.AreEqual("[insert error response dto json]", ex.ResponseText);
+                Assert.AreEqual("InvalidCredentials", ex.Message, "FIXME: the API is just setting 401. it needs to send ErrorResponseDTO json as well.");
+                Assert.AreEqual("{\"ErrorMessage\":\"InvalidCredentials\",\"ErrorCode\":4010}", ex.ResponseText);
             }
         }
 
@@ -92,7 +99,7 @@ namespace CIAPI.Tests.Rpc
 
             var ctx = BuildAuthenticatedClientAndSetupResponse(NewsHeadlines12);
 
-            ListNewsHeadlinesResponseDTO response = ctx.ListNewsHeadlines("UK", 12);
+            ListNewsHeadlinesResponseDTO response = ctx.News.ListNewsHeadlines("UK", 12);
             Assert.AreEqual(12, response.Headlines.Length);
 
         }
@@ -104,7 +111,7 @@ namespace CIAPI.Tests.Rpc
             Console.WriteLine("DeserializationExceptionIsProperlySurfacedBySyncRequests");
 
             CIAPI.Rpc.Client ctx = BuildAuthenticatedClientAndSetupResponse(BogusJson);
-            Assert.Throws<CIAPI.Rpc.ServerConnectionException>(() => ctx.GetNewsDetail("foobar"));
+            Assert.Throws<CIAPI.Rpc.ServerConnectionException>(() => ctx.News.GetNewsDetail("foobar"));
         }
 
 
@@ -116,11 +123,11 @@ namespace CIAPI.Tests.Rpc
             CIAPI.Rpc.Client ctx = BuildAuthenticatedClientAndSetupResponse(BogusJson);
 
             var gate = new ManualResetEvent(false);
-            ctx.BeginListNewsHeadlines("UK", 14, ar =>
+            ctx.News.BeginListNewsHeadlines("UK", 14, ar =>
                 {
                     try
                     {
-                        ctx.EndListNewsHeadlines(ar);
+                        ctx.News.EndListNewsHeadlines(ar);
                         Assert.Fail("expected exception");
                     }
                     catch (Exception ex)
@@ -144,9 +151,9 @@ namespace CIAPI.Tests.Rpc
             CIAPI.Rpc.Client ctx = BuildAuthenticatedClientAndSetupResponse(NewsHeadlines14);
 
             var gate = new ManualResetEvent(false);
-            ctx.BeginListNewsHeadlines("UK", 14, ar =>
+            ctx.News.BeginListNewsHeadlines("UK", 14, ar =>
                 {
-                    ListNewsHeadlinesResponseDTO response = ctx.EndListNewsHeadlines(ar);
+                    ListNewsHeadlinesResponseDTO response = ctx.News.EndListNewsHeadlines(ar);
                     Assert.AreEqual(14, response.Headlines.Length);
                     gate.Set();
                 }, null);
@@ -174,11 +181,11 @@ namespace CIAPI.Tests.Rpc
 
             Exception exception = null;
 
-            ctx.BeginListNewsHeadlines("UK", 14, ar =>
+            ctx.News.BeginListNewsHeadlines("UK", 14, ar =>
                                                      {
                                                          try
                                                          {
-                                                             var response = ctx.EndListNewsHeadlines(ar);
+                                                             var response = ctx.News.EndListNewsHeadlines(ar);
                                                          }
                                                          catch (Exception ex)
                                                          {

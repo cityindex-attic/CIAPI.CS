@@ -20,7 +20,7 @@ namespace CityIndex.JsonClient
         /// <typeparam name="TDTO"></typeparam>
         /// <param name="url"></param>
         /// <returns></returns>
-        CacheItem<TDTO> GetOrCreate<TDTO>(string url) where TDTO : class,new();
+        CacheItem<TDTO> GetOrCreate<TDTO>(string url) ;
 
         /// <summary>
         /// Returns a <see cref="CacheItem{TDTO}"/> keyed by url (case insensitive)
@@ -29,7 +29,7 @@ namespace CityIndex.JsonClient
         /// <param name="url"></param>
         /// <returns></returns>
         /// <exception cref="KeyNotFoundException">If url is not found in internal map</exception>
-        CacheItem<TDTO> Get<TDTO>(string url) where TDTO : class,new();
+        CacheItem<TDTO> Get<TDTO>(string url) ;
 
         /// <summary>
         /// Removes a <see cref="CacheItem{TDTO}"/> from the internal map
@@ -40,6 +40,6 @@ namespace CityIndex.JsonClient
         /// <exception cref="InvalidOperationException">
         /// If item is not completed, removing would result in orphaned callbacks effectively stalling the calling code.
         /// </exception>
-        CacheItem<TDTO> Remove<TDTO>(string url) where TDTO : class,new();
+        CacheItem<TDTO> Remove<TDTO>(string url) ;
     }
 }

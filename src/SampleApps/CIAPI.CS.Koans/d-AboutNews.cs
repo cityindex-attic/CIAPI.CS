@@ -11,7 +11,7 @@ namespace CIAPI.CS.Koans
     [KoanCategory(Order = 3)]
     public class AboutNews
     {
-        private string USERNAME = "0x234";
+        private string USERNAME = "xx189949";
         private string PASSWORD = "password";
 
         [Koan(Order = 0)]
@@ -28,8 +28,8 @@ namespace CIAPI.CS.Koans
         public void YouCanFetchTheLatestNewsHeadlines()
         {
             const int numberOfHeadlines = 25;
-            _ukHeadlines = _rpcClient.ListNewsHeadlines(category: "UK", maxResults: numberOfHeadlines);
-            _ausHeadlines = _rpcClient.ListNewsHeadlines(category: "AUS", maxResults: numberOfHeadlines);
+            _ukHeadlines = _rpcClient.News.ListNewsHeadlines(category: "UK", maxResults: numberOfHeadlines);
+            _ausHeadlines = _rpcClient.News.ListNewsHeadlines(category: "AUS", maxResults: numberOfHeadlines);
 
             KoanAssert.That(_ukHeadlines.Headlines.Length, Is.EqualTo(25), "You should get the number of headlines requested");
 
@@ -44,7 +44,7 @@ namespace CIAPI.CS.Koans
         [Koan(Order = 3)]
         public void UsingTheStoryIdYouCanFetchTheStoryDetails()
         {
-            var newsStory = _rpcClient.GetNewsDetail(_ukHeadlines.Headlines[0].StoryId.ToString());
+            var newsStory = _rpcClient.News.GetNewsDetail(_ukHeadlines.Headlines[0].StoryId.ToString());
             KoanAssert.That(newsStory.NewsDetail.Story, Is.Not.Null.Or.Empty, "You now have the full body of the news story");
             KoanAssert.That(newsStory.NewsDetail.Story, Is.StringContaining("<p>"), "which contains simple HTML");
         }
@@ -57,7 +57,7 @@ namespace CIAPI.CS.Koans
             try
             {
                 const int maxHeadlines = 500;
-                _ukHeadlines = _rpcClient.ListNewsHeadlines(category: "UK", maxResults: maxHeadlines + 1);
+                _ukHeadlines = _rpcClient.News.ListNewsHeadlines(category: "UK", maxResults: maxHeadlines + 1);
             }
             catch (Exception ex)
             {
@@ -69,7 +69,7 @@ namespace CIAPI.CS.Koans
         public void AskingForAnInvalidStoryIdWillGetYouNullStoryDetails()
         {
             const int invalidStoryId = Int32.MaxValue;
-            var newsStory = _rpcClient.GetNewsDetail(storyId: invalidStoryId.ToString());
+            var newsStory = _rpcClient.News.GetNewsDetail(storyId: invalidStoryId.ToString());
 
             KoanAssert.That(newsStory.NewsDetail, Is.EqualTo(null), "There are no details for an invalid story Id");
         }
@@ -80,11 +80,11 @@ namespace CIAPI.CS.Koans
             var gate = new ManualResetEvent(false);
             GetNewsDetailResponseDTO newsDetailResponseDto = null;
 
-            _rpcClient.BeginGetNewsDetail(
+            _rpcClient.News.BeginGetNewsDetail(
                 storyId: _ukHeadlines.Headlines[0].StoryId.ToString(),
                 callback: (response) =>
                               {
-                                  newsDetailResponseDto = _rpcClient.EndGetNewsDetail(response);
+                                  newsDetailResponseDto = _rpcClient.News.EndGetNewsDetail(response);
                                   gate.Set();
                               },
                 state: null);
@@ -117,13 +117,13 @@ namespace CIAPI.CS.Koans
             var gate = new ManualResetEvent(false);
             ListNewsHeadlinesResponseDTO listNewsHeadlinesResponseDto = null;
 
-            _rpcClient.BeginListNewsHeadlines(
+            _rpcClient.News.BeginListNewsHeadlines(
                 category: "UK", maxResults: maxHeadlines + 1,
                 callback: (response) =>
                 {
                     try
                     {
-                        listNewsHeadlinesResponseDto = _rpcClient.EndListNewsHeadlines(response);
+                        listNewsHeadlinesResponseDto = _rpcClient.News.EndListNewsHeadlines(response);
                     }
                     catch (ApiException ex)
                     {

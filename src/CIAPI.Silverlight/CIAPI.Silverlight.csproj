@@ -56,23 +56,23 @@
     <Reference Include="System.Windows.Browser" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\CIAPI.CodeGeneration\DTO.cs">
-      <Link>DTO.cs</Link>
+    <Compile Include="..\CIAPI\Generated\DTO.cs">
+      <Link>Generated\DTO.cs</Link>
     </Compile>
-    <Compile Include="..\CIAPI.CodeGeneration\DTO_hardcoded.cs">
-      <Link>DTO_hardcoded.cs</Link>
-    </Compile>
-    <Compile Include="..\CIAPI.CodeGeneration\ROUTES.cs">
-      <Link>ROUTES.cs</Link>
-    </Compile>
-    <Compile Include="..\CIAPI.CodeGeneration\Routes_hardcoded.cs">
-      <Link>Routes_hardcoded.cs</Link>
+    <Compile Include="..\CIAPI\Generated\Routes.cs">
+      <Link>Generated\Routes.cs</Link>
     </Compile>
     <Compile Include="..\CIAPI\Rpc\ApiClient.cs">
       <Link>Rpc\ApiClient.cs</Link>
     </Compile>
     <Compile Include="..\CIAPI\PrettyPrinterExtensions.cs">
       <Link>PrettyPrinterExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\Rpc\ErrorResponseDTOJsonExceptionFactory.cs">
+      <Link>Rpc\ErrorResponseDTOJsonExceptionFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\Rpc\ServerConnectionException.cs">
+      <Link>Rpc\ServerConnectionException.cs</Link>
     </Compile>
     <Compile Include="..\CIAPI\Streaming\IStreamingClient.cs">
       <Link>Streaming\IStreamingClient.cs</Link>

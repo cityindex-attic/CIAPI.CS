@@ -41,7 +41,7 @@ Method          : GET
 Target          : target
 UriTemplate     : uriTemplate
 Parameters      : 
-	key: value
+	key: ""value""
 Request URI     : http://tempuri.org/
 Request Headers : 
 	name: value
@@ -88,7 +88,7 @@ Method          : GET
 Target          : target
 UriTemplate     : uriTemplate
 Parameters      : 
-	key: value
+	key: ""value""
 Request URI     : http://tempuri.org/
 Request Headers : 
 	name: value
@@ -129,7 +129,7 @@ Method          : GET
 Target          : target
 UriTemplate     : uriTemplate
 Parameters      : 
-	key: value
+	key: ""value""
 CacheDuration   : 00:00:01
 RetryCount      : 3
 ThrottleScope   : throttleScope

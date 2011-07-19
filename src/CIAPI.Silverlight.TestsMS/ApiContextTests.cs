@@ -31,7 +31,7 @@ namespace CIAPI.Silverlight.TestsMS
         [Asynchronous]
         public void CanLoginAsync()
         {
-            
+
             var ctx = BuildClientAndSetupResponse(LoggedIn);
 
             ctx.BeginLogIn(TestConfig.ApiUsername, TestConfig.ApiPassword, ar =>
@@ -47,12 +47,12 @@ namespace CIAPI.Silverlight.TestsMS
                                         {
                                             EnqueueTestComplete();
                                         }
-                                        
+
                                     }
 
                     );
 
-                
+
             }, null);
 
         }
@@ -62,9 +62,9 @@ namespace CIAPI.Silverlight.TestsMS
         public void CanLogoutAsync()
         {
 
-            
-            var ctx = BuildClientAndSetupResponse(LoggedOut);
-            
+
+            var ctx = BuildAuthenticatedClientAndSetupResponse(LoggedOut);
+
 
             ctx.BeginLogOut(ar =>
             {
@@ -79,11 +79,11 @@ namespace CIAPI.Silverlight.TestsMS
                     {
                         EnqueueTestComplete();
                     }
-                    
+
                 }
             );
 
-                
+
             }, null);
         }
 
@@ -94,22 +94,22 @@ namespace CIAPI.Silverlight.TestsMS
 
             var ctx = BuildAuthenticatedClientAndSetupResponse(NewsHeadlines14);
 
-            ctx.BeginListNewsHeadlines("UK", 14, ar =>
+            ctx.News.BeginListNewsHeadlines("UK", 14, ar =>
                 {
                     EnqueueCallback(() =>
                                         {
                                             try
                                             {
-                                                ListNewsHeadlinesResponseDTO response = ctx.EndListNewsHeadlines(ar);
+                                                ListNewsHeadlinesResponseDTO response = ctx.News.EndListNewsHeadlines(ar);
                                                 Assert.AreEqual(14, response.Headlines.Length);
                                             }
                                             finally
                                             {
                                                 EnqueueTestComplete();
                                             }
-                                            
+
                                         });
-                    
+
                 }, null);
 
         }

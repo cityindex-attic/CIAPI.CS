@@ -15,7 +15,7 @@ namespace CIAPI.IntegrationTests.Streaming
         private ILog _logger = LogManager.GetCurrentClassLogger();
 
         public static IStreamingClient BuildStreamingClient(
-            string userName = "0x234",
+            string userName = "xx189949",
             string password = "password")
         {
             const string apiUrl = "https://ciapipreprod.cityindextest9.co.uk/TradingApi/";
@@ -28,7 +28,10 @@ namespace CIAPI.IntegrationTests.Streaming
             return StreamingClientFactory.CreateStreamingClient(streamingUri, userName, authenticatedClient.SessionId);
         }
 
-        [Test,Ignore("this test is best run interactively when market is responsive. after hours there is no pricing so test will fail")]
+        [
+        Test
+        //,Ignore("this test is best run interactively when market is responsive. after hours there is no pricing so test will fail")
+        ]
         public void CanConsumePriceStream()
         {
             var gate = new ManualResetEvent(false);
@@ -78,7 +81,9 @@ namespace CIAPI.IntegrationTests.Streaming
             {"MarketId":400481122,"Name":"EUR\/CAD"},
         */
 
-        [Test, Ignore("Only works during market opening hours.  Run manually")]
+        [Test
+        //, Ignore("Only works during market opening hours.  Run manually")
+        ]
         public void CanSubscribeToMultiplePriceStreamsAtOnce()
         {
             var streamingClient = BuildStreamingClient();

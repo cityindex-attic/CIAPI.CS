@@ -45,13 +45,12 @@ namespace CityIndex.JsonClient
         ///<typeparam name="TDTO"></typeparam>
         void ProcessCacheItem<TDTO>(string target, string uriTemplate, string method,
                                     Dictionary<string, object> parameters, TimeSpan cacheDuration, string throttleScope,
-                                    string url, ApiAsyncCallback<TDTO> cb, object state) where TDTO : class, new();
+                                    string url, ApiAsyncCallback<TDTO> cb, object state) ;
 
         ///<summary>
         ///</summary>
         ///<param name="url"></param>
         ///<typeparam name="TDTO"></typeparam>
-        void CreateRequest<TDTO>(string url)
-            where TDTO : class, new();
+        void CreateRequest<TDTO>(string url);
     }
 }

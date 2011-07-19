@@ -14,7 +14,7 @@ namespace CIAPI.CS.Koans
     [KoanCategory(Order = 4)]
     public class AboutStreamingNews: IDisposable
     {
-        private string USERNAME = "0x234";
+        private string USERNAME = "xx189949";
         private string PASSWORD = "password";
 
         [Koan(Order = 1)]

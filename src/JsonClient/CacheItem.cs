@@ -16,7 +16,7 @@ namespace CityIndex.JsonClient
     /// request service both.
     /// </summary>
     /// <typeparam name="TDTO">The expected DTO type</typeparam>
-    public class CacheItem<TDTO> : CacheItemBase where TDTO : class, new()
+    public class CacheItem<TDTO> : CacheItemBase 
     {
         
 

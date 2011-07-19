@@ -5,5 +5,5 @@
     /// </summary>
     /// <typeparam name="TDTO"></typeparam>
     /// <param name="asyncResult"></param>
-    public delegate void ApiAsyncCallback<TDTO>(ApiAsyncResult<TDTO> asyncResult) where TDTO : class, new();
+    public delegate void ApiAsyncCallback<TDTO>(ApiAsyncResult<TDTO> asyncResult) ;
 }

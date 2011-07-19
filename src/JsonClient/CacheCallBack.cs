@@ -4,7 +4,7 @@
     /// A simple composition for collection storage
     /// </summary>
     /// <typeparam name="TDTO"></typeparam>
-    public class CacheCallBack<TDTO> where TDTO : class, new()
+    public class CacheCallBack<TDTO> 
     {
         ///<summary>
         ///</summary>

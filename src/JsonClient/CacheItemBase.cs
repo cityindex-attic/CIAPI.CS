@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using Common.Logging;
+using Newtonsoft.Json;
 
 namespace CityIndex.JsonClient
 {
@@ -36,7 +39,7 @@ namespace CityIndex.JsonClient
             ProcessingWaitHandle = new AutoResetEvent(false);
         }
 
-        
+
         ///<summary>
         /// The url of this request
         ///</summary>
@@ -117,6 +120,7 @@ namespace CityIndex.JsonClient
 
         public override string ToString()
         {
+            
             var sb = new StringBuilder();
             sb.AppendFormat("ItemState       : {0}\r\n", ItemState);
             sb.AppendFormat("Url             : {0}\r\n", Url ?? "NULL");
@@ -129,8 +133,20 @@ namespace CityIndex.JsonClient
                 sb.AppendFormat("Parameters      : \r\n");
                 foreach (var kvp in Parameters)
                 {
-                    sb.AppendFormat("\t{0}: {1}\r\n", kvp.Key,
-                                    kvp.Key.ToLower() == "password" ? "*****" : kvp.Value ?? "NULL");
+
+                    string paramText = "null";
+                    if (kvp.Value != null)
+                    {
+                        paramText = JsonConvert.SerializeObject(kvp.Value,Formatting.Indented);
+                    }
+                    
+                    // hide password
+                    if (paramText.IndexOf("password") > -1 || paramText.IndexOf("Password") > -1)
+                    {
+                        
+                    }
+                    paramText = Regex.Replace(paramText, "\"(password\":\\s?)\"[^\"]*\"", "\"$1\"*****\"", RegexOptions.IgnoreCase);
+                    sb.AppendFormat("\t{0}: {1}\r\n", kvp.Key, paramText);
                 }
             }
 

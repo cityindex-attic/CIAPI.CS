@@ -34,14 +34,14 @@ namespace CIAPI.IntegrationTests.Rpc
             var rpcClient = new Client(Settings.RpcUri);
             rpcClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);
 
-            var headlines = rpcClient.ListNewsHeadlines("UK", 3);
+            var headlines = rpcClient.News.ListNewsHeadlines("UK", 3);
             Assert.That(headlines.Headlines.Length, Is.GreaterThan(0), "you should have a set of headlines");
 
             rpcClient.LogOut();
 
             try
             {
-                rpcClient.ListNewsHeadlines("AUS", 4);
+                rpcClient.News.ListNewsHeadlines("AUS", 4);
                 Assert.Fail("the previous line should have thrown an 'SessionId is null. Have you created a session? (logged in)' exception");
             }
             catch (ApiException e)
@@ -72,7 +72,7 @@ namespace CIAPI.IntegrationTests.Rpc
             try
             {
                 const int moreThanMaxHeadlines = 1000;
-                rpcClient.ListNewsHeadlines(category: "UK", maxResults: moreThanMaxHeadlines);
+                rpcClient.News.ListNewsHeadlines(category: "UK", maxResults: moreThanMaxHeadlines);
             }
             catch (ApiException ex)
             {

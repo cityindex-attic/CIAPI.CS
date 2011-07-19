@@ -106,7 +106,7 @@ namespace WinFormsSpike
         {
             new Thread(() =>
             {
-                var response = _ctx.ListNewsHeadlines(CategoryTextBox.Text, (int)MaxResultsNumericUpDown.Value);
+                var response = _ctx.News.ListNewsHeadlines(CategoryTextBox.Text, (int)MaxResultsNumericUpDown.Value);
                 Invoke(() =>
                 {
                     NewsDTOBindingSource.DataSource = response.Headlines;
@@ -122,9 +122,9 @@ namespace WinFormsSpike
         {
             var item = (NewsDTO)NewsDTOBindingSource.Current;
 
-            _ctx.BeginGetNewsDetail(item.StoryId.ToString(), r =>
+            _ctx.News.BeginGetNewsDetail(item.StoryId.ToString(), r =>
             {
-                var response = _ctx.EndGetNewsDetail(r);
+                var response = _ctx.News.EndGetNewsDetail(r);
                 Invoke(() => DisplayHtml(response.NewsDetail.Story, NewsDetailWebBrowser));
 
             }, null);

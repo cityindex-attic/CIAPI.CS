@@ -19,7 +19,7 @@ namespace CIAPI.IntegrationTests.Rpc
             var rpcClient = new Client(Settings.RpcUri);
             rpcClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);
 
-            GetPriceBarResponseDTO bars = rpcClient.GetPriceBars("71442", "MINUTE", 1, "15");
+            GetPriceBarResponseDTO bars = rpcClient.PriceHistory.GetPriceBars("71442", "MINUTE", 1, "15");
             Assert.IsNotNull(bars);
 
             rpcClient.LogOut();
@@ -36,8 +36,27 @@ namespace CIAPI.IntegrationTests.Rpc
 
             var rpcClient = new Client(Settings.RpcUri);
             rpcClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);
+            var param = new NewStopLimitOrderRequestDTO
+                            {
+                                OrderId = 0,
+                                MarketId = 99498,
+                                Currency = null,
+                                AutoRollover = false,
+                                Direction = "buy",
+                                Quantity = 10m,
+                                BidPrice = 12094m,
+                                OfferPrice = 12098m,
+                                AuditId = "20110629-G2PREPROD3-0102794",
+                                TradingAccountId = 400002249,
+                                IfDone = null,
+                                OcoOrder = null,
+                                Applicability = null,
+                                ExpiryDateTimeUTC = null,
+                                Guaranteed = false,
+                                TriggerPrice = 0m
+                            };
+            var response = rpcClient.TradesAndOrders.Order(param);
 
-            var response = rpcClient.Order(0, 99498, null, false, "buy", 10m, 12094m, 12098m, "20110629-G2PREPROD3-0102794", 400002249, null, null, null, null, false, 0m);
 
             rpcClient.LogOut();
         }
@@ -53,8 +72,8 @@ namespace CIAPI.IntegrationTests.Rpc
             var rpcClient = new Client(Settings.RpcUri);
             rpcClient.LogIn("xx189949", "password");
 
-            var accountInfo = rpcClient.GetClientAndTradingAccount();
-            var resp = rpcClient.ListTradeHistory(accountInfo.ClientAccountId, 20);
+            var accountInfo = rpcClient.AccountInformation.GetClientAndTradingAccount();
+            var resp = rpcClient.TradesAndOrders.ListTradeHistory(accountInfo.ClientAccountId, 20);
 
 
             rpcClient.LogOut();

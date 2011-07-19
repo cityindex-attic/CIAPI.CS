@@ -60,8 +60,7 @@ namespace CityIndex.JsonClient
         /// <param name="cacheDuration"></param>
         /// <param name="throttleScope"></param>
         /// <returns></returns>
-        TDTO Request<TDTO>(string target, string uriTemplate, string method, Dictionary<string, object> parameters, TimeSpan cacheDuration, string throttleScope)
-            where TDTO : class, new();
+        TDTO Request<TDTO>(string target, string uriTemplate, string method, Dictionary<string, object> parameters, TimeSpan cacheDuration, string throttleScope);
         /// <summary>
         /// Standard async Begin implementation.
         /// </summary>
@@ -74,8 +73,7 @@ namespace CityIndex.JsonClient
         /// <param name="parameters"></param>
         /// <param name="cacheDuration"></param>
         /// <param name="throttleScope"></param>
-        void BeginRequest<TDTO>(ApiAsyncCallback<TDTO> cb, object state, string target, string uriTemplate, string method, Dictionary<string, object> parameters, TimeSpan cacheDuration, string throttleScope)
-            where TDTO : class, new();
+        void BeginRequest<TDTO>(ApiAsyncCallback<TDTO> cb, object state, string target, string uriTemplate, string method, Dictionary<string, object> parameters, TimeSpan cacheDuration, string throttleScope);
         /// <summary>
         /// Standard async end implementation. Calling code passes in the ApiAsyncResult that is returned to the callback
         /// and the response data is returned. If an exception occurred during execution of the request, it will now be
@@ -85,7 +83,6 @@ namespace CityIndex.JsonClient
         /// <param name="asyncResult"></param>
         /// <returns></returns>
         /// <exception cref="ApiException">the exception, if any, that occurred during execution of the request</exception>
-        TDTO EndRequest<TDTO>(ApiAsyncResult<TDTO> asyncResult)
-            where TDTO : class, new();
+        TDTO EndRequest<TDTO>(ApiAsyncResult<TDTO> asyncResult);
     }
 }

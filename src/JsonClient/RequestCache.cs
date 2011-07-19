@@ -51,7 +51,7 @@ namespace CityIndex.JsonClient
         /// <typeparam name="TDTO"></typeparam>
         /// <param name="url"></param>
         /// <returns></returns>
-        public CacheItem<TDTO> GetOrCreate<TDTO>(string url) where TDTO : class, new()
+        public CacheItem<TDTO> GetOrCreate<TDTO>(string url) 
         {
             lock (_lock)
             {
@@ -73,7 +73,7 @@ namespace CityIndex.JsonClient
         /// <param name="url"></param>
         /// <returns></returns>
         /// <exception cref="KeyNotFoundException">If url is not found in internal map</exception>
-        public CacheItem<TDTO> Get<TDTO>(string url) where TDTO : class, new()
+        public CacheItem<TDTO> Get<TDTO>(string url) 
         {
             lock (_lock)
             {
@@ -95,7 +95,7 @@ namespace CityIndex.JsonClient
         /// <exception cref="InvalidOperationException">
         /// If item is not completed, removing would result in orphaned callbacks effectively stalling the calling code.
         /// </exception>
-        public CacheItem<TDTO> Remove<TDTO>(string url) where TDTO : class, new()
+        public CacheItem<TDTO> Remove<TDTO>(string url) 
         {
             lock (_lock)
             {
@@ -151,7 +151,7 @@ namespace CityIndex.JsonClient
         /// <param name="url"></param>
         /// <returns></returns>
         private CacheItem<TDTO> CreateAndAddItem<TDTO>(string url)
-            where TDTO : class, new()
+            
         {
             var item = new CacheItem<TDTO>
                            {
@@ -172,7 +172,7 @@ namespace CityIndex.JsonClient
         /// <typeparam name="TDTO"></typeparam>
         /// <param name="url"></param>
         /// <returns></returns>
-        private CacheItem<TDTO> GetItem<TDTO>(string url) where TDTO : class, new()
+        private CacheItem<TDTO> GetItem<TDTO>(string url) 
         {
             var item = (CacheItem<TDTO>)_items[url];
 

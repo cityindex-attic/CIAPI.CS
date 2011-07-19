@@ -13,7 +13,7 @@ namespace CIAPI.IntegrationTests.Streaming
     public class NewsFixture
     {
         public static IStreamingClient BuildStreamingClient(
-            string userName = "0x234",
+            string userName = "xx189949",
             string password = "password")
         {
             const string apiUrl = "https://ciapipreprod.cityindextest9.co.uk/TradingApi/";

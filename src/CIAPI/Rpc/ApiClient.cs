@@ -3,58 +3,14 @@ using System.Collections.Generic;
 using System.Net;
 using CIAPI.DTO;
 using CityIndex.JsonClient;
-using Newtonsoft.Json;
 
 namespace CIAPI.Rpc
 {
-    public class ErrorResponseDTOJsonExceptionFactory : IJsonExceptionFactory
-    {
-        public Exception ParseException(string json)
-        {
-            return ParseException(null, json, null);
-        }
-
-        public Exception ParseException(string extraInfo, string json, Exception inner)
-        {
-            if (!string.IsNullOrEmpty(json))
-            {
-                if (json.Contains("\"ErrorMessage\"") && json.Contains("\"ErrorCode\""))
-                {
-                    try
-                    {
-                        // we cannot guarantee that for some strange reason a news item will not contain the strings
-                        // searched for above so just need to try to parse the json and swallow
-                        ApiErrorResponseDTO errorResponseDTO = JsonConvert.DeserializeObject<ApiErrorResponseDTO>(json);
-                        ApiException ex = new ApiException(errorResponseDTO.ErrorMessage + (!string.IsNullOrEmpty(extraInfo) ? "\r\n" + extraInfo : ""));
-                        ex.ResponseText = json;
-                        return ex;
-                    }
-                    // ReSharper disable EmptyGeneralCatchClause
-
-                    catch
-                    // ReSharper restore EmptyGeneralCatchClause
-                    {
-
-
-                    }
-                }
-
-            }
-            return null;
-        }
-    }
     public partial class Client : CityIndex.JsonClient.Client
     {
-        public Client(Uri uri)
-            : base(uri, new RequestController(TimeSpan.FromSeconds(0), 2, new RequestFactory(), new ErrorResponseDTOJsonExceptionFactory(), new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10, "data"), new ThrottedRequestQueue(TimeSpan.FromSeconds(3), 1, 3, "trading")))
-        {
-        }
+    
 
-
-        public Client(Uri uri, IRequestController requestController)
-            : base(uri, requestController)
-        {
-        }
+ 
 
 
         public string UserName { get; set; }
@@ -102,8 +58,11 @@ namespace CIAPI.Rpc
 
             var response = Request<ApiLogOnResponseDTO>("session", "/", "POST", new Dictionary<string, object>
                                                                                          {
-                                                                                             {"UserName", userName},
-                                                                                             {"Password", password},
+                                                                                             {"apiLogOnRequest", new ApiLogOnRequestDTO()
+                                                                                                               {
+                                                                                                                   UserName=userName,
+                                                                                                                   Password = password
+                                                                                                               }}
                                                                                          }, TimeSpan.FromMilliseconds(0),
                                                              "data");
             SessionId = response.Session;
@@ -125,8 +84,12 @@ namespace CIAPI.Rpc
 
             BeginRequest(callback, state, "session", "/", "POST", new Dictionary<string, object>
                                                                       {
-                                                                          {"UserName", userName},
-                                                                          {"Password", password},
+                                                                       {"apiLogOnRequest", new ApiLogOnRequestDTO()
+                                                                        {
+                                                                            UserName=userName,
+                                                                            Password = password
+                                                                            }
+                                                                         }
                                                                       }, TimeSpan.FromMilliseconds(0), "data");
         }
 
@@ -202,14 +165,5 @@ namespace CIAPI.Rpc
         }
 
         #endregion
-    }
-
-
-    public class ServerConnectionException : ApiSerializationException
-    {
-        public ServerConnectionException(string message, string responseText)
-            : base(message, responseText)
-        {
-        }
     }
 }
