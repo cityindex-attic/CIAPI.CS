@@ -109,38 +109,19 @@ namespace StreamingClient.Lightstreamer
 
         #endregion
 
-        public IStreamingListener<TDto> BuildListener<TDto>(string topic, Regex topicMask) where TDto : class, new()
+        public IStreamingListener<TDto> BuildListener<TDto>(string topic) where TDto : class, new()
         {
             if (!_currentListeners.ContainsKey(topic))
             {
-                EnsureIsValidTopic(topic, topicMask);
                 _currentListeners.Add(topic, new LightstreamerListener<TDto>(topic, _internalClient));
             }
            
             return (IStreamingListener<TDto>) _currentListeners[topic];
         }
 
-        public IStreamingListener<TDto> BuildListener<TDto>(string[] topics, Regex topicMask) where TDto : class, new()
-        {
-            var multiTopic = string.Join(" ", topics);
-            if (!_currentListeners.ContainsKey(multiTopic))
-            {
-                foreach (var topic in topics)
-                {
-                    EnsureIsValidTopic(topic, topicMask);
-                }
-                _currentListeners.Add(multiTopic, new LightstreamerListener<TDto>(multiTopic, _internalClient));
-            }
+        
 
-            return (IStreamingListener<TDto>)_currentListeners[multiTopic];
-        }
-
-        protected static void EnsureIsValidTopic(string topic, Regex topicMask)
-        {
-            if (!topicMask.IsMatch(topic))
-                throw new InvalidTopicException(
-                    string.Format("The topic for this listener must match the following regex {0}", topicMask));
-        }
+ 
 
     }
 }

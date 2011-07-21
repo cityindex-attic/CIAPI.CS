@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="Generated\DTO.cs" />
     <Compile Include="Generated\Routes.cs" />
+    <Compile Include="Generated\Streaming.cs" />
     <Compile Include="PrettyPrinterExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rpc\ApiClient.cs" />
