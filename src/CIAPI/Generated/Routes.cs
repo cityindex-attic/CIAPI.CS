@@ -1110,9 +1110,9 @@ namespace CIAPI.Rpc
         /// <param name="id">[MISSING]</param>
         /// <param name="language">[MISSING]</param>
         /// <param name="category">[MISSING]</param>
-        public String GetMessage(string id, string language, string category)
+        public string GetMessage(string id, string language, string category)
         {
-            return _client.Request<String>("message", "/Message/{id}?language={language}&category={category}", "GET",
+            return _client.Request<string>("message", "/Message/{id}?language={language}&category={category}", "GET",
             new Dictionary<string, object>
             {
                 { "id", id}, 
@@ -1130,7 +1130,7 @@ namespace CIAPI.Rpc
         /// <param name="category">[MISSING]</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public void BeginGetMessage(string id, string language, string category, ApiAsyncCallback<String> callback, object state)
+        public void BeginGetMessage(string id, string language, string category, ApiAsyncCallback<string> callback, object state)
         {
             _client.BeginRequest(callback, state, "message", "/Message/{id}?language={language}&category={category}", "GET",
             new Dictionary<string, object>
@@ -1141,7 +1141,7 @@ namespace CIAPI.Rpc
             }, TimeSpan.FromMilliseconds(0), "data");
         }
 
-        public String EndGetMessage(ApiAsyncResult<String> asyncResult)
+        public string EndGetMessage(ApiAsyncResult<string> asyncResult)
         {
             return _client.EndRequest(asyncResult);
         }

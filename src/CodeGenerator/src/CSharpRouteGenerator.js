@@ -86,9 +86,6 @@
                     }
                     else if (parameter.$ref) {
                         paramType = self.normalizeKey(parameter.$ref);
-                        if (paramType == "Void") {
-                            paramType = "NullType";
-                        }
 
                     } else {
                         throw new Error("unsupported property type");
@@ -102,7 +99,23 @@
                     firstParam = false;
                     paramList = paramList.concat(paramType, " ", parameter.name);
                 });
-                var returnType = self.resolveType(service.returns);
+                var returnType;
+                if (key == "GetMessage") {
+                }
+                if (service.returns) {
+                    if (service.returns.type) {
+                        // is a primitive type
+                        returnType = self.resolveType(service.returns.type);
+                    }
+                    else {
+                        // is a reference type
+                        returnType = self.resolveType(service.returns);
+                    }
+                } else {
+                    // C# client needs a dummy type for void returns
+                    returnType = "NullType";
+                }
+
                 var target = service.target;
                 var uriTemplate = service.uriTemplate;
                 var transport = service.transport;
@@ -253,9 +266,7 @@
             if (type.$ref) {
 
                 resolvedType = this.normalizeKey(type.$ref);
-                if (resolvedType == "Void") {
-                    resolvedType = "NullType";
-                }
+
 
 
             } else {

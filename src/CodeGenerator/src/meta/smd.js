@@ -694,7 +694,7 @@ exports.smd =
                     "transport": "GET",
                     "envelope": "URL",
                     "returns": {
-                        "$ref": "String"
+                        "type": "string"
                     },
                     "group": "Messaging",
                     "throttleScope": "data",
@@ -750,9 +750,6 @@ exports.smd =
                     "responseContentType": "application/json",
                     "transport": "GET",
                     "envelope": "URL",
-                    "returns": {
-                        "$ref": "Void"
-                    },
                     "group": "Messaging",
                     "throttleScope": "data",
                     "parameters": [
