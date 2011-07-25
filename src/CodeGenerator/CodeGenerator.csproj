@@ -97,7 +97,7 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
-    <PostBuildEvent>call "$(SolutionDir)..\tools\node-0.4.7-cygwin\bin\node" "../src/generate.js"</PostBuildEvent>
+    <PostBuildEvent>call "..\node-0.4.7-cygwin\bin\node" "../src/generate.js"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
