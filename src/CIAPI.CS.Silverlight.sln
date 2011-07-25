@@ -50,8 +50,14 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SOAPI.CS2.CodeGeneration", "SOAPI.CS2.CodeGeneration\SOAPI.CS2.CodeGeneration.csproj", "{F82EA47A-42F7-4E3F-AF6D-8CE04DCD96B4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CIAPI", "CIAPI\CIAPI.csproj", "{B40E6F1C-453E-44A2-BA9D-1692378B355C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{ED7E8F67-BDA1-4613-8275-E8D94888803F} = {ED7E8F67-BDA1-4613-8275-E8D94888803F}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CIAPI.Silverlight", "CIAPI.Silverlight\CIAPI.Silverlight.csproj", "{B26AA333-051A-4C11-B6CD-CECA8FD656E0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{ED7E8F67-BDA1-4613-8275-E8D94888803F} = {ED7E8F67-BDA1-4613-8275-E8D94888803F}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CIAPI.Tests", "CIAPI.Tests\CIAPI.Tests.csproj", "{F98BA3D0-FA49-4A3E-849F-27C302999B58}"
 EndProject
@@ -103,6 +109,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CIAPI.Silverlight.TestsMS.Web", "CIAPI.Silverlight.TestsMS.Web\CIAPI.Silverlight.TestsMS.Web.csproj", "{5F9A8527-E473-45D9-822A-ADD5CA3CB67B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CIAPI.CS.Koans", "SampleApps\CIAPI.CS.Koans\CIAPI.CS.Koans.csproj", "{A9347E3A-E64D-4D1F-96A4-561291C862AF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeGenerator", "CodeGenerator\CodeGenerator.csproj", "{ED7E8F67-BDA1-4613-8275-E8D94888803F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -373,6 +381,16 @@ Global
 		{A9347E3A-E64D-4D1F-96A4-561291C862AF}.Release|Mixed Platforms.Build.0 = Release|x86
 		{A9347E3A-E64D-4D1F-96A4-561291C862AF}.Release|x86.ActiveCfg = Release|x86
 		{A9347E3A-E64D-4D1F-96A4-561291C862AF}.Release|x86.Build.0 = Release|x86
+		{ED7E8F67-BDA1-4613-8275-E8D94888803F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED7E8F67-BDA1-4613-8275-E8D94888803F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED7E8F67-BDA1-4613-8275-E8D94888803F}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{ED7E8F67-BDA1-4613-8275-E8D94888803F}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{ED7E8F67-BDA1-4613-8275-E8D94888803F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{ED7E8F67-BDA1-4613-8275-E8D94888803F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED7E8F67-BDA1-4613-8275-E8D94888803F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED7E8F67-BDA1-4613-8275-E8D94888803F}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{ED7E8F67-BDA1-4613-8275-E8D94888803F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{ED7E8F67-BDA1-4613-8275-E8D94888803F}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

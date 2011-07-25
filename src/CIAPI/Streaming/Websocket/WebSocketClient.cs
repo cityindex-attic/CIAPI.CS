@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text.RegularExpressions;
 using CIAPI.DTO;
 using StreamingClient;
 using StreamingClient.Websocket;
@@ -13,29 +12,26 @@ namespace CIAPI.Streaming.Websocket
         {
         }
 
+ 
 
-
-        public IStreamingListener<NewsDTO> BuildNewsHeadlinesListener(string category)
-        {
-            string topic = Regex.Replace("NEWS.HEADLINES.{category}", "{category}", category);
-            return BuildListener<NewsDTO>(topic); // regex validator dummied for now
-        }
-
-        public IStreamingListener<PriceDTO> BuildPricesListener(string[] marketIds)
+        public IStreamingListener<PriceDTO> BuildPricesListener(string[] topics)
         {
             throw new NotImplementedException();
         }
 
+        public IStreamingListener<NewsDTO> BuildNewsHeadlinesListener(string topic)
+        {
+            return BuildListener<NewsDTO>(topic);
+        }
+
         public IStreamingListener<ClientAccountMarginDTO> BuildClientAccountMarginListener()
         {
-            string topic = "ALL";
-            return BuildListener<ClientAccountMarginDTO>(topic); // regex validator dummied for now
+            return BuildListener<ClientAccountMarginDTO>("");
         }
 
         public IStreamingListener<QuoteDTO> BuildQuotesListener()
         {
-            string topic = "QUOTE.ALL";
-            return BuildListener<QuoteDTO>(topic); // regex validator dummied for now
+            return BuildListener<QuoteDTO>("");
         }
     }
 

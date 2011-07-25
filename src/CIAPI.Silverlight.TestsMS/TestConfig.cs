@@ -9,7 +9,7 @@
         {
             get
             {
-                return "https://ciapipreprod.cityindextest9.co.uk/tradingapi/";
+                return "http://ciapipreprod.cityindextest9.co.uk/TradingApi/";
             }
         }
         

@@ -10,7 +10,8 @@ namespace StreamingClient.Lightstreamer
         private readonly string _sessionId;
         private readonly Uri _streamingUri;
         private readonly string _userName;
-        private LSClient _internalClient;
+        
+        private Dictionary<string, LSClient> _clients = new Dictionary<string, LSClient>();
         private Dictionary<string, IStreamingListener> _currentListeners = new Dictionary<string, IStreamingListener>();
 
         protected LightstreamerClient(Uri streamingUri, string userName, string sessionId)
@@ -23,25 +24,36 @@ namespace StreamingClient.Lightstreamer
         public event EventHandler<MessageEventArgs<object>> MessageReceived;
         public event EventHandler<StatusEventArgs> StatusChanged;
 
+        protected abstract string[] GetAdapterList();
+
         public void Connect()
         {
-            _internalClient = new LSClient();
+            var adapterList = GetAdapterList();
 
-            var connectionInfo = new ConnectionInfo
+            foreach (string adapter in adapterList)
+            {
+                var connectionInfo = new ConnectionInfo
                 {
-                    pushServerUrl = _streamingUri.GetComponents(UriComponents.SchemeAndServer | UriComponents.UserInfo, UriFormat.UriEscaped),
-                    adapter = _streamingUri.GetComponents(UriComponents.PathAndQuery, UriFormat.UriEscaped).TrimStart('/'),
-                    user = _userName,
-                    password = _sessionId,
-                    constraints = {maxBandwidth = 999999}
+                    PushServerUrl = _streamingUri.ToString().TrimEnd('/'),
+                    Adapter = adapter,
+                    User = _userName,
+                    Password = _sessionId,
+                    Constraints = { MaxBandwidth = 999999 }
                 };
+                var client = new LSClient();
+                client.OpenConnection(connectionInfo, this);
+                _clients.Add(adapter, client);
+            }
 
-            _internalClient.OpenConnection(connectionInfo, this);
         }
 
         public void Disconnect()
         {
-            _internalClient.CloseConnection();
+            var adapterList = GetAdapterList();
+            foreach (string adapter in adapterList)
+            {
+                _clients[adapter].CloseConnection();
+            }
         }
 
         public void OnStatusChanged(StatusEventArgs e)
@@ -53,12 +65,12 @@ namespace StreamingClient.Lightstreamer
 
         void IConnectionListener.OnConnectionEstablished()
         {
-            OnStatusChanged(new StatusEventArgs {Status = " Connection established"});
+            OnStatusChanged(new StatusEventArgs { Status = " Connection established" });
         }
 
         void IConnectionListener.OnNewBytes(long bytes)
         {
-            OnStatusChanged(new StatusEventArgs {Status = string.Format("{0} new bytes received", bytes)});
+            OnStatusChanged(new StatusEventArgs { Status = string.Format("{0} new bytes received", bytes) });
         }
 
         void IConnectionListener.OnSessionStarted(bool isPolling)
@@ -83,12 +95,12 @@ namespace StreamingClient.Lightstreamer
 
         void IConnectionListener.OnActivityWarning(bool warningOn)
         {
-            OnStatusChanged(new StatusEventArgs {Status = string.Format("Activity warning: {0}", warningOn)});
+            OnStatusChanged(new StatusEventArgs { Status = string.Format("Activity warning: {0}", warningOn) });
         }
 
         void IConnectionListener.OnClose()
         {
-            OnStatusChanged(new StatusEventArgs {Status = "Connection closed"});
+            OnStatusChanged(new StatusEventArgs { Status = "Connection closed" });
         }
 
         void IConnectionListener.OnFailure(PushServerException e)
@@ -103,25 +115,19 @@ namespace StreamingClient.Lightstreamer
 
         void IConnectionListener.OnFailure(PushConnException e)
         {
-            OnStatusChanged(new StatusEventArgs
-                {Status = string.Format("Failure: {0}:{1}\r\n{2}\r\n{3}", e.GetType(), e.Message, e.Data, e.StackTrace)});
+            OnStatusChanged(new StatusEventArgs { Status = string.Format("Failure: {0}:{1}\r\n{2}\r\n{3}", e.GetType(), e.Message, e.Data, e.StackTrace) });
         }
 
         #endregion
 
-        public IStreamingListener<TDto> BuildListener<TDto>(string topic) where TDto : class, new()
+        public IStreamingListener<TDto> BuildListener<TDto>(string adapter, string topic/*, Regex topicMask*/) where TDto : class, new()
         {
             if (!_currentListeners.ContainsKey(topic))
             {
-                _currentListeners.Add(topic, new LightstreamerListener<TDto>(topic, _internalClient));
+                _currentListeners.Add(topic, new LightstreamerListener<TDto>(topic, _clients[adapter]));
             }
-           
-            return (IStreamingListener<TDto>) _currentListeners[topic];
+
+            return (IStreamingListener<TDto>)_currentListeners[topic];
         }
-
-        
-
- 
-
     }
 }

@@ -5,10 +5,11 @@ namespace CIAPI.Streaming
 {
     public interface IStreamingClient : StreamingClient.IStreamingClient
     {
+
         
-        IStreamingListener<PriceDTO> BuildPricesListener(string[] marketIds);
+        IStreamingListener<PriceDTO> BuildPricesListener(params string[] marketIds);
         IStreamingListener<NewsDTO> BuildNewsHeadlinesListener(string category);
-        IStreamingListener<ClientAccountMarginDTO> BuildClientAccountMarginListener();
-        IStreamingListener<QuoteDTO> BuildQuotesListener();
+        //IStreamingListener<ClientAccountMarginDTO> BuildClientAccountMarginListener();
+        //IStreamingListener<QuoteDTO> BuildQuotesListener();
     }
 }

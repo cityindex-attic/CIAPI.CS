@@ -18,12 +18,12 @@ namespace CIAPI.IntegrationTests.Streaming
             string userName = "xx189949",
             string password = "password")
         {
-            const string apiUrl = "https://ciapipreprod.cityindextest9.co.uk/TradingApi/";
+            const string apiUrl = "http://ciapipreprod.cityindextest9.co.uk/TradingApi/";
 
             var authenticatedClient = new CIAPI.Rpc.Client(new Uri(apiUrl));
             authenticatedClient.LogIn(userName, password);
 
-            var streamingUri = new Uri("https://pushpreprod.cityindextest9.co.uk/CITYINDEXSTREAMING");
+            var streamingUri = new Uri("http://pushpreprod.cityindextest9.co.uk");
 
             return StreamingClientFactory.CreateStreamingClient(streamingUri, userName, authenticatedClient.SessionId);
         }
@@ -42,7 +42,7 @@ namespace CIAPI.IntegrationTests.Streaming
 
             
 
-            var priceListener = streamingClient.BuildPriceListener("PRICES.PRICE.71442");
+            var priceListener = streamingClient.BuildPricesListener("71442");
             priceListener.Start();
 
             PriceDTO actual = null;
@@ -88,14 +88,14 @@ namespace CIAPI.IntegrationTests.Streaming
         {
             var streamingClient = BuildStreamingClient();
             streamingClient.Connect();
-            var priceListener = streamingClient.BuildPriceListener(new[]{
-                                                                         "PRICES.PRICE.400481115",
-                                                                         "PRICES.PRICE.400481116",
-                                                                         "PRICES.PRICE.400481118",
-                                                                         "PRICES.PRICE.400481119",
-                                                                         "PRICES.PRICE.400481120",
-                                                                         "PRICES.PRICE.400481121",
-                                                                         "PRICES.PRICE.400481122"
+            var priceListener = streamingClient.BuildPricesListener(new[]{
+                                                                         "400481115",
+                                                                         "400481116",
+                                                                         "400481118",
+                                                                         "400481119",
+                                                                         "400481120",
+                                                                         "400481121",
+                                                                         "400481122"
                                                                     });
             
             var prices = new List<PriceDTO>();
@@ -106,16 +106,20 @@ namespace CIAPI.IntegrationTests.Streaming
                 priceListener.Start();
 
                 Thread.Sleep(TimeSpan.FromSeconds(15));
-                
-                if (prices.Count == 0)
+
+                lock (prices)
                 {
-                    Assert.Fail("No price updates were recieved");
+                    if (prices.Count == 0)
+                    {
+                        Assert.Fail("No price updates were recieved");
+                    }
+
+                    foreach (var price in prices)
+                    {
+                        _logger.DebugFormat(price.ToStringWithValues());
+                    }                    
                 }
 
-                foreach (var price in prices)
-                {
-                    _logger.DebugFormat(price.ToStringWithValues());
-                }
             }
             finally
             {

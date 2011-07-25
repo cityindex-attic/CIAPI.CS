@@ -55,11 +55,11 @@
     <Compile Include="..\CIAPI\Generated\DTO.cs">
       <Link>Generated\DTO.cs</Link>
     </Compile>
+    <Compile Include="..\CIAPI\Generated\LightstreamerClient.cs">
+      <Link>Generated\LightstreamerClient.cs</Link>
+    </Compile>
     <Compile Include="..\CIAPI\Generated\Routes.cs">
       <Link>Generated\Routes.cs</Link>
-    </Compile>
-    <Compile Include="..\CIAPI\Generated\Streaming.cs">
-      <Link>Generated\Streaming.cs</Link>
     </Compile>
     <Compile Include="..\ciapi\rpc\ApiClient.cs">
       <Link>Rpc\ApiClient.cs</Link>

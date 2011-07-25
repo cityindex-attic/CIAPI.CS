@@ -20,11 +20,11 @@ namespace CIAPI.CS.Koans
         [Koan(Order = 1)]
         public void ConnectingToTheNewsStreamRequiresAValidSession()
         {
-            _rpcClient = new Rpc.Client(new Uri("https://ciapipreprod.cityindextest9.co.uk/TradingApi"));
+            _rpcClient = new Rpc.Client(new Uri("http://ciapipreprod.cityindextest9.co.uk/TradingApi"));
             _rpcClient.LogIn(USERNAME, PASSWORD);
 
             //Data is streamed over a specific HTTP endpoint
-            var STREAMING_URI = new Uri("http://pushpreprod.cityindextest9.co.uk/CITYINDEXSTREAMING");
+            var STREAMING_URI = new Uri("http://pushpreprod.cityindextest9.co.uk");
 
             //A single streaming client (connection) allows listening to many streams (channels)
             _streamingClient =
@@ -81,7 +81,7 @@ namespace CIAPI.CS.Koans
         public void YouCanListenToMultipleStreamsOverASingleConnection()
         {
             var ukNewsListener = _streamingClient.BuildNewsHeadlinesListener("NEWS.MOCKHEADLINES.UK");
-            var gbpusdPriceListener = _streamingClient.BuildPricesListener(new [] { "PRICES.PRICE.154297" });
+            var gbpusdPriceListener = _streamingClient.BuildPricesListener("154297");
 
             //Build as many listeners as you want
             var ukNewsHeadlines = new List<NewsDTO>();

@@ -20,7 +20,7 @@ namespace CIAPI.CS.Koans
             //that holds details about your connection.
             
             //You need to initialise the client with a valid endpoint
-            _rpcClient = new Rpc.Client(new Uri("https://ciapipreprod.cityindextest9.co.uk/TradingApi"));
+            _rpcClient = new Rpc.Client(new Uri("http://ciapipreprod.cityindextest9.co.uk/TradingApi"));
             
             //And then create a session by creating a username & password
             //You can get test credentials by requesting them at http://ciapipreprod.cityindextest9.co.uk/CIAPI.docs/#content.test-credentials

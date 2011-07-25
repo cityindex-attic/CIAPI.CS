@@ -34,9 +34,9 @@ namespace SilverlightSpike
             {
                 App.ctx.EndLogIn(loginResult);
 
-                App.ctx.BeginListNewsHeadlines("UK", 20, headlinesResult =>
+                App.ctx.News.BeginListNewsHeadlines("UK", 20, headlinesResult =>
                 {
-                    var response = App.ctx.EndListNewsHeadlines(headlinesResult);
+                    var response = App.ctx.News.EndListNewsHeadlines(headlinesResult);
                     datasource = response.Headlines.Select(item => item.Headline).ToList();
 
                     Dispatcher.BeginInvoke(() =>
