@@ -1,4 +1,6 @@
-﻿var schema = require("../src/meta/schema.js").schema;
+﻿console.log("generating code....");
+
+var schema = require("../src/meta/schema.js").schema;
 var smd = require("../src/meta/smd.js").smd;
 var schemaPatch = require("../src/meta/schema.patch.js").schema;
 var routesPatch = require("../src/meta/routes.patch.js").routesPatch;
@@ -29,6 +31,7 @@ var fs = require('fs'), str = 'string to append to file';
 fs.open('../../CIAPI/Generated/DTO.cs', 'w', 666, function (e, id) {
     fs.write(id, output, 'w', 'utf8', function () {
         fs.close(id, function () {
+            console.log("  generated DTO");
         });
     });
 });
@@ -36,6 +39,7 @@ fs.open('../../CIAPI/Generated/DTO.cs', 'w', 666, function (e, id) {
 fs.open('../../CIAPI/Generated/Routes.cs', 'w', 666, function (e, id) {
     fs.write(id, rpcRoutes, 'w', 'utf8', function () {
         fs.close(id, function () {
+            console.log("  generated ROUTES");
         });
     });
 });
@@ -43,6 +47,7 @@ fs.open('../../CIAPI/Generated/Routes.cs', 'w', 666, function (e, id) {
 fs.open('../../CIAPI/Generated/LightstreamerClient.cs', 'w', 666, function (e, id) {
     fs.write(id, channels, 'w', 'utf8', function () {
         fs.close(id, function () {
+            console.log("  generated CHANNELS");
         });
     });
 });
