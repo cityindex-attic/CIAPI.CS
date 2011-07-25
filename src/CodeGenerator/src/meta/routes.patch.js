@@ -1,6 +1,20 @@
 ﻿
 exports.routesPatch = {
-
+    "GetMessage": {
+        "section": "Messaging"
+    },
+    "GetMessagePopup": {
+        "section": "Messaging"
+    },
+    "AcceptOrRejectMessagePopupResponse": {
+        "section": "Messaging"
+    },
+    "GetSystemLookup": {
+        "section": "Messaging"
+    },
+    "GetSystemLookup": {
+        "section": "Messaging"
+    },
     "LogOn": {
         "section": "Authentication",
         "visibility": "internal"

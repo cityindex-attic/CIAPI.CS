@@ -15,6 +15,7 @@ namespace CIAPI.Rpc
       public _SpreadMarkets SpreadMarkets{get; private set;}
       public _TradesAndOrders TradesAndOrders{get; private set;}
       public _AccountInformation AccountInformation{get; private set;}
+      public _Messaging Messaging{get; private set;}
       public _ExceptionHandling ExceptionHandling{get; private set;}
         public Client(Uri uri)
             : base(uri, new RequestController(TimeSpan.FromSeconds(0), 2, new RequestFactory(), new ErrorResponseDTOJsonExceptionFactory(), new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10, "data"), new ThrottedRequestQueue(TimeSpan.FromSeconds(3), 1, 3, "trading"),new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10, "default")))
@@ -28,6 +29,7 @@ namespace CIAPI.Rpc
             this. SpreadMarkets = new _SpreadMarkets(this);
             this. TradesAndOrders = new _TradesAndOrders(this);
             this. AccountInformation = new _AccountInformation(this);
+            this. Messaging = new _Messaging(this);
             this. ExceptionHandling = new _ExceptionHandling(this);
         }
         public Client(Uri uri, IRequestController requestController)
@@ -42,6 +44,7 @@ namespace CIAPI.Rpc
             this. SpreadMarkets = new _SpreadMarkets(this);
             this. TradesAndOrders = new _TradesAndOrders(this);
             this. AccountInformation = new _AccountInformation(this);
+            this. Messaging = new _Messaging(this);
             this. ExceptionHandling = new _ExceptionHandling(this);
         }            
 
@@ -1085,6 +1088,192 @@ namespace CIAPI.Rpc
         }
 
         public AccountInformationResponseDTO EndGetClientAndTradingAccount(ApiAsyncResult<AccountInformationResponseDTO> asyncResult)
+        {
+            return _client.EndRequest(asyncResult);
+        }
+
+
+        }            
+        public class _Messaging
+        {
+            private Client _client;
+            public _Messaging(Client client){ this._client = client;}
+
+        // ***********************************
+        // GetMessage
+        // ***********************************
+
+
+        /// <summary>
+        /// [MISSING]
+        /// </summary>
+        /// <param name="id">[MISSING]</param>
+        /// <param name="language">[MISSING]</param>
+        /// <param name="category">[MISSING]</param>
+        public String GetMessage(string id, string language, string category)
+        {
+            return _client.Request<String>("message", "/Message/{id}?language={language}&category={category}", "GET",
+            new Dictionary<string, object>
+            {
+                { "id", id}, 
+                { "language", language}, 
+                { "category", category}
+            }, TimeSpan.FromMilliseconds(0), "data");
+        }
+
+
+        /// <summary>
+        /// [MISSING]
+        /// </summary>
+        /// <param name="id">[MISSING]</param>
+        /// <param name="language">[MISSING]</param>
+        /// <param name="category">[MISSING]</param>
+        /// <param name="callback"></param>
+        /// <param name="state"></param>
+        public void BeginGetMessage(string id, string language, string category, ApiAsyncCallback<String> callback, object state)
+        {
+            _client.BeginRequest(callback, state, "message", "/Message/{id}?language={language}&category={category}", "GET",
+            new Dictionary<string, object>
+            {
+                { "id", id}, 
+                { "language", language}, 
+                { "category", category}
+            }, TimeSpan.FromMilliseconds(0), "data");
+        }
+
+        public String EndGetMessage(ApiAsyncResult<String> asyncResult)
+        {
+            return _client.EndRequest(asyncResult);
+        }
+
+
+        // ***********************************
+        // GetMessagePopup
+        // ***********************************
+
+
+        /// <summary>
+        /// [MISSING]
+        /// </summary>
+        /// <param name="language">[MISSING]</param>
+        /// <param name="clientAccountId">[MISSING]</param>
+        public GetMessagePopupResponseDTO GetMessagePopup(string language, int clientAccountId)
+        {
+            return _client.Request<GetMessagePopupResponseDTO>("message", "/message/popup?language={language}&ClientAccountId={clientAccountId}", "GET",
+            new Dictionary<string, object>
+            {
+                { "language", language}, 
+                { "clientAccountId", clientAccountId}
+            }, TimeSpan.FromMilliseconds(0), "data");
+        }
+
+
+        /// <summary>
+        /// [MISSING]
+        /// </summary>
+        /// <param name="language">[MISSING]</param>
+        /// <param name="clientAccountId">[MISSING]</param>
+        /// <param name="callback"></param>
+        /// <param name="state"></param>
+        public void BeginGetMessagePopup(string language, int clientAccountId, ApiAsyncCallback<GetMessagePopupResponseDTO> callback, object state)
+        {
+            _client.BeginRequest(callback, state, "message", "/message/popup?language={language}&ClientAccountId={clientAccountId}", "GET",
+            new Dictionary<string, object>
+            {
+                { "language", language}, 
+                { "clientAccountId", clientAccountId}
+            }, TimeSpan.FromMilliseconds(0), "data");
+        }
+
+        public GetMessagePopupResponseDTO EndGetMessagePopup(ApiAsyncResult<GetMessagePopupResponseDTO> asyncResult)
+        {
+            return _client.EndRequest(asyncResult);
+        }
+
+
+        // ***********************************
+        // AcceptOrRejectMessagePopupResponse
+        // ***********************************
+
+
+        /// <summary>
+        /// [MISSING]
+        /// </summary>
+        /// <param name="clientAccountId">[MISSING]</param>
+        /// <param name="accepted">[MISSING]</param>
+        public NullType AcceptOrRejectMessagePopupResponse(int clientAccountId, bool accepted)
+        {
+            return _client.Request<NullType>("message", "/message/popupchoice?ClientAccountId={clientAccountId}&Accepted={accepted}", "GET",
+            new Dictionary<string, object>
+            {
+                { "clientAccountId", clientAccountId}, 
+                { "accepted", accepted}
+            }, TimeSpan.FromMilliseconds(0), "data");
+        }
+
+
+        /// <summary>
+        /// [MISSING]
+        /// </summary>
+        /// <param name="clientAccountId">[MISSING]</param>
+        /// <param name="accepted">[MISSING]</param>
+        /// <param name="callback"></param>
+        /// <param name="state"></param>
+        public void BeginAcceptOrRejectMessagePopupResponse(int clientAccountId, bool accepted, ApiAsyncCallback<NullType> callback, object state)
+        {
+            _client.BeginRequest(callback, state, "message", "/message/popupchoice?ClientAccountId={clientAccountId}&Accepted={accepted}", "GET",
+            new Dictionary<string, object>
+            {
+                { "clientAccountId", clientAccountId}, 
+                { "accepted", accepted}
+            }, TimeSpan.FromMilliseconds(0), "data");
+        }
+
+        public NullType EndAcceptOrRejectMessagePopupResponse(ApiAsyncResult<NullType> asyncResult)
+        {
+            return _client.EndRequest(asyncResult);
+        }
+
+
+        // ***********************************
+        // GetSystemLookup
+        // ***********************************
+
+
+        /// <summary>
+        /// [MISSING]
+        /// </summary>
+        /// <param name="lookupEntityName">[MISSING]</param>
+        /// <param name="cultureId">[MISSING]</param>
+        public ApiLookupResponseDTO GetSystemLookup(string lookupEntityName, int cultureId)
+        {
+            return _client.Request<ApiLookupResponseDTO>("message", "/message/lookup?lookupEntityName={lookupEntityName}&cultureId={cultureId}", "GET",
+            new Dictionary<string, object>
+            {
+                { "lookupEntityName", lookupEntityName}, 
+                { "cultureId", cultureId}
+            }, TimeSpan.FromMilliseconds(0), "data");
+        }
+
+
+        /// <summary>
+        /// [MISSING]
+        /// </summary>
+        /// <param name="lookupEntityName">[MISSING]</param>
+        /// <param name="cultureId">[MISSING]</param>
+        /// <param name="callback"></param>
+        /// <param name="state"></param>
+        public void BeginGetSystemLookup(string lookupEntityName, int cultureId, ApiAsyncCallback<ApiLookupResponseDTO> callback, object state)
+        {
+            _client.BeginRequest(callback, state, "message", "/message/lookup?lookupEntityName={lookupEntityName}&cultureId={cultureId}", "GET",
+            new Dictionary<string, object>
+            {
+                { "lookupEntityName", lookupEntityName}, 
+                { "cultureId", cultureId}
+            }, TimeSpan.FromMilliseconds(0), "data");
+        }
+
+        public ApiLookupResponseDTO EndGetSystemLookup(ApiAsyncResult<ApiLookupResponseDTO> asyncResult)
         {
             return _client.EndRequest(asyncResult);
         }

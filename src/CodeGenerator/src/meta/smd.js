@@ -685,6 +685,115 @@ exports.smd =
                     "throttleScope": "data",
                     "parameters": []
                 },
+                "GetMessage": {
+                    "description": "[MISSING]",
+                    "target": "message",
+                    "uriTemplate": "/Message/{id}?language={language}&category={category}",
+                    "contentType": "application/json",
+                    "responseContentType": "application/json",
+                    "transport": "GET",
+                    "envelope": "URL",
+                    "returns": {
+                        "$ref": "String"
+                    },
+                    "group": "Messaging",
+                    "throttleScope": "data",
+                    "parameters": [
+            {
+                "type": "string",
+                "name": "id",
+                "description": "[MISSING]"
+            },
+            {
+                "type": "string",
+                "name": "language",
+                "description": "[MISSING]"
+            },
+            {
+                "type": "string",
+                "name": "category",
+                "description": "[MISSING]"
+            }
+          ]
+                },
+                "GetMessagePopup": {
+                    "description": "[MISSING]",
+                    "target": "message",
+                    "uriTemplate": "/message/popup?language={language}&ClientAccountId={clientAccountId}",
+                    "contentType": "application/json",
+                    "responseContentType": "application/json",
+                    "transport": "GET",
+                    "envelope": "URL",
+                    "returns": {
+                        "$ref": "GetMessagePopupResponseDTO"
+                    },
+                    "group": "Messaging",
+                    "throttleScope": "data",
+                    "parameters": [
+            {
+                "type": "string",
+                "name": "language",
+                "description": "[MISSING]"
+            },
+            {
+                "type": "integer",
+                "name": "clientAccountId",
+                "description": "[MISSING]"
+            }
+          ]
+                },
+                "AcceptOrRejectMessagePopupResponse": {
+                    "description": "[MISSING]",
+                    "target": "message",
+                    "uriTemplate": "/message/popupchoice?ClientAccountId={clientAccountId}&Accepted={accepted}",
+                    "contentType": "application/json",
+                    "responseContentType": "application/json",
+                    "transport": "GET",
+                    "envelope": "URL",
+                    "returns": {
+                        "$ref": "Void"
+                    },
+                    "group": "Messaging",
+                    "throttleScope": "data",
+                    "parameters": [
+            {
+                "type": "integer",
+                "name": "clientAccountId",
+                "description": "[MISSING]"
+            },
+            {
+                "type": "boolean",
+                "name": "accepted",
+                "description": "[MISSING]"
+            }
+          ]
+                },
+                "GetSystemLookup": {
+                    "description": "[MISSING]",
+                    "target": "message",
+                    "uriTemplate": "/message/lookup?lookupEntityName={lookupEntityName}&cultureId={cultureId}",
+                    "contentType": "application/json",
+                    "responseContentType": "application/json",
+                    "transport": "GET",
+                    "envelope": "URL",
+                    "returns": {
+                        "$ref": "ApiLookupResponseDTO"
+                    },
+                    "group": "Messaging",
+                    "throttleScope": "data",
+                    "parameters": [
+            {
+                "type": "string",
+                "name": "lookupEntityName",
+                "description": "[MISSING]"
+            },
+            {
+                "type": "integer",
+                "name": "cultureId",
+                "description": "[MISSING]"
+            }
+          ]
+                },
                 "GenerateException": {
                     "description": "Simulates an error condition.",
                     "target": "errors",

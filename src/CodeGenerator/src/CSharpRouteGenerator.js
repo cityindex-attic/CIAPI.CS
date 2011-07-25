@@ -5,7 +5,7 @@
         this.schema = schema;
         this._lines = [];
         this.routesPatch = routesPatch;
-        
+
         this.className = className;
         this.namespaceName = namespaceName;
         this.imports = imports ? imports : [];
@@ -86,6 +86,9 @@
                     }
                     else if (parameter.$ref) {
                         paramType = self.normalizeKey(parameter.$ref);
+                        if (paramType == "Void") {
+                            paramType = "NullType";
+                        }
 
                     } else {
                         throw new Error("unsupported property type");
@@ -193,7 +196,7 @@
 
 
             each(subClasses, function (subClass, key) {
-                
+
                 if (key != "default") {
                     subClassProperties = subClassProperties.concat("\n      public _" + key + " " + key + "{get; private set;}");
                     subClassInitializer = subClassInitializer.concat("\n            this. " + key + " = new _" + key + "(this);");
@@ -250,6 +253,10 @@
             if (type.$ref) {
 
                 resolvedType = this.normalizeKey(type.$ref);
+                if (resolvedType == "Void") {
+                    resolvedType = "NullType";
+                }
+
 
             } else {
 
