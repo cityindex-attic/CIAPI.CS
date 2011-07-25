@@ -25,15 +25,15 @@
   <Target Name="Go" DependsOnTargets="UpdateVersion; 
                                       Build; 
                                       RunTests; 
-                                      CalculateMetrics;
                                       Package">
+                                      
+    <!-- CalculateMetrics  calculation of metrics disabled until replacement for Reflector can be integrated -->
   </Target>
   
   <!-- Used to build the Dev branch - everything except packaging -->
   <Target Name="GoDev" DependsOnTargets="UpdateVersion; 
                                       Build; 
-                                      RunTests; 
-                                      CalculateMetrics">
+                                      RunTests">
   </Target>
 
   <Target Name="Build">
