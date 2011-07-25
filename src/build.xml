@@ -37,7 +37,7 @@
   </Target>
 
   <Target Name="Build">
-    <MSBuild Projects="$(SrcDirectory)\CIAPI.CS.sln" Targets="Rebuild" 
+    <MSBuild Projects="$(SrcDirectory)\CIAPI.CS.Silverlight.Phone7.sln" Targets="Rebuild" 
              Properties="Configuration=$(Configuration);Platform=$(Platform);EnableCodeAnalysis=true;GenerateDocumentation=true" />
   </Target>
 </Project>
