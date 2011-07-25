@@ -1,15 +1,15 @@
 ﻿console.log("generating code....");
 
-var schema = require("../src/meta/schema.js").schema;
-var smd = require("../src/meta/smd.js").smd;
-var schemaPatch = require("../src/meta/schema.patch.js").schema;
-var routesPatch = require("../src/meta/routes.patch.js").routesPatch;
+var schema = require("./meta/schema.js").schema;
+var smd = require("./meta/smd.js").smd;
+var schemaPatch = require("./meta/schema.patch.js").schema;
+var routesPatch = require("./meta/routes.patch.js").routesPatch;
 
-var JSchemaProvider = require("../src/JSchemaProvider.js").JSchemaProvider;
-var CSharpVisitor = require("../src/JSchemaProvider.CSharpVisitor.js").CSharpVisitor;
-var CSharpRouteGenerator = require("../src/CSharpRouteGenerator.js").CSharpRouteGenerator;
+var JSchemaProvider = require("./JSchemaProvider.js").JSchemaProvider;
+var CSharpVisitor = require("./JSchemaProvider.CSharpVisitor.js").CSharpVisitor;
+var CSharpRouteGenerator = require("./CSharpRouteGenerator.js").CSharpRouteGenerator;
 
-var LSChannelGenerator = require("../src/CSharpLightStreamerChannelGenerator.js").LSChannelGenerator;
+var LSChannelGenerator = require("./CSharpLightStreamerChannelGenerator.js").LSChannelGenerator;
 
 
 var visitor = new CSharpVisitor();
