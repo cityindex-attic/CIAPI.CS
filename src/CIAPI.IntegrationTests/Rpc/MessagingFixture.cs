@@ -46,12 +46,12 @@ namespace CIAPI.IntegrationTests.Rpc
             var rpcClient = new Client(Settings.RpcUri);
             rpcClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);
             var resolver = new MagicNumberResolver(rpcClient);
-            var source = new GetOpenPositionResponseDTO
+            GetOpenPositionResponseDTO source = new GetOpenPositionResponseDTO
             {
                 OpenPosition = new ApiOpenPositionDTO { Status = 1 }
             };
 
-            var result = resolver.ResolveGetOpenPositionResponseDTO(source);
+            GetOpenPositionResponseDTOResolved result = resolver.ResolveGetOpenPositionResponseDTO(source);
 
 
             Assert.AreEqual("OK", result.OpenPosition.StatusReason, "status reason not resolved");
