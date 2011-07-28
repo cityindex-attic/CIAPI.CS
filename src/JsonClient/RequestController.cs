@@ -26,7 +26,7 @@ namespace CityIndex.JsonClient
         private readonly int _retryCount;
         private readonly Dictionary<string, IThrottedRequestQueue> _scopes;
         private readonly AutoResetEvent _waitHandle;
-        private static ILog Log = LogManager.GetLogger(typeof (RequestController));
+        private static ILog Log = LogManager.GetLogger(typeof(RequestController));
 
         private bool _disposed;
         private volatile bool _disposing;
@@ -74,7 +74,6 @@ namespace CityIndex.JsonClient
         public void ProcessCacheItem<TDTO>(string target, string uriTemplate, string method,
                                            Dictionary<string, object> parameters, TimeSpan cacheDuration,
                                            string throttleScope, string url, ApiAsyncCallback<TDTO> cb, object state)
-            
         {
             CacheItem<TDTO> item = Cache.GetOrCreate<TDTO>(url);
 
@@ -83,7 +82,7 @@ namespace CityIndex.JsonClient
                 case CacheItemState.New:
 
                     item.AddCallback(cb, state);
-                    item.CacheDuration = cacheDuration;
+                    item.CacheDuration = cacheDuration.Milliseconds == -1 ? TimeSpan.FromDays(1) : cacheDuration;
                     item.Method = method;
                     item.Parameters = parameters;
                     item.Target = target;
@@ -126,7 +125,6 @@ namespace CityIndex.JsonClient
         }
 
         public void CreateRequest<TDTO>(string url)
-            
         {
             CacheItem<TDTO> item = _cache.Get<TDTO>(url);
 
@@ -139,11 +137,11 @@ namespace CityIndex.JsonClient
             if (item.Method.ToUpper() == "POST")
             {
                 // if post then parameters should contain zero or one items
-                if(item.Parameters.Count>1)
+                if (item.Parameters.Count > 1)
                 {
-                    
+
                     throw new ArgumentException("POST method with too many parameters");
-                    
+
                 }
                 SetPostEntityAndEnqueueRequest<TDTO>(url);
             }
@@ -201,17 +199,16 @@ namespace CityIndex.JsonClient
         /// </summary>
         /// <param name="url"></param>
         private void SetPostEntityAndEnqueueRequest<TDTO>(string url)
-            
         {
             CacheItem<TDTO> item = _cache.Get<TDTO>(url);
 
 
-            byte[] bodyValue = new byte[]{};
-            if (item.Parameters.Count==1)
+            byte[] bodyValue = new byte[] { };
+            if (item.Parameters.Count == 1)
             {
-                bodyValue = CreatePostEntity(item.Parameters.First().Value);    
+                bodyValue = CreatePostEntity(item.Parameters.First().Value);
             }
-            
+
 
             item.Request.BeginGetRequestStream(ac =>
                 {
@@ -249,7 +246,7 @@ namespace CityIndex.JsonClient
         private static byte[] CreatePostEntity(object value)
         {
             // #TODO: this could be exposed on interface and made virtual to allow custom serialization
-            
+
 
             var body = JsonConvert.SerializeObject(value, Formatting.None, new JsonConverter[] { });
             byte[] bodyValue = Encoding.UTF8.GetBytes(body);
@@ -263,7 +260,6 @@ namespace CityIndex.JsonClient
         /// </summary>
         /// <typeparam name="TDTO"></typeparam>
         private void EnqueueRequest<TDTO>(string url)
-            
         {
             CacheItem<TDTO> outerItem = _cache.Get<TDTO>(url);
             IThrottedRequestQueue throttle = this[outerItem.ThrottleScope];
@@ -297,8 +293,8 @@ namespace CityIndex.JsonClient
 
                                 item.ResponseText = json;
 
-                                Exception seralizedException = _jsonExceptionFactory.ParseException(json); 
-                                
+                                Exception seralizedException = _jsonExceptionFactory.ParseException(json);
+
                                 Log.Debug(string.Format("request completed:\r\nITEM\r\n{0}", item));
 
                                 try
@@ -332,7 +328,7 @@ namespace CityIndex.JsonClient
                             else
                             {
                                 ApiException exception;
-                                string responseText=null;
+                                string responseText = null;
 
                                 responseText = ApiException.GetResponseText(wex);
                                 item.ResponseText = responseText;
@@ -342,14 +338,14 @@ namespace CityIndex.JsonClient
                                     exception =
                                         new ApiException(
                                             wex.Message +
-                                            String.Format("\r\nretried {0} times", item.RetryCount) + "\r\nREQUEST INFO:\r\n" + item.ToString(),wex);
+                                            String.Format("\r\nretried {0} times", item.RetryCount) + "\r\nREQUEST INFO:\r\n" + item.ToString(), wex);
                                 }
                                 else
                                 {
                                     exception =
                                         new ApiException(
                                             wex.Message + "\r\nREQUEST INFO:\r\n" + item.ToString(), wex);
-                                    
+
                                 }
 
                                 exception.ResponseText = responseText;

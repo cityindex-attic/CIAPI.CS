@@ -55,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ResolvableDTO.cs" />
     <Compile Include="Generated\DTO.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -64,6 +65,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rpc\ApiClient.cs" />
     <Compile Include="Rpc\ErrorResponseDTOJsonExceptionFactory.cs" />
+    <Compile Include="NullType.cs" />
+    <Compile Include="MagicNumberKeys.cs" />
+    <Compile Include="MagicNumberResolver.cs" />
     <Compile Include="Rpc\ServerConnectionException.cs" />
     <Compile Include="Streaming\IStreamingClient.cs" />
     <Compile Include="Streaming\Lightstreamer\LightStreamerClient.cs" />

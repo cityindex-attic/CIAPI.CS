@@ -62,7 +62,7 @@ namespace CIAPI.Rpc
         /// <p>Create a new session. This is how you "log on" to the CIAPI. Post a <a onclick="dojo.hash('#type.ApiLogOnRequestDTO'); return false;" class="json-link" href="#">ApiLogOnRequestDTO</a> to the uri specified below</p>
         /// </summary>
         /// <param name="apiLogOnRequest"> [DESCRIPTION MISSING]</param>
-        internal ApiLogOnResponseDTO LogOn(ApiLogOnRequestDTO apiLogOnRequest)
+        internal virtual ApiLogOnResponseDTO LogOn(ApiLogOnRequestDTO apiLogOnRequest)
         {
             return _client.Request<ApiLogOnResponseDTO>("session", "/", "POST",
             new Dictionary<string, object>
@@ -78,7 +78,7 @@ namespace CIAPI.Rpc
         /// <param name="apiLogOnRequest"> [DESCRIPTION MISSING]</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        internal void BeginLogOn(ApiLogOnRequestDTO apiLogOnRequest, ApiAsyncCallback<ApiLogOnResponseDTO> callback, object state)
+        internal virtual void BeginLogOn(ApiLogOnRequestDTO apiLogOnRequest, ApiAsyncCallback<ApiLogOnResponseDTO> callback, object state)
         {
             _client.BeginRequest(callback, state, "session", "/", "POST",
             new Dictionary<string, object>
@@ -103,7 +103,7 @@ namespace CIAPI.Rpc
         /// </summary>
         /// <param name="userName">Username is case sensitive. May be set as a service parameter or as a request header.</param>
         /// <param name="session">The session token. May be set as a service parameter or as a request header.</param>
-        internal ApiLogOffResponseDTO DeleteSession(string userName, string session)
+        internal virtual ApiLogOffResponseDTO DeleteSession(string userName, string session)
         {
             return _client.Request<ApiLogOffResponseDTO>("session", "/deleteSession?userName={userName}&session={session}", "POST",
             new Dictionary<string, object>
@@ -121,7 +121,7 @@ namespace CIAPI.Rpc
         /// <param name="session">The session token. May be set as a service parameter or as a request header.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        internal void BeginDeleteSession(string userName, string session, ApiAsyncCallback<ApiLogOffResponseDTO> callback, object state)
+        internal virtual void BeginDeleteSession(string userName, string session, ApiAsyncCallback<ApiLogOffResponseDTO> callback, object state)
         {
             _client.BeginRequest(callback, state, "session", "/deleteSession?userName={userName}&session={session}", "POST",
             new Dictionary<string, object>
@@ -155,7 +155,7 @@ namespace CIAPI.Rpc
         /// <param name="interval">The pricebar interval</param>
         /// <param name="span">The number of each interval per pricebar.</param>
         /// <param name="priceBars">The total number of pricebars to return</param>
-        public GetPriceBarResponseDTO GetPriceBars(string marketId, string interval, int span, string priceBars)
+        public virtual GetPriceBarResponseDTO GetPriceBars(string marketId, string interval, int span, string priceBars)
         {
             return _client.Request<GetPriceBarResponseDTO>("market", "/{marketId}/barhistory?interval={interval}&span={span}&pricebars={priceBars}", "GET",
             new Dictionary<string, object>
@@ -177,7 +177,7 @@ namespace CIAPI.Rpc
         /// <param name="priceBars">The total number of pricebars to return</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public void BeginGetPriceBars(string marketId, string interval, int span, string priceBars, ApiAsyncCallback<GetPriceBarResponseDTO> callback, object state)
+        public virtual void BeginGetPriceBars(string marketId, string interval, int span, string priceBars, ApiAsyncCallback<GetPriceBarResponseDTO> callback, object state)
         {
             _client.BeginRequest(callback, state, "market", "/{marketId}/barhistory?interval={interval}&span={span}&pricebars={priceBars}", "GET",
             new Dictionary<string, object>
@@ -205,7 +205,7 @@ namespace CIAPI.Rpc
         /// </summary>
         /// <param name="marketId">The marketId</param>
         /// <param name="priceTicks">The total number of price ticks to return</param>
-        public GetPriceTickResponseDTO GetPriceTicks(string marketId, string priceTicks)
+        public virtual GetPriceTickResponseDTO GetPriceTicks(string marketId, string priceTicks)
         {
             return _client.Request<GetPriceTickResponseDTO>("market", "/{marketId}/tickhistory?priceticks={priceTicks}", "GET",
             new Dictionary<string, object>
@@ -223,7 +223,7 @@ namespace CIAPI.Rpc
         /// <param name="priceTicks">The total number of price ticks to return</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public void BeginGetPriceTicks(string marketId, string priceTicks, ApiAsyncCallback<GetPriceTickResponseDTO> callback, object state)
+        public virtual void BeginGetPriceTicks(string marketId, string priceTicks, ApiAsyncCallback<GetPriceTickResponseDTO> callback, object state)
         {
             _client.BeginRequest(callback, state, "market", "/{marketId}/tickhistory?priceticks={priceTicks}", "GET",
             new Dictionary<string, object>
@@ -254,7 +254,7 @@ namespace CIAPI.Rpc
         /// <p>Get Market Information for the specified market.</p>
         /// </summary>
         /// <param name="marketId">The marketId</param>
-        public GetMarketInformationResponseDTO GetMarketInformation(string marketId)
+        public virtual GetMarketInformationResponseDTO GetMarketInformation(string marketId)
         {
             return _client.Request<GetMarketInformationResponseDTO>("market", "/{marketId}/information", "GET",
             new Dictionary<string, object>
@@ -270,7 +270,7 @@ namespace CIAPI.Rpc
         /// <param name="marketId">The marketId</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public void BeginGetMarketInformation(string marketId, ApiAsyncCallback<GetMarketInformationResponseDTO> callback, object state)
+        public virtual void BeginGetMarketInformation(string marketId, ApiAsyncCallback<GetMarketInformationResponseDTO> callback, object state)
         {
             _client.BeginRequest(callback, state, "market", "/{marketId}/information", "GET",
             new Dictionary<string, object>
@@ -300,7 +300,7 @@ namespace CIAPI.Rpc
         /// <param name="binaryProductType">Should the search include binary markets</param>
         /// <param name="query">The text to search for.  Matches part of market name / code from the start.</param>
         /// <param name="maxResults">The maximum number of results to return</param>
-        public ListMarketInformationSearchResponseDTO ListMarketInformationSearch(bool searchByMarketCode, bool searchByMarketName, bool spreadProductType, bool cfdProductType, bool binaryProductType, string query, int maxResults)
+        public virtual ListMarketInformationSearchResponseDTO ListMarketInformationSearch(bool searchByMarketCode, bool searchByMarketName, bool spreadProductType, bool cfdProductType, bool binaryProductType, string query, int maxResults)
         {
             return _client.Request<ListMarketInformationSearchResponseDTO>("market", "/informationsearch?SearchByMarketCode={searchByMarketCode}&SearchByMarketName={searchByMarketName}&SpreadProductType={spreadProductType}&CfdProductType={cfdProductType}&BinaryProductType={binaryProductType}&Query={query}&MaxResults={maxResults}", "GET",
             new Dictionary<string, object>
@@ -328,7 +328,7 @@ namespace CIAPI.Rpc
         /// <param name="maxResults">The maximum number of results to return</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public void BeginListMarketInformationSearch(bool searchByMarketCode, bool searchByMarketName, bool spreadProductType, bool cfdProductType, bool binaryProductType, string query, int maxResults, ApiAsyncCallback<ListMarketInformationSearchResponseDTO> callback, object state)
+        public virtual void BeginListMarketInformationSearch(bool searchByMarketCode, bool searchByMarketName, bool spreadProductType, bool cfdProductType, bool binaryProductType, string query, int maxResults, ApiAsyncCallback<ListMarketInformationSearchResponseDTO> callback, object state)
         {
             _client.BeginRequest(callback, state, "market", "/informationsearch?SearchByMarketCode={searchByMarketCode}&SearchByMarketName={searchByMarketName}&SpreadProductType={spreadProductType}&CfdProductType={cfdProductType}&BinaryProductType={binaryProductType}&Query={query}&MaxResults={maxResults}", "GET",
             new Dictionary<string, object>
@@ -365,7 +365,7 @@ namespace CIAPI.Rpc
         /// </summary>
         /// <param name="category">Filter headlines by category</param>
         /// <param name="maxResults">Restrict the number of headlines returned</param>
-        public ListNewsHeadlinesResponseDTO ListNewsHeadlines(string category, int maxResults)
+        public virtual ListNewsHeadlinesResponseDTO ListNewsHeadlines(string category, int maxResults)
         {
             return _client.Request<ListNewsHeadlinesResponseDTO>("news", "?Category={category}&MaxResults={maxResults}", "GET",
             new Dictionary<string, object>
@@ -383,7 +383,7 @@ namespace CIAPI.Rpc
         /// <param name="maxResults">Restrict the number of headlines returned</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public void BeginListNewsHeadlines(string category, int maxResults, ApiAsyncCallback<ListNewsHeadlinesResponseDTO> callback, object state)
+        public virtual void BeginListNewsHeadlines(string category, int maxResults, ApiAsyncCallback<ListNewsHeadlinesResponseDTO> callback, object state)
         {
             _client.BeginRequest(callback, state, "news", "?Category={category}&MaxResults={maxResults}", "GET",
             new Dictionary<string, object>
@@ -408,7 +408,7 @@ namespace CIAPI.Rpc
         /// Get the detail of a specific news story
         /// </summary>
         /// <param name="storyId">The news story Id</param>
-        public GetNewsDetailResponseDTO GetNewsDetail(string storyId)
+        public virtual GetNewsDetailResponseDTO GetNewsDetail(string storyId)
         {
             return _client.Request<GetNewsDetailResponseDTO>("news", "/{storyId}", "GET",
             new Dictionary<string, object>
@@ -424,7 +424,7 @@ namespace CIAPI.Rpc
         /// <param name="storyId">The news story Id</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public void BeginGetNewsDetail(string storyId, ApiAsyncCallback<GetNewsDetailResponseDTO> callback, object state)
+        public virtual void BeginGetNewsDetail(string storyId, ApiAsyncCallback<GetNewsDetailResponseDTO> callback, object state)
         {
             _client.BeginRequest(callback, state, "news", "/{storyId}", "GET",
             new Dictionary<string, object>
@@ -457,7 +457,7 @@ namespace CIAPI.Rpc
         /// <param name="searchByMarketCode">The characters that the market code should start with (normally this is the RIC code for the market)</param>
         /// <param name="clientAccountId">The logged on user's ClientAccountId.  (This only shows you markets that you can trade on)</param>
         /// <param name="maxResults">The maximum number of markets to return.</param>
-        public ListCfdMarketsResponseDTO ListCfdMarkets(string searchByMarketName, string searchByMarketCode, int clientAccountId, int maxResults)
+        public virtual ListCfdMarketsResponseDTO ListCfdMarkets(string searchByMarketName, string searchByMarketCode, int clientAccountId, int maxResults)
         {
             return _client.Request<ListCfdMarketsResponseDTO>("cfd/markets", "?MarketName={searchByMarketName}&MarketCode={searchByMarketCode}&ClientAccountId={clientAccountId}&MaxResults={maxResults}", "GET",
             new Dictionary<string, object>
@@ -479,7 +479,7 @@ namespace CIAPI.Rpc
         /// <param name="maxResults">The maximum number of markets to return.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public void BeginListCfdMarkets(string searchByMarketName, string searchByMarketCode, int clientAccountId, int maxResults, ApiAsyncCallback<ListCfdMarketsResponseDTO> callback, object state)
+        public virtual void BeginListCfdMarkets(string searchByMarketName, string searchByMarketCode, int clientAccountId, int maxResults, ApiAsyncCallback<ListCfdMarketsResponseDTO> callback, object state)
         {
             _client.BeginRequest(callback, state, "cfd/markets", "?MarketName={searchByMarketName}&MarketCode={searchByMarketCode}&ClientAccountId={clientAccountId}&MaxResults={maxResults}", "GET",
             new Dictionary<string, object>
@@ -515,7 +515,7 @@ namespace CIAPI.Rpc
         /// <param name="searchByMarketCode">The characters that the Spread market code should start with (normally this is the RIC code for the market)</param>
         /// <param name="clientAccountId">The logged on user's ClientAccountId.  (This only shows you markets that you can trade on)</param>
         /// <param name="maxResults">The maximum number of markets to return.</param>
-        public ListSpreadMarketsResponseDTO ListSpreadMarkets(string searchByMarketName, string searchByMarketCode, int clientAccountId, int maxResults)
+        public virtual ListSpreadMarketsResponseDTO ListSpreadMarkets(string searchByMarketName, string searchByMarketCode, int clientAccountId, int maxResults)
         {
             return _client.Request<ListSpreadMarketsResponseDTO>("spread/markets", "?MarketName={searchByMarketName}&MarketCode={searchByMarketCode}&ClientAccountId={clientAccountId}&MaxResults={maxResults}", "GET",
             new Dictionary<string, object>
@@ -537,7 +537,7 @@ namespace CIAPI.Rpc
         /// <param name="maxResults">The maximum number of markets to return.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public void BeginListSpreadMarkets(string searchByMarketName, string searchByMarketCode, int clientAccountId, int maxResults, ApiAsyncCallback<ListSpreadMarketsResponseDTO> callback, object state)
+        public virtual void BeginListSpreadMarkets(string searchByMarketName, string searchByMarketCode, int clientAccountId, int maxResults, ApiAsyncCallback<ListSpreadMarketsResponseDTO> callback, object state)
         {
             _client.BeginRequest(callback, state, "spread/markets", "?MarketName={searchByMarketName}&MarketCode={searchByMarketCode}&ClientAccountId={clientAccountId}&MaxResults={maxResults}", "GET",
             new Dictionary<string, object>
@@ -570,7 +570,7 @@ namespace CIAPI.Rpc
         /// <p>Place an order on a particular market. Post a <a onclick="dojo.hash('#type.NewStopLimitOrderRequestDTO'); return false;" class="json-link" href="#">NewStopLimitOrderRequestDTO</a> to the uri specified below.</p> <p>Do not set any order id fields when requesting a new order, the platform will generate them.</p>
         /// </summary>
         /// <param name="order">The order request</param>
-        public ApiTradeOrderResponseDTO Order(NewStopLimitOrderRequestDTO order)
+        public virtual ApiTradeOrderResponseDTO Order(NewStopLimitOrderRequestDTO order)
         {
             return _client.Request<ApiTradeOrderResponseDTO>("order", "/newstoplimitorder", "POST",
             new Dictionary<string, object>
@@ -586,7 +586,7 @@ namespace CIAPI.Rpc
         /// <param name="order">The order request</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public void BeginOrder(NewStopLimitOrderRequestDTO order, ApiAsyncCallback<ApiTradeOrderResponseDTO> callback, object state)
+        public virtual void BeginOrder(NewStopLimitOrderRequestDTO order, ApiAsyncCallback<ApiTradeOrderResponseDTO> callback, object state)
         {
             _client.BeginRequest(callback, state, "order", "/newstoplimitorder", "POST",
             new Dictionary<string, object>
@@ -610,7 +610,7 @@ namespace CIAPI.Rpc
         /// <p>Cancel an order. Post a <a onclick="dojo.hash('#type.CancelOrderRequestDTO'); return false;" class="json-link" href="#">CancelOrderRequestDTO</a> to the uri specified below</p>
         /// </summary>
         /// <param name="cancelOrder">The cancel order request</param>
-        public ApiTradeOrderResponseDTO CancelOrder(CancelOrderRequestDTO cancelOrder)
+        public virtual ApiTradeOrderResponseDTO CancelOrder(CancelOrderRequestDTO cancelOrder)
         {
             return _client.Request<ApiTradeOrderResponseDTO>("order", "/cancel", "POST",
             new Dictionary<string, object>
@@ -626,7 +626,7 @@ namespace CIAPI.Rpc
         /// <param name="cancelOrder">The cancel order request</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public void BeginCancelOrder(CancelOrderRequestDTO cancelOrder, ApiAsyncCallback<ApiTradeOrderResponseDTO> callback, object state)
+        public virtual void BeginCancelOrder(CancelOrderRequestDTO cancelOrder, ApiAsyncCallback<ApiTradeOrderResponseDTO> callback, object state)
         {
             _client.BeginRequest(callback, state, "order", "/cancel", "POST",
             new Dictionary<string, object>
@@ -650,7 +650,7 @@ namespace CIAPI.Rpc
         /// <p>Update an order (for adding a stop/limit or attaching an OCO relationship). Post an <a onclick="dojo.hash('#type.UpdateStopLimitOrderRequestDTO'); return false;" class="json-link" href="#">UpdateStopLimitOrderRequestDTO</a> to the uri specified below</p>
         /// </summary>
         /// <param name="order"><p>Update an order (for adding a stop/limit or attaching an OCO relationship).  Post an <a onclick="dojo.hash('#type.UpdateStopLimitOrderRequestDTO'); return false;" class="json-link" href="#">UpdateStopLimitOrderRequestDTO</a> to the uri specified below</p></param>
-        public ApiTradeOrderResponseDTO UpdateOrder(UpdateStopLimitOrderRequestDTO order)
+        public virtual ApiTradeOrderResponseDTO UpdateOrder(UpdateStopLimitOrderRequestDTO order)
         {
             return _client.Request<ApiTradeOrderResponseDTO>("order", "/updatestoplimitorder", "POST",
             new Dictionary<string, object>
@@ -666,7 +666,7 @@ namespace CIAPI.Rpc
         /// <param name="order"><p>Update an order (for adding a stop/limit or attaching an OCO relationship).  Post an <a onclick="dojo.hash('#type.UpdateStopLimitOrderRequestDTO'); return false;" class="json-link" href="#">UpdateStopLimitOrderRequestDTO</a> to the uri specified below</p></param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public void BeginUpdateOrder(UpdateStopLimitOrderRequestDTO order, ApiAsyncCallback<ApiTradeOrderResponseDTO> callback, object state)
+        public virtual void BeginUpdateOrder(UpdateStopLimitOrderRequestDTO order, ApiAsyncCallback<ApiTradeOrderResponseDTO> callback, object state)
         {
             _client.BeginRequest(callback, state, "order", "/updatestoplimitorder", "POST",
             new Dictionary<string, object>
@@ -690,7 +690,7 @@ namespace CIAPI.Rpc
         /// <p>Queries for a specified trading account's trades / open positions.</p> <p>This uri is intended to be used to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call <a onclick="dojo.hash('#service.GetOpenPosition'); return false;" class="json-link" href="#">GetOpenPosition</a> when you get updates on the order stream to get the updated data in this format.</p>
         /// </summary>
         /// <param name="tradingAccountId">The trading account to get orders for.</param>
-        public ListOpenPositionsResponseDTO ListOpenPositions(int tradingAccountId)
+        public virtual ListOpenPositionsResponseDTO ListOpenPositions(int tradingAccountId)
         {
             return _client.Request<ListOpenPositionsResponseDTO>("order", "/openpositions?TradingAccountId={tradingAccountId}", "GET",
             new Dictionary<string, object>
@@ -706,7 +706,7 @@ namespace CIAPI.Rpc
         /// <param name="tradingAccountId">The trading account to get orders for.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public void BeginListOpenPositions(int tradingAccountId, ApiAsyncCallback<ListOpenPositionsResponseDTO> callback, object state)
+        public virtual void BeginListOpenPositions(int tradingAccountId, ApiAsyncCallback<ListOpenPositionsResponseDTO> callback, object state)
         {
             _client.BeginRequest(callback, state, "order", "/openpositions?TradingAccountId={tradingAccountId}", "GET",
             new Dictionary<string, object>
@@ -730,7 +730,7 @@ namespace CIAPI.Rpc
         /// <p>Queries for a specified trading account's active stop / limit orders.</p> <p>This uri is intended to be used to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call <a onclick="dojo.hash('#service.GetActiveStopLimitOrder'); return false;" class="json-link" href="#">GetActiveStopLimitOrder</a> when you get updates on the order stream to get the updated data in this format.</p>
         /// </summary>
         /// <param name="tradingAccountId">The trading account to get orders for.</param>
-        public ListActiveStopLimitOrderResponseDTO ListActiveStopLimitOrders(int tradingAccountId)
+        public virtual ListActiveStopLimitOrderResponseDTO ListActiveStopLimitOrders(int tradingAccountId)
         {
             return _client.Request<ListActiveStopLimitOrderResponseDTO>("order", "/activestoplimitorders?TradingAccountId={tradingAccountId}", "GET",
             new Dictionary<string, object>
@@ -746,7 +746,7 @@ namespace CIAPI.Rpc
         /// <param name="tradingAccountId">The trading account to get orders for.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public void BeginListActiveStopLimitOrders(int tradingAccountId, ApiAsyncCallback<ListActiveStopLimitOrderResponseDTO> callback, object state)
+        public virtual void BeginListActiveStopLimitOrders(int tradingAccountId, ApiAsyncCallback<ListActiveStopLimitOrderResponseDTO> callback, object state)
         {
             _client.BeginRequest(callback, state, "order", "/activestoplimitorders?TradingAccountId={tradingAccountId}", "GET",
             new Dictionary<string, object>
@@ -770,7 +770,7 @@ namespace CIAPI.Rpc
         /// <p>Queries for a active stop limit order with a specified order id. It will return a null value if the order doesn't exist, or is not an active stop limit order.<p> <p>This uri is intended to be used to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call <a onclick="dojo.hash('#service.ListActiveStopLimitOrders'); return false;" class="json-link" href="#">ListActiveStopLimitOrders</a> for the initial data to display in the grid, and call this uri when you get updates on the order stream to get the updated data in this format.</p> <p>For a more comprehensive order response, see <a onclick="dojo.hash('#service.GetOrder'); return false;" class="json-link" href="#">GetOrder</a><p>
         /// </summary>
         /// <param name="orderId">The requested order id.</param>
-        public GetActiveStopLimitOrderResponseDTO GetActiveStopLimitOrder(string orderId)
+        public virtual GetActiveStopLimitOrderResponseDTO GetActiveStopLimitOrder(string orderId)
         {
             return _client.Request<GetActiveStopLimitOrderResponseDTO>("order", "/{orderId}/activestoplimitorder", "GET",
             new Dictionary<string, object>
@@ -786,7 +786,7 @@ namespace CIAPI.Rpc
         /// <param name="orderId">The requested order id.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public void BeginGetActiveStopLimitOrder(string orderId, ApiAsyncCallback<GetActiveStopLimitOrderResponseDTO> callback, object state)
+        public virtual void BeginGetActiveStopLimitOrder(string orderId, ApiAsyncCallback<GetActiveStopLimitOrderResponseDTO> callback, object state)
         {
             _client.BeginRequest(callback, state, "order", "/{orderId}/activestoplimitorder", "GET",
             new Dictionary<string, object>
@@ -810,7 +810,7 @@ namespace CIAPI.Rpc
         /// <p>Queries for a trade / open position with a specified order id. It will return a null value if the order doesn't exist, or is not a trade / open position.</p> <p>This uri is intended to be used to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call <a onclick="dojo.hash('#service.ListOpenPositions'); return false;" class="json-link" href="#">ListOpenPositions</a> for the initial data to display in the grid, and call this uri when you get updates on the order stream to get the updated data in this format.</p> <p>For a more comprehensive order response, see <a onclick="dojo.hash('#service.GetOrder'); return false;" class="json-link" href="#">GetOrder</a><p>
         /// </summary>
         /// <param name="orderId">The requested order id.</param>
-        public GetOpenPositionResponseDTO GetOpenPosition(string orderId)
+        public virtual GetOpenPositionResponseDTO GetOpenPosition(string orderId)
         {
             return _client.Request<GetOpenPositionResponseDTO>("order", "/{orderId}/openposition", "GET",
             new Dictionary<string, object>
@@ -826,7 +826,7 @@ namespace CIAPI.Rpc
         /// <param name="orderId">The requested order id.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public void BeginGetOpenPosition(string orderId, ApiAsyncCallback<GetOpenPositionResponseDTO> callback, object state)
+        public virtual void BeginGetOpenPosition(string orderId, ApiAsyncCallback<GetOpenPositionResponseDTO> callback, object state)
         {
             _client.BeginRequest(callback, state, "order", "/{orderId}/openposition", "GET",
             new Dictionary<string, object>
@@ -851,7 +851,7 @@ namespace CIAPI.Rpc
         /// </summary>
         /// <param name="tradingAccountId">The trading account to get orders for.</param>
         /// <param name="maxResults">The maximum results to return.</param>
-        public ListTradeHistoryResponseDTO ListTradeHistory(int tradingAccountId, int maxResults)
+        public virtual ListTradeHistoryResponseDTO ListTradeHistory(int tradingAccountId, int maxResults)
         {
             return _client.Request<ListTradeHistoryResponseDTO>("order", "/tradehistory?TradingAccountId={tradingAccountId}&MaxResults={maxResults}", "GET",
             new Dictionary<string, object>
@@ -869,7 +869,7 @@ namespace CIAPI.Rpc
         /// <param name="maxResults">The maximum results to return.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public void BeginListTradeHistory(int tradingAccountId, int maxResults, ApiAsyncCallback<ListTradeHistoryResponseDTO> callback, object state)
+        public virtual void BeginListTradeHistory(int tradingAccountId, int maxResults, ApiAsyncCallback<ListTradeHistoryResponseDTO> callback, object state)
         {
             _client.BeginRequest(callback, state, "order", "/tradehistory?TradingAccountId={tradingAccountId}&MaxResults={maxResults}", "GET",
             new Dictionary<string, object>
@@ -895,7 +895,7 @@ namespace CIAPI.Rpc
         /// </summary>
         /// <param name="tradingAccountId">The trading account to get orders for.</param>
         /// <param name="maxResults">the maximum results to return.</param>
-        public ListStopLimitOrderHistoryResponseDTO ListStopLimitOrderHistory(int tradingAccountId, int maxResults)
+        public virtual ListStopLimitOrderHistoryResponseDTO ListStopLimitOrderHistory(int tradingAccountId, int maxResults)
         {
             return _client.Request<ListStopLimitOrderHistoryResponseDTO>("order", "/stoplimitorderhistory?TradingAccountId={tradingAccountId}&MaxResults={maxResults}", "GET",
             new Dictionary<string, object>
@@ -913,7 +913,7 @@ namespace CIAPI.Rpc
         /// <param name="maxResults">the maximum results to return.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public void BeginListStopLimitOrderHistory(int tradingAccountId, int maxResults, ApiAsyncCallback<ListStopLimitOrderHistoryResponseDTO> callback, object state)
+        public virtual void BeginListStopLimitOrderHistory(int tradingAccountId, int maxResults, ApiAsyncCallback<ListStopLimitOrderHistoryResponseDTO> callback, object state)
         {
             _client.BeginRequest(callback, state, "order", "/stoplimitorderhistory?TradingAccountId={tradingAccountId}&MaxResults={maxResults}", "GET",
             new Dictionary<string, object>
@@ -938,7 +938,7 @@ namespace CIAPI.Rpc
         /// <p>Queries for an order by a specific order id.</p> <p>The current implementation only returns active orders (i.e. those with a status of <b>1 - Pending, 2 - Accepted, 3 - Open, 6 - Suspended, 8 - Yellow Card, 11 - Triggered)</b>.</p>
         /// </summary>
         /// <param name="orderId">The requested order id.</param>
-        public GetOrderResponseDTO GetOrder(string orderId)
+        public virtual GetOrderResponseDTO GetOrder(string orderId)
         {
             return _client.Request<GetOrderResponseDTO>("order", "/{orderId}", "GET",
             new Dictionary<string, object>
@@ -954,7 +954,7 @@ namespace CIAPI.Rpc
         /// <param name="orderId">The requested order id.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public void BeginGetOrder(string orderId, ApiAsyncCallback<GetOrderResponseDTO> callback, object state)
+        public virtual void BeginGetOrder(string orderId, ApiAsyncCallback<GetOrderResponseDTO> callback, object state)
         {
             _client.BeginRequest(callback, state, "order", "/{orderId}", "GET",
             new Dictionary<string, object>
@@ -978,7 +978,7 @@ namespace CIAPI.Rpc
         /// <p>Place a trade on a particular market. Post a <a onclick="dojo.hash('#type.NewTradeOrderRequestDTO'); return false;" class="json-link" href="#">NewTradeOrderRequestDTO</a> to the uri specified below.</p> <p>Do not set any order id fields when requesting a new trade, the platform will generate them.</p>
         /// </summary>
         /// <param name="trade">The trade request</param>
-        public ApiTradeOrderResponseDTO Trade(NewTradeOrderRequestDTO trade)
+        public virtual ApiTradeOrderResponseDTO Trade(NewTradeOrderRequestDTO trade)
         {
             return _client.Request<ApiTradeOrderResponseDTO>("order", "/newtradeorder", "POST",
             new Dictionary<string, object>
@@ -994,7 +994,7 @@ namespace CIAPI.Rpc
         /// <param name="trade">The trade request</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public void BeginTrade(NewTradeOrderRequestDTO trade, ApiAsyncCallback<ApiTradeOrderResponseDTO> callback, object state)
+        public virtual void BeginTrade(NewTradeOrderRequestDTO trade, ApiAsyncCallback<ApiTradeOrderResponseDTO> callback, object state)
         {
             _client.BeginRequest(callback, state, "order", "/newtradeorder", "POST",
             new Dictionary<string, object>
@@ -1018,7 +1018,7 @@ namespace CIAPI.Rpc
         /// Update a trade (for adding a stop/limit etc). Post an <a onclick="dojo.hash('#type.UpdateTradeOrderRequestDTO'); return false;" class="json-link" href="#">UpdateTradeOrderRequestDTO</a> to the uri specified below</p>
         /// </summary>
         /// <param name="update">The trade request</param>
-        public ApiTradeOrderResponseDTO UpdateTrade(UpdateTradeOrderRequestDTO update)
+        public virtual ApiTradeOrderResponseDTO UpdateTrade(UpdateTradeOrderRequestDTO update)
         {
             return _client.Request<ApiTradeOrderResponseDTO>("order", "/updatetradeorder", "POST",
             new Dictionary<string, object>
@@ -1034,7 +1034,7 @@ namespace CIAPI.Rpc
         /// <param name="update">The trade request</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public void BeginUpdateTrade(UpdateTradeOrderRequestDTO update, ApiAsyncCallback<ApiTradeOrderResponseDTO> callback, object state)
+        public virtual void BeginUpdateTrade(UpdateTradeOrderRequestDTO update, ApiAsyncCallback<ApiTradeOrderResponseDTO> callback, object state)
         {
             _client.BeginRequest(callback, state, "order", "/updatetradeorder", "POST",
             new Dictionary<string, object>
@@ -1063,7 +1063,7 @@ namespace CIAPI.Rpc
         /// <summary>
         /// Returns the Users ClientAccountId and a list of their TradingAccounts. There are no parameters for this call.
         /// </summary>
-        public AccountInformationResponseDTO GetClientAndTradingAccount()
+        public virtual AccountInformationResponseDTO GetClientAndTradingAccount()
         {
             return _client.Request<AccountInformationResponseDTO>("useraccount", "/UserAccount/ClientAndTradingAccount", "GET",
             new Dictionary<string, object>
@@ -1078,7 +1078,7 @@ namespace CIAPI.Rpc
         /// </summary>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public void BeginGetClientAndTradingAccount( ApiAsyncCallback<AccountInformationResponseDTO> callback, object state)
+        public virtual void BeginGetClientAndTradingAccount( ApiAsyncCallback<AccountInformationResponseDTO> callback, object state)
         {
             _client.BeginRequest(callback, state, "useraccount", "/UserAccount/ClientAndTradingAccount", "GET",
             new Dictionary<string, object>
@@ -1100,177 +1100,41 @@ namespace CIAPI.Rpc
             public _Messaging(Client client){ this._client = client;}
 
         // ***********************************
-        // GetMessage
-        // ***********************************
-
-
-        /// <summary>
-        /// [MISSING]
-        /// </summary>
-        /// <param name="id">[MISSING]</param>
-        /// <param name="language">[MISSING]</param>
-        /// <param name="category">[MISSING]</param>
-        public string GetMessage(string id, string language, string category)
-        {
-            return _client.Request<string>("message", "/Message/{id}?language={language}&category={category}", "GET",
-            new Dictionary<string, object>
-            {
-                { "id", id}, 
-                { "language", language}, 
-                { "category", category}
-            }, TimeSpan.FromMilliseconds(0), "data");
-        }
-
-
-        /// <summary>
-        /// [MISSING]
-        /// </summary>
-        /// <param name="id">[MISSING]</param>
-        /// <param name="language">[MISSING]</param>
-        /// <param name="category">[MISSING]</param>
-        /// <param name="callback"></param>
-        /// <param name="state"></param>
-        public void BeginGetMessage(string id, string language, string category, ApiAsyncCallback<string> callback, object state)
-        {
-            _client.BeginRequest(callback, state, "message", "/Message/{id}?language={language}&category={category}", "GET",
-            new Dictionary<string, object>
-            {
-                { "id", id}, 
-                { "language", language}, 
-                { "category", category}
-            }, TimeSpan.FromMilliseconds(0), "data");
-        }
-
-        public string EndGetMessage(ApiAsyncResult<string> asyncResult)
-        {
-            return _client.EndRequest(asyncResult);
-        }
-
-
-        // ***********************************
-        // GetMessagePopup
-        // ***********************************
-
-
-        /// <summary>
-        /// [MISSING]
-        /// </summary>
-        /// <param name="language">[MISSING]</param>
-        /// <param name="clientAccountId">[MISSING]</param>
-        public GetMessagePopupResponseDTO GetMessagePopup(string language, int clientAccountId)
-        {
-            return _client.Request<GetMessagePopupResponseDTO>("message", "/message/popup?language={language}&ClientAccountId={clientAccountId}", "GET",
-            new Dictionary<string, object>
-            {
-                { "language", language}, 
-                { "clientAccountId", clientAccountId}
-            }, TimeSpan.FromMilliseconds(0), "data");
-        }
-
-
-        /// <summary>
-        /// [MISSING]
-        /// </summary>
-        /// <param name="language">[MISSING]</param>
-        /// <param name="clientAccountId">[MISSING]</param>
-        /// <param name="callback"></param>
-        /// <param name="state"></param>
-        public void BeginGetMessagePopup(string language, int clientAccountId, ApiAsyncCallback<GetMessagePopupResponseDTO> callback, object state)
-        {
-            _client.BeginRequest(callback, state, "message", "/message/popup?language={language}&ClientAccountId={clientAccountId}", "GET",
-            new Dictionary<string, object>
-            {
-                { "language", language}, 
-                { "clientAccountId", clientAccountId}
-            }, TimeSpan.FromMilliseconds(0), "data");
-        }
-
-        public GetMessagePopupResponseDTO EndGetMessagePopup(ApiAsyncResult<GetMessagePopupResponseDTO> asyncResult)
-        {
-            return _client.EndRequest(asyncResult);
-        }
-
-
-        // ***********************************
-        // AcceptOrRejectMessagePopupResponse
-        // ***********************************
-
-
-        /// <summary>
-        /// [MISSING]
-        /// </summary>
-        /// <param name="clientAccountId">[MISSING]</param>
-        /// <param name="accepted">[MISSING]</param>
-        public NullType AcceptOrRejectMessagePopupResponse(int clientAccountId, bool accepted)
-        {
-            return _client.Request<NullType>("message", "/message/popupchoice?ClientAccountId={clientAccountId}&Accepted={accepted}", "GET",
-            new Dictionary<string, object>
-            {
-                { "clientAccountId", clientAccountId}, 
-                { "accepted", accepted}
-            }, TimeSpan.FromMilliseconds(0), "data");
-        }
-
-
-        /// <summary>
-        /// [MISSING]
-        /// </summary>
-        /// <param name="clientAccountId">[MISSING]</param>
-        /// <param name="accepted">[MISSING]</param>
-        /// <param name="callback"></param>
-        /// <param name="state"></param>
-        public void BeginAcceptOrRejectMessagePopupResponse(int clientAccountId, bool accepted, ApiAsyncCallback<NullType> callback, object state)
-        {
-            _client.BeginRequest(callback, state, "message", "/message/popupchoice?ClientAccountId={clientAccountId}&Accepted={accepted}", "GET",
-            new Dictionary<string, object>
-            {
-                { "clientAccountId", clientAccountId}, 
-                { "accepted", accepted}
-            }, TimeSpan.FromMilliseconds(0), "data");
-        }
-
-        public NullType EndAcceptOrRejectMessagePopupResponse(ApiAsyncResult<NullType> asyncResult)
-        {
-            return _client.EndRequest(asyncResult);
-        }
-
-
-        // ***********************************
         // GetSystemLookup
         // ***********************************
 
 
         /// <summary>
-        /// [MISSING]
+        /// Use the message lookup service to get localised textual names for the various status code & Ids returned by the API. For example, a query for OrderStatusReasons will contain text names for all the possible values of OrderStatusReason in the ApiOrderResponseDTO. You should only request the list once per session (for each entity you're interested in).
         /// </summary>
-        /// <param name="lookupEntityName">[MISSING]</param>
-        /// <param name="cultureId">[MISSING]</param>
-        public ApiLookupResponseDTO GetSystemLookup(string lookupEntityName, int cultureId)
+        /// <param name="lookupEntityName">The entity to lookup (eg OrderStatusReason, InstructionStatusReason, OrderApplicability or Culture)</param>
+        /// <param name="cultureId">The cultureId used to override the translated text description.</param>
+        public virtual ApiLookupResponseDTO GetSystemLookup(string lookupEntityName, int cultureId)
         {
             return _client.Request<ApiLookupResponseDTO>("message", "/message/lookup?lookupEntityName={lookupEntityName}&cultureId={cultureId}", "GET",
             new Dictionary<string, object>
             {
                 { "lookupEntityName", lookupEntityName}, 
                 { "cultureId", cultureId}
-            }, TimeSpan.FromMilliseconds(0), "data");
+            }, TimeSpan.FromMilliseconds(-1), "default");
         }
 
 
         /// <summary>
-        /// [MISSING]
+        /// Use the message lookup service to get localised textual names for the various status code & Ids returned by the API. For example, a query for OrderStatusReasons will contain text names for all the possible values of OrderStatusReason in the ApiOrderResponseDTO. You should only request the list once per session (for each entity you're interested in).
         /// </summary>
-        /// <param name="lookupEntityName">[MISSING]</param>
-        /// <param name="cultureId">[MISSING]</param>
+        /// <param name="lookupEntityName">The entity to lookup (eg OrderStatusReason, InstructionStatusReason, OrderApplicability or Culture)</param>
+        /// <param name="cultureId">The cultureId used to override the translated text description.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public void BeginGetSystemLookup(string lookupEntityName, int cultureId, ApiAsyncCallback<ApiLookupResponseDTO> callback, object state)
+        public virtual void BeginGetSystemLookup(string lookupEntityName, int cultureId, ApiAsyncCallback<ApiLookupResponseDTO> callback, object state)
         {
             _client.BeginRequest(callback, state, "message", "/message/lookup?lookupEntityName={lookupEntityName}&cultureId={cultureId}", "GET",
             new Dictionary<string, object>
             {
                 { "lookupEntityName", lookupEntityName}, 
                 { "cultureId", cultureId}
-            }, TimeSpan.FromMilliseconds(0), "data");
+            }, TimeSpan.FromMilliseconds(-1), "default");
         }
 
         public ApiLookupResponseDTO EndGetSystemLookup(ApiAsyncResult<ApiLookupResponseDTO> asyncResult)
@@ -1294,7 +1158,7 @@ namespace CIAPI.Rpc
         /// Simulates an error condition.
         /// </summary>
         /// <param name="errorCode">Simulates an error condition.</param>
-        public ApiErrorResponseDTO GenerateException(int errorCode)
+        public virtual ApiErrorResponseDTO GenerateException(int errorCode)
         {
             return _client.Request<ApiErrorResponseDTO>("errors", "?errorCode={errorCode}", "GET",
             new Dictionary<string, object>
@@ -1310,7 +1174,7 @@ namespace CIAPI.Rpc
         /// <param name="errorCode">Simulates an error condition.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public void BeginGenerateException(int errorCode, ApiAsyncCallback<ApiErrorResponseDTO> callback, object state)
+        public virtual void BeginGenerateException(int errorCode, ApiAsyncCallback<ApiErrorResponseDTO> callback, object state)
         {
             _client.BeginRequest(callback, state, "errors", "?errorCode={errorCode}", "GET",
             new Dictionary<string, object>

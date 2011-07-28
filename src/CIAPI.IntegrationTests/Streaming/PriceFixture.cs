@@ -30,7 +30,7 @@ namespace CIAPI.IntegrationTests.Streaming
 
         [
         Test
-        //,Ignore("this test is best run interactively when market is responsive. after hours there is no pricing so test will fail")
+            //,Ignore("this test is best run interactively when market is responsive. after hours there is no pricing so test will fail")
         ]
         public void CanConsumePriceStream()
         {
@@ -40,7 +40,7 @@ namespace CIAPI.IntegrationTests.Streaming
 
             streamingClient.Connect();
 
-            
+
 
             var priceListener = streamingClient.BuildPricesListener("71442");
             priceListener.Start();
@@ -49,6 +49,7 @@ namespace CIAPI.IntegrationTests.Streaming
 
             //Trap the Price given by the update event for checking
 
+
             priceListener.MessageReceived += (s, e) =>
             {
                 actual = e.Data;
@@ -56,14 +57,18 @@ namespace CIAPI.IntegrationTests.Streaming
             };
 
 
-            if (!gate.WaitOne(TimeSpan.FromSeconds(5)))
+            bool gotPriceInTime = true;
+            if (!gate.WaitOne(TimeSpan.FromSeconds(15)))
             {
-                Assert.Fail("A price update wasn't received in time");
+                gotPriceInTime = false;
+                // don't want to throw while client is listening, hangs test
             }
 
             priceListener.Stop();
             streamingClient.Disconnect();
 
+
+            Assert.IsTrue(gotPriceInTime, "A price update wasn't received in time");
             Assert.IsNotNull(actual);
             Assert.Greater(actual.TickDate, DateTime.UtcNow.AddSeconds(-10), "We're expecting a recent price");
         }
@@ -71,6 +76,10 @@ namespace CIAPI.IntegrationTests.Streaming
 
         /* 24/5 fast pricing FX markets
 
+         * SKY: these don't seem to be running very often - i just used the above and a 2 off to get the test running
+         * please update with a longer list of valid markets
+         * 
+         * 
             {"MarketId":400481115,"Name":"AUD\/JPY"},
             {"MarketId":400481116,"Name":"AUD\/NZD"},
             {"MarketId":400481117,"Name":"AUD\/USD"},
@@ -82,24 +91,20 @@ namespace CIAPI.IntegrationTests.Streaming
         */
 
         [Test
-        //, Ignore("Only works during market opening hours.  Run manually")
+            //, Ignore("Only works during market opening hours.  Run manually")
         ]
         public void CanSubscribeToMultiplePriceStreamsAtOnce()
         {
             var streamingClient = BuildStreamingClient();
             streamingClient.Connect();
             var priceListener = streamingClient.BuildPricesListener(new[]{
-                                                                         "400481115",
-                                                                         "400481116",
-                                                                         "400481118",
-                                                                         "400481119",
-                                                                         "400481120",
-                                                                         "400481121",
-                                                                         "400481122"
+                                                                         "71442",
+                                                                         "71443"
                                                                     });
-            
-            var prices = new List<PriceDTO>();
-            priceListener.MessageReceived += (s, e) => prices.Add(e.Data);
+
+            var prices = new Dictionary<string, PriceDTO>();
+            priceListener.MessageReceived += (s, e) =>
+                prices[e.Data.MarketId.ToString()] = e.Data;
 
             try
             {
@@ -117,7 +122,7 @@ namespace CIAPI.IntegrationTests.Streaming
                     foreach (var price in prices)
                     {
                         _logger.DebugFormat(price.ToStringWithValues());
-                    }                    
+                    }
                 }
 
             }

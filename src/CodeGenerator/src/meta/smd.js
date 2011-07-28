@@ -1,58 +1,10 @@
-﻿
-exports.smd =
-{
+﻿exports.smd = {
     "SMDVersion": "2.6",
     "version": "1",
     "description": "CIAPI SMD",
     "services": {
-        "streaming": {
-            "target": "http://pushpreprod.cityindextest9.co.uk/",
-            "services": {
-                "NewsHeadlines": {
-                    "description": "Stream of current news headlines.  Try NEWS.MOCKHEADLINES.UK for a mock stream",
-                    "target": "CITYINDEXSTREAMING",
-                    "channel": "NEWS.HEADLINES.{category}",
-                    "transport": "HTTP",
-                    "protocol": "lightstreamer-3.6",
-                    "returns": {
-                        "$ref": "NewsDTO"
-                    },
-                    "group": "Streaming API",
-                    "parameters": [
-                {
-                    "type": "string",
-                    "name": "category",
-                    "description": "A news category",
-                    "minLength": 1,
-                    "maxLength": 100,
-                    "demoValue": "UK"
-                }
-            ]
-                },
-                "Prices": {
-                    "description": "Stream of current prices. Try PRICES.PRICE.154297 (GBP/USD (per 0.0001) CFD) which prices Mon - Fri 24hrs",
-                    "target": "CITYINDEXSTREAMING",
-                    "channel": "PRICES.PRICE.{marketIds}",
-                    "transport": "HTTP",
-                    "protocol": "lightstreamer-3.6",
-                    "returns": {
-                        "$ref": "PriceDTO"
-                    },
-                    "group": "Streaming API",
-                    "parameters": [
-                        {
-                            "type": "array",
-                            "items": [{ "type": "string"}],
-                            "name": "marketIds",
-                            "description": "The marketIds",
-                            "demoValue": "[\"71442\", \"71443\"]"
-                        }]
-                }
-
-            }
-        },
         "rpc": {
-            "target": "http://ciapipreprod.cityindextest9.co.uk/TradingApi/",
+            "target": "",
             "services": {
                 "LogOn": {
                     "description": "<p>Create a new session. This is how you \"log on\" to the CIAPI. Post a <a onclick=\"dojo.hash('#type.ApiLogOnRequestDTO'); return false;\" class=\"json-link\" href=\"#\">ApiLogOnRequestDTO</a> to the uri specified below</p>",
@@ -685,109 +637,29 @@ exports.smd =
                     "throttleScope": "data",
                     "parameters": []
                 },
-                "GetMessage": {
-                    "description": "[MISSING]",
-                    "target": "message",
-                    "uriTemplate": "/Message/{id}?language={language}&category={category}",
-                    "contentType": "application/json",
-                    "responseContentType": "application/json",
-                    "transport": "GET",
-                    "envelope": "URL",
-                    "returns": {
-                        "type": "string"
-                    },
-                    "group": "Messaging",
-                    "throttleScope": "data",
-                    "parameters": [
-            {
-                "type": "string",
-                "name": "id",
-                "description": "[MISSING]"
-            },
-            {
-                "type": "string",
-                "name": "language",
-                "description": "[MISSING]"
-            },
-            {
-                "type": "string",
-                "name": "category",
-                "description": "[MISSING]"
-            }
-          ]
-                },
-                "GetMessagePopup": {
-                    "description": "[MISSING]",
-                    "target": "message",
-                    "uriTemplate": "/message/popup?language={language}&ClientAccountId={clientAccountId}",
-                    "contentType": "application/json",
-                    "responseContentType": "application/json",
-                    "transport": "GET",
-                    "envelope": "URL",
-                    "returns": {
-                        "$ref": "GetMessagePopupResponseDTO"
-                    },
-                    "group": "Messaging",
-                    "throttleScope": "data",
-                    "parameters": [
-            {
-                "type": "string",
-                "name": "language",
-                "description": "[MISSING]"
-            },
-            {
-                "type": "integer",
-                "name": "clientAccountId",
-                "description": "[MISSING]"
-            }
-          ]
-                },
-                "AcceptOrRejectMessagePopupResponse": {
-                    "description": "[MISSING]",
-                    "target": "message",
-                    "uriTemplate": "/message/popupchoice?ClientAccountId={clientAccountId}&Accepted={accepted}",
-                    "contentType": "application/json",
-                    "responseContentType": "application/json",
-                    "transport": "GET",
-                    "envelope": "URL",
-                    "group": "Messaging",
-                    "throttleScope": "data",
-                    "parameters": [
-            {
-                "type": "integer",
-                "name": "clientAccountId",
-                "description": "[MISSING]"
-            },
-            {
-                "type": "boolean",
-                "name": "accepted",
-                "description": "[MISSING]"
-            }
-          ]
-                },
                 "GetSystemLookup": {
-                    "description": "[MISSING]",
+                    "description": "Use the message lookup service to get localised textual names for the various status code & Ids returned by the API. For example, a query for OrderStatusReasons will contain text names for all the possible values of OrderStatusReason in the ApiOrderResponseDTO. You should only request the list once per session (for each entity you're interested in).",
                     "target": "message",
                     "uriTemplate": "/message/lookup?lookupEntityName={lookupEntityName}&cultureId={cultureId}",
                     "contentType": "application/json",
                     "responseContentType": "application/json",
+                    "cacheDuration": -1,
                     "transport": "GET",
                     "envelope": "URL",
                     "returns": {
                         "$ref": "ApiLookupResponseDTO"
                     },
-                    "group": "Messaging",
-                    "throttleScope": "data",
+                    "group": "Messages",
                     "parameters": [
             {
                 "type": "string",
                 "name": "lookupEntityName",
-                "description": "[MISSING]"
+                "description": "The entity to lookup (eg OrderStatusReason, InstructionStatusReason, OrderApplicability or Culture)"
             },
             {
                 "type": "integer",
                 "name": "cultureId",
-                "description": "[MISSING]"
+                "description": "The cultureId used to override the translated text description."
             }
           ]
                 },
@@ -813,7 +685,56 @@ exports.smd =
             }
           ]
                 }
-
+            }
+        },
+        "streaming": {
+            "target": "",
+            "services": {
+                "NewsHeadlines": {
+                    "description": "Stream of current news headlines.  Try NEWS.MOCKHEADLINES.UK for a mock stream",
+                    "target": "CITYINDEXSTREAMING",
+                    "channel": "NEWS.MOCKHEADLINES.{category}",
+                    "transport": "HTTP",
+                    "protocol": "lightstreamer-3.6",
+                    "returns": {
+                        "$ref": "NewsDTO"
+                    },
+                    "group": "Streaming API",
+                    "parameters": [
+            {
+                "type": "string",
+                "name": "category",
+                "description": "A news category",
+                "minLength": 1,
+                "maxLength": 100,
+                "demoValue": "UK"
+            }
+          ]
+                },
+                "Prices": {
+                    "description": "Stream of current prices. Try PRICES.PRICE.154297 (GBP/USD (per 0.0001) CFD) which prices Mon - Fri 24hrs",
+                    "target": "CITYINDEXSTREAMING",
+                    "channel": "PRICES.PRICE.{marketIds}",
+                    "transport": "HTTP",
+                    "protocol": "lightstreamer-3.6",
+                    "returns": {
+                        "$ref": "PriceDTO"
+                    },
+                    "group": "Streaming API",
+                    "parameters": [
+            {
+                "type": "array",
+                "items": [
+                {
+                    "type": "string"
+                }
+              ],
+                "name": "marketIds",
+                "description": "The marketIds",
+                "demoValue": "[\"71442\", \"71443\"]"
+            }
+          ]
+                }
             }
         }
     }

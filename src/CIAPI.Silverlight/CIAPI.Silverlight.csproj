@@ -65,6 +65,18 @@
     <Compile Include="..\CIAPI\Generated\Routes.cs">
       <Link>Generated\Routes.cs</Link>
     </Compile>
+    <Compile Include="..\CIAPI\MagicNumberKeys.cs">
+      <Link>MagicNumberKeys.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\MagicNumberResolver.cs">
+      <Link>MagicNumberResolver.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\NullType.cs">
+      <Link>NullType.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\ResolvableDTO.cs">
+      <Link>ResolvableDTO.cs</Link>
+    </Compile>
     <Compile Include="..\CIAPI\Rpc\ApiClient.cs">
       <Link>Rpc\ApiClient.cs</Link>
     </Compile>

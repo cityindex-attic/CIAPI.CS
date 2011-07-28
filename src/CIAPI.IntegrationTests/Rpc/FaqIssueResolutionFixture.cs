@@ -19,6 +19,8 @@ namespace CIAPI.IntegrationTests.Rpc
             var rpcClient = new Client(Settings.RpcUri);
             rpcClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);
 
+
+
             GetPriceBarResponseDTO bars = rpcClient.PriceHistory.GetPriceBars("71442", "MINUTE", 1, "15");
             Assert.IsNotNull(bars);
 

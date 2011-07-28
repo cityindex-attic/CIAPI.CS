@@ -100,8 +100,7 @@
                     paramList = paramList.concat(paramType, " ", parameter.name);
                 });
                 var returnType;
-                if (key == "GetMessage") {
-                }
+       
                 if (service.returns) {
                     if (service.returns.type) {
                         // is a primitive type
@@ -155,7 +154,7 @@
                 }
 
 
-                serviceText = serviceText.concat("\n" + "        " + visibility + " " + returnType + " " + key + "(" + paramList + ")");
+                serviceText = serviceText.concat("\n" + "        " + visibility + " virtual " + returnType + " " + key + "(" + paramList + ")");
                 serviceText = serviceText.concat("\n" + "        {");
                 serviceText = serviceText.concat("\n" + "            return _client.Request<" + returnType + ">(\"" + target + "\", \"" + uriTemplate + "\", \"" + transport + "\",");
                 serviceText = serviceText.concat("\n" + "            new Dictionary<string, object>");
@@ -177,7 +176,7 @@
                 });
                 serviceText = serviceText.concat("\n" + "        /// <param name=\"callback\"></param>");
                 serviceText = serviceText.concat("\n" + "        /// <param name=\"state\"></param>");
-                serviceText = serviceText.concat("\n" + "        " + visibility + " void Begin" + key + "(" + paramList + (paramList ? "," : "") + " ApiAsyncCallback<" + returnType + "> callback, object state)");
+                serviceText = serviceText.concat("\n" + "        " + visibility + " virtual void Begin" + key + "(" + paramList + (paramList ? "," : "") + " ApiAsyncCallback<" + returnType + "> callback, object state)");
                 serviceText = serviceText.concat("\n" + "        {");
                 serviceText = serviceText.concat("\n" + "            _client.BeginRequest(callback, state, \"" + target + "\", \"" + uriTemplate + "\", \"" + transport + "\",");
 

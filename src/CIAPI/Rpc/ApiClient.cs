@@ -6,18 +6,9 @@ using CityIndex.JsonClient;
 
 namespace CIAPI.Rpc
 {
-    /// <summary>
-    /// empty class to enable return of void methods
-    /// </summary>
-    public class NullType
-    {
-        
-    }
     public partial class Client : CityIndex.JsonClient.Client
     {
     
-
- 
 
 
         public string UserName { get; set; }

@@ -11,7 +11,7 @@ namespace CIAPI.Streaming.Lightstreamer
 
         public IStreamingListener<NewsDTO> BuildNewsHeadlinesListener(string category)
         {
-            var topic = Regex.Replace("NEWS.HEADLINES.{category}", "{category}", category);
+            var topic = Regex.Replace("NEWS.MOCKHEADLINES.{category}", "{category}", category);
             return BuildListener<NewsDTO>("CITYINDEXSTREAMING",topic);
         }
 

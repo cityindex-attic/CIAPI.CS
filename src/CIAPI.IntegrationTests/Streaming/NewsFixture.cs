@@ -34,7 +34,7 @@ namespace CIAPI.IntegrationTests.Streaming
             var streamingClient = BuildStreamingClient();
             streamingClient.Connect();
 
-            var newsListener = streamingClient.BuildNewsHeadlinesListener("NEWS.MOCKHEADLINES.UK");
+            var newsListener = streamingClient.BuildNewsHeadlinesListener("UK");
             newsListener.Start();
 
             NewsDTO actual = null;
@@ -46,15 +46,17 @@ namespace CIAPI.IntegrationTests.Streaming
                 gate.Set();
             };
 
+            bool timedOut = false;
 
-            if (!gate.WaitOne(TimeSpan.FromSeconds(5)))
+            if (!gate.WaitOne(TimeSpan.FromSeconds(15)))
             {
-                Assert.Fail("timed out");
+                timedOut = true;
             }
 
             newsListener.Stop();
             streamingClient.Disconnect();
 
+            Assert.IsFalse(timedOut,"timed out");
             Assert.IsNotNull(actual);
             Assert.IsNotEmpty(actual.Headline);
 

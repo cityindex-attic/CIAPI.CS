@@ -64,7 +64,7 @@ namespace ConsoleSpikes
 
             //And instantiate a listener for news headlines on the appropriate topic
             //You can have multiple listeners on one connection
-            var newsListener = streamingClient.BuildNewsHeadlinesListener("NEWS.MOCKHEADLINES.UK");
+            var newsListener = streamingClient.BuildNewsHeadlinesListener("NEWS.HEADLINES.UK");
             newsListener.Start();
 
             //The MessageReceived event will be triggered every time a new News headline is available,
