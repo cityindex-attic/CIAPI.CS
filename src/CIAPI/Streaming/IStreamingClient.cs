@@ -7,7 +7,7 @@ namespace CIAPI.Streaming
     {
 
         
-        IStreamingListener<PriceDTO> BuildPricesListener(params string[] marketIds);
+        IStreamingListener<PriceDTO> BuildPricesListener(params int[] marketIds);
         IStreamingListener<NewsDTO> BuildNewsHeadlinesListener(string category);
         //IStreamingListener<ClientAccountMarginDTO> BuildClientAccountMarginListener();
         //IStreamingListener<QuoteDTO> BuildQuotesListener();

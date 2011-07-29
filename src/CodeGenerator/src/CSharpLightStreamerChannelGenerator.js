@@ -18,6 +18,7 @@
         appendLine("using CIAPI.DTO;");
         appendLine("using StreamingClient;");
         appendLine("using System.Linq;");
+        appendLine("using System;");
 
         appendLine("");
         appendLine("namespace CIAPI.Streaming.Lightstreamer");
@@ -36,33 +37,53 @@
             adapters[service.target] = service.target;
             var parameterName = "";
             var parameterArray = false;
+            var parameterType = "";
+            var parameterValidator = "";
             if (service.parameters) {
                 if (service.parameters.length > 1) {
                     throw new Error("multiple parameters not supported");
                 };
                 parameterName = service.parameters[0].name;
                 parameterArray = service.parameters[0].type == "array";
+                parameterValidator = service.parameters[0].pattern;
                 if (parameterArray) {
-                    if (service.parameters[0].items[0].type != "string") {
-                        throw new Error("only string or string array parameters supported");
-                    }
+                    parameterType = service.parameters[0].items[0].type;
                 } else {
-                    if (service.parameters[0].type != "string") {
-                        throw new Error("only string or string array parameters supported");
-                    }
+                    parameterType = service.parameters[0].type;
                 }
+
+                switch (parameterType) {
+
+                    case "string":
+                        break;
+                    case "integer":
+                        parameterType = "int";
+                        break;
+                    default:
+                        throw new Error("unsupported parameter type:" + parameterType);
+                        break;
+                }
+
+
             }
 
 
 
-            appendLine("        public IStreamingListener<" + returnType + "> Build" + key + "Listener(" + (parameterName ? "string " : "") + (parameterArray ? "[] " : "") + parameterName + ")");
+            appendLine("        public IStreamingListener<" + returnType + "> Build" + key + "Listener(" + (parameterName ? parameterType + " " : "") + (parameterArray ? "[] " : "") + parameterName + ")");
             appendLine("        {");
             if (parameterName) {
+                if (parameterValidator) {
+                    appendLine("            const string validator = \"" + parameterValidator + "\";");
+                    appendLine("            if (!Regex.IsMatch(" + parameterName + ", validator))");
+                    appendLine("            {");
+                    appendLine("                throw new Exception(\"Invalid " + parameterName + ":\" + " + parameterName + " + \"\\r\\nMust match expression \" + validator);");
+                    appendLine("            }");
+                }
 
                 if (parameterArray) {
-                    appendLine("          var topic = string.Join(\" \", " + parameterName + ".Select(t => Regex.Replace(\"" + service.channel + "\", \"{" + parameterName + "}\", t)).ToArray());");
+                    appendLine("          var topic = string.Join(\" \", " + parameterName + ".Select(t => Regex.Replace(\"" + service.channel + "\", \"{" + parameterName + "}\", t.ToString())).ToArray());");
                 } else {
-                    appendLine("            var topic = Regex.Replace(\"" + service.channel + "\", \"{" + parameterName + "}\", " + parameterName + ");");
+                    appendLine("            var topic = Regex.Replace(\"" + service.channel + "\", \"{" + parameterName + "}\", " + parameterName + ".ToString());");
                 }
             } else {
                 appendLine("            string topic = \"" + service.channel + "\";");

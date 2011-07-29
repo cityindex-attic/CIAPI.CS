@@ -19,18 +19,8 @@ namespace CIAPI.Tests.Streaming
 
         }
 
-        [Test]
-        public void SubscribingToAnCompletelyInvalidPriceTopicThrowsAnException()
-        {
-            var ex = Assert.Throws<InvalidTopicException>(() => _streamingClient.BuildPricesListener("BOGUS.TOPIC"));
-        }
-
-        [Test]
-        public void SubscribingToAnInvalidPriceTopicThrowsAnException()
-        {
-            var ex = Assert.Throws<InvalidTopicException>(() => _streamingClient.BuildPricesListener("GBP"));
-        }
-
+        
+        
         [Test]
         public void SubscribingToAnInvalidNewsHeadlinesTopicThrowsAnException()
         {

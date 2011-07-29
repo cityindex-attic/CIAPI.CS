@@ -17,7 +17,7 @@ namespace CIAPI.Phone7.Tests
 {
     public partial class App : Application
     {
-        public static Uri RpcUri = new Uri("http://ciapipreprod.cityindextest9.co.uk/TradingApi/");
+        public static Uri RpcUri = new Uri("http://ciapipreprod.cityindextest9.co.uk/TradingApi");
         public static Uri StreamingUri = new Uri("http://pushpreprod.cityindextest9.co.uk");
         public static string RpcUserName = "xx189949";
         public static string RpcPassword = "password";

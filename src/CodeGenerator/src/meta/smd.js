@@ -693,7 +693,7 @@
                 "NewsHeadlines": {
                     "description": "Stream of current news headlines.  Try NEWS.MOCKHEADLINES.UK for a mock stream",
                     "target": "CITYINDEXSTREAMING",
-                    "channel": "NEWS.MOCKHEADLINES.{category}",
+                    "channel": "NEWS.HEADLINES.{category}",
                     "transport": "HTTP",
                     "protocol": "lightstreamer-3.6",
                     "returns": {
@@ -704,6 +704,7 @@
             {
                 "type": "string",
                 "name": "category",
+                "pattern": "(US|UK|ALL)",
                 "description": "A news category",
                 "minLength": 1,
                 "maxLength": 100,
@@ -726,12 +727,12 @@
                 "type": "array",
                 "items": [
                 {
-                    "type": "string"
+                    "type": "integer"
                 }
               ],
                 "name": "marketIds",
                 "description": "The marketIds",
-                "demoValue": "[\"71442\", \"71443\"]"
+                "demoValue": "[71442, 71443]"
             }
           ]
                 }

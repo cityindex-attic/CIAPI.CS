@@ -56,7 +56,7 @@ namespace CIAPI.CS.Koans
         public void YouListenToAStreamsOverAConnection()
         {
             //Beginning with a connected streamingClient, you create a listener expected a specific message type on a certain channel/topic
-            const string topic = "NEWS.HEADLINES.UK"; //The mock news headlines stream publishes one "story" per second.
+            const string topic = "UK"; //The mock news headlines stream publishes one "story" per second.
             var ukNewsListener = _streamingClient.BuildNewsHeadlinesListener(topic);
 
             var ukNewsHeadlines = new List<NewsDTO>();
@@ -80,8 +80,8 @@ namespace CIAPI.CS.Koans
         [Koan(Order = 3)]
         public void YouCanListenToMultipleStreamsOverASingleConnection()
         {
-            var ukNewsListener = _streamingClient.BuildNewsHeadlinesListener("NEWS.HEADLINES.UK");
-            var gbpusdPriceListener = _streamingClient.BuildPricesListener("154297");
+            var ukNewsListener = _streamingClient.BuildNewsHeadlinesListener("UK");
+            var gbpusdPriceListener = _streamingClient.BuildPricesListener(154297);
 
             //Build as many listeners as you want
             var ukNewsHeadlines = new List<NewsDTO>();

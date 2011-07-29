@@ -2,6 +2,7 @@ using System.Text.RegularExpressions;
 using CIAPI.DTO;
 using StreamingClient;
 using System.Linq;
+using System;
 
 namespace CIAPI.Streaming.Lightstreamer
 {
@@ -11,13 +12,18 @@ namespace CIAPI.Streaming.Lightstreamer
 
         public IStreamingListener<NewsDTO> BuildNewsHeadlinesListener(string category)
         {
-            var topic = Regex.Replace("NEWS.MOCKHEADLINES.{category}", "{category}", category);
+            const string validator = "(US|UK|ALL)";
+            if (!Regex.IsMatch(category, validator))
+            {
+                throw new Exception("Invalid category:" + category + "\r\nMust match expression " + validator);
+            }
+            var topic = Regex.Replace("NEWS.HEADLINES.{category}", "{category}", category.ToString());
             return BuildListener<NewsDTO>("CITYINDEXSTREAMING",topic);
         }
 
-        public IStreamingListener<PriceDTO> BuildPricesListener(string [] marketIds)
+        public IStreamingListener<PriceDTO> BuildPricesListener(int [] marketIds)
         {
-          var topic = string.Join(" ", marketIds.Select(t => Regex.Replace("PRICES.PRICE.{marketIds}", "{marketIds}", t)).ToArray());
+          var topic = string.Join(" ", marketIds.Select(t => Regex.Replace("PRICES.PRICE.{marketIds}", "{marketIds}", t.ToString())).ToArray());
             return BuildListener<PriceDTO>("CITYINDEXSTREAMING",topic);
         }
 

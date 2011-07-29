@@ -42,7 +42,7 @@ namespace CIAPI.IntegrationTests.Streaming
 
 
 
-            var priceListener = streamingClient.BuildPricesListener("71442");
+            var priceListener = streamingClient.BuildPricesListener(71442);
             priceListener.Start();
 
             PriceDTO actual = null;
@@ -98,8 +98,8 @@ namespace CIAPI.IntegrationTests.Streaming
             var streamingClient = BuildStreamingClient();
             streamingClient.Connect();
             var priceListener = streamingClient.BuildPricesListener(new[]{
-                                                                         "71442",
-                                                                         "71443"
+                                                                         71442,
+                                                                         71443
                                                                     });
 
             var prices = new Dictionary<string, PriceDTO>();

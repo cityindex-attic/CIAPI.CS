@@ -14,14 +14,14 @@ namespace CIAPI.Streaming.Websocket
 
  
 
-        public IStreamingListener<PriceDTO> BuildPricesListener(string[] topics)
+        public IStreamingListener<PriceDTO> BuildPricesListener(int[] marketIds)
         {
             throw new NotImplementedException();
         }
 
-        public IStreamingListener<NewsDTO> BuildNewsHeadlinesListener(string topic)
+        public IStreamingListener<NewsDTO> BuildNewsHeadlinesListener(string category)
         {
-            return BuildListener<NewsDTO>(topic);
+            return BuildListener<NewsDTO>(category);
         }
 
         public IStreamingListener<ClientAccountMarginDTO> BuildClientAccountMarginListener()

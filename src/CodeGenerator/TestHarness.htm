@@ -25,6 +25,8 @@
             var LSChannelGenerator = exports.LSChannelGenerator;
 
 
+            // FIXME: provider model idea sounded good at the time but is actually just
+            // unnecessary complexity. need to revert to simple iteration model.
 
             var visitor = new CSharpVisitor();
             var provider = new JSchemaProvider(visitor);
@@ -33,9 +35,9 @@
             // FIXME: instigator should not take parameters
             provider.visit("root", schema, "schema");
             var output = visitor.toString();
-            // IE sucks
-            //output = output.replace(/\n/g, "<br/>\n").replace(/\s/g, "&nbsp;");
             document.getElementById("code").value = output;
+
+
 
             var rpcGenerator = new CSharpRouteGenerator(smd.services.rpc, schema, "CIAPI.Rpc", "Client", ["System", "System.Collections.Generic", "CityIndex.JsonClient", "CIAPI.DTO"], routesPatch);
             var rpcRoutes = rpcGenerator.generate();
