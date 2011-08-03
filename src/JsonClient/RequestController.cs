@@ -219,6 +219,7 @@ namespace CityIndex.JsonClient
                             using (Stream requestStream = item.Request.EndGetRequestStream(ac))
                             {
                                 requestStream.Write(bodyValue, 0, bodyValue.Length);
+                                requestStream.Flush();
                             }
 
                             EnqueueRequest<TDTO>(url);

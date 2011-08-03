@@ -5,6 +5,14 @@ using System.Text;
 
 namespace CIAPI.DTO
 {
+
+    [Serializable]
+    public class ApiOrderResponseDTOResolved : ApiOrderResponseDTO
+    {
+        
+    }
+
+
     [Serializable]
     public class ApiTradeOrderResponseDTOResolved:ApiTradeOrderResponseDTO
     {
