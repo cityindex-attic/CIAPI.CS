@@ -167,7 +167,7 @@
                         self.writeLine("    /// </summary>");
                     };
                     self.writeLine("    [Serializable]");
-                    this.writeLine("    public " + typeName + " " + current.key + (current.value["extends"] ? (" : " + this.normalizeKey(current.value["extends"])) : ""));
+                    this.writeLine("    public " + (typeName!="enum"?"partial ":"") + typeName + " " + current.key + (current.value["extends"] ? (" : " + this.normalizeKey(current.value["extends"])) : ""));
                     this.writeLine("    {");
                     if (typeName == "enum") {
                         // not really a better place to handle this...

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Common.Logging;
+using Newtonsoft.Json;
 
 namespace CityIndex.JsonClient
 {
@@ -9,6 +10,7 @@ namespace CityIndex.JsonClient
     /// </summary>
     public class RequestCache : IRequestCache
     {
+
         #region Fields
 
         private static readonly ILog Log = LogManager.GetLogger(typeof(RequestCache));
@@ -20,21 +22,17 @@ namespace CityIndex.JsonClient
 
         #region cTor
 
-        /// <summary>
-        /// Instantiates a <see cref="RequestCache"/> with default purge interval of 10 seconds and default cache duration of 0 milliseconds.
-        /// </summary>
-        public RequestCache()
-            : this(TimeSpan.FromMilliseconds(0))
-        {
-        }
+        
 
         /// <summary>
         /// Instantiates a <see cref="RequestCache"/> with supplied <paramref name="defaultCacheDuration"/>
         /// </summary>
-
         /// <param name="defaultCacheDuration">The default cache lifespan to apply to <see cref="CacheItem{TDTO}"/></param>
+        
         public RequestCache(TimeSpan defaultCacheDuration)
         {
+            
+
             _defaultCacheDuration = defaultCacheDuration;
             _lock = new object();
             _items = new Dictionary<string, CacheItemBase>();
@@ -51,7 +49,7 @@ namespace CityIndex.JsonClient
         /// <typeparam name="TDTO"></typeparam>
         /// <param name="url"></param>
         /// <returns></returns>
-        public CacheItem<TDTO> GetOrCreate<TDTO>(string url) 
+        public CacheItem<TDTO> GetOrCreate<TDTO>(string url)
         {
             lock (_lock)
             {
@@ -73,7 +71,7 @@ namespace CityIndex.JsonClient
         /// <param name="url"></param>
         /// <returns></returns>
         /// <exception cref="KeyNotFoundException">If url is not found in internal map</exception>
-        public CacheItem<TDTO> Get<TDTO>(string url) 
+        public CacheItem<TDTO> Get<TDTO>(string url)
         {
             lock (_lock)
             {
@@ -95,7 +93,7 @@ namespace CityIndex.JsonClient
         /// <exception cref="InvalidOperationException">
         /// If item is not completed, removing would result in orphaned callbacks effectively stalling the calling code.
         /// </exception>
-        public CacheItem<TDTO> Remove<TDTO>(string url) 
+        public CacheItem<TDTO> Remove<TDTO>(string url)
         {
             lock (_lock)
             {
@@ -114,6 +112,8 @@ namespace CityIndex.JsonClient
         #endregion
 
         #region Private implementation
+
+
 
         /// <summary>
         /// Is called on the purge timer to remove completed and expired <see cref="CacheItem{TDTO}"/> from the internal map.
@@ -151,7 +151,6 @@ namespace CityIndex.JsonClient
         /// <param name="url"></param>
         /// <returns></returns>
         private CacheItem<TDTO> CreateAndAddItem<TDTO>(string url)
-            
         {
             var item = new CacheItem<TDTO>
                            {
@@ -172,7 +171,7 @@ namespace CityIndex.JsonClient
         /// <typeparam name="TDTO"></typeparam>
         /// <param name="url"></param>
         /// <returns></returns>
-        private CacheItem<TDTO> GetItem<TDTO>(string url) 
+        private CacheItem<TDTO> GetItem<TDTO>(string url)
         {
             var item = (CacheItem<TDTO>)_items[url];
 

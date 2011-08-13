@@ -2,69 +2,51 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
 namespace CIAPI.DTO
 {
-
-    [Serializable]
-    public class ApiOrderResponseDTOResolved : ApiOrderResponseDTO
+    public partial class ApiOrderResponseDTO
     {
-        
-    }
-
-
-    [Serializable]
-    public class ApiTradeOrderResponseDTOResolved:ApiTradeOrderResponseDTO
-    {
-        
-    }
-    [Serializable]
-    public class ApiOpenPositionDTOResolved : ApiOpenPositionDTO
-    {
-        public ApiOpenPositionDTOResolved(ApiOpenPositionDTO source)
+        public void ResolveMagicNumbers(MagicNumberResolver resolver)
         {
-            this.Currency = source.Currency;
-            this.Direction = source.Direction;
-            this.LastChangedDateTimeUTC = source.LastChangedDateTimeUTC;
-            this.LimitOrder = source.LimitOrder;
-            this.MarketId = source.MarketId;
-            this.MarketName = source.MarketName;
-            this.OrderId = source.OrderId;
-            this.Price = source.Price;
-            this.Quantity = source.Quantity;
-            this.Status = source.Status;
-            this.StopOrder = source.StopOrder;
-            this.TradingAccountId = source.TradingAccountId;
+            this.StatusReason_Resolved = resolver.ResolveMagicNumber(MagicNumberKeys.ApiOrderResponseDTO_StatusReason, this.StatusReason);
+            this.Status_Resolved = resolver.ResolveMagicNumber(MagicNumberKeys.ApiOrderResponseDTO_StatusReason, this.StatusReason);
+            this.OCO.ResolveMagicNumbers(resolver);
+            foreach (ApiIfDoneResponseDTO apiIfDoneResponseDTO in this.IfDone)
+            {
+                apiIfDoneResponseDTO.Limit.ResolveMagicNumbers(resolver);
+                apiIfDoneResponseDTO.Stop.ResolveMagicNumbers(resolver);
+            }
         }
-
-        public string StatusReason { get; set; }
     }
-
-    /// <summary>
-    /// Response containing the open position.
-    /// </summary>
-    [Serializable]
-    public class GetOpenPositionResponseDTOResolved
+    public partial class ApiTradeOrderResponseDTO
     {
-        public GetOpenPositionResponseDTOResolved(GetOpenPositionResponseDTO source)
+        public void ResolveMagicNumbers(MagicNumberResolver resolver)
         {
-            this.OpenPosition = new ApiOpenPositionDTOResolved(source.OpenPosition);
+            this.StatusReason_Resolved = resolver.ResolveMagicNumber(MagicNumberKeys.ApiOrderResponseDTO_StatusReason, this.StatusReason);
+            this.Status_Resolved = resolver.ResolveMagicNumber(MagicNumberKeys.ApiOrderResponseDTO_StatusReason, this.StatusReason);
+
+            foreach (ApiOrderResponseDTO order in this.Orders)
+            {
+                order.ResolveMagicNumbers(resolver);
+            }
         }
-
-        public ApiOpenPositionDTOResolved OpenPosition { get; set; }
     }
-
-    /// <summary>
-    /// Contains the result of a ListOpenPositions query
-    /// </summary>
-    [Serializable]
-    public class ListOpenPositionsResponseDTOResolved
+    public partial class ApiActiveStopLimitOrderDTO
     {
-        public ListOpenPositionsResponseDTOResolved(ListOpenPositionsResponseDTO source)
+        public void ResolveMagicNumbers(MagicNumberResolver resolver)
         {
-            this.OpenPositions = source.OpenPositions.Select(p => new ApiOpenPositionDTOResolved(p)).ToArray();
-        }
+            this.Applicability_Resolved = resolver.ResolveMagicNumber(MagicNumberKeys.ApiActiveStopLimitOrderDTO_Applicability, this.Applicability);
 
-        public ApiOpenPositionDTOResolved[] OpenPositions { get; set; }
+        }
     }
+
+    public partial class ApiOpenPositionDTO
+    {
+        public void ResolveMagicNumbers(MagicNumberResolver resolver)
+        {
+            this.Status_Resolved = resolver.ResolveMagicNumber(MagicNumberKeys.ApiOpenPositionDTO_Status, this.Status);
+        }
+    }
+
+
 }

@@ -2,7 +2,7 @@
 
 var schema = require("./meta/schema.js").schema;
 var smd = require("./meta/smd.js").smd;
-var schemaPatch = require("./meta/schema.patch.js").schema;
+var schemaPatch = require("./meta/schema.patch.js").schemaPatch;
 var routesPatch = require("./meta/routes.patch.js").routesPatch;
 
 var JSchemaProvider = require("./JSchemaProvider.js").JSchemaProvider;
@@ -10,6 +10,20 @@ var CSharpVisitor = require("./JSchemaProvider.CSharpVisitor.js").CSharpVisitor;
 var CSharpRouteGenerator = require("./CSharpRouteGenerator.js").CSharpRouteGenerator;
 
 var LSChannelGenerator = require("./CSharpLightStreamerChannelGenerator.js").LSChannelGenerator;
+
+// patch in additional members to DTO
+for (patchTypeName in schemaPatch.properties) {
+    if (schemaPatch.properties.hasOwnProperty(patchTypeName)) {
+        var patchType = schemaPatch.properties[patchTypeName];
+        var targetType = schema.properties[patchTypeName];
+        for (patchPropertyName in patchType.properties) {
+            if (patchType.properties.hasOwnProperty(patchPropertyName)) {
+                targetType.properties[patchPropertyName] = patchType.properties[patchPropertyName];
+            }
+        }
+    }
+}
+
 
 
 var visitor = new CSharpVisitor();

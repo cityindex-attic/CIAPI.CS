@@ -31,7 +31,7 @@ namespace CIAPI.IntegrationTests.Rpc
             rpcClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);
 
             var resolver = new MagicNumberResolver(rpcClient);
-            const string lookupEntityName = MagicNumberKeys.OrderStatusReason;
+            const string lookupEntityName = MagicNumberKeys.ApiOrderResponseDTO_Status;
 
             string orderStatusReason = resolver.ResolveMagicNumber(lookupEntityName, 1);
 
@@ -46,15 +46,17 @@ namespace CIAPI.IntegrationTests.Rpc
             var rpcClient = new Client(Settings.RpcUri);
             rpcClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);
             var resolver = new MagicNumberResolver(rpcClient);
+
+            // this would be the value you get back from the API
             GetOpenPositionResponseDTO source = new GetOpenPositionResponseDTO
             {
                 OpenPosition = new ApiOpenPositionDTO { Status = 1 }
             };
 
-            GetOpenPositionResponseDTOResolved result = resolver.ResolveGetOpenPositionResponseDTO(source);
+            source.OpenPosition.ResolveMagicNumbers(resolver);
 
 
-            Assert.AreEqual("OK", result.OpenPosition.StatusReason, "status reason not resolved");
+            Assert.AreEqual("Pending", source.OpenPosition.Status_Resolved, "status reason not resolved");
 
             rpcClient.LogOut();
         }

@@ -17,6 +17,7 @@ namespace CityIndex.JsonClient
     ///</summary>
     public class RequestController : IRequestController
     {
+        
         private IJsonExceptionFactory _jsonExceptionFactory;
         private const int BackgroundInterval = 50;
         private readonly Thread _backgroundThread;
@@ -35,6 +36,7 @@ namespace CityIndex.JsonClient
         ///</summary>
         public RequestController(TimeSpan defaultCacheDuration, int retryCount, IRequestFactory requestFactory, IJsonExceptionFactory jsonExceptionFactory, params IThrottedRequestQueue[] scopes)
         {
+            
             _jsonExceptionFactory = jsonExceptionFactory;
             _requestFactory = requestFactory;
             _retryCount = retryCount;
@@ -104,6 +106,7 @@ namespace CityIndex.JsonClient
                     item.AddCallback(cb, state);
                     break;
                 case CacheItemState.Complete:
+                    
                     new ApiAsyncResult<TDTO>(cb, state, true, item.ResponseText, null);
                     break;
             }

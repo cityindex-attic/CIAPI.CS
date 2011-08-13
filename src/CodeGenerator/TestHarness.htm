@@ -15,8 +15,21 @@
             
             var schema = exports.schema;
             var smd = exports.smd;
-            var schemaPatch = exports.schema;
+            var schemaPatch = exports.schemaPatch;
             var routesPatch = exports.routesPatch;
+
+            for (patchTypeName in schemaPatch.properties) {
+                if (schemaPatch.properties.hasOwnProperty(patchTypeName)) {
+                    var patchType = schemaPatch.properties[patchTypeName];
+                    var targetType = schema.properties[patchTypeName];
+                    for (patchPropertyName in patchType.properties) {
+                        if (patchType.properties.hasOwnProperty(patchPropertyName)) {
+                            targetType.properties[patchPropertyName] = patchType.properties[patchPropertyName];
+                        }
+                    }
+                }
+            }
+
 
             var JSchemaProvider = exports.JSchemaProvider;
             var CSharpVisitor = exports.CSharpVisitor;

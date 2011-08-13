@@ -221,7 +221,7 @@
             self.writeLine(subClassProperties);
 
             self.writeLine("        public Client(Uri uri)");
-            self.writeLine("            : base(uri, new RequestController(TimeSpan.FromSeconds(0), 2, new RequestFactory(), new ErrorResponseDTOJsonExceptionFactory(), new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10, \"data\"), new ThrottedRequestQueue(TimeSpan.FromSeconds(3), 1, 3, \"trading\"),new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10, \"default\")))");
+            self.writeLine("            : base(uri, new RequestController(TimeSpan.FromSeconds(0), 2, new RequestFactory(), new ErrorResponseDTOJsonExceptionFactory(), new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10, \"data\"), new ThrottedRequestQueue(TimeSpan.FromSeconds(3), 1, 3, \"trading\"),new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10, \"default\")) )");
             self.writeLine("        {");
             self.writeLine(subClassInitializer);
             self.writeLine("        }");

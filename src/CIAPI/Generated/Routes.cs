@@ -18,7 +18,7 @@ namespace CIAPI.Rpc
       public _Messaging Messaging{get; private set;}
       public _ExceptionHandling ExceptionHandling{get; private set;}
         public Client(Uri uri)
-            : base(uri, new RequestController(TimeSpan.FromSeconds(0), 2, new RequestFactory(), new ErrorResponseDTOJsonExceptionFactory(), new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10, "data"), new ThrottedRequestQueue(TimeSpan.FromSeconds(3), 1, 3, "trading"),new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10, "default")))
+            : base(uri, new RequestController(TimeSpan.FromSeconds(0), 2, new RequestFactory(), new ErrorResponseDTOJsonExceptionFactory(), new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10, "data"), new ThrottedRequestQueue(TimeSpan.FromSeconds(3), 1, 3, "trading"),new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10, "default")) )
         {
 
             this. Authentication = new _Authentication(this);

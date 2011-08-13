@@ -49,7 +49,7 @@ namespace CityIndex.JsonClient.Tests
         {
 
             TestRequestFactory factory = new TestRequestFactory();
-            var requestController = new RequestController(TimeSpan.FromSeconds(0), 2, factory, new DummyJsonExceptionFactory(), new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10, "default"));
+            var requestController = new RequestController(TimeSpan.FromSeconds(0), 2, factory, new DummyJsonExceptionFactory(),  new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10, "default"));
 
             var ctx = new Client(new Uri("http://foo.bar"), requestController);
             factory.CreateTestRequest(expectedJson);

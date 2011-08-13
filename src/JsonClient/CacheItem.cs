@@ -70,6 +70,7 @@ namespace CityIndex.JsonClient
                         {
                             
                         }
+                        
                         new ApiAsyncResult<TDTO>(callback.Callback, callback.State, true, ResponseText, exception);
 
                     }

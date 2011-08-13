@@ -242,7 +242,7 @@ namespace CIAPI.Tests.Rpc
         {
 
             TestRequestFactory factory = new TestRequestFactory();
-            var requestController = new RequestController(TimeSpan.FromSeconds(0), 2, factory, new ErrorResponseDTOJsonExceptionFactory(), new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10, "data"), new ThrottedRequestQueue(TimeSpan.FromSeconds(3), 1, 3, "trading"));
+            var requestController = new RequestController(TimeSpan.FromSeconds(0), 2, factory, new ErrorResponseDTOJsonExceptionFactory(),  new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10, "data"), new ThrottedRequestQueue(TimeSpan.FromSeconds(3), 1, 3, "trading"));
 
             var ctx = new CIAPI.Rpc.Client(new Uri(TestConfig.RpcUrl), requestController);
             factory.CreateTestRequest(expectedJson);

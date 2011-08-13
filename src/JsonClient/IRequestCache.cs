@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace CityIndex.JsonClient
 {
@@ -8,6 +9,8 @@ namespace CityIndex.JsonClient
     /// </summary>
     public interface IRequestCache 
     {
+   
+
         ///<summary>
         /// Removes expired items from cache.
         ///</summary>

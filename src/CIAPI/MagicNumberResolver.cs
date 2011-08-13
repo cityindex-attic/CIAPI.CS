@@ -5,8 +5,12 @@ using CIAPI.Rpc;
 
 namespace CIAPI
 {
+    
     public class MagicNumberResolver
     {
+
+        
+
         private static readonly Dictionary<string, ApiLookupResponseDTO> MagicNumbers =
             new Dictionary<string, ApiLookupResponseDTO>();
 
@@ -16,26 +20,7 @@ namespace CIAPI
         {
             _client = client;
         }
-
-        public GetOpenPositionResponseDTOResolved ResolveGetOpenPositionResponseDTO(GetOpenPositionResponseDTO source)
-        {
-            var result = new GetOpenPositionResponseDTOResolved(source);
-            result.OpenPosition.StatusReason = ResolveMagicNumber(MagicNumberKeys.OrderStatusReason,
-                                                                  result.OpenPosition.Status);
-            return result;
-        }
-
-        public ListOpenPositionsResponseDTOResolved ResolveListOpenPositionsResponseDTO(
-            ListOpenPositionsResponseDTO source)
-        {
-            var result = new ListOpenPositionsResponseDTOResolved(source);
-            foreach (ApiOpenPositionDTOResolved openPosition in result.OpenPositions)
-            {
-                openPosition.StatusReason = ResolveMagicNumber(MagicNumberKeys.OrderStatusReason, openPosition.Status);
-            }
-            return result;
-        }
-
+         
 
         public string ResolveMagicNumber(string type, int code)
         {

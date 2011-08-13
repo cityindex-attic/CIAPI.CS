@@ -1,13 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using Newtonsoft.Json;
-
+using System.Linq;
 namespace CityIndex.JsonClient
 {
+ 
     /// <summary>
     /// The asynch request handle that is passed back to the <see cref="Client"/> to retrieve the result of the request.
     /// </summary>
-    public class ApiAsyncResult<TDTO> : ApiAsyncResultBase, IAsyncResult 
+    public class ApiAsyncResult<TDTO> : ApiAsyncResultBase, IAsyncResult
     {
         // Fields
         private readonly object _asyncState;
@@ -19,18 +21,20 @@ namespace CityIndex.JsonClient
         private string _responseText;
         private RequestNotificationStatus _status;
 
-        // Methods
-        internal ApiAsyncResult(ApiAsyncCallback<TDTO> cb, object state)
-        {
-            _id = Guid.NewGuid();
-            _callback = cb;
-            _asyncState = state;
-            _status = RequestNotificationStatus.Continue;
-        }
 
-        internal ApiAsyncResult(ApiAsyncCallback<TDTO> cb, object state, bool completed, string responseText,
+        // Methods
+        //internal ApiAsyncResult(ApiAsyncCallback<TDTO> cb, object state)
+        //{
+        //    _id = Guid.NewGuid();
+        //    _callback = cb;
+        //    _asyncState = state;
+        //    _status = RequestNotificationStatus.Continue;
+        //}
+
+        public ApiAsyncResult(ApiAsyncCallback<TDTO> cb, object state, bool completed, string responseText,
                                 Exception error)
         {
+            
             _id = Guid.NewGuid();
             _callback = cb;
             _asyncState = state;
@@ -123,7 +127,9 @@ namespace CityIndex.JsonClient
 
             try
             {
+
                 return JsonConvert.DeserializeObject<TDTO>(_responseText);
+
             }
             catch
             {
