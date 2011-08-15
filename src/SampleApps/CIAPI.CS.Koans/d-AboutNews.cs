@@ -21,7 +21,7 @@ namespace CIAPI.CS.Koans
 
             _rpcClient.LogIn(USERNAME, PASSWORD);
 
-            KoanAssert.That(_rpcClient.SessionId, Is.Not.Null.Or.Empty, "after logging in, you should have a valid session");
+            KoanAssert.That(_rpcClient.Session, Is.Not.Null.Or.Empty, "after logging in, you should have a valid session");
         }
 
         [Koan(Order = 1)]

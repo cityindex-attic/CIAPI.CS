@@ -12,7 +12,7 @@ namespace CIAPI.Rpc
 
 
         public string UserName { get; set; }
-        public string SessionId { get; set; }
+        public string Session { get; set; }
 
         /// <summary>
         /// Authenticates the request with the API using request headers.
@@ -32,12 +32,11 @@ namespace CIAPI.Rpc
             if (url.IndexOf("/session", StringComparison.OrdinalIgnoreCase) == -1)
             {
                 request.Headers["UserName"] = UserName;
-                // API advertises session id as a GUID but treats as a string internally so we need to ucase here.
-                if (SessionId == null)
+                if (Session == null)
                 {
-                    throw new ApiException("SessionId is null. Have you created a session? (logged in)");
+                    throw new ApiException("Session is null. Have you created a session? (logged on)");
                 }
-                request.Headers["Session"] = SessionId.ToUpper();
+                request.Headers["Session"] = Session;
             }
         }
 
@@ -52,7 +51,7 @@ namespace CIAPI.Rpc
         public void LogIn(String userName, String password)
         {
             UserName = userName;
-            SessionId = null;
+            Session = null;
 
             var response = Request<ApiLogOnResponseDTO>("session", "/", "POST", new Dictionary<string, object>
                                                                                          {
@@ -63,7 +62,7 @@ namespace CIAPI.Rpc
                                                                                                                }}
                                                                                          }, TimeSpan.FromMilliseconds(0),
                                                              "data");
-            SessionId = response.Session;
+            Session = response.Session;
         }
 
         /// <summary>
@@ -78,7 +77,7 @@ namespace CIAPI.Rpc
                                object state)
         {
             UserName = userName;
-            SessionId = null;
+            Session = null;
 
             BeginRequest(callback, state, "session", "/", "POST", new Dictionary<string, object>
                                                                       {
@@ -110,7 +109,7 @@ namespace CIAPI.Rpc
         public void EndLogIn(ApiAsyncResult<ApiLogOnResponseDTO> asyncResult)
         {
             ApiLogOnResponseDTO response = EndRequest(asyncResult);
-            SessionId = response.Session;
+            Session = response.Session;
         }
 
         /// <summary>
@@ -124,11 +123,11 @@ namespace CIAPI.Rpc
                                                                "POST", new Dictionary<string, object>
                                                                            {
                                                                                {"userName", UserName},
-                                                                               {"session", SessionId},
+                                                                               {"session", Session},
                                                                            }, TimeSpan.FromMilliseconds(0), "data");
             if (response.LoggedOut)
             {
-                SessionId = null;
+                Session = null;
             }
 
             return response.LoggedOut;
@@ -146,7 +145,7 @@ namespace CIAPI.Rpc
                          new Dictionary<string, object>
                              {
                                  {"userName", UserName},
-                                 {"session", SessionId},
+                                 {"session", Session},
                              }, TimeSpan.FromMilliseconds(0), "data");
         }
 
@@ -156,7 +155,7 @@ namespace CIAPI.Rpc
 
             if (response.LoggedOut)
             {
-                SessionId = null;
+                Session = null;
             }
 
             return response.LoggedOut;

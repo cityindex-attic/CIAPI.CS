@@ -41,7 +41,7 @@ namespace CIAPI.Silverlight.TestsMS
                                     {
                                         try
                                         {
-                                            Assert.IsFalse(string.IsNullOrEmpty(ctx.SessionId));
+                                            Assert.IsFalse(string.IsNullOrEmpty(ctx.Session));
                                         }
                                         finally
                                         {
@@ -121,7 +121,7 @@ namespace CIAPI.Silverlight.TestsMS
             CIAPI.Rpc.Client ctx = BuildClientAndSetupResponse(expectedJson);
 
             ctx.UserName = TestConfig.ApiUsername;
-            ctx.SessionId = TestConfig.ApiTestSessionId;
+            ctx.Session = TestConfig.ApiTestSessionId;
 
             return ctx;
         }

@@ -31,7 +31,7 @@ namespace CIAPI.CS.Koans
                 StreamingClientFactory.CreateStreamingClient(
                     STREAMING_URI, 
                     USERNAME,               /* Note how we use the same username */
-                    _rpcClient.SessionId);  /* and and shared sessionId to connect */
+                    _rpcClient.Session);  /* and and shared sessionId to connect */
 
             var gate = new ManualResetEvent(false);
             var isConnected = false;

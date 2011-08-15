@@ -33,7 +33,7 @@ namespace CIAPI.Tests.Rpc
 
             ctx.LogIn(TestConfig.ApiUsername, TestConfig.ApiPassword);
 
-            Assert.IsNotNullOrEmpty(ctx.SessionId);
+            Assert.IsNotNullOrEmpty(ctx.Session);
 
         }
 
@@ -234,7 +234,7 @@ namespace CIAPI.Tests.Rpc
             CIAPI.Rpc.Client ctx = BuildClientAndSetupResponse(expectedJson);
 
             ctx.UserName = TestConfig.ApiUsername;
-            ctx.SessionId = TestConfig.ApiTestSessionId;
+            ctx.Session = TestConfig.ApiTestSessionId;
 
             return ctx;
         }

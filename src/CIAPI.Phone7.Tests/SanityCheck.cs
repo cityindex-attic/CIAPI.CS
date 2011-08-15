@@ -24,7 +24,7 @@ namespace CIAPI.Phone7.Tests
             rpcClient.BeginLogIn(App.RpcUserName, App.RpcPassword, ar =>
                 {
                     rpcClient.EndLogIn(ar);
-                    Assert.IsNotNull(rpcClient.SessionId);
+                    Assert.IsNotNull(rpcClient.Session);
                     rpcClient.BeginLogOut(ar2 =>
                         {
                             var loggedOut = rpcClient.EndLogOut(ar2);
@@ -44,7 +44,7 @@ namespace CIAPI.Phone7.Tests
             rpcClient.BeginLogIn(App.RpcUserName, App.RpcPassword, ar =>
             {
                 rpcClient.EndLogIn(ar);
-                Assert.IsNotNull(rpcClient.SessionId);
+                Assert.IsNotNull(rpcClient.Session);
                 rpcClient.News.BeginListNewsHeadlines("UK", 10, ar2 =>
                     {
                         var response = rpcClient.News.EndListNewsHeadlines(ar2);

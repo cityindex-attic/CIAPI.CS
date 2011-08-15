@@ -42,11 +42,11 @@ namespace CIAPI.IntegrationTests.Rpc
             try
             {
                 rpcClient.News.ListNewsHeadlines("AUS", 4);
-                Assert.Fail("the previous line should have thrown an 'SessionId is null. Have you created a session? (logged in)' exception");
+                Assert.Fail("the previous line should have thrown an 'Session is null. Have you created a session? (logged in)' exception");
             }
             catch (ApiException e)
             {
-                Assert.That(e.Message, Is.StringContaining("SessionId is null. Have you created a session? (logged in)"), "The client should have rejected the request");
+                Assert.That(e.Message, Is.StringContaining("Session is null. Have you created a session? (logged in)"), "The client should have rejected the request");
             }
         }
  

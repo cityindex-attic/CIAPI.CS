@@ -23,7 +23,7 @@ namespace CIAPI.IntegrationTests.Streaming
 
             var streamingUri = new Uri("http://pushpreprod.cityindextest9.co.uk");
 
-            return StreamingClientFactory.CreateStreamingClient(streamingUri, userName, authenticatedClient.SessionId);
+            return StreamingClientFactory.CreateStreamingClient(streamingUri, userName, authenticatedClient.Session);
         }
 
         [Test]

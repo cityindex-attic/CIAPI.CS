@@ -36,7 +36,7 @@ namespace CIAPI.CS.Koans
                 KoanAssert.Fail(string.Format("cannot login because {0}", apiException.Message));
             }
 
-            KoanAssert.That(_rpcClient.SessionId != "", "after logging in, you should have a valid session");
+            KoanAssert.That(_rpcClient.Session != "", "after logging in, you should have a valid session");
         }
 
         [Koan(Order = 2)]
@@ -48,7 +48,7 @@ namespace CIAPI.CS.Koans
             KoanAssert.That(headlines.Headlines.Length > 0, "you should have a set of headlines");
 
             //When your sessionId expires
-            _rpcClient.SessionId = "{an-expired-session-token}";
+            _rpcClient.Session = "{an-expired-session-token}";
 
             //Then future requests will fail.
             try
@@ -67,8 +67,8 @@ namespace CIAPI.CS.Koans
         {
             _rpcClient.LogIn(USERNAME, PASSWORD);
 
-            KoanAssert.That(_rpcClient.SessionId, Is.Not.Null, "You should have a valid sessionId after logon");
-            var oldSessionId = _rpcClient.SessionId;
+            KoanAssert.That(_rpcClient.Session, Is.Not.Null, "You should have a valid sessionId after logon");
+            var oldSessionId = _rpcClient.Session;
 
             //Logging out force expires your session token on the server
             _rpcClient.LogOut();
@@ -76,7 +76,7 @@ namespace CIAPI.CS.Koans
             //So that future requests with your old token will fail.
             try
             {
-                _rpcClient.SessionId = oldSessionId;
+                _rpcClient.Session = oldSessionId;
                 var headlines2 = _rpcClient.News.ListNewsHeadlines("AUS", 4);
                 KoanAssert.Fail("the previous line should have thrown an (401) Unauthorized exception");
             }
