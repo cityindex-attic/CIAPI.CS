@@ -4,13 +4,31 @@ using System.Linq;
 using System.Text;
 namespace CIAPI.DTO
 {
+    public partial class ListOpenPositionsResponseDTO
+    {
+        public void ResolveMagicNumbers(MagicNumberResolver resolver)
+        {
+         
+            foreach (var dto in this.OpenPositions)
+            {
+                dto.ResolveMagicNumbers(resolver);
+            }
+        }
+    }
+
     public partial class ApiOrderResponseDTO
     {
         public void ResolveMagicNumbers(MagicNumberResolver resolver)
         {
             this.StatusReason_Resolved = resolver.ResolveMagicNumber(MagicNumberKeys.ApiOrderResponseDTO_StatusReason, this.StatusReason);
             this.Status_Resolved = resolver.ResolveMagicNumber(MagicNumberKeys.ApiOrderResponseDTO_StatusReason, this.StatusReason);
-            this.OCO.ResolveMagicNumbers(resolver);
+            if (this.OCO!=null)
+            {
+                this.OCO.ResolveMagicNumbers(resolver);    
+            }
+            
+
+
             foreach (ApiIfDoneResponseDTO apiIfDoneResponseDTO in this.IfDone)
             {
                 apiIfDoneResponseDTO.Limit.ResolveMagicNumbers(resolver);
