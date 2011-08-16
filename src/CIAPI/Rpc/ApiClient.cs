@@ -8,8 +8,20 @@ namespace CIAPI.Rpc
 {
     public partial class Client : CityIndex.JsonClient.Client
     {
-    
 
+        private MagicNumberResolver _magicNumberResolver;
+        public MagicNumberResolver MagicNumberResolver
+        {
+            get
+            {
+                if(_magicNumberResolver==null)
+                {
+                    _magicNumberResolver = new MagicNumberResolver(this);
+                }
+
+                return _magicNumberResolver;
+            }
+        }
 
         public string UserName { get; set; }
         public string Session { get; set; }
