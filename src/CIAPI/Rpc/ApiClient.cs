@@ -9,6 +9,10 @@ namespace CIAPI.Rpc
     public partial class Client : CityIndex.JsonClient.Client
     {
 
+        
+
+
+
         private MagicNumberResolver _magicNumberResolver;
         public MagicNumberResolver MagicNumberResolver
         {
