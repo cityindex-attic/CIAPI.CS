@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using Common.Logging;
 using Microsoft.Silverlight.Testing;
 
 namespace CIAPI.Silverlight.TestsMS
@@ -9,6 +10,8 @@ namespace CIAPI.Silverlight.TestsMS
 
         public App()
         {
+            LogManager.IsDebug = true;
+
             this.Startup += this.Application_Startup;
             this.Exit += this.Application_Exit;
             this.UnhandledException += this.Application_UnhandledException;

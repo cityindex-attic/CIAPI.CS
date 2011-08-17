@@ -106,6 +106,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="IntegrationTests01.cs" />
     <Compile Include="IssueResolutionScratchpadFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpikeFixture.cs" />
@@ -133,6 +134,10 @@
     <ProjectReference Include="..\JsonClient.Silverlight\JsonClient.Silverlight.csproj">
       <Project>{0156697E-DEFE-47CF-9EB0-11F120780356}</Project>
       <Name>JsonClient.Silverlight</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\StreamingClient.Silverlight\StreamingClient.Silverlight.csproj">
+      <Project>{C552DD3D-3738-4194-95F3-5A988E7D4647}</Project>
+      <Name>StreamingClient.Silverlight</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />

@@ -48,11 +48,23 @@
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Common.Logging.Silverlight\AbstractLogger.cs">
+      <Link>AbstractLogger.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Logging.Silverlight\AbstractSimpleLogger.cs">
+      <Link>AbstractSimpleLogger.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Logging.Silverlight\DebugAppender.cs">
+      <Link>DebugAppender.cs</Link>
+    </Compile>
     <Compile Include="..\Common.Logging.Silverlight\FormatMessageHandler.cs">
       <Link>FormatMessageHandler.cs</Link>
     </Compile>
     <Compile Include="..\Common.Logging.Silverlight\ILog.cs">
       <Link>ILog.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Logging.Silverlight\LogLevel.cs">
+      <Link>LogLevel.cs</Link>
     </Compile>
     <Compile Include="..\Common.Logging.Silverlight\NullLogger.cs">
       <Link>NullLogger.cs</Link>

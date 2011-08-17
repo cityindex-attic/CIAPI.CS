@@ -19,7 +19,7 @@ namespace CIAPI.Phone7.Tests
     [TestClass]
     public class IntegrationTests : SilverlightTest
     {
-        [TestMethod,Ignore]
+        [TestMethod, Ignore]
         [Asynchronous]
         public void CanLoginLogout()
         {
@@ -67,27 +67,39 @@ namespace CIAPI.Phone7.Tests
             rpcClient.BeginLogIn(App.RpcUserName, App.RpcPassword, ar =>
             {
                 rpcClient.EndLogIn(ar);
-                Assert.IsNotNull(rpcClient.Session);
-                var streamingClient = StreamingClientFactory.CreateStreamingClient(App.StreamingUri, App.RpcUserName, rpcClient.Session);
-                var newsListener = streamingClient.BuildNewsHeadlinesListener("UK");
-                newsListener.Start();
 
-                
-                newsListener.MessageReceived += (s, e) =>
+                EnqueueCallback(() =>
                 {
-                    NewsDTO actual = null;
-                    actual = e.Data;
-                    newsListener.Stop();
-                    streamingClient.Disconnect();
+                    Assert.IsNotNull(rpcClient.Session);
 
-                    
-                    Assert.IsNotNull(actual);
-                    Assert.IsFalse(string.IsNullOrEmpty(actual.Headline));
+                    var streamingClient = StreamingClientFactory.CreateStreamingClient(App.StreamingUri, App.RpcUserName, rpcClient.Session);
+                    var newsListener = streamingClient.BuildNewsHeadlinesListener("UK");
 
 
-                    Assert.IsTrue(actual.StoryId > 0);
-                    EnqueueTestComplete();
-                };
+
+                    newsListener.MessageReceived += (s, e) =>
+                    {
+                        NewsDTO actual = null;
+                        actual = e.Data;
+                        newsListener.Stop();
+                        streamingClient.Disconnect();
+
+
+                        Assert.IsNotNull(actual);
+                        Assert.IsFalse(string.IsNullOrEmpty(actual.Headline));
+
+
+                        Assert.IsTrue(actual.StoryId > 0);
+                        EnqueueTestComplete();
+                    };
+
+                    newsListener.Start();
+
+
+                }
+
+                    );
+
 
             }, null);
 

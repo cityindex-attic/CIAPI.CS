@@ -58,6 +58,7 @@
     <Compile Include="AbstractLogger.cs" />
     <Compile Include="AbstractSimpleLogger.cs" />
     <Compile Include="BrowserConsoleAppender.cs" />
+    <Compile Include="DebugAppender.cs" />
     <Compile Include="FormatMessageHandler.cs" />
     <Compile Include="ILog.cs" />
     <Compile Include="LogLevel.cs" />

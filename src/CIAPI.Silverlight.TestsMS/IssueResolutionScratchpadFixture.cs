@@ -19,6 +19,13 @@ namespace CIAPI.Silverlight.TestsMS
     [TestClass]
     public class IssueResolutionScratchpadFixture : SilverlightTest
     {
+        [TestInitialize]
+        public void TestFixtureSetUp()
+        {
+            // this enables the client framework stack - necessary for access to headers
+            bool httpResult = WebRequest.RegisterPrefix("http://", System.Net.Browser.WebRequestCreator.ClientHttp);
+            bool httpsResult = WebRequest.RegisterPrefix("https://", System.Net.Browser.WebRequestCreator.ClientHttp);
+        }
         [TestMethod]
         [Asynchronous]
         public void EnsureSilverlightCanConnect()

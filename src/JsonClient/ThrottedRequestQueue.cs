@@ -228,7 +228,7 @@ namespace CityIndex.JsonClient
                     finally
                     {
                         _requests.Dequeue();
-                        _outstandingRequests++;
+                        _outstandingRequests++; // TODO: should this really be here if there was an error that prevented dispatch?
                     }
 
                 }

@@ -43,6 +43,7 @@ namespace CIAPI.IntegrationTests.Streaming
             newsListener.MessageReceived += (s, e) =>
             {
                 actual = e.Data;
+                Console.WriteLine(actual);
                 gate.Set();
             };
 

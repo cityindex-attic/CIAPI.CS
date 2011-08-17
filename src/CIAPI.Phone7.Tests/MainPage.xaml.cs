@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using Common.Logging;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Microsoft.Silverlight.Testing;
@@ -30,6 +31,8 @@ namespace CIAPI.Phone7.Tests
             var testPage = UnitTestSystem.CreateTestPage() as IMobileTestPage;
             BackKeyPress += (x, xe) => xe.Cancel = testPage.NavigateBack();
             (Application.Current.RootVisual as PhoneApplicationFrame).Content = testPage;
+
+            
         }
     }
 }

@@ -12,6 +12,27 @@ using Client = CIAPI.Rpc.Client;
 
 namespace CIAPI.Tests.Rpc
 {
+
+    [TestFixture]
+    public class ExceptionHandling
+    {
+        [Test]
+        public void ReproAbortedRequest()
+        {
+            TestRequestFactory factory = new TestRequestFactory();
+            var requestController = new RequestController(TimeSpan.FromSeconds(0), 2, factory, new ErrorResponseDTOJsonExceptionFactory(), new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10, "data"), new ThrottedRequestQueue(TimeSpan.FromSeconds(3), 1, 3, "trading"));
+
+            var ctx = new CIAPI.Rpc.Client(new Uri(TestConfig.RpcUrl), requestController);
+            ctx.UserName = TestConfig.ApiUsername;
+            ctx.Session = TestConfig.ApiTestSessionId;
+
+            factory.CreateTestRequest("{}",TimeSpan.FromMinutes(1));
+
+            ctx.Market.GetMarketInformation("FOO");
+
+        }
+        
+    }
     [TestFixture]
     public class ApiContextTests
     {

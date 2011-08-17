@@ -50,10 +50,11 @@ namespace CIAPI.CS.Streaming.Samples
                                                           => Log(string.Format("Status update: {0}", message.Status));
                         _streamingClient.Connect();
 
-                        Log("Listening to news stream...");
+                        Log("Creating listener...");
                         _newsListener = _streamingClient.BuildNewsHeadlinesListener(topic);
+                        Log("Starting listener...");
                         _newsListener.Start();
-
+                        Log("Listening to news stream...");
                         _newsListener.MessageReceived += (s, message) =>
                                                              {
                                                                  try

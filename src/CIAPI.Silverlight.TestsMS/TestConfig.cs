@@ -13,7 +13,10 @@
             }
         }
         
-
+        public static string StreamingUri
+        {
+            get { return "http://pushpreprod.cityindextest9.co.uk"; }
+        }
         public static string ApiUsername
         {
             get

@@ -6,7 +6,7 @@ namespace Common.Logging
     {
         public static ILog GetLogger(Type type)
         {
-            return new NullLogger();
+            return new DebugAppender(type.FullName, LogLevel.All, true, true, true, "u");
         }
     }
 }
