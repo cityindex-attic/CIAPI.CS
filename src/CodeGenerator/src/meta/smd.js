@@ -691,9 +691,9 @@
             "target": "",
             "services": {
                 "NewsHeadlines": {
-                    "description": "Stream of current news headlines.  Try NEWS.MOCKHEADLINES.UK for a mock stream",
+                    "description": "Stream of  news headlines.  Try NEWS.MOCKHEADLINES.UK for a mock stream",
                     "target": "CITYINDEXSTREAMING",
-                    "channel": "NEWS.HEADLINES.{category}",
+                    "channel": "NEWS.MOCKHEADLINES.{category}",
                     "transport": "HTTP",
                     "protocol": "lightstreamer-3.6",
                     "returns": {

@@ -42,7 +42,7 @@ namespace CityIndex.JsonClient
 
             try
             {
- 
+
                 if (inner is ApiException)
                 {
                     ResponseText = ((ApiException)inner).ResponseText;
@@ -80,9 +80,10 @@ namespace CityIndex.JsonClient
         public static string GetResponseText(WebException exception)
         {
             string json = null;
+           
             try
             {
- 
+
                 if (exception.Response != null)
                 {
                     using (Stream stream = exception.Response.GetResponseStream())
@@ -103,11 +104,28 @@ namespace CityIndex.JsonClient
                 json = "Could not parse exception response";
             }
 
+           
+       
             return json;
         }
     }
 
+    ///<summary>
+    ///</summary>
+    public class ApiTimeoutException :ApiException
+    {
+        internal ApiTimeoutException(Exception inner) : base(inner)
+        {
+        }
 
+        public ApiTimeoutException(string message) : base(message)
+        {
+        }
+
+        public ApiTimeoutException(string message, Exception inner) : base(message, inner)
+        {
+        }
+    }
     ///<summary>
     ///</summary>
     public class ApiSerializationException : ApiException

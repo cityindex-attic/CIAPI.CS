@@ -17,7 +17,7 @@ namespace CityIndex.JsonClient
     ///</summary>
     public class RequestController : IRequestController
     {
-        
+
         private IJsonExceptionFactory _jsonExceptionFactory;
         private const int BackgroundInterval = 50;
         private readonly Thread _backgroundThread;
@@ -36,7 +36,7 @@ namespace CityIndex.JsonClient
         ///</summary>
         public RequestController(TimeSpan defaultCacheDuration, int retryCount, IRequestFactory requestFactory, IJsonExceptionFactory jsonExceptionFactory, params IThrottedRequestQueue[] scopes)
         {
-            
+
             _jsonExceptionFactory = jsonExceptionFactory;
             _requestFactory = requestFactory;
             _retryCount = retryCount;
@@ -106,7 +106,7 @@ namespace CityIndex.JsonClient
                     item.AddCallback(cb, state);
                     break;
                 case CacheItemState.Complete:
-                    
+
                     new ApiAsyncResult<TDTO>(cb, state, true, item.ResponseText, null);
                     break;
             }
@@ -336,19 +336,44 @@ namespace CityIndex.JsonClient
 
                                 responseText = ApiException.GetResponseText(wex);
                                 item.ResponseText = responseText;
-
+                                bool isTimeout = wex.Message.ToLower().Contains("the request was aborted");
+                                                                
                                 if (item.RetryCount > 0)
                                 {
-                                    exception =
-                                        new ApiException(
-                                            wex.Message +
+                                    if (isTimeout)
+                                    {
+                                        // TODO: this is ugly
+                                        exception =
+                                        new ApiTimeoutException(
+                                            "Request timed out" +
                                             String.Format("\r\nretried {0} times", item.RetryCount) + "\r\nREQUEST INFO:\r\n" + item.ToString(), wex);
+                                    }
+                                    else
+                                    {
+                                        exception =
+                                            new ApiException(
+                                                wex.Message +
+                                                String.Format("\r\nretried {0} times", item.RetryCount) + "\r\nREQUEST INFO:\r\n" + item.ToString(), wex);
+                                    }
+
                                 }
                                 else
                                 {
-                                    exception =
-                                        new ApiException(
-                                            wex.Message + "\r\nREQUEST INFO:\r\n" + item.ToString(), wex);
+                                    if (isTimeout)
+                                    {
+                                        // TODO: this is ugly
+
+                                        exception =
+                                        new ApiTimeoutException(
+                                            "Request timed out" + "\r\nREQUEST INFO:\r\n" + item.ToString(), wex);
+                                    }
+                                    else
+                                    {
+                                        exception =
+                                            new ApiException(
+                                                wex.Message + "\r\nREQUEST INFO:\r\n" + item.ToString(), wex);
+                                    }
+
 
                                 }
 
