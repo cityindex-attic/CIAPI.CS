@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -8,6 +9,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using CIAPI.DTO;
+using CIAPI.Streaming;
 using Microsoft.Silverlight.Testing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -16,7 +19,7 @@ namespace CIAPI.Phone7.Tests
     [TestClass]
     public class IntegrationTests : SilverlightTest
     {
-        [TestMethod]
+        [TestMethod,Ignore]
         [Asynchronous]
         public void CanLoginLogout()
         {
@@ -36,7 +39,7 @@ namespace CIAPI.Phone7.Tests
 
         }
 
-        [TestMethod]
+        [TestMethod, Ignore]
         [Asynchronous]
         public void CanGetHeadlines()
         {
@@ -56,5 +59,38 @@ namespace CIAPI.Phone7.Tests
 
         }
 
+        [TestMethod]
+        [Asynchronous]
+        public void CanSubscribeToStream()
+        {
+            var rpcClient = new Rpc.Client(App.RpcUri);
+            rpcClient.BeginLogIn(App.RpcUserName, App.RpcPassword, ar =>
+            {
+                rpcClient.EndLogIn(ar);
+                Assert.IsNotNull(rpcClient.Session);
+                var streamingClient = StreamingClientFactory.CreateStreamingClient(App.StreamingUri, App.RpcUserName, rpcClient.Session);
+                var newsListener = streamingClient.BuildNewsHeadlinesListener("UK");
+                newsListener.Start();
+
+                
+                newsListener.MessageReceived += (s, e) =>
+                {
+                    NewsDTO actual = null;
+                    actual = e.Data;
+                    newsListener.Stop();
+                    streamingClient.Disconnect();
+
+                    
+                    Assert.IsNotNull(actual);
+                    Assert.IsFalse(string.IsNullOrEmpty(actual.Headline));
+
+
+                    Assert.IsTrue(actual.StoryId > 0);
+                    EnqueueTestComplete();
+                };
+
+            }, null);
+
+        }
     }
 }

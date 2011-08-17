@@ -53,8 +53,7 @@ namespace CIAPI.IntegrationTests.Rpc
                 OpenPosition = new ApiOpenPositionDTO { Status = 1 }
             };
 
-            source.OpenPosition.ResolveMagicNumbers(rpcClient.MagicNumberResolver);
-
+            rpcClient.MagicNumberResolver.ResolveMagicNumbers(source);
 
             Assert.AreEqual("Pending", source.OpenPosition.Status_Resolved, "status reason not resolved");
 
@@ -70,15 +69,15 @@ namespace CIAPI.IntegrationTests.Rpc
 
 
             // this would be the value you get back from the API
-            GetOpenPositionResponseDTO source = new GetOpenPositionResponseDTO
+            GetOpenPositionResponseDTO dto = new GetOpenPositionResponseDTO
             {
                 OpenPosition = new ApiOpenPositionDTO { Status = 1 }
             };
 
-            rpcClient.MagicNumberResolver.ResolveMagicNumbers(source);
+            rpcClient.MagicNumberResolver.ResolveMagicNumbers(dto);
             
 
-            Assert.AreEqual("Pending", source.OpenPosition.Status_Resolved, "status reason not resolved");
+            Assert.AreEqual("Pending", dto.OpenPosition.Status_Resolved, "status reason not resolved");
 
             rpcClient.LogOut();
         }

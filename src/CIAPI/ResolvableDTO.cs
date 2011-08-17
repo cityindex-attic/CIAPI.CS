@@ -8,11 +8,15 @@ namespace CIAPI.DTO
     {
         public void ResolveMagicNumbers(MagicNumberResolver resolver)
         {
-         
-            foreach (var dto in this.OpenPositions)
+
+            if (this.OpenPositions != null)
             {
-                dto.ResolveMagicNumbers(resolver);
+                foreach (var dto in this.OpenPositions)
+                {
+                    dto.ResolveMagicNumbers(resolver);
+                }    
             }
+            
         }
     }
 
@@ -20,20 +24,32 @@ namespace CIAPI.DTO
     {
         public void ResolveMagicNumbers(MagicNumberResolver resolver)
         {
-            this.StatusReason_Resolved = resolver.ResolveMagicNumber(MagicNumberKeys.ApiOrderResponseDTO_StatusReason, this.StatusReason);
+            
+            this.StatusReason_Resolved = resolver.ResolveMagicNumber(MagicNumberKeys.ApiOrderResponseDTO_StatusReason, this.StatusReason);    
             this.Status_Resolved = resolver.ResolveMagicNumber(MagicNumberKeys.ApiOrderResponseDTO_StatusReason, this.StatusReason);
             if (this.OCO!=null)
             {
                 this.OCO.ResolveMagicNumbers(resolver);    
             }
-            
 
 
-            foreach (ApiIfDoneResponseDTO apiIfDoneResponseDTO in this.IfDone)
+
+            if (this.IfDone != null)
             {
-                apiIfDoneResponseDTO.Limit.ResolveMagicNumbers(resolver);
-                apiIfDoneResponseDTO.Stop.ResolveMagicNumbers(resolver);
+                foreach (ApiIfDoneResponseDTO apiIfDoneResponseDTO in this.IfDone)
+                {
+                    if (apiIfDoneResponseDTO.Limit != null)
+                    {
+                        apiIfDoneResponseDTO.Limit.ResolveMagicNumbers(resolver);    
+                    }
+                    if (apiIfDoneResponseDTO.Stop != null)
+                    {
+                        apiIfDoneResponseDTO.Stop.ResolveMagicNumbers(resolver);    
+                    }
+                    
+                }    
             }
+            
         }
     }
     public partial class ApiTradeOrderResponseDTO
@@ -43,10 +59,14 @@ namespace CIAPI.DTO
             this.StatusReason_Resolved = resolver.ResolveMagicNumber(MagicNumberKeys.ApiOrderResponseDTO_StatusReason, this.StatusReason);
             this.Status_Resolved = resolver.ResolveMagicNumber(MagicNumberKeys.ApiOrderResponseDTO_StatusReason, this.StatusReason);
 
-            foreach (ApiOrderResponseDTO order in this.Orders)
+            if (this.Orders != null)
             {
-                order.ResolveMagicNumbers(resolver);
+                foreach (ApiOrderResponseDTO order in this.Orders)
+                {
+                    order.ResolveMagicNumbers(resolver);
+                }    
             }
+            
         }
     }
     public partial class ApiActiveStopLimitOrderDTO

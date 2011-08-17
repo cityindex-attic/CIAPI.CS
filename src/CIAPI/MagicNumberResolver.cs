@@ -11,10 +11,14 @@ namespace CIAPI
 
         public void ResolveMagicNumbers(ListOpenPositionsResponseDTO value)
         {
-            foreach (ApiOpenPositionDTO dto in value.OpenPositions)
+            if (value.OpenPositions != null)
             {
-                this.ResolveMagicNumbers(dto);
+                foreach (ApiOpenPositionDTO dto in value.OpenPositions)
+                {
+                    this.ResolveMagicNumbers(dto);
+                }    
             }
+            
         }
 
         public void ResolveMagicNumbers(ApiOpenPositionDTO value)
@@ -30,10 +34,14 @@ namespace CIAPI
             value.StatusReason_Resolved = this.ResolveMagicNumber(MagicNumberKeys.ApiOrderResponseDTO_StatusReason, value.StatusReason);
             value.Status_Resolved = this.ResolveMagicNumber(MagicNumberKeys.ApiOrderResponseDTO_StatusReason, value.StatusReason);
 
-            foreach (ApiOrderResponseDTO order in value.Orders)
+            if (value.Orders != null)
             {
-                this.ResolveMagicNumbers(order);
+                foreach (ApiOrderResponseDTO order in value.Orders)
+                {
+                    this.ResolveMagicNumbers(order);
+                }    
             }
+            
         }
 
         public void ResolveMagicNumbers(ApiOrderResponseDTO value)
@@ -47,16 +55,33 @@ namespace CIAPI
 
 
 
-            foreach (ApiIfDoneResponseDTO apiIfDoneResponseDTO in value.IfDone)
+            if (value.IfDone != null)
             {
-                this.ResolveMagicNumbers(apiIfDoneResponseDTO.Limit);
-                this.ResolveMagicNumbers(apiIfDoneResponseDTO.Stop);
+                foreach (ApiIfDoneResponseDTO apiIfDoneResponseDTO in value.IfDone)
+                {
+                    if (apiIfDoneResponseDTO.Limit != null)
+                    {
+
+                        this.ResolveMagicNumbers(apiIfDoneResponseDTO.Limit);
+                    }
+
+                    if (apiIfDoneResponseDTO.Stop != null)
+                    {
+                        this.ResolveMagicNumbers(apiIfDoneResponseDTO.Stop);    
+                    }
+                    
+                }    
             }
+            
         }
         
         public void ResolveMagicNumbers(GetOpenPositionResponseDTO value)
         {
-            this.ResolveMagicNumbers(value.OpenPosition);
+            if (value.OpenPosition != null)
+            {
+                this.ResolveMagicNumbers(value.OpenPosition);
+            }
+            
         }
         private static readonly Dictionary<string, ApiLookupResponseDTO> MagicNumbers =
             new Dictionary<string, ApiLookupResponseDTO>();
