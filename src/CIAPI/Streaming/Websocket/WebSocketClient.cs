@@ -12,7 +12,7 @@ namespace CIAPI.Streaming.Websocket
         {
         }
 
- 
+  
 
         public IStreamingListener<PriceDTO> BuildPricesListener(int[] marketIds)
         {
