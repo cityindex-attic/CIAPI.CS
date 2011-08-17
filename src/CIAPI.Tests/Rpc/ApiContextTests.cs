@@ -16,7 +16,7 @@ namespace CIAPI.Tests.Rpc
     [TestFixture]
     public class ExceptionHandling
     {
-        [Test, ExpectedException(typeof(ApiTimeoutException))]
+        [Test,Ignore, ExpectedException(typeof(ApiTimeoutException))]
         public void ReproAbortedRequest()
         {
             TestRequestFactory factory = new TestRequestFactory();
