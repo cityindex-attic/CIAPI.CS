@@ -4,6 +4,7 @@ using System.Threading;
 using Common.Logging;
 using Lightstreamer.DotNet.Client;
 
+
 namespace StreamingClient.Lightstreamer
 {
     public class LightstreamerListener<TDto> : IStreamingListener<TDto>, IHandyTableListener
@@ -42,7 +43,7 @@ namespace StreamingClient.Lightstreamer
                 schema: schema,
                 snap: false) { DataAdapter = dataAdapter };
             _subscribedTableKey = _lsClient.SubscribeTable(simpleTableInfo, this, false);
-            _logger.DebugFormat("Subscribed to table with key: {0}", _subscribedTableKey.KeyValue);
+            _logger.DebugFormat("Subscribed to table with key: {0}", _subscribedTableKey);
         }
 
         /// <summary>
@@ -52,7 +53,7 @@ namespace StreamingClient.Lightstreamer
         {
             if (_subscribedTableKey == null) return;
 
-            var message = String.Format("Unsubscribing from table with key: {0}", _subscribedTableKey.KeyValue);
+            var message = String.Format("Unsubscribing from table with key: {0}", _subscribedTableKey);
             _logger.DebugFormat(message);
 
 

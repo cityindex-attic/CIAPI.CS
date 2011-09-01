@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
+<html>
+<head>
+<title>LSClient.SendMessage Method (MessageInfo, ISendMessageListener)</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="generator" content="Doc-O-Matic" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <link rel="STYLESHEET" href="default.css" type="text/css" />
+
+<script type="text/javascript" src="scripts.js"></script>
+</head>
+<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', 'Lightstreamer_DotNet_Client_LSClient_SendMessage@MessageInfo@ISendMessageListener.html');" onmousedown="onBodyMouseDown();">
+
+<!-- Begin Popups -->
+
+<!-- End Popups -->
+
+<!-- Begin Page Header -->
+<div class="Element710" id="areafixed">
+<div class="Element731">
+<div class="Element730">
+<a href="#" onclick="ToggleAllElements('506172616D6574657273,52657475726E73,47726F7570,4C696E6B73', 'linkToggleAllElements', 'imgToggleAllElements', 'Collapse All', 'Expand All');"><img src="btn_collapse_2.gif" border="0" alt="" title="" id="imgToggleAllElements"></a><a href="#" id="linkToggleAllElements" onclick="ToggleAllElements('506172616D6574657273,52657475726E73,47726F7570,4C696E6B73', 'linkToggleAllElements', 'imgToggleAllElements', 'Collapse All', 'Expand All');">Collapse All</a></div>
+</div>
+<div class="Element92">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="33%">
+<div class="Element1">
+Lightstreamer Windows Phone Client 1.0</div>
+</td><td width="34%">
+<div class="Element2">
+<a href="contents.html" target="tocidx"><img src="btn_globals_contents_black.gif" border="0" alt="Contents" title="Contents" onmouseover="switchImage(this, 'btn_globals_contents_black_hover.gif');" onmouseout="switchImage(this, 'btn_globals_contents_black.gif');"></a><a href="idx.html" target="tocidx"><img src="btn_globals_index_black.gif" border="0" alt="Index" title="Index" onmouseover="switchImage(this, 'btn_globals_index_black_hover.gif');" onmouseout="switchImage(this, 'btn_globals_index_black.gif');"></a><a href="index.html" target="topic"><img src="btn_globals_home_black.gif" border="0" alt="Home" title="Home" onmouseover="switchImage(this, 'btn_globals_home_black_hover.gif');" onmouseout="switchImage(this, 'btn_globals_home_black.gif');"></a></div>
+</td><td width="33%">
+<div class="Element90">
+<a href="!!OVERLOADED_SendMessage_Lightstreamer_DotNet_Client_LSClient.html" target="topic"><img src="btn_prev_black.gif" border="0" alt="Previous" title="Previous" onmouseover="switchImage(this, 'btn_prev_black_hover.gif');" onmouseout="switchImage(this, 'btn_prev_black.gif');"></a><a href="!!OVERLOADED_SendMessage_Lightstreamer_DotNet_Client_LSClient.html" target="topic"><img src="btn_up_black.gif" border="0" alt="Up" title="Up" onmouseover="switchImage(this, 'btn_up_black_hover.gif');" onmouseout="switchImage(this, 'btn_up_black.gif');"></a><a href="Lightstreamer_DotNet_Client_LSClient_SendMessage@string.html" target="topic"><img src="btn_next_black.gif" border="0" alt="Next" title="Next" onmouseover="switchImage(this, 'btn_next_black_hover.gif');" onmouseout="switchImage(this, 'btn_next_black.gif');"></a></div>
+</td></tr></table><div class="Element5">
+LSClient.SendMessage Method (MessageInfo, ISendMessageListener)</div>
+<div class="Element7">
+<a href="Lightstreamer_DotNet_Client_LSClient.html" target="topic">LSClient Class</a>&nbsp; <a href="!!MEMBEROVERVIEW_Lightstreamer_DotNet_Client_LSClient.html" target="topic">LSClient Members</a>&nbsp; <a href="Lightstreamer_DotNet_Client.html" target="topic">Lightstreamer.DotNet.Client Namespace</a>&nbsp; <a href="!!OVERLOADED_SendMessage_Lightstreamer_DotNet_Client_LSClient.html" target="topic">SendMessage Method</a></div>
+</div>
+</div>
+
+<!-- End Page Header -->
+
+<!-- Begin Client Area -->
+<div class="Element720" id="areascroll">
+<div class="Element721">
+
+<!-- Begin Page Content -->
+<div class="Element58">
+<a name="53756D6D617279"></a><div class="Element11">
+<div class="Element10">
+<p class="Element10">
+Sends a message to Lightstreamer Server. The message is associated to the current session and is interpreted and managed by the Metadata Adapter related to the session. &nbsp;</p>
+<p class="Element10">
+Upon subsequent calls to the method, the sequential management of the messages is guaranteed. However, any message that, for any reason, doesn't reach the Server can be discarded by the Server if this causes the subsequent message to be kept waiting for longer than a configurable timeout. A shorter timeout can be associated with the subsequent message itself. A sequence identifier must also be associated with the messages; the sequential management is restricted to all subsets of messages with the same sequence identifier associated. In case the sequential management is undesired the special UNORDERED_MESSAGES sequence identifier can be used. &nbsp;</p>
+<p class="Element10">
+Note that messages are sent to the Server asynchronously with respect to the Client thread and that the real outcome of the request should be obtained by listening for calls on the associated <a href="Lightstreamer_DotNet_Client_ISendMessageListener.html" target="topic">ISendMessageListener</a> instance. Unless the return value is 0, one of those events will be eventually sent. Calls associated with the same sequence are guaranteed to be issued in sequence. &nbsp;</p>
+<p class="Element10">
+&nbsp;</p></div>
+</div>
+<a name="432B2B"></a><div class="Element99">
+C++</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #871F78">public</span></strong>: <strong><span style="color: #871F78">int</span></strong> <strong><span style="color: #660000">SendMessage</span></strong>(<a href="Lightstreamer_DotNet_Client_MessageInfo.html" target="topic">MessageInfo</a> <strong><span style="color: #660000">message</span></strong>, <a href="Lightstreamer_DotNet_Client_ISendMessageListener.html" target="topic">ISendMessageListener</a> <strong><span style="color: #660000">listener</span></strong>);</pre></div></div>
+<a name="4323"></a><div class="Element99">
+C#</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #871F78">public</span></strong> <strong><span style="color: #871F78">virtual</span></strong> <strong><span style="color: #871F78">int</span></strong> <strong><span style="color: #660000">SendMessage</span></strong>(<a href="Lightstreamer_DotNet_Client_MessageInfo.html" target="topic">MessageInfo</a> <strong><span style="color: #660000">message</span></strong>, <a href="Lightstreamer_DotNet_Client_ISendMessageListener.html" target="topic">ISendMessageListener</a> <strong><span style="color: #660000">listener</span></strong>);</pre></div></div>
+<a name="56697375616C204261736963"></a><div class="Element99">
+Visual Basic</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #871F78">Public</span></strong> virtual <strong><span style="color: #871F78">Function</span></strong> <strong><span style="color: #660000">SendMessage</span></strong>(<strong><span style="color: #660000">message</span></strong> <strong><span style="color: #871F78">As</span></strong> <a href="Lightstreamer_DotNet_Client_MessageInfo.html" target="topic">MessageInfo</a>, <strong><span style="color: #660000">listener</span></strong> <strong><span style="color: #871F78">As</span></strong> <a href="Lightstreamer_DotNet_Client_ISendMessageListener.html" target="topic">ISendMessageListener</a>) <strong><span style="color: #871F78">As</span></strong> <strong><span style="color: #871F78">Integer</span></strong></pre></div></div>
+<a name="506172616D6574657273"></a><div class="Element14">
+<a onclick="toggleVisibilityStored('506172616D6574657273');" class="a_Element14"><img src="btn_collapse_2.gif" border="0" alt="" title="" id="img506172616D6574657273">Parameters</a></div>
+<div id="div506172616D6574657273">
+<div class="Element11">
+<div class="Element10">
+<div class="Element252">
+<div class="TableDiv">
+<table cellspacing="0" class="Table1">
+<tr>
+<td class="Element240" valign="top" width="50%">
+<div class="Element241">
+Parameters&nbsp;</div></td><td class="Element244" valign="top" width="50%">
+<div class="Element245">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element242" valign="top" width="50%">
+<div class="Element243">
+MessageInfo message&nbsp;</div></td><td class="Element246" valign="top" width="50%">
+<div class="Element247">
+An instance containing the message string to be interpreted by the Metadata Adapter, the sequence this message has to be associated with and a delay timeout to be waited by the server for missing previous messages to be received before being declared lost.&nbsp;</div></td></tr><tr>
+<td class="Element242" valign="top" width="50%">
+<div class="Element243">
+ISendMessageListener listener&nbsp;</div></td><td class="Element246" valign="top" width="50%">
+<div class="Element247">
+A listener instance to receive a call representing the outcome of the message request.&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+</div>
+<a name="52657475726E73"></a><div class="Element14">
+<a onclick="toggleVisibilityStored('52657475726E73');" class="a_Element14"><img src="btn_collapse_2.gif" border="0" alt="" title="" id="img52657475726E73">Returns</a></div>
+<div id="div52657475726E73">
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+0 if no session is open; in the other case a number representing the progressive number of the message within its sequence is returned (starting from 1). Note that each time a new session is established the progressive number is reset. Note that if no session is open, no attempt of sending the message will be performed; however, as messages outcomes are received from the Server asynchronously, if a session is open but ends before the message outcome is received, than a call to ISendMessageListener.OnAbort will be made. </p></div>
+</div>
+</div>
+<a name="47726F7570"></a><div class="Element14">
+<a onclick="toggleVisibilityStored('47726F7570');" class="a_Element14"><img src="btn_collapse_2.gif" border="0" alt="" title="" id="img47726F7570">Group</a></div>
+<div id="div47726F7570">
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+<a href="!!OVERLOADED_SendMessage_Lightstreamer_DotNet_Client_LSClient.html" target="topic">SendMessage Method</a></p></div>
+</div>
+</div>
+<a name="4C696E6B73"></a><div class="Element14">
+<a onclick="toggleVisibilityStored('4C696E6B73');" class="a_Element14"><img src="btn_collapse_2.gif" border="0" alt="" title="" id="img4C696E6B73">Links</a></div>
+<div id="div4C696E6B73">
+<div class="Element11">
+<div class="Element10">
+<a href="Lightstreamer_DotNet_Client_LSClient.html" target="topic">LSClient Class</a>, <a href="!!MEMBEROVERVIEW_Lightstreamer_DotNet_Client_LSClient.html" target="topic">LSClient Members</a>, <a href="Lightstreamer_DotNet_Client.html" target="topic">Lightstreamer.DotNet.Client Namespace</a>, <a href="!!OVERLOADED_SendMessage_Lightstreamer_DotNet_Client_LSClient.html" target="topic">SendMessage Method</a></div>
+</div>
+</div>
+</div>
+<!-- End Page Content -->
+
+<!-- Begin Page Footer -->
+<div class="Element93">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="100%">
+<div class="Element3">
+<a href="http://www.lightstreamer.com/" target="_blank">Copyright (C) 2004-2011 Weswit s.r.l.</a></div>
+</td></tr><tr><td width="100%">
+<div class="Element4">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="idx.html" target="tocidx">Index</a> | <a href="index.html" target="topic">Home</a></div>
+</td></tr></table></div>
+
+<!-- End Page Footer -->
+</div>
+</div>
+
+<!-- End Client Area -->
+</body></html>

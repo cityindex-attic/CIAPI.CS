@@ -1,0 +1,2 @@
+Lightstreamer Windows Phone Client Library version 1.0.4168.21541
+Compatible with Lightstreamer Server since version 4.0

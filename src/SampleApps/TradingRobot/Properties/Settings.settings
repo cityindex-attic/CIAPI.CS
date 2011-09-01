@@ -1,0 +1,21 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="TradingRobot.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="UserName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">DM336488</Value>
+    </Setting>
+    <Setting Name="RpcUri" Type="System.String" Scope="User">
+      <Value Profile="(Default)">https://ciapi.cityindex.com/tradingapi</Value>
+    </Setting>
+    <Setting Name="StreamingUri" Type="System.String" Scope="User">
+      <Value Profile="(Default)">https://push.cityindex.com</Value>
+    </Setting>
+    <Setting Name="IPTUri" Type="System.String" Scope="User">
+      <Value Profile="(Default)">https://trade.loginandtrade.com/demoitp/siteselector_ci-demo.asp</Value>
+    </Setting>
+    <Setting Name="Password" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+  </Settings>
+</SettingsFile>

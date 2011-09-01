@@ -47,6 +47,9 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Net" />
+    <Reference Include="WindowsPhoneClient">
+      <HintPath>..\packages\Lightstreamer 4.0 Client\sdk_client_windows_phone\lib\StrongName\WindowsPhoneClient.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\CIAPI.Silverlight\Serializable.cs">

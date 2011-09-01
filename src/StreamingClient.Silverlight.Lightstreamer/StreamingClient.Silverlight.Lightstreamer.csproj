@@ -47,6 +47,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />
+    <Reference Include="SilverlightClient, Version=1.3.4168.21502, Culture=neutral, PublicKeyToken=8d72f58860ac9835, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Lightstreamer 4.0 Client\sdk_client_silverlight\lib\StrongName\SilverlightClient.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows" />
     <Reference Include="system" />
     <Reference Include="System.Core" />
@@ -58,53 +62,6 @@
     <Compile Include="..\StreamingClient.Lightstreamer\LightstreamerDefaults.cs">
       <Link>LightstreamerDefaults.cs</Link>
     </Compile>
-    <Compile Include="Lightstreamer.Silverlight\BatchingHttpProvider.cs" />
-    <Compile Include="Lightstreamer.Silverlight\BatchManager.cs" />
-    <Compile Include="Lightstreamer.Silverlight\BatchMonitor.cs" />
-    <Compile Include="Lightstreamer.Silverlight\ClientException.cs" />
-    <Compile Include="Lightstreamer.Silverlight\CollectionsSupport.cs" />
-    <Compile Include="Lightstreamer.Silverlight\ConnectionConstraints.cs" />
-    <Compile Include="Lightstreamer.Silverlight\ConnectionInfo.cs" />
-    <Compile Include="Lightstreamer.Silverlight\Constants.cs" />
-    <Compile Include="Lightstreamer.Silverlight\ExtConnectionListener.cs" />
-    <Compile Include="Lightstreamer.Silverlight\ExtendedTableInfo.cs" />
-    <Compile Include="Lightstreamer.Silverlight\ExtendedTableManager.cs" />
-    <Compile Include="Lightstreamer.Silverlight\FullTableManager.cs" />
-    <Compile Include="Lightstreamer.Silverlight\HttpProvider.cs" />
-    <Compile Include="Lightstreamer.Silverlight\IConnectionListener.cs" />
-    <Compile Include="Lightstreamer.Silverlight\IExtendedTableListener.cs" />
-    <Compile Include="Lightstreamer.Silverlight\IFastItemsListener.cs" />
-    <Compile Include="Lightstreamer.Silverlight\IHandyTableListener.cs" />
-    <Compile Include="Lightstreamer.Silverlight\ISetSupport.cs" />
-    <Compile Include="Lightstreamer.Silverlight\ISimpleTableListener.cs" />
-    <Compile Include="Lightstreamer.Silverlight\ITableManager.cs" />
-    <Compile Include="Lightstreamer.Silverlight\IThreadRunnable.cs" />
-    <Compile Include="Lightstreamer.Silverlight\IUpdateInfo.cs" />
-    <Compile Include="Lightstreamer.Silverlight\LoggingTypes\com\lightstreamer\ls_client\actions.cs" />
-    <Compile Include="Lightstreamer.Silverlight\LoggingTypes\com\lightstreamer\ls_client\protocol.cs" />
-    <Compile Include="Lightstreamer.Silverlight\LoggingTypes\com\lightstreamer\ls_client\session.cs" />
-    <Compile Include="Lightstreamer.Silverlight\LoggingTypes\com\lightstreamer\ls_client\stream.cs" />
-    <Compile Include="Lightstreamer.Silverlight\LSClient.cs" />
-    <Compile Include="Lightstreamer.Silverlight\MyServerListener.cs" />
-    <Compile Include="Lightstreamer.Silverlight\NotificationQueue.cs" />
-    <Compile Include="Lightstreamer.Silverlight\PhaseException.cs" />
-    <Compile Include="Lightstreamer.Silverlight\PushConnException.cs" />
-    <Compile Include="Lightstreamer.Silverlight\PushEndException.cs" />
-    <Compile Include="Lightstreamer.Silverlight\PushLengthException.cs" />
-    <Compile Include="Lightstreamer.Silverlight\PushServerException.cs" />
-    <Compile Include="Lightstreamer.Silverlight\PushServerProxy.cs" />
-    <Compile Include="Lightstreamer.Silverlight\PushServerTranslator.cs" />
-    <Compile Include="Lightstreamer.Silverlight\PushUserException.cs" />
-    <Compile Include="Lightstreamer.Silverlight\ServerManager.cs" />
-    <Compile Include="Lightstreamer.Silverlight\ServerUpdateEvent.cs" />
-    <Compile Include="Lightstreamer.Silverlight\SimpleTableInfo.cs" />
-    <Compile Include="Lightstreamer.Silverlight\SimpleTableManager.cs" />
-    <Compile Include="Lightstreamer.Silverlight\SubscrException.cs" />
-    <Compile Include="Lightstreamer.Silverlight\SubscribedTableKey.cs" />
-    <Compile Include="Lightstreamer.Silverlight\ThreadSupport.cs" />
-    <Compile Include="Lightstreamer.Silverlight\TimerSupport.cs" />
-    <Compile Include="Lightstreamer.Silverlight\UpdateInfoImpl.cs" />
-    <Compile Include="Lightstreamer.Silverlight\VirtualTableManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

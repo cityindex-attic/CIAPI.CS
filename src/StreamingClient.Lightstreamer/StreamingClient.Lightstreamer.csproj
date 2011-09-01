@@ -36,10 +36,14 @@
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>..\common\ciapi.snk</AssemblyOriginatorKeyFile>
-  </PropertyGroup>  
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Common.Logging">
       <HintPath>..\packages\Common.Logging-2.0.0\2.0\release\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetClient_N2, Version=2.0.4168.21411, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Lightstreamer 4.0 Client\sdk_client_dotnet\lib\StrongName\DotNetClient_N2.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -51,49 +55,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HttpUtility.cs" />
-    <Compile Include="Lightstreamer.dotNetClient_N2\BatchingHttpProvider.cs" />
-    <Compile Include="Lightstreamer.dotNetClient_N2\BatchManager.cs" />
-    <Compile Include="Lightstreamer.dotNetClient_N2\BatchMonitor.cs" />
-    <Compile Include="Lightstreamer.dotNetClient_N2\ClientException.cs" />
-    <Compile Include="Lightstreamer.dotNetClient_N2\CollectionsSupport.cs" />
-    <Compile Include="Lightstreamer.dotNetClient_N2\ConnectionConstraints.cs" />
-    <Compile Include="Lightstreamer.dotNetClient_N2\ConnectionInfo.cs" />
-    <Compile Include="Lightstreamer.dotNetClient_N2\Constants.cs" />
-    <Compile Include="Lightstreamer.dotNetClient_N2\ExtConnectionListener.cs" />
-    <Compile Include="Lightstreamer.dotNetClient_N2\ExtendedTableInfo.cs" />
-    <Compile Include="Lightstreamer.dotNetClient_N2\ExtendedTableManager.cs" />
-    <Compile Include="Lightstreamer.dotNetClient_N2\FullTableManager.cs" />
-    <Compile Include="Lightstreamer.dotNetClient_N2\HttpProvider.cs" />
-    <Compile Include="Lightstreamer.dotNetClient_N2\IConnectionListener.cs" />
-    <Compile Include="Lightstreamer.dotNetClient_N2\IExtendedTableListener.cs" />
-    <Compile Include="Lightstreamer.dotNetClient_N2\IFastItemsListener.cs" />
-    <Compile Include="Lightstreamer.dotNetClient_N2\IHandyTableListener.cs" />
-    <Compile Include="Lightstreamer.dotNetClient_N2\ISetSupport.cs" />
-    <Compile Include="Lightstreamer.dotNetClient_N2\ISimpleTableListener.cs" />
-    <Compile Include="Lightstreamer.dotNetClient_N2\ITableManager.cs" />
-    <Compile Include="Lightstreamer.dotNetClient_N2\IThreadRunnable.cs" />
-    <Compile Include="Lightstreamer.dotNetClient_N2\IUpdateInfo.cs" />
-    <Compile Include="Lightstreamer.dotNetClient_N2\LSClient.cs" />
-    <Compile Include="Lightstreamer.dotNetClient_N2\MyServerListener.cs" />
-    <Compile Include="Lightstreamer.dotNetClient_N2\NotificationQueue.cs" />
-    <Compile Include="Lightstreamer.dotNetClient_N2\PhaseException.cs" />
-    <Compile Include="Lightstreamer.dotNetClient_N2\PushConnException.cs" />
-    <Compile Include="Lightstreamer.dotNetClient_N2\PushEndException.cs" />
-    <Compile Include="Lightstreamer.dotNetClient_N2\PushLengthException.cs" />
-    <Compile Include="Lightstreamer.dotNetClient_N2\PushServerException.cs" />
-    <Compile Include="Lightstreamer.dotNetClient_N2\PushServerProxy.cs" />
-    <Compile Include="Lightstreamer.dotNetClient_N2\PushServerTranslator.cs" />
-    <Compile Include="Lightstreamer.dotNetClient_N2\PushUserException.cs" />
-    <Compile Include="Lightstreamer.dotNetClient_N2\ServerManager.cs" />
-    <Compile Include="Lightstreamer.dotNetClient_N2\ServerUpdateEvent.cs" />
-    <Compile Include="Lightstreamer.dotNetClient_N2\SimpleTableInfo.cs" />
-    <Compile Include="Lightstreamer.dotNetClient_N2\SimpleTableManager.cs" />
-    <Compile Include="Lightstreamer.dotNetClient_N2\SubscrException.cs" />
-    <Compile Include="Lightstreamer.dotNetClient_N2\SubscribedTableKey.cs" />
-    <Compile Include="Lightstreamer.dotNetClient_N2\ThreadSupport.cs" />
-    <Compile Include="Lightstreamer.dotNetClient_N2\TimerSupport.cs" />
-    <Compile Include="Lightstreamer.dotNetClient_N2\UpdateInfoImpl.cs" />
-    <Compile Include="Lightstreamer.dotNetClient_N2\VirtualTableManager.cs" />
     <Compile Include="LightstreamerDefaults.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

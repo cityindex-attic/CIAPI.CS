@@ -13,6 +13,8 @@ using CIAPI.DTO;
 using CIAPI.Streaming;
 using Microsoft.Silverlight.Testing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using StreamingClient;
+using IStreamingClient = CIAPI.Streaming.IStreamingClient;
 
 namespace CIAPI.Phone7.Tests
 {
@@ -72,6 +74,8 @@ namespace CIAPI.Phone7.Tests
         public void CanSubscribeToStream()
         {
             var rpcClient = new Rpc.Client(App.RpcUri);
+            IStreamingClient streamingClient = null;
+            IStreamingListener<NewsDTO> newsListener = null;
             rpcClient.BeginLogIn(App.RpcUserName, App.RpcPassword, ar =>
             {
                 rpcClient.EndLogIn(ar);
@@ -79,36 +83,35 @@ namespace CIAPI.Phone7.Tests
                 EnqueueCallback(() =>
                 {
                     Assert.IsNotNull(rpcClient.Session);
+                });
 
-                    var streamingClient = StreamingClientFactory.CreateStreamingClient(App.StreamingUri, App.RpcUserName, rpcClient.Session);
-                    streamingClient.Connect();
-                    var newsListener = streamingClient.BuildNewsHeadlinesListener("UK");
-
-
-
-                    newsListener.MessageReceived += (s, e) =>
+                EnqueueCallback(() =>
                     {
-                        NewsDTO actual = null;
-                        actual = e.Data;
-                        newsListener.Stop();
-                        streamingClient.Disconnect();
+                        streamingClient = StreamingClientFactory.CreateStreamingClient(App.StreamingUri, App.RpcUserName, rpcClient.Session);
+                        streamingClient.Connect();
+                    });
 
+                EnqueueCallback(() =>
+                    {
+                        newsListener = streamingClient.BuildNewsHeadlinesListener("UK");
+                        newsListener.MessageReceived += (s, e) =>
+                        {
+                            NewsDTO actual = null;
+                            actual = e.Data;
+                            newsListener.Stop();
+                            streamingClient.Disconnect();
+                            Assert.IsNotNull(actual);
+                            Assert.IsFalse(string.IsNullOrEmpty(actual.Headline));
 
-                        Assert.IsNotNull(actual);
-                        Assert.IsFalse(string.IsNullOrEmpty(actual.Headline));
+                            Assert.IsTrue(actual.StoryId > 0);
+                            EnqueueTestComplete();
+                        };
 
-
-                        Assert.IsTrue(actual.StoryId > 0);
-                        EnqueueTestComplete();
-                    };
-
+                    });
+                EnqueueCallback(() =>
+                {
                     newsListener.Start();
-
-
-                }
-
-                    );
-
+                });
 
             }, null);
 
