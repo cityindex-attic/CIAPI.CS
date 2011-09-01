@@ -18,12 +18,12 @@ namespace CIAPI.IntegrationTests.Streaming
             string userName = "xx189949",
             string password = "password")
         {
-            const string apiUrl = "http://ciapipreprod.cityindextest9.co.uk/TradingApi/";
+            const string apiUrl = "https://ciapipreprod.cityindextest9.co.uk/TradingApi/";
 
             var authenticatedClient = new CIAPI.Rpc.Client(new Uri(apiUrl));
             authenticatedClient.LogIn(userName, password);
 
-            var streamingUri = new Uri("http://pushpreprod.cityindextest9.co.uk");
+            var streamingUri = new Uri("https://pushpreprod.cityindextest9.co.uk");
 
             return StreamingClientFactory.CreateStreamingClient(streamingUri, userName, authenticatedClient.Session);
         }

@@ -9,13 +9,13 @@
         {
             get
             {
-                return "http://ciapipreprod.cityindextest9.co.uk/TradingApi/";
+                return "https://ciapipreprod.cityindextest9.co.uk/TradingApi/";
             }
         }
         
         public static string StreamingUri
         {
-            get { return "http://pushpreprod.cityindextest9.co.uk"; }
+            get { return "https://pushpreprod.cityindextest9.co.uk"; }
         }
         public static string ApiUsername
         {

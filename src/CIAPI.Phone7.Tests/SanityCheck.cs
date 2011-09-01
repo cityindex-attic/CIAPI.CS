@@ -19,7 +19,15 @@ namespace CIAPI.Phone7.Tests
     [TestClass]
     public class IntegrationTests : SilverlightTest
     {
-        [TestMethod, Ignore]
+        [TestInitialize]
+        public void TestFixtureSetUp()
+        {
+            // this enables the client framework stack - necessary for access to headers
+            bool httpResult = WebRequest.RegisterPrefix("http://", System.Net.Browser.WebRequestCreator.ClientHttp);
+            bool httpsResult = WebRequest.RegisterPrefix("https://", System.Net.Browser.WebRequestCreator.ClientHttp);
+        }
+
+        [TestMethod]
         [Asynchronous]
         public void CanLoginLogout()
         {
@@ -39,7 +47,7 @@ namespace CIAPI.Phone7.Tests
 
         }
 
-        [TestMethod, Ignore]
+        [TestMethod]
         [Asynchronous]
         public void CanGetHeadlines()
         {
@@ -73,6 +81,7 @@ namespace CIAPI.Phone7.Tests
                     Assert.IsNotNull(rpcClient.Session);
 
                     var streamingClient = StreamingClientFactory.CreateStreamingClient(App.StreamingUri, App.RpcUserName, rpcClient.Session);
+                    streamingClient.Connect();
                     var newsListener = streamingClient.BuildNewsHeadlinesListener("UK");
 
 

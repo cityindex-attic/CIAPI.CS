@@ -17,7 +17,7 @@ namespace CIAPI.CS.Koans
         [Koan(Order = 0)]
         public void UsingNewsRequiresAValidSession()
         {
-            _rpcClient = new Rpc.Client(new Uri("http://ciapipreprod.cityindextest9.co.uk/TradingApi"));
+            _rpcClient = new Rpc.Client(new Uri("https://ciapipreprod.cityindextest9.co.uk/TradingApi"));
 
             _rpcClient.LogIn(USERNAME, PASSWORD);
 

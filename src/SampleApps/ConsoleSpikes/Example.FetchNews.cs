@@ -8,8 +8,8 @@ namespace ConsoleSpikes
 {
     class Example
     {
-        private static readonly Uri RPC_URI = new Uri("http://ciapipreprod.cityindextest9.co.uk/TradingApi");
-        private static readonly Uri STREAMING_URI = new Uri("http://pushpreprod.cityindextest9.co.uk");
+        private static readonly Uri RPC_URI = new Uri("https://ciapipreprod.cityindextest9.co.uk/TradingApi");
+        private static readonly Uri STREAMING_URI = new Uri("https://pushpreprod.cityindextest9.co.uk");
         private const string USERNAME = "xx189949";
         private const string PASSWORD = "password";
 
