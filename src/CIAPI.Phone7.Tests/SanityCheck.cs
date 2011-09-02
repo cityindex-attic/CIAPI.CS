@@ -69,13 +69,16 @@ namespace CIAPI.Phone7.Tests
 
         }
 
+        /// <summary>
+        /// WARNING! This test will fail if run over the weekend (as there are no prices)
+        /// </summary>
         [TestMethod]
         [Asynchronous]
         public void CanSubscribeToStream()
         {
             var rpcClient = new Rpc.Client(App.RpcUri);
             IStreamingClient streamingClient = null;
-            IStreamingListener<NewsDTO> newsListener = null;
+            IStreamingListener<PriceDTO> priceListener = null;
             rpcClient.BeginLogIn(App.RpcUserName, App.RpcPassword, ar =>
             {
                 rpcClient.EndLogIn(ar);
@@ -93,24 +96,34 @@ namespace CIAPI.Phone7.Tests
 
                 EnqueueCallback(() =>
                     {
-                        newsListener = streamingClient.BuildNewsHeadlinesListener("UK");
-                        newsListener.MessageReceived += (s, e) =>
+                        // 24/5 currency markets 
+                        //   154297	GBP/USD (per 0.0001) CFD
+                        //   154284	EUR/AUD (per 0.0001) CFD
+                        //   99524	EUR/CAD (per 0.0001) CFD
+
+                        Assert.IsTrue(
+                            DateTime.UtcNow.DayOfWeek != DayOfWeek.Saturday &&
+                            DateTime.UtcNow.DayOfWeek != DayOfWeek.Sunday,
+                            "This test cannot be run as there are no prices over the weekend");
+
+                        priceListener = streamingClient.BuildPricesListener(new[]{154297,154284,99524 });
+                        priceListener.MessageReceived += (s, e) =>
                         {
-                            NewsDTO actual = null;
+                            PriceDTO actual = null;
                             actual = e.Data;
-                            newsListener.Stop();
+                            priceListener.Stop();
                             streamingClient.Disconnect();
                             Assert.IsNotNull(actual);
-                            Assert.IsFalse(string.IsNullOrEmpty(actual.Headline));
+                            Assert.IsFalse(string.IsNullOrEmpty(actual.AuditId));
 
-                            Assert.IsTrue(actual.StoryId > 0);
+                            Assert.IsTrue(actual.Price > 0);
                             EnqueueTestComplete();
                         };
 
                     });
                 EnqueueCallback(() =>
                 {
-                    newsListener.Start();
+                    priceListener.Start();
                 });
 
             }, null);
