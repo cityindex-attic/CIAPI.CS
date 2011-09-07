@@ -7,7 +7,7 @@ namespace TradingRobot
 {
     public partial class Settings : Form
     {
-        private Client _authenticatedClient;
+        private Client _rpcClient;
         private IStreamingClient _streamingClient;
 
         public Settings()
@@ -15,9 +15,9 @@ namespace TradingRobot
             InitializeComponent();
         }
 
-        public Client AuthenticatedClient
+        public Client RpcClient
         {
-            get { return _authenticatedClient; }
+            get { return _rpcClient; }
         }
 
         public IStreamingClient StreamingClient
@@ -27,12 +27,14 @@ namespace TradingRobot
 
         private void button2_Click(object sender, EventArgs e)
         {
-            _authenticatedClient = new Client(new Uri(RpcUriTextBox.Text));
+            _rpcClient = new Client(new Uri(RpcUriTextBox.Text));
 
-            AuthenticatedClient.LogIn(UserNameTextBox.Text, PasswordTextBox.Text);
+            RpcClient.LogIn(UserNameTextBox.Text, PasswordTextBox.Text);
             _streamingClient = StreamingClientFactory.CreateStreamingClient(new Uri(StreamingUriTextBox.Text),
                                                                             UserNameTextBox.Text,
-                                                                            AuthenticatedClient.Session);
+                                                                            RpcClient.Session);
+            _streamingClient.Connect();
+            DialogResult = DialogResult.OK;
         }
     }
 }

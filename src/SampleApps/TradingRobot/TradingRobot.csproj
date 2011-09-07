@@ -99,6 +99,13 @@
       <Project>{EE5023DC-A20F-4358-9DF1-7D69BB1C322E}</Project>
       <Name>StreamingClient</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TradingRobot.Logic\TradingRobot.Logic.csproj">
+      <Project>{2D38B929-CD86-4234-BE82-515B08AD3CB5}</Project>
+      <Name>TradingRobot.Logic</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="strategy.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

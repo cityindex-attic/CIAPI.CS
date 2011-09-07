@@ -34,15 +34,16 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.PasswordTextBox = new System.Windows.Forms.TextBox();
             this.StreamingUriTextBox = new System.Windows.Forms.TextBox();
             this.RpcUriTextBox = new System.Windows.Forms.TextBox();
-            this.PasswordTextBox = new System.Windows.Forms.TextBox();
             this.UserNameTextBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(426, 172);
+            this.button1.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.button1.Location = new System.Drawing.Point(426, 259);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 0;
@@ -51,7 +52,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(345, 172);
+            this.button2.Location = new System.Drawing.Point(345, 259);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 1;
@@ -95,6 +96,14 @@
             this.label4.TabIndex = 9;
             this.label4.Text = "Streaming Uri";
             // 
+            // PasswordTextBox
+            // 
+            this.PasswordTextBox.Location = new System.Drawing.Point(101, 53);
+            this.PasswordTextBox.Name = "PasswordTextBox";
+            this.PasswordTextBox.PasswordChar = '*';
+            this.PasswordTextBox.Size = new System.Drawing.Size(400, 20);
+            this.PasswordTextBox.TabIndex = 4;
+            // 
             // StreamingUriTextBox
             // 
             this.StreamingUriTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::TradingRobot.Properties.Settings.Default, "StreamingUri", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
@@ -113,14 +122,6 @@
             this.RpcUriTextBox.TabIndex = 6;
             this.RpcUriTextBox.Text = global::TradingRobot.Properties.Settings.Default.RpcUri;
             // 
-            // PasswordTextBox
-            // 
-            this.PasswordTextBox.Location = new System.Drawing.Point(101, 53);
-            this.PasswordTextBox.Name = "PasswordTextBox";
-            this.PasswordTextBox.PasswordChar = '*';
-            this.PasswordTextBox.Size = new System.Drawing.Size(400, 20);
-            this.PasswordTextBox.TabIndex = 4;
-            // 
             // UserNameTextBox
             // 
             this.UserNameTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::TradingRobot.Properties.Settings.Default, "UserName", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
@@ -134,7 +135,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(512, 222);
+            this.ClientSize = new System.Drawing.Size(512, 360);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.StreamingUriTextBox);
             this.Controls.Add(this.label3);
