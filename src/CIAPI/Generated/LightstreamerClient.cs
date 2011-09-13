@@ -17,7 +17,7 @@ namespace CIAPI.Streaming.Lightstreamer
             {
                 throw new Exception("Invalid category:" + category + "\r\nMust match expression " + validator);
             }
-            var topic = Regex.Replace("NEWS.MOCKHEADLINES.{category}", "{category}", category.ToString());
+            var topic = Regex.Replace("NEWS.HEADLINES.{category}", "{category}", category.ToString());
             return BuildListener<NewsDTO>("CITYINDEXSTREAMING",topic);
         }
 

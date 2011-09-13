@@ -693,7 +693,7 @@
                 "NewsHeadlines": {
                     "description": "Stream of  news headlines.  Try NEWS.MOCKHEADLINES.UK for a mock stream",
                     "target": "CITYINDEXSTREAMING",
-                    "channel": "NEWS.MOCKHEADLINES.{category}",
+                    "channel": "NEWS.HEADLINES.{category}",
                     "transport": "HTTP",
                     "protocol": "lightstreamer-3.6",
                     "returns": {
