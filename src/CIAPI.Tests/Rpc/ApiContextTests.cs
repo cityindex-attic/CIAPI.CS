@@ -16,7 +16,7 @@ namespace CIAPI.Tests.Rpc
     [TestFixture]
     public class ExceptionHandling
     {
-        [Test,Ignore, ExpectedException(typeof(ApiTimeoutException))]
+        [Test, Ignore, ExpectedException(typeof(ApiTimeoutException))]
         public void ReproAbortedRequest()
         {
             TestRequestFactory factory = new TestRequestFactory();
@@ -65,11 +65,11 @@ namespace CIAPI.Tests.Rpc
         {
 
             var errorDto = new ApiErrorResponseDTO()
-                               {
-                                   ErrorCode = (int)ErrorCode.InvalidCredentials,
-                                   ErrorMessage = "InvalidCredentials"
+            {
+                ErrorCode = (int)ErrorCode.InvalidCredentials,
+                ErrorMessage = "InvalidCredentials"
 
-                               };
+            };
 
             var ctx = BuildAuthenticatedClientAndSetupResponse(JsonConvert.SerializeObject(errorDto));
 
@@ -145,21 +145,21 @@ namespace CIAPI.Tests.Rpc
 
             var gate = new ManualResetEvent(false);
             ctx.News.BeginListNewsHeadlines("UK", 14, ar =>
+            {
+                try
                 {
-                    try
-                    {
-                        ctx.News.EndListNewsHeadlines(ar);
-                        Assert.Fail("expected exception");
-                    }
-                    catch (Exception ex)
-                    {
-                        Assert.IsInstanceOf(typeof(CIAPI.Rpc.ServerConnectionException), ex, "expected ServerConnectionException but got " + ex.GetType().Name);
-                    }
-                    finally
-                    {
-                        gate.Set();
-                    }
-                }, null);
+                    ctx.News.EndListNewsHeadlines(ar);
+                    Assert.Fail("expected exception");
+                }
+                catch (Exception ex)
+                {
+                    Assert.IsInstanceOf(typeof(CIAPI.Rpc.ServerConnectionException), ex, "expected ServerConnectionException but got " + ex.GetType().Name);
+                }
+                finally
+                {
+                    gate.Set();
+                }
+            }, null);
 
             gate.WaitOne(TimeSpan.FromSeconds(3));
         }
@@ -173,11 +173,11 @@ namespace CIAPI.Tests.Rpc
 
             var gate = new ManualResetEvent(false);
             ctx.News.BeginListNewsHeadlines("UK", 14, ar =>
-                {
-                    ListNewsHeadlinesResponseDTO response = ctx.News.EndListNewsHeadlines(ar);
-                    Assert.AreEqual(14, response.Headlines.Length);
-                    gate.Set();
-                }, null);
+            {
+                ListNewsHeadlinesResponseDTO response = ctx.News.EndListNewsHeadlines(ar);
+                Assert.AreEqual(14, response.Headlines.Length);
+                gate.Set();
+            }, null);
 
             gate.WaitOne(TimeSpan.FromSeconds(3));
         }
@@ -203,20 +203,20 @@ namespace CIAPI.Tests.Rpc
             Exception exception = null;
 
             ctx.News.BeginListNewsHeadlines("UK", 14, ar =>
-                                                     {
-                                                         try
-                                                         {
-                                                             var response = ctx.News.EndListNewsHeadlines(ar);
-                                                         }
-                                                         catch (Exception ex)
-                                                         {
-                                                             exception = ex;
-                                                         }
-                                                         finally
-                                                         {
-                                                             gate.Set();
-                                                         }
-                                                     }, null);
+            {
+                try
+                {
+                    var response = ctx.News.EndListNewsHeadlines(ar);
+                }
+                catch (Exception ex)
+                {
+                    exception = ex;
+                }
+                finally
+                {
+                    gate.Set();
+                }
+            }, null);
             gate.WaitOne(TimeSpan.FromSeconds(30));
             Assert.IsNotNull(exception, "expected exception, got none");
             Assert.IsTrue(exception.Message.Contains(string.Format("(500) internal server error\r\nretried {0} times", EXPECTED_RETRY_COUNT)), "error message incorrect. got " + exception.Message);
