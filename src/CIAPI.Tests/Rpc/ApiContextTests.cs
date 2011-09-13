@@ -230,7 +230,7 @@ namespace CIAPI.Tests.Rpc
 
             ((TestRequestFactory)ctx.RequestController.RequestFactory).CreateTestRequest(LoggedIn, TimeSpan.FromSeconds(300));
 
-            Assert.Throws<ApiException>(() => ctx.LogIn("foo", "bar"));
+            Assert.Throws<ApiTimeoutException>(() => ctx.LogIn("foo", "bar"));
 
 
 

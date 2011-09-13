@@ -31,7 +31,7 @@ namespace TradingRobot.Logic
 
         public ApiTradeOrderResponseDTO OpenPosition(PriceDTO price)
         {
-            return Trade(price, Direction.sell);
+            return Trade(price, Direction.buy);
         }
 
 

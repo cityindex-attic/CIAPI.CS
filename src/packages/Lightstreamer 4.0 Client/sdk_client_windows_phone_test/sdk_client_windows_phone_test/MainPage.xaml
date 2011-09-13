@@ -1,0 +1,70 @@
+﻿<phone:PhoneApplicationPage 
+    x:Class="WindowsPhone7Demo.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    shell:SystemTray.IsVisible="True">
+
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition MaxHeight="30" />
+        </Grid.RowDefinitions>
+
+        <StackPanel x:Name="TitlePanel" Margin="0,17,0,28">
+            <StackPanel Height="95" Name="stackPanel2" Width="478" HorizontalAlignment="Stretch" Orientation="Horizontal">
+                <Image Name="logoImage" Stretch="Uniform" Source="/WP7StockListDemo;component/res/lslogo.png" Width="280" />
+                <Rectangle Height="95" Name="rectangle1" StrokeThickness="1" Width="35">
+                    <Rectangle.Stroke>
+                        <SolidColorBrush />
+                    </Rectangle.Stroke>
+                </Rectangle>
+                <Button Content="Stop" Height="62" Name="button1" Width="135" FontSize="15" HorizontalContentAlignment="Center" HorizontalAlignment="Center" Click="button1_Click" />
+            </StackPanel>
+            <StackPanel Name="stackPanel1" HorizontalAlignment="Left" Orientation="Horizontal">
+                <Image Name="StatusImage" Stretch="Fill" Width="21" Height="51" Source="/WP7StockListDemo;component/res/status_disconnected.png" />
+                <TextBlock Height="27" Name="StatusLabel" Text="Please wait..." Width="458"  />
+            </StackPanel>
+        </StackPanel>
+
+         <Grid x:Name="ContentPanel" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="240" />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.ColumnSpan="2" Grid.RowSpan="2" HorizontalAlignment="Left" Name="textBlock1" Text="Name" VerticalAlignment="Top" FontWeight="Bold" />
+            <TextBlock FontWeight="Bold" HorizontalAlignment="Left" Name="textBlock2" Text="Price" VerticalAlignment="Top" Grid.Column="1" />
+            <TextBlock FontWeight="Bold" HorizontalAlignment="Left" Name="textBlock3" Text="Time" VerticalAlignment="Top" Grid.Column="2" TextAlignment="Left" Width="47" />
+        </Grid>
+        <TextBlock Grid.Row="2" Height="38" HorizontalAlignment="Left" Name="textBlock4" Text="Simulated marked data." VerticalAlignment="Top" />
+    </Grid>
+
+</phone:PhoneApplicationPage>

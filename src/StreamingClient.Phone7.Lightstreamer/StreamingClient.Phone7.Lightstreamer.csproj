@@ -46,8 +46,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Net" />
-    <Reference Include="WindowsPhoneClient, Version=1.0.4168.21542, Culture=neutral, PublicKeyToken=8d72f58860ac9835, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="WindowsPhoneClient">
       <HintPath>..\packages\Lightstreamer 4.0 Client\sdk_client_windows_phone\lib\StrongName\WindowsPhoneClient.dll</HintPath>
     </Reference>
   </ItemGroup>
