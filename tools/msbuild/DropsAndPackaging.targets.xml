@@ -11,10 +11,10 @@
 
   <Target Name="Package" DependsOnTargets="CreateDropDirectories;CopyMSBuildOutputToDropDirectory;CopyLicenseToAllDirectories;CopyReportsToDropFolder">
     <Message Text="Packaging with NuGet" />
-    <Copy SourceFiles="$(RootDirectory)\src\Package.CIAPI.nuspec.xml" DestinationFolder="$(DropDirectory)"/>
-    <Copy SourceFiles="$(RootDirectory)\src\Package.JsonClient.nuspec.xml" DestinationFolder="$(DropDirectory)"/>
-    <Exec Command='"$(NuGetEXE)" pack $(DropDirectory)\Package.CIAPI.nuspec.xml' ContinueOnError='false' WorkingDirectory='$(DropDirectory)'/>
-    <Exec Command='"$(NuGetEXE)" pack $(DropDirectory)\Package.JsonClient.nuspec.xml' ContinueOnError='false' WorkingDirectory='$(DropDirectory)'/>
+    <Copy SourceFiles="$(RootDirectory)\src\Package.CIAPI.nuspec" DestinationFolder="$(DropDirectory)"/>
+    <Copy SourceFiles="$(RootDirectory)\src\Package.JsonClient.nuspec" DestinationFolder="$(DropDirectory)"/>
+    <Exec Command='"$(NuGetEXE)" pack $(DropDirectory)\Package.CIAPI.nuspec' ContinueOnError='false' WorkingDirectory='$(DropDirectory)'/>
+    <Exec Command='"$(NuGetEXE)" pack $(DropDirectory)\Package.JsonClient.nuspec' ContinueOnError='false' WorkingDirectory='$(DropDirectory)'/>
   </Target>
 
   <Target Name="PublishToNugetOrg" DependsOnTargets="Package">
