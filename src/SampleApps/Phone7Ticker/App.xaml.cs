@@ -13,6 +13,7 @@ using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 
+
 namespace Phone7Ticker
 {
     public partial class App : Application
@@ -28,6 +29,7 @@ namespace Phone7Ticker
         /// </summary>
         public App()
         {
+            
             // Global handler for uncaught exceptions. 
             UnhandledException += Application_UnhandledException;
 

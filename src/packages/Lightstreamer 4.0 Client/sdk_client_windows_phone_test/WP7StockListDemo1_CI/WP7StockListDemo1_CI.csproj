@@ -55,6 +55,10 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Net" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsPhoneClient, Version=1.0.4168.21542, Culture=neutral, PublicKeyToken=8d72f58860ac9835, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\sdk_client_windows_phone\lib\StrongName\WindowsPhoneClient.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -64,10 +68,10 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Source\ILightstreamerListener.cs" />
-    <Compile Include="Source\LightstreamerClient.cs" />
-    <Compile Include="Source\StocklistConnectionListener.cs" />
-    <Compile Include="Source\StocklistHandyTableListener.cs" />
+    <None Include="Source\ILightstreamerListener.cs" />
+    <None Include="Source\LightstreamerClient.cs" />
+    <None Include="Source\StocklistConnectionListener.cs" />
+    <None Include="Source\StocklistHandyTableListener.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -101,9 +105,9 @@
       <Project>{DB3089D5-44AC-441C-845C-3596C21C5E34}</Project>
       <Name>JsonClient.Phone7</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\WindowsPhoneClient\WindowsPhoneClient.csproj">
-      <Project>{BFF0E8FF-732C-4D28-88FD-D08A8BCA18BF}</Project>
-      <Name>WindowsPhoneClient</Name>
+    <ProjectReference Include="..\..\..\..\StreamingClient.Phone7\StreamingClient.Phone7.csproj">
+      <Project>{43781FA6-57B5-4EF1-A4C4-4900613BDE77}</Project>
+      <Name>StreamingClient.Phone7</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />

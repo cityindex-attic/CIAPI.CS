@@ -5,7 +5,7 @@ using CIAPI.Rpc;
 
 namespace CIAPI
 {
-    
+
     public class MagicNumberResolver
     {
 
@@ -16,9 +16,9 @@ namespace CIAPI
                 foreach (ApiOpenPositionDTO dto in value.OpenPositions)
                 {
                     this.ResolveMagicNumbers(dto);
-                }    
+                }
             }
-            
+
         }
 
         public void ResolveMagicNumbers(ApiOpenPositionDTO value)
@@ -39,9 +39,9 @@ namespace CIAPI
                 foreach (ApiOrderResponseDTO order in value.Orders)
                 {
                     this.ResolveMagicNumbers(order);
-                }    
+                }
             }
-            
+
         }
 
         public void ResolveMagicNumbers(ApiOrderResponseDTO value)
@@ -67,21 +67,21 @@ namespace CIAPI
 
                     if (apiIfDoneResponseDTO.Stop != null)
                     {
-                        this.ResolveMagicNumbers(apiIfDoneResponseDTO.Stop);    
+                        this.ResolveMagicNumbers(apiIfDoneResponseDTO.Stop);
                     }
-                    
-                }    
+
+                }
             }
-            
+
         }
-        
+
         public void ResolveMagicNumbers(GetOpenPositionResponseDTO value)
         {
             if (value.OpenPosition != null)
             {
                 this.ResolveMagicNumbers(value.OpenPosition);
             }
-            
+
         }
         private static readonly Dictionary<string, ApiLookupResponseDTO> MagicNumbers =
             new Dictionary<string, ApiLookupResponseDTO>();
@@ -92,7 +92,7 @@ namespace CIAPI
         {
             _client = client;
         }
-         
+
 
         public string ResolveMagicNumber(string type, int code)
         {
@@ -116,6 +116,16 @@ namespace CIAPI
                 // log unresolved code
                 return code.ToString();
             }
+        }
+
+        public void PreloadMagicNumbers()
+        {
+            MagicNumbers[MagicNumberKeys.ApiOrderResponseDTO_StatusReason] = _client.Messaging.GetSystemLookup(MagicNumberKeys.ApiOrderResponseDTO_StatusReason, 69);
+            MagicNumbers[MagicNumberKeys.ApiOrderResponseDTO_Status] = _client.Messaging.GetSystemLookup(MagicNumberKeys.ApiOrderResponseDTO_Status, 69);
+            MagicNumbers[MagicNumberKeys.ApiTradeOrderResponseDTO_StatusReason] = _client.Messaging.GetSystemLookup(MagicNumberKeys.ApiTradeOrderResponseDTO_StatusReason, 69);
+            MagicNumbers[MagicNumberKeys.ApiTradeOrderResponseDTO_Status] = _client.Messaging.GetSystemLookup(MagicNumberKeys.ApiTradeOrderResponseDTO_Status, 69);
+            MagicNumbers[MagicNumberKeys.ApiActiveStopLimitOrderDTO_Applicability] = _client.Messaging.GetSystemLookup(MagicNumberKeys.ApiActiveStopLimitOrderDTO_Applicability, 69);
+            MagicNumbers[MagicNumberKeys.ApiOpenPositionDTO_Status] = _client.Messaging.GetSystemLookup(MagicNumberKeys.ApiOpenPositionDTO_Status, 69);
         }
     }
 }
