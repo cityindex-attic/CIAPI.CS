@@ -6,18 +6,20 @@
     <DropContentDirectory>$(DropDirectory)\content</DropContentDirectory>
     <DropToolsDirectory>$(DropDirectory)\tools</DropToolsDirectory>
 
-    <NuGetEXE>$(RootDirectory)\tools\nuget\nuget.exe</NuGetEXE>
+    <NuGetEXE>$(ProgramFiles86)\nuget\nuget.exe</NuGetEXE>
   </PropertyGroup>
 
   <Target Name="Package" DependsOnTargets="CreateDropDirectories;CopyMSBuildOutputToDropDirectory;CopyLicenseToAllDirectories;CopyReportsToDropFolder">
     <Message Text="Packaging with NuGet" />
-    <Copy SourceFiles="$(RootDirectory)\src\Package.CIAPI.nuspec.xml" DestinationFolder="$(DropDirectory)"/>
-    <Copy SourceFiles="$(RootDirectory)\src\Package.JsonClient.nuspec.xml" DestinationFolder="$(DropDirectory)"/>
-    <Exec Command='"$(NuGetEXE)" pack $(DropDirectory)\Package.CIAPI.nuspec.xml' ContinueOnError='false' WorkingDirectory='$(DropDirectory)'/>
-    <Exec Command='"$(NuGetEXE)" pack $(DropDirectory)\Package.JsonClient.nuspec.xml' ContinueOnError='false' WorkingDirectory='$(DropDirectory)'/>
+    <Copy SourceFiles="$(RootDirectory)\src\Package.CIAPI.nuspec" DestinationFolder="$(DropDirectory)"/>
+    <Copy SourceFiles="$(RootDirectory)\src\Package.JsonClient.nuspec" DestinationFolder="$(DropDirectory)"/>
+    <Exec Command='"$(NuGetEXE)" pack $(DropDirectory)\Package.CIAPI.nuspec' ContinueOnError='false' WorkingDirectory='$(DropDirectory)'/>
+    <Exec Command='"$(NuGetEXE)" pack $(DropDirectory)\Package.JsonClient.nuspec' ContinueOnError='false' WorkingDirectory='$(DropDirectory)'/>
   </Target>
 
-  
+  <Target Name="PublishToNugetOrg" DependsOnTargets="Package">
+	    <Exec Command='"$(NuGetEXE)" push $(DropDirectory)\CIAPI.CS.$(Major).$(Minor).$(Build).$(Revision).nupkg' ContinueOnError='false' WorkingDirectory='$(DropDirectory)'/>
+  </Target>
   
   <Target Name="CreateDropDirectories">
     <Message Text="Making the drop directories at '$(DropDirectory)'." />
