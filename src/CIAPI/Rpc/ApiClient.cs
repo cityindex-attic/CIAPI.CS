@@ -10,7 +10,7 @@ namespace CIAPI.Rpc
     {
 
         
-
+        
 
 
         private MagicNumberResolver _magicNumberResolver;

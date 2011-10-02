@@ -210,10 +210,40 @@
             }
           ]
                 },
+                "ListMarketInformation": {
+                    "description": "<p>Get Market Information for the specified list of markets. Post a <a onclick=\"dojo.hash('#type.ListMarketInformationRequestDTO'); return false;\" class=\"json-link\" href=\"#\">ListMarketInformationRequestDTO</a> to the uri specified below.</p>",
+                    "target": "market",
+                    "uriTemplate": "/market/information",
+                    "contentType": "application/json",
+                    "responseContentType": "application/json",
+                    "transport": "POST",
+                    "envelope": "JSON",
+                    "returns": {
+                        "$ref": "ListMarketInformationResponseDTO"
+                    },
+                    "group": "Market",
+                    "throttleScope": "data",
+                    "parameters": []
+                },
+                "SaveMarketInformation": {
+                    "description": "Save Market Information for the specified list of markets.",
+                    "target": "market",
+                    "uriTemplate": "/market/information/save",
+                    "contentType": "application/json",
+                    "responseContentType": "application/json",
+                    "transport": "POST",
+                    "envelope": "JSON",
+                    "returns": {
+                        "$ref": "ApiSaveMarketInformationResponseDTO"
+                    },
+                    "group": "Market",
+                    "throttleScope": "data",
+                    "parameters": []
+                },
                 "ListNewsHeadlines": {
                     "description": "Get a list of current news headlines",
                     "target": "news",
-                    "uriTemplate": "?Category={category}&MaxResults={maxResults}",
+                    "uriTemplate": "?Category={category}&MaxResults={maxResults}&Source={source}",
                     "contentType": "application/json",
                     "responseContentType": "application/json",
                     "transport": "GET",
@@ -247,7 +277,7 @@
                 "GetNewsDetail": {
                     "description": "Get the detail of a specific news story",
                     "target": "news",
-                    "uriTemplate": "/{storyId}",
+                    "uriTemplate": "/{storyId}?Source={source}",
                     "contentType": "application/json",
                     "responseContentType": "application/json",
                     "transport": "GET",
@@ -637,15 +667,85 @@
                     "throttleScope": "data",
                     "parameters": []
                 },
+                "GetMessage": {
+                    "description": "",
+                    "target": "message",
+                    "uriTemplate": "/Message/{id}?language={language}&category={category}",
+                    "contentType": "application/json",
+                    "responseContentType": "application/json",
+                    "transport": "GET",
+                    "envelope": "URL",
+                    "returns": {
+                        "type": "string"
+                    },
+                    "group": "Messages",
+                    "parameters": [
+            {
+                "type": "string",
+                "name": "id"
+            },
+            {
+                "type": "string",
+                "name": "language"
+            },
+            {
+                "type": "string",
+                "name": "category"
+            }
+          ]
+                },
+                "GetMessagePopup": {
+                    "description": "",
+                    "target": "message",
+                    "uriTemplate": "/message/popup?language={language}&ClientAccountId={clientAccountId}",
+                    "contentType": "application/json",
+                    "responseContentType": "application/json",
+                    "transport": "GET",
+                    "envelope": "URL",
+                    "returns": {
+                        "$ref": "GetMessagePopupResponseDTO"
+                    },
+                    "group": "Messages",
+                    "parameters": [
+            {
+                "type": "string",
+                "name": "language"
+            },
+            {
+                "type": "integer",
+                "name": "clientAccountId"
+            }
+          ]
+                },
+                "AcceptOrRejectMessagePopupResponse": {
+                    "description": "",
+                    "target": "message",
+                    "uriTemplate": "/message/popupchoice?ClientAccountId={clientAccountId}&Accepted={accepted}",
+                    "contentType": "application/json",
+                    "responseContentType": "application/json",
+                    "transport": "GET",
+                    "envelope": "URL",
+                    "group": "Messages",
+                    "parameters": [
+            {
+                "type": "integer",
+                "name": "clientAccountId"
+            },
+            {
+                "type": "boolean",
+                "name": "accepted"
+            }
+          ]
+                },
                 "GetSystemLookup": {
                     "description": "Use the message lookup service to get localised textual names for the various status code & Ids returned by the API. For example, a query for OrderStatusReasons will contain text names for all the possible values of OrderStatusReason in the ApiOrderResponseDTO. You should only request the list once per session (for each entity you're interested in).",
                     "target": "message",
                     "uriTemplate": "/message/lookup?lookupEntityName={lookupEntityName}&cultureId={cultureId}",
                     "contentType": "application/json",
                     "responseContentType": "application/json",
-                    "cacheDuration": -1,
                     "transport": "GET",
                     "envelope": "URL",
+                    "cacheDuration":3600,
                     "returns": {
                         "$ref": "ApiLookupResponseDTO"
                     },
@@ -659,7 +759,94 @@
             {
                 "type": "integer",
                 "name": "cultureId",
-                "description": "The cultureId used to override the translated text description."
+                "description": "The cultureId used to override the translated text description. (optional)"
+            }
+          ]
+                },
+                "GetClientApplicationMessageTranslation": {
+                    "description": "Use the message translation service to get client specific translated textual strings.",
+                    "target": "message",
+                    "uriTemplate": "/message/translation?clientApplicationId={clientApplicationId}&cultureId={cultureId}&accountOperatorId={accountOperatorId}",
+                    "contentType": "application/json",
+                    "responseContentType": "application/json",
+                    "transport": "GET",
+                    "envelope": "URL",
+                    "returns": {
+                        "$ref": "ApiClientApplicationMessageTranslationResponseDTO"
+                    },
+                    "group": "Messages",
+                    "parameters": [
+            {
+                "type": "integer",
+                "name": "clientApplicationId",
+                "description": "Client application identifier. (optional)"
+            },
+            {
+                "type": "integer",
+                "name": "cultureId",
+                "description": "CultureId which corresponds to a culture code. (optional)"
+            },
+            {
+                "type": "integer",
+                "name": "accountOperatorId",
+                "description": "Account operator identifier. (optional)"
+            }
+          ]
+                },
+                "GetWatchlists": {
+                    "description": "Get client watchlist",
+                    "target": "watchlists",
+                    "uriTemplate": "/",
+                    "contentType": "application/json",
+                    "responseContentType": "application/json",
+                    "transport": "GET",
+                    "envelope": "URL",
+                    "returns": {
+                        "$ref": "ListWatchlistResponseDTO"
+                    },
+                    "group": "Watchlist",
+                    "throttleScope": "data",
+                    "parameters": []
+                },
+                "SaveWatchlist": {
+                    "description": "Save watchlist",
+                    "target": "watchlists",
+                    "uriTemplate": "/Save",
+                    "contentType": "application/json",
+                    "responseContentType": "application/json",
+                    "transport": "POST",
+                    "envelope": "JSON",
+                    "returns": {
+                        "$ref": "ApiSaveWatchlistResponseDTO"
+                    },
+                    "group": "Watchlist",
+                    "throttleScope": "data",
+                    "parameters": [
+            {
+                "$ref": "#/ApiSaveWatchlistRequestDTO",
+                "name": "apiSaveWatchlistRequestDto",
+                "description": "Save watchlist"
+            }
+          ]
+                },
+                "DeleteWatchlist": {
+                    "description": "Delete a watchlist",
+                    "target": "watchlists",
+                    "uriTemplate": "/delete",
+                    "contentType": "application/json",
+                    "responseContentType": "application/json",
+                    "transport": "POST",
+                    "envelope": "JSON",
+                    "returns": {
+                        "$ref": "ApiDeleteWatchlistResponseDTO"
+                    },
+                    "group": "Watchlist",
+                    "throttleScope": "data",
+                    "parameters": [
+            {
+                "$ref": "#/ApiDeleteWatchlistRequestDTO",
+                "name": "deleteWatchlistRequestDto",
+                "description": "Delete a watchlist"
             }
           ]
                 },
@@ -691,7 +878,7 @@
             "target": "",
             "services": {
                 "NewsHeadlines": {
-                    "description": "Stream of  news headlines.  Try NEWS.MOCKHEADLINES.UK for a mock stream",
+                    "description": "Stream of current news headlines.  Try NEWS.HEADLINES.UK for a mock stream",
                     "target": "CITYINDEXSTREAMING",
                     "channel": "NEWS.HEADLINES.{category}",
                     "transport": "HTTP",
@@ -704,7 +891,6 @@
             {
                 "type": "string",
                 "name": "category",
-                "pattern": "(US|UK|ALL)",
                 "description": "A news category",
                 "minLength": 1,
                 "maxLength": 100,
@@ -732,10 +918,59 @@
               ],
                 "name": "marketIds",
                 "description": "The marketIds",
-                "demoValue": "[71442, 71443]"
+                "demoValue": "[\"71442\", \"71443\"]"
             }
           ]
-                }
+                },
+                "Quotes": {
+                    "description": "Stream of quotes",
+                    "target": "STREAMINGTRADINGACCOUNT",
+                    "channel": "QUOTE.ALL",
+                    "transport": "HTTP",
+                    "protocol": "lightstreamer-3.6",
+                    "returns": {
+                        "$ref": "QuoteDTO"
+                    },
+                    "group": "Streaming API"
+                } //,
+//                "ClientAccountMargin": {
+//                    "description": "Stream of clients current margin",
+//                    "target": "STREAMINGCLIENTACCOUNT",
+//                    "channel": "???",
+//                    "transport": "HTTP",
+//                    "protocol": "lightstreamer-3.6",
+//                    "returns": {
+//                        "$ref": "ClientAccountMarginDTO"
+//                    },
+//                    PARAMETERS???????
+//                    "group": "Streaming API"
+//                },
+//                "ORDERS ": {
+//                    "description": "Stream of clients current orders",
+//                    "target": "STREAMINGCLIENTACCOUNT",
+//                    "channel": "???",
+//                    "transport": "HTTP",
+//                    "protocol": "lightstreamer-3.6",
+//                    "returns": {
+//                        "$ref": "OrderDTO"
+//                    },
+//                    PARAMETERS???????
+//                    "group": "Streaming API"
+//                },
+//                
+//                "PRICES": {
+//                    "description": "Stream of default prices",
+//                    "target": "STREAMINGDEFAULTPRICES",
+//                    "channel": "????",
+//                    "transport": "HTTP",
+//                    "protocol": "lightstreamer-3.6",
+//                    "returns": {
+//                        "$ref": "PriceDTO"
+//                    },
+//                    PARAMETERS???????
+//                    "group": "Streaming API"
+//                }
+
             }
         }
     }

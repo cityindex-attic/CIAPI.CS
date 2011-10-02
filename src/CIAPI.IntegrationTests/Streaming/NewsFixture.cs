@@ -64,5 +64,43 @@ namespace CIAPI.IntegrationTests.Streaming
             Assert.Greater(actual.PublishDate, DateTime.UtcNow.AddMonths(-1));
             Assert.Greater(actual.StoryId, 0);
         }
+
+
+
+        [Test]
+        public void CanConsumeQuotesStream()
+        {
+            var gate = new ManualResetEvent(false);
+
+            var streamingClient = BuildStreamingClient();
+            streamingClient.Connect();
+
+            var newsListener = streamingClient.BuildQuotesListener();
+            newsListener.Start();
+
+            QuoteDTO actual = null;
+
+            //Trap the Price given by the update event for checking
+            newsListener.MessageReceived += (s, e) =>
+            {
+                actual = e.Data;
+                Console.WriteLine(actual);
+                gate.Set();
+            };
+
+            bool timedOut = false;
+
+            if (!gate.WaitOne(TimeSpan.FromSeconds(15)))
+            {
+                timedOut = true;
+            }
+
+            newsListener.Stop();
+            streamingClient.Disconnect();
+
+            Assert.IsFalse(timedOut, "timed out");
+            Assert.IsNotNull(actual);
+ 
+        }
     }
 }

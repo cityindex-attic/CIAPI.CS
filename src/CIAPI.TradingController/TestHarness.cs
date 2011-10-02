@@ -8,7 +8,7 @@ using NUnit.Framework;
 namespace CIAPI.TradingController
 {
 
-    [TestFixture]
+    [TestFixture,Ignore]
     public class TestHarness
     {
         [Test]

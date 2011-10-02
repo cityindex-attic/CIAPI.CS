@@ -1,5 +1,27 @@
 ﻿
 exports.routesPatch = {
+
+    "DeleteWatchlist": {
+        "section": "Watchlist"
+    },
+    "SaveWatchlist": {
+        "section": "Watchlist"
+    },
+    "GetWatchlists": {
+        "section": "Watchlist"
+    },
+    "GetClientApplicationMessageTranslation": {
+        "section": "Messaging"
+    },
+
+    
+"ListMarketInformation": {
+    "section": "Market"
+},
+"SaveMarketInformation": {
+    "section": "Market"
+},
+
     "GetMessage": {
         "section": "Messaging"
     },

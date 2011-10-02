@@ -98,7 +98,7 @@ namespace CIAPI.Tests.Rpc
             catch (ApiException ex)
             {
                 Assert.AreEqual("InvalidCredentials", ex.Message, "FIXME: the API is just setting 401. it needs to send ErrorResponseDTO json as well.");
-                Assert.AreEqual("{\"ErrorMessage\":\"InvalidCredentials\",\"ErrorCode\":4010}", ex.ResponseText);
+                Assert.AreEqual("{\"HttpStatus\":0,\"ErrorMessage\":\"InvalidCredentials\",\"ErrorCode\":4010}", ex.ResponseText);
             }
         }
 

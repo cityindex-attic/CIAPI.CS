@@ -12,11 +12,6 @@ namespace CIAPI.Streaming.Lightstreamer
 
         public IStreamingListener<NewsDTO> BuildNewsHeadlinesListener(string category)
         {
-            const string validator = "(US|UK|ALL)";
-            if (!Regex.IsMatch(category, validator))
-            {
-                throw new Exception("Invalid category:" + category + "\r\nMust match expression " + validator);
-            }
             var topic = Regex.Replace("NEWS.HEADLINES.{category}", "{category}", category.ToString());
             return BuildListener<NewsDTO>("CITYINDEXSTREAMING",topic);
         }
@@ -27,9 +22,15 @@ namespace CIAPI.Streaming.Lightstreamer
             return BuildListener<PriceDTO>("CITYINDEXSTREAMING",topic);
         }
 
+        public IStreamingListener<QuoteDTO> BuildQuotesListener()
+        {
+            string topic = "QUOTE.ALL";
+            return BuildListener<QuoteDTO>("STREAMINGTRADINGACCOUNT",topic);
+        }
+
         protected override string[] GetAdapterList()
         {
-            return new [] { "CITYINDEXSTREAMING" };
+            return new [] { "CITYINDEXSTREAMING","STREAMINGTRADINGACCOUNT" };
         }
 
         #endregion

@@ -41,7 +41,19 @@ namespace StreamingClient.Lightstreamer
                     Constraints = { MaxBandwidth = 999999 }
                 };
                 var client = new LSClient();
-                client.OpenConnection(connectionInfo, this);
+                
+                try
+                {
+                    client.OpenConnection(connectionInfo, this);
+                }
+                catch (PushUserException ex)
+                {
+                    if (ex.Message == "Requested Adapter Set not available")
+                    {
+                        throw new Exception(string.Format("Data adapter {0} is not available", adapter), ex);
+                    }
+                    throw;
+                }
                 _clients.Add(adapter, client);
             }
 
@@ -54,6 +66,7 @@ namespace StreamingClient.Lightstreamer
             {
                 _clients[adapter].CloseConnection();
             }
+            _clients.Clear();
         }
 
         public void OnStatusChanged(StatusEventArgs e)

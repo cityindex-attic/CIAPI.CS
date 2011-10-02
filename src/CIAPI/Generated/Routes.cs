@@ -16,6 +16,7 @@ namespace CIAPI.Rpc
       public _TradesAndOrders TradesAndOrders{get; private set;}
       public _AccountInformation AccountInformation{get; private set;}
       public _Messaging Messaging{get; private set;}
+      public _Watchlist Watchlist{get; private set;}
       public _ExceptionHandling ExceptionHandling{get; private set;}
         public Client(Uri uri)
             : base(uri, new RequestController(TimeSpan.FromSeconds(0), 2, new RequestFactory(), new ErrorResponseDTOJsonExceptionFactory(), new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10, "data"), new ThrottedRequestQueue(TimeSpan.FromSeconds(3), 1, 3, "trading"),new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10, "default")) )
@@ -30,6 +31,7 @@ namespace CIAPI.Rpc
             this. TradesAndOrders = new _TradesAndOrders(this);
             this. AccountInformation = new _AccountInformation(this);
             this. Messaging = new _Messaging(this);
+            this. Watchlist = new _Watchlist(this);
             this. ExceptionHandling = new _ExceptionHandling(this);
         }
         public Client(Uri uri, IRequestController requestController)
@@ -45,6 +47,7 @@ namespace CIAPI.Rpc
             this. TradesAndOrders = new _TradesAndOrders(this);
             this. AccountInformation = new _AccountInformation(this);
             this. Messaging = new _Messaging(this);
+            this. Watchlist = new _Watchlist(this);
             this. ExceptionHandling = new _ExceptionHandling(this);
         }            
 
@@ -349,6 +352,82 @@ namespace CIAPI.Rpc
         }
 
 
+        // ***********************************
+        // ListMarketInformation
+        // ***********************************
+
+
+        /// <summary>
+        /// <p>Get Market Information for the specified list of markets. Post a <a onclick="dojo.hash('#type.ListMarketInformationRequestDTO'); return false;" class="json-link" href="#">ListMarketInformationRequestDTO</a> to the uri specified below.</p>
+        /// </summary>
+        public virtual ListMarketInformationResponseDTO ListMarketInformation()
+        {
+            return _client.Request<ListMarketInformationResponseDTO>("market", "/market/information", "POST",
+            new Dictionary<string, object>
+            {
+
+            }, TimeSpan.FromMilliseconds(0), "data");
+        }
+
+
+        /// <summary>
+        /// <p>Get Market Information for the specified list of markets. Post a <a onclick="dojo.hash('#type.ListMarketInformationRequestDTO'); return false;" class="json-link" href="#">ListMarketInformationRequestDTO</a> to the uri specified below.</p>
+        /// </summary>
+        /// <param name="callback"></param>
+        /// <param name="state"></param>
+        public virtual void BeginListMarketInformation( ApiAsyncCallback<ListMarketInformationResponseDTO> callback, object state)
+        {
+            _client.BeginRequest(callback, state, "market", "/market/information", "POST",
+            new Dictionary<string, object>
+            {
+
+            }, TimeSpan.FromMilliseconds(0), "data");
+        }
+
+        public ListMarketInformationResponseDTO EndListMarketInformation(ApiAsyncResult<ListMarketInformationResponseDTO> asyncResult)
+        {
+            return _client.EndRequest(asyncResult);
+        }
+
+
+        // ***********************************
+        // SaveMarketInformation
+        // ***********************************
+
+
+        /// <summary>
+        /// Save Market Information for the specified list of markets.
+        /// </summary>
+        public virtual ApiSaveMarketInformationResponseDTO SaveMarketInformation()
+        {
+            return _client.Request<ApiSaveMarketInformationResponseDTO>("market", "/market/information/save", "POST",
+            new Dictionary<string, object>
+            {
+
+            }, TimeSpan.FromMilliseconds(0), "data");
+        }
+
+
+        /// <summary>
+        /// Save Market Information for the specified list of markets.
+        /// </summary>
+        /// <param name="callback"></param>
+        /// <param name="state"></param>
+        public virtual void BeginSaveMarketInformation( ApiAsyncCallback<ApiSaveMarketInformationResponseDTO> callback, object state)
+        {
+            _client.BeginRequest(callback, state, "market", "/market/information/save", "POST",
+            new Dictionary<string, object>
+            {
+
+            }, TimeSpan.FromMilliseconds(0), "data");
+        }
+
+        public ApiSaveMarketInformationResponseDTO EndSaveMarketInformation(ApiAsyncResult<ApiSaveMarketInformationResponseDTO> asyncResult)
+        {
+            return _client.EndRequest(asyncResult);
+        }
+
+
         }            
         public class _News
         {
@@ -367,7 +446,7 @@ namespace CIAPI.Rpc
         /// <param name="maxResults">Restrict the number of headlines returned</param>
         public virtual ListNewsHeadlinesResponseDTO ListNewsHeadlines(string category, int maxResults)
         {
-            return _client.Request<ListNewsHeadlinesResponseDTO>("news", "?Category={category}&MaxResults={maxResults}", "GET",
+            return _client.Request<ListNewsHeadlinesResponseDTO>("news", "?Category={category}&MaxResults={maxResults}&Source={source}", "GET",
             new Dictionary<string, object>
             {
                 { "category", category}, 
@@ -385,7 +464,7 @@ namespace CIAPI.Rpc
         /// <param name="state"></param>
         public virtual void BeginListNewsHeadlines(string category, int maxResults, ApiAsyncCallback<ListNewsHeadlinesResponseDTO> callback, object state)
         {
-            _client.BeginRequest(callback, state, "news", "?Category={category}&MaxResults={maxResults}", "GET",
+            _client.BeginRequest(callback, state, "news", "?Category={category}&MaxResults={maxResults}&Source={source}", "GET",
             new Dictionary<string, object>
             {
                 { "category", category}, 
@@ -410,7 +489,7 @@ namespace CIAPI.Rpc
         /// <param name="storyId">The news story Id</param>
         public virtual GetNewsDetailResponseDTO GetNewsDetail(string storyId)
         {
-            return _client.Request<GetNewsDetailResponseDTO>("news", "/{storyId}", "GET",
+            return _client.Request<GetNewsDetailResponseDTO>("news", "/{storyId}?Source={source}", "GET",
             new Dictionary<string, object>
             {
                 { "storyId", storyId}
@@ -426,7 +505,7 @@ namespace CIAPI.Rpc
         /// <param name="state"></param>
         public virtual void BeginGetNewsDetail(string storyId, ApiAsyncCallback<GetNewsDetailResponseDTO> callback, object state)
         {
-            _client.BeginRequest(callback, state, "news", "/{storyId}", "GET",
+            _client.BeginRequest(callback, state, "news", "/{storyId}?Source={source}", "GET",
             new Dictionary<string, object>
             {
                 { "storyId", storyId}
@@ -1100,6 +1179,142 @@ namespace CIAPI.Rpc
             public _Messaging(Client client){ this._client = client;}
 
         // ***********************************
+        // GetMessage
+        // ***********************************
+
+
+        /// <summary>
+        ///  [DESCRIPTION MISSING]
+        /// </summary>
+        /// <param name="id"> [DESCRIPTION MISSING]</param>
+        /// <param name="language"> [DESCRIPTION MISSING]</param>
+        /// <param name="category"> [DESCRIPTION MISSING]</param>
+        public virtual string GetMessage(string id, string language, string category)
+        {
+            return _client.Request<string>("message", "/Message/{id}?language={language}&category={category}", "GET",
+            new Dictionary<string, object>
+            {
+                { "id", id}, 
+                { "language", language}, 
+                { "category", category}
+            }, TimeSpan.FromMilliseconds(0), "default");
+        }
+
+
+        /// <summary>
+        ///  [DESCRIPTION MISSING]
+        /// </summary>
+        /// <param name="id"> [DESCRIPTION MISSING]</param>
+        /// <param name="language"> [DESCRIPTION MISSING]</param>
+        /// <param name="category"> [DESCRIPTION MISSING]</param>
+        /// <param name="callback"></param>
+        /// <param name="state"></param>
+        public virtual void BeginGetMessage(string id, string language, string category, ApiAsyncCallback<string> callback, object state)
+        {
+            _client.BeginRequest(callback, state, "message", "/Message/{id}?language={language}&category={category}", "GET",
+            new Dictionary<string, object>
+            {
+                { "id", id}, 
+                { "language", language}, 
+                { "category", category}
+            }, TimeSpan.FromMilliseconds(0), "default");
+        }
+
+        public string EndGetMessage(ApiAsyncResult<string> asyncResult)
+        {
+            return _client.EndRequest(asyncResult);
+        }
+
+
+        // ***********************************
+        // GetMessagePopup
+        // ***********************************
+
+
+        /// <summary>
+        ///  [DESCRIPTION MISSING]
+        /// </summary>
+        /// <param name="language"> [DESCRIPTION MISSING]</param>
+        /// <param name="clientAccountId"> [DESCRIPTION MISSING]</param>
+        public virtual GetMessagePopupResponseDTO GetMessagePopup(string language, int clientAccountId)
+        {
+            return _client.Request<GetMessagePopupResponseDTO>("message", "/message/popup?language={language}&ClientAccountId={clientAccountId}", "GET",
+            new Dictionary<string, object>
+            {
+                { "language", language}, 
+                { "clientAccountId", clientAccountId}
+            }, TimeSpan.FromMilliseconds(0), "default");
+        }
+
+
+        /// <summary>
+        ///  [DESCRIPTION MISSING]
+        /// </summary>
+        /// <param name="language"> [DESCRIPTION MISSING]</param>
+        /// <param name="clientAccountId"> [DESCRIPTION MISSING]</param>
+        /// <param name="callback"></param>
+        /// <param name="state"></param>
+        public virtual void BeginGetMessagePopup(string language, int clientAccountId, ApiAsyncCallback<GetMessagePopupResponseDTO> callback, object state)
+        {
+            _client.BeginRequest(callback, state, "message", "/message/popup?language={language}&ClientAccountId={clientAccountId}", "GET",
+            new Dictionary<string, object>
+            {
+                { "language", language}, 
+                { "clientAccountId", clientAccountId}
+            }, TimeSpan.FromMilliseconds(0), "default");
+        }
+
+        public GetMessagePopupResponseDTO EndGetMessagePopup(ApiAsyncResult<GetMessagePopupResponseDTO> asyncResult)
+        {
+            return _client.EndRequest(asyncResult);
+        }
+
+
+        // ***********************************
+        // AcceptOrRejectMessagePopupResponse
+        // ***********************************
+
+
+        /// <summary>
+        ///  [DESCRIPTION MISSING]
+        /// </summary>
+        /// <param name="clientAccountId"> [DESCRIPTION MISSING]</param>
+        /// <param name="accepted"> [DESCRIPTION MISSING]</param>
+        public virtual NullType AcceptOrRejectMessagePopupResponse(int clientAccountId, bool accepted)
+        {
+            return _client.Request<NullType>("message", "/message/popupchoice?ClientAccountId={clientAccountId}&Accepted={accepted}", "GET",
+            new Dictionary<string, object>
+            {
+                { "clientAccountId", clientAccountId}, 
+                { "accepted", accepted}
+            }, TimeSpan.FromMilliseconds(0), "default");
+        }
+
+
+        /// <summary>
+        ///  [DESCRIPTION MISSING]
+        /// </summary>
+        /// <param name="clientAccountId"> [DESCRIPTION MISSING]</param>
+        /// <param name="accepted"> [DESCRIPTION MISSING]</param>
+        /// <param name="callback"></param>
+        /// <param name="state"></param>
+        public virtual void BeginAcceptOrRejectMessagePopupResponse(int clientAccountId, bool accepted, ApiAsyncCallback<NullType> callback, object state)
+        {
+            _client.BeginRequest(callback, state, "message", "/message/popupchoice?ClientAccountId={clientAccountId}&Accepted={accepted}", "GET",
+            new Dictionary<string, object>
+            {
+                { "clientAccountId", clientAccountId}, 
+                { "accepted", accepted}
+            }, TimeSpan.FromMilliseconds(0), "default");
+        }
+
+        public NullType EndAcceptOrRejectMessagePopupResponse(ApiAsyncResult<NullType> asyncResult)
+        {
+            return _client.EndRequest(asyncResult);
+        }
+
+
+        // ***********************************
         // GetSystemLookup
         // ***********************************
 
@@ -1108,7 +1323,7 @@ namespace CIAPI.Rpc
         /// Use the message lookup service to get localised textual names for the various status code & Ids returned by the API. For example, a query for OrderStatusReasons will contain text names for all the possible values of OrderStatusReason in the ApiOrderResponseDTO. You should only request the list once per session (for each entity you're interested in).
         /// </summary>
         /// <param name="lookupEntityName">The entity to lookup (eg OrderStatusReason, InstructionStatusReason, OrderApplicability or Culture)</param>
-        /// <param name="cultureId">The cultureId used to override the translated text description.</param>
+        /// <param name="cultureId">The cultureId used to override the translated text description. (optional)</param>
         public virtual ApiLookupResponseDTO GetSystemLookup(string lookupEntityName, int cultureId)
         {
             return _client.Request<ApiLookupResponseDTO>("message", "/message/lookup?lookupEntityName={lookupEntityName}&cultureId={cultureId}", "GET",
@@ -1116,7 +1331,7 @@ namespace CIAPI.Rpc
             {
                 { "lookupEntityName", lookupEntityName}, 
                 { "cultureId", cultureId}
-            }, TimeSpan.FromMilliseconds(-1), "default");
+            }, TimeSpan.FromMilliseconds(3600), "default");
         }
 
 
@@ -1124,7 +1339,7 @@ namespace CIAPI.Rpc
         /// Use the message lookup service to get localised textual names for the various status code & Ids returned by the API. For example, a query for OrderStatusReasons will contain text names for all the possible values of OrderStatusReason in the ApiOrderResponseDTO. You should only request the list once per session (for each entity you're interested in).
         /// </summary>
         /// <param name="lookupEntityName">The entity to lookup (eg OrderStatusReason, InstructionStatusReason, OrderApplicability or Culture)</param>
-        /// <param name="cultureId">The cultureId used to override the translated text description.</param>
+        /// <param name="cultureId">The cultureId used to override the translated text description. (optional)</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
         public virtual void BeginGetSystemLookup(string lookupEntityName, int cultureId, ApiAsyncCallback<ApiLookupResponseDTO> callback, object state)
@@ -1134,10 +1349,182 @@ namespace CIAPI.Rpc
             {
                 { "lookupEntityName", lookupEntityName}, 
                 { "cultureId", cultureId}
-            }, TimeSpan.FromMilliseconds(-1), "default");
+            }, TimeSpan.FromMilliseconds(3600), "default");
         }
 
         public ApiLookupResponseDTO EndGetSystemLookup(ApiAsyncResult<ApiLookupResponseDTO> asyncResult)
+        {
+            return _client.EndRequest(asyncResult);
+        }
+
+
+        // ***********************************
+        // GetClientApplicationMessageTranslation
+        // ***********************************
+
+
+        /// <summary>
+        /// Use the message translation service to get client specific translated textual strings.
+        /// </summary>
+        /// <param name="clientApplicationId">Client application identifier. (optional)</param>
+        /// <param name="cultureId">CultureId which corresponds to a culture code. (optional)</param>
+        /// <param name="accountOperatorId">Account operator identifier. (optional)</param>
+        public virtual ApiClientApplicationMessageTranslationResponseDTO GetClientApplicationMessageTranslation(int clientApplicationId, int cultureId, int accountOperatorId)
+        {
+            return _client.Request<ApiClientApplicationMessageTranslationResponseDTO>("message", "/message/translation?clientApplicationId={clientApplicationId}&cultureId={cultureId}&accountOperatorId={accountOperatorId}", "GET",
+            new Dictionary<string, object>
+            {
+                { "clientApplicationId", clientApplicationId}, 
+                { "cultureId", cultureId}, 
+                { "accountOperatorId", accountOperatorId}
+            }, TimeSpan.FromMilliseconds(0), "default");
+        }
+
+
+        /// <summary>
+        /// Use the message translation service to get client specific translated textual strings.
+        /// </summary>
+        /// <param name="clientApplicationId">Client application identifier. (optional)</param>
+        /// <param name="cultureId">CultureId which corresponds to a culture code. (optional)</param>
+        /// <param name="accountOperatorId">Account operator identifier. (optional)</param>
+        /// <param name="callback"></param>
+        /// <param name="state"></param>
+        public virtual void BeginGetClientApplicationMessageTranslation(int clientApplicationId, int cultureId, int accountOperatorId, ApiAsyncCallback<ApiClientApplicationMessageTranslationResponseDTO> callback, object state)
+        {
+            _client.BeginRequest(callback, state, "message", "/message/translation?clientApplicationId={clientApplicationId}&cultureId={cultureId}&accountOperatorId={accountOperatorId}", "GET",
+            new Dictionary<string, object>
+            {
+                { "clientApplicationId", clientApplicationId}, 
+                { "cultureId", cultureId}, 
+                { "accountOperatorId", accountOperatorId}
+            }, TimeSpan.FromMilliseconds(0), "default");
+        }
+
+        public ApiClientApplicationMessageTranslationResponseDTO EndGetClientApplicationMessageTranslation(ApiAsyncResult<ApiClientApplicationMessageTranslationResponseDTO> asyncResult)
+        {
+            return _client.EndRequest(asyncResult);
+        }
+
+
+        }            
+        public class _Watchlist
+        {
+            private Client _client;
+            public _Watchlist(Client client){ this._client = client;}
+
+        // ***********************************
+        // GetWatchlists
+        // ***********************************
+
+
+        /// <summary>
+        /// Get client watchlist
+        /// </summary>
+        public virtual ListWatchlistResponseDTO GetWatchlists()
+        {
+            return _client.Request<ListWatchlistResponseDTO>("watchlists", "/", "GET",
+            new Dictionary<string, object>
+            {
+
+            }, TimeSpan.FromMilliseconds(0), "data");
+        }
+
+
+        /// <summary>
+        /// Get client watchlist
+        /// </summary>
+        /// <param name="callback"></param>
+        /// <param name="state"></param>
+        public virtual void BeginGetWatchlists( ApiAsyncCallback<ListWatchlistResponseDTO> callback, object state)
+        {
+            _client.BeginRequest(callback, state, "watchlists", "/", "GET",
+            new Dictionary<string, object>
+            {
+
+            }, TimeSpan.FromMilliseconds(0), "data");
+        }
+
+        public ListWatchlistResponseDTO EndGetWatchlists(ApiAsyncResult<ListWatchlistResponseDTO> asyncResult)
+        {
+            return _client.EndRequest(asyncResult);
+        }
+
+
+        // ***********************************
+        // SaveWatchlist
+        // ***********************************
+
+
+        /// <summary>
+        /// Save watchlist
+        /// </summary>
+        /// <param name="apiSaveWatchlistRequestDto">Save watchlist</param>
+        public virtual ApiSaveWatchlistResponseDTO SaveWatchlist(ApiSaveWatchlistRequestDTO apiSaveWatchlistRequestDto)
+        {
+            return _client.Request<ApiSaveWatchlistResponseDTO>("watchlists", "/Save", "POST",
+            new Dictionary<string, object>
+            {
+                { "apiSaveWatchlistRequestDto", apiSaveWatchlistRequestDto}
+            }, TimeSpan.FromMilliseconds(0), "data");
+        }
+
+
+        /// <summary>
+        /// Save watchlist
+        /// </summary>
+        /// <param name="apiSaveWatchlistRequestDto">Save watchlist</param>
+        /// <param name="callback"></param>
+        /// <param name="state"></param>
+        public virtual void BeginSaveWatchlist(ApiSaveWatchlistRequestDTO apiSaveWatchlistRequestDto, ApiAsyncCallback<ApiSaveWatchlistResponseDTO> callback, object state)
+        {
+            _client.BeginRequest(callback, state, "watchlists", "/Save", "POST",
+            new Dictionary<string, object>
+            {
+                { "apiSaveWatchlistRequestDto", apiSaveWatchlistRequestDto}
+            }, TimeSpan.FromMilliseconds(0), "data");
+        }
+
+        public ApiSaveWatchlistResponseDTO EndSaveWatchlist(ApiAsyncResult<ApiSaveWatchlistResponseDTO> asyncResult)
+        {
+            return _client.EndRequest(asyncResult);
+        }
+
+
+        // ***********************************
+        // DeleteWatchlist
+        // ***********************************
+
+
+        /// <summary>
+        /// Delete a watchlist
+        /// </summary>
+        /// <param name="deleteWatchlistRequestDto">Delete a watchlist</param>
+        public virtual ApiDeleteWatchlistResponseDTO DeleteWatchlist(ApiDeleteWatchlistRequestDTO deleteWatchlistRequestDto)
+        {
+            return _client.Request<ApiDeleteWatchlistResponseDTO>("watchlists", "/delete", "POST",
+            new Dictionary<string, object>
+            {
+                { "deleteWatchlistRequestDto", deleteWatchlistRequestDto}
+            }, TimeSpan.FromMilliseconds(0), "data");
+        }
+
+
+        /// <summary>
+        /// Delete a watchlist
+        /// </summary>
+        /// <param name="deleteWatchlistRequestDto">Delete a watchlist</param>
+        /// <param name="callback"></param>
+        /// <param name="state"></param>
+        public virtual void BeginDeleteWatchlist(ApiDeleteWatchlistRequestDTO deleteWatchlistRequestDto, ApiAsyncCallback<ApiDeleteWatchlistResponseDTO> callback, object state)
+        {
+            _client.BeginRequest(callback, state, "watchlists", "/delete", "POST",
+            new Dictionary<string, object>
+            {
+                { "deleteWatchlistRequestDto", deleteWatchlistRequestDto}
+            }, TimeSpan.FromMilliseconds(0), "data");
+        }
+
+        public ApiDeleteWatchlistResponseDTO EndDeleteWatchlist(ApiAsyncResult<ApiDeleteWatchlistResponseDTO> asyncResult)
         {
             return _client.EndRequest(asyncResult);
         }
