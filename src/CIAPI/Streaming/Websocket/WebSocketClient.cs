@@ -29,6 +29,16 @@ namespace CIAPI.Streaming.Websocket
             return BuildListener<ClientAccountMarginDTO>("");
         }
 
+        public IStreamingListener<OrderDTO> BuildOrdersListener()
+        {
+            return BuildListener<OrderDTO>("");
+        }
+
+        public IStreamingListener<PriceDTO> BuildDefaultPricesListener()
+        {
+            return BuildListener<PriceDTO>("");
+        }
+
         public IStreamingListener<QuoteDTO> BuildQuotesListener()
         {
             return BuildListener<QuoteDTO>("");

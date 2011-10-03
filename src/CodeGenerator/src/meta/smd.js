@@ -745,7 +745,7 @@
                     "responseContentType": "application/json",
                     "transport": "GET",
                     "envelope": "URL",
-                    "cacheDuration":3600,
+                    "cacheDuration": 3600,
                     "returns": {
                         "$ref": "ApiLookupResponseDTO"
                     },
@@ -925,51 +925,48 @@
                 "Quotes": {
                     "description": "Stream of quotes",
                     "target": "STREAMINGTRADINGACCOUNT",
-                    "channel": "QUOTE.ALL",
+                    "channel": "QUOTES",
                     "transport": "HTTP",
                     "protocol": "lightstreamer-3.6",
                     "returns": {
                         "$ref": "QuoteDTO"
                     },
                     "group": "Streaming API"
-                } //,
-//                "ClientAccountMargin": {
-//                    "description": "Stream of clients current margin",
-//                    "target": "STREAMINGCLIENTACCOUNT",
-//                    "channel": "???",
-//                    "transport": "HTTP",
-//                    "protocol": "lightstreamer-3.6",
-//                    "returns": {
-//                        "$ref": "ClientAccountMarginDTO"
-//                    },
-//                    PARAMETERS???????
-//                    "group": "Streaming API"
-//                },
-//                "ORDERS ": {
-//                    "description": "Stream of clients current orders",
-//                    "target": "STREAMINGCLIENTACCOUNT",
-//                    "channel": "???",
-//                    "transport": "HTTP",
-//                    "protocol": "lightstreamer-3.6",
-//                    "returns": {
-//                        "$ref": "OrderDTO"
-//                    },
-//                    PARAMETERS???????
-//                    "group": "Streaming API"
-//                },
-//                
-//                "PRICES": {
-//                    "description": "Stream of default prices",
-//                    "target": "STREAMINGDEFAULTPRICES",
-//                    "channel": "????",
-//                    "transport": "HTTP",
-//                    "protocol": "lightstreamer-3.6",
-//                    "returns": {
-//                        "$ref": "PriceDTO"
-//                    },
-//                    PARAMETERS???????
-//                    "group": "Streaming API"
-//                }
+                },
+                "ClientAccountMargin": {
+                    "description": "Stream of clients current margin",
+                    "target": "STREAMINGCLIENTACCOUNT",
+                    "channel": "CLIENTACCOUNTMARGIN",
+                    "transport": "HTTP",
+                    "protocol": "lightstreamer-3.6",
+                    "returns": {
+                        "$ref": "ClientAccountMarginDTO"
+                    },
+                    "group": "Streaming API"
+                },
+                "Orders": {
+                    "description": "Stream of clients current orders",
+                    "target": "STREAMINGCLIENTACCOUNT",
+                    "channel": "ORDERS",
+                    "transport": "HTTP",
+                    "protocol": "lightstreamer-3.6",
+                    "returns": {
+                        "$ref": "OrderDTO"
+                    },
+                    "group": "Streaming API"
+                },
+
+                "DefaultPrices": {
+                    "description": "Stream of default prices",
+                    "target": "CITYINDEXSTREAMINGDEFAULTPRICES",
+                    "channel": "PRICES",
+                    "transport": "HTTP",
+                    "protocol": "lightstreamer-3.6",
+                    "returns": {
+                        "$ref": "PriceDTO"
+                    },
+                    "group": "Streaming API"
+                }
 
             }
         }

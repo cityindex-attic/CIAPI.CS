@@ -24,13 +24,31 @@ namespace CIAPI.Streaming.Lightstreamer
 
         public IStreamingListener<QuoteDTO> BuildQuotesListener()
         {
-            string topic = "QUOTE.ALL";
+            string topic = "QUOTES";
             return BuildListener<QuoteDTO>("STREAMINGTRADINGACCOUNT",topic);
+        }
+
+        public IStreamingListener<ClientAccountMarginDTO> BuildClientAccountMarginListener()
+        {
+            string topic = "CLIENTACCOUNTMARGIN";
+            return BuildListener<ClientAccountMarginDTO>("STREAMINGCLIENTACCOUNT",topic);
+        }
+
+        public IStreamingListener<OrderDTO> BuildOrdersListener()
+        {
+            string topic = "ORDERS";
+            return BuildListener<OrderDTO>("STREAMINGCLIENTACCOUNT",topic);
+        }
+
+        public IStreamingListener<PriceDTO> BuildDefaultPricesListener()
+        {
+            string topic = "PRICES";
+            return BuildListener<PriceDTO>("CITYINDEXSTREAMINGDEFAULTPRICES",topic);
         }
 
         protected override string[] GetAdapterList()
         {
-            return new [] { "CITYINDEXSTREAMING","STREAMINGTRADINGACCOUNT" };
+            return new [] { "CITYINDEXSTREAMING","STREAMINGTRADINGACCOUNT","STREAMINGCLIENTACCOUNT","CITYINDEXSTREAMINGDEFAULTPRICES" };
         }
 
         #endregion

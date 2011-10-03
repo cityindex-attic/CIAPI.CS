@@ -11,6 +11,8 @@ namespace CIAPI.Streaming
         IStreamingListener<NewsDTO> BuildNewsHeadlinesListener(string category);
         IStreamingListener<QuoteDTO> BuildQuotesListener();
 
-        //IStreamingListener<ClientAccountMarginDTO> BuildClientAccountMarginListener();
+        IStreamingListener<ClientAccountMarginDTO> BuildClientAccountMarginListener();
+        IStreamingListener<OrderDTO> BuildOrdersListener();
+        IStreamingListener<PriceDTO> BuildDefaultPricesListener();
     }
 }
