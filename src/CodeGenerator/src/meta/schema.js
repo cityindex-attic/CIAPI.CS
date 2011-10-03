@@ -965,11 +965,15 @@ exports.schema =
             "type": "object",
             "extends": "#/ApiOrderDTO",
             "properties": {
+                "TriggerPrice": {
+                    "type": "number",
+                    "description": "Price at which the order should be triggered"
+                },
                 "ExpiryDateTimeUTC": {
                     "type": [
-            "null",
-            "string"
-          ],
+                        "null",
+                        "string"
+                        ],
                     "format": "wcf-date",
                     "description": "The associated expiry DateTime for a pair of GoodTillDate IfDone orders"
                 },
