@@ -21,7 +21,7 @@
                     "throttleScope": "data",
                     "parameters": [
             {
-                "$ref": "#/ApiLogOnRequestDTO",
+                "$ref": "ApiLogOnRequestDTO",
                 "name": "apiLogOnRequest",
                 "description": ""
             }
@@ -238,7 +238,14 @@
                     },
                     "group": "Market",
                     "throttleScope": "data",
-                    "parameters": []
+                    "parameters": [
+            {
+                "$ref": "SaveMarketInformationRequestDTO",
+                "name": "listMarketInformationRequestSaveDTO",
+                "description": "The market information request"
+            }
+
+                    ]
                 },
                 "ListNewsHeadlines": {
                     "description": "Get a list of current news headlines",
@@ -414,7 +421,7 @@
                     "throttleScope": "trading",
                     "parameters": [
             {
-                "$ref": "#/NewStopLimitOrderRequestDTO",
+                "$ref": "NewStopLimitOrderRequestDTO",
                 "name": "order",
                 "description": "The order request"
             }
@@ -434,7 +441,7 @@
                     "group": "Trades and Orders",
                     "parameters": [
             {
-                "$ref": "#/CancelOrderRequestDTO",
+                "$ref": "CancelOrderRequestDTO",
                 "name": "cancelOrder",
                 "description": "The cancel order request"
             }
@@ -454,7 +461,7 @@
                     "group": "Trades and Orders",
                     "parameters": [
             {
-                "$ref": "#/UpdateStopLimitOrderRequestDTO",
+                "$ref": "UpdateStopLimitOrderRequestDTO",
                 "name": "order",
                 "description": "<p>Update an order (for adding a stop/limit or attaching an OCO relationship).  Post an <a onclick=\"dojo.hash('#type.UpdateStopLimitOrderRequestDTO'); return false;\" class=\"json-link\" href=\"#\">UpdateStopLimitOrderRequestDTO</a> to the uri specified below</p>"
             }
@@ -625,7 +632,7 @@
                     "throttleScope": "trading",
                     "parameters": [
             {
-                "$ref": "#/NewTradeOrderRequestDTO",
+                "$ref": "NewTradeOrderRequestDTO",
                 "name": "trade",
                 "description": "The trade request"
             }
@@ -646,7 +653,7 @@
                     "throttleScope": "trading",
                     "parameters": [
             {
-                "$ref": "#/UpdateTradeOrderRequestDTO",
+                "$ref": "UpdateTradeOrderRequestDTO",
                 "name": "update",
                 "description": "The trade request"
             }
@@ -823,7 +830,7 @@
                     "throttleScope": "data",
                     "parameters": [
             {
-                "$ref": "#/ApiSaveWatchlistRequestDTO",
+                "$ref": "ApiSaveWatchlistRequestDTO",
                 "name": "apiSaveWatchlistRequestDto",
                 "description": "Save watchlist"
             }
@@ -844,7 +851,7 @@
                     "throttleScope": "data",
                     "parameters": [
             {
-                "$ref": "#/ApiDeleteWatchlistRequestDTO",
+                "$ref": "ApiDeleteWatchlistRequestDTO",
                 "name": "deleteWatchlistRequestDto",
                 "description": "Delete a watchlist"
             }

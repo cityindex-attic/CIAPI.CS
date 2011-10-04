@@ -278,6 +278,7 @@ namespace  CIAPI.DTO
     [Serializable]
     public partial class ApiStopLimitOrderDTO : ApiOrderDTO
     {
+        public decimal TriggerPrice { get; set; }
         public DateTime? ExpiryDateTimeUTC { get; set; }
         public string Applicability { get; set; }
     }

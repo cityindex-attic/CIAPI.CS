@@ -965,6 +965,13 @@ exports.schema =
             "type": "object",
             "extends": "#/ApiOrderDTO",
             "properties": {
+                "TriggerPrice": {
+                    "type": "number",
+                    "format": "decimal",
+                    "minValue": -7.9228162514264338E+28,
+                    "maxValue": 7.9228162514264338E+28,
+                    "description": "The price / rate that the the order was set to trigger at."
+                },
                 "ExpiryDateTimeUTC": {
                     "type": [
             "null",

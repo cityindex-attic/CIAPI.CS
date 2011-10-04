@@ -398,12 +398,13 @@ namespace CIAPI.Rpc
         /// <summary>
         /// Save Market Information for the specified list of markets.
         /// </summary>
-        public virtual ApiSaveMarketInformationResponseDTO SaveMarketInformation()
+        /// <param name="listMarketInformationRequestSaveDTO">The market information request</param>
+        public virtual ApiSaveMarketInformationResponseDTO SaveMarketInformation(SaveMarketInformationRequestDTO listMarketInformationRequestSaveDTO)
         {
             return _client.Request<ApiSaveMarketInformationResponseDTO>("market", "/market/information/save", "POST",
             new Dictionary<string, object>
             {
-
+                { "listMarketInformationRequestSaveDTO", listMarketInformationRequestSaveDTO}
             }, TimeSpan.FromMilliseconds(0), "data");
         }
 
@@ -411,14 +412,15 @@ namespace CIAPI.Rpc
         /// <summary>
         /// Save Market Information for the specified list of markets.
         /// </summary>
+        /// <param name="listMarketInformationRequestSaveDTO">The market information request</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginSaveMarketInformation( ApiAsyncCallback<ApiSaveMarketInformationResponseDTO> callback, object state)
+        public virtual void BeginSaveMarketInformation(SaveMarketInformationRequestDTO listMarketInformationRequestSaveDTO, ApiAsyncCallback<ApiSaveMarketInformationResponseDTO> callback, object state)
         {
             _client.BeginRequest(callback, state, "market", "/market/information/save", "POST",
             new Dictionary<string, object>
             {
-
+                { "listMarketInformationRequestSaveDTO", listMarketInformationRequestSaveDTO}
             }, TimeSpan.FromMilliseconds(0), "data");
         }
 
