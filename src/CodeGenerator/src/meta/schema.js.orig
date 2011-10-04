@@ -967,10 +967,14 @@ exports.schema =
             "properties": {
                 "TriggerPrice": {
                     "type": "number",
+<<<<<<< HEAD
                     "format": "decimal",
                     "minValue": -7.9228162514264338E+28,
                     "maxValue": 7.9228162514264338E+28,
                     "description": "The price / rate that the the order was set to trigger at."
+=======
+                    "description": "Price at which the order should be triggered"
+>>>>>>> 1efa9b12c2af0d3991524fee592efd1faac11fcd
                 },
                 "ExpiryDateTimeUTC": {
                     "type": [
