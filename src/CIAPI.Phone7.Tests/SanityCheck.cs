@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Net;
 using System.Threading;
 using System.Windows;
@@ -10,7 +11,10 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using CIAPI.DTO;
+using CIAPI.Phone7.Tests.Lightstreamer;
 using CIAPI.Streaming;
+using Common.Logging;
+using Lightstreamer.DotNet.Client;
 using Microsoft.Silverlight.Testing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using StreamingClient;
@@ -27,6 +31,8 @@ namespace CIAPI.Phone7.Tests
             // this enables the client framework stack - necessary for access to headers
             bool httpResult = WebRequest.RegisterPrefix("http://", System.Net.Browser.WebRequestCreator.ClientHttp);
             bool httpsResult = WebRequest.RegisterPrefix("https://", System.Net.Browser.WebRequestCreator.ClientHttp);
+
+            LSClient.SetLoggerProvider(new DebugLoggerProvider());
         }
 
         [TestMethod]
@@ -74,71 +80,69 @@ namespace CIAPI.Phone7.Tests
         /////// <summary>
         /////// WARNING! This test will fail if run over the weekend (as there are no prices)
         /////// </summary>
-        //[TestMethod]
-        //[Asynchronous]
-        //public void CanSubscribeToStream()
-        //{
-        //    var rpcClient = new Rpc.Client(App.RpcUri);
-        //    IStreamingClient streamingClient = null;
-        //    IStreamingListener<PriceDTO> priceListener = null;
-        //    rpcClient.BeginLogIn(App.RpcUserName, App.RpcPassword, ar =>
-        //    {
+        [TestMethod]
+        [Asynchronous, Ignore]
+        public void CanSubscribeToStream()
+        {
+            var rpcClient = new Rpc.Client(App.RpcUri);
+            IStreamingClient streamingClient = null;
+            IStreamingListener<PriceDTO> priceListener = null;
+
+            rpcClient.BeginLogIn(App.RpcUserName, App.RpcPassword, ar =>
+            {
+                rpcClient.EndLogIn(ar);
+
+                EnqueueCallback(() =>
+                    {
+                        // 24/5 currency markets 
+                        //   154297	GBP/USD (per 0.0001) CFD
+                        //   154284	EUR/AUD (per 0.0001) CFD
+                        //   99524	EUR/CAD (per 0.0001) CFD
+
+                        Assert.IsTrue(
+                            DateTime.UtcNow.DayOfWeek != DayOfWeek.Saturday &&
+                            DateTime.UtcNow.DayOfWeek != DayOfWeek.Sunday,
+                            "This test cannot be run as there are no prices over the weekend");
+
+                        EnqueueCallback(() =>
+                        {
+                            Debug.WriteLine(string.Format("creating streaming client: streamingUri={0}, UserName={1}, Session={2}",
+                                                                                        App.StreamingUri, App.RpcUserName, rpcClient.Session));
+                            streamingClient = StreamingClientFactory.CreateStreamingClient(App.StreamingUri, App.RpcUserName, rpcClient.Session);
+                            streamingClient.Connect();
+                        });
+
+                        EnqueueCallback(() =>
+                        {
+
+                            priceListener = streamingClient.BuildPricesListener(new[] { 154297, 154284, 99524 });
+                        });
 
 
-        //        rpcClient.EndLogIn(ar);
+                        EnqueueCallback(() =>
+                        {
+                            priceListener.MessageReceived += (s, e) =>
+                            {
+                                PriceDTO actual = null;
+                                actual = e.Data;
+                                priceListener.Stop();
+                                streamingClient.Disconnect();
+                                Assert.IsNotNull(actual);
+                                Assert.IsFalse(string.IsNullOrEmpty(actual.AuditId));
+
+                                Assert.IsTrue(actual.Price > 0);
+                                EnqueueTestComplete();
+                            };
+
+                            priceListener.Start();
+                        });
+                        
+
+                    });
 
 
+            }, null);
 
-        //        //EnqueueCallback(() =>
-        //        //    {
-        //        //        // 24/5 currency markets 
-        //        //        //   154297	GBP/USD (per 0.0001) CFD
-        //        //        //   154284	EUR/AUD (per 0.0001) CFD
-        //        //        //   99524	EUR/CAD (per 0.0001) CFD
-
-        //        //        Assert.IsTrue(
-        //        //            DateTime.UtcNow.DayOfWeek != DayOfWeek.Saturday &&
-        //        //            DateTime.UtcNow.DayOfWeek != DayOfWeek.Sunday,
-        //        //            "This test cannot be run as there are no prices over the weekend");
-
-        //        //        
-        //        //        priceListener.MessageReceived += (s, e) =>
-        //        //        {
-        //        //            PriceDTO actual = null;
-        //        //            actual = e.Data;
-        //        //            priceListener.Stop();
-        //        //            streamingClient.Disconnect();
-        //        //            Assert.IsNotNull(actual);
-        //        //            Assert.IsFalse(string.IsNullOrEmpty(actual.AuditId));
-
-        //        //            Assert.IsTrue(actual.Price > 0);
-        //        //            EnqueueTestComplete();
-        //        //        };
-
-        //        //    });
-
-
-        //    }, null);
-
-
-        //    EnqueueCallback(() =>
-        //    {
-        //        streamingClient = StreamingClientFactory.CreateStreamingClient(App.StreamingUri, App.RpcUserName, rpcClient.Session);
-        //        streamingClient.Connect();
-        //    });
-
-        //    EnqueueCallback(() =>
-        //    {
-
-        //        priceListener = streamingClient.BuildPricesListener(new[] { 154297, 154284, 99524 });
-        //    });
-
-
-        //    EnqueueCallback(() =>
-        //    {
-        //        priceListener.Start();
-        //    });
-
-        //}
+        }
     }
 }
