@@ -10,6 +10,7 @@ namespace CIAPI.Streaming.Lightstreamer
         public LightstreamerClient(Uri streamingUri, string userName, string sessionId)
             : base(streamingUri, userName, sessionId)
         {
+            
         }
     }
 }

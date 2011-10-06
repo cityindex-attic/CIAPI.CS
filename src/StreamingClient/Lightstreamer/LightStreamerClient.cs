@@ -1,21 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text.RegularExpressions;
 using Lightstreamer.DotNet.Client;
 
 namespace StreamingClient.Lightstreamer
 {
+
     public abstract class LightstreamerClient : IStreamingClient, IConnectionListener
     {
         private readonly string _sessionId;
         private readonly Uri _streamingUri;
         private readonly string _userName;
-        
-        private Dictionary<string, LSClient> _clients = new Dictionary<string, LSClient>();
-        private Dictionary<string, IStreamingListener> _currentListeners = new Dictionary<string, IStreamingListener>();
 
+        private Dictionary<string, ClientData> _clients = new Dictionary<string, ClientData>();
+        private Dictionary<string, IStreamingListener> _currentListeners = new Dictionary<string, IStreamingListener>();
+        static LightstreamerClient()
+        {
+            LSClient.SetLoggerProvider(new LSLoggerProvider());
+        }
         protected LightstreamerClient(Uri streamingUri, string userName, string sessionId)
         {
+            
             _streamingUri = streamingUri;
             _sessionId = sessionId;
             _userName = userName;
@@ -42,19 +48,7 @@ namespace StreamingClient.Lightstreamer
                 };
                 var client = new LSClient();
                 
-                try
-                {
-                    client.OpenConnection(connectionInfo, this);
-                }
-                catch (PushUserException ex)
-                {
-                    if (ex.Message == "Requested Adapter Set not available")
-                    {
-                        throw new Exception(string.Format("Data adapter {0} is not available", adapter), ex);
-                    }
-                    throw;
-                }
-                _clients.Add(adapter, client);
+                _clients.Add(adapter, new ClientData() { client = client, connection = connectionInfo, dataAdapter = adapter });
             }
 
         }
@@ -62,9 +56,33 @@ namespace StreamingClient.Lightstreamer
         public void Disconnect()
         {
             var adapterList = GetAdapterList();
+            foreach (var item in _currentListeners)
+            {
+                try
+                {
+                    Debug.WriteLine("stopping listener on " + item.Key );
+                    item.Value.Stop();
+                    Debug.WriteLine("stopped listener on " + item.Key);
+                }
+                catch (Exception ex)
+                {
+
+                    Debug.WriteLine("error stopping listener on " + item.Key + "/n" + ex);
+                }
+            }
             foreach (string adapter in adapterList)
             {
-                _clients[adapter].CloseConnection();
+                try
+                {
+                    Debug.WriteLine("disconnecting client on adapter " + adapter);
+                    _clients[adapter].client.CloseConnection();
+                    Debug.WriteLine("disconnected client on adapter " + adapter);
+                }
+                catch (Exception ex)
+                {
+
+                    Debug.WriteLine("error disconnecting client on " + adapter + "/n" + ex);
+                }
             }
             _clients.Clear();
         }
@@ -137,7 +155,30 @@ namespace StreamingClient.Lightstreamer
         {
             if (!_currentListeners.ContainsKey(topic))
             {
-                _currentListeners.Add(topic, new LightstreamerListener<TDto>(topic, _clients[adapter]));
+                var listener = new LightstreamerListener<TDto>(topic, _clients[adapter].client);
+                _currentListeners.Add(topic, listener);
+            }
+
+
+            try
+            {
+                var clientInfo = _clients[adapter];
+                if (!clientInfo.connected)
+                {
+                    Debug.WriteLine("connecting streaming client to adapter " + clientInfo.dataAdapter);
+                    clientInfo.client.OpenConnection(clientInfo.connection, this);
+                    Debug.WriteLine("connected streaming client to adapter " + clientInfo.dataAdapter);
+                    clientInfo.connected = true;
+                }
+                
+            }
+            catch (PushUserException ex)
+            {
+                if (ex.Message == "Requested Adapter Set not available")
+                {
+                    throw new Exception(string.Format("Data adapter {0} is not available", adapter), ex);
+                }
+                throw;
             }
 
             return (IStreamingListener<TDto>)_currentListeners[topic];

@@ -21,9 +21,9 @@ namespace Phone7Ticker
 {
     public partial class MainPage : PhoneApplicationPage
     {
-        private const string pushServerHost = "https://push.cityindex.com";
-        private const string rpcServerHost = "https://ciapi.cityindex.com/tradingapi";
-        private const string userName = "XX512670";
+        private const string pushServerHost = "https://pushpreprod.cityindextest9.co.uk/";
+        private const string rpcServerHost = "https://ciapipreprod.cityindextest9.co.uk/TradingApi/";
+        private const string userName = "xx189949";
         private const string password = "password";
         private string sessionId = "";
         IStreamingClient streamingClient;

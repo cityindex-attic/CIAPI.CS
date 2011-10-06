@@ -73,6 +73,9 @@
     <Compile Include="..\StreamingClient\IStreamingListener.cs">
       <Link>IStreamingListener.cs</Link>
     </Compile>
+    <Compile Include="..\StreamingClient\Lightstreamer\ClientData.cs">
+      <Link>Lightstreamer\ClientData.cs</Link>
+    </Compile>
     <Compile Include="..\StreamingClient\Lightstreamer\LightStreamerClient.cs">
       <Link>Lightstreamer\LightStreamerClient.cs</Link>
     </Compile>
@@ -81,6 +84,12 @@
     </Compile>
     <Compile Include="..\StreamingClient\Lightstreamer\LightStreamerListener.cs">
       <Link>Lightstreamer\LightStreamerListener.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient\Lightstreamer\LSLogger.cs">
+      <Link>Lightstreamer\LSLogger.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient\Lightstreamer\LSLoggerProvider.cs">
+      <Link>Lightstreamer\LSLoggerProvider.cs</Link>
     </Compile>
     <Compile Include="..\StreamingClient\MessageEventArgs.cs">
       <Link>MessageEventArgs.cs</Link>
