@@ -25,14 +25,16 @@ namespace CIAPI
         {
             value.Status_Resolved = this.ResolveMagicNumber(MagicNumberKeys.ApiOpenPositionDTO_Status, value.Status);
         }
+
         public void ResolveMagicNumbers(ApiActiveStopLimitOrderDTO value)
         {
             value.Applicability_Resolved = this.ResolveMagicNumber(MagicNumberKeys.ApiActiveStopLimitOrderDTO_Applicability, value.Applicability);
         }
+
         public void ResolveMagicNumbers(ApiTradeOrderResponseDTO value)
         {
-            value.StatusReason_Resolved = this.ResolveMagicNumber(MagicNumberKeys.ApiOrderResponseDTO_StatusReason, value.StatusReason);
-            value.Status_Resolved = this.ResolveMagicNumber(MagicNumberKeys.ApiOrderResponseDTO_StatusReason, value.StatusReason);
+            value.StatusReason_Resolved = this.ResolveMagicNumber(MagicNumberKeys.ApiTradeOrderResponseDTO_StatusReason, value.StatusReason);
+            value.Status_Resolved = this.ResolveMagicNumber(MagicNumberKeys.ApiTradeOrderResponseDTO_Status, value.Status);
 
             if (value.Orders != null)
             {
@@ -47,7 +49,7 @@ namespace CIAPI
         public void ResolveMagicNumbers(ApiOrderResponseDTO value)
         {
             value.StatusReason_Resolved = this.ResolveMagicNumber(MagicNumberKeys.ApiOrderResponseDTO_StatusReason, value.StatusReason);
-            value.Status_Resolved = this.ResolveMagicNumber(MagicNumberKeys.ApiOrderResponseDTO_StatusReason, value.StatusReason);
+            value.Status_Resolved = this.ResolveMagicNumber(MagicNumberKeys.ApiOrderResponseDTO_Status, value.Status);
             if (value.OCO != null)
             {
                 this.ResolveMagicNumbers(value.OCO);
