@@ -20,9 +20,10 @@
         </Grid.RowDefinitions>
  
         <StackPanel x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <Button Content="Start" Height="72" HorizontalAlignment="Left" Margin="10,10,0,0" Name="button1" VerticalAlignment="Top" Width="160" Click="button1_Click" /> 
-            <Button Content="Stop" Height="72" HorizontalAlignment="Left" Margin="10,10,0,0" Name="button2" VerticalAlignment="Top" Width="160" Click="button2_Click" />
-            <ListBox HorizontalAlignment="Stretch" Margin="10,10,0,0" Name="listBox1" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" SelectionChanged="listBox1_SelectionChanged" />
+            <Button Content="Start" Height="72" HorizontalAlignment="Left" Margin="10,10,0,0" Name="StartButton" VerticalAlignment="Top" Width="160" Click="StartButtonClick" />
+
+            <Button Content="Stop" Height="72" HorizontalAlignment="Left" Margin="10,10,0,0" Name="StopButton" VerticalAlignment="Top" Width="160" Click="StopButtonClick" />
+            <ListBox HorizontalAlignment="Stretch" Margin="10,10,0,0" Name="listBox1" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
 
         </StackPanel>
     </Grid>

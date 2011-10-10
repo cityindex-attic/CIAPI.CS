@@ -77,6 +77,7 @@ namespace StreamingClient.Lightstreamer
                     Debug.WriteLine("disconnecting client on adapter " + adapter);
                     _clients[adapter].client.CloseConnection();
                     Debug.WriteLine("disconnected client on adapter " + adapter);
+                    _clients[adapter].connected = false;
                 }
                 catch (Exception ex)
                 {
