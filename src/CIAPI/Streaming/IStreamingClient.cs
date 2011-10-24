@@ -13,7 +13,7 @@ namespace CIAPI.Streaming
 
         IStreamingListener<ClientAccountMarginDTO> BuildClientAccountMarginListener();
         IStreamingListener<OrderDTO> BuildOrdersListener();
-        IStreamingListener<PriceDTO> BuildDefaultPricesListener();
+        IStreamingListener<PriceDTO> BuildDefaultPricesListener(string accountOperatorId);
         void TearDownListener(IStreamingListener listener);
     }
 }
