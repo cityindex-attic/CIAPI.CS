@@ -54,8 +54,6 @@
     <Compile Include="Lightstreamer\LightStreamerClientTests.cs" />
     <Compile Include="Lightstreamer\LightstreamerDtoConverterFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Websocket\StompOverWebsocketConnectionFixture.cs" />
-    <Compile Include="Websocket\WebsocketClientFixture.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

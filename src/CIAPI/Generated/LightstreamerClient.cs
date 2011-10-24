@@ -6,6 +6,7 @@ using System;
 
 namespace CIAPI.Streaming.Lightstreamer
 {
+    
     public partial class LightstreamerClient
     {
         #region IStreamingClient Members
@@ -46,10 +47,7 @@ namespace CIAPI.Streaming.Lightstreamer
             return BuildListener<PriceDTO>("CITYINDEXSTREAMINGDEFAULTPRICES",topic);
         }
 
-        protected override string[] GetAdapterList()
-        {
-            return new [] { "CITYINDEXSTREAMING","STREAMINGTRADINGACCOUNT","STREAMINGCLIENTACCOUNT","CITYINDEXSTREAMINGDEFAULTPRICES" };
-        }
+ 
 
         #endregion
     }

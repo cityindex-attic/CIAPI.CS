@@ -102,10 +102,10 @@ namespace StreamingClient.Tests.Lightstreamer
                 return BuildListener<AMessageTypeDto>("FOO",string.Join(" ", topics));
             }
 
-            protected override string[] GetAdapterList()
-            {
-                return new string[]{"FOO"};
-            }
+            //protected override string[] GetAdapterList()
+            //{
+            //    return new string[]{"FOO"};
+            //}
         }
     }
 }

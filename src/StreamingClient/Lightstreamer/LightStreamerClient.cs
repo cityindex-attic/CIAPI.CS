@@ -55,6 +55,12 @@ namespace StreamingClient.Lightstreamer
 
         public void Disconnect()
         {
+#if SILVERLIGHT
+            if (System.Windows.Deployment.Current.Dispatcher.CheckAccess())
+            {
+                throw new Exception("You cannot call this method from the UI thread.  Call this from a background thread");
+            }
+#endif
             var adapterList = GetAdapterList();
             foreach (var item in _currentListeners)
             {
@@ -154,6 +160,12 @@ namespace StreamingClient.Lightstreamer
 
         public IStreamingListener<TDto> BuildListener<TDto>(string adapter, string topic/*, Regex topicMask*/) where TDto : class, new()
         {
+#if SILVERLIGHT
+            if (System.Windows.Deployment.Current.Dispatcher.CheckAccess())
+            {
+                throw new Exception("You cannot call this method from the UI thread.  Call this from a background thread");
+            }
+#endif
             if (!_currentListeners.ContainsKey(topic))
             {
                 var listener = new LightstreamerListener<TDto>(topic, _clients[adapter].client);

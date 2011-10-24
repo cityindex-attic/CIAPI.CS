@@ -32,10 +32,10 @@ namespace CIAPI.IntegrationTests.Streaming
             var gate = new ManualResetEvent(false);
 
             var streamingClient = BuildStreamingClient();
-            streamingClient.Connect();
+            //streamingClient.Connect();
 
             var newsListener = streamingClient.BuildNewsHeadlinesListener("UK");
-            newsListener.Start();
+            //newsListener.Start();
 
             NewsDTO actual = null;
 
@@ -54,8 +54,8 @@ namespace CIAPI.IntegrationTests.Streaming
                 timedOut = true;
             }
 
-            newsListener.Stop();
-            streamingClient.Disconnect();
+            //newsListener.Stop();
+            //streamingClient.Disconnect();
 
             Assert.IsFalse(timedOut,"timed out");
             Assert.IsNotNull(actual);
@@ -73,10 +73,10 @@ namespace CIAPI.IntegrationTests.Streaming
             var gate = new ManualResetEvent(false);
 
             var streamingClient = BuildStreamingClient();
-            streamingClient.Connect();
+            //streamingClient.Connect();
 
             var newsListener = streamingClient.BuildQuotesListener();
-            newsListener.Start();
+            //newsListener.Start();
 
             QuoteDTO actual = null;
 
@@ -95,8 +95,8 @@ namespace CIAPI.IntegrationTests.Streaming
                 timedOut = true;
             }
 
-            newsListener.Stop();
-            streamingClient.Disconnect();
+            //newsListener.Stop();
+            //streamingClient.Disconnect();
 
             Assert.IsFalse(timedOut, "timed out");
             Assert.IsNotNull(actual);

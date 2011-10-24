@@ -63,20 +63,11 @@
     <Compile Include="..\StreamingClient\IStreamingClient.cs">
       <Link>IStreamingClient.cs</Link>
     </Compile>
-    <Compile Include="..\StreamingClient\IStreamingListener.cs">
-      <Link>IStreamingListener.cs</Link>
-    </Compile>
     <Compile Include="..\StreamingClient\Lightstreamer\ClientData.cs">
       <Link>Lightstreamer\ClientData.cs</Link>
     </Compile>
-    <Compile Include="..\streamingclient\lightstreamer\LightStreamerClient.cs">
-      <Link>Lightstreamer\LightStreamerClient.cs</Link>
-    </Compile>
     <Compile Include="..\streamingclient\lightstreamer\LightstreamerDtoConverter.cs">
       <Link>Lightstreamer\LightstreamerDtoConverter.cs</Link>
-    </Compile>
-    <Compile Include="..\streamingclient\lightstreamer\LightStreamerListener.cs">
-      <Link>Lightstreamer\LightStreamerListener.cs</Link>
     </Compile>
     <Compile Include="..\StreamingClient\Lightstreamer\LSLogger.cs">
       <Link>Lightstreamer\LSLogger.cs</Link>
@@ -84,8 +75,29 @@
     <Compile Include="..\StreamingClient\Lightstreamer\LSLoggerProvider.cs">
       <Link>Lightstreamer\LSLoggerProvider.cs</Link>
     </Compile>
-    <Compile Include="..\StreamingClient\MessageEventArgs.cs">
-      <Link>MessageEventArgs.cs</Link>
+    <Compile Include="..\StreamingClient\Lightstreamer\Move\ConnectionStatus.cs">
+      <Link>move\ConnectionStatus.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient\Lightstreamer\Move\ConnectionStatusEventArgs.cs">
+      <Link>move\ConnectionStatusEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient\Lightstreamer\Move\FaultTolerantClientAdapter.cs">
+      <Link>move\FaultTolerantClientAdapter.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient\Lightstreamer\Move\IStreamingListener.cs">
+      <Link>move\IStreamingListener.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient\Lightstreamer\Move\LightstreamerClient.cs">
+      <Link>move\LightstreamerClient.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient\Lightstreamer\Move\ListenerAdapter.cs">
+      <Link>move\ListenerAdapter.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient\Lightstreamer\Move\MessageEventArgs.cs">
+      <Link>move\MessageEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient\Lightstreamer\Move\TableListener.cs">
+      <Link>move\TableListener.cs</Link>
     </Compile>
     <Compile Include="..\StreamingClient\StatusEventArgs.cs">
       <Link>StatusEventArgs.cs</Link>

@@ -7,7 +7,7 @@ namespace StreamingClient
     {
         event EventHandler<MessageEventArgs<object>> MessageReceived;
         event EventHandler<StatusEventArgs> StatusChanged;
-        void Connect();
-        void Disconnect();
+        //void Connect();
+        //void Disconnect();
     }
 }

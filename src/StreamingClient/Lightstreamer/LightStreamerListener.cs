@@ -10,6 +10,9 @@ namespace StreamingClient.Lightstreamer
     public class LightstreamerListener<TDto> : IStreamingListener<TDto>, IHandyTableListener
         where TDto : class, new()
     {
+ 
+
+
         private readonly LightstreamerDtoConverter<TDto> _messageConverter = new LightstreamerDtoConverter<TDto>();
         private static readonly ILog _logger = LogManager.GetLogger(typeof(LightstreamerListener<TDto>));
         private readonly string _groupOrItemName;
@@ -33,6 +36,12 @@ namespace StreamingClient.Lightstreamer
         /// </summary>
         public void Start()
         {
+#if SILVERLIGHT
+            if (System.Windows.Deployment.Current.Dispatcher.CheckAccess())
+            {
+                throw new Exception("You cannot call this method from the UI thread.  Call this from a background thread");
+            }
+#endif
             var groupOrItemName = _groupOrItemName.ToUpper();
             var schema = _messageConverter.GetFieldList();
             var dataAdapter = _dataAdapter.ToUpper();
@@ -51,6 +60,12 @@ namespace StreamingClient.Lightstreamer
         /// </summary>
         public void Stop()
         {
+#if SILVERLIGHT
+            if (System.Windows.Deployment.Current.Dispatcher.CheckAccess())
+            {
+                throw new Exception("You cannot call this method from the UI thread.  Call this from a background thread");
+            }
+#endif
             if (_subscribedTableKey == null) return;
 
             var message = String.Format("Unsubscribing from table with key: {0}", _subscribedTableKey);

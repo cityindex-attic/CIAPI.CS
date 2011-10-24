@@ -38,12 +38,12 @@ namespace CIAPI.IntegrationTests.Streaming
 
             var streamingClient = BuildStreamingClient();
 
-            streamingClient.Connect();
+            //streamingClient.Connect();
 
 
 
             var priceListener = streamingClient.BuildPricesListener(71442);
-            priceListener.Start();
+            //priceListener.Start();
 
             PriceDTO actual = null;
 
@@ -65,7 +65,7 @@ namespace CIAPI.IntegrationTests.Streaming
             }
 
             priceListener.Stop();
-            streamingClient.Disconnect();
+            //streamingClient.Disconnect();
 
 
             Assert.IsTrue(gotPriceInTime, "A price update wasn't received in time");
@@ -96,7 +96,7 @@ namespace CIAPI.IntegrationTests.Streaming
         public void CanSubscribeToMultiplePriceStreamsAtOnce()
         {
             var streamingClient = BuildStreamingClient();
-            streamingClient.Connect();
+            //streamingClient.Connect();
             var priceListener = streamingClient.BuildPricesListener(new[]{
                                                                          71442,
                                                                          71443
@@ -108,7 +108,7 @@ namespace CIAPI.IntegrationTests.Streaming
 
             try
             {
-                priceListener.Start();
+                //priceListener.Start();
 
                 Thread.Sleep(TimeSpan.FromSeconds(15));
 
@@ -129,7 +129,7 @@ namespace CIAPI.IntegrationTests.Streaming
             finally
             {
                 priceListener.Stop();
-                streamingClient.Disconnect();
+                //streamingClient.Disconnect();
             }
         }
 

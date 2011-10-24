@@ -74,7 +74,6 @@
     <Compile Include="Streaming\IStreamingClient.cs" />
     <Compile Include="Streaming\Lightstreamer\LightStreamerClient.cs" />
     <Compile Include="Streaming\StreamingClientFactory.cs" />
-    <Compile Include="Streaming\Websocket\WebSocketClient.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\JsonClient\JsonClient.csproj">

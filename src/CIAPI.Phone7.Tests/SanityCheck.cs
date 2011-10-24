@@ -109,7 +109,7 @@ namespace CIAPI.Phone7.Tests
                             Debug.WriteLine(string.Format("creating streaming client: streamingUri={0}, UserName={1}, Session={2}",
                                                                                         App.StreamingUri, App.RpcUserName, rpcClient.Session));
                             streamingClient = StreamingClientFactory.CreateStreamingClient(App.StreamingUri, App.RpcUserName, rpcClient.Session);
-                            streamingClient.Connect();
+                            
                         });
 
                         EnqueueCallback(() =>
@@ -125,8 +125,7 @@ namespace CIAPI.Phone7.Tests
                             {
                                 PriceDTO actual = null;
                                 actual = e.Data;
-                                priceListener.Stop();
-                                streamingClient.Disconnect();
+                                
                                 Assert.IsNotNull(actual);
                                 Assert.IsFalse(string.IsNullOrEmpty(actual.AuditId));
 
@@ -134,7 +133,7 @@ namespace CIAPI.Phone7.Tests
                                 EnqueueTestComplete();
                             };
 
-                            priceListener.Start();
+                            
                         });
                         
 

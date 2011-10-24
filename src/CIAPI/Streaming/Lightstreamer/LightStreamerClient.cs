@@ -12,5 +12,8 @@ namespace CIAPI.Streaming.Lightstreamer
         {
             
         }
+
+        public event EventHandler<MessageEventArgs<object>> MessageReceived;
+        public event EventHandler<StatusEventArgs> StatusChanged;
     }
 }

@@ -59,30 +59,22 @@
     <Compile Include="IMessageConverter.cs" />
     <Compile Include="InvalidTopicException.cs" />
     <Compile Include="IStreamingClient.cs" />
-    <Compile Include="IStreamingListener.cs" />
-    <Compile Include="Lightstreamer\ClientData.cs" />
-    <Compile Include="Lightstreamer\ILightstreamerListener.cs" />
-    <Compile Include="Lightstreamer\LightStreamerClient.cs" />
     <Compile Include="Lightstreamer\LightstreamerDtoConverter.cs" />
-    <Compile Include="Lightstreamer\LightStreamerListener.cs" />
     <Compile Include="Lightstreamer\LSLogger.cs" />
     <Compile Include="Lightstreamer\LSLoggerProvider.cs" />
-    <Compile Include="Lightstreamer\ConnectionListener.cs" />
-    <Compile Include="MessageEventArgs.cs" />
+    <Compile Include="Lightstreamer\Move\ConnectionStatus.cs" />
+    <Compile Include="Lightstreamer\Move\ConnectionStatusEventArgs.cs" />
+    <Compile Include="Lightstreamer\Move\FaultTolerantClientAdapter.cs" />
+    <Compile Include="Lightstreamer\Move\IStreamingListener.cs" />
+    <Compile Include="Lightstreamer\Move\LightstreamerClient.cs" />
+    <Compile Include="Lightstreamer\Move\ListenerAdapter.cs" />
+    <Compile Include="Lightstreamer\Move\MessageEventArgs.cs" />
+    <Compile Include="Lightstreamer\Move\TableListener.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StatusEventArgs.cs" />
-    <Compile Include="Websocket\ITcpClient.cs" />
-    <Compile Include="Websocket\StompDtoConverter.cs" />
-    <Compile Include="Websocket\StompListener.cs" />
-    <Compile Include="Websocket\StompMessage.cs" />
-    <Compile Include="Websocket\StompOverWebsocketClient.cs" />
-    <Compile Include="Websocket\StompOverWebsocketConnection.cs" />
-    <Compile Include="Websocket\TcpClientFacade.cs" />
-    <Compile Include="Websocket\WebsocketClient.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="Websocket\Websocket.cd" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\StreamingClient.Lightstreamer\StreamingClient.Lightstreamer.csproj">

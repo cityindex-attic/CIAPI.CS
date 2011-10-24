@@ -17,7 +17,7 @@ namespace Phone7Ticker
         private const string RpcServerHost = "https://ciapipreprod.cityindextest9.co.uk/TradingApi/";
         private const string UserName = "xx189949";
         private const string Password = "password";
-        
+
         IStreamingClient _streamingClient;
         IStreamingListener<PriceDTO> _listener;
 
@@ -41,9 +41,6 @@ namespace Phone7Ticker
                 {
                     rpcClient.EndLogIn(ar);
 
-                    
-
-
                     Debug.WriteLine("creating client");
 
                     // build a streaming client.
@@ -59,7 +56,7 @@ namespace Phone7Ticker
 
                     // the upside to this is that there is no need to run .Connect in a separate thread.
 
-                    _streamingClient.Connect();
+
                     Debug.WriteLine("client connected");
 
 
@@ -94,17 +91,14 @@ namespace Phone7Ticker
                 StartButton.IsEnabled = false;
                 StopButton.IsEnabled = false;
 
-                // you will want to start a listener in a new thread, doing so on the UI thread will deadlock the app.
-                // the referenced lightstreamer assembly does not check which thread you are on as the Rpc client does.
+                // you will want to start a listener in a new thread, doing so on the UI thread is forbidden
+
                 new Thread(() =>
                 {
-
 
                     Debug.WriteLine("building listener");
                     _listener = _streamingClient.BuildPricesListener(400535967, 81136, 400509294, 400535971, 80902, 400509295, 400193864, 400525367, 80926, 400498641, 400193866, 91047, 400194551, 121766, 400172033, 139144);
                     _listener.MessageReceived += ListenerMessageReceived;
-                    Debug.WriteLine("starting listener");
-                    _listener.Start();
                     Debug.WriteLine("listener started");
 
                     Dispatcher.BeginInvoke(() =>
@@ -121,37 +115,19 @@ namespace Phone7Ticker
         private void StopButtonClick(object sender, RoutedEventArgs e)
         {
 
-
-
-
-            // stopping a listener should be done on a new thread.
-
+            // tearing down a listener should be done on a new thread.
 
             new Thread(() =>
                 {
-                    // stopping a listener takes a while and at the end of the process it will throw
-                    // an exception. from the looks of the LightStreamer sample code this is to be expected
-                    // and should be ignored.
 
-                    // it is for this reason that a listener should not be reused. 
-                    // simply call stop in a separate thread and move on. the exception on disconnect
-                    // will simply go into the ether and the instance will go out of scope and be collected.
-
-                    // or, if you don't like seeing phantom exceptions in your logs, wrap it up in
-                    // a swallow as shown.
-
-                    Debug.WriteLine("stopping listener");
+                    Debug.WriteLine("tearing down listener");
 
                     // unwire the listener 
                     _listener.MessageReceived -= ListenerMessageReceived;
 
-                    try
-                    {
-                        _listener.Stop();
-                    }
-                    catch
-                    {
-                    }
+                    // tear down the listener
+                    _streamingClient.TearDownListener(_listener);
+
                 }).Start();
 
 
