@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Windows;
 using System.Windows.Browser;
 using System.Windows.Controls;
@@ -48,32 +49,45 @@ namespace CIAPI.CS.Streaming.Samples
                         _streamingClient = StreamingClientFactory.CreateStreamingClient(streamingUri, userName, _rcpClient.Session);
                         _streamingClient.StatusChanged += (s, message) 
                                                           => Log(string.Format("Status update: {0}", message.Status));
-                        _streamingClient.Connect();
+                        
 
-                        Log("Creating listener...");
-                        _newsListener = _streamingClient.BuildNewsHeadlinesListener(topic);
-                        Log("Starting listener...");
-                        _newsListener.Start();
-                        Log("Listening to news stream...");
-                        _newsListener.MessageReceived += (s, message) =>
-                                                             {
-                                                                 try
-                                                                 {
-                                                                     NewsDTO receivedNewsHeadline = message.Data;
-                                                                     Log(
-                                                                         string.Format(
-                                                                             "Received: NewsDTO: StoryId {0}, Headline {1}, PublishDate = {2}",
-                                                                             receivedNewsHeadline.StoryId,
-                                                                             receivedNewsHeadline.Headline,
-                                                                             //receivedNewsHeadline.PublishDate.ToString("u")));
-                                                                             // dates are currently strings
-                                                                             receivedNewsHeadline.PublishDate));
-                                                                 }
-                                                                 catch (Exception exception)
-                                                                 {
-                                                                     _logger.Error("Exception occured:", exception);
-                                                                 }
-                                                             };
+new Thread(()=>
+               {
+
+                   try
+                   {
+                       Log("Creating listener...");
+                       _newsListener = _streamingClient.BuildNewsHeadlinesListener(topic);
+
+
+                       Log("Listening to news stream...");
+                       _newsListener.MessageReceived += (s, message) =>
+                       {
+                           try
+                           {
+                               NewsDTO receivedNewsHeadline = message.Data;
+                               Log(
+                                   string.Format(
+                                       "Received: NewsDTO: StoryId {0}, Headline {1}, PublishDate = {2}",
+                                       receivedNewsHeadline.StoryId,
+                                       receivedNewsHeadline.Headline,
+                                   //receivedNewsHeadline.PublishDate.ToString("u")));
+                                   // dates are currently strings
+                                       receivedNewsHeadline.PublishDate));
+                           }
+                           catch (Exception exception)
+                           {
+                               _logger.Error("Exception occured:", exception);
+                           }
+                       };
+                   }
+                   catch (Exception ex)
+                   {
+
+                       _logger.Error("Exception occured:", ex);
+                   }
+
+               }).Start();
                     }
                     catch (Exception exception)
                     {
@@ -96,14 +110,12 @@ namespace CIAPI.CS.Streaming.Samples
 
                     if (_newsListener != null)
                     {
-                        _newsListener.Stop();
+                        _streamingClient.TearDownListener(_newsListener);
+                        
                     }
-                    Log("Disconnecting from streaming server...");
 
-                    if (_streamingClient != null)
-                    {
-                       _streamingClient.Disconnect();
-                    }
+
+                    
 
                     Log("Deleting session...");
 
