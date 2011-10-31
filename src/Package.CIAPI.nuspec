@@ -12,8 +12,8 @@
   <files>
     <file src="lib\ciapi\bin\release\*.dll" target="lib\Net40"/>
     <file src="lib\ciapi\bin\release\*.pdb" target="lib\Net40"/>
-  	<file src="lib\ciapi.silverlight\bin\release\*.dll" target="lib\Silverlight40"/>
-  	<file src="lib\ciapi.silverlight\bin\release\*.pdb" target="lib\Silverlight40"/>
+  	<!--<file src="lib\ciapi.silverlight\bin\release\*.dll" target="lib\Silverlight40"/>
+  	<file src="lib\ciapi.silverlight\bin\release\*.pdb" target="lib\Silverlight40"/>-->
     <file src="..\src\SampleApps\ConsoleSpikes\Example.FetchNews.cs" target="content"/>
   </files>
 </package>
