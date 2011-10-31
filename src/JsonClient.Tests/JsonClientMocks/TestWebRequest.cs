@@ -1,12 +1,25 @@
 ﻿using System;
 using System.IO;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Threading;
 
 namespace CityIndex.JsonClient.Tests
 {
     public class TestWebRequest : WebRequest
     {
+        public static TestWebRequest CreateTestRequest(Regex requestUriRegex, string response, TimeSpan latency, Exception requestStreamException, Exception responseStreamException, Exception endGetResponseException)
+        {
+            var request = new TestWebRequest(response, latency, requestStreamException, responseStreamException, endGetResponseException);
+            request.RequestUriRegex = requestUriRegex;
+#if !SILVERLIGHT
+            request.Timeout = Convert.ToInt32(TimeSpan.FromSeconds(30).TotalMilliseconds);
+#else
+            //FIXME: Need a way to timeout requests in Silverlight
+#endif
+            return request;
+        }
+
         private readonly TimeSpan _latency;
         private readonly Exception _requestStreamException;
         private readonly Exception _responseStreamException;
@@ -24,12 +37,13 @@ namespace CityIndex.JsonClient.Tests
             set { _headers = value; }
         }
 
-        #if !SILVERLIGHT
+#if !SILVERLIGHT
         public override int Timeout { get; set; }
         public override long ContentLength { get; set; }
-        #endif
+#endif
 
         public override string Method { get; set; }
+        public Regex RequestUriRegex { get; set; }
         public override Uri RequestUri
         {
             get { return new Uri("http://TestRequest.com/"); }
@@ -179,7 +193,7 @@ namespace CityIndex.JsonClient.Tests
             get { return IsCompleted; }
         }
 
-        public TestAsyncResult(AsyncCallback callback, object state) 
+        public TestAsyncResult(AsyncCallback callback, object state)
             : this(callback, state, TimeSpan.FromMilliseconds(DEFAULT_LATENCY_IN_MS))
         {
         }

@@ -43,7 +43,7 @@ namespace CIAPI.Streaming.Lightstreamer
 
         public IStreamingListener<PriceDTO> BuildDefaultPricesListener(int accountOperatorId)
         {
-            return BuildListener<PriceDTO>("CITYINDEXSTREAMINGDEFAULTPRICES", accountOperatorId.ToString());
+            return BuildListener<PriceDTO>("CITYINDEXSTREAMINGDEFAULTPRICES", "AC"+ accountOperatorId);
         }
 
  

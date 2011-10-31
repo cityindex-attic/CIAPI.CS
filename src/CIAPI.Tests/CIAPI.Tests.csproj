@@ -71,6 +71,7 @@
       <Link>JsonClientMocks\TestWebRequest.cs</Link>
     </Compile>
     <Compile Include="DTOTestFixture.cs" />
+    <Compile Include="JsonClientMocks\MockClient.cs" />
     <Compile Include="PrettyPrinterExtensionsFixture.cs" />
     <Compile Include="Rpc\ApiContextTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

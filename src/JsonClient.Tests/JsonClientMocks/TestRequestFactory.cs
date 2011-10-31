@@ -13,7 +13,11 @@ namespace CityIndex.JsonClient.Tests
         public List<TestRequestInfo> RequestLog = new List<TestRequestInfo>();
         WebRequest _nextRequest;
         readonly object _lock = new object();
-
+        public List<TestWebRequest> TestWebRequests { get; set; }
+        public void AddTestRequest(TestWebRequest testRequest)
+        {
+            TestWebRequests.Add(testRequest);
+        }
         public TestRequestFactory()
         {
             RequestTimeout = TimeSpan.FromSeconds(30);
@@ -37,15 +41,15 @@ namespace CityIndex.JsonClient.Tests
             lock (RequestLog)
             {
                 RequestLog.Add(new TestRequestInfo
-                    {
-                        Url = url,
-                        Issued = DateTimeOffset.UtcNow
-                    });
+                {
+                    Url = url,
+                    Issued = DateTimeOffset.UtcNow
+                });
             }
             return _nextRequest;
         }
 
-        public TimeSpan RequestTimeout { get; set;  }
+        public TimeSpan RequestTimeout { get; set; }
 
         /// <summary>Utility method for creating a TestWebRequest and setting
         /// it to be the next WebRequest to use.</summary>

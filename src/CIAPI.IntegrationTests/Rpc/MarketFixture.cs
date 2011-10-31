@@ -8,6 +8,24 @@ namespace CIAPI.IntegrationTests.Rpc
     public class MarketFixture
     {
         [Test]
+        public void CanListMarketInformation()
+        {
+
+            var rpcClient = new Client(Settings.RpcUri);
+            rpcClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);
+
+            var response = rpcClient.Market.ListMarketInformation(new ListMarketInformationRequestDTO()
+                                                                      {
+
+
+                                                                          MarketIds = new int[] { 71442 }
+                                                                      });
+
+            Assert.AreEqual(1, response.MarketInformation.Length);
+
+            rpcClient.LogOut();
+        }
+        [Test]
         public void CanGetMarketInformation()
         {
 
