@@ -1,12 +1,13 @@
 ﻿using System.Diagnostics;
 using CIAPI.DTO;
+using CIAPI.IntegrationTests.Streaming;
 using CIAPI.Rpc;
 using NUnit.Framework;
 
 namespace CIAPI.IntegrationTests.Rpc
 {
     [TestFixture]
-    public class MessagingFixture
+    public class MessagingFixture : RpcFixtureBase
     {
         [Test]
         public void CanGetLookup()

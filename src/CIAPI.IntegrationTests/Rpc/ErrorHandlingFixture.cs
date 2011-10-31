@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using CIAPI.IntegrationTests.Streaming;
 using CIAPI.Rpc;
 using CityIndex.JsonClient;
 using NUnit.Framework;
@@ -11,7 +12,7 @@ using Client = CIAPI.Rpc.Client;
 namespace CIAPI.IntegrationTests.Rpc
 {
     [TestFixture]
-    public class ErrorHandlingFixture
+    public class ErrorHandlingFixture : RpcFixtureBase
     {
         [Test]
         public void ShouldGiveGuidanceWhenSpecifyingInvalidServerName()

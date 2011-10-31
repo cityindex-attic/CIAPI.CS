@@ -10,23 +10,11 @@ using IStreamingClient = CIAPI.Streaming.IStreamingClient;
 namespace CIAPI.IntegrationTests.Streaming
 {
     [TestFixture]
-    public class PriceFixture
+    public class PriceFixture : RpcFixtureBase
     {
         private ILog _logger = LogManager.GetCurrentClassLogger();
 
-        public IStreamingClient BuildStreamingClient(
-            string userName = "xx189949",
-            string password = "password")
-        {
-            const string apiUrl = "https://ciapipreprod.cityindextest9.co.uk/TradingApi/";
-
-            var authenticatedClient = new CIAPI.Rpc.Client(new Uri(apiUrl));
-            authenticatedClient.LogIn(userName, password);
-
-            var streamingUri = new Uri("https://pushpreprod.cityindextest9.co.uk");
-
-            return StreamingClientFactory.CreateStreamingClient(streamingUri, userName, authenticatedClient.Session);
-        }
+ 
 
         [
         Test

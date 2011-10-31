@@ -1,10 +1,11 @@
 ﻿using CIAPI.DTO;
 using CIAPI.IntegrationTests;
+using CIAPI.IntegrationTests.Streaming;
 using CIAPI.Rpc;
 using NUnit.Framework;
 
 [TestFixture]
-public class WatchListFixture
+public class WatchListFixture : RpcFixtureBase
 {
     [Test]
     public void HowToUseWatchLists()

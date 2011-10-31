@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using CIAPI.DTO;
+using CIAPI.IntegrationTests.Streaming;
 using CIAPI.Rpc;
 using CIAPI.Streaming;
 using NUnit.Framework;
@@ -10,7 +11,7 @@ using NUnit.Framework;
 namespace CIAPI.IntegrationTests.Rpc
 {
     [TestFixture]
-    public class AccountInformationFixture
+    public class AccountInformationFixture : RpcFixtureBase
     {
         [Test]
         public void CanListOpenPositions()

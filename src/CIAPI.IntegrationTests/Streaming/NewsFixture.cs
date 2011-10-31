@@ -9,22 +9,19 @@ using IStreamingClient = CIAPI.Streaming.IStreamingClient;
 
 namespace CIAPI.IntegrationTests.Streaming
 {
-    [TestFixture]
-    public class NewsFixture
+    public class RpcFixtureBase
     {
-        public  IStreamingClient BuildStreamingClient(
-            string userName = "xx189949",
-            string password = "password")
+        public IStreamingClient BuildStreamingClient()
         {
-            const string apiUrl = "https://ciapipreprod.cityindextest9.co.uk/TradingApi/";
-
-            var authenticatedClient = new CIAPI.Rpc.Client(new Uri(apiUrl));
-            authenticatedClient.LogIn(userName, password);
-
-            var streamingUri = new Uri("https://pushpreprod.cityindextest9.co.uk");
-
-            return StreamingClientFactory.CreateStreamingClient(streamingUri, userName, authenticatedClient.Session);
+            var authenticatedClient = new CIAPI.Rpc.Client(Settings.RpcUri);
+            authenticatedClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);
+            return StreamingClientFactory.CreateStreamingClient(Settings.StreamingUri, Settings.RpcUserName, authenticatedClient.Session);
         }
+    }
+    [TestFixture]
+    public class NewsFixture:RpcFixtureBase
+    {
+        
 
         [Test]
         public void CanConsumeNewsStream()
@@ -56,7 +53,7 @@ namespace CIAPI.IntegrationTests.Streaming
 
             
             streamingClient.TearDownListener(newsListener);
-            
+            streamingClient.Dispose();
 
             Assert.IsFalse(timedOut,"timed out");
             Assert.IsNotNull(actual);
@@ -97,7 +94,7 @@ namespace CIAPI.IntegrationTests.Streaming
             }
 
             streamingClient.TearDownListener(newsListener);
-
+            streamingClient.Dispose();
             Assert.IsFalse(timedOut, "timed out");
             Assert.IsNotNull(actual);
  

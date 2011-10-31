@@ -1,11 +1,12 @@
 ﻿using CIAPI.DTO;
+using CIAPI.IntegrationTests.Streaming;
 using CIAPI.Rpc;
 using NUnit.Framework;
 
 namespace CIAPI.IntegrationTests.Rpc
 {
     [TestFixture]
-    public class MarketFixture
+    public class MarketFixture : RpcFixtureBase
     {
 
         [Test]
