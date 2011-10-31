@@ -1463,7 +1463,7 @@ namespace CIAPI.Rpc
         /// <param name="apiSaveWatchlistRequestDto">Save watchlist</param>
         public virtual ApiSaveWatchlistResponseDTO SaveWatchlist(ApiSaveWatchlistRequestDTO apiSaveWatchlistRequestDto)
         {
-            return _client.Request<ApiSaveWatchlistResponseDTO>("watchlists", "/Save", "POST",
+            return _client.Request<ApiSaveWatchlistResponseDTO>("watchlist", "/Save", "POST",
             new Dictionary<string, object>
             {
                 { "apiSaveWatchlistRequestDto", apiSaveWatchlistRequestDto}
@@ -1479,7 +1479,7 @@ namespace CIAPI.Rpc
         /// <param name="state"></param>
         public virtual void BeginSaveWatchlist(ApiSaveWatchlistRequestDTO apiSaveWatchlistRequestDto, ApiAsyncCallback<ApiSaveWatchlistResponseDTO> callback, object state)
         {
-            _client.BeginRequest(callback, state, "watchlists", "/Save", "POST",
+            _client.BeginRequest(callback, state, "watchlist", "/Save", "POST",
             new Dictionary<string, object>
             {
                 { "apiSaveWatchlistRequestDto", apiSaveWatchlistRequestDto}
@@ -1503,7 +1503,7 @@ namespace CIAPI.Rpc
         /// <param name="deleteWatchlistRequestDto">Delete a watchlist</param>
         public virtual ApiDeleteWatchlistResponseDTO DeleteWatchlist(ApiDeleteWatchlistRequestDTO deleteWatchlistRequestDto)
         {
-            return _client.Request<ApiDeleteWatchlistResponseDTO>("watchlists", "/delete", "POST",
+            return _client.Request<ApiDeleteWatchlistResponseDTO>("watchlist", "/delete", "POST",
             new Dictionary<string, object>
             {
                 { "deleteWatchlistRequestDto", deleteWatchlistRequestDto}
@@ -1519,7 +1519,7 @@ namespace CIAPI.Rpc
         /// <param name="state"></param>
         public virtual void BeginDeleteWatchlist(ApiDeleteWatchlistRequestDTO deleteWatchlistRequestDto, ApiAsyncCallback<ApiDeleteWatchlistResponseDTO> callback, object state)
         {
-            _client.BeginRequest(callback, state, "watchlists", "/delete", "POST",
+            _client.BeginRequest(callback, state, "watchlist", "/delete", "POST",
             new Dictionary<string, object>
             {
                 { "deleteWatchlistRequestDto", deleteWatchlistRequestDto}

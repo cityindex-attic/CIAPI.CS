@@ -101,7 +101,7 @@ namespace CIAPI.CS.Koans
             for (int i = 0; i < 10; i++)
             {
                 Console.Write(".");
-                Thread.Sleep(100);
+                new AutoResetEvent(false).WaitOne(100);
             }
             Console.WriteLine();
         }

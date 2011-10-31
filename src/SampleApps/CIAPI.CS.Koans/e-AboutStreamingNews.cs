@@ -66,7 +66,8 @@ namespace CIAPI.CS.Koans
             
 
             //Wait whilst some data is connected
-            Thread.Sleep(TimeSpan.FromSeconds(10));
+            new AutoResetEvent(false).WaitOne(20000);
+            
 
             //And tear down to finish
             _streamingClient.TearDownListener(ukNewsListener);
@@ -91,12 +92,12 @@ namespace CIAPI.CS.Koans
             
 
             //Wait whilst some data is connected
-            Thread.Sleep(TimeSpan.FromSeconds(10));
+            new AutoResetEvent(false).WaitOne(20000);
 
             //Remember to tear them down when you are done
             _streamingClient.TearDownListener(ukNewsListener);
             _streamingClient.TearDownListener(gbpusdPriceListener);
-
+            
 
             KoanAssert.That(ukNewsHeadlines.Count, Is.GreaterThan(8), "On the mock news headlines stream we should get 1 headline per second");
             KoanAssert.That(gbpusdPrices.Count, Is.GreaterThanOrEqualTo(1), "GBP/USD Prices should come through fairly regularly");
@@ -107,7 +108,7 @@ namespace CIAPI.CS.Koans
             //After you are done with the connection, you need to disconnect
             if (_streamingClient != null)
             {
-                
+                _streamingClient.Dispose();
             }
         }
 

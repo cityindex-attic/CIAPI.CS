@@ -1,9 +1,10 @@
-﻿using CIAPI.DTO;
+﻿using System;
+using CIAPI.DTO;
 using StreamingClient;
 
 namespace CIAPI.Streaming
 {
-    public interface IStreamingClient : StreamingClient.IStreamingClient
+    public interface IStreamingClient : StreamingClient.IStreamingClient,IDisposable 
     {
 
         

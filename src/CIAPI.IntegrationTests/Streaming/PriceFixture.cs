@@ -14,7 +14,7 @@ namespace CIAPI.IntegrationTests.Streaming
     {
         private ILog _logger = LogManager.GetCurrentClassLogger();
 
-        public static IStreamingClient BuildStreamingClient(
+        public IStreamingClient BuildStreamingClient(
             string userName = "xx189949",
             string password = "password")
         {
@@ -64,13 +64,19 @@ namespace CIAPI.IntegrationTests.Streaming
                 // don't want to throw while client is listening, hangs test
             }
 
-            priceListener.Stop();
-            //streamingClient.Disconnect();
+            streamingClient.TearDownListener(priceListener);
+            
+            streamingClient.Dispose();
 
 
             Assert.IsTrue(gotPriceInTime, "A price update wasn't received in time");
             Assert.IsNotNull(actual);
             Assert.Greater(actual.TickDate, DateTime.UtcNow.AddSeconds(-10), "We're expecting a recent price");
+
+            //// we are going to build up a new client in other tests and the server is going to get confused by the phase
+            //// and not send updates to the new listener
+            //new AutoResetEvent(false).WaitOne(20000);
+
         }
 
 
@@ -128,8 +134,11 @@ namespace CIAPI.IntegrationTests.Streaming
             }
             finally
             {
-                priceListener.Stop();
-                //streamingClient.Disconnect();
+                streamingClient.TearDownListener(priceListener);
+                streamingClient.Dispose();
+                //// we are going to build up a new client in other tests and the server is going to get confused by the phase
+                //// and not send updates to the new listener
+                //new AutoResetEvent(false).WaitOne(20000);
             }
         }
 

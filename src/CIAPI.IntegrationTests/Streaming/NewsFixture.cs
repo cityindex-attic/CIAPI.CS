@@ -12,7 +12,7 @@ namespace CIAPI.IntegrationTests.Streaming
     [TestFixture]
     public class NewsFixture
     {
-        public static IStreamingClient BuildStreamingClient(
+        public  IStreamingClient BuildStreamingClient(
             string userName = "xx189949",
             string password = "password")
         {
@@ -54,8 +54,9 @@ namespace CIAPI.IntegrationTests.Streaming
                 timedOut = true;
             }
 
-            //newsListener.Stop();
-            //streamingClient.Disconnect();
+            
+            streamingClient.TearDownListener(newsListener);
+            
 
             Assert.IsFalse(timedOut,"timed out");
             Assert.IsNotNull(actual);
@@ -95,8 +96,7 @@ namespace CIAPI.IntegrationTests.Streaming
                 timedOut = true;
             }
 
-            //newsListener.Stop();
-            //streamingClient.Disconnect();
+            streamingClient.TearDownListener(newsListener);
 
             Assert.IsFalse(timedOut, "timed out");
             Assert.IsNotNull(actual);

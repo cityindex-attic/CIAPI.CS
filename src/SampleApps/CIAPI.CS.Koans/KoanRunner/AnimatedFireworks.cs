@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace CIAPI.CS.Koans.KoanRunner
 {
@@ -14,7 +15,7 @@ namespace CIAPI.CS.Koans.KoanRunner
             {
                 Console.SetCursorPosition(left, top);
                 Console.WriteLine(frame);
-                System.Threading.Thread.Sleep(200);
+                new AutoResetEvent(false).WaitOne(200);
             }    
         }
 
