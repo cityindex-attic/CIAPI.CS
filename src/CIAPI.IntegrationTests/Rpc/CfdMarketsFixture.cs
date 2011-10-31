@@ -1,31 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
+﻿using System.Linq;
 using CIAPI.DTO;
 using CIAPI.Rpc;
-using CIAPI.Streaming;
 using NUnit.Framework;
 
 namespace CIAPI.IntegrationTests.Rpc
 {
     [TestFixture]
-    public class AccountInformationFixture
+    public class CfdMarketsFixture
     {
         [Test]
-        public void CanListOpenPositions()
+        public void Test()
         {
-
             var rpcClient = new Client(Settings.RpcUri);
             rpcClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);
+
             AccountInformationResponseDTO accounts = rpcClient.AccountInformation.GetClientAndTradingAccount();
-            rpcClient.TradesAndOrders.ListOpenPositions(accounts.TradingAccounts[0].TradingAccountId);
+
+            var response = rpcClient.CFDMarkets.ListCfdMarkets("USD", null, accounts.CFDAccount.TradingAccountId, 100);
+            
             rpcClient.LogOut();
             rpcClient.Dispose();
-
-            
-   
         }
- 
     }
 }

@@ -58,6 +58,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTOExtensions.cs" />
     <Compile Include="Generated\DTO.cs">
       <SubType>Code</SubType>
     </Compile>

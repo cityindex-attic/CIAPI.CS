@@ -7,13 +7,39 @@ namespace CIAPI.IntegrationTests.Rpc
     [TestFixture]
     public class MarketFixture
     {
+
+        [Test]
+        public void CanSaveMarketInformation()
+        {
+            var rpcClient = new Client(Settings.RpcUri);
+            rpcClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);
+            var clientAccount = rpcClient.AccountInformation.GetClientAndTradingAccount();
+
+            //rpcClient.Market.GetMarketInformation()
+            //rpcClient.Market.ListMarketInformation()
+            var saveMarketInfoRespnse = rpcClient.Market.SaveMarketInformation(new SaveMarketInformationRequestDTO()
+                                                                                   {
+                                                                                       MarketInformation =
+                                                                                           new ApiMarketInformationSaveDTO
+                                                                                           [] {},
+                                                                                       TradingAccountId =
+                                                                                           clientAccount.ClientAccountId
+                                                                                   });
+
+            Assert.Fail("need usage guidance");
+        }
+
         [Test]
         public void CanListMarketInformation()
         {
 
+
+
             var rpcClient = new Client(Settings.RpcUri);
             rpcClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);
 
+
+            
             var response = rpcClient.Market.ListMarketInformation(new ListMarketInformationRequestDTO()
                                                                       {
 

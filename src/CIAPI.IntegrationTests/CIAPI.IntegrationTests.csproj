@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Rpc\AccountInformationFixture.cs" />
+    <Compile Include="Rpc\CfdMarketsFixture.cs" />
     <Compile Include="Rpc\FaqIssueResolutionFixture.cs" />
     <Compile Include="Rpc\ErrorHandlingFixture.cs" />
     <Compile Include="Rpc\MarketFixture.cs" />
