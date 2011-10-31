@@ -79,8 +79,8 @@ namespace CIAPI.Silverlight.TestsMS
                         {
                             var streamingClient = StreamingClientFactory.CreateStreamingClient(new Uri(TestConfig.StreamingUri), ctx.UserName, ctx.Session);
                             System.Diagnostics.Debug.WriteLine("created streaming client");
-                            streamingClient.Connect();
-                            System.Diagnostics.Debug.WriteLine("streaming client connected");
+                            
+                            
                         });
 
 
