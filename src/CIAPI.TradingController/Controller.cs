@@ -141,7 +141,7 @@ namespace CIAPI.TradingController
             
             _pricesListener = StreamingClient.BuildPricesListener(markets);
             _pricesListener.MessageReceived += (PricesListenerMessageReceived);
-            _pricesListener.Start();
+            
         }
 
         private void KillPriceListener()
@@ -170,7 +170,7 @@ namespace CIAPI.TradingController
 
             _newsListener = StreamingClient.BuildNewsHeadlinesListener(topic);
             _newsListener.MessageReceived += NewsListenerMessageReceived;
-            _newsListener.Start();
+            
         }
 
 
@@ -313,12 +313,12 @@ namespace CIAPI.TradingController
             Log.Info("Connecting streaming client");
             try
             {
-                StreamingClient.Connect();
-                Log.Info("Streaming client connected");
+                
+                Log.Info("Streaming client constructed");
             }
             catch 
             {
-                Log.Info("Failure connecting streaming client");    
+                Log.Info("Failure constructing streaming client");    
                 throw;
             }
 
@@ -335,7 +335,7 @@ namespace CIAPI.TradingController
         public void Disconnect()
         {
             Log.Info("Shutting down"); 
-            StreamingClient.Disconnect();
+            
             StreamingClient = null;
             RpcClient.LogOut();
             RpcClient = null;

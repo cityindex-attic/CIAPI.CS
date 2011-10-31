@@ -45,11 +45,8 @@ namespace CIAPI.CS.Koans
                                                       }
                                                   };
             //You have to connect the client to the server
-            _streamingClient.Connect();
-
-            gate.WaitOne(TimeSpan.FromSeconds(10));
-
-            KoanAssert.That(isConnected, Is.EqualTo(true), "it takes a few seconds for the steam to get connected");
+            
+ 
         }
 
         [Koan(Order = 2)]
@@ -66,13 +63,14 @@ namespace CIAPI.CS.Koans
                                                   };
 
             //You call start to begin listening
-            ukNewsListener.Start();
+            
 
             //Wait whilst some data is connected
-            Thread.Sleep(TimeSpan.FromSeconds(5));
+            Thread.Sleep(TimeSpan.FromSeconds(10));
 
-            //And stop to finish
-            ukNewsListener.Stop();
+            //And tear down to finish
+            _streamingClient.TearDownListener(ukNewsListener);
+            
 
             KoanAssert.That(ukNewsHeadlines.Count, Is.GreaterThan(3), "On the mock news headlines stream we should get 1 headline per second");
         }
@@ -86,18 +84,19 @@ namespace CIAPI.CS.Koans
             //Build as many listeners as you want
             var ukNewsHeadlines = new List<NewsDTO>();
             ukNewsListener.MessageReceived += (sender, message) => ukNewsHeadlines.Add(message.Data);
-            ukNewsListener.Start();
+            
 
             var gbpusdPrices = new List<PriceDTO>();
             gbpusdPriceListener.MessageReceived += (sender, message) => gbpusdPrices.Add(message.Data);
-            gbpusdPriceListener.Start();
+            
 
             //Wait whilst some data is connected
             Thread.Sleep(TimeSpan.FromSeconds(10));
 
-            //Remember to stop them when you are done
-            ukNewsListener.Stop();
-            gbpusdPriceListener.Stop();
+            //Remember to tear them down when you are done
+            _streamingClient.TearDownListener(ukNewsListener);
+            _streamingClient.TearDownListener(gbpusdPriceListener);
+
 
             KoanAssert.That(ukNewsHeadlines.Count, Is.GreaterThan(8), "On the mock news headlines stream we should get 1 headline per second");
             KoanAssert.That(gbpusdPrices.Count, Is.GreaterThanOrEqualTo(1), "GBP/USD Prices should come through fairly regularly");
@@ -106,7 +105,10 @@ namespace CIAPI.CS.Koans
         public void Dispose()
         {
             //After you are done with the connection, you need to disconnect
-            if (_streamingClient != null) _streamingClient.Disconnect();
+            if (_streamingClient != null)
+            {
+                
+            }
         }
 
         private Client _rpcClient;

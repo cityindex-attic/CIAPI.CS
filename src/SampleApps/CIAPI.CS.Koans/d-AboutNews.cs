@@ -37,7 +37,7 @@ namespace CIAPI.CS.Koans
             KoanAssert.That(_ukHeadlines.Headlines[0].StoryId, Is.GreaterThan(0).And.LessThan(int.MaxValue), "StoryId is a positive integer");
 
             // sky: not sure about this one.. requires user to guess or get the error and then come back. is this intended.
-            KoanAssert.That(_ukHeadlines.Headlines[0].Headline, Is.StringStarting("Swiss"), "Headline is a short string");
+            KoanAssert.That(_ukHeadlines.Headlines[0].Headline, Is.Not.Null.Or.Empty, "Headline is a short string");
             KoanAssert.That(_ukHeadlines.Headlines[0].PublishDate, Is.GreaterThan(new DateTime(2010, 12, 8)), "PublishDate is in UTC");
         }
 

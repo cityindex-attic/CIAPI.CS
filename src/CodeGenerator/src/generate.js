@@ -1,4 +1,6 @@
-﻿console.log("generating code....");
+﻿console.log("code generation disabled....");
+return;
+console.log("generating code....");
 
 var schema = require("./meta/schema.js").schema;
 var smd = require("./meta/smd.js").smd;
