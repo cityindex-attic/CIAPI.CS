@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Lightstreamer.DotNet.Client;
 
 namespace StreamingClient.Lightstreamer
 {
@@ -10,8 +11,16 @@ namespace StreamingClient.Lightstreamer
         private readonly string _userName;
         private readonly string _streamingUri;
         private readonly Dictionary<string, FaultTolerantLsClientAdapter> _adapters ;
+        
+        static LightstreamerClient()
+        {
+            LSClient.SetLoggerProvider(new LSLoggerProvider());
+        }
+
         public LightstreamerClient(Uri streamingUri, string userName, string sessionId)
         {
+            
+
             _adapters = new Dictionary<string, FaultTolerantLsClientAdapter>();
             _streamingUri = streamingUri.ToString();
             _sessionId = sessionId;

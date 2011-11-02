@@ -22,6 +22,8 @@ namespace CIAPI.IntegrationTests.Streaming
         ]
         public void CanConsumePriceStream()
         {
+            
+
             var gate = new ManualResetEvent(false);
 
             var streamingClient = BuildStreamingClient();
@@ -52,6 +54,7 @@ namespace CIAPI.IntegrationTests.Streaming
                 // don't want to throw while client is listening, hangs test
             }
 
+            
             streamingClient.TearDownListener(priceListener);
             
             streamingClient.Dispose();

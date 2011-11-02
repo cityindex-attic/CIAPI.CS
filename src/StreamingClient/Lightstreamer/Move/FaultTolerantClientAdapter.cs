@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Net.NetworkInformation;
 using System.Threading;
 using Lightstreamer.DotNet.Client;
+using StreamingClient.Lightstreamer;
 
 namespace StreamingClient
 {
@@ -39,6 +40,7 @@ namespace StreamingClient
 
         public FaultTolerantLsClientAdapter(string streamingUri, string userName, string sessionId, string dataAdapter)
         {
+            
             _dataAdapter = dataAdapter;
             _streamingUri = streamingUri;
             _sessionId = sessionId;
