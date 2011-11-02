@@ -13,8 +13,7 @@ namespace CIAPI.IntegrationTests.Rpc
         public void CanGetLookup()
         {
 
-            var rpcClient = new Client(Settings.RpcUri);
-            rpcClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);
+            var rpcClient = BuildRpcClient();
 
             const string lookupEntityName = "OrderStatusReason";
             var orderStatus = rpcClient.Messaging.GetSystemLookup(lookupEntityName, 69);
@@ -28,8 +27,7 @@ namespace CIAPI.IntegrationTests.Rpc
         public void CanResolveMagicNumber()
         {
 
-            var rpcClient = new Client(Settings.RpcUri);
-            rpcClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);
+            var rpcClient = BuildRpcClient();
 
             var resolver = new MagicNumberResolver(rpcClient);
             const string lookupEntityName = MagicNumberKeys.ApiOrderResponseDTO_Status;
@@ -44,8 +42,7 @@ namespace CIAPI.IntegrationTests.Rpc
         public void CanResolveDTO()
         {
 
-            var rpcClient = new Client(Settings.RpcUri);
-            rpcClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);
+            var rpcClient = BuildRpcClient();
             
 
             // this would be the value you get back from the API
@@ -65,8 +62,7 @@ namespace CIAPI.IntegrationTests.Rpc
         public void CanResolveDTOVersion2()
         {
 
-            var rpcClient = new Client(Settings.RpcUri);
-            rpcClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);
+            var rpcClient = BuildRpcClient();
 
 
             // this would be the value you get back from the API
@@ -86,8 +82,8 @@ namespace CIAPI.IntegrationTests.Rpc
         public void LookupIsCached()
         {
 
-            var rpcClient = new Client(Settings.RpcUri);
-            rpcClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);
+            var rpcClient = BuildRpcClient();
+
             var sw = new Stopwatch();
 
             for (int i = 0; i < 1000; i++)

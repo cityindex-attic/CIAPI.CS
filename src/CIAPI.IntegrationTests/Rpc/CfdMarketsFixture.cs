@@ -12,8 +12,7 @@ namespace CIAPI.IntegrationTests.Rpc
         [Test]
         public void CanListCFDMarkets()
         {
-            var rpcClient = new Client(Settings.RpcUri);
-            rpcClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);
+            var rpcClient = BuildRpcClient();
 
             AccountInformationResponseDTO accounts = rpcClient.AccountInformation.GetClientAndTradingAccount();
 

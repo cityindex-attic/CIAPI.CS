@@ -11,8 +11,7 @@ public class WatchListFixture : RpcFixtureBase
     public void HowToUseWatchLists()
     {
 
-        var rpcClient = new Client(Settings.RpcUri);
-        rpcClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);
+        var rpcClient = BuildRpcClient();
 
         #region Setting up
 

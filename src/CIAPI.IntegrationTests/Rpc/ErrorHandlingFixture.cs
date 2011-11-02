@@ -32,8 +32,7 @@ namespace CIAPI.IntegrationTests.Rpc
         [Test]
         public void LogOutShouldInvalidateSession()
         {
-            var rpcClient = new Client(Settings.RpcUri);
-            rpcClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);
+            var rpcClient = BuildRpcClient();
 
             var headlines = rpcClient.News.ListNewsHeadlines("UK", 3);
             Assert.That(headlines.Headlines.Length, Is.GreaterThan(0), "you should have a set of headlines");
@@ -55,8 +54,7 @@ namespace CIAPI.IntegrationTests.Rpc
         [Test]
         public void TheSameErrorShouldhaveTheSameErrorMessage()
         {
-            var rpcClient = new Client(Settings.RpcUri);
-            rpcClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);
+            var rpcClient = BuildRpcClient();
 
             var error1 = GetBadRequestErrorMessage(rpcClient);
             var error2 = GetBadRequestErrorMessage(rpcClient);
@@ -85,8 +83,7 @@ namespace CIAPI.IntegrationTests.Rpc
         [Test]
         public void ErrorMessageShouldContainDetailsOfErrorResponseDTO()
         {
-            var rpcClient = new Client(Settings.RpcUri);
-            rpcClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);
+            var rpcClient = BuildRpcClient();
 
             var error1 = GetBadRequestErrorMessage(rpcClient);
 

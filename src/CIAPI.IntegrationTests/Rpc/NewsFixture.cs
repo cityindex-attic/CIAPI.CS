@@ -10,8 +10,7 @@ namespace CIAPI.IntegrationTests.Rpc
         [Test]
         public void HowToUseNews()
         {
-            var rpcClient = new Client(Settings.RpcUri);
-            rpcClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);
+            var rpcClient = BuildRpcClient();
 
 
 

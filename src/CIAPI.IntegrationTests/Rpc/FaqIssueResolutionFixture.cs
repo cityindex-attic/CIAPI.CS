@@ -17,8 +17,7 @@ namespace CIAPI.IntegrationTests.Rpc
         public void Json_Ho_01()
         {
 
-            var rpcClient = new Client(Settings.RpcUri);
-            rpcClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);
+            var rpcClient = BuildRpcClient();
 
 
 
@@ -37,8 +36,8 @@ namespace CIAPI.IntegrationTests.Rpc
         public void Issue42()
         {
 
-            var rpcClient = new Client(Settings.RpcUri);
-            rpcClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);
+            var rpcClient = BuildRpcClient();
+
             var param = new NewStopLimitOrderRequestDTO
                             {
                                 OrderId = 0,
@@ -72,8 +71,7 @@ namespace CIAPI.IntegrationTests.Rpc
         public void Issue35()
         {
 
-            var rpcClient = new Client(Settings.RpcUri);
-            rpcClient.LogIn("xx189949", "password");
+            var rpcClient = BuildRpcClient();
 
             var accountInfo = rpcClient.AccountInformation.GetClientAndTradingAccount();
             var resp = rpcClient.TradesAndOrders.ListTradeHistory(accountInfo.ClientAccountId, 20);

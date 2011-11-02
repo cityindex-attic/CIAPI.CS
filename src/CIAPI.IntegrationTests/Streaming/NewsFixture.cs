@@ -1,23 +1,12 @@
 using System;
 using System.Threading;
 using CIAPI.DTO;
-using CIAPI.Streaming;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using StreamingClient;
-using IStreamingClient = CIAPI.Streaming.IStreamingClient;
 
 namespace CIAPI.IntegrationTests.Streaming
 {
-    public class RpcFixtureBase
-    {
-        public IStreamingClient BuildStreamingClient()
-        {
-            var authenticatedClient = new CIAPI.Rpc.Client(Settings.RpcUri);
-            authenticatedClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);
-            return StreamingClientFactory.CreateStreamingClient(Settings.StreamingUri, Settings.RpcUserName, authenticatedClient.Session);
-        }
-    }
     [TestFixture]
     public class NewsFixture:RpcFixtureBase
     {

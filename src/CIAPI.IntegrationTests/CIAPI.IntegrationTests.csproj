@@ -57,11 +57,15 @@
     <Compile Include="Rpc\MarketFixture.cs" />
     <Compile Include="Rpc\MessagingFixture.cs" />
     <Compile Include="Rpc\NewsFixture.cs" />
+    <Compile Include="Rpc\PriceHistoryFixture.cs" />
+    <Compile Include="Rpc\SpreadMarketsFixture.cs" />
+    <Compile Include="Rpc\TradesAndOrdersFixture.cs" />
     <Compile Include="Rpc\WatchListFixture.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Streaming\PriceFixture.cs" />
     <Compile Include="Streaming\NewsFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Streaming\RpcFixtureBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CIAPI\CIAPI.csproj">

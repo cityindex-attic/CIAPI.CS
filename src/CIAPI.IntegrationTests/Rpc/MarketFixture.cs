@@ -10,37 +10,15 @@ namespace CIAPI.IntegrationTests.Rpc
     {
 
         [Test]
-        public void CanSaveMarketInformation()
-        {
-            var rpcClient = new Client(Settings.RpcUri);
-            rpcClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);
-            var clientAccount = rpcClient.AccountInformation.GetClientAndTradingAccount();
-
-            //rpcClient.Market.GetMarketInformation()
-            //rpcClient.Market.ListMarketInformation()
-            var saveMarketInfoRespnse = rpcClient.Market.SaveMarketInformation(new SaveMarketInformationRequestDTO()
-                                                                                   {
-                                                                                       MarketInformation =
-                                                                                           new ApiMarketInformationSaveDTO
-                                                                                           [] {},
-                                                                                       TradingAccountId =
-                                                                                           clientAccount.ClientAccountId
-                                                                                   });
-
-            Assert.Fail("need usage guidance");
-        }
-
-        [Test]
         public void CanListMarketInformation()
         {
 
 
 
-            var rpcClient = new Client(Settings.RpcUri);
-            rpcClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);
+            var rpcClient = BuildRpcClient();
 
 
-            
+
             var response = rpcClient.Market.ListMarketInformation(new ListMarketInformationRequestDTO()
                                                                       {
 
@@ -52,12 +30,12 @@ namespace CIAPI.IntegrationTests.Rpc
 
             rpcClient.LogOut();
         }
+
         [Test]
         public void CanGetMarketInformation()
         {
 
-            var rpcClient = new Client(Settings.RpcUri);
-            rpcClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);
+            var rpcClient = BuildRpcClient();
 
             for (int i = 0; i < 10; i++)
             {
@@ -68,6 +46,35 @@ namespace CIAPI.IntegrationTests.Rpc
             rpcClient.LogOut();
         }
 
+
+        [Test]
+        public void CanSaveMarketInformation()
+        {
+            var rpcClient = BuildRpcClient();
+
+            var clientAccount = rpcClient.AccountInformation.GetClientAndTradingAccount();
+
+
+            var tolerances = new[]
+            {
+                new ApiMarketInformationSaveDTO()
+                {
+                    MarketId = 71442,
+                    PriceTolerance = 10
+                }
+            };
+
+            var saveMarketInfoRespnse = rpcClient.Market.SaveMarketInformation(new SaveMarketInformationRequestDTO()
+            {
+                MarketInformation = tolerances,
+                TradingAccountId = clientAccount.SpreadBettingAccount.TradingAccountId
+            });
+
+            // ApiSaveMarketInformationResponseDTO is devoid of properties, nothing to check as long as the call succeeds
+
+
+            
+        }
 
     }
 
