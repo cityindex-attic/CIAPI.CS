@@ -62,6 +62,7 @@
     <Compile Include="Rpc\TradesAndOrdersFixture.cs" />
     <Compile Include="Rpc\WatchListFixture.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="Streaming\MultipleStreamsFixture.cs" />
     <Compile Include="Streaming\PriceFixture.cs" />
     <Compile Include="Streaming\NewsFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
