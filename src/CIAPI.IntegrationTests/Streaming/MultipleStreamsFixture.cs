@@ -8,7 +8,6 @@ namespace CIAPI.IntegrationTests.Streaming
     public class MultipleStreamsFixture : RpcFixtureBase
     {
         [Test]
-        [Ignore("WIP")]
         public void CanSubscribeToTwoStreamsAtSameTime()
         {
             var gate = new ManualResetEvent(false);
@@ -22,25 +21,26 @@ namespace CIAPI.IntegrationTests.Streaming
                 (s, e) =>
                 {
                     priceRecieved = true;
-
                     Console.WriteLine("########### {0} -> {1}", e.Data.MarketId, e.Data.Price);
-                    if (marginRecieved && priceRecieved)
+                    if (priceRecieved && marginRecieved)
+                    {
                         gate.Set();
+                    }
                 };
+
 
             var marginListener = streamingClient.BuildClientAccountMarginListener();
             marginListener.MessageReceived +=
                 (s, e) =>
+                {
+                    marginRecieved = true;
+                    Console.WriteLine("########### \tequity: {0}", e.Data.NetEquity);
+                    if (priceRecieved && marginRecieved)
                     {
-                        marginRecieved = true;
-                        Console.WriteLine("########### \tequity: {0}", e.Data.NetEquity);
-                        if (marginRecieved && priceRecieved)
-                            gate.Set();
-                    };
+                        gate.Set();
+                    }
+                };
 
-          
-
-            
             gate.WaitOne(TimeSpan.FromSeconds(30));
 
             streamingClient.TearDownListener(pricesListener);

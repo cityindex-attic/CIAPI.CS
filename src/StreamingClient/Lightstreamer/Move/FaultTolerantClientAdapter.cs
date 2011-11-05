@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net;
 using System.Net.NetworkInformation;
 using System.Threading;
 using Lightstreamer.DotNet.Client;
@@ -40,6 +41,9 @@ namespace StreamingClient
 
         public FaultTolerantLsClientAdapter(string streamingUri, string userName, string sessionId, string adapterSet)
         {
+            //Ensure that at least another 2 concurrent HTTP connections are allowed by the .NET framework
+            //(it defaults to 2, which will already be used if there is another LSClient active)
+            ServicePointManager.DefaultConnectionLimit += 2;
             
             _adapterSet = adapterSet;
             _streamingUri = streamingUri;
