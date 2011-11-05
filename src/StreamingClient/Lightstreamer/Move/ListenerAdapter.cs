@@ -58,9 +58,9 @@ namespace StreamingClient
 
             var simpleTableInfo = new SimpleTableInfo(
                 groupOrItemName,
-                mode: "RAW", //David, cannot find the issue related to this change, can you verify?
                 schema: schema,
-                snap: false) {DataAdapter = dataAdapter};
+                mode: "MERGE", snap: true ) //To ensure the last message published prior to this subscription is recieved immediately, mode must be MERGE and snap = true
+                {DataAdapter = dataAdapter};
             var gate = new ManualResetEvent(false);
             Exception ex = null;
             new Thread(() =>
