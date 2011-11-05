@@ -13,12 +13,12 @@ namespace StreamingClient
     {
         private static readonly Object ConnLock = new Object();
 
-        private readonly string _dataAdapter;
-        public string DataAdapter
+        private readonly string _adapterSet;
+        public string AdapterSet
         {
             get
             {
-                return _dataAdapter;
+                return _adapterSet;
             }
         }
 
@@ -38,10 +38,10 @@ namespace StreamingClient
         private readonly Dictionary<string, IStreamingListener> _currentListeners = new Dictionary<string, IStreamingListener>();
 
 
-        public FaultTolerantLsClientAdapter(string streamingUri, string userName, string sessionId, string dataAdapter)
+        public FaultTolerantLsClientAdapter(string streamingUri, string userName, string sessionId, string adapterSet)
         {
             
-            _dataAdapter = dataAdapter;
+            _adapterSet = adapterSet;
             _streamingUri = streamingUri;
             _sessionId = sessionId;
             _userName = userName;
@@ -324,7 +324,7 @@ namespace StreamingClient
                 var connection = new ConnectionInfo
                 {
                     PushServerUrl = _streamingUri.TrimEnd('/'),
-                    Adapter = _dataAdapter,
+                    Adapter = _adapterSet,
                     User = _userName,
                     Password = _sessionId,
                     Constraints = { MaxBandwidth = 999999 }
@@ -332,9 +332,9 @@ namespace StreamingClient
 
                 try
                 {
-                    Debug.WriteLine("connecting streaming client to adapter " + _dataAdapter);
+                    Debug.WriteLine("connecting streaming client to adapter " + _adapterSet);
                     Client.OpenConnection(connection, this);
-                    Debug.WriteLine("connected streaming client to adapter " + _dataAdapter);
+                    Debug.WriteLine("connected streaming client to adapter " + _adapterSet);
                     Connected = true;
 
                 }
@@ -342,7 +342,7 @@ namespace StreamingClient
                 {
                     if (ex.Message == "Requested Adapter Set not available")
                     {
-                        throw new Exception(string.Format("Data adapter {0} is not available", _dataAdapter), ex);
+                        throw new Exception(string.Format("Adapter set {0} is not available", _adapterSet), ex);
                     }
                     throw;
                 }
