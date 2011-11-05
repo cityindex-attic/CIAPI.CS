@@ -41,10 +41,11 @@ namespace StreamingClient
 
         public FaultTolerantLsClientAdapter(string streamingUri, string userName, string sessionId, string adapterSet)
         {
-            //Ensure that at least another 2 concurrent HTTP connections are allowed by the .NET framework
+#if !SILVERLIGHT
+            //Ensure that at least another 2 concurrent HTTP connections are allowed by the desktop .NET framework
             //(it defaults to 2, which will already be used if there is another LSClient active)
             ServicePointManager.DefaultConnectionLimit += 2;
-            
+#endif            
             _adapterSet = adapterSet;
             _streamingUri = streamingUri;
             _sessionId = sessionId;
