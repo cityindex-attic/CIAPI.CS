@@ -23,7 +23,11 @@
             <Button Content="Start" Height="72" HorizontalAlignment="Left" Margin="10,10,0,0" Name="StartButton" VerticalAlignment="Top" Width="160" Click="StartButtonClick" />
 
             <Button Content="Stop" Height="72" HorizontalAlignment="Left" Margin="10,10,0,0" Name="StopButton" VerticalAlignment="Top" Width="160" Click="StopButtonClick" />
-            <ListBox HorizontalAlignment="Stretch" Margin="10,10,0,0" Name="listBox1" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+            <StackPanel Orientation="Horizontal">
+                <ListBox   Margin="10,10,0,0" Name="listBox1" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="Blue" />
+                <ListBox   Margin="10,10,0,0" Name="listBox2"  VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="Red" />
+            </StackPanel>
+            
 
         </StackPanel>
     </Grid>

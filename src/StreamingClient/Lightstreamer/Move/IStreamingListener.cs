@@ -13,7 +13,8 @@ namespace StreamingClient
 
 
         string Topic { get; }
-        string DataAdapter { get; }
+        string Channel { get; }
+        string AdapterSet { get; }
         
     }
 

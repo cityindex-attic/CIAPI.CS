@@ -13,14 +13,17 @@ namespace Phone7Ticker
 {
     public partial class MainPage : PhoneApplicationPage
     {
-        private const string PushServerHost = "https://pushpreprod.cityindextest9.co.uk/";
-        private const string RpcServerHost = "https://ciapipreprod.cityindextest9.co.uk/TradingApi/";
-        private const string UserName = "xx189949";
+        //private const string PushServerHost = "https://pushpreprod.cityindextest9.co.uk/";
+        //private const string RpcServerHost = "https://ciapipreprod.cityindextest9.co.uk/TradingApi/";
+        //private const string UserName = "xx189949";
+        //private const string Password = "password";
+        private const string PushServerHost = "https://push.cityindex.com/";
+        private const string RpcServerHost = "https://ciapi.cityindex.com/tradingapi/";
+        private const string UserName = "DM715257";
         private const string Password = "password";
-
         IStreamingClient _streamingClient;
         IStreamingListener<PriceDTO> _listener;
-
+        private IStreamingListener<ClientAccountMarginDTO> _listener2;
 
         public MainPage()
         {
@@ -57,6 +60,7 @@ namespace Phone7Ticker
                     // the upside to this is that there is no need to run .Connect in a separate thread.
 
 
+
                     Debug.WriteLine("client connected");
 
 
@@ -84,6 +88,8 @@ namespace Phone7Ticker
 
         private void StartButtonClick(object sender, RoutedEventArgs e)
         {
+            Dispatcher.BeginInvoke(() => { listBox2.Items.Add("Starting"); });
+
             Dispatcher.BeginInvoke(() =>
             {
                 listBox1.Items.Clear();
@@ -96,10 +102,14 @@ namespace Phone7Ticker
                 new Thread(() =>
                 {
 
-                    Debug.WriteLine("building listener");
+                    Debug.WriteLine("building listener2");
                     _listener = _streamingClient.BuildPricesListener(400535967, 81136, 400509294, 400535971, 80902, 400509295, 400193864, 400525367, 80926, 400498641, 400193866, 91047, 400194551, 121766, 400172033, 139144);
                     _listener.MessageReceived += ListenerMessageReceived;
+                    Debug.WriteLine("building listener");
+                    _listener2 = _streamingClient.BuildClientAccountMarginListener();
+                    _listener2.MessageReceived += new EventHandler<MessageEventArgs<ClientAccountMarginDTO>>(Listener2MessageReceived);
                     Debug.WriteLine("listener started");
+                    Debug.WriteLine("listener2 started");
 
                     Dispatcher.BeginInvoke(() =>
                     {
@@ -108,25 +118,32 @@ namespace Phone7Ticker
                     });
 
                 }).Start();
+
+
+                
             });
 
         }
 
+        
+
         private void StopButtonClick(object sender, RoutedEventArgs e)
         {
+            Dispatcher.BeginInvoke(() => { listBox2.Items.Add("Stopping");});
 
             // tearing down a listener should be done on a new thread.
 
             new Thread(() =>
                 {
 
-                    Debug.WriteLine("tearing down listener");
+                    Debug.WriteLine("tearing down listeners");
 
                     // unwire the listener 
                     _listener.MessageReceived -= ListenerMessageReceived;
-
+                    _listener2.MessageReceived -= Listener2MessageReceived;
                     // tear down the listener
                     _streamingClient.TearDownListener(_listener);
+                    _streamingClient.TearDownListener(_listener2);
 
                 }).Start();
 
@@ -140,7 +157,10 @@ namespace Phone7Ticker
 
 
         }
-
+        void Listener2MessageReceived(object sender, MessageEventArgs<ClientAccountMarginDTO> e)
+        {
+            Dispatcher.BeginInvoke(() => listBox2.Items.Add(e.Data.Cash));
+        }
         void ListenerMessageReceived(object sender, MessageEventArgs<PriceDTO> e)
         {
 

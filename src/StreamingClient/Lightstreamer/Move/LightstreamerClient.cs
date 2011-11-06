@@ -43,9 +43,9 @@ namespace StreamingClient.Lightstreamer
         {
             lock (_adapters)
             {
-                if (_adapters.ContainsKey(listener.DataAdapter))
+                if (_adapters.ContainsKey(listener.AdapterSet))
                 {
-                    var adapter = _adapters[listener.DataAdapter];
+                    var adapter = _adapters[listener.AdapterSet];
                     adapter.TearDownListener(listener);
                 }
             }

@@ -15,15 +15,24 @@ namespace StreamingClient
     public class ListenerAdapter<TDto> : IStreamingListener<TDto> where TDto : class, new()
     {
         private static readonly ILog Logger = LogManager.GetLogger(typeof (ListenerAdapter<TDto>));
-        private readonly string _dataAdapter;
+        
+        private readonly string _adapterSet;
+        private readonly string _channel;
         private readonly string _groupOrItemName;
         private readonly FaultTolerantLsClientAdapter _lsClient;
         private readonly LightstreamerDtoConverter<TDto> _messageConverter = new LightstreamerDtoConverter<TDto>();
-        public string DataAdapter
+        public string AdapterSet
         {
             get
             {
-                return _dataAdapter;
+                return _adapterSet;
+            }
+        }
+        public string Channel
+        {
+            get
+            {
+                return _channel;
             }
         }
         private TableListener<TDto> _listener;
@@ -33,8 +42,9 @@ namespace StreamingClient
         {
             Topic = topic;
             _lsClient = client;
-            _dataAdapter = topic.Split('.').First();
-            _groupOrItemName = topic.Replace(_dataAdapter + ".", "");
+            _adapterSet = client.AdapterSet;
+            _channel = topic.Split('.').First();
+            _groupOrItemName = topic.Replace(_channel + ".", "");
         }
 
         #region IStreamingListenerAdapter<TDto> Members
@@ -52,15 +62,15 @@ namespace StreamingClient
             _listener.MessageReceived += ListenerMessageReceived;
 
             string schema = _messageConverter.GetFieldList();
-            string dataAdapter = _dataAdapter.ToUpper();
+            string channel = _channel.ToUpper();
             Logger.DebugFormat("Subscribing to group:{0}, schema {1}, dataAdapter {2}", groupOrItemName, schema,
-                               dataAdapter);
+                               channel);
 
             var simpleTableInfo = new SimpleTableInfo(
                 groupOrItemName,
                 schema: schema,
                 mode: "MERGE", snap: true ) //To ensure the last message published prior to this subscription is recieved immediately, mode must be MERGE and snap = true
-                {DataAdapter = dataAdapter};
+                {DataAdapter = channel};
             var gate = new ManualResetEvent(false);
             Exception ex = null;
             new Thread(() =>
