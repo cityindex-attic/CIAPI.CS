@@ -9,8 +9,8 @@ using StreamingClient.Lightstreamer;
 
 namespace StreamingClient
 {
- 
-    public class FaultTolerantLsClientAdapter :IDisposable, IConnectionListener
+
+    public class FaultTolerantLsClientAdapter : IDisposable, IConnectionListener
     {
         private static readonly Object ConnLock = new Object();
 
@@ -45,7 +45,7 @@ namespace StreamingClient
             //Ensure that at least another 2 concurrent HTTP connections are allowed by the desktop .NET framework
             //(it defaults to 2, which will already be used if there is another LSClient active)
             ServicePointManager.DefaultConnectionLimit += 2;
-#endif            
+#endif
             _adapterSet = adapterSet;
             _streamingUri = streamingUri;
             _sessionId = sessionId;
@@ -202,7 +202,7 @@ namespace StreamingClient
         /// <summary>
         /// Allows consumer to stop and remove a listener from this client.
         /// </summary>
-        public void TearDownListener(IStreamingListener listener) 
+        public void TearDownListener(IStreamingListener listener)
         {
             lock (_currentListeners)
             {
@@ -221,7 +221,7 @@ namespace StreamingClient
             {
                 IStreamingListener listener = new ListenerAdapter<TDto>(topic, this);
                 _currentListeners.Add(topic, listener);
-                new Thread(()=> listener.Start(_phase)).Start();
+                new Thread(() => listener.Start(_phase)).Start();
             }
 
             return (IStreamingListener<TDto>)_currentListeners[topic];
@@ -428,6 +428,10 @@ namespace StreamingClient
             if (disposing)
             {
                 Stop();
+#if !SILVERLIGHT
+                // relinquish allocated connection limits.
+                ServicePointManager.DefaultConnectionLimit -= 2;
+#endif
             }
         }
     }

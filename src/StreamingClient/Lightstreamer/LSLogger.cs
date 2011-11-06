@@ -1,64 +1,80 @@
 ﻿using System;
+using Common.Logging;
 using Lightstreamer.DotNet.Client.Log;
+#if !SILVERLIGHT
+    using Common.Logging.Simple;
+#endif
 
 namespace StreamingClient.Lightstreamer
 {
     internal class LSLogger : ILogger
     {
+        public LSLogger(string logName, LogLevel logLevel, bool showLevel, bool showDateTime, bool showLogName, string dateTimeFormat)
+        {
+#if SILVERLIGHT
+
+#if WINDOWS_PHONE
+            _wrapped = new DebugAppender(logName, logLevel, showLevel, showDateTime, showLogName, dateTimeFormat);
+#else
+            _wrapped = new DebugAppender(logName, logLevel, showLevel, showDateTime, showLogName, dateTimeFormat);
+#endif
+#else
+            _wrapped = new Common.Logging.Simple.ConsoleOutLogger(logName, logLevel, showLevel, showDateTime, showLogName, dateTimeFormat);
+#endif
+
+        }
+        private AbstractSimpleLogger _wrapped;
+
         public void Error(string line)
         {
-            System.Diagnostics.Debug.WriteLine("ERROR: " + line);
+            _wrapped.Error(line);
+            
             
         }
 
         public void Error(string line, Exception exception)
         {
-            System.Diagnostics.Debug.WriteLine("ERROR: " + line);
-            System.Diagnostics.Debug.WriteLine(exception);
+            _wrapped.Error(line,exception);
         }
 
         public void Warn(string line)
         {
-            System.Diagnostics.Debug.WriteLine("WARN: " + line);
+            _wrapped.Warn(line);
         }
 
         public void Warn(string line, Exception exception)
         {
-            System.Diagnostics.Debug.WriteLine("WARN: " + line);
-            System.Diagnostics.Debug.WriteLine(exception);
+            _wrapped.Warn(line,exception);
         }
 
         public void Info(string line)
         {
-            System.Diagnostics.Debug.WriteLine("INFO: " + line);
+            _wrapped.Info(line);
         }
 
         public void Info(string line, Exception exception)
         {
-            System.Diagnostics.Debug.WriteLine("INFO: " + line);
-            System.Diagnostics.Debug.WriteLine(exception);
+            _wrapped.Info(line,exception);
         }
 
         public void Debug(string line)
         {
-            System.Diagnostics.Debug.WriteLine("DEBUG: " + line);
+            _wrapped.Debug(line);
         }
 
         public void Debug(string line, Exception exception)
         {
-            System.Diagnostics.Debug.WriteLine("DEBUG: " + line);
-            System.Diagnostics.Debug.WriteLine("DEBUG: " + exception);
+            _wrapped.Debug(line,exception);
         }
 
         public void Fatal(string line)
         {
-            System.Diagnostics.Debug.WriteLine("FATAL: " + line);
+            _wrapped.Fatal(line);
         }
 
         public void Fatal(string line, Exception exception)
         {
-            System.Diagnostics.Debug.WriteLine("FATAL: " + line);
-            System.Diagnostics.Debug.WriteLine(exception);
+            _wrapped.Fatal(line,exception);
         }
 
 
