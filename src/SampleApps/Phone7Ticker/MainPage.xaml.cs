@@ -24,7 +24,9 @@ namespace Phone7Ticker
         IStreamingClient _streamingClient;
         IStreamingListener<PriceDTO> _listener;
         private IStreamingListener<ClientAccountMarginDTO> _listener2;
-
+        private Thread _backgroundRpc;
+        private Client rpcClient;
+        private bool _backgroundRpcStop = false;
         public MainPage()
         {
             InitializeComponent();
@@ -37,7 +39,7 @@ namespace Phone7Ticker
 
 
             // build an rpc client and log it in.
-            var rpcClient = new Client(new Uri(RpcServerHost));
+            rpcClient = new Client(new Uri(RpcServerHost));
 
             // get a session from the rpc client
             rpcClient.BeginLogIn(UserName, Password, ar =>
@@ -93,12 +95,25 @@ namespace Phone7Ticker
             Dispatcher.BeginInvoke(() =>
             {
                 listBox1.Items.Clear();
+                listBox2.Items.Clear();
+                listBox3.Items.Clear();
 
                 StartButton.IsEnabled = false;
                 StopButton.IsEnabled = false;
+                 
 
-                // you will want to start a listener in a new thread, doing so on the UI thread is forbidden
-
+                _backgroundRpcStop = false;
+                _backgroundRpc = new Thread(() =>
+                                                {
+                                                    while (_backgroundRpcStop==false)
+                                                    {
+                                                        new AutoResetEvent(false).WaitOne(100);
+                                                        var marketInfo = rpcClient.Market.GetMarketInformation("400535967");
+                                                        Dispatcher.BeginInvoke(() => listBox3.Items.Add(marketInfo.MarketInformation.MarketId));
+                                                    }
+                                                    return;
+                                                });
+                _backgroundRpc.Start();
                 new Thread(() =>
                 {
 
@@ -106,6 +121,7 @@ namespace Phone7Ticker
                     _listener = _streamingClient.BuildPricesListener(400535967, 81136, 400509294, 400535971, 80902, 400509295, 400193864, 400525367, 80926, 400498641, 400193866, 91047, 400194551, 121766, 400172033, 139144);
                     _listener.MessageReceived += ListenerMessageReceived;
                     Debug.WriteLine("building listener");
+                    
                     _listener2 = _streamingClient.BuildClientAccountMarginListener();
                     _listener2.MessageReceived += new EventHandler<MessageEventArgs<ClientAccountMarginDTO>>(Listener2MessageReceived);
                     Debug.WriteLine("listener started");
@@ -120,18 +136,21 @@ namespace Phone7Ticker
                 }).Start();
 
 
-                
+
             });
 
         }
 
-        
+
 
         private void StopButtonClick(object sender, RoutedEventArgs e)
         {
-            Dispatcher.BeginInvoke(() => { listBox2.Items.Add("Stopping");});
+            Dispatcher.BeginInvoke(() => { listBox2.Items.Add("Stopping"); });
+
+            _backgroundRpcStop = true;
 
             // tearing down a listener should be done on a new thread.
+            // you will want to start a listener in a new thread, doing so on the UI thread is forbidden
 
             new Thread(() =>
                 {
