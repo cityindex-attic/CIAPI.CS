@@ -23,7 +23,7 @@ namespace Phone7Ticker
         private const string Password = "password";
         IStreamingClient _streamingClient;
         IStreamingListener<PriceDTO> _listener;
-        private IStreamingListener<ClientAccountMarginDTO> _listener2;
+        private IStreamingListener<PriceDTO> _listener2;
         private Thread _backgroundRpc;
         private Client rpcClient;
         private bool _backgroundRpcStop = false;
@@ -107,7 +107,7 @@ namespace Phone7Ticker
                                                 {
                                                     while (_backgroundRpcStop==false)
                                                     {
-                                                        new AutoResetEvent(false).WaitOne(100);
+                                                        new AutoResetEvent(false).WaitOne(100000);
                                                         var marketInfo = rpcClient.Market.GetMarketInformation("400535967");
                                                         Dispatcher.BeginInvoke(() => listBox3.Items.Add(marketInfo.MarketInformation.MarketId));
                                                     }
@@ -121,9 +121,9 @@ namespace Phone7Ticker
                     _listener = _streamingClient.BuildPricesListener(400535967, 81136, 400509294, 400535971, 80902, 400509295, 400193864, 400525367, 80926, 400498641, 400193866, 91047, 400194551, 121766, 400172033, 139144);
                     _listener.MessageReceived += ListenerMessageReceived;
                     Debug.WriteLine("building listener");
-                    
-                    _listener2 = _streamingClient.BuildClientAccountMarginListener();
-                    _listener2.MessageReceived += new EventHandler<MessageEventArgs<ClientAccountMarginDTO>>(Listener2MessageReceived);
+
+                    _listener2 = _streamingClient.BuildDefaultPricesListener(2347);
+                    _listener2.MessageReceived += Listener2MessageReceived;
                     Debug.WriteLine("listener started");
                     Debug.WriteLine("listener2 started");
 
@@ -176,9 +176,9 @@ namespace Phone7Ticker
 
 
         }
-        void Listener2MessageReceived(object sender, MessageEventArgs<ClientAccountMarginDTO> e)
+        void Listener2MessageReceived(object sender, MessageEventArgs<PriceDTO> e)
         {
-            Dispatcher.BeginInvoke(() => listBox2.Items.Add(e.Data.Cash));
+            Dispatcher.BeginInvoke(() => listBox2.Items.Add(e.Data.MarketId));
         }
         void ListenerMessageReceived(object sender, MessageEventArgs<PriceDTO> e)
         {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using Common.Logging;
 
@@ -35,7 +36,7 @@ namespace CityIndex.JsonClient
         private bool _notifiedWaitingOnWindow;
         private int _outstandingRequests;
         private bool _processingQueue;
-        
+        private static object _lockTarget = new object();
 
         #endregion
 
@@ -138,10 +139,13 @@ namespace CityIndex.JsonClient
         /// <param name="url"></param>
         /// <param name="request"></param>
         /// <param name="action"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void Enqueue(string url, WebRequest request, Action<IAsyncResult, RequestHolder> action)
         {
-            lock (_requests)
+            //Log.DebugFormat("entering lock for {0}",url);
+            //lock (_lockTarget)
             {
+                //Log.DebugFormat("inside lock for {0}", url);
                 // TODO: have a max queue length to keep things from getting out of hand - THEN we can throw an exception
                 _requests.Enqueue(new RequestHolder
                     {
@@ -149,15 +153,19 @@ namespace CityIndex.JsonClient
                         Url = url,
                         AsyncResultHandler = action
                     });
+                //Log.DebugFormat("exiting lock for {0}", url);
             }
+            //Log.DebugFormat("outside lock for {0}", url);
         }
 
         #endregion
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void ProcessQueue(object ignored)
         {
-            lock (_requests)
+            //Log.DebugFormat("entering lock for ProcessQueue()");
+            //lock (_lockTarget)
             {
+                //Log.DebugFormat("inside lock for ProcessQueue()");
                 if (_processingQueue) return;
                 if (_requests.Count == 0) return;
 
@@ -236,7 +244,9 @@ namespace CityIndex.JsonClient
                 {
                     _processingQueue = false;
                 }
+                //Log.DebugFormat("exiting lock for ProcessQueue()");
             }
+            //Log.DebugFormat("outside lock for ProcessQueue()");
         }
 
         private bool ThereAreMoreOutstandingRequestsThanIsAllowed()
