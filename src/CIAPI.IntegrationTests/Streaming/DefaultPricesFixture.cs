@@ -1,8 +1,9 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using CIAPI.DTO;
 using CIAPI.Streaming;
-using Common.Logging;
 using NUnit.Framework;
 
 namespace CIAPI.IntegrationTests.Streaming
@@ -10,41 +11,40 @@ namespace CIAPI.IntegrationTests.Streaming
     [TestFixture]
     public class DefaultPricesFixture : RpcFixtureBase
     {
-        private ILog _logger = LogManager.GetCurrentClassLogger();
+        private const int IFX_POLAND_ACCOUNT_OPERATOR_ID = 2347;
+
         [Test]
         public void CanConsumeDefaultPricesStream()
         {
-            var gate = new ManualResetEvent(false);
-
             var streamingClient = StreamingClientFactory.CreateStreamingClient(Settings.StreamingUri, "", "");
 
-            var priceListener = streamingClient.BuildDefaultPricesListener(2347);
+            var priceListener = streamingClient.BuildDefaultPricesListener(IFX_POLAND_ACCOUNT_OPERATOR_ID);
 
-            PriceDTO actual = null;
+            var tableOfPrices = new Dictionary<int, PriceDTO>();
 
-            //Trap the Price given by the update event for checking
+            //A collection of different prices will stream in.
+            //You need to collect a few before you get an idea of which prices you will get
             priceListener.MessageReceived += (s, e) =>
             {
-                actual = e.Data;
-                gate.Set();
+                var newPrice = e.Data;
+                if (tableOfPrices.ContainsKey(newPrice.MarketId))
+                {
+                    tableOfPrices[newPrice.MarketId] = newPrice;
+                }
+                else
+                {
+                    tableOfPrices.Add(newPrice.MarketId,newPrice);
+                }
             };
 
-
-            bool gotPriceInTime = true;
-            if (!gate.WaitOne(TimeSpan.FromSeconds(15)))
-            {
-                gotPriceInTime = false;
-                // don't want to throw while client is listening, hangs test
-            }
+            Thread.Sleep(5000); //Wait for some prices to come in
 
             streamingClient.TearDownListener(priceListener);
             streamingClient.Dispose();
 
+            tableOfPrices.Values.ToList().ForEach(p => Console.WriteLine(" ############ {0} - {1}", p.MarketId, p.Bid));
 
-            Assert.IsTrue(gotPriceInTime, "A price update wasn't received in time");
-            Assert.IsNotNull(actual);
-            Assert.Greater(actual.TickDate, DateTime.UtcNow.AddSeconds(-10), "We're expecting a recent price");
-
+            Assert.Greater(tableOfPrices.Values.Count, 1, "We're expecting at least one price");
         }
     }
 }
