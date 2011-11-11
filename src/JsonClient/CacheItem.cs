@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Common.Logging;
 
 namespace CityIndex.JsonClient
@@ -35,9 +36,10 @@ namespace CityIndex.JsonClient
         /// </summary>
         /// <param name="callback"></param>
         /// <param name="state"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddCallback(ApiAsyncCallback<TDTO> callback, object state)
         {
-            lock (_callbacks)
+            //lock (_callbacks)
             {
                 _callbacks.Enqueue(new CacheCallBack<TDTO>
                     {
@@ -52,9 +54,10 @@ namespace CityIndex.JsonClient
         /// </summary>
         /// <param name="json"></param>
         /// <param name="exception"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void CompleteResponse(string json, Exception exception)
         {
-            lock (_callbacks)
+            //lock (_callbacks)
             {
                 ResponseText = json;
                 ItemState = CacheItemState.Processing;

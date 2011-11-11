@@ -46,7 +46,7 @@ namespace CIAPI.IntegrationTests.Streaming
 
             Assert.IsFalse(timedOut,"timed out");
             Assert.IsNotNull(actual);
-            Assert.IsNotEmpty(actual.Headline);
+            Assert.IsNotNullOrEmpty(actual.Headline);
 
             Assert.Greater(actual.PublishDate, DateTime.UtcNow.AddMonths(-1));
             Assert.Greater(actual.StoryId, 0);

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Threading;
 using Common.Logging;
@@ -232,11 +233,12 @@ namespace CityIndex.JsonClient
         /// <param name="parameters"></param>
         /// <param name="cacheDuration"></param>
         /// <param name="throttleScope"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void BeginRequest<TDTO>(ApiAsyncCallback<TDTO> cb, object state, string target, string uriTemplate,
                                        string method, Dictionary<string, object> parameters, TimeSpan cacheDuration,
                                        string throttleScope) 
         {
-            lock (_lockObj)
+            //lock (_lockObj)
             {
                 // params gets modified so we will make a local copy
                 var localParams = new Dictionary<string, object>(parameters);

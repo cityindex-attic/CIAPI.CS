@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Lightstreamer.DotNet.Client;
 
 namespace StreamingClient.Lightstreamer
@@ -39,9 +40,10 @@ namespace StreamingClient.Lightstreamer
         /// <summary>
         /// Allows consumer to stop and remove a listener from this client.
         /// </summary>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void TearDownListener(IStreamingListener  listener) 
         {
-            lock (_adapters)
+            //lock (_adapters)
             {
                 if (_adapters.ContainsKey(listener.AdapterSet))
                 {
@@ -51,10 +53,11 @@ namespace StreamingClient.Lightstreamer
             }
             
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IStreamingListener<TDto> BuildListener<TDto>(string dataAdapter, string topic)
                 where TDto : class, new()
         {
-            lock (_adapters)
+            //lock (_adapters)
             {
                 if (!_adapters.ContainsKey(dataAdapter))
                 {

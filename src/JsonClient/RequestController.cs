@@ -170,7 +170,7 @@ namespace CityIndex.JsonClient
         {
             while (true)
             {
-                lock (_lock)
+                //lock (_lock)
                 {
                     // passive shut down of thread to avoid spurious ThreadAbortException from
                     // popping up in arbitrary places as is wont to happen when just killing a thread.
@@ -215,7 +215,7 @@ namespace CityIndex.JsonClient
 
             item.Request.BeginGetRequestStream(ac =>
                 {
-                    lock (_lock)
+                    //lock (_lock)
                     {
                         try
                         {
@@ -272,7 +272,7 @@ namespace CityIndex.JsonClient
 
             throttle.Enqueue(url, request, (ar, requestHolder) =>
                 {
-                    lock (_lock)
+                    //lock (_lock)
                     {
                         RequestHolder holder = requestHolder;
 

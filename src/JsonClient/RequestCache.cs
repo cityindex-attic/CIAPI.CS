@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Common.Logging;
 using Newtonsoft.Json;
 
@@ -49,9 +50,10 @@ namespace CityIndex.JsonClient
         /// <typeparam name="TDTO"></typeparam>
         /// <param name="url"></param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public CacheItem<TDTO> GetOrCreate<TDTO>(string url)
         {
-            lock (_lock)
+            //lock (_lock)
             {
                 url = url.ToLower();
 
@@ -71,9 +73,10 @@ namespace CityIndex.JsonClient
         /// <param name="url"></param>
         /// <returns></returns>
         /// <exception cref="KeyNotFoundException">If url is not found in internal map</exception>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public CacheItem<TDTO> Get<TDTO>(string url)
         {
-            lock (_lock)
+            //lock (_lock)
             {
                 url = url.ToLower();
                 if (_items.ContainsKey(url))
@@ -93,9 +96,10 @@ namespace CityIndex.JsonClient
         /// <exception cref="InvalidOperationException">
         /// If item is not completed, removing would result in orphaned callbacks effectively stalling the calling code.
         /// </exception>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public CacheItem<TDTO> Remove<TDTO>(string url)
         {
-            lock (_lock)
+            //lock (_lock)
             {
                 url = url.ToLower();
                 CacheItem<TDTO> item = Get<TDTO>(url);
@@ -119,9 +123,10 @@ namespace CityIndex.JsonClient
         /// Is called on the purge timer to remove completed and expired <see cref="CacheItem{TDTO}"/> from the internal map.
         /// </summary>
         /// <param name="ignored"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void PurgeExpiredItems(object ignored)
         {
-            lock (_lock)
+            //lock (_lock)
             {
                 var toRemove = new List<string>();
 
