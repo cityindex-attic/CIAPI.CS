@@ -842,6 +842,7 @@ namespace  CIAPI.DTO
     public partial class ListWatchlistResponseDTO
     {
         public int ClientAccountId { get; set; }
+        public ApiClientAccountWatchlistDTO[] ClientAccountWatchlists { get; set; }
     }
 
     /// <summary>

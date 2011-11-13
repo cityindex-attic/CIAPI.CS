@@ -96,6 +96,9 @@
     <Content Include="node-0.4.7-cygwin\bin\tar.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="src\generate-routes.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="src\generate-dto.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -192,7 +195,9 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
-    <PostBuildEvent>call "..\node-0.4.7-cygwin\bin\node" "../src/generate-dto.js"</PostBuildEvent>
+    <PostBuildEvent>rem call "..\node-0.4.7-cygwin\bin\node" "../src/generate-dto.js"
+call "..\node-0.4.7-cygwin\bin\node" "../src/generate-routes.js"
+</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

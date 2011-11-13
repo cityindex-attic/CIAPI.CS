@@ -19,7 +19,7 @@ namespace CIAPI.Rpc
       public _Watchlist Watchlist{get; private set;}
       public _ExceptionHandling ExceptionHandling{get; private set;}
         public Client(Uri uri)
-            : base(uri, new RequestController(TimeSpan.FromSeconds(0), 2, new RequestFactory(), new ErrorResponseDTOJsonExceptionFactory(), new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10, "data"), new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10, "trading"),new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10, "default")) )
+            : base(uri, new RequestController(TimeSpan.FromSeconds(0), 2, new RequestFactory(), new ErrorResponseDTOJsonExceptionFactory(), new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10, "data"), new ThrottedRequestQueue(TimeSpan.FromSeconds(3), 1, 3, "trading"),new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10, "default")) )
         {
 
             this. Authentication = new _Authentication(this);
@@ -360,12 +360,12 @@ namespace CIAPI.Rpc
         /// <summary>
         /// <p>Get Market Information for the specified list of markets. Post a <a onclick="dojo.hash('#type.ListMarketInformationRequestDTO'); return false;" class="json-link" href="#">ListMarketInformationRequestDTO</a> to the uri specified below.</p>
         /// </summary>
-        public virtual ListMarketInformationResponseDTO ListMarketInformation(ListMarketInformationRequestDTO listMarketInformationRequestDTO)
+        public virtual ListMarketInformationResponseDTO ListMarketInformation()
         {
             return _client.Request<ListMarketInformationResponseDTO>("market", "/market/information", "POST",
             new Dictionary<string, object>
             {
-                {"listMarketInformationRequestDTO",listMarketInformationRequestDTO}
+
             }, TimeSpan.FromMilliseconds(0), "data");
         }
 
@@ -375,12 +375,12 @@ namespace CIAPI.Rpc
         /// </summary>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginListMarketInformation(ListMarketInformationRequestDTO listMarketInformationRequestDTO, ApiAsyncCallback<ListMarketInformationResponseDTO> callback, object state)
+        public virtual void BeginListMarketInformation( ApiAsyncCallback<ListMarketInformationResponseDTO> callback, object state)
         {
             _client.BeginRequest(callback, state, "market", "/market/information", "POST",
             new Dictionary<string, object>
             {
-                 {"listMarketInformationRequestDTO",listMarketInformationRequestDTO}
+
             }, TimeSpan.FromMilliseconds(0), "data");
         }
 
@@ -1463,7 +1463,7 @@ namespace CIAPI.Rpc
         /// <param name="apiSaveWatchlistRequestDto">Save watchlist</param>
         public virtual ApiSaveWatchlistResponseDTO SaveWatchlist(ApiSaveWatchlistRequestDTO apiSaveWatchlistRequestDto)
         {
-            return _client.Request<ApiSaveWatchlistResponseDTO>("watchlist", "/Save", "POST",
+            return _client.Request<ApiSaveWatchlistResponseDTO>("watchlists", "/Save", "POST",
             new Dictionary<string, object>
             {
                 { "apiSaveWatchlistRequestDto", apiSaveWatchlistRequestDto}
@@ -1479,7 +1479,7 @@ namespace CIAPI.Rpc
         /// <param name="state"></param>
         public virtual void BeginSaveWatchlist(ApiSaveWatchlistRequestDTO apiSaveWatchlistRequestDto, ApiAsyncCallback<ApiSaveWatchlistResponseDTO> callback, object state)
         {
-            _client.BeginRequest(callback, state, "watchlist", "/Save", "POST",
+            _client.BeginRequest(callback, state, "watchlists", "/Save", "POST",
             new Dictionary<string, object>
             {
                 { "apiSaveWatchlistRequestDto", apiSaveWatchlistRequestDto}
@@ -1503,7 +1503,7 @@ namespace CIAPI.Rpc
         /// <param name="deleteWatchlistRequestDto">Delete a watchlist</param>
         public virtual ApiDeleteWatchlistResponseDTO DeleteWatchlist(ApiDeleteWatchlistRequestDTO deleteWatchlistRequestDto)
         {
-            return _client.Request<ApiDeleteWatchlistResponseDTO>("watchlist", "/delete", "POST",
+            return _client.Request<ApiDeleteWatchlistResponseDTO>("watchlists", "/delete", "POST",
             new Dictionary<string, object>
             {
                 { "deleteWatchlistRequestDto", deleteWatchlistRequestDto}
@@ -1519,7 +1519,7 @@ namespace CIAPI.Rpc
         /// <param name="state"></param>
         public virtual void BeginDeleteWatchlist(ApiDeleteWatchlistRequestDTO deleteWatchlistRequestDto, ApiAsyncCallback<ApiDeleteWatchlistResponseDTO> callback, object state)
         {
-            _client.BeginRequest(callback, state, "watchlist", "/delete", "POST",
+            _client.BeginRequest(callback, state, "watchlists", "/delete", "POST",
             new Dictionary<string, object>
             {
                 { "deleteWatchlistRequestDto", deleteWatchlistRequestDto}

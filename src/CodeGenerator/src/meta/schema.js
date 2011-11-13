@@ -2263,6 +2263,15 @@ exports.schema =
                     "minValue": -2147483648,
                     "maxValue": 2147483647,
                     "description": "Client account id"
+                },
+                "ClientAccountWatchlists": {
+                    "type": "array",
+                    "items": [
+            {
+                "$ref": "ApiClientAccountWatchlistDTO"
+            }
+          ],
+                    "description": "Client account watchlists"
                 }
             },
             "description": "Gets the client watchlist"
