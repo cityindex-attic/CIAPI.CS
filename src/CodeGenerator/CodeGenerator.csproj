@@ -13,6 +13,7 @@
     <RootNamespace>CodeGenerator</RootNamespace>
     <AssemblyName>CodeGenerator</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <UseIISExpress>false</UseIISExpress>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -93,6 +94,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="node-0.4.7-cygwin\bin\tar.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="src\generate-dto.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="src\CSharpLightStreamerChannelGenerator.js">
@@ -188,7 +192,7 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
-    <PostBuildEvent>call "..\node-0.4.7-cygwin\bin\node" "../src/generate.js"</PostBuildEvent>
+    <PostBuildEvent>call "..\node-0.4.7-cygwin\bin\node" "../src/generate-dto.js"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

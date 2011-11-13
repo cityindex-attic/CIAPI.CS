@@ -13,6 +13,7 @@ namespace StreamingClient.Lightstreamer
         private readonly string _streamingUri;
         private readonly Dictionary<string, FaultTolerantLsClientAdapter> _adapters ;
         
+        
         static LightstreamerClient()
         {
             LSClient.SetLoggerProvider(new LSLoggerProvider());
@@ -61,6 +62,12 @@ namespace StreamingClient.Lightstreamer
             {
                 if (!_adapters.ContainsKey(dataAdapter))
                 {
+#if WINDOWS_PHONE
+                    if(_adapters.Count==2)
+                    {
+                        throw new Exception("Max concurrent streams for WP7 is 2");
+                    }
+#endif
                     var adp = new FaultTolerantLsClientAdapter(_streamingUri, _userName, _sessionId, dataAdapter);
                     adp.StatusUpdate += OnStatusUpdate;
                     _adapters.Add(dataAdapter, adp);
