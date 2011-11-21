@@ -223,7 +223,13 @@
                     },
                     "group": "Market",
                     "throttleScope": "data",
-                    "parameters": []
+                    "parameters": [
+            {
+                "$ref": "ListMarketInformationRequestDTO",
+                "name": "listMarketInformationRequestDTO",
+                "description": "The market information request"
+            }                    
+                    ]
                 },
                 "SaveMarketInformation": {
                     "description": "Save Market Information for the specified list of markets.",

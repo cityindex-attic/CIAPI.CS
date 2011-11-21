@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using Common.Logging;
@@ -16,14 +17,43 @@ namespace StreamingClient
         private readonly string _groupOrItemName;
         private readonly int _phase;
 
-        public TableListener(string groupOrItemName,int phase)
+        public TableListener(string groupOrItemName, int phase)
         {
             _phase = phase;
             _groupOrItemName = groupOrItemName;
         }
 
+        /// <summary>
+        /// It seems some streams have a 'spin-up' process that can return an all null update
+        /// until the data starts streaming. We were not catching this and null updates were
+        /// sometimes throwing exceptions that were logged and then swallowed by LS. I think
+        /// a better way is to determine if the update is emtpy (null) and simply not fire if so.
+        /// 
+        /// Follows is a very simple check
+        /// </summary>
+        /// <param name="update"></param>
+        /// <returns></returns>
+        private static bool IsUpdateNull(IUpdateInfo update)
+        {
+            for (int i = 1; i < update.NumFields + 1; i++)
+            {
+                object value = update.IsValueChanged(i) ? update.GetNewValue(i) : update.GetOldValue(i);
+                if (value != null)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
         void IHandyTableListener.OnUpdate(int itemPos, string itemName, IUpdateInfo update)
         {
+            // if all null values simply return.
+            if (IsUpdateNull(update))
+            {
+
+                return;
+            }
+
             try
             {
                 if (MessageReceived == null) return;

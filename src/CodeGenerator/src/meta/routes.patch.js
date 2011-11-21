@@ -57,6 +57,7 @@ exports.routesPatch = {
     "ListMarketInformationSearch": {
         "section": "Market"
     },
+ 
     "ListNewsHeadlines": {
         "section": "News"
     },

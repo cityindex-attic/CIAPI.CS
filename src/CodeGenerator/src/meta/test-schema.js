@@ -1,4 +1,4 @@
-﻿
+﻿var exports = exports || {};
 exports.schema =
 {
     "namespace": " CIAPI.DTO",

@@ -16,10 +16,7 @@ namespace CIAPI.IntegrationTests.Streaming
 
  
 
-        [
-        Test
-            //,Ignore("this test is best run interactively when market is responsive. after hours there is no pricing so test will fail")
-        ]
+        [Test]
         public void CanConsumePriceStream()
         {
             
@@ -28,12 +25,11 @@ namespace CIAPI.IntegrationTests.Streaming
 
             var streamingClient = BuildStreamingClient();
 
-            //streamingClient.Connect();
 
-
-
+            // odd - 80905 returns null values for the first update and then subsequently returns values - indicative of a spin-up process?
+            // 71442
             var priceListener = streamingClient.BuildPricesListener(71442);
-            //priceListener.Start();
+           
 
             PriceDTO actual = null;
 
@@ -62,11 +58,10 @@ namespace CIAPI.IntegrationTests.Streaming
 
             Assert.IsTrue(gotPriceInTime, "A price update wasn't received in time");
             Assert.IsNotNull(actual);
-            Assert.Greater(actual.TickDate, DateTime.UtcNow.AddSeconds(-10), "We're expecting a recent price");
+            // i think the demo price stream may be delayed?
+            Assert.Greater(actual.TickDate, DateTime.UtcNow.AddMinutes(-10), "We're expecting a recent price");
 
-            //// we are going to build up a new client in other tests and the server is going to get confused by the phase
-            //// and not send updates to the new listener
-            //new AutoResetEvent(false).WaitOne(20000);
+          
 
         }
 
@@ -93,7 +88,7 @@ namespace CIAPI.IntegrationTests.Streaming
         public void CanSubscribeToMultiplePriceStreamsAtOnce()
         {
             var streamingClient = BuildStreamingClient();
-            //streamingClient.Connect();
+            
             var priceListener = streamingClient.BuildPricesListener(new[]{
                                                                          71442,
                                                                          71443
@@ -105,7 +100,7 @@ namespace CIAPI.IntegrationTests.Streaming
 
             try
             {
-                //priceListener.Start();
+                
 
                 Thread.Sleep(TimeSpan.FromSeconds(15));
 
@@ -127,9 +122,7 @@ namespace CIAPI.IntegrationTests.Streaming
             {
                 streamingClient.TearDownListener(priceListener);
                 streamingClient.Dispose();
-                //// we are going to build up a new client in other tests and the server is going to get confused by the phase
-                //// and not send updates to the new listener
-                //new AutoResetEvent(false).WaitOne(20000);
+ 
             }
         }
 

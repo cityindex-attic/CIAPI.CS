@@ -17,8 +17,8 @@ namespace CIAPI.IntegrationTests.Rpc
 
             var rpcClient = BuildRpcClient();
 
-
-
+            
+            
             var response = rpcClient.Market.ListMarketInformation(new ListMarketInformationRequestDTO()
                                                                       {
 

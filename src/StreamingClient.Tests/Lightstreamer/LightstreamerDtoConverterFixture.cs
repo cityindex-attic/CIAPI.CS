@@ -15,6 +15,168 @@ namespace StreamingClient.Tests.Lightstreamer
             _testDtoConverter = new LightstreamerDtoConverter<TestDto>();
         }
 
+        [Test] public void CanConvertNullableJsonValues()
+        {
+
+
+            Assert.IsNull(LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(DateTime?), "DateTime?", ""));
+            Assert.IsNull(LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(DateTime?), "DateTime?", null));
+
+            Assert.IsNull(LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(Boolean?), "Boolean?", ""));
+            Assert.IsNull(LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(Boolean?), "Boolean?", null));
+
+            Assert.IsNull( LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(Byte?), "Byte", ""));
+            Assert.IsNull( LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(Byte?), "Byte", null));
+
+            Assert.IsNull(LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(Char?), "Char?", ""));
+            Assert.IsNull(LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(Char?), "Char?", null));
+
+            Assert.IsNull( LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(Decimal?), "Decimal?", ""));
+            Assert.IsNull( LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(Decimal?), "Decimal?", null));
+
+            Assert.IsNull( LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(Double?), "Double?", ""));
+            Assert.IsNull( LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(Double?), "Double?", null));
+
+            Assert.IsNull( LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(Int16?), "Int16?", ""));
+            Assert.IsNull( LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(Int16?), "Int16?", null));
+
+            Assert.IsNull( LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(Int32?), "Int32?", ""));
+            Assert.IsNull( LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(Int32?), "Int32?", null));
+
+            Assert.IsNull( LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(Int64?), "Int64?", ""));
+            Assert.IsNull( LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(Int64?), "Int64?", null));
+
+            Assert.IsNull( LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(SByte?), "SByte?", ""));
+            Assert.IsNull( LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(SByte?), "SByte?", null));
+
+            Assert.IsNull( LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(Single?), "Single?", ""));
+            Assert.IsNull( LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(Single?), "Single?", null));
+
+            Assert.IsNull( LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(UInt16?), "UInt16?", ""));
+            Assert.IsNull( LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(UInt16?), "UInt16?", null));
+
+            Assert.IsNull( LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(UInt32?), "UInt32?", ""));
+            Assert.IsNull( LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(UInt32?), "UInt32?", null));
+
+            Assert.IsNull( LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(UInt64?), "UInt64?", ""));
+            Assert.IsNull( LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(UInt64?), "UInt64?", null));
+
+            Assert.Throws<NotImplementedException>(() => LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(Object), "Object", ""));
+            Assert.Throws<NotImplementedException>(() => LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(DBNull), "DBNull", ""));
+
+
+
+        }
+        [Test]
+        public void CanConvertNullJsonValues()
+        {
+         
+            Assert.AreEqual(string.Empty,LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(string), "string", ""));
+            Assert.IsNull(LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(string), "string", null));
+
+            Assert.AreEqual(DateTime.MinValue,LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(DateTime), "DateTime", ""));
+            Assert.AreEqual(DateTime.MinValue, LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(DateTime), "DateTime", null));
+
+            Assert.AreEqual(false, LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(Boolean), "Boolean", ""));
+            Assert.AreEqual(false,LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(Boolean), "Boolean", null));
+
+            Assert.AreEqual(0, LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(Byte), "Byte", ""));
+            Assert.AreEqual(0, LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(Byte), "Byte", null));
+
+            Assert.AreEqual(default(char), LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(Char), "Char", ""));
+            Assert.AreEqual(default(char), LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(Char), "Char", null));
+
+            Assert.AreEqual(0, LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(Decimal), "Decimal", ""));
+            Assert.AreEqual(0, LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(Decimal), "Decimal", null));
+
+            Assert.AreEqual(0, LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(Double), "Double", ""));
+            Assert.AreEqual(0, LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(Double), "Double", null));
+
+            Assert.AreEqual(0, LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(Int16), "Int16", ""));
+            Assert.AreEqual(0, LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(Int16), "Int16", null));
+
+            Assert.AreEqual(0, LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(Int32), "Int32", ""));
+            Assert.AreEqual(0, LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(Int32), "Int32", null));
+
+            Assert.AreEqual(0, LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(Int64), "Int64", ""));
+            Assert.AreEqual(0, LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(Int64), "Int64", null));
+
+            Assert.AreEqual(0, LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(SByte), "SByte", ""));
+            Assert.AreEqual(0, LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(SByte), "SByte", null));
+
+            Assert.AreEqual(0, LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(Single), "Single", ""));
+            Assert.AreEqual(0, LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(Single), "Single", null));
+
+            Assert.AreEqual(0, LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(UInt16), "UInt16", ""));
+            Assert.AreEqual(0, LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(UInt16), "UInt16", null));
+
+            Assert.AreEqual(0, LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(UInt32), "UInt32", ""));
+            Assert.AreEqual(0, LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(UInt32), "UInt32", null));
+
+            Assert.AreEqual(0, LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(UInt64), "UInt64", ""));
+            Assert.AreEqual(0,LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(UInt64), "UInt64", null));
+
+            Assert.Throws<NotImplementedException>(() => LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(Object), "Object", ""));
+            Assert.Throws<NotImplementedException>(() => LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(DBNull), "DBNull", ""));
+
+            
+            
+        }
+        [Test]
+        public void CanConvertJsonValues()
+        {
+
+            Assert.AreEqual(DateTime.Parse("2011-11-21 07:28:06.000"), LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(DateTime), "DateTime", "/Date(1321860486000)/"));
+
+
+            Assert.AreEqual("FOO", LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(string), "string", "FOO"));
+            
+            Assert.AreEqual(false, LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(Boolean), "Boolean", "false"));
+            Assert.AreEqual(false, LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(Boolean), "Boolean", "False"));
+
+            Assert.AreEqual(1, LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(Byte), "Byte", "1"));
+            
+
+            Assert.AreEqual('1', LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(Char), "Char", "1"));
+            
+
+            Assert.AreEqual(1, LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(Decimal), "Decimal", "1"));
+            
+
+            Assert.AreEqual(1, LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(Double), "Double", "1"));
+            
+
+            Assert.AreEqual(1, LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(Int16), "Int16", "1"));
+            
+
+            Assert.AreEqual(1, LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(Int32), "Int32", "1"));
+            
+
+            Assert.AreEqual(1, LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(Int64), "Int64", "1"));
+            
+
+            Assert.AreEqual(1, LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(SByte), "SByte", "1"));
+            
+
+            Assert.AreEqual(1, LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(Single), "Single", "1"));
+            
+
+            Assert.AreEqual(1, LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(UInt16), "UInt16", "1"));
+            
+
+            Assert.AreEqual(1, LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(UInt32), "UInt32", "1"));
+            
+
+            Assert.AreEqual(1, LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(UInt64), "UInt64", "1"));
+            
+
+            Assert.Throws<NotImplementedException>(() => LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(Object), "Object", ""));
+            Assert.Throws<NotImplementedException>(() => LightstreamerDtoConverter<TestDto>.ConvertPropertyValue(typeof(DBNull), "DBNull", ""));
+
+
+
+        }
+
         [Test]
         public void CanReturnSpaceSeparatedListOfFields()
         {

@@ -51,6 +51,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="dto-generator.htm" />
     <Content Include="node-0.4.7-cygwin\bin\cygcrypto-0.9.8.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -96,6 +97,7 @@
     <Content Include="node-0.4.7-cygwin\bin\tar.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="src\dto-generator.js" />
     <Content Include="src\generate-routes.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -132,6 +134,7 @@
     <Content Include="src\generate.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="src\meta\test-schema.js" />
     <Content Include="TestHarness.htm" />
     <Content Include="src\tools\fauxconsole.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

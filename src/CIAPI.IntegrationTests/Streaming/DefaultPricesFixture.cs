@@ -27,6 +27,7 @@ namespace CIAPI.IntegrationTests.Streaming
             priceListener.MessageReceived += (s, e) =>
             {
                 var newPrice = e.Data;
+                Console.WriteLine(e.Data.Price);
                 if (tableOfPrices.ContainsKey(newPrice.MarketId))
                 {
                     tableOfPrices[newPrice.MarketId] = newPrice;
@@ -37,7 +38,7 @@ namespace CIAPI.IntegrationTests.Streaming
                 }
             };
 
-            Thread.Sleep(5000); //Wait for some prices to come in
+            Thread.Sleep(15000); //Wait for some prices to come in
 
             streamingClient.TearDownListener(priceListener);
             streamingClient.Dispose();

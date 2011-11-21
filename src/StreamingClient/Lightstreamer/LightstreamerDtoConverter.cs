@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using Lightstreamer.DotNet.Client;
@@ -11,7 +12,8 @@ namespace StreamingClient.Lightstreamer
     {
         public virtual TDto Convert(object data)
         {
-            var updateInfo = (IUpdateInfo) data;
+            var updateInfo = (IUpdateInfo)data;
+
             var dto = new TDto();
             foreach (var property in typeof(TDto).GetProperties())
             {
@@ -58,31 +60,123 @@ namespace StreamingClient.Lightstreamer
                        : updateInfo.GetOldValue(pos);
         }
 
-        public void PopulateProperty(TDto dto, string propertyName, string value)
+
+        /// <summary>
+        /// public for testing - too lazy to show internals
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="underlyingType"></param>
+        /// <returns></returns>
+        public static bool IsTypeNullable(Type type, out Type underlyingType)
         {
-            var propertyInfo = typeof(TDto).GetProperty(propertyName);
-            object convertedValue = null;
-            switch (propertyInfo.PropertyType.FullName)
+            // TODO: a static dictionary could act as a cache and improve performance
+            underlyingType = type;
+            Type uType = Nullable.GetUnderlyingType(type);
+            if (uType != null)
             {
-                case "System.String":
-                    convertedValue = value;
-                    break;
-                case "System.Int32":
-                    convertedValue =  System.Convert.ToInt32(value);
-                    break;
-                case "System.Decimal":
-                    convertedValue = System.Convert.ToDecimal(value);
-                    break;
-                case "System.DateTime":
-                    convertedValue = JsonConvert.DeserializeObject<DateTimeOffset>("\"" + value + "\"").DateTime;
-                    break;
-                default:
-                    throw new NotImplementedException(string.Format("Cannot populate fields of type {0} such as {1} on type {2}",
-                                                                propertyInfo.PropertyType.FullName, propertyName, typeof(TDto).FullName));
+                underlyingType = uType;
+                return true; 
+            }
+            return false; 
+        }
+
+
+        /// <summary>
+        /// public for testing - too lazy to show internals
+        /// </summary>
+        /// <param name="pType"></param>
+        /// <param name="propertyName"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static object ConvertPropertyValue(Type pType, string propertyName, string value)
+        {
+            object convertedValue;
+            Type propertyType;
+
+            bool isNullable = IsTypeNullable(pType, out propertyType);
+            if (isNullable && string.IsNullOrEmpty(value))
+            {
+                convertedValue = null;
+            }
+            else
+            {
+                switch (Type.GetTypeCode(propertyType))
+                {
+                    case TypeCode.String:
+                        convertedValue = value;
+                        break;
+                    case TypeCode.DateTime:
+
+                        // Why are we converting from DateTimeOffset to DateTime?
+                        // and should we be checking for DateTimeOffset as a property type?
+                        if (string.IsNullOrEmpty(value))
+                        {
+                            // not nullable but json is null - cannot throw because lightstreamer likes to send null updates
+                            // and DTO members are not alwasys nullable
+                            convertedValue = DateTimeOffset.MinValue.DateTime;
+
+                        }
+                        else
+                        {
+
+                            convertedValue = JsonConvert.DeserializeObject<DateTimeOffset>("\"" + value + "\"").DateTime;
+                        }
+                        break;
+
+                    case TypeCode.Boolean:
+                    case TypeCode.Byte:
+                    case TypeCode.Char:
+                    case TypeCode.Decimal:
+                    case TypeCode.Double:
+                    case TypeCode.Int16:
+                    case TypeCode.Int32:
+                    case TypeCode.Int64:
+                    case TypeCode.SByte:
+                    case TypeCode.Single:
+                    case TypeCode.UInt16:
+                    case TypeCode.UInt32:
+                    case TypeCode.UInt64:
+
+                        if (string.IsNullOrEmpty(value))
+                        {
+                            // get a default value
+                            convertedValue = Activator.CreateInstance(propertyType);
+                        }
+                        else
+                        {
+                            convertedValue = System.Convert.ChangeType(value, propertyType, CultureInfo.InvariantCulture);
+                        }
+
+                        break;
+
+                    case TypeCode.Empty:
+                    case TypeCode.Object:
+                    case TypeCode.DBNull:
+                    default:
+                        throw new NotImplementedException(string.Format("Cannot populate fields of type {0} such as {1} on type {2}",
+                                                            propertyType.FullName, propertyName, typeof(TDto).FullName));
+                        break;
+                }
+
 
             }
+            
+            return convertedValue;
+        }
+        public void PopulateProperty(TDto dto, string propertyName, string value)
+        {
 
-            propertyInfo.SetValue(dto, convertedValue, index: null);
+            try
+            {
+                var propertyInfo = typeof(TDto).GetProperty(propertyName);
+                object convertedValue = ConvertPropertyValue(propertyInfo.PropertyType, propertyInfo.Name, value);
+                propertyInfo.SetValue(dto, convertedValue, null);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
         }
     }
 }
