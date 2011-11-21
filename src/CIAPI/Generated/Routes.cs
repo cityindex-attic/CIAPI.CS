@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using CityIndex.JsonClient;
 using CIAPI.DTO;
 namespace CIAPI.Rpc
@@ -305,6 +306,11 @@ namespace CIAPI.Rpc
         /// <param name="maxResults">The maximum number of results to return</param>
         public virtual ListMarketInformationSearchResponseDTO ListMarketInformationSearch(bool searchByMarketCode, bool searchByMarketName, bool spreadProductType, bool cfdProductType, bool binaryProductType, string query, int maxResults)
         {
+            //if (!Regex.IsMatch(query, @"(\w|\d|\s|/){2,}"))
+            //{
+            //    throw new ArgumentException("only alpha-numeric and forward slash are permitted in query, '" + query + "' is invalid.");
+            //}
+
             return _client.Request<ListMarketInformationSearchResponseDTO>("market", "/informationsearch?SearchByMarketCode={searchByMarketCode}&SearchByMarketName={searchByMarketName}&SpreadProductType={spreadProductType}&CfdProductType={cfdProductType}&BinaryProductType={binaryProductType}&Query={query}&MaxResults={maxResults}", "GET",
             new Dictionary<string, object>
             {
@@ -333,6 +339,11 @@ namespace CIAPI.Rpc
         /// <param name="state"></param>
         public virtual void BeginListMarketInformationSearch(bool searchByMarketCode, bool searchByMarketName, bool spreadProductType, bool cfdProductType, bool binaryProductType, string query, int maxResults, ApiAsyncCallback<ListMarketInformationSearchResponseDTO> callback, object state)
         {
+            //// FIXME: hardcoded regex param validation - implement code generation
+            //if (!Regex.IsMatch(query, @"(\w|\d|\s|/){2,}"))
+            //{
+            //    throw new ArgumentException("only alpha-numeric and forward slash are permitted in query, '" + query + "' is invalid.");
+            //}
             _client.BeginRequest(callback, state, "market", "/informationsearch?SearchByMarketCode={searchByMarketCode}&SearchByMarketName={searchByMarketName}&SpreadProductType={spreadProductType}&CfdProductType={cfdProductType}&BinaryProductType={binaryProductType}&Query={query}&MaxResults={maxResults}", "GET",
             new Dictionary<string, object>
             {

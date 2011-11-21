@@ -50,6 +50,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SampleApps\ConsoleSpikes\Example.FetchNews.cs">
+      <Link>Rpc\Example.FetchNews.cs</Link>
+    </Compile>
     <Compile Include="Rpc\AccountInformationFixture.cs" />
     <Compile Include="Rpc\CfdMarketsFixture.cs" />
     <Compile Include="Rpc\FaqIssueResolutionFixture.cs" />

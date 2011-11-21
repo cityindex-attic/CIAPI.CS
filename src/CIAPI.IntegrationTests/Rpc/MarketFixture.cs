@@ -1,4 +1,6 @@
-﻿using CIAPI.DTO;
+﻿using System;
+using System.Threading;
+using CIAPI.DTO;
 using CIAPI.IntegrationTests.Streaming;
 using CIAPI.Rpc;
 using NUnit.Framework;
@@ -17,8 +19,8 @@ namespace CIAPI.IntegrationTests.Rpc
 
             var rpcClient = BuildRpcClient();
 
-            
-            
+
+
             var response = rpcClient.Market.ListMarketInformation(new ListMarketInformationRequestDTO()
                                                                       {
 
@@ -30,7 +32,41 @@ namespace CIAPI.IntegrationTests.Rpc
 
             rpcClient.LogOut();
         }
+        [Test]
+        public void ListMarketInformationSearchQueryIsValidated()
+        {
+            var rpcClient = BuildRpcClient();
 
+            rpcClient.Market.ListMarketInformationSearch(false, true, true, false, false, "/", 100);
+            rpcClient.Market.ListMarketInformationSearch(false, true, true, false, false, "\\", 100);
+            rpcClient.Market.ListMarketInformationSearch(false, true, true, false, false, @"\", 100);
+            rpcClient.Market.ListMarketInformationSearch(false, true, true, false, false, @"GBP \ USD", 100);
+            rpcClient.Market.ListMarketInformationSearch(false, true, true, false, false, @"GBP \\ USD", 100);
+
+            var gate = new AutoResetEvent(false);
+
+            rpcClient.Market.BeginListMarketInformationSearch(false, true, true, false, false, @"\", 100, ar =>
+                {
+                    var response = rpcClient.Market.EndListMarketInformationSearch(ar);
+                    gate.Set();
+                }, null);
+
+            if (!gate.WaitOne(10000))
+            {
+                throw new TimeoutException();
+            }
+
+            rpcClient.LogOut();
+        }
+        [Test]
+        public void CanListMarketInformationSearch()
+        {
+            var rpcClient = BuildRpcClient();
+
+            var response = rpcClient.Market.ListMarketInformationSearch(false, true, true, false, false, "GBP/USD", 100);
+            Assert.Greater(response.MarketInformation.Length, 1);
+            rpcClient.LogOut();
+        }
         [Test]
         public void CanGetMarketInformation()
         {
@@ -73,7 +109,7 @@ namespace CIAPI.IntegrationTests.Rpc
             // ApiSaveMarketInformationResponseDTO is devoid of properties, nothing to check as long as the call succeeds
 
 
-            
+
         }
 
     }
