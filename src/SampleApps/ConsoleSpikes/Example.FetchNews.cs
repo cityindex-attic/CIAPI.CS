@@ -60,12 +60,12 @@ namespace ConsoleSpikes
             //Next we create a connection to the streaming api, using the authenticated session
             //You application should only ever have one of these
             var streamingClient = StreamingClientFactory.CreateStreamingClient(STREAMING_URI, USERNAME, ctx.Session);
-            streamingClient.Connect();
+            
 
             //And instantiate a listener for news headlines on the appropriate topic
             //You can have multiple listeners on one connection
             var newsListener = streamingClient.BuildNewsHeadlinesListener("UK");
-            newsListener.Start();
+            
 
             //The MessageReceived event will be triggered every time a new News headline is available,
             //so attach a handler for that event, and wait until something comes through
@@ -79,11 +79,9 @@ namespace ConsoleSpikes
             };
             gate.WaitOne();
 
-            //Clean up
-            //Stop any listeners
-            newsListener.Stop();
             //Shut down the connection
-            streamingClient.Disconnect();
+            streamingClient.Dispose();
+
             //Destroy your session
             ctx.LogOut();
         }
