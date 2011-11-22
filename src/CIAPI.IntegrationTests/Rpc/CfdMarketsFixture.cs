@@ -16,7 +16,7 @@ namespace CIAPI.IntegrationTests.Rpc
 
             AccountInformationResponseDTO accounts = rpcClient.AccountInformation.GetClientAndTradingAccount();
 
-            var response = rpcClient.CFDMarkets.ListCfdMarkets("USD", null, accounts.ClientAccountId, 100);
+            var response = rpcClient.CFDMarkets.ListCfdMarkets("USD", null, accounts.ClientAccountId, 500);
 
             Assert.Greater(response.Markets.Length, 0,"no markets returned");
 

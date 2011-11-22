@@ -101,13 +101,13 @@ namespace CIAPI.Silverlight.TestsMS
 
             var ctx = BuildAuthenticatedClientAndSetupResponse(NewsHeadlines14);
 
-            ctx.News.BeginListNewsHeadlines("UK", 14, ar =>
+            ctx.News.BeginListNewsHeadlinesWithSource("dj", "UK", 14, ar =>
                 {
                     EnqueueCallback(() =>
                                         {
                                             try
                                             {
-                                                ListNewsHeadlinesResponseDTO response = ctx.News.EndListNewsHeadlines(ar);
+                                                ListNewsHeadlinesResponseDTO response = ctx.News.EndListNewsHeadlinesWithSource(ar);
                                                 Assert.AreEqual(14, response.Headlines.Length);
                                             }
                                             finally

@@ -120,7 +120,7 @@ namespace CIAPI.Tests.Rpc
 
             var ctx = BuildAuthenticatedClientAndSetupResponse(NewsHeadlines12);
 
-            ListNewsHeadlinesResponseDTO response = ctx.News.ListNewsHeadlines("UK", 12);
+            ListNewsHeadlinesResponseDTO response = ctx.News.ListNewsHeadlinesWithSource("dj", "UK", 12);
             Assert.AreEqual(12, response.Headlines.Length);
 
         }
@@ -144,11 +144,11 @@ namespace CIAPI.Tests.Rpc
             CIAPI.Rpc.Client ctx = BuildAuthenticatedClientAndSetupResponse(BogusJson);
 
             var gate = new ManualResetEvent(false);
-            ctx.News.BeginListNewsHeadlines("UK", 14, ar =>
+            ctx.News.BeginListNewsHeadlinesWithSource("dj", "UK", 14, ar =>
             {
                 try
                 {
-                    ctx.News.EndListNewsHeadlines(ar);
+                    ctx.News.EndListNewsHeadlinesWithSource(ar);
                     Assert.Fail("expected exception");
                 }
                 catch (Exception ex)
@@ -172,9 +172,9 @@ namespace CIAPI.Tests.Rpc
             CIAPI.Rpc.Client ctx = BuildAuthenticatedClientAndSetupResponse(NewsHeadlines14);
 
             var gate = new ManualResetEvent(false);
-            ctx.News.BeginListNewsHeadlines("UK", 14, ar =>
+            ctx.News.BeginListNewsHeadlinesWithSource("dj", "UK", 14, ar =>
             {
-                ListNewsHeadlinesResponseDTO response = ctx.News.EndListNewsHeadlines(ar);
+                ListNewsHeadlinesResponseDTO response = ctx.News.EndListNewsHeadlinesWithSource(ar);
                 Assert.AreEqual(14, response.Headlines.Length);
                 gate.Set();
             }, null);
@@ -202,11 +202,11 @@ namespace CIAPI.Tests.Rpc
 
             Exception exception = null;
 
-            ctx.News.BeginListNewsHeadlines("UK", 14, ar =>
+            ctx.News.BeginListNewsHeadlinesWithSource("dj", "UK", 14, ar =>
             {
                 try
                 {
-                    var response = ctx.News.EndListNewsHeadlines(ar);
+                    var response = ctx.News.EndListNewsHeadlinesWithSource(ar);
                 }
                 catch (Exception ex)
                 {

@@ -31,17 +31,17 @@ namespace CIAPI.IntegrationTests.Rpc
         [Test]
         public void CanTrade()
         {
-    
-    //MarketId: 80905
-    //Name: "GBP/USD (per 0.0001) Rolling Spread"
 
-    
-    //MarketId: 400516274
-    //Name: "GBP/USD (per 0.0001) Dec 11 Spread"
+            //MarketId: 80905
+            //Name: "GBP/USD (per 0.0001) Rolling Spread"
+
+
+            //MarketId: 400516274
+            //Name: "GBP/USD (per 0.0001) Dec 11 Spread"
 
             var rpcClient = BuildRpcClient();
 
-            
+
 
             AccountInformationResponseDTO accounts = rpcClient.AccountInformation.GetClientAndTradingAccount();
 
@@ -142,7 +142,7 @@ namespace CIAPI.IntegrationTests.Rpc
             int maxResults = 100;
             int tradingAccountId = accounts.CFDAccount.TradingAccountId;
             var response = rpcClient.TradesAndOrders.ListTradeHistory(tradingAccountId, maxResults);
-            
+
 
             tradingAccountId = accounts.SpreadBettingAccount.TradingAccountId;
             response = rpcClient.TradesAndOrders.ListTradeHistory(tradingAccountId, maxResults);
@@ -213,7 +213,7 @@ namespace CIAPI.IntegrationTests.Rpc
             {
                 listener = streamingClient.BuildPricesListener(marketId);
                 var gate = new AutoResetEvent(false);
-                
+
                 listener.MessageReceived += (o, s) =>
                                         {
                                             marketInfo = s.Data;
@@ -250,11 +250,50 @@ namespace CIAPI.IntegrationTests.Rpc
         {
             var rpcClient = BuildRpcClient();
 
+
+
             AccountInformationResponseDTO accounts = rpcClient.AccountInformation.GetClientAndTradingAccount();
+
+            PriceDTO marketInfo = GetMarketInfo(80905);
+
+            NewTradeOrderRequestDTO trade = new NewTradeOrderRequestDTO()
+            {
+                AuditId = marketInfo.AuditId,
+                AutoRollover = false,
+                BidPrice = marketInfo.Bid,
+                Close = null,
+                Currency = null,
+                Direction = "buy",
+                IfDone = null,
+                MarketId = marketInfo.MarketId,
+                OfferPrice = marketInfo.Offer,
+                Quantity = 1,
+                QuoteId = null,
+                TradingAccountId = accounts.SpreadBettingAccount.TradingAccountId
+            };
+            var order = rpcClient.TradesAndOrders.Trade(trade);
+            rpcClient.MagicNumberResolver.ResolveMagicNumbers(order);
+
+            Assert.AreEqual(order.Status_Resolved, "Accepted");
             UpdateTradeOrderRequestDTO update = new UpdateTradeOrderRequestDTO()
-                                                    {
-                                                        
-                                                    };
+                {
+                    OrderId = order.OrderId,
+                    IfDone = new[] 
+                        { 
+                            new ApiIfDoneDTO 
+                                { 
+                                    Stop = new ApiStopLimitOrderDTO
+                                        {
+                                            TriggerPrice = marketInfo.Offer+10,
+                                            Direction = "sell",
+                                            IfDone = null,
+                                            MarketId = marketInfo.MarketId,
+                                            Quantity = 1,
+                                            TradingAccountId = accounts.SpreadBettingAccount.TradingAccountId    
+                                        }
+                                }
+                        }
+                };
             var response = rpcClient.TradesAndOrders.UpdateTrade(update);
         }
     }

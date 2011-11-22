@@ -18,7 +18,7 @@ namespace ConsoleSpikes
             var ctx = new CIAPI.Rpc.Client(RPC_URI);
             ctx.LogIn(USERNAME, PASSWORD);
 
-            ListNewsHeadlinesResponseDTO news = ctx.News.ListNewsHeadlines("UK", 10);
+            ListNewsHeadlinesResponseDTO news = ctx.News.ListNewsHeadlinesWithSource("dj", "UK", 10);
             
             //do something with the news
 
@@ -33,10 +33,10 @@ namespace ConsoleSpikes
             {
                 ctx.EndLogIn(a);
 
-                ctx.News.BeginListNewsHeadlines("UK", 10, newsResult =>
+                ctx.News.BeginListNewsHeadlinesWithSource("dj", "UK", 10, newsResult =>
                 {
 
-                    ListNewsHeadlinesResponseDTO news = ctx.News.EndListNewsHeadlines(newsResult);
+                    ListNewsHeadlinesResponseDTO news = ctx.News.EndListNewsHeadlinesWithSource(newsResult);
 
                     //do something with the news
 

@@ -17,7 +17,7 @@ namespace CIAPI.IntegrationTests.Rpc
 
 
             // get some headlines
-            var headlines = rpcClient.News.ListNewsHeadlines("UK", 100);
+            var headlines = rpcClient.News.ListNewsHeadlinesWithSource("dj", "UK", 100);
 
             // get a story id from one of the headlines
             var storyId = headlines.Headlines[0].StoryId;

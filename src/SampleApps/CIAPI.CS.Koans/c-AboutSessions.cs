@@ -44,7 +44,7 @@ namespace CIAPI.CS.Koans
         {
             //The rpcClient stores your current session details, and uses it to authenticate
             //every request.
-            var headlines = _rpcClient.News.ListNewsHeadlines("UK", 10);
+            var headlines = _rpcClient.News.ListNewsHeadlinesWithSource("dj", "UK", 10);
             KoanAssert.That(headlines.Headlines.Length > 0, "you should have a set of headlines");
 
             //When your sessionId expires
@@ -53,7 +53,7 @@ namespace CIAPI.CS.Koans
             //Then future requests will fail.
             try
             {
-                var headlines2 = _rpcClient.News.ListNewsHeadlines("AUS", 10);
+                var headlines2 = _rpcClient.News.ListNewsHeadlinesWithSource("dj", "AUS", 10);
                 KoanAssert.That(false, "the previous line should have thrown an (401) Unauthorized exception");
             }
             catch (ApiException e)
@@ -77,7 +77,7 @@ namespace CIAPI.CS.Koans
             try
             {
                 _rpcClient.Session = oldSessionId;
-                var headlines2 = _rpcClient.News.ListNewsHeadlines("AUS", 4);
+                var headlines2 = _rpcClient.News.ListNewsHeadlinesWithSource("dj", "AUS", 4);
                 KoanAssert.Fail("the previous line should have thrown an (401) Unauthorized exception");
             }
             catch (ApiException e)

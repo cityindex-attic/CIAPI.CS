@@ -28,8 +28,8 @@ namespace CIAPI.CS.Koans
         public void YouCanFetchTheLatestNewsHeadlines()
         {
             const int numberOfHeadlines = 25;
-            _ukHeadlines = _rpcClient.News.ListNewsHeadlines(category: "UK", maxResults: numberOfHeadlines);
-            _ausHeadlines = _rpcClient.News.ListNewsHeadlines(category: "AUS", maxResults: numberOfHeadlines);
+            _ukHeadlines = _rpcClient.News.ListNewsHeadlinesWithSource("dj", category: "UK", maxResults: numberOfHeadlines);
+            _ausHeadlines = _rpcClient.News.ListNewsHeadlinesWithSource("dj", category: "AUS", maxResults: numberOfHeadlines);
 
             KoanAssert.That(_ukHeadlines.Headlines.Length, Is.EqualTo(25), "You should get the number of headlines requested");
 
@@ -57,7 +57,7 @@ namespace CIAPI.CS.Koans
             try
             {
                 const int maxHeadlines = 500;
-                _ukHeadlines = _rpcClient.News.ListNewsHeadlines(category: "UK", maxResults: maxHeadlines + 1);
+                _ukHeadlines = _rpcClient.News.ListNewsHeadlinesWithSource("dj", category: "UK", maxResults: maxHeadlines + 1);
             }
             catch (Exception ex)
             {
@@ -117,13 +117,14 @@ namespace CIAPI.CS.Koans
             var gate = new ManualResetEvent(false);
             ListNewsHeadlinesResponseDTO listNewsHeadlinesResponseDto = null;
 
-            _rpcClient.News.BeginListNewsHeadlines(
+            _rpcClient.News.BeginListNewsHeadlinesWithSource(
+                source:"dj",
                 category: "UK", maxResults: maxHeadlines + 1,
                 callback: (response) =>
                 {
                     try
                     {
-                        listNewsHeadlinesResponseDto = _rpcClient.News.EndListNewsHeadlines(response);
+                        listNewsHeadlinesResponseDto = _rpcClient.News.EndListNewsHeadlinesWithSource(response);
                     }
                     catch (ApiException ex)
                     {

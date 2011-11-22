@@ -507,6 +507,7 @@ namespace CIAPI.Rpc
         /// </summary>
         /// <param name="category">Filter headlines by category</param>
         /// <param name="maxResults">Restrict the number of headlines returned</param>
+        [Obsolete("Please use ListNewsHeadlinesWithSource",true)]
         public virtual ListNewsHeadlinesResponseDTO ListNewsHeadlines(string category, int maxResults)
         {
             return _client.Request<ListNewsHeadlinesResponseDTO>("news", "?Category={category}&MaxResults={maxResults}", "GET",
@@ -525,6 +526,7 @@ namespace CIAPI.Rpc
         /// <param name="maxResults">Restrict the number of headlines returned</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
+        [Obsolete("Please use BeginListNewsHeadlinesWithSource", true)]
         public virtual void BeginListNewsHeadlines(string category, int maxResults, ApiAsyncCallback<ListNewsHeadlinesResponseDTO> callback, object state)
         {
             _client.BeginRequest(callback, state, "news", "?Category={category}&MaxResults={maxResults}", "GET",
@@ -535,6 +537,7 @@ namespace CIAPI.Rpc
             }, TimeSpan.FromMilliseconds(10000), "data");
         }
 
+        [Obsolete("Please use EndListNewsHeadlinesWithSource", true)]
         public ListNewsHeadlinesResponseDTO EndListNewsHeadlines(ApiAsyncResult<ListNewsHeadlinesResponseDTO> asyncResult)
         {
             return _client.EndRequest(asyncResult);

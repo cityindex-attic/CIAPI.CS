@@ -41,11 +41,11 @@ namespace CIAPI.Silverlight.TestsMS
                         {
 
                             client.EndLogIn(ar);
-                            client.News.BeginListNewsHeadlines("UK", 10, ar2 =>
+                            client.News.BeginListNewsHeadlinesWithSource("dj","UK", 10, ar2 =>
                                 {
                                     EnqueueCallback(() =>
                                                         {
-                                                            var headlines = client.News.EndListNewsHeadlines(ar2);
+                                                            var headlines = client.News.EndListNewsHeadlinesWithSource(ar2);
                                                             Assert.IsTrue(headlines.Headlines.Length > 0);
                                                             client.BeginLogOut(ar3 =>
                                                                                    {
