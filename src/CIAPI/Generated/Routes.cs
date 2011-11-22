@@ -449,6 +449,54 @@ namespace CIAPI.Rpc
             private Client _client;
             public _News(Client client){ this._client = client;}
 
+
+            // ***********************************
+            // ListNewsHeadlinesWithSource
+            // ***********************************
+
+
+            /// <summary>
+            /// Get a list of current news headlines
+            /// </summary>
+            /// <param name="source">The news feed source provider. Valid options are: dj|mni|ci</param>
+            /// <param name="category">Filter headlines by category. Valid categories depend on the source used: for dj: uk|aus, for ci: SEMINARSCHINA, for mni: ALL</param>
+            /// <param name="maxResults">Restrict the number of headlines returned</param>
+            public virtual ListNewsHeadlinesResponseDTO ListNewsHeadlinesWithSource(string source,string category, int maxResults)
+            {
+                return _client.Request<ListNewsHeadlinesResponseDTO>("news", "/{source}/{category}?MaxResults={maxResults}", "GET",
+                new Dictionary<string, object>
+            {
+                { "source", source}, 
+                { "category", category}, 
+                { "maxResults", maxResults}
+            }, TimeSpan.FromMilliseconds(10000), "data");
+            }
+
+
+            /// <summary>
+            /// Get a list of current news headlines
+            /// </summary>
+            /// <param name="source">The news feed source provider. Valid options are: dj|mni|ci</param>
+            /// <param name="category">Filter headlines by category. Valid categories depend on the source used: for dj: uk|aus, for ci: SEMINARSCHINA, for mni: ALL</param>
+            /// <param name="maxResults">Restrict the number of headlines returned</param>
+            /// <param name="callback"></param>
+            /// <param name="state"></param>
+            public virtual void BeginListNewsHeadlinesWithSource(string source, string category, int maxResults, ApiAsyncCallback<ListNewsHeadlinesResponseDTO> callback, object state)
+            {
+                _client.BeginRequest(callback, state, "news", "/{source}/{category}?MaxResults={maxResults}", "GET",
+                new Dictionary<string, object>
+            {
+                { "source", source}, 
+                { "category", category}, 
+                { "maxResults", maxResults}
+            }, TimeSpan.FromMilliseconds(10000), "data");
+            }
+
+            public ListNewsHeadlinesResponseDTO EndListNewsHeadlinesWithSource(ApiAsyncResult<ListNewsHeadlinesResponseDTO> asyncResult)
+            {
+                return _client.EndRequest(asyncResult);
+            }
+
         // ***********************************
         // ListNewsHeadlines
         // ***********************************
@@ -461,7 +509,7 @@ namespace CIAPI.Rpc
         /// <param name="maxResults">Restrict the number of headlines returned</param>
         public virtual ListNewsHeadlinesResponseDTO ListNewsHeadlines(string category, int maxResults)
         {
-            return _client.Request<ListNewsHeadlinesResponseDTO>("news", "?Category={category}&MaxResults={maxResults}&Source={source}", "GET",
+            return _client.Request<ListNewsHeadlinesResponseDTO>("news", "?Category={category}&MaxResults={maxResults}", "GET",
             new Dictionary<string, object>
             {
                 { "category", category}, 
@@ -479,7 +527,7 @@ namespace CIAPI.Rpc
         /// <param name="state"></param>
         public virtual void BeginListNewsHeadlines(string category, int maxResults, ApiAsyncCallback<ListNewsHeadlinesResponseDTO> callback, object state)
         {
-            _client.BeginRequest(callback, state, "news", "?Category={category}&MaxResults={maxResults}&Source={source}", "GET",
+            _client.BeginRequest(callback, state, "news", "?Category={category}&MaxResults={maxResults}", "GET",
             new Dictionary<string, object>
             {
                 { "category", category}, 
