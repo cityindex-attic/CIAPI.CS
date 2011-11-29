@@ -1,24 +1,24 @@
 ﻿console.log("generating DTO....");
 
-var schema = require("./meta/schema.js").schema;
-var schemaPatch = require("./meta/schema.patch.js").schemaPatch;
+var schema = require("./meta/schema.json").schema;
+
 
 
 var JSchemaProvider = require("./JSchemaProvider.js").JSchemaProvider;
 var CSharpVisitor = require("./JSchemaProvider.CSharpVisitor.js").CSharpVisitor;
 
-// patch in additional members to DTO
-for (patchTypeName in schemaPatch.properties) {
-    if (schemaPatch.properties.hasOwnProperty(patchTypeName)) {
-        var patchType = schemaPatch.properties[patchTypeName];
-        var targetType = schema.properties[patchTypeName];
-        for (patchPropertyName in patchType.properties) {
-            if (patchType.properties.hasOwnProperty(patchPropertyName)) {
-                targetType.properties[patchPropertyName] = patchType.properties[patchPropertyName];
-            }
-        }
-    }
-}
+//// patch in additional members to DTO
+//for (patchTypeName in schemaPatch.properties) {
+//    if (schemaPatch.properties.hasOwnProperty(patchTypeName)) {
+//        var patchType = schemaPatch.properties[patchTypeName];
+//        var targetType = schema.properties[patchTypeName];
+//        for (patchPropertyName in patchType.properties) {
+//            if (patchType.properties.hasOwnProperty(patchPropertyName)) {
+//                targetType.properties[patchPropertyName] = patchType.properties[patchPropertyName];
+//            }
+//        }
+//    }
+//}
 
 
 

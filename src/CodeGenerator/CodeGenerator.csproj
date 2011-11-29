@@ -119,22 +119,9 @@
     <Content Include="src\JSchemaProvider.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="src\meta\routes.patch.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="src\meta\schema.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="src\meta\schema.patch.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="src\meta\smd.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="src\generate.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="src\meta\test-schema.js" />
     <Content Include="TestHarness.htm" />
     <Content Include="src\tools\fauxconsole.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -175,6 +162,8 @@
     <None Include="node-0.4.7-cygwin\bin\sudo.cmd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="src\meta\schema.json" />
+    <None Include="src\meta\smd.json" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
