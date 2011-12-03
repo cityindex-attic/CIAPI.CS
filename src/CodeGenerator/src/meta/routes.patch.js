@@ -13,8 +13,25 @@ exports.routesPatch = {
     "GetClientApplicationMessageTranslation": {
         "section": "Messaging"
     },
-
-    
+    "SaveAccountInformation": {
+        "section": "AccountInformation"
+    },
+    "SearchWithTags": {
+        "section": "Market"
+    },
+    "TagLookup": {
+        "section": "Market"
+    },
+    "ChangePassword": {
+        "section": "AccountInformation"
+    },
+    "GetChartingEnabled": {
+        "section": "AccountInformation"
+    },
+    "ListNewsHeadlinesWithSource":
+    {
+        "section": "News"
+    },
 "ListMarketInformation": {
     "section": "Market"
 },

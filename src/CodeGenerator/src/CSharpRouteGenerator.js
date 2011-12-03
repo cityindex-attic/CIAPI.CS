@@ -221,12 +221,12 @@
             self.writeLine(subClassProperties);
             
             // to support smd methods that do not have a 'section' in meta or patch
-            // self.writeLine("private Client _client;");
+             self.writeLine("private Client _client;");
 
             self.writeLine("        public Client(Uri uri)");
             self.writeLine("            : base(uri, new RequestController(TimeSpan.FromSeconds(0), 2, new RequestFactory(), new ErrorResponseDTOJsonExceptionFactory(), new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10, \"data\"), new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10, \"trading\"),new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10, \"default\")) )");
             self.writeLine("        {");
-            //self.writeLine("        _client=this;");
+            self.writeLine("        _client=this;");
             self.writeLine(subClassInitializer);
             self.writeLine("        }");
             self.writeLine("        public Client(Uri uri, IRequestController requestController)");
