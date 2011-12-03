@@ -7,7 +7,7 @@
             "target": "",
             "services": {
                 "LogOn": {
-                    "description": "Create a new session. This is how you \"log on\" to the CIAPI.",
+                    "description": "<p>Create a new session. This is how you \"log on\" to the CIAPI. Post a <a onclick=\"dojo.hash('#type.ApiLogOnRequestDTO'); return false;\" class=\"json-link\" href=\"#\">ApiLogOnRequestDTO</a> to the uri specified below</p>",
                     "target": "session",
                     "uriTemplate": "/",
                     "contentType": "application/json",
@@ -15,16 +15,15 @@
                     "transport": "POST",
                     "envelope": "JSON",
                     "returns": {
-                        "$ref": "#.ApiLogOnResponseDTO"
+                        "$ref": "ApiLogOnResponseDTO"
                     },
                     "group": "Authentication",
-                    "cacheDuration": 0,
                     "throttleScope": "data",
                     "parameters": [
             {
-                "$ref": "#.ApiLogOnRequestDTO",
+                "$ref": "ApiLogOnRequestDTO",
                 "name": "apiLogOnRequest",
-                "description": "The request to create a session (log on)."
+                "description": ""
             }
           ]
                 },
@@ -37,10 +36,9 @@
                     "transport": "POST",
                     "envelope": "JSON",
                     "returns": {
-                        "$ref": "#.ApiLogOffResponseDTO"
+                        "$ref": "ApiLogOffResponseDTO"
                     },
                     "group": "Authentication",
-                    "cacheDuration": 0,
                     "throttleScope": "data",
                     "parameters": [
             {
@@ -59,81 +57,6 @@
                 "format": "guid",
                 "minLength": 36,
                 "maxLength": 36
-            }
-          ]
-                },
-                "ChangePassword": {
-                    "description": "Change a user's password.",
-                    "target": "session",
-                    "uriTemplate": "/changePassword",
-                    "contentType": "application/json",
-                    "responseContentType": "application/json",
-                    "transport": "POST",
-                    "envelope": "JSON",
-                    "returns": {
-                        "$ref": "#.ApiChangePasswordResponseDTO"
-                    },
-                    "group": "Authentication",
-                    "throttleScope": "data",
-                    "parameters": [
-            {
-                "$ref": "#.ApiChangePasswordRequestDTO",
-                "name": "apiChangePasswordRequest",
-                "description": "The change password request details."
-            }
-          ]
-                },
-                "GetPriceTicks": {
-                    "description": "Get historic price ticks for the specified market. Returns price ticks in ascending order up to the current time. The length of time that elapses between each tick is usually different.",
-                    "target": "market",
-                    "uriTemplate": "/{marketId}/tickhistory?priceticks={priceTicks}",
-                    "contentType": "application/json",
-                    "responseContentType": "application/json",
-                    "transport": "GET",
-                    "envelope": "URL",
-                    "returns": {
-                        "$ref": "#.GetPriceTickResponseDTO"
-                    },
-                    "group": "Price History",
-                    "cacheDuration": 0,
-                    "throttleScope": "data",
-                    "parameters": [
-            {
-                "type": "string",
-                "name": "marketId",
-                "description": "The marketId.",
-                "demoValue": "71442"
-            },
-            {
-                "type": "string",
-                "name": "priceTicks",
-                "description": "The total number of price ticks to return.",
-                "demoValue": "10"
-            }
-          ]
-                },
-                "GetNewsDetail": {
-                    "description": "Get the detail of a specific news story",
-                    "target": "news",
-                    "uriTemplate": "/{storyId}?Source={source}",
-                    "contentType": "application/json",
-                    "responseContentType": "application/json",
-                    "transport": "GET",
-                    "envelope": "URL",
-                    "returns": {
-                        "$ref": "GetNewsDetailResponseDTO"
-                    },
-                    "group": "News",
-                    "cacheDuration": 10000,
-                    "throttleScope": "data",
-                    "parameters": [
-            {
-                "type": "string",
-                "name": "storyId",
-                "description": "The news story Id",
-                "demoValue": "12654",
-                "minLength": 1,
-                "maxLength": 9
             }
           ]
                 },
@@ -178,17 +101,168 @@
             }
           ]
                 },
-
-                "ListNewsHeadlinesWithSource": {
-                    "description": "Get a list of current news headlines",
-                    "target": "news",
-                    "uriTemplate": "/{source}/{category}?MaxResults={maxResults}",
+                "GetPriceTicks": {
+                    "description": "Get historic price ticks. Returns price ticks in ascending order up to the current time. The length of time between each tick will be different.",
+                    "target": "market",
+                    "uriTemplate": "/{marketId}/tickhistory?priceticks={priceTicks}",
                     "contentType": "application/json",
                     "responseContentType": "application/json",
                     "transport": "GET",
                     "envelope": "URL",
                     "returns": {
-                        "$ref": "#.ListNewsHeadlinesResponseDTO"
+                        "$ref": "GetPriceTickResponseDTO"
+                    },
+                    "group": "Price History",
+                    "cacheDuration": 10000,
+                    "throttleScope": "data",
+                    "parameters": [
+            {
+                "type": "string",
+                "name": "marketId",
+                "description": "The marketId",
+                "demoValue": "71442"
+            },
+            {
+                "type": "string",
+                "name": "priceTicks",
+                "description": "The total number of price ticks to return",
+                "demoValue": "10"
+            }
+          ]
+                },
+                "GetMarketInformation": {
+                    "description": "<p>Get Market Information for the specified market.</p>",
+                    "target": "market",
+                    "uriTemplate": "/{marketId}/information",
+                    "contentType": "application/json",
+                    "responseContentType": "application/json",
+                    "transport": "GET",
+                    "envelope": "URL",
+                    "returns": {
+                        "$ref": "GetMarketInformationResponseDTO"
+                    },
+                    "group": "Market",
+                    "throttleScope": "data",
+                    "parameters": [
+            {
+                "type": "string",
+                "name": "marketId",
+                "description": "The marketId",
+                "demoValue": "71442"
+            }
+          ]
+                },
+                "ListMarketInformationSearch": {
+                    "description": "<p>Queries for market information.</p>",
+                    "target": "market",
+                    "uriTemplate": "/informationsearch?SearchByMarketCode={searchByMarketCode}&SearchByMarketName={searchByMarketName}&SpreadProductType={spreadProductType}&CfdProductType={cfdProductType}&BinaryProductType={binaryProductType}&Query={query}&MaxResults={maxResults}",
+                    "contentType": "application/json",
+                    "responseContentType": "application/json",
+                    "transport": "GET",
+                    "envelope": "URL",
+                    "returns": {
+                        "$ref": "ListMarketInformationSearchResponseDTO"
+                    },
+                    "group": "Market",
+                    "throttleScope": "data",
+                    "parameters": [
+            {
+                "type": "boolean",
+                "name": "searchByMarketCode",
+                "description": "Should the search be done by market code",
+                "demoValue": true
+            },
+            {
+                "type": "boolean",
+                "name": "searchByMarketName",
+                "description": "Should the search be done by market Name",
+                "demoValue": true
+            },
+            {
+                "type": "boolean",
+                "name": "spreadProductType",
+                "description": "Should the search include spread bet markets",
+                "demoValue": true
+            },
+            {
+                "type": "boolean",
+                "name": "cfdProductType",
+                "description": "Should the search include CFD markets",
+                "demoValue": true
+            },
+            {
+                "type": "boolean",
+                "name": "binaryProductType",
+                "description": "Should the search include binary markets",
+                "demoValue": true
+            },
+            {
+                "type": "string",
+                "name": "query",
+                "description": "The text to search for.  Matches part of market name / code from the start.",
+                "demoValue": "UK 100"
+            },
+            {
+                "type": "integer",
+                "name": "maxResults",
+                "description": "The maximum number of results to return",
+                "demoValue": 50
+            }
+          ]
+                },
+                "ListMarketInformation": {
+                    "description": "<p>Get Market Information for the specified list of markets. Post a <a onclick=\"dojo.hash('#type.ListMarketInformationRequestDTO'); return false;\" class=\"json-link\" href=\"#\">ListMarketInformationRequestDTO</a> to the uri specified below.</p>",
+                    "target": "market",
+                    "uriTemplate": "/market/information",
+                    "contentType": "application/json",
+                    "responseContentType": "application/json",
+                    "transport": "POST",
+                    "envelope": "JSON",
+                    "returns": {
+                        "$ref": "ListMarketInformationResponseDTO"
+                    },
+                    "group": "Market",
+                    "throttleScope": "data",
+                    "parameters": [
+            {
+                "$ref": "ListMarketInformationRequestDTO",
+                "name": "listMarketInformationRequestDTO",
+                "description": "The market information request"
+            }                    
+                    ]
+                },
+                "SaveMarketInformation": {
+                    "description": "Save Market Information for the specified list of markets.",
+                    "target": "market",
+                    "uriTemplate": "/market/information/save",
+                    "contentType": "application/json",
+                    "responseContentType": "application/json",
+                    "transport": "POST",
+                    "envelope": "JSON",
+                    "returns": {
+                        "$ref": "ApiSaveMarketInformationResponseDTO"
+                    },
+                    "group": "Market",
+                    "throttleScope": "data",
+                    "parameters": [
+            {
+                "$ref": "SaveMarketInformationRequestDTO",
+                "name": "listMarketInformationRequestSaveDTO",
+                "description": "The market information request"
+            }
+
+                    ]
+                },
+                "ListNewsHeadlines": {
+                    "description": "Get a list of current news headlines",
+                    "target": "news",
+                    "uriTemplate": "?Category={category}&MaxResults={maxResults}&Source={source}",
+                    "contentType": "application/json",
+                    "responseContentType": "application/json",
+                    "transport": "GET",
+                    "envelope": "URL",
+                    "returns": {
+                        "$ref": "ListNewsHeadlinesResponseDTO"
                     },
                     "group": "News",
                     "cacheDuration": 10000,
@@ -196,14 +270,8 @@
                     "parameters": [
             {
                 "type": "string",
-                "name": "source",
-                "description": "The news feed source provider. Valid options are: dj|mni|ci.",
-                "demoValue": "dj"
-            },
-            {
-                "type": "string",
                 "name": "category",
-                "description": "Filter headlines by category. Valid categories depend on the source used:  for dj: uk|aus, for ci: SEMINARSCHINA, for mni: ALL.",
+                "description": "Filter headlines by category",
                 "demoValue": "UK",
                 "minLength": 2,
                 "maxLength": 3
@@ -211,7 +279,7 @@
             {
                 "type": "integer",
                 "name": "maxResults",
-                "description": "Specify the maximum number of headlines returned",
+                "description": "Restrict the number of headlines returned",
                 "demoValue": 10,
                 "default": 25,
                 "minimum": 1,
@@ -219,8 +287,33 @@
             }
           ]
                 },
+                "GetNewsDetail": {
+                    "description": "Get the detail of a specific news story",
+                    "target": "news",
+                    "uriTemplate": "/{storyId}?Source={source}",
+                    "contentType": "application/json",
+                    "responseContentType": "application/json",
+                    "transport": "GET",
+                    "envelope": "URL",
+                    "returns": {
+                        "$ref": "GetNewsDetailResponseDTO"
+                    },
+                    "group": "News",
+                    "cacheDuration": 10000,
+                    "throttleScope": "data",
+                    "parameters": [
+            {
+                "type": "string",
+                "name": "storyId",
+                "description": "The news story Id",
+                "demoValue": "12654",
+                "minLength": 1,
+                "maxLength": 9
+            }
+          ]
+                },
                 "ListCfdMarkets": {
-                    "description": "Returns a list of CFD markets filtered by market name and/or market code. Leave the market name and code parameters empty to return all markets available to the User.",
+                    "description": "Returns a list of CFD markets filtered by market name and/or market code",
                     "target": "cfd/markets",
                     "uriTemplate": "?MarketName={searchByMarketName}&MarketCode={searchByMarketCode}&ClientAccountId={clientAccountId}&MaxResults={maxResults}",
                     "contentType": "application/json",
@@ -228,16 +321,15 @@
                     "transport": "GET",
                     "envelope": "URL",
                     "returns": {
-                        "$ref": "#.ListCfdMarketsResponseDTO"
+                        "$ref": "ListCfdMarketsResponseDTO"
                     },
                     "group": "CFD Markets",
-                    "cacheDuration": 0,
                     "throttleScope": "data",
                     "parameters": [
             {
                 "type": "string",
                 "name": "searchByMarketName",
-                "description": "The characters that the CFD market name starts with (Optional).",
+                "description": "The characters that the CFD market name should start with",
                 "demoValue": "voda",
                 "minLength": 1,
                 "maxLength": 120
@@ -245,14 +337,14 @@
             {
                 "type": "string",
                 "name": "searchByMarketCode",
-                "description": "The characters that the market code starts with, normally this is the RIC code for the market (Optional).",
+                "description": "The characters that the market code should start with (normally this is the RIC code for the market)",
                 "minLength": 1,
                 "maxLength": 50
             },
             {
                 "type": "integer",
                 "name": "clientAccountId",
-                "description": "The logged on user's ClientAccountId. This only shows you the markets that the user can trade. (Required).",
+                "description": "The logged on user's ClientAccountId.  (This only shows you markets that you can trade on)",
                 "demoValue": 123456,
                 "minimum": 1,
                 "maximum": 2147483647,
@@ -264,13 +356,13 @@
                 "description": "The maximum number of markets to return.",
                 "demoValue": 20,
                 "minimum": 1,
-                "maximum": 200,
+                "maximum": 500,
                 "default": 20
             }
           ]
                 },
                 "ListSpreadMarkets": {
-                    "description": "Returns a list of Spread Betting markets filtered by market name and/or market code. Leave the market name and code parameters empty to return all markets available to the User.",
+                    "description": "Returns a list of Spread Betting markets filtered by market name and/or market code",
                     "target": "spread/markets",
                     "uriTemplate": "?MarketName={searchByMarketName}&MarketCode={searchByMarketCode}&ClientAccountId={clientAccountId}&MaxResults={maxResults}",
                     "contentType": "application/json",
@@ -278,16 +370,16 @@
                     "transport": "GET",
                     "envelope": "URL",
                     "returns": {
-                        "$ref": "#.ListSpreadMarketsResponseDTO"
+                        "$ref": "ListSpreadMarketsResponseDTO"
                     },
                     "group": "Spread Markets",
-                    "cacheDuration": 0,
+                    "cacheDuration": 10000,
                     "throttleScope": "data",
                     "parameters": [
             {
                 "type": "string",
                 "name": "searchByMarketName",
-                "description": "The characters that the Spread market name starts with (Optional).",
+                "description": "The characters that the Spread market name should start with",
                 "demoValue": "voda",
                 "minLength": 1,
                 "maxLength": 120
@@ -295,7 +387,7 @@
             {
                 "type": "string",
                 "name": "searchByMarketCode",
-                "description": "The characters that the Spread market code starts with, normally this is the RIC code for the market (Optional).",
+                "description": "The characters that the Spread market code should start with (normally this is the RIC code for the market)",
                 "demoValue": "VOD.L",
                 "minLength": 1,
                 "maxLength": 50
@@ -303,7 +395,7 @@
             {
                 "type": "integer",
                 "name": "clientAccountId",
-                "description": "The logged on user's ClientAccountId. (This only shows you markets that you can trade on.)",
+                "description": "The logged on user's ClientAccountId.  (This only shows you markets that you can trade on)",
                 "demoValue": 123456,
                 "minimum": 1,
                 "maximum": 84272157
@@ -320,185 +412,8 @@
             }
           ]
                 },
-                "GetMarketInformation": {
-                    "description": "<p>Get Market Information for the single specified market supplied in the parameter.</p>",
-                    "target": "market",
-                    "uriTemplate": "/{marketId}/information",
-                    "contentType": "application/json",
-                    "responseContentType": "application/json",
-                    "transport": "GET",
-                    "envelope": "URL",
-                    "returns": {
-                        "$ref": "#.GetMarketInformationResponseDTO"
-                    },
-                    "group": "Market",
-                    "cacheDuration": 1000,
-                    "throttleScope": "data",
-                    "parameters": [
-            {
-                "type": "string",
-                "name": "marketId",
-                "description": "The marketId.",
-                "demoValue": "71442"
-            }
-          ]
-                },
-                "ListMarketInformationSearch": {
-                    "description": "<p>Returns market information for the markets that meet the search criteria.</p> The search can be performed by market code and/or market name, and can include CFDs and Spread Bet markets.",
-                    "target": "market",
-                    "uriTemplate": "/market/informationsearch?SearchByMarketCode={searchByMarketCode}&SearchByMarketName={searchByMarketName}&SpreadProductType={spreadProductType}&CfdProductType={cfdProductType}&BinaryProductType={binaryProductType}&Query={query}&MaxResults={maxResults}",
-                    "contentType": "application/json",
-                    "responseContentType": "application/json",
-                    "transport": "GET",
-                    "envelope": "URL",
-                    "returns": {
-                        "$ref": "#.ListMarketInformationSearchResponseDTO"
-                    },
-                    "group": "Market",
-                    "cacheDuration": 0,
-                    "throttleScope": "data",
-                    "parameters": [
-            {
-                "type": "boolean",
-                "name": "searchByMarketCode",
-                "description": "Sets the search to use market code.",
-                "demoValue": true
-            },
-            {
-                "type": "boolean",
-                "name": "searchByMarketName",
-                "description": "Sets the search to use market Name.",
-                "demoValue": true
-            },
-            {
-                "type": "boolean",
-                "name": "spreadProductType",
-                "description": "Sets the search to include spread bet markets.",
-                "demoValue": true
-            },
-            {
-                "type": "boolean",
-                "name": "cfdProductType",
-                "description": "Sets the search to include CFD markets.",
-                "demoValue": true
-            },
-            {
-                "type": "boolean",
-                "name": "binaryProductType",
-                "description": "Sets the search to include binary markets.",
-                "demoValue": true
-            },
-            {
-                "type": "string",
-                "name": "query",
-                "description": "The text to search for. Matches part of market name / code from the start.",
-                "demoValue": "UK 100"
-            },
-            {
-                "type": "integer",
-                "name": "maxResults",
-                "description": "The maximum number of results to return.",
-                "demoValue": 50
-            }
-          ]
-                },
-                "SearchWithTags": {
-                    "description": "Get market information and tags for the markets that meet the search criteria.",
-                    "target": "market",
-                    "uriTemplate": "/market/searchwithtags?Query={query}&TagId={tagId}&MaxResults={maxResults}",
-                    "contentType": "application/json",
-                    "responseContentType": "application/json",
-                    "transport": "GET",
-                    "envelope": "URL",
-                    "returns": {
-                        "$ref": "#.MarketInformationSearchWithTagsResponseDTO"
-                    },
-                    "group": "Market",
-                    "cacheDuration": 0,
-                    "throttleScope": "data",
-                    "parameters": [
-            {
-                "type": "string",
-                "name": "query",
-                "description": "The text to search for. Matches part of market name / code from the start.",
-                "demoValue": "UK 100"
-            },
-            {
-                "type": "integer",
-                "name": "tagId",
-                "description": "The ID for the tag to be searched (optional).",
-                "demoValue": 0
-            },
-            {
-                "type": "integer",
-                "name": "maxResults",
-                "description": "The maximum number of results to return.  Default is 20.",
-                "demoValue": 50
-            }
-          ]
-                },
-                "TagLookup": {
-                    "description": "<p>Gets all of the tags the the requesting user is allowed to see. Tags are returned in a primary / secondary hierarchy.</p>",
-                    "target": "market",
-                    "uriTemplate": "/market/taglookup",
-                    "contentType": "application/json",
-                    "responseContentType": "application/json",
-                    "transport": "GET",
-                    "envelope": "URL",
-                    "returns": {
-                        "$ref": "#.MarketInformationTagLookupResponseDTO"
-                    },
-                    "group": "Market",
-                    "cacheDuration": 0,
-                    "throttleScope": "data",
-                    "parameters": []
-                },
-                "ListMarketInformation": {
-                    "description": "Get Market Information for the specified list of markets.",
-                    "target": "market",
-                    "uriTemplate": "/market/information",
-                    "contentType": "application/json",
-                    "responseContentType": "application/json",
-                    "transport": "POST",
-                    "envelope": "JSON",
-                    "returns": {
-                        "$ref": "#.ListMarketInformationResponseDTO"
-                    },
-                    "group": "Market",
-                    "cacheDuration": 1000,
-                    "throttleScope": "data",
-                    "parameters": [
-            {
-                "$ref": "#.ListMarketInformationRequestDTO",
-                "name": "listMarketInformationRequestDTO",
-                "description": "Get Market Information for the specified list of markets."
-            }
-          ]
-                },
-                "SaveMarketInformation": {
-                    "description": "Save Market Information for the specified list of markets.",
-                    "target": "market",
-                    "uriTemplate": "/market/information/save",
-                    "contentType": "application/json",
-                    "responseContentType": "application/json",
-                    "transport": "POST",
-                    "envelope": "JSON",
-                    "returns": {
-                        "$ref": "#.ApiSaveMarketInformationResponseDTO"
-                    },
-                    "group": "Market",
-                    "cacheDuration": 0,
-                    "throttleScope": "data",
-                    "parameters": [
-            {
-                "$ref": "#.SaveMarketInformationRequestDTO",
-                "name": "listMarketInformationRequestSaveDTO",
-                "description": "Save Market Information for the specified list of markets."
-            }
-          ]
-                },
                 "Order": {
-                    "description": "<p>Place an order on a particular market. <p>Do not set any order id fields when requesting a new order, the platform will generate them.</p>",
+                    "description": "<p>Place an order on a particular market. Post a <a onclick=\"dojo.hash('#type.NewStopLimitOrderRequestDTO'); return false;\" class=\"json-link\" href=\"#\">NewStopLimitOrderRequestDTO</a> to the uri specified below.</p> <p>Do not set any order id fields when requesting a new order, the platform will generate them.</p>",
                     "target": "order",
                     "uriTemplate": "/newstoplimitorder",
                     "contentType": "application/json",
@@ -506,21 +421,20 @@
                     "transport": "POST",
                     "envelope": "JSON",
                     "returns": {
-                        "$ref": "#.ApiTradeOrderResponseDTO"
+                        "$ref": "ApiTradeOrderResponseDTO"
                     },
                     "group": "Trades and Orders",
-                    "cacheDuration": 0,
                     "throttleScope": "trading",
                     "parameters": [
             {
-                "$ref": "#.NewStopLimitOrderRequestDTO",
+                "$ref": "NewStopLimitOrderRequestDTO",
                 "name": "order",
-                "description": "The order request."
+                "description": "The order request"
             }
           ]
                 },
                 "CancelOrder": {
-                    "description": "<p>Cancel an order.",
+                    "description": "<p>Cancel an order. Post a <a onclick=\"dojo.hash('#type.CancelOrderRequestDTO'); return false;\" class=\"json-link\" href=\"#\">CancelOrderRequestDTO</a> to the uri specified below</p>",
                     "target": "order",
                     "uriTemplate": "/cancel",
                     "contentType": "application/json",
@@ -528,20 +442,19 @@
                     "transport": "POST",
                     "envelope": "JSON",
                     "returns": {
-                        "$ref": "#.ApiTradeOrderResponseDTO"
+                        "$ref": "ApiTradeOrderResponseDTO"
                     },
                     "group": "Trades and Orders",
-                    "cacheDuration": 0,
                     "parameters": [
             {
-                "$ref": "#.CancelOrderRequestDTO",
+                "$ref": "CancelOrderRequestDTO",
                 "name": "cancelOrder",
-                "description": "The cancel order request."
+                "description": "The cancel order request"
             }
           ]
                 },
                 "UpdateOrder": {
-                    "description": "<p>Update an order (for adding a stop/limit or attaching an OCO relationship).",
+                    "description": "<p>Update an order (for adding a stop/limit or attaching an OCO relationship). Post an <a onclick=\"dojo.hash('#type.UpdateStopLimitOrderRequestDTO'); return false;\" class=\"json-link\" href=\"#\">UpdateStopLimitOrderRequestDTO</a> to the uri specified below</p>",
                     "target": "order",
                     "uriTemplate": "/updatestoplimitorder",
                     "contentType": "application/json",
@@ -549,31 +462,29 @@
                     "transport": "POST",
                     "envelope": "JSON",
                     "returns": {
-                        "$ref": "#.ApiTradeOrderResponseDTO"
+                        "$ref": "ApiTradeOrderResponseDTO"
                     },
                     "group": "Trades and Orders",
-                    "cacheDuration": 0,
                     "parameters": [
             {
-                "$ref": "#.UpdateStopLimitOrderRequestDTO",
+                "$ref": "UpdateStopLimitOrderRequestDTO",
                 "name": "order",
-                "description": "The update order request."
+                "description": "<p>Update an order (for adding a stop/limit or attaching an OCO relationship).  Post an <a onclick=\"dojo.hash('#type.UpdateStopLimitOrderRequestDTO'); return false;\" class=\"json-link\" href=\"#\">UpdateStopLimitOrderRequestDTO</a> to the uri specified below</p>"
             }
           ]
                 },
                 "ListOpenPositions": {
-                    "description": "<p>Queries for a specified trading account's trades / open positions.</p> <p>This uri is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service GetOpenPosition when you get updates on the order stream to get the updated data in this format.</p>",
+                    "description": "<p>Queries for a specified trading account's trades / open positions.</p> <p>This uri is intended to be used to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call <a onclick=\"dojo.hash('#service.GetOpenPosition'); return false;\" class=\"json-link\" href=\"#\">GetOpenPosition</a> when you get updates on the order stream to get the updated data in this format.</p>",
                     "target": "order",
-                    "uriTemplate": "/order/openpositions?TradingAccountId={tradingAccountId}",
+                    "uriTemplate": "/openpositions?TradingAccountId={tradingAccountId}",
                     "contentType": "application/json",
                     "responseContentType": "application/json",
                     "transport": "GET",
                     "envelope": "URL",
                     "returns": {
-                        "$ref": "#.ListOpenPositionsResponseDTO"
+                        "$ref": "ListOpenPositionsResponseDTO"
                     },
                     "group": "Trades and Orders",
-                    "cacheDuration": 0,
                     "parameters": [
             {
                 "type": "integer",
@@ -583,18 +494,17 @@
           ]
                 },
                 "ListActiveStopLimitOrders": {
-                    "description": "<p>Queries for a specified trading account's active stop / limit orders.</p> <p>This uri is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service GetActiveStopLimitOrder when you get updates on the order stream to get the updated data in this format.</p>",
+                    "description": "<p>Queries for a specified trading account's active stop / limit orders.</p> <p>This uri is intended to be used to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call <a onclick=\"dojo.hash('#service.GetActiveStopLimitOrder'); return false;\" class=\"json-link\" href=\"#\">GetActiveStopLimitOrder</a> when you get updates on the order stream to get the updated data in this format.</p>",
                     "target": "order",
-                    "uriTemplate": "/order/activestoplimitorders?TradingAccountId={tradingAccountId}",
+                    "uriTemplate": "/activestoplimitorders?TradingAccountId={tradingAccountId}",
                     "contentType": "application/json",
                     "responseContentType": "application/json",
                     "transport": "GET",
                     "envelope": "URL",
                     "returns": {
-                        "$ref": "#.ListActiveStopLimitOrderResponseDTO"
+                        "$ref": "ListActiveStopLimitOrderResponseDTO"
                     },
                     "group": "Trades and Orders",
-                    "cacheDuration": 0,
                     "parameters": [
             {
                 "type": "integer",
@@ -604,7 +514,7 @@
           ]
                 },
                 "GetActiveStopLimitOrder": {
-                    "description": "<p>Queries for an active stop limit order with a specified order id. It returns a null value if the order doesn't exist, or is not an active stop limit order.<p> <p>This uri is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call the HTTP service ListActiveStopLimitOrders for the initial data to display in the grid, and call this uri when you get updates on the order stream to get the updated data in this format.</p> <p>For a more comprehensive order response, see the HTTP service GetOrder",
+                    "description": "<p>Queries for a active stop limit order with a specified order id. It will return a null value if the order doesn't exist, or is not an active stop limit order.<p> <p>This uri is intended to be used to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call <a onclick=\"dojo.hash('#service.ListActiveStopLimitOrders'); return false;\" class=\"json-link\" href=\"#\">ListActiveStopLimitOrders</a> for the initial data to display in the grid, and call this uri when you get updates on the order stream to get the updated data in this format.</p> <p>For a more comprehensive order response, see <a onclick=\"dojo.hash('#service.GetOrder'); return false;\" class=\"json-link\" href=\"#\">GetOrder</a><p>",
                     "target": "order",
                     "uriTemplate": "/{orderId}/activestoplimitorder",
                     "contentType": "application/json",
@@ -612,10 +522,9 @@
                     "transport": "GET",
                     "envelope": "URL",
                     "returns": {
-                        "$ref": "#.GetActiveStopLimitOrderResponseDTO"
+                        "$ref": "GetActiveStopLimitOrderResponseDTO"
                     },
                     "group": "Trades and Orders",
-                    "cacheDuration": 0,
                     "parameters": [
             {
                 "type": "string",
@@ -625,7 +534,7 @@
           ]
                 },
                 "GetOpenPosition": {
-                    "description": "<p>Queries for a trade / open position with a specified order id. It returns a null value if the order doesn't exist, or is not a trade / open position.</p> <p>This uri is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call the HTTP service ListOpenPositions for the initial data to display in the grid, and call this uri when you get updates on the order stream to get the updated data in this format.</p> <p>For a more comprehensive order response, see the HTTP service GetOrder",
+                    "description": "<p>Queries for a trade / open position with a specified order id. It will return a null value if the order doesn't exist, or is not a trade / open position.</p> <p>This uri is intended to be used to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call <a onclick=\"dojo.hash('#service.ListOpenPositions'); return false;\" class=\"json-link\" href=\"#\">ListOpenPositions</a> for the initial data to display in the grid, and call this uri when you get updates on the order stream to get the updated data in this format.</p> <p>For a more comprehensive order response, see <a onclick=\"dojo.hash('#service.GetOrder'); return false;\" class=\"json-link\" href=\"#\">GetOrder</a><p>",
                     "target": "order",
                     "uriTemplate": "/{orderId}/openposition",
                     "contentType": "application/json",
@@ -633,10 +542,9 @@
                     "transport": "GET",
                     "envelope": "URL",
                     "returns": {
-                        "$ref": "#.GetOpenPositionResponseDTO"
+                        "$ref": "GetOpenPositionResponseDTO"
                     },
                     "group": "Trades and Orders",
-                    "cacheDuration": 0,
                     "parameters": [
             {
                 "type": "string",
@@ -646,18 +554,17 @@
           ]
                 },
                 "ListTradeHistory": {
-                    "description": "<p>Queries for a specified trading account's trade history. The result set will contain orders with a status of <b>(3 - Open, 9 - Closed)</b>, and includes <b>orders that were a trade / stop / limit order</b>.</p> <p>There's currently no corresponding GetTradeHistory (as with ListOpenPositions).",
+                    "description": "<p>Queries for a specified trading account's trade history. The result set will contain orders with a status of <b>(3 - Open, 9 - Closed)</b>, and includes <b>orders that were a trade / stop / limit order</b>.</p> <p>There's currently no corresponding GetTradeHistory (as with ListOpenPositions).</p>",
                     "target": "order",
-                    "uriTemplate": "/order/tradehistory?TradingAccountId={tradingAccountId}&MaxResults={maxResults}",
+                    "uriTemplate": "/tradehistory?TradingAccountId={tradingAccountId}&MaxResults={maxResults}",
                     "contentType": "application/json",
                     "responseContentType": "application/json",
                     "transport": "GET",
                     "envelope": "URL",
                     "returns": {
-                        "$ref": "#.ListTradeHistoryResponseDTO"
+                        "$ref": "ListTradeHistoryResponseDTO"
                     },
                     "group": "Trades and Orders",
-                    "cacheDuration": 0,
                     "parameters": [
             {
                 "type": "integer",
@@ -667,23 +574,22 @@
             {
                 "type": "integer",
                 "name": "maxResults",
-                "description": "The maximum number of results to return."
+                "description": "The maximum results to return."
             }
           ]
                 },
                 "ListStopLimitOrderHistory": {
-                    "description": "<p>Queries for a specified trading account's stop / limit order history. The result set includes <b>only orders that were originally stop / limit orders</b> that currently have one of the following statuses <b>(3 - Open, 4 - Cancelled, 5 - Rejected, 9 - Closed, 10 - Red Card)</b>. </p> <p>There's currently no corresponding GetStopLimitOrderHistory (as with ListActiveStopLimitOrders).</p>",
+                    "description": "<p>Queries for a specified trading account's stop / limit order history. The result set will include <b>only orders that were originally stop / limit orders</b> that currently have one of the following statuses <b>(3 - Open, 4 - Cancelled, 5 - Rejected, 9 - Closed, 10 - Red Card)</b> </p> <p>There's currently no corresponding GetStopLimitOrderHistory (as with ListActiveStopLimitOrders).</p>",
                     "target": "order",
-                    "uriTemplate": "/order/stoplimitorderhistory?TradingAccountId={tradingAccountId}&MaxResults={maxResults}",
+                    "uriTemplate": "/stoplimitorderhistory?TradingAccountId={tradingAccountId}&MaxResults={maxResults}",
                     "contentType": "application/json",
                     "responseContentType": "application/json",
                     "transport": "GET",
                     "envelope": "URL",
                     "returns": {
-                        "$ref": "#.ListStopLimitOrderHistoryResponseDTO"
+                        "$ref": "ListStopLimitOrderHistoryResponseDTO"
                     },
                     "group": "Trades and Orders",
-                    "cacheDuration": 0,
                     "parameters": [
             {
                 "type": "integer",
@@ -693,12 +599,12 @@
             {
                 "type": "integer",
                 "name": "maxResults",
-                "description": "The maximum number of results to return."
+                "description": "the maximum results to return."
             }
           ]
                 },
                 "GetOrder": {
-                    "description": "<p>Queries for an order by a specific order id.</p> <p>The current implementation only returns active orders (i.e. those with a status of <b>1 - Pending, 2 - Accepted, 3 - Open, 6 - Suspended, 8 - Yellow Card, 11 - Triggered</b>).</p>",
+                    "description": "<p>Queries for an order by a specific order id.</p> <p>The current implementation only returns active orders (i.e. those with a status of <b>1 - Pending, 2 - Accepted, 3 - Open, 6 - Suspended, 8 - Yellow Card, 11 - Triggered)</b>.</p>",
                     "target": "order",
                     "uriTemplate": "/{orderId}",
                     "contentType": "application/json",
@@ -706,10 +612,9 @@
                     "transport": "GET",
                     "envelope": "URL",
                     "returns": {
-                        "$ref": "#.GetOrderResponseDTO"
+                        "$ref": "GetOrderResponseDTO"
                     },
                     "group": "Trades and Orders",
-                    "cacheDuration": 0,
                     "parameters": [
             {
                 "type": "string",
@@ -719,7 +624,7 @@
           ]
                 },
                 "Trade": {
-                    "description": "<p>Place a trade on a particular market.</p> <p>Do not set any order id fields when requesting a new trade, the platform will generate them.</p>",
+                    "description": "<p>Place a trade on a particular market. Post a <a onclick=\"dojo.hash('#type.NewTradeOrderRequestDTO'); return false;\" class=\"json-link\" href=\"#\">NewTradeOrderRequestDTO</a> to the uri specified below.</p> <p>Do not set any order id fields when requesting a new trade, the platform will generate them.</p>",
                     "target": "order",
                     "uriTemplate": "/newtradeorder",
                     "contentType": "application/json",
@@ -727,21 +632,20 @@
                     "transport": "POST",
                     "envelope": "JSON",
                     "returns": {
-                        "$ref": "#.ApiTradeOrderResponseDTO"
+                        "$ref": "ApiTradeOrderResponseDTO"
                     },
                     "group": "Trades and Orders",
-                    "cacheDuration": 0,
                     "throttleScope": "trading",
                     "parameters": [
             {
-                "$ref": "#.NewTradeOrderRequestDTO",
+                "$ref": "NewTradeOrderRequestDTO",
                 "name": "trade",
-                "description": "The trade request."
+                "description": "The trade request"
             }
           ]
                 },
                 "UpdateTrade": {
-                    "description": "Update a trade (for adding a stop/limit etc).",
+                    "description": "Update a trade (for adding a stop/limit etc). Post an <a onclick=\"dojo.hash('#type.UpdateTradeOrderRequestDTO'); return false;\" class=\"json-link\" href=\"#\">UpdateTradeOrderRequestDTO</a> to the uri specified below</p>",
                     "target": "order",
                     "uriTemplate": "/updatetradeorder",
                     "contentType": "application/json",
@@ -749,38 +653,15 @@
                     "transport": "POST",
                     "envelope": "JSON",
                     "returns": {
-                        "$ref": "#.ApiTradeOrderResponseDTO"
+                        "$ref": "ApiTradeOrderResponseDTO"
                     },
                     "group": "Trades and Orders",
-                    "cacheDuration": 0,
                     "throttleScope": "trading",
                     "parameters": [
             {
-                "$ref": "#.UpdateTradeOrderRequestDTO",
+                "$ref": "UpdateTradeOrderRequestDTO",
                 "name": "update",
-                "description": "The update trade request."
-            }
-          ]
-                },
-                "GetChartingEnabled": {
-                    "description": "Checks whether the supplied User Account is allowed to see Charting Data.",
-                    "target": "useraccount",
-                    "uriTemplate": "/UserAccount/{id}/ChartingEnabled",
-                    "contentType": "application/json",
-                    "responseContentType": "application/json",
-                    "transport": "GET",
-                    "envelope": "URL",
-                    "returns": {
-                        "type": "boolean"
-                    },
-                    "group": "AccountInformation",
-                    "cacheDuration": 0,
-                    "throttleScope": "data",
-                    "parameters": [
-            {
-                "type": "string",
-                "name": "id",
-                "description": "The User Account ID to check."
+                "description": "The trade request"
             }
           ]
                 },
@@ -793,33 +674,11 @@
                     "transport": "GET",
                     "envelope": "URL",
                     "returns": {
-                        "$ref": "#.AccountInformationResponseDTO"
+                        "$ref": "AccountInformationResponseDTO"
                     },
                     "group": "AccountInformation",
-                    "cacheDuration": 0,
                     "throttleScope": "data",
                     "parameters": []
-                },
-                "SaveAccountInformation": {
-                    "description": "Saves the users account information.",
-                    "target": "useraccount",
-                    "uriTemplate": "/UserAccount/Save",
-                    "contentType": "application/json",
-                    "responseContentType": "application/json",
-                    "transport": "POST",
-                    "envelope": "JSON",
-                    "returns": {
-                        "$ref": "#.ApiSaveAccountInformationResponseDTO"
-                    },
-                    "group": "AccountInformation",
-                    "throttleScope": "data",
-                    "parameters": [
-            {
-                "$ref": "#.ApiSaveAccountInformationRequestDTO",
-                "name": "saveAccountInformationRequest",
-                "description": "Saves the users account information."
-            }
-          ]
                 },
                 "GetMessage": {
                     "description": "",
@@ -833,7 +692,6 @@
                         "type": "string"
                     },
                     "group": "Messages",
-                    "cacheDuration": 3600000,
                     "parameters": [
             {
                 "type": "string",
@@ -858,10 +716,9 @@
                     "transport": "GET",
                     "envelope": "URL",
                     "returns": {
-                        "$ref": "#.GetMessagePopupResponseDTO"
+                        "$ref": "GetMessagePopupResponseDTO"
                     },
                     "group": "Messages",
-                    "cacheDuration": 0,
                     "parameters": [
             {
                 "type": "string",
@@ -882,7 +739,6 @@
                     "transport": "GET",
                     "envelope": "URL",
                     "group": "Messages",
-                    "cacheDuration": 0,
                     "parameters": [
             {
                 "type": "integer",
@@ -902,11 +758,11 @@
                     "responseContentType": "application/json",
                     "transport": "GET",
                     "envelope": "URL",
+                    "cacheDuration": 3600,
                     "returns": {
-                        "$ref": "#.ApiLookupResponseDTO"
+                        "$ref": "ApiLookupResponseDTO"
                     },
                     "group": "Messages",
-                    "cacheDuration": 3600000,
                     "parameters": [
             {
                 "type": "string",
@@ -929,10 +785,9 @@
                     "transport": "GET",
                     "envelope": "URL",
                     "returns": {
-                        "$ref": "#.ApiClientApplicationMessageTranslationResponseDTO"
+                        "$ref": "ApiClientApplicationMessageTranslationResponseDTO"
                     },
                     "group": "Messages",
-                    "cacheDuration": 3600000,
                     "parameters": [
             {
                 "type": "integer",
@@ -952,7 +807,7 @@
           ]
                 },
                 "GetWatchlists": {
-                    "description": "Gets all watchlists for the user account.",
+                    "description": "Get client watchlist",
                     "target": "watchlists",
                     "uriTemplate": "/",
                     "contentType": "application/json",
@@ -960,59 +815,56 @@
                     "transport": "GET",
                     "envelope": "URL",
                     "returns": {
-                        "$ref": "#.ListWatchlistResponseDTO"
+                        "$ref": "ListWatchlistResponseDTO"
                     },
                     "group": "Watchlist",
-                    "cacheDuration": 0,
                     "throttleScope": "data",
                     "parameters": []
                 },
                 "SaveWatchlist": {
-                    "description": "Save watchlist.",
-                    "target": "watchlist",
+                    "description": "Save watchlist",
+                    "target": "watchlists",
                     "uriTemplate": "/Save",
                     "contentType": "application/json",
                     "responseContentType": "application/json",
                     "transport": "POST",
                     "envelope": "JSON",
                     "returns": {
-                        "$ref": "#.ApiSaveWatchlistResponseDTO"
+                        "$ref": "ApiSaveWatchlistResponseDTO"
                     },
                     "group": "Watchlist",
-                    "cacheDuration": 0,
                     "throttleScope": "data",
                     "parameters": [
             {
-                "$ref": "#.ApiSaveWatchlistRequestDTO",
+                "$ref": "ApiSaveWatchlistRequestDTO",
                 "name": "apiSaveWatchlistRequestDto",
-                "description": "The watchlist to save."
+                "description": "Save watchlist"
             }
           ]
                 },
                 "DeleteWatchlist": {
-                    "description": "Delete a watchlist.",
-                    "target": "watchlist",
+                    "description": "Delete a watchlist",
+                    "target": "watchlists",
                     "uriTemplate": "/delete",
                     "contentType": "application/json",
                     "responseContentType": "application/json",
                     "transport": "POST",
                     "envelope": "JSON",
                     "returns": {
-                        "$ref": "#.ApiDeleteWatchlistResponseDTO"
+                        "$ref": "ApiDeleteWatchlistResponseDTO"
                     },
                     "group": "Watchlist",
-                    "cacheDuration": 0,
                     "throttleScope": "data",
                     "parameters": [
             {
-                "$ref": "#.ApiDeleteWatchlistRequestDTO",
+                "$ref": "ApiDeleteWatchlistRequestDTO",
                 "name": "deleteWatchlistRequestDto",
-                "description": "The watchlist to delete."
+                "description": "Delete a watchlist"
             }
           ]
                 },
                 "GenerateException": {
-                    "description": "Raises an error condition when an unexpected or uncontrolled event occurs.",
+                    "description": "Simulates an error condition.",
                     "target": "errors",
                     "uriTemplate": "?errorCode={errorCode}",
                     "contentType": "application/json",
@@ -1020,16 +872,15 @@
                     "transport": "GET",
                     "envelope": "URL",
                     "returns": {
-                        "$ref": "#.ApiErrorResponseDTO"
+                        "$ref": "ApiErrorResponseDTO"
                     },
                     "group": "Exception Handling",
-                    "cacheDuration": 0,
                     "throttleScope": "data",
                     "parameters": [
             {
                 "type": "integer",
                 "name": "errorCode",
-                "description": "The error code for the condition encountered.",
+                "description": "Simulates an error condition.",
                 "demoValue": 4000
             }
           ]
@@ -1044,7 +895,7 @@
                     "target": "CITYINDEXSTREAMING",
                     "channel": "NEWS.HEADLINES.{category}",
                     "transport": "HTTP",
-                    "protocol": "lightstreamer-4",
+                    "protocol": "lightstreamer-3.6",
                     "returns": {
                         "$ref": "NewsDTO"
                     },
@@ -1065,7 +916,7 @@
                     "target": "CITYINDEXSTREAMING",
                     "channel": "PRICES.PRICE.{marketIds}",
                     "transport": "HTTP",
-                    "protocol": "lightstreamer-4",
+                    "protocol": "lightstreamer-3.6",
                     "returns": {
                         "$ref": "PriceDTO"
                     },
@@ -1084,50 +935,52 @@
             }
           ]
                 },
-                "ClientAccountMargin": {
-                    "description": "Stream of clients current margin",
-                    "target": "STREAMINGCLIENTACCOUNT",
-                    "channel": "CLIENTACCOUNTMARGIN.ALL",
+                "Quotes": {
+                    "description": "Stream of quotes",
+                    "target": "STREAMINGTRADINGACCOUNT",
+                    "channel": "QUOTES",
                     "transport": "HTTP",
-                    "protocol": "lightstreamer-4",
+                    "protocol": "lightstreamer-3.6",
                     "returns": {
-                        "$ref": "#.ClientAccountMarginDTO"
+                        "$ref": "QuoteDTO"
                     },
                     "group": "Streaming API"
                 },
-                "TradeMargin": {
-                    "description": "Stream of trade margin",
+                "ClientAccountMargin": {
+                    "description": "Stream of clients current margin",
                     "target": "STREAMINGCLIENTACCOUNT",
-                    "channel": "TRADEMARGIN.All",
+                    "channel": "CLIENTACCOUNTMARGIN",
                     "transport": "HTTP",
-                    "protocol": "lightstreamer-4",
+                    "protocol": "lightstreamer-3.6",
                     "returns": {
-                        "$ref": "#.TradeMarginDTO"
+                        "$ref": "ClientAccountMarginDTO"
                     },
                     "group": "Streaming API"
                 },
                 "Orders": {
-                    "description": "Stream of orders",
+                    "description": "Stream of clients current orders",
                     "target": "STREAMINGCLIENTACCOUNT",
-                    "channel": "ORDERS.All",
+                    "channel": "ORDERS",
                     "transport": "HTTP",
-                    "protocol": "lightstreamer-4",
+                    "protocol": "lightstreamer-3.6",
                     "returns": {
-                        "$ref": "#.OrderDTO"
+                        "$ref": "OrderDTO"
                     },
                     "group": "Streaming API"
                 },
-                "Quotes": {
-                    "description": "Stream of quotes",
-                    "target": "STREAMINGTRADINGACCOUNT",
-                    "channel": "QUOTE.ALL",
+
+                "DefaultPrices": {
+                    "description": "Stream of default prices",
+                    "target": "CITYINDEXSTREAMINGDEFAULTPRICES",
+                    "channel": "PRICES",
                     "transport": "HTTP",
-                    "protocol": "lightstreamer-4",
+                    "protocol": "lightstreamer-3.6",
                     "returns": {
-                        "$ref": "#.QuoteDTO"
+                        "$ref": "PriceDTO"
                     },
                     "group": "Streaming API"
                 }
+
             }
         }
     }

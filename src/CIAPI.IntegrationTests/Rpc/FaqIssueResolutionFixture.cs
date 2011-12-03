@@ -10,6 +10,7 @@ namespace CIAPI.IntegrationTests.Rpc
     public class FaqIssueResolutionFixture : RpcFixtureBase
     {
 
+         
         /// <summary>
         /// http://faq.labs.cityindex.com/questions/why-getpricebars-sometimes-does-not-return-back-a-getpricebarresponsedto-object-or-throw-an-error
         /// </summary>

@@ -7,6 +7,7 @@ namespace CIAPI.IntegrationTests.Rpc
     [TestFixture]
     public class PriceHistoryFixture : RpcFixtureBase
     {
+        
         [Test]
         public void CanGetPriceBars()
         {
@@ -14,7 +15,7 @@ namespace CIAPI.IntegrationTests.Rpc
 
             var response = rpcClient.PriceHistory.GetPriceBars("71442", "MINUTE", 10, "10");
             Assert.AreEqual(10, response.PriceBars.Length);
-            
+
         }
         [Test]
         public void CanGetPriceTicks()

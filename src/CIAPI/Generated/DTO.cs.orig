@@ -1,6 +1,28 @@
 using System;
-namespace  CIAPI.DTO
+namespace CIAPI.DTO
 {
+<<<<<<< HEAD
+    /// <summary>
+    /// A stop or limit order from a historical perspective.
+    /// </summary>
+    [Serializable]
+    public partial class ApiStopLimitOrderHistoryDTO
+    {
+        public int OrderId { get; set; }
+        public int MarketId { get; set; }
+        public string MarketName { get; set; }
+        public string Direction { get; set; }
+        public decimal OriginalQuantity { get; set; }
+        public decimal? Price { get; set; }
+        public decimal TriggerPrice { get; set; }
+        public int TradingAccountId { get; set; }
+        public int TypeId { get; set; }
+        public int OrderApplicabilityId { get; set; }
+        public string Currency { get; set; }
+        public int StatusId { get; set; }
+        public DateTime LastChangedDateTimeUtc { get; set; }
+        public DateTime CreatedDateTimeUtc { get; set; }
+=======
     /// <summary>
     /// A stop or limit order from a historical perspective.
     /// </summary>
@@ -94,9 +116,134 @@ namespace  CIAPI.DTO
     {
         public string MarketEodUnit { get; set; }
         public int? MarketEodAmount { get; set; }
+>>>>>>> csharp_codegen
     }
 
     /// <summary>
+    /// Represents an order.
+    /// </summary>
+    [Serializable]
+    public partial class ApiOrderDTO
+    {
+        public int OrderId { get; set; }
+        public int MarketId { get; set; }
+        public string Direction { get; set; }
+        public decimal Quantity { get; set; }
+        public decimal? Price { get; set; }
+        public int TradingAccountId { get; set; }
+        public int CurrencyId { get; set; }
+        public int StatusId { get; set; }
+        public int TypeId { get; set; }
+        public ApiIfDoneDTO[] IfDone { get; set; }
+        public ApiStopLimitOrderDTO OcoOrder { get; set; }
+    }
+
+    /// <summary>
+<<<<<<< HEAD
+    /// Represents a stop/limit order.
+    /// </summary>
+    [Serializable]
+    public partial class ApiStopLimitOrderDTO : ApiOrderDTO
+    {
+        public decimal TriggerPrice { get; set; }
+        public DateTime? ExpiryDateTimeUTC { get; set; }
+        public string Applicability { get; set; }
+        public int OrderId { get; set; }
+        public int MarketId { get; set; }
+        public string Direction { get; set; }
+        public decimal Quantity { get; set; }
+        public decimal? Price { get; set; }
+        public int TradingAccountId { get; set; }
+        public int CurrencyId { get; set; }
+        public int StatusId { get; set; }
+        public int TypeId { get; set; }
+        public ApiIfDoneDTO[] IfDone { get; set; }
+        public ApiStopLimitOrderDTO OcoOrder { get; set; }
+=======
+    /// Lookup data specific to a Culture
+    /// </summary>
+    [Serializable]
+    public partial class ApiCultureLookupDTO : ApiLookupDTO
+    {
+        public string Code { get; set; }
+    }
+
+    /// <summary>
+    /// A stop or limit order with a limited number of data fields.
+    /// </summary>
+    [Serializable]
+    public partial class ApiBasicStopLimitOrderDTO
+    {
+        public int OrderId { get; set; }
+        public decimal TriggerPrice { get; set; }
+        public decimal Quantity { get; set; }
+>>>>>>> csharp_codegen
+    }
+
+    [Serializable]
+    public partial class ApiClientApplicationMessageTranslationDTO
+    {
+        public string Key { get; set; }
+        public string Value { get; set; }
+    }
+
+    /// <summary>
+<<<<<<< HEAD
+    /// A stop or limit order that is currently active.
+    /// </summary>
+    [Serializable]
+    public partial class ApiActiveStopLimitOrderDTO
+    {
+        public int OrderId { get; set; }
+        public int? ParentOrderId { get; set; }
+        public int MarketId { get; set; }
+        public string MarketName { get; set; }
+        public string Direction { get; set; }
+        public decimal Quantity { get; set; }
+        public decimal TriggerPrice { get; set; }
+        public decimal TradingAccountId { get; set; }
+        public int Type { get; set; }
+        public int Applicability { get; set; }
+        public DateTime? ExpiryDateTimeUTC { get; set; }
+        public string Currency { get; set; }
+        public int Status { get; set; }
+        public ApiBasicStopLimitOrderDTO StopOrder { get; set; }
+        public ApiBasicStopLimitOrderDTO LimitOrder { get; set; }
+        public ApiBasicStopLimitOrderDTO OcoOrder { get; set; }
+        public DateTime LastChangedDateTimeUTC { get; set; }
+=======
+    /// The current margin and other account balance data for a specific client account used in the ClientAccountMargin stream.
+    /// </summary>
+    [Serializable]
+    public partial class ClientAccountMarginDTO
+    {
+        public decimal Cash { get; set; }
+        public decimal Margin { get; set; }
+        public decimal MarginIndicator { get; set; }
+        public decimal NetEquity { get; set; }
+        public decimal OpenTradeEquity { get; set; }
+        public decimal TradeableFunds { get; set; }
+        public decimal PendingFunds { get; set; }
+        public decimal TradingResource { get; set; }
+        public decimal TotalMarginRequirement { get; set; }
+        public int CurrencyId { get; set; }
+        public string CurrencyISO { get; set; }
+>>>>>>> csharp_codegen
+    }
+
+    /// <summary>
+    /// A headline for a news story.
+    /// </summary>
+    [Serializable]
+    public partial class NewsDTO
+    {
+        public int StoryId { get; set; }
+        public string Headline { get; set; }
+        public DateTime PublishDate { get; set; }
+    }
+
+    /// <summary>
+<<<<<<< HEAD
     /// Generic look up data entities - such as localised textual names.
     /// </summary>
     [Serializable]
@@ -118,6 +265,13 @@ namespace  CIAPI.DTO
     public partial class ApiCultureLookupDTO : ApiLookupDTO
     {
         public string Code { get; set; }
+        public int Id { get; set; }
+        public string Description { get; set; }
+        public int DisplayOrder { get; set; }
+        public int? TranslationTextId { get; set; }
+        public string TranslationText { get; set; }
+        public bool IsActive { get; set; }
+        public bool IsAllowed { get; set; }
     }
 
     /// <summary>
@@ -128,51 +282,7 @@ namespace  CIAPI.DTO
     {
         public int OrderId { get; set; }
         public decimal TriggerPrice { get; set; }
-        public decimal Quantity { get; set; }
-    }
-
-    /// <summary>
-    /// API watchlist item.
-    /// </summary>
-    [Serializable]
-    public partial class ApiClientAccountWatchlistItemDTO
-    {
-        public int WatchlistId { get; set; }
-        public int MarketId { get; set; }
-        public int DisplayOrder { get; set; }
-    }
-
-    /// <summary>
-    /// The current margin and other account balance data for a specific client account used in the ClientAccountMargin stream.
-    /// </summary>
-    [Serializable]
-    public partial class ClientAccountMarginDTO
-    {
-        public decimal Cash { get; set; }
-        public decimal Margin { get; set; }
-        public decimal MarginIndicator { get; set; }
-        public decimal NetEquity { get; set; }
-        public decimal OpenTradeEquity { get; set; }
-        public decimal TradeableFunds { get; set; }
-        public decimal PendingFunds { get; set; }
-        public decimal TradingResource { get; set; }
-        public decimal TotalMarginRequirement { get; set; }
-        public int CurrencyId { get; set; }
-        public string CurrencyISO { get; set; }
-    }
-
-    /// <summary>
-    /// A headline for a news story.
-    /// </summary>
-    [Serializable]
-    public partial class NewsDTO
-    {
-        public int StoryId { get; set; }
-        public string Headline { get; set; }
-        public DateTime PublishDate { get; set; }
-    }
-
-    /// <summary>
+=======
     /// Contains details of a specific news story.
     /// </summary>
     [Serializable]
@@ -224,10 +334,44 @@ namespace  CIAPI.DTO
         public string OTEConvertedCurrencyISOCode { get; set; }
         public decimal PriceCalculatedAt { get; set; }
         public decimal PriceTakenAt { get; set; }
+>>>>>>> csharp_codegen
         public decimal Quantity { get; set; }
     }
 
     /// <summary>
+<<<<<<< HEAD
+    /// API watchlist item.
+    /// </summary>
+    [Serializable]
+    public partial class ApiClientAccountWatchlistItemDTO
+    {
+        public int WatchlistId { get; set; }
+        public int MarketId { get; set; }
+        public int DisplayOrder { get; set; }
+    }
+
+    /// <summary>
+    /// A headline for a news story.
+    /// </summary>
+    [Serializable]
+    public partial class NewsDTO
+    {
+        public int StoryId { get; set; }
+        public string Headline { get; set; }
+        public DateTime PublishDate { get; set; }
+    }
+
+    /// <summary>
+    /// Contains details of a specific news story.
+    /// </summary>
+    [Serializable]
+    public partial class NewsDetailDTO : NewsDTO
+    {
+        public string Story { get; set; }
+        public int StoryId { get; set; }
+        public string Headline { get; set; }
+        public DateTime PublishDate { get; set; }
+=======
     /// A quote for a specific order request.
     /// </summary>
     [Serializable]
@@ -416,6 +560,195 @@ namespace  CIAPI.DTO
     {
         public DateTime TickDate { get; set; }
         public decimal Price { get; set; }
+>>>>>>> csharp_codegen
+    }
+
+    /// <summary>
+    /// Basic information about a market tag.
+    /// </summary>
+    [Serializable]
+    public partial class ApiMarketTagDTO
+    {
+        public int MarketTagId { get; set; }
+        public string Name { get; set; }
+        public int Type { get; set; }
+    }
+
+    /// <summary>
+<<<<<<< HEAD
+    /// Information about a Trading Account.
+    /// </summary>
+    [Serializable]
+    public partial class ApiTradingAccountDTO
+    {
+        public int TradingAccountId { get; set; }
+        public string TradingAccountCode { get; set; }
+        public string TradingAccountStatus { get; set; }
+        public string TradingAccountType { get; set; }
+    }
+
+    /// <summary>
+    /// Represents a trade order.
+    /// </summary>
+    [Serializable]
+    public partial class ApiTradeOrderDTO : ApiOrderDTO
+=======
+    /// A Trade, or order that is currently open.
+    /// </summary>
+    [Serializable]
+    public partial class ApiOpenPositionDTO
+>>>>>>> csharp_codegen
+    {
+        public int OrderId { get; set; }
+        public int MarketId { get; set; }
+        public string MarketName { get; set; }
+        public string Direction { get; set; }
+        public decimal Quantity { get; set; }
+        public decimal Price { get; set; }
+        public int TradingAccountId { get; set; }
+        public string Currency { get; set; }
+        public int Status { get; set; }
+        public ApiBasicStopLimitOrderDTO StopOrder { get; set; }
+        public ApiBasicStopLimitOrderDTO LimitOrder { get; set; }
+        public DateTime LastChangedDateTimeUTC { get; set; }
+        public string Status_Resolved { get; set; }
+    }
+
+    /// <summary>
+<<<<<<< HEAD
+    /// The details of a specific price bar, useful for plotting candlestick charts
+    /// </summary>
+    [Serializable]
+    public partial class PriceBarDTO
+    {
+        public DateTime BarDate { get; set; }
+        public decimal Open { get; set; }
+        public decimal High { get; set; }
+        public decimal Low { get; set; }
+        public decimal Close { get; set; }
+    }
+
+    /// <summary>
+    /// Market tag information extended to include a list o child tags.
+    /// </summary>
+    [Serializable]
+    public partial class ApiPrimaryMarketTagDTO : ApiMarketTagDTO
+    {
+        public ApiMarketTagDTO[] Children { get; set; }
+        public int MarketTagId { get; set; }
+        public string Name { get; set; }
+        public int Type { get; set; }
+    }
+
+    /// <summary>
+    /// Contains market information to be modified and saved.
+    /// </summary>
+    [Serializable]
+    public partial class ApiMarketInformationSaveDTO
+    {
+        public int MarketId { get; set; }
+        public decimal? PriceTolerance { get; set; }
+        public bool PriceToleranceIsDirty { get; set; }
+        public decimal? MarginFactor { get; set; }
+        public bool MarginFactorIsDirty { get; set; }
+    }
+
+    /// <summary>
+    /// Basic information about a Market.
+    /// </summary>
+    [Serializable]
+    public partial class ApiMarketDTO
+    {
+        public int MarketId { get; set; }
+        public string Name { get; set; }
+=======
+    /// The response from the News Detail GET request.
+    /// </summary>
+    [Serializable]
+    public partial class GetNewsDetailResponseDTO
+    {
+        public NewsDetailDTO NewsDetail { get; set; }
+    }
+
+    /// <summary>
+    /// Contains the result of a ListStopLimitOrderHistory query.
+    /// </summary>
+    [Serializable]
+    public partial class ListStopLimitOrderHistoryResponseDTO
+    {
+        public ApiStopLimitOrderHistoryDTO[] StopLimitOrderHistory { get; set; }
+    }
+
+    /// <summary>
+    /// Response from a market information request.
+    /// </summary>
+    [Serializable]
+    public partial class ListMarketInformationResponseDTO
+    {
+        public ApiMarketInformationDTO[] MarketInformation { get; set; }
+>>>>>>> csharp_codegen
+    }
+
+    /// <summary>
+    /// Gives a list of client application specific message translations
+    /// </summary>
+    [Serializable]
+    public partial class ApiClientApplicationMessageTranslationResponseDTO
+    {
+        public ApiClientApplicationMessageTranslationDTO[] TranslationKeyValuePairs { get; set; }
+    }
+
+    /// <summary>
+<<<<<<< HEAD
+    /// Client account watchlist.
+    /// </summary>
+    [Serializable]
+    public partial class ApiClientAccountWatchlistDTO
+    {
+        public int WatchlistId { get; set; }
+        public string WatchlistDescription { get; set; }
+        public int DisplayOrder { get; set; }
+        public ApiClientAccountWatchlistItemDTO[] Items { get; set; }
+    }
+
+    /// <summary>
+    /// Contains market information.
+    /// </summary>
+    [Serializable]
+    public partial class ApiMarketInformationDTO
+    {
+        public int MarketId { get; set; }
+        public string Name { get; set; }
+        public decimal? MarginFactor { get; set; }
+        public decimal? MinMarginFactor { get; set; }
+        public decimal? MaxMarginFactor { get; set; }
+        public int MarginFactorUnits { get; set; }
+        public decimal? MinDistance { get; set; }
+        public decimal? WebMinSize { get; set; }
+        public decimal? MaxSize { get; set; }
+        public bool Market24H { get; set; }
+        public int? PriceDecimalPlaces { get; set; }
+        public int? DefaultQuoteLength { get; set; }
+        public bool TradeOnWeb { get; set; }
+        public bool LimitUp { get; set; }
+        public bool LimitDown { get; set; }
+        public bool LongPositionOnly { get; set; }
+        public bool CloseOnly { get; set; }
+        public ApiMarketEodDTO[] MarketEod { get; set; }
+        public decimal? PriceTolerance { get; set; }
+        public int ConvertPriceToPipsMultiplier { get; set; }
+        public int MarketSettingsTypeId { get; set; }
+        public string MarketSettingsType { get; set; }
+    }
+
+    /// <summary>
+    /// The mid price at a particular point in time.
+    /// </summary>
+    [Serializable]
+    public partial class PriceTickDTO
+    {
+        public DateTime TickDate { get; set; }
+        public decimal Price { get; set; }
     }
 
     /// <summary>
@@ -446,7 +779,6 @@ namespace  CIAPI.DTO
         public ApiBasicStopLimitOrderDTO StopOrder { get; set; }
         public ApiBasicStopLimitOrderDTO LimitOrder { get; set; }
         public DateTime LastChangedDateTimeUTC { get; set; }
-        public string Status_Resolved { get; set; }
     }
 
     /// <summary>
@@ -486,6 +818,17 @@ namespace  CIAPI.DTO
     }
 
     /// <summary>
+    /// Contains the response of a ListActiveStopLimitOrder query.
+    /// </summary>
+    [Serializable]
+    public partial class ListActiveStopLimitOrderResponseDTO
+    {
+        public ApiActiveStopLimitOrderDTO[] ActiveStopLimitOrders { get; set; }
+    }
+
+    [Serializable]
+    public partial class ApiSaveMarketInformationResponseDTO
+=======
     /// Contains the response of a ListActiveStopLimitOrder query.
     /// </summary>
     [Serializable]
@@ -601,7 +944,162 @@ namespace  CIAPI.DTO
     /// </summary>
     [Serializable]
     public partial class ApiStopLimitResponseDTO : ApiOrderResponseDTO
+>>>>>>> csharp_codegen
     {
+    }
+
+    /// <summary>
+<<<<<<< HEAD
+    /// Response from an account information query.
+    /// </summary>
+    [Serializable]
+    public partial class AccountInformationResponseDTO
+    {
+        public string LogonUserName { get; set; }
+        public int ClientAccountId { get; set; }
+        public string ClientAccountCurrency { get; set; }
+        public int AccountOperatorId { get; set; }
+        public ApiTradingAccountDTO[] TradingAccounts { get; set; }
+        public string PersonalEmailAddress { get; set; }
+        public bool HasMultipleEmailAddresses { get; set; }
+    }
+
+    /// <summary>
+    /// The response from a GET request for News headlines.
+=======
+    /// Contains the response of a ListCfdMarkets query.
+    /// </summary>
+    [Serializable]
+    public partial class ListCfdMarketsResponseDTO
+    {
+        public ApiMarketDTO[] Markets { get; set; }
+    }
+
+    /// <summary>
+    /// Update watchlist with item request.
+>>>>>>> csharp_codegen
+    /// </summary>
+    [Serializable]
+    public partial class ListNewsHeadlinesResponseDTO
+    {
+        public NewsDTO[] Headlines { get; set; }
+    }
+
+    /// <summary>
+    /// Response containing the active stop limit order.
+    /// </summary>
+    [Serializable]
+<<<<<<< HEAD
+    public partial class GetActiveStopLimitOrderResponseDTO
+    {
+        public ApiActiveStopLimitOrderDTO ActiveStopLimitOrder { get; set; }
+    }
+
+    /// <summary>
+    /// A request for a stop/limit order.
+    /// </summary>
+    [Serializable]
+    public partial class NewStopLimitOrderRequestDTO
+=======
+    public partial class SaveMarketInformationRequestDTO
+>>>>>>> csharp_codegen
+    {
+        public ApiMarketInformationSaveDTO[] MarketInformation { get; set; }
+        public int TradingAccountId { get; set; }
+    }
+
+    /// <summary>
+<<<<<<< HEAD
+    /// A request for updating a stop/limit order
+=======
+    /// The response from the trade request.
+    /// </summary>
+    [Serializable]
+    public partial class ApiTradeOrderResponseDTO
+    {
+        public int Status { get; set; }
+        public int StatusReason { get; set; }
+        public int OrderId { get; set; }
+        public ApiOrderResponseDTO[] Orders { get; set; }
+        public ApiQuoteResponseDTO Quote { get; set; }
+        public string StatusReason_Resolved { get; set; }
+        public string Status_Resolved { get; set; }
+    }
+
+    /// <summary>
+    /// A request for a trade order
+>>>>>>> csharp_codegen
+    /// </summary>
+    [Serializable]
+    public partial class UpdateStopLimitOrderRequestDTO : NewStopLimitOrderRequestDTO
+    {
+        public int OrderId { get; set; }
+        public int MarketId { get; set; }
+        public string Currency { get; set; }
+        public bool AutoRollover { get; set; }
+        public string Direction { get; set; }
+        public decimal Quantity { get; set; }
+        public decimal BidPrice { get; set; }
+        public decimal OfferPrice { get; set; }
+        public string AuditId { get; set; }
+        public int TradingAccountId { get; set; }
+        public ApiIfDoneDTO[] IfDone { get; set; }
+        public NewStopLimitOrderRequestDTO OcoOrder { get; set; }
+        public string Applicability { get; set; }
+        public DateTime? ExpiryDateTimeUTC { get; set; }
+        public bool Guaranteed { get; set; }
+        public decimal TriggerPrice { get; set; }
+    }
+
+    /// <summary>
+<<<<<<< HEAD
+    /// system status
+    /// </summary>
+    [Serializable]
+    public partial class SystemStatusDTO
+    {
+        public string StatusMessage { get; set; }
+    }
+
+    [Serializable]
+    public partial class ApiSaveAccountInformationResponseDTO
+    {
+    }
+
+    /// <summary>
+    /// Response to an order request.
+=======
+    /// A request for updating a trade order
+>>>>>>> csharp_codegen
+    /// </summary>
+    [Serializable]
+    public partial class ApiOrderResponseDTO
+    {
+        public int OrderId { get; set; }
+        public int StatusReason { get; set; }
+        public int Status { get; set; }
+        public decimal Price { get; set; }
+        public decimal CommissionCharge { get; set; }
+        public ApiIfDoneResponseDTO[] IfDone { get; set; }
+        public decimal GuaranteedPremium { get; set; }
+        public ApiOrderResponseDTO OCO { get; set; }
+    }
+
+    /// <summary>
+<<<<<<< HEAD
+    /// The response from the stop limit order request
+    /// </summary>
+    [Serializable]
+    public partial class ApiStopLimitResponseDTO : ApiOrderResponseDTO
+    {
+        public int OrderId { get; set; }
+        public int StatusReason { get; set; }
+        public int Status { get; set; }
+        public decimal Price { get; set; }
+        public decimal CommissionCharge { get; set; }
+        public ApiIfDoneResponseDTO[] IfDone { get; set; }
+        public decimal GuaranteedPremium { get; set; }
+        public ApiOrderResponseDTO OCO { get; set; }
     }
 
     /// <summary>
@@ -644,8 +1142,6 @@ namespace  CIAPI.DTO
         public int OrderId { get; set; }
         public ApiOrderResponseDTO[] Orders { get; set; }
         public ApiQuoteResponseDTO Quote { get; set; }
-        public string StatusReason_Resolved { get; set; }
-        public string Status_Resolved { get; set; }
     }
 
     /// <summary>
@@ -675,6 +1171,18 @@ namespace  CIAPI.DTO
     public partial class UpdateTradeOrderRequestDTO : NewTradeOrderRequestDTO
     {
         public int OrderId { get; set; }
+        public int MarketId { get; set; }
+        public string Currency { get; set; }
+        public bool AutoRollover { get; set; }
+        public string Direction { get; set; }
+        public decimal Quantity { get; set; }
+        public int? QuoteId { get; set; }
+        public decimal BidPrice { get; set; }
+        public decimal OfferPrice { get; set; }
+        public string AuditId { get; set; }
+        public int TradingAccountId { get; set; }
+        public ApiIfDoneDTO[] IfDone { get; set; }
+        public int[] Close { get; set; }
     }
 
     /// <summary>
@@ -709,6 +1217,39 @@ namespace  CIAPI.DTO
     /// This is a description of the ErrorCode enum.
     /// </summary>
     [Serializable]
+=======
+    /// The response from a request for historical Price Ticks.
+    /// </summary>
+    [Serializable]
+    public partial class GetPriceTickResponseDTO
+    {
+        public PriceTickDTO[] PriceTicks { get; set; }
+    }
+
+    /// <summary>
+    /// Response from a market information request.
+    /// </summary>
+    [Serializable]
+    public partial class GetMarketInformationResponseDTO
+    {
+        public ApiMarketInformationDTO MarketInformation { get; set; }
+    }
+
+    /// <summary>
+    /// Request to delete a session (log off).
+    /// </summary>
+    [Serializable]
+    public partial class ApiLogOffRequestDTO
+    {
+        public string UserName { get; set; }
+        public string Session { get; set; }
+    }
+
+    /// <summary>
+    /// This is a description of the ErrorCode enum.
+    /// </summary>
+    [Serializable]
+>>>>>>> csharp_codegen
     public enum ErrorCode
     {
         /// <summary>
@@ -820,16 +1361,7 @@ namespace  CIAPI.DTO
     }
 
     /// <summary>
-    /// Request to change account information.
-    /// </summary>
-    [Serializable]
-    public partial class ApiSaveAccountInformationRequestDTO
-    {
-        public string PersonalEmailAddress { get; set; }
-        public bool PersonalEmailAddressIsDirty { get; set; }
-    }
-
-    /// <summary>
+<<<<<<< HEAD
     /// Contains the result of a ListTradeHistory query.
     /// </summary>
     [Serializable]
@@ -940,9 +1472,133 @@ namespace  CIAPI.DTO
     {
         public bool AskForClientApproval { get; set; }
         public string Message { get; set; }
+=======
+    /// Request to change account information.
+    /// </summary>
+    [Serializable]
+    public partial class ApiSaveAccountInformationRequestDTO
+    {
+        public string PersonalEmailAddress { get; set; }
+        public bool PersonalEmailAddressIsDirty { get; set; }
     }
 
     /// <summary>
+    /// Contains the result of a ListTradeHistory query.
+    /// </summary>
+    [Serializable]
+    public partial class ListTradeHistoryResponseDTO
+    {
+        public ApiTradeHistoryDTO[] TradeHistory { get; set; }
+    }
+
+    [Serializable]
+    public partial class ApiSaveWatchlistResponseDTO
+    {
+    }
+
+    /// <summary>
+    /// Response from a request to delete a watchlist.
+    /// </summary>
+    [Serializable]
+    public partial class ApiDeleteWatchlistResponseDTO
+    {
+        public bool Deleted { get; set; }
+    }
+
+    /// <summary>
+    /// Get market information for a list of markets.
+    /// </summary>
+    [Serializable]
+    public partial class UpdateWatchlistDisplayOrderRequestDTO
+    {
+        public int[] NewDisplayOrderIdSequence { get; set; }
+    }
+
+    /// <summary>
+    /// Get market information request for a list of markets.
+    /// </summary>
+    [Serializable]
+    public partial class ListMarketInformationRequestDTO
+    {
+        public int[] MarketIds { get; set; }
+    }
+
+    /// <summary>
+    /// Request to change a user's password.
+    /// </summary>
+    [Serializable]
+    public partial class ApiChangePasswordRequestDTO
+    {
+        public string UserName { get; set; }
+        public string Password { get; set; }
+        public string NewPassword { get; set; }
+    }
+
+    /// <summary>
+    /// Quote response.
+    /// </summary>
+    [Serializable]
+    public partial class ApiQuoteResponseDTO
+    {
+        public int QuoteId { get; set; }
+        public int Status { get; set; }
+        public int StatusReason { get; set; }
+    }
+
+    /// <summary>
+    /// Contains the result of a ListSpreadMarkets query.
+    /// </summary>
+    [Serializable]
+    public partial class ListSpreadMarketsResponseDTO
+    {
+        public ApiMarketDTO[] Markets { get; set; }
+    }
+
+    /// <summary>
+    /// Gets the lookup entities from trading database given the lookup name and culture ID.
+    /// </summary>
+    [Serializable]
+    public partial class ApiLookupResponseDTO
+    {
+        public int CultureId { get; set; }
+        public string LookupEntityName { get; set; }
+        public ApiLookupDTO[] ApiLookupDTOList { get; set; }
+        public ApiCultureLookupDTO[] ApiCultureLookupDTOList { get; set; }
+    }
+
+    /// <summary>
+    /// Response to an If/Done order request.
+    /// </summary>
+    [Serializable]
+    public partial class ApiIfDoneResponseDTO
+    {
+        public ApiOrderResponseDTO Stop { get; set; }
+        public ApiOrderResponseDTO Limit { get; set; }
+    }
+
+    /// <summary>
+    /// Request to delete a watchlist.
+    /// </summary>
+    [Serializable]
+    public partial class ApiDeleteWatchlistRequestDTO
+    {
+        public int WatchlistId { get; set; }
+>>>>>>> csharp_codegen
+    }
+
+    /// <summary>
+    /// Message popup response denoting whether the client application should display a popup notification at startup.
+    /// </summary>
+    [Serializable]
+    public partial class GetMessagePopupResponseDTO
+    {
+        public bool AskForClientApproval { get; set; }
+        public string Message { get; set; }
+    }
+
+    /// <summary>
+<<<<<<< HEAD
+=======
     /// Response to a CreateSessionRequest (Log On).
     /// </summary>
     [Serializable]
@@ -952,6 +1608,7 @@ namespace  CIAPI.DTO
     }
 
     /// <summary>
+>>>>>>> csharp_codegen
     /// Contains the result of a ListOpenPositions query.
     /// </summary>
     [Serializable]

@@ -7,6 +7,12 @@ namespace CIAPI.Rpc
     public partial class Client
     {
 
+<<<<<<< HEAD
+        public Client(Uri uri)
+            : base(uri, new RequestController(TimeSpan.FromSeconds(0), 2, new RequestFactory(), new ErrorResponseDTOJsonExceptionFactory(), new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10, "data"), new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10, "trading"),new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10, "default")) )
+        {
+
+=======
       public _Authentication Authentication{get; private set;}
       public _AccountInformation AccountInformation{get; private set;}
       public _PriceHistory PriceHistory{get; private set;}
@@ -35,11 +41,16 @@ private Client _client;
             this. Messaging = new _Messaging(this);
             this. Watchlist = new _Watchlist(this);
             this. ExceptionHandling = new _ExceptionHandling(this);
+>>>>>>> csharp_codegen
         }
         public Client(Uri uri, IRequestController requestController)
             : base(uri, requestController)
         {
 
+<<<<<<< HEAD
+        }            
+
+=======
             this. Authentication = new _Authentication(this);
             this. AccountInformation = new _AccountInformation(this);
             this. PriceHistory = new _PriceHistory(this);
@@ -58,16 +69,24 @@ private Client _client;
             private Client _client;
             public _Authentication(Client client){ this._client = client;}
 
+>>>>>>> csharp_codegen
         // ***********************************
         // LogOn
         // ***********************************
 
 
         /// <summary>
+<<<<<<< HEAD
+        /// <p>Create a new session. This is how you "log on" to the CIAPI. Post a <a onclick="dojo.hash('#type.ApiLogOnRequestDTO'); return false;" class="json-link" href="#">ApiLogOnRequestDTO</a> to the uri specified in the following Service Info.</p>
+        /// </summary>
+        /// <param name="apiLogOnRequest">The request to create a session (log on).</param>
+        public virtual ApiLogOnResponseDTO LogOn(ApiLogOnRequestDTO apiLogOnRequest)
+=======
         /// Create a new session. This is how you "log on" to the CIAPI.
         /// </summary>
         /// <param name="apiLogOnRequest">The request to create a session (log on).</param>
         internal virtual ApiLogOnResponseDTO LogOn(ApiLogOnRequestDTO apiLogOnRequest)
+>>>>>>> csharp_codegen
         {
             return _client.Request<ApiLogOnResponseDTO>("session", "/", "POST",
             new Dictionary<string, object>
@@ -78,12 +97,20 @@ private Client _client;
 
 
         /// <summary>
+<<<<<<< HEAD
+        /// <p>Create a new session. This is how you "log on" to the CIAPI. Post a <a onclick="dojo.hash('#type.ApiLogOnRequestDTO'); return false;" class="json-link" href="#">ApiLogOnRequestDTO</a> to the uri specified in the following Service Info.</p>
+=======
         /// Create a new session. This is how you "log on" to the CIAPI.
+>>>>>>> csharp_codegen
         /// </summary>
         /// <param name="apiLogOnRequest">The request to create a session (log on).</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
+<<<<<<< HEAD
+        public virtual void BeginLogOn(ApiLogOnRequestDTO apiLogOnRequest, ApiAsyncCallback<ApiLogOnResponseDTO> callback, object state)
+=======
         internal virtual void BeginLogOn(ApiLogOnRequestDTO apiLogOnRequest, ApiAsyncCallback<ApiLogOnResponseDTO> callback, object state)
+>>>>>>> csharp_codegen
         {
             _client.BeginRequest(callback, state, "session", "/", "POST",
             new Dictionary<string, object>
@@ -92,7 +119,11 @@ private Client _client;
             }, TimeSpan.FromMilliseconds(0), "data");
         }
 
+<<<<<<< HEAD
+        public ApiLogOnResponseDTO EndLogOn(ApiAsyncResult<ApiLogOnResponseDTO> asyncResult)
+=======
         internal ApiLogOnResponseDTO EndLogOn(ApiAsyncResult<ApiLogOnResponseDTO> asyncResult)
+>>>>>>> csharp_codegen
         {
             return _client.EndRequest(asyncResult);
         }
@@ -108,7 +139,11 @@ private Client _client;
         /// </summary>
         /// <param name="userName">Username is case sensitive. May be set as a service parameter or as a request header.</param>
         /// <param name="session">The session token. May be set as a service parameter or as a request header.</param>
+<<<<<<< HEAD
+        public virtual ApiLogOffResponseDTO DeleteSession(string userName, string session)
+=======
         internal virtual ApiLogOffResponseDTO DeleteSession(string userName, string session)
+>>>>>>> csharp_codegen
         {
             return _client.Request<ApiLogOffResponseDTO>("session", "/deleteSession?userName={userName}&session={session}", "POST",
             new Dictionary<string, object>
@@ -126,7 +161,11 @@ private Client _client;
         /// <param name="session">The session token. May be set as a service parameter or as a request header.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
+<<<<<<< HEAD
+        public virtual void BeginDeleteSession(string userName, string session, ApiAsyncCallback<ApiLogOffResponseDTO> callback, object state)
+=======
         internal virtual void BeginDeleteSession(string userName, string session, ApiAsyncCallback<ApiLogOffResponseDTO> callback, object state)
+>>>>>>> csharp_codegen
         {
             _client.BeginRequest(callback, state, "session", "/deleteSession?userName={userName}&session={session}", "POST",
             new Dictionary<string, object>
@@ -136,18 +175,25 @@ private Client _client;
             }, TimeSpan.FromMilliseconds(0), "data");
         }
 
+<<<<<<< HEAD
+        public ApiLogOffResponseDTO EndDeleteSession(ApiAsyncResult<ApiLogOffResponseDTO> asyncResult)
+=======
         internal ApiLogOffResponseDTO EndDeleteSession(ApiAsyncResult<ApiLogOffResponseDTO> asyncResult)
+>>>>>>> csharp_codegen
         {
             return _client.EndRequest(asyncResult);
         }
 
 
+<<<<<<< HEAD
+=======
         }            
         public class _AccountInformation
         {
             private Client _client;
             public _AccountInformation(Client client){ this._client = client;}
 
+>>>>>>> csharp_codegen
         // ***********************************
         // ChangePassword
         // ***********************************
@@ -189,6 +235,8 @@ private Client _client;
 
 
         // ***********************************
+<<<<<<< HEAD
+=======
         // GetChartingEnabled
         // ***********************************
 
@@ -313,6 +361,7 @@ private Client _client;
             public _PriceHistory(Client client){ this._client = client;}
 
         // ***********************************
+>>>>>>> csharp_codegen
         // GetPriceTicks
         // ***********************************
 
@@ -357,6 +406,8 @@ private Client _client;
 
 
         // ***********************************
+<<<<<<< HEAD
+=======
         // GetPriceBars
         // ***********************************
 
@@ -455,6 +506,7 @@ private Client _client;
 
 
         // ***********************************
+>>>>>>> csharp_codegen
         // ListNewsHeadlinesWithSource
         // ***********************************
 
@@ -502,12 +554,15 @@ private Client _client;
         }
 
 
+<<<<<<< HEAD
+=======
         }            
         public class _CFDMarkets
         {
             private Client _client;
             public _CFDMarkets(Client client){ this._client = client;}
 
+>>>>>>> csharp_codegen
         // ***********************************
         // ListCfdMarkets
         // ***********************************
@@ -560,12 +615,15 @@ private Client _client;
         }
 
 
+<<<<<<< HEAD
+=======
         }            
         public class _SpreadMarkets
         {
             private Client _client;
             public _SpreadMarkets(Client client){ this._client = client;}
 
+>>>>>>> csharp_codegen
         // ***********************************
         // ListSpreadMarkets
         // ***********************************
@@ -618,12 +676,15 @@ private Client _client;
         }
 
 
+<<<<<<< HEAD
+=======
         }            
         public class _Market
         {
             private Client _client;
             public _Market(Client client){ this._client = client;}
 
+>>>>>>> csharp_codegen
         // ***********************************
         // GetMarketInformation
         // ***********************************
@@ -734,7 +795,11 @@ private Client _client;
 
 
         /// <summary>
+<<<<<<< HEAD
+        /// <p>Get market information and tags for the markets that meet the search criteria.</p>
+=======
         /// Get market information and tags for the markets that meet the search criteria.
+>>>>>>> csharp_codegen
         /// </summary>
         /// <param name="query">The text to search for. Matches part of market name / code from the start.</param>
         /// <param name="tagId">The ID for the tag to be searched (optional).</param>
@@ -752,7 +817,11 @@ private Client _client;
 
 
         /// <summary>
+<<<<<<< HEAD
+        /// <p>Get market information and tags for the markets that meet the search criteria.</p>
+=======
         /// Get market information and tags for the markets that meet the search criteria.
+>>>>>>> csharp_codegen
         /// </summary>
         /// <param name="query">The text to search for. Matches part of market name / code from the start.</param>
         /// <param name="tagId">The ID for the tag to be searched (optional).</param>
@@ -820,9 +889,15 @@ private Client _client;
 
 
         /// <summary>
+<<<<<<< HEAD
+        /// <p>Get Market Information for the specified list of markets. Post a <a onclick="dojo.hash('#type.ListMarketInformationRequestDTO'); return false;" class="json-link" href="#">ListMarketInformationRequestDTO</a> to the uri specified below.</p>
+        /// </summary>
+        /// <param name="listMarketInformationRequestDTO"><p>Get Market Information for the specified list of markets.  Post a <a onclick="dojo.hash('#type.ListMarketInformationRequestDTO'); return false;" class="json-link" href="#">ListMarketInformationRequestDTO</a> to the uri specified below.</p></param>
+=======
         /// Get Market Information for the specified list of markets.
         /// </summary>
         /// <param name="listMarketInformationRequestDTO">Get Market Information for the specified list of markets.</param>
+>>>>>>> csharp_codegen
         public virtual ListMarketInformationResponseDTO ListMarketInformation(ListMarketInformationRequestDTO listMarketInformationRequestDTO)
         {
             return _client.Request<ListMarketInformationResponseDTO>("market", "/market/information", "POST",
@@ -834,9 +909,15 @@ private Client _client;
 
 
         /// <summary>
+<<<<<<< HEAD
+        /// <p>Get Market Information for the specified list of markets. Post a <a onclick="dojo.hash('#type.ListMarketInformationRequestDTO'); return false;" class="json-link" href="#">ListMarketInformationRequestDTO</a> to the uri specified below.</p>
+        /// </summary>
+        /// <param name="listMarketInformationRequestDTO"><p>Get Market Information for the specified list of markets.  Post a <a onclick="dojo.hash('#type.ListMarketInformationRequestDTO'); return false;" class="json-link" href="#">ListMarketInformationRequestDTO</a> to the uri specified below.</p></param>
+=======
         /// Get Market Information for the specified list of markets.
         /// </summary>
         /// <param name="listMarketInformationRequestDTO">Get Market Information for the specified list of markets.</param>
+>>>>>>> csharp_codegen
         /// <param name="callback"></param>
         /// <param name="state"></param>
         public virtual void BeginListMarketInformation(ListMarketInformationRequestDTO listMarketInformationRequestDTO, ApiAsyncCallback<ListMarketInformationResponseDTO> callback, object state)
@@ -860,9 +941,15 @@ private Client _client;
 
 
         /// <summary>
+<<<<<<< HEAD
+        /// Save Market Information for the specified list of markets. Post a <a onclick="dojo.hash('#type.SaveMarketInformationRequestDTO'); return false;" class="json-link" href="#">SaveMarketInformationRequestDTO</a> to the uri specified below.</p>
+        /// </summary>
+        /// <param name="listMarketInformationRequestSaveDTO">Save Market Information for the specified list of markets.  Post a <a onclick="dojo.hash('#type.SaveMarketInformationRequestDTO'); return false;" class="json-link" href="#">SaveMarketInformationRequestDTO</a> to the uri specified below.</p></param>
+=======
         /// Save Market Information for the specified list of markets.
         /// </summary>
         /// <param name="listMarketInformationRequestSaveDTO">Save Market Information for the specified list of markets.</param>
+>>>>>>> csharp_codegen
         public virtual ApiSaveMarketInformationResponseDTO SaveMarketInformation(SaveMarketInformationRequestDTO listMarketInformationRequestSaveDTO)
         {
             return _client.Request<ApiSaveMarketInformationResponseDTO>("market", "/market/information/save", "POST",
@@ -874,9 +961,15 @@ private Client _client;
 
 
         /// <summary>
+<<<<<<< HEAD
+        /// Save Market Information for the specified list of markets. Post a <a onclick="dojo.hash('#type.SaveMarketInformationRequestDTO'); return false;" class="json-link" href="#">SaveMarketInformationRequestDTO</a> to the uri specified below.</p>
+        /// </summary>
+        /// <param name="listMarketInformationRequestSaveDTO">Save Market Information for the specified list of markets.  Post a <a onclick="dojo.hash('#type.SaveMarketInformationRequestDTO'); return false;" class="json-link" href="#">SaveMarketInformationRequestDTO</a> to the uri specified below.</p></param>
+=======
         /// Save Market Information for the specified list of markets.
         /// </summary>
         /// <param name="listMarketInformationRequestSaveDTO">Save Market Information for the specified list of markets.</param>
+>>>>>>> csharp_codegen
         /// <param name="callback"></param>
         /// <param name="state"></param>
         public virtual void BeginSaveMarketInformation(SaveMarketInformationRequestDTO listMarketInformationRequestSaveDTO, ApiAsyncCallback<ApiSaveMarketInformationResponseDTO> callback, object state)
@@ -894,19 +987,26 @@ private Client _client;
         }
 
 
+<<<<<<< HEAD
+=======
         }            
         public class _TradesAndOrders
         {
             private Client _client;
             public _TradesAndOrders(Client client){ this._client = client;}
 
+>>>>>>> csharp_codegen
         // ***********************************
         // Order
         // ***********************************
 
 
         /// <summary>
+<<<<<<< HEAD
+        /// <p>Place an order on a particular market. Post a <a onclick="dojo.hash('#type.NewStopLimitOrderRequestDTO'); return false;" class="json-link" href="#">NewStopLimitOrderRequestDTO</a> to the uri specified below.</p> <p>Do not set any order id fields when requesting a new order, the platform will generate them.</p>
+=======
         /// <p>Place an order on a particular market. <p>Do not set any order id fields when requesting a new order, the platform will generate them.</p>
+>>>>>>> csharp_codegen
         /// </summary>
         /// <param name="order">The order request.</param>
         public virtual ApiTradeOrderResponseDTO Order(NewStopLimitOrderRequestDTO order)
@@ -920,7 +1020,11 @@ private Client _client;
 
 
         /// <summary>
+<<<<<<< HEAD
+        /// <p>Place an order on a particular market. Post a <a onclick="dojo.hash('#type.NewStopLimitOrderRequestDTO'); return false;" class="json-link" href="#">NewStopLimitOrderRequestDTO</a> to the uri specified below.</p> <p>Do not set any order id fields when requesting a new order, the platform will generate them.</p>
+=======
         /// <p>Place an order on a particular market. <p>Do not set any order id fields when requesting a new order, the platform will generate them.</p>
+>>>>>>> csharp_codegen
         /// </summary>
         /// <param name="order">The order request.</param>
         /// <param name="callback"></param>
@@ -946,7 +1050,11 @@ private Client _client;
 
 
         /// <summary>
+<<<<<<< HEAD
+        /// <p>Cancel an order. Post a <a onclick="dojo.hash('#type.CancelOrderRequestDTO'); return false;" class="json-link" href="#">CancelOrderRequestDTO</a> to the uri specified below.</p>
+=======
         /// <p>Cancel an order.
+>>>>>>> csharp_codegen
         /// </summary>
         /// <param name="cancelOrder">The cancel order request.</param>
         public virtual ApiTradeOrderResponseDTO CancelOrder(CancelOrderRequestDTO cancelOrder)
@@ -960,7 +1068,11 @@ private Client _client;
 
 
         /// <summary>
+<<<<<<< HEAD
+        /// <p>Cancel an order. Post a <a onclick="dojo.hash('#type.CancelOrderRequestDTO'); return false;" class="json-link" href="#">CancelOrderRequestDTO</a> to the uri specified below.</p>
+=======
         /// <p>Cancel an order.
+>>>>>>> csharp_codegen
         /// </summary>
         /// <param name="cancelOrder">The cancel order request.</param>
         /// <param name="callback"></param>
@@ -986,7 +1098,11 @@ private Client _client;
 
 
         /// <summary>
+<<<<<<< HEAD
+        /// <p>Update an order (for adding a stop/limit or attaching an OCO relationship). Post an <a onclick="dojo.hash('#type.UpdateStopLimitOrderRequestDTO'); return false;" class="json-link" href="#">UpdateStopLimitOrderRequestDTO</a> to the uri specified below.</p>
+=======
         /// <p>Update an order (for adding a stop/limit or attaching an OCO relationship).
+>>>>>>> csharp_codegen
         /// </summary>
         /// <param name="order">The update order request.</param>
         public virtual ApiTradeOrderResponseDTO UpdateOrder(UpdateStopLimitOrderRequestDTO order)
@@ -1000,7 +1116,11 @@ private Client _client;
 
 
         /// <summary>
+<<<<<<< HEAD
+        /// <p>Update an order (for adding a stop/limit or attaching an OCO relationship). Post an <a onclick="dojo.hash('#type.UpdateStopLimitOrderRequestDTO'); return false;" class="json-link" href="#">UpdateStopLimitOrderRequestDTO</a> to the uri specified below.</p>
+=======
         /// <p>Update an order (for adding a stop/limit or attaching an OCO relationship).
+>>>>>>> csharp_codegen
         /// </summary>
         /// <param name="order">The update order request.</param>
         /// <param name="callback"></param>
@@ -1026,7 +1146,11 @@ private Client _client;
 
 
         /// <summary>
+<<<<<<< HEAD
+        /// <p>Queries for a specified trading account's trades / open positions.</p> <p>This uri is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call <a onclick="dojo.hash('#service.GetOpenPosition'); return false;" class="json-link" href="#">GetOpenPosition</a> when you get updates on the order stream to get the updated data in this format.</p>
+=======
         /// <p>Queries for a specified trading account's trades / open positions.</p> <p>This uri is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service GetOpenPosition when you get updates on the order stream to get the updated data in this format.</p>
+>>>>>>> csharp_codegen
         /// </summary>
         /// <param name="tradingAccountId">The trading account to get orders for.</param>
         public virtual ListOpenPositionsResponseDTO ListOpenPositions(int tradingAccountId)
@@ -1040,7 +1164,11 @@ private Client _client;
 
 
         /// <summary>
+<<<<<<< HEAD
+        /// <p>Queries for a specified trading account's trades / open positions.</p> <p>This uri is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call <a onclick="dojo.hash('#service.GetOpenPosition'); return false;" class="json-link" href="#">GetOpenPosition</a> when you get updates on the order stream to get the updated data in this format.</p>
+=======
         /// <p>Queries for a specified trading account's trades / open positions.</p> <p>This uri is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service GetOpenPosition when you get updates on the order stream to get the updated data in this format.</p>
+>>>>>>> csharp_codegen
         /// </summary>
         /// <param name="tradingAccountId">The trading account to get orders for.</param>
         /// <param name="callback"></param>
@@ -1066,7 +1194,11 @@ private Client _client;
 
 
         /// <summary>
+<<<<<<< HEAD
+        /// <p>Queries for a specified trading account's active stop / limit orders.</p> <p>This uri is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call <a onclick="dojo.hash('#service.GetActiveStopLimitOrder'); return false;" class="json-link" href="#">GetActiveStopLimitOrder</a> when you get updates on the order stream to get the updated data in this format.</p>
+=======
         /// <p>Queries for a specified trading account's active stop / limit orders.</p> <p>This uri is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service GetActiveStopLimitOrder when you get updates on the order stream to get the updated data in this format.</p>
+>>>>>>> csharp_codegen
         /// </summary>
         /// <param name="tradingAccountId">The trading account to get orders for.</param>
         public virtual ListActiveStopLimitOrderResponseDTO ListActiveStopLimitOrders(int tradingAccountId)
@@ -1080,7 +1212,11 @@ private Client _client;
 
 
         /// <summary>
+<<<<<<< HEAD
+        /// <p>Queries for a specified trading account's active stop / limit orders.</p> <p>This uri is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call <a onclick="dojo.hash('#service.GetActiveStopLimitOrder'); return false;" class="json-link" href="#">GetActiveStopLimitOrder</a> when you get updates on the order stream to get the updated data in this format.</p>
+=======
         /// <p>Queries for a specified trading account's active stop / limit orders.</p> <p>This uri is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service GetActiveStopLimitOrder when you get updates on the order stream to get the updated data in this format.</p>
+>>>>>>> csharp_codegen
         /// </summary>
         /// <param name="tradingAccountId">The trading account to get orders for.</param>
         /// <param name="callback"></param>
@@ -1106,7 +1242,11 @@ private Client _client;
 
 
         /// <summary>
+<<<<<<< HEAD
+        /// <p>Queries for an active stop limit order with a specified order id. It returns a null value if the order doesn't exist, or is not an active stop limit order.<p> <p>This uri is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call <a onclick="dojo.hash('#service.ListActiveStopLimitOrders'); return false;" class="json-link" href="#">ListActiveStopLimitOrders</a> for the initial data to display in the grid, and call this uri when you get updates on the order stream to get the updated data in this format.</p> <p>For a more comprehensive order response, see <a onclick="dojo.hash('#service.GetOrder'); return false;" class="json-link" href="#">GetOrder</a><p>
+=======
         /// <p>Queries for an active stop limit order with a specified order id. It returns a null value if the order doesn't exist, or is not an active stop limit order.<p> <p>This uri is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call the HTTP service ListActiveStopLimitOrders for the initial data to display in the grid, and call this uri when you get updates on the order stream to get the updated data in this format.</p> <p>For a more comprehensive order response, see the HTTP service GetOrder
+>>>>>>> csharp_codegen
         /// </summary>
         /// <param name="orderId">The requested order id.</param>
         public virtual GetActiveStopLimitOrderResponseDTO GetActiveStopLimitOrder(string orderId)
@@ -1120,7 +1260,11 @@ private Client _client;
 
 
         /// <summary>
+<<<<<<< HEAD
+        /// <p>Queries for an active stop limit order with a specified order id. It returns a null value if the order doesn't exist, or is not an active stop limit order.<p> <p>This uri is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call <a onclick="dojo.hash('#service.ListActiveStopLimitOrders'); return false;" class="json-link" href="#">ListActiveStopLimitOrders</a> for the initial data to display in the grid, and call this uri when you get updates on the order stream to get the updated data in this format.</p> <p>For a more comprehensive order response, see <a onclick="dojo.hash('#service.GetOrder'); return false;" class="json-link" href="#">GetOrder</a><p>
+=======
         /// <p>Queries for an active stop limit order with a specified order id. It returns a null value if the order doesn't exist, or is not an active stop limit order.<p> <p>This uri is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call the HTTP service ListActiveStopLimitOrders for the initial data to display in the grid, and call this uri when you get updates on the order stream to get the updated data in this format.</p> <p>For a more comprehensive order response, see the HTTP service GetOrder
+>>>>>>> csharp_codegen
         /// </summary>
         /// <param name="orderId">The requested order id.</param>
         /// <param name="callback"></param>
@@ -1146,7 +1290,11 @@ private Client _client;
 
 
         /// <summary>
+<<<<<<< HEAD
+        /// <p>Queries for a trade / open position with a specified order id. It returns a null value if the order doesn't exist, or is not a trade / open position.</p> <p>This uri is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call <a onclick="dojo.hash('#service.ListOpenPositions'); return false;" class="json-link" href="#">ListOpenPositions</a> for the initial data to display in the grid, and call this uri when you get updates on the order stream to get the updated data in this format.</p> <p>For a more comprehensive order response, see <a onclick="dojo.hash('#service.GetOrder'); return false;" class="json-link" href="#">GetOrder</a><p>
+=======
         /// <p>Queries for a trade / open position with a specified order id. It returns a null value if the order doesn't exist, or is not a trade / open position.</p> <p>This uri is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call the HTTP service ListOpenPositions for the initial data to display in the grid, and call this uri when you get updates on the order stream to get the updated data in this format.</p> <p>For a more comprehensive order response, see the HTTP service GetOrder
+>>>>>>> csharp_codegen
         /// </summary>
         /// <param name="orderId">The requested order id.</param>
         public virtual GetOpenPositionResponseDTO GetOpenPosition(string orderId)
@@ -1160,7 +1308,11 @@ private Client _client;
 
 
         /// <summary>
+<<<<<<< HEAD
+        /// <p>Queries for a trade / open position with a specified order id. It returns a null value if the order doesn't exist, or is not a trade / open position.</p> <p>This uri is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call <a onclick="dojo.hash('#service.ListOpenPositions'); return false;" class="json-link" href="#">ListOpenPositions</a> for the initial data to display in the grid, and call this uri when you get updates on the order stream to get the updated data in this format.</p> <p>For a more comprehensive order response, see <a onclick="dojo.hash('#service.GetOrder'); return false;" class="json-link" href="#">GetOrder</a><p>
+=======
         /// <p>Queries for a trade / open position with a specified order id. It returns a null value if the order doesn't exist, or is not a trade / open position.</p> <p>This uri is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call the HTTP service ListOpenPositions for the initial data to display in the grid, and call this uri when you get updates on the order stream to get the updated data in this format.</p> <p>For a more comprehensive order response, see the HTTP service GetOrder
+>>>>>>> csharp_codegen
         /// </summary>
         /// <param name="orderId">The requested order id.</param>
         /// <param name="callback"></param>
@@ -1186,7 +1338,11 @@ private Client _client;
 
 
         /// <summary>
+<<<<<<< HEAD
+        /// <p>Queries for a specified trading account's trade history. The result set will contain orders with a status of <b>(3 - Open, 9 - Closed)</b>, and includes <b>orders that were a trade / stop / limit order</b>.</p> <p>There's currently no corresponding GetTradeHistory (as with ListOpenPositions).</p>
+=======
         /// <p>Queries for a specified trading account's trade history. The result set will contain orders with a status of <b>(3 - Open, 9 - Closed)</b>, and includes <b>orders that were a trade / stop / limit order</b>.</p> <p>There's currently no corresponding GetTradeHistory (as with ListOpenPositions).
+>>>>>>> csharp_codegen
         /// </summary>
         /// <param name="tradingAccountId">The trading account to get orders for.</param>
         /// <param name="maxResults">The maximum number of results to return.</param>
@@ -1202,7 +1358,11 @@ private Client _client;
 
 
         /// <summary>
+<<<<<<< HEAD
+        /// <p>Queries for a specified trading account's trade history. The result set will contain orders with a status of <b>(3 - Open, 9 - Closed)</b>, and includes <b>orders that were a trade / stop / limit order</b>.</p> <p>There's currently no corresponding GetTradeHistory (as with ListOpenPositions).</p>
+=======
         /// <p>Queries for a specified trading account's trade history. The result set will contain orders with a status of <b>(3 - Open, 9 - Closed)</b>, and includes <b>orders that were a trade / stop / limit order</b>.</p> <p>There's currently no corresponding GetTradeHistory (as with ListOpenPositions).
+>>>>>>> csharp_codegen
         /// </summary>
         /// <param name="tradingAccountId">The trading account to get orders for.</param>
         /// <param name="maxResults">The maximum number of results to return.</param>
@@ -1314,7 +1474,11 @@ private Client _client;
 
 
         /// <summary>
+<<<<<<< HEAD
+        /// <p>Place a trade on a particular market. Post a <a onclick="dojo.hash('#type.NewTradeOrderRequestDTO'); return false;" class="json-link" href="#">NewTradeOrderRequestDTO</a> to the uri specified below.</p> <p>Do not set any order id fields when requesting a new trade, the platform will generate them.</p>
+=======
         /// <p>Place a trade on a particular market.</p> <p>Do not set any order id fields when requesting a new trade, the platform will generate them.</p>
+>>>>>>> csharp_codegen
         /// </summary>
         /// <param name="trade">The trade request.</param>
         public virtual ApiTradeOrderResponseDTO Trade(NewTradeOrderRequestDTO trade)
@@ -1328,7 +1492,11 @@ private Client _client;
 
 
         /// <summary>
+<<<<<<< HEAD
+        /// <p>Place a trade on a particular market. Post a <a onclick="dojo.hash('#type.NewTradeOrderRequestDTO'); return false;" class="json-link" href="#">NewTradeOrderRequestDTO</a> to the uri specified below.</p> <p>Do not set any order id fields when requesting a new trade, the platform will generate them.</p>
+=======
         /// <p>Place a trade on a particular market.</p> <p>Do not set any order id fields when requesting a new trade, the platform will generate them.</p>
+>>>>>>> csharp_codegen
         /// </summary>
         /// <param name="trade">The trade request.</param>
         /// <param name="callback"></param>
@@ -1354,7 +1522,11 @@ private Client _client;
 
 
         /// <summary>
+<<<<<<< HEAD
+        /// Update a trade (for adding a stop/limit etc). Post an <a onclick="dojo.hash('#type.UpdateTradeOrderRequestDTO'); return false;" class="json-link" href="#">UpdateTradeOrderRequestDTO</a> to the uri specified below.</p>
+=======
         /// Update a trade (for adding a stop/limit etc).
+>>>>>>> csharp_codegen
         /// </summary>
         /// <param name="update">The update trade request.</param>
         public virtual ApiTradeOrderResponseDTO UpdateTrade(UpdateTradeOrderRequestDTO update)
@@ -1368,7 +1540,11 @@ private Client _client;
 
 
         /// <summary>
+<<<<<<< HEAD
+        /// Update a trade (for adding a stop/limit etc). Post an <a onclick="dojo.hash('#type.UpdateTradeOrderRequestDTO'); return false;" class="json-link" href="#">UpdateTradeOrderRequestDTO</a> to the uri specified below.</p>
+=======
         /// Update a trade (for adding a stop/limit etc).
+>>>>>>> csharp_codegen
         /// </summary>
         /// <param name="update">The update trade request.</param>
         /// <param name="callback"></param>
@@ -1388,11 +1564,131 @@ private Client _client;
         }
 
 
+<<<<<<< HEAD
+        // ***********************************
+        // GetChartingEnabled
+        // ***********************************
+
+
+        /// <summary>
+        /// Checks whether the supplied User Account is allowed to see Charting Data.
+        /// </summary>
+        /// <param name="id">The User Account ID to check.</param>
+        public virtual bool GetChartingEnabled(string id)
+        {
+            return _client.Request<bool>("useraccount", "/UserAccount/{id}/ChartingEnabled", "GET",
+            new Dictionary<string, object>
+            {
+                { "id", id}
+            }, TimeSpan.FromMilliseconds(0), "data");
+        }
+
+
+        /// <summary>
+        /// Checks whether the supplied User Account is allowed to see Charting Data.
+        /// </summary>
+        /// <param name="id">The User Account ID to check.</param>
+        /// <param name="callback"></param>
+        /// <param name="state"></param>
+        public virtual void BeginGetChartingEnabled(string id, ApiAsyncCallback<bool> callback, object state)
+        {
+            _client.BeginRequest(callback, state, "useraccount", "/UserAccount/{id}/ChartingEnabled", "GET",
+            new Dictionary<string, object>
+            {
+                { "id", id}
+            }, TimeSpan.FromMilliseconds(0), "data");
+        }
+
+        public bool EndGetChartingEnabled(ApiAsyncResult<bool> asyncResult)
+        {
+            return _client.EndRequest(asyncResult);
+        }
+
+
+        // ***********************************
+        // GetClientAndTradingAccount
+        // ***********************************
+
+
+        /// <summary>
+        /// Returns the Users ClientAccountId and a list of their TradingAccounts. There are no parameters for this call.
+        /// </summary>
+        public virtual AccountInformationResponseDTO GetClientAndTradingAccount()
+        {
+            return _client.Request<AccountInformationResponseDTO>("useraccount", "/UserAccount/ClientAndTradingAccount", "GET",
+            new Dictionary<string, object>
+            {
+
+            }, TimeSpan.FromMilliseconds(0), "data");
+        }
+
+
+        /// <summary>
+        /// Returns the Users ClientAccountId and a list of their TradingAccounts. There are no parameters for this call.
+        /// </summary>
+        /// <param name="callback"></param>
+        /// <param name="state"></param>
+        public virtual void BeginGetClientAndTradingAccount( ApiAsyncCallback<AccountInformationResponseDTO> callback, object state)
+        {
+            _client.BeginRequest(callback, state, "useraccount", "/UserAccount/ClientAndTradingAccount", "GET",
+            new Dictionary<string, object>
+            {
+
+            }, TimeSpan.FromMilliseconds(0), "data");
+        }
+
+        public AccountInformationResponseDTO EndGetClientAndTradingAccount(ApiAsyncResult<AccountInformationResponseDTO> asyncResult)
+        {
+            return _client.EndRequest(asyncResult);
+        }
+
+
+        // ***********************************
+        // SaveAccountInformation
+        // ***********************************
+
+
+        /// <summary>
+        /// Saves the users account information.
+        /// </summary>
+        /// <param name="saveAccountInformationRequest">Saves the users account information.</param>
+        public virtual ApiSaveAccountInformationResponseDTO SaveAccountInformation(ApiSaveAccountInformationRequestDTO saveAccountInformationRequest)
+        {
+            return _client.Request<ApiSaveAccountInformationResponseDTO>("useraccount", "/UserAccount/Save", "POST",
+            new Dictionary<string, object>
+            {
+                { "saveAccountInformationRequest", saveAccountInformationRequest}
+            }, TimeSpan.FromMilliseconds(0), "data");
+        }
+
+
+        /// <summary>
+        /// Saves the users account information.
+        /// </summary>
+        /// <param name="saveAccountInformationRequest">Saves the users account information.</param>
+        /// <param name="callback"></param>
+        /// <param name="state"></param>
+        public virtual void BeginSaveAccountInformation(ApiSaveAccountInformationRequestDTO saveAccountInformationRequest, ApiAsyncCallback<ApiSaveAccountInformationResponseDTO> callback, object state)
+        {
+            _client.BeginRequest(callback, state, "useraccount", "/UserAccount/Save", "POST",
+            new Dictionary<string, object>
+            {
+                { "saveAccountInformationRequest", saveAccountInformationRequest}
+            }, TimeSpan.FromMilliseconds(0), "data");
+        }
+
+        public ApiSaveAccountInformationResponseDTO EndSaveAccountInformation(ApiAsyncResult<ApiSaveAccountInformationResponseDTO> asyncResult)
+        {
+            return _client.EndRequest(asyncResult);
+        }
+
+=======
         }            
         public class _Messaging
         {
             private Client _client;
             public _Messaging(Client client){ this._client = client;}
+>>>>>>> csharp_codegen
 
         // ***********************************
         // GetMessage
@@ -1622,12 +1918,15 @@ private Client _client;
         }
 
 
+<<<<<<< HEAD
+=======
         }            
         public class _Watchlist
         {
             private Client _client;
             public _Watchlist(Client client){ this._client = client;}
 
+>>>>>>> csharp_codegen
         // ***********************************
         // GetWatchlists
         // ***********************************
@@ -1677,7 +1976,11 @@ private Client _client;
         /// <param name="apiSaveWatchlistRequestDto">The watchlist to save.</param>
         public virtual ApiSaveWatchlistResponseDTO SaveWatchlist(ApiSaveWatchlistRequestDTO apiSaveWatchlistRequestDto)
         {
+<<<<<<< HEAD
+            return _client.Request<ApiSaveWatchlistResponseDTO>("watchlists", "/Save", "POST",
+=======
             return _client.Request<ApiSaveWatchlistResponseDTO>("watchlist", "/Save", "POST",
+>>>>>>> csharp_codegen
             new Dictionary<string, object>
             {
                 { "apiSaveWatchlistRequestDto", apiSaveWatchlistRequestDto}
@@ -1693,7 +1996,11 @@ private Client _client;
         /// <param name="state"></param>
         public virtual void BeginSaveWatchlist(ApiSaveWatchlistRequestDTO apiSaveWatchlistRequestDto, ApiAsyncCallback<ApiSaveWatchlistResponseDTO> callback, object state)
         {
+<<<<<<< HEAD
+            _client.BeginRequest(callback, state, "watchlists", "/Save", "POST",
+=======
             _client.BeginRequest(callback, state, "watchlist", "/Save", "POST",
+>>>>>>> csharp_codegen
             new Dictionary<string, object>
             {
                 { "apiSaveWatchlistRequestDto", apiSaveWatchlistRequestDto}
@@ -1717,7 +2024,11 @@ private Client _client;
         /// <param name="deleteWatchlistRequestDto">The watchlist to delete.</param>
         public virtual ApiDeleteWatchlistResponseDTO DeleteWatchlist(ApiDeleteWatchlistRequestDTO deleteWatchlistRequestDto)
         {
+<<<<<<< HEAD
+            return _client.Request<ApiDeleteWatchlistResponseDTO>("watchlists", "/delete", "POST",
+=======
             return _client.Request<ApiDeleteWatchlistResponseDTO>("watchlist", "/delete", "POST",
+>>>>>>> csharp_codegen
             new Dictionary<string, object>
             {
                 { "deleteWatchlistRequestDto", deleteWatchlistRequestDto}
@@ -1733,7 +2044,11 @@ private Client _client;
         /// <param name="state"></param>
         public virtual void BeginDeleteWatchlist(ApiDeleteWatchlistRequestDTO deleteWatchlistRequestDto, ApiAsyncCallback<ApiDeleteWatchlistResponseDTO> callback, object state)
         {
+<<<<<<< HEAD
+            _client.BeginRequest(callback, state, "watchlists", "/delete", "POST",
+=======
             _client.BeginRequest(callback, state, "watchlist", "/delete", "POST",
+>>>>>>> csharp_codegen
             new Dictionary<string, object>
             {
                 { "deleteWatchlistRequestDto", deleteWatchlistRequestDto}
@@ -1746,12 +2061,15 @@ private Client _client;
         }
 
 
+<<<<<<< HEAD
+=======
         }            
         public class _ExceptionHandling
         {
             private Client _client;
             public _ExceptionHandling(Client client){ this._client = client;}
 
+>>>>>>> csharp_codegen
         // ***********************************
         // GenerateException
         // ***********************************
@@ -1792,6 +2110,9 @@ private Client _client;
         }
 
 
+<<<<<<< HEAD
+=======
         }            
+>>>>>>> csharp_codegen
     }
 }

@@ -1,4 +1,4 @@
-﻿exports.smd = {
+{
     "SMDVersion": "2.6",
     "version": "1",
     "description": "CIAPI SMD",
@@ -969,7 +969,7 @@
                 },
                 "SaveWatchlist": {
                     "description": "Save watchlist.",
-                    "target": "watchlist",
+                    "target": "watchlists",
                     "uriTemplate": "/Save",
                     "contentType": "application/json",
                     "responseContentType": "application/json",
@@ -991,7 +991,7 @@
                 },
                 "DeleteWatchlist": {
                     "description": "Delete a watchlist.",
-                    "target": "watchlist",
+                    "target": "watchlists",
                     "uriTemplate": "/delete",
                     "contentType": "application/json",
                     "responseContentType": "application/json",

@@ -1,5 +1,3 @@
-﻿
-exports.schema =
 {
     "namespace": " CIAPI.DTO",
     "properties": {
@@ -194,6 +192,78 @@ exports.schema =
                 "Applicability": {
                     "type": "string",
                     "description": "Identifier which relates to the expiry of the order/trade, i.e. GoodTillDate (GTD), GoodTillCancelled (GTC) or GoodForDay (GFD)."
+                },
+                "OrderId": {
+                    "type": "integer",
+                    "minValue": -2147483648,
+                    "maxValue": 2147483647,
+                    "description": "The order identifier."
+                },
+                "MarketId": {
+                    "type": "integer",
+                    "minValue": -2147483648,
+                    "maxValue": 2147483647,
+                    "description": "A market's unique identifier."
+                },
+                "Direction": {
+                    "type": "string",
+                    "description": "Direction identifier for trade, values supported are buy or sell."
+                },
+                "Quantity": {
+                    "type": "number",
+                    "format": "decimal",
+                    "minValue": -7.9228162514264338E+28,
+                    "maxValue": 7.9228162514264338E+28,
+                    "description": "Size of the order."
+                },
+                "Price": {
+                    "type": [
+            "null",
+            "number"
+          ],
+                    "format": "decimal",
+                    "minValue": -7.9228162514264338E+28,
+                    "maxValue": 7.9228162514264338E+28,
+                    "description": "The price at which the order was filled."
+                },
+                "TradingAccountId": {
+                    "type": "integer",
+                    "minValue": -2147483648,
+                    "maxValue": 2147483647,
+                    "description": "The ID of the Trading Account associated with the order."
+                },
+                "CurrencyId": {
+                    "type": "integer",
+                    "minValue": -2147483648,
+                    "maxValue": 2147483647,
+                    "description": "Currency ID for order (as represented in the trading system)."
+                },
+                "StatusId": {
+                    "type": "integer",
+                    "minValue": -2147483648,
+                    "maxValue": 2147483647,
+                    "description": "Status ID of order (as represented in the trading system)."
+                },
+                "TypeId": {
+                    "type": "integer",
+                    "minValue": -2147483648,
+                    "maxValue": 2147483647,
+                    "description": "The type of the order, Trade, stop or limit."
+                },
+                "IfDone": {
+                    "type": "array",
+                    "items": [
+            {
+                "$ref": "#.ApiIfDoneDTO"
+            }
+          ],
+                    "description": "List of If/Done Orders which will be filled when the initial order is triggered."
+                },
+                "OcoOrder": {
+                    "type": {
+                        "$ref": "#.ApiStopLimitOrderDTO"
+                    },
+                    "description": "Corresponding Oco Order (One Cancels the Other)."
                 }
             },
             "description": "Represents a stop/limit order."
@@ -395,6 +465,43 @@ exports.schema =
                 "Code": {
                     "type": "string",
                     "description": "2 letter ISO 639 culture code followed by a 2 letter uppercase ISO 3166 culture code"
+                },
+                "Id": {
+                    "type": "integer",
+                    "minValue": -2147483648,
+                    "maxValue": 2147483647,
+                    "description": "The lookup ID."
+                },
+                "Description": {
+                    "type": "string",
+                    "description": "Lookup items description."
+                },
+                "DisplayOrder": {
+                    "type": "integer",
+                    "minValue": -2147483648,
+                    "maxValue": 2147483647,
+                    "description": "The order to display the items on a user interface."
+                },
+                "TranslationTextId": {
+                    "type": [
+            "null",
+            "integer"
+          ],
+                    "minValue": -2147483648,
+                    "maxValue": 2147483647,
+                    "description": "Translation text ID."
+                },
+                "TranslationText": {
+                    "type": "string",
+                    "description": "Translated text."
+                },
+                "IsActive": {
+                    "type": "boolean",
+                    "description": "Is active flag."
+                },
+                "IsAllowed": {
+                    "type": "boolean",
+                    "description": "Is allowed flag."
                 }
             },
             "description": "Lookup data specific to a Culture"
@@ -563,6 +670,21 @@ exports.schema =
                     "minLength": 0,
                     "maxLength": 2147483647,
                     "description": "The detail of the news story. This can contain HTML characters."
+                },
+                "StoryId": {
+                    "type": "integer",
+                    "minValue": -2147483648,
+                    "maxValue": 2147483647,
+                    "description": "The unique identifier for a news story."
+                },
+                "Headline": {
+                    "type": "string",
+                    "description": "The news story headline."
+                },
+                "PublishDate": {
+                    "type": "string",
+                    "format": "wcf-date",
+                    "description": "The date on which the news story was published. Always in UTC."
                 }
             },
             "description": "Contains details of a specific news story."
@@ -805,7 +927,80 @@ exports.schema =
             "id": "ApiTradeOrderDTO",
             "type": "object",
             "extends": "#/ApiOrderDTO",
-            "properties": {},
+            "properties": {
+                "OrderId": {
+                    "type": "integer",
+                    "minValue": -2147483648,
+                    "maxValue": 2147483647,
+                    "description": "The order identifier."
+                },
+                "MarketId": {
+                    "type": "integer",
+                    "minValue": -2147483648,
+                    "maxValue": 2147483647,
+                    "description": "A market's unique identifier."
+                },
+                "Direction": {
+                    "type": "string",
+                    "description": "Direction identifier for trade, values supported are buy or sell."
+                },
+                "Quantity": {
+                    "type": "number",
+                    "format": "decimal",
+                    "minValue": -7.9228162514264338E+28,
+                    "maxValue": 7.9228162514264338E+28,
+                    "description": "Size of the order."
+                },
+                "Price": {
+                    "type": [
+            "null",
+            "number"
+          ],
+                    "format": "decimal",
+                    "minValue": -7.9228162514264338E+28,
+                    "maxValue": 7.9228162514264338E+28,
+                    "description": "The price at which the order was filled."
+                },
+                "TradingAccountId": {
+                    "type": "integer",
+                    "minValue": -2147483648,
+                    "maxValue": 2147483647,
+                    "description": "The ID of the Trading Account associated with the order."
+                },
+                "CurrencyId": {
+                    "type": "integer",
+                    "minValue": -2147483648,
+                    "maxValue": 2147483647,
+                    "description": "Currency ID for order (as represented in the trading system)."
+                },
+                "StatusId": {
+                    "type": "integer",
+                    "minValue": -2147483648,
+                    "maxValue": 2147483647,
+                    "description": "Status ID of order (as represented in the trading system)."
+                },
+                "TypeId": {
+                    "type": "integer",
+                    "minValue": -2147483648,
+                    "maxValue": 2147483647,
+                    "description": "The type of the order, Trade, stop or limit."
+                },
+                "IfDone": {
+                    "type": "array",
+                    "items": [
+            {
+                "$ref": "#.ApiIfDoneDTO"
+            }
+          ],
+                    "description": "List of If/Done Orders which will be filled when the initial order is triggered."
+                },
+                "OcoOrder": {
+                    "type": {
+                        "$ref": "#.ApiStopLimitOrderDTO"
+                    },
+                    "description": "Corresponding Oco Order (One Cancels the Other)."
+                }
+            },
             "description": "Represents a trade order."
         },
         "OrderDTO": {
@@ -970,6 +1165,26 @@ exports.schema =
             }
           ],
                     "description": "The list of child tags associated with this market tag."
+                },
+                "MarketTagId": {
+                    "type": "integer",
+                    "minValue": -2147483648,
+                    "maxValue": 2147483647,
+                    "description": "A unique identifier for this market tag."
+                },
+                "Name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 120,
+                    "description": "The market tag description. Can be localised if required."
+                },
+                "Type": {
+                    "type": "integer",
+                    "minValue": -2147483648,
+                    "maxValue": 2147483647,
+                    "minLength": 1,
+                    "maxLength": 1,
+                    "description": "Used to determine if the market tag is a primary (1) or secondary (2) tag."
                 }
             },
             "description": "Market tag information extended to include a list o child tags."
@@ -1759,7 +1974,101 @@ exports.schema =
             "id": "UpdateStopLimitOrderRequestDTO",
             "type": "object",
             "extends": "#/NewStopLimitOrderRequestDTO",
-            "properties": {},
+            "properties": {
+                "OrderId": {
+                    "type": "integer",
+                    "minValue": -2147483648,
+                    "maxValue": 2147483647,
+                    "description": "The identifier of the order to update."
+                },
+                "MarketId": {
+                    "type": "integer",
+                    "minValue": -2147483648,
+                    "maxValue": 2147483647,
+                    "description": "The unique identifier for the market."
+                },
+                "Currency": {
+                    "type": "string",
+                    "description": "Currency to place order in."
+                },
+                "AutoRollover": {
+                    "type": "boolean",
+                    "description": "Flag to indicate whether the trade will automatically roll into the next market when the current market expires."
+                },
+                "Direction": {
+                    "type": "string",
+                    "description": "Direction identifier for order/trade, values supported are buy or sell."
+                },
+                "Quantity": {
+                    "type": "number",
+                    "format": "decimal",
+                    "minValue": -7.9228162514264338E+28,
+                    "maxValue": 7.9228162514264338E+28,
+                    "description": "Size of the order/trade."
+                },
+                "BidPrice": {
+                    "type": "number",
+                    "format": "decimal",
+                    "minValue": -7.9228162514264338E+28,
+                    "maxValue": 7.9228162514264338E+28,
+                    "description": "Market prices are quoted as a pair (buy/sell or bid/offer), the BidPrice is the lower of the two."
+                },
+                "OfferPrice": {
+                    "type": "number",
+                    "format": "decimal",
+                    "minValue": -7.9228162514264338E+28,
+                    "maxValue": 7.9228162514264338E+28,
+                    "description": "Market prices are quoted as a pair (buy/sell or bid/offer), the OfferPrice is the higher of the market price pair."
+                },
+                "AuditId": {
+                    "type": "string",
+                    "description": "Unique identifier for a price tick."
+                },
+                "TradingAccountId": {
+                    "type": "integer",
+                    "minValue": -2147483648,
+                    "maxValue": 2147483647,
+                    "description": "The ID of the TradingAccount associated with the trade/order request."
+                },
+                "IfDone": {
+                    "type": "array",
+                    "items": [
+            {
+                "$ref": "#.ApiIfDoneDTO"
+            }
+          ],
+                    "description": "List of If/Done Orders that will be filled when the initial trade/order is triggered."
+                },
+                "OcoOrder": {
+                    "type": {
+                        "$ref": "#.NewStopLimitOrderRequestDTO"
+                    },
+                    "description": "Corresponding OCO Order (One Cancels the Other) if one has been defined."
+                },
+                "Applicability": {
+                    "type": "string",
+                    "description": "Identifier which relates to the expiry of the order/trade, i.e. GoodTillDate (GTD), GoodTillCancelled (GTC) or GoodForDay (GFD)."
+                },
+                "ExpiryDateTimeUTC": {
+                    "type": [
+            "null",
+            "string"
+          ],
+                    "format": "wcf-date",
+                    "description": "The associated expiry DateTime for a pair of GoodTillDate IfDone orders."
+                },
+                "Guaranteed": {
+                    "type": "boolean",
+                    "description": "Flag to determine whether an order is guaranteed to trigger and fill at the associated trigger price."
+                },
+                "TriggerPrice": {
+                    "type": "number",
+                    "format": "decimal",
+                    "minValue": -7.9228162514264338E+28,
+                    "maxValue": 7.9228162514264338E+28,
+                    "description": "Price at which the order is intended to be triggered."
+                }
+            },
             "description": "A request for updating a stop/limit order"
         },
         "SystemStatusDTO": {
@@ -1844,7 +2153,62 @@ exports.schema =
             "id": "ApiStopLimitResponseDTO",
             "type": "object",
             "extends": "#/ApiOrderResponseDTO",
-            "properties": {},
+            "properties": {
+                "OrderId": {
+                    "type": "integer",
+                    "minValue": -2147483648,
+                    "maxValue": 2147483647,
+                    "description": "Order ID."
+                },
+                "StatusReason": {
+                    "type": "integer",
+                    "minValue": -2147483648,
+                    "maxValue": 2147483647,
+                    "description": "Order status reason ID."
+                },
+                "Status": {
+                    "type": "integer",
+                    "minValue": -2147483648,
+                    "maxValue": 2147483647,
+                    "description": "Order status ID."
+                },
+                "Price": {
+                    "type": "number",
+                    "format": "decimal",
+                    "minValue": -7.9228162514264338E+28,
+                    "maxValue": 7.9228162514264338E+28,
+                    "description": "Order fill price."
+                },
+                "CommissionCharge": {
+                    "type": "number",
+                    "format": "decimal",
+                    "minValue": -7.9228162514264338E+28,
+                    "maxValue": 7.9228162514264338E+28,
+                    "description": "Commission charge."
+                },
+                "IfDone": {
+                    "type": "array",
+                    "items": [
+            {
+                "$ref": "#.ApiIfDoneResponseDTO"
+            }
+          ],
+                    "description": "List of If/Done orders."
+                },
+                "GuaranteedPremium": {
+                    "type": "number",
+                    "format": "decimal",
+                    "minValue": -7.9228162514264338E+28,
+                    "maxValue": 7.9228162514264338E+28,
+                    "description": "Premium for guaranteed orders."
+                },
+                "OCO": {
+                    "type": {
+                        "$ref": "#.ApiOrderResponseDTO"
+                    },
+                    "description": "An order in an OCO relationship with this order."
+                }
+            },
             "description": "The response from the stop limit order request"
         },
         "ListCfdMarketsResponseDTO": {
@@ -2037,6 +2401,82 @@ exports.schema =
                     "minValue": -2147483648,
                     "maxValue": 2147483647,
                     "description": "Order identifier of the order to update"
+                },
+                "MarketId": {
+                    "type": "integer",
+                    "minValue": -2147483648,
+                    "maxValue": 2147483647,
+                    "description": "A market's unique identifier"
+                },
+                "Currency": {
+                    "type": "string",
+                    "description": "Currency to place order in"
+                },
+                "AutoRollover": {
+                    "type": "boolean",
+                    "description": "Flag to indicate whether the trade will automatically roll into the next market when the current market expires"
+                },
+                "Direction": {
+                    "type": "string",
+                    "description": "Direction identifier for order/trade, values supported are buy or sell"
+                },
+                "Quantity": {
+                    "type": "number",
+                    "format": "decimal",
+                    "minValue": -7.9228162514264338E+28,
+                    "maxValue": 7.9228162514264338E+28,
+                    "description": "Size of the order/trade"
+                },
+                "QuoteId": {
+                    "type": [
+            "null",
+            "integer"
+          ],
+                    "minValue": -2147483648,
+                    "maxValue": 2147483647,
+                    "description": "Quote Id"
+                },
+                "BidPrice": {
+                    "type": "number",
+                    "format": "decimal",
+                    "minValue": -7.9228162514264338E+28,
+                    "maxValue": 7.9228162514264338E+28,
+                    "description": "Market prices are quoted as a pair (buy/sell or bid/offer), the BidPrice is the lower of the two"
+                },
+                "OfferPrice": {
+                    "type": "number",
+                    "format": "decimal",
+                    "minValue": -7.9228162514264338E+28,
+                    "maxValue": 7.9228162514264338E+28,
+                    "description": "Market prices are quote as a pair (buy/sell or bid/offer), the OfferPrice is the higher of the market price pair"
+                },
+                "AuditId": {
+                    "type": "string",
+                    "description": "Unique identifier for a price tick"
+                },
+                "TradingAccountId": {
+                    "type": "integer",
+                    "minValue": -2147483648,
+                    "maxValue": 2147483647,
+                    "description": "TradingAccount associated with the trade/order request"
+                },
+                "IfDone": {
+                    "type": "array",
+                    "items": [
+            {
+                "$ref": "#.ApiIfDoneDTO"
+            }
+          ],
+                    "description": "List of IfDone Orders which will be filled when the initial trade/order is triggered"
+                },
+                "Close": {
+                    "type": "array",
+                    "items": [
+            "integer"
+          ],
+                    "minValue": -2147483648,
+                    "maxValue": 2147483647,
+                    "description": "List of existing order id's that require part or full closure"
                 }
             },
             "description": "A request for updating a trade order"
