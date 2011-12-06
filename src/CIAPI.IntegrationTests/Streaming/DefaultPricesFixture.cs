@@ -48,4 +48,34 @@ namespace CIAPI.IntegrationTests.Streaming
             Assert.Greater(tableOfPrices.Values.Count, 1, "We're expecting at least one price");
         }
     }
+
+    [TestFixture]
+    public class ClientAccountFixture : RpcFixtureBase
+    {
+        
+
+        [Test]
+        public void CanConsumeDefaultPricesStream()
+        {
+            var streamingClient = BuildStreamingClient();
+
+            var priceListener = streamingClient.BuildTradeMarginListener();
+
+
+
+            var gate = new AutoResetEvent(false);
+            priceListener.MessageReceived += (s, e) =>
+            {
+                
+                Console.WriteLine(e.Data.OrderId);
+                gate.Set();
+            };
+
+            gate.WaitOne(15000);
+
+            streamingClient.TearDownListener(priceListener);
+            streamingClient.Dispose();
+
+        }
+    }
 }
