@@ -71,7 +71,10 @@ namespace CIAPI.IntegrationTests.Streaming
                 gate.Set();
             };
 
-            gate.WaitOne(15000);
+            if (!gate.WaitOne(15000))
+            {
+                throw new TimeoutException();
+            }
 
             streamingClient.TearDownListener(priceListener);
             streamingClient.Dispose();
