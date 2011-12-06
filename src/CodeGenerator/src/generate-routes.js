@@ -3,7 +3,7 @@
 var schema = require("./meta/schema.json").schema;
 var smd = require("./meta/smd.json").smd;
 //var schemaPatch = require("./meta/schema.patch.js").schemaPatch;
-//var routesPatch = require("./meta/routes.patch.js").routesPatch;
+var routesPatch = require("./meta/routes.patch.js").routesPatch;
 
 var JSchemaProvider = require("./JSchemaProvider.js").JSchemaProvider;
 var CSharpVisitor = require("./JSchemaProvider.CSharpVisitor.js").CSharpVisitor;
@@ -33,7 +33,7 @@ provider.schema = schema;
 // FIXME: instigator should not take parameters
 provider.visit("root", schema, "schema");
 var output = visitor.toString();
-var rpcGenerator = new CSharpRouteGenerator(smd.services.rpc, schema, "CIAPI.Rpc", "Client", ["System", "System.Collections.Generic", "CityIndex.JsonClient", "CIAPI.DTO"], null);
+var rpcGenerator = new CSharpRouteGenerator(smd.services.rpc, schema, "CIAPI.Rpc", "Client", ["System", "System.Collections.Generic", "CityIndex.JsonClient", "CIAPI.DTO"], routesPatch);
 var rpcRoutes = rpcGenerator.generate();
 //var channelGenerator = new LSChannelGenerator();
 //var channels = channelGenerator.generateChannels(smd.services.streaming);

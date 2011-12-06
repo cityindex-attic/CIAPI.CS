@@ -7,10 +7,10 @@ namespace CIAPI.Rpc
     public partial class Client
     {
 
+      public _News News{get; private set;}
+      public _PriceHistory PriceHistory{get; private set;}
       public _Authentication Authentication{get; private set;}
       public _AccountInformation AccountInformation{get; private set;}
-      public _PriceHistory PriceHistory{get; private set;}
-      public _News News{get; private set;}
       public _CFDMarkets CFDMarkets{get; private set;}
       public _SpreadMarkets SpreadMarkets{get; private set;}
       public _Market Market{get; private set;}
@@ -24,10 +24,10 @@ private Client _client;
         {
         _client=this;
 
+            this. News = new _News(this);
+            this. PriceHistory = new _PriceHistory(this);
             this. Authentication = new _Authentication(this);
             this. AccountInformation = new _AccountInformation(this);
-            this. PriceHistory = new _PriceHistory(this);
-            this. News = new _News(this);
             this. CFDMarkets = new _CFDMarkets(this);
             this. SpreadMarkets = new _SpreadMarkets(this);
             this. Market = new _Market(this);
@@ -40,10 +40,10 @@ private Client _client;
             : base(uri, requestController)
         {
 
+            this. News = new _News(this);
+            this. PriceHistory = new _PriceHistory(this);
             this. Authentication = new _Authentication(this);
             this. AccountInformation = new _AccountInformation(this);
-            this. PriceHistory = new _PriceHistory(this);
-            this. News = new _News(this);
             this. CFDMarkets = new _CFDMarkets(this);
             this. SpreadMarkets = new _SpreadMarkets(this);
             this. Market = new _Market(this);
@@ -53,6 +53,202 @@ private Client _client;
             this. ExceptionHandling = new _ExceptionHandling(this);
         }            
 
+        public class _News
+        {
+            private Client _client;
+            public _News(Client client){ this._client = client;}
+
+        // ***********************************
+        // GetNewsDetail
+        // ***********************************
+
+
+        /// <summary>
+        /// Get the detail of a specific news story
+        /// </summary>
+        /// <param name="storyId">The news story Id</param>
+        public virtual GetNewsDetailResponseDTO GetNewsDetail(string storyId)
+        {
+            return _client.Request<GetNewsDetailResponseDTO>("news", "/{storyId}?Source={source}", "GET",
+            new Dictionary<string, object>
+            {
+                { "storyId", storyId}
+            }, TimeSpan.FromMilliseconds(10000), "data");
+        }
+
+
+        /// <summary>
+        /// Get the detail of a specific news story
+        /// </summary>
+        /// <param name="storyId">The news story Id</param>
+        /// <param name="callback"></param>
+        /// <param name="state"></param>
+        public virtual void BeginGetNewsDetail(string storyId, ApiAsyncCallback<GetNewsDetailResponseDTO> callback, object state)
+        {
+            _client.BeginRequest(callback, state, "news", "/{storyId}?Source={source}", "GET",
+            new Dictionary<string, object>
+            {
+                { "storyId", storyId}
+            }, TimeSpan.FromMilliseconds(10000), "data");
+        }
+
+        public GetNewsDetailResponseDTO EndGetNewsDetail(ApiAsyncResult<GetNewsDetailResponseDTO> asyncResult)
+        {
+            return _client.EndRequest(asyncResult);
+        }
+
+
+        // ***********************************
+        // ListNewsHeadlinesWithSource
+        // ***********************************
+
+
+        /// <summary>
+        /// Get a list of current news headlines
+        /// </summary>
+        /// <param name="source">The news feed source provider. Valid options are: dj|mni|ci.</param>
+        /// <param name="category">Filter headlines by category. Valid categories depend on the source used:  for dj: uk|aus, for ci: SEMINARSCHINA, for mni: ALL.</param>
+        /// <param name="maxResults">Specify the maximum number of headlines returned</param>
+        public virtual ListNewsHeadlinesResponseDTO ListNewsHeadlinesWithSource(string source, string category, int maxResults)
+        {
+            return _client.Request<ListNewsHeadlinesResponseDTO>("news", "/{source}/{category}?MaxResults={maxResults}", "GET",
+            new Dictionary<string, object>
+            {
+                { "source", source}, 
+                { "category", category}, 
+                { "maxResults", maxResults}
+            }, TimeSpan.FromMilliseconds(10000), "data");
+        }
+
+
+        /// <summary>
+        /// Get a list of current news headlines
+        /// </summary>
+        /// <param name="source">The news feed source provider. Valid options are: dj|mni|ci.</param>
+        /// <param name="category">Filter headlines by category. Valid categories depend on the source used:  for dj: uk|aus, for ci: SEMINARSCHINA, for mni: ALL.</param>
+        /// <param name="maxResults">Specify the maximum number of headlines returned</param>
+        /// <param name="callback"></param>
+        /// <param name="state"></param>
+        public virtual void BeginListNewsHeadlinesWithSource(string source, string category, int maxResults, ApiAsyncCallback<ListNewsHeadlinesResponseDTO> callback, object state)
+        {
+            _client.BeginRequest(callback, state, "news", "/{source}/{category}?MaxResults={maxResults}", "GET",
+            new Dictionary<string, object>
+            {
+                { "source", source}, 
+                { "category", category}, 
+                { "maxResults", maxResults}
+            }, TimeSpan.FromMilliseconds(10000), "data");
+        }
+
+        public ListNewsHeadlinesResponseDTO EndListNewsHeadlinesWithSource(ApiAsyncResult<ListNewsHeadlinesResponseDTO> asyncResult)
+        {
+            return _client.EndRequest(asyncResult);
+        }
+
+
+        }            
+        public class _PriceHistory
+        {
+            private Client _client;
+            public _PriceHistory(Client client){ this._client = client;}
+
+        // ***********************************
+        // GetPriceBars
+        // ***********************************
+
+
+        /// <summary>
+        /// Get historic price bars in OHLC (open, high, low, close) format, suitable for plotting candlestick chartsReturns price bars in ascending order up to the current time.When there are no prices per a particular time period, no price bar is returned. Thus, it can appear that the array of price bars has "gaps", i.e. the gap between the datetime of each price bar might not be equal to interval x spanSample Urls: /market/1234/history?interval=MINUTE&span=15&pricebars=180/market/735/history?interval=HOUR&span=1&pricebars=240/market/1577/history?interval=DAY&span=1&pricebars=10
+        /// </summary>
+        /// <param name="marketId">The marketId</param>
+        /// <param name="interval">The pricebar interval</param>
+        /// <param name="span">The number of each interval per pricebar.</param>
+        /// <param name="priceBars">The total number of pricebars to return</param>
+        public virtual GetPriceBarResponseDTO GetPriceBars(string marketId, string interval, int span, string priceBars)
+        {
+            return _client.Request<GetPriceBarResponseDTO>("market", "/{marketId}/barhistory?interval={interval}&span={span}&pricebars={priceBars}", "GET",
+            new Dictionary<string, object>
+            {
+                { "marketId", marketId}, 
+                { "interval", interval}, 
+                { "span", span}, 
+                { "priceBars", priceBars}
+            }, TimeSpan.FromMilliseconds(10000), "data");
+        }
+
+
+        /// <summary>
+        /// Get historic price bars in OHLC (open, high, low, close) format, suitable for plotting candlestick chartsReturns price bars in ascending order up to the current time.When there are no prices per a particular time period, no price bar is returned. Thus, it can appear that the array of price bars has "gaps", i.e. the gap between the datetime of each price bar might not be equal to interval x spanSample Urls: /market/1234/history?interval=MINUTE&span=15&pricebars=180/market/735/history?interval=HOUR&span=1&pricebars=240/market/1577/history?interval=DAY&span=1&pricebars=10
+        /// </summary>
+        /// <param name="marketId">The marketId</param>
+        /// <param name="interval">The pricebar interval</param>
+        /// <param name="span">The number of each interval per pricebar.</param>
+        /// <param name="priceBars">The total number of pricebars to return</param>
+        /// <param name="callback"></param>
+        /// <param name="state"></param>
+        public virtual void BeginGetPriceBars(string marketId, string interval, int span, string priceBars, ApiAsyncCallback<GetPriceBarResponseDTO> callback, object state)
+        {
+            _client.BeginRequest(callback, state, "market", "/{marketId}/barhistory?interval={interval}&span={span}&pricebars={priceBars}", "GET",
+            new Dictionary<string, object>
+            {
+                { "marketId", marketId}, 
+                { "interval", interval}, 
+                { "span", span}, 
+                { "priceBars", priceBars}
+            }, TimeSpan.FromMilliseconds(10000), "data");
+        }
+
+        public GetPriceBarResponseDTO EndGetPriceBars(ApiAsyncResult<GetPriceBarResponseDTO> asyncResult)
+        {
+            return _client.EndRequest(asyncResult);
+        }
+
+
+        // ***********************************
+        // GetPriceTicks
+        // ***********************************
+
+
+        /// <summary>
+        /// Get historic price ticks for the specified market. Returns price ticks in ascending order up to the current time. The length of time that elapses between each tick is usually different.
+        /// </summary>
+        /// <param name="marketId">The marketId.</param>
+        /// <param name="priceTicks">The total number of price ticks to return.</param>
+        public virtual GetPriceTickResponseDTO GetPriceTicks(string marketId, string priceTicks)
+        {
+            return _client.Request<GetPriceTickResponseDTO>("market", "/{marketId}/tickhistory?priceticks={priceTicks}", "GET",
+            new Dictionary<string, object>
+            {
+                { "marketId", marketId}, 
+                { "priceTicks", priceTicks}
+            }, TimeSpan.FromMilliseconds(0), "data");
+        }
+
+
+        /// <summary>
+        /// Get historic price ticks for the specified market. Returns price ticks in ascending order up to the current time. The length of time that elapses between each tick is usually different.
+        /// </summary>
+        /// <param name="marketId">The marketId.</param>
+        /// <param name="priceTicks">The total number of price ticks to return.</param>
+        /// <param name="callback"></param>
+        /// <param name="state"></param>
+        public virtual void BeginGetPriceTicks(string marketId, string priceTicks, ApiAsyncCallback<GetPriceTickResponseDTO> callback, object state)
+        {
+            _client.BeginRequest(callback, state, "market", "/{marketId}/tickhistory?priceticks={priceTicks}", "GET",
+            new Dictionary<string, object>
+            {
+                { "marketId", marketId}, 
+                { "priceTicks", priceTicks}
+            }, TimeSpan.FromMilliseconds(0), "data");
+        }
+
+        public GetPriceTickResponseDTO EndGetPriceTicks(ApiAsyncResult<GetPriceTickResponseDTO> asyncResult)
+        {
+            return _client.EndRequest(asyncResult);
+        }
+
+
+        }            
         public class _Authentication
         {
             private Client _client;
@@ -64,7 +260,7 @@ private Client _client;
 
 
         /// <summary>
-        /// Create a new session. This is how you "log on" to the CIAPI.
+        /// <p>Create a new session. This is how you "log on" to the CIAPI. Post a <a onclick="dojo.hash('#type.ApiLogOnRequestDTO'); return false;" class="json-link" href="#">ApiLogOnRequestDTO</a> to the uri specified in the following Service Info.</p>
         /// </summary>
         /// <param name="apiLogOnRequest">The request to create a session (log on).</param>
         internal virtual ApiLogOnResponseDTO LogOn(ApiLogOnRequestDTO apiLogOnRequest)
@@ -78,7 +274,7 @@ private Client _client;
 
 
         /// <summary>
-        /// Create a new session. This is how you "log on" to the CIAPI.
+        /// <p>Create a new session. This is how you "log on" to the CIAPI. Post a <a onclick="dojo.hash('#type.ApiLogOnRequestDTO'); return false;" class="json-link" href="#">ApiLogOnRequestDTO</a> to the uri specified in the following Service Info.</p>
         /// </summary>
         /// <param name="apiLogOnRequest">The request to create a session (log on).</param>
         /// <param name="callback"></param>
@@ -301,202 +497,6 @@ private Client _client;
         }
 
         public ApiSaveAccountInformationResponseDTO EndSaveAccountInformation(ApiAsyncResult<ApiSaveAccountInformationResponseDTO> asyncResult)
-        {
-            return _client.EndRequest(asyncResult);
-        }
-
-
-        }            
-        public class _PriceHistory
-        {
-            private Client _client;
-            public _PriceHistory(Client client){ this._client = client;}
-
-        // ***********************************
-        // GetPriceTicks
-        // ***********************************
-
-
-        /// <summary>
-        /// Get historic price ticks for the specified market. Returns price ticks in ascending order up to the current time. The length of time that elapses between each tick is usually different.
-        /// </summary>
-        /// <param name="marketId">The marketId.</param>
-        /// <param name="priceTicks">The total number of price ticks to return.</param>
-        public virtual GetPriceTickResponseDTO GetPriceTicks(string marketId, string priceTicks)
-        {
-            return _client.Request<GetPriceTickResponseDTO>("market", "/{marketId}/tickhistory?priceticks={priceTicks}", "GET",
-            new Dictionary<string, object>
-            {
-                { "marketId", marketId}, 
-                { "priceTicks", priceTicks}
-            }, TimeSpan.FromMilliseconds(0), "data");
-        }
-
-
-        /// <summary>
-        /// Get historic price ticks for the specified market. Returns price ticks in ascending order up to the current time. The length of time that elapses between each tick is usually different.
-        /// </summary>
-        /// <param name="marketId">The marketId.</param>
-        /// <param name="priceTicks">The total number of price ticks to return.</param>
-        /// <param name="callback"></param>
-        /// <param name="state"></param>
-        public virtual void BeginGetPriceTicks(string marketId, string priceTicks, ApiAsyncCallback<GetPriceTickResponseDTO> callback, object state)
-        {
-            _client.BeginRequest(callback, state, "market", "/{marketId}/tickhistory?priceticks={priceTicks}", "GET",
-            new Dictionary<string, object>
-            {
-                { "marketId", marketId}, 
-                { "priceTicks", priceTicks}
-            }, TimeSpan.FromMilliseconds(0), "data");
-        }
-
-        public GetPriceTickResponseDTO EndGetPriceTicks(ApiAsyncResult<GetPriceTickResponseDTO> asyncResult)
-        {
-            return _client.EndRequest(asyncResult);
-        }
-
-
-        // ***********************************
-        // GetPriceBars
-        // ***********************************
-
-
-        /// <summary>
-        /// Get historic price bars in OHLC (open, high, low, close) format, suitable for plotting candlestick chartsReturns price bars in ascending order up to the current time.When there are no prices per a particular time period, no price bar is returned. Thus, it can appear that the array of price bars has "gaps", i.e. the gap between the datetime of each price bar might not be equal to interval x spanSample Urls: /market/1234/history?interval=MINUTE&span=15&pricebars=180/market/735/history?interval=HOUR&span=1&pricebars=240/market/1577/history?interval=DAY&span=1&pricebars=10
-        /// </summary>
-        /// <param name="marketId">The marketId</param>
-        /// <param name="interval">The pricebar interval</param>
-        /// <param name="span">The number of each interval per pricebar.</param>
-        /// <param name="priceBars">The total number of pricebars to return</param>
-        public virtual GetPriceBarResponseDTO GetPriceBars(string marketId, string interval, int span, string priceBars)
-        {
-            return _client.Request<GetPriceBarResponseDTO>("market", "/{marketId}/barhistory?interval={interval}&span={span}&pricebars={priceBars}", "GET",
-            new Dictionary<string, object>
-            {
-                { "marketId", marketId}, 
-                { "interval", interval}, 
-                { "span", span}, 
-                { "priceBars", priceBars}
-            }, TimeSpan.FromMilliseconds(10000), "data");
-        }
-
-
-        /// <summary>
-        /// Get historic price bars in OHLC (open, high, low, close) format, suitable for plotting candlestick chartsReturns price bars in ascending order up to the current time.When there are no prices per a particular time period, no price bar is returned. Thus, it can appear that the array of price bars has "gaps", i.e. the gap between the datetime of each price bar might not be equal to interval x spanSample Urls: /market/1234/history?interval=MINUTE&span=15&pricebars=180/market/735/history?interval=HOUR&span=1&pricebars=240/market/1577/history?interval=DAY&span=1&pricebars=10
-        /// </summary>
-        /// <param name="marketId">The marketId</param>
-        /// <param name="interval">The pricebar interval</param>
-        /// <param name="span">The number of each interval per pricebar.</param>
-        /// <param name="priceBars">The total number of pricebars to return</param>
-        /// <param name="callback"></param>
-        /// <param name="state"></param>
-        public virtual void BeginGetPriceBars(string marketId, string interval, int span, string priceBars, ApiAsyncCallback<GetPriceBarResponseDTO> callback, object state)
-        {
-            _client.BeginRequest(callback, state, "market", "/{marketId}/barhistory?interval={interval}&span={span}&pricebars={priceBars}", "GET",
-            new Dictionary<string, object>
-            {
-                { "marketId", marketId}, 
-                { "interval", interval}, 
-                { "span", span}, 
-                { "priceBars", priceBars}
-            }, TimeSpan.FromMilliseconds(10000), "data");
-        }
-
-        public GetPriceBarResponseDTO EndGetPriceBars(ApiAsyncResult<GetPriceBarResponseDTO> asyncResult)
-        {
-            return _client.EndRequest(asyncResult);
-        }
-
-
-        }            
-        public class _News
-        {
-            private Client _client;
-            public _News(Client client){ this._client = client;}
-
-        // ***********************************
-        // GetNewsDetail
-        // ***********************************
-
-
-        /// <summary>
-        /// Get the detail of a specific news story
-        /// </summary>
-        /// <param name="storyId">The news story Id</param>
-        public virtual GetNewsDetailResponseDTO GetNewsDetail(string storyId)
-        {
-            return _client.Request<GetNewsDetailResponseDTO>("news", "/{storyId}?Source={source}", "GET",
-            new Dictionary<string, object>
-            {
-                { "storyId", storyId}
-            }, TimeSpan.FromMilliseconds(10000), "data");
-        }
-
-
-        /// <summary>
-        /// Get the detail of a specific news story
-        /// </summary>
-        /// <param name="storyId">The news story Id</param>
-        /// <param name="callback"></param>
-        /// <param name="state"></param>
-        public virtual void BeginGetNewsDetail(string storyId, ApiAsyncCallback<GetNewsDetailResponseDTO> callback, object state)
-        {
-            _client.BeginRequest(callback, state, "news", "/{storyId}?Source={source}", "GET",
-            new Dictionary<string, object>
-            {
-                { "storyId", storyId}
-            }, TimeSpan.FromMilliseconds(10000), "data");
-        }
-
-        public GetNewsDetailResponseDTO EndGetNewsDetail(ApiAsyncResult<GetNewsDetailResponseDTO> asyncResult)
-        {
-            return _client.EndRequest(asyncResult);
-        }
-
-
-        // ***********************************
-        // ListNewsHeadlinesWithSource
-        // ***********************************
-
-
-        /// <summary>
-        /// Get a list of current news headlines
-        /// </summary>
-        /// <param name="source">The news feed source provider. Valid options are: dj|mni|ci.</param>
-        /// <param name="category">Filter headlines by category. Valid categories depend on the source used:  for dj: uk|aus, for ci: SEMINARSCHINA, for mni: ALL.</param>
-        /// <param name="maxResults">Specify the maximum number of headlines returned</param>
-        public virtual ListNewsHeadlinesResponseDTO ListNewsHeadlinesWithSource(string source, string category, int maxResults)
-        {
-            return _client.Request<ListNewsHeadlinesResponseDTO>("news", "/{source}/{category}?MaxResults={maxResults}", "GET",
-            new Dictionary<string, object>
-            {
-                { "source", source}, 
-                { "category", category}, 
-                { "maxResults", maxResults}
-            }, TimeSpan.FromMilliseconds(10000), "data");
-        }
-
-
-        /// <summary>
-        /// Get a list of current news headlines
-        /// </summary>
-        /// <param name="source">The news feed source provider. Valid options are: dj|mni|ci.</param>
-        /// <param name="category">Filter headlines by category. Valid categories depend on the source used:  for dj: uk|aus, for ci: SEMINARSCHINA, for mni: ALL.</param>
-        /// <param name="maxResults">Specify the maximum number of headlines returned</param>
-        /// <param name="callback"></param>
-        /// <param name="state"></param>
-        public virtual void BeginListNewsHeadlinesWithSource(string source, string category, int maxResults, ApiAsyncCallback<ListNewsHeadlinesResponseDTO> callback, object state)
-        {
-            _client.BeginRequest(callback, state, "news", "/{source}/{category}?MaxResults={maxResults}", "GET",
-            new Dictionary<string, object>
-            {
-                { "source", source}, 
-                { "category", category}, 
-                { "maxResults", maxResults}
-            }, TimeSpan.FromMilliseconds(10000), "data");
-        }
-
-        public ListNewsHeadlinesResponseDTO EndListNewsHeadlinesWithSource(ApiAsyncResult<ListNewsHeadlinesResponseDTO> asyncResult)
         {
             return _client.EndRequest(asyncResult);
         }
@@ -734,7 +734,7 @@ private Client _client;
 
 
         /// <summary>
-        /// Get market information and tags for the markets that meet the search criteria.
+        /// <p>Get market information and tags for the markets that meet the search criteria.</p>
         /// </summary>
         /// <param name="query">The text to search for. Matches part of market name / code from the start.</param>
         /// <param name="tagId">The ID for the tag to be searched (optional).</param>
@@ -752,7 +752,7 @@ private Client _client;
 
 
         /// <summary>
-        /// Get market information and tags for the markets that meet the search criteria.
+        /// <p>Get market information and tags for the markets that meet the search criteria.</p>
         /// </summary>
         /// <param name="query">The text to search for. Matches part of market name / code from the start.</param>
         /// <param name="tagId">The ID for the tag to be searched (optional).</param>
@@ -820,9 +820,9 @@ private Client _client;
 
 
         /// <summary>
-        /// Get Market Information for the specified list of markets.
+        /// <p>Get Market Information for the specified list of markets. Post a <a onclick="dojo.hash('#type.ListMarketInformationRequestDTO'); return false;" class="json-link" href="#">ListMarketInformationRequestDTO</a> to the uri specified below.</p>
         /// </summary>
-        /// <param name="listMarketInformationRequestDTO">Get Market Information for the specified list of markets.</param>
+        /// <param name="listMarketInformationRequestDTO"><p>Get Market Information for the specified list of markets.  Post a <a onclick="dojo.hash('#type.ListMarketInformationRequestDTO'); return false;" class="json-link" href="#">ListMarketInformationRequestDTO</a> to the uri specified below.</p></param>
         public virtual ListMarketInformationResponseDTO ListMarketInformation(ListMarketInformationRequestDTO listMarketInformationRequestDTO)
         {
             return _client.Request<ListMarketInformationResponseDTO>("market", "/market/information", "POST",
@@ -834,9 +834,9 @@ private Client _client;
 
 
         /// <summary>
-        /// Get Market Information for the specified list of markets.
+        /// <p>Get Market Information for the specified list of markets. Post a <a onclick="dojo.hash('#type.ListMarketInformationRequestDTO'); return false;" class="json-link" href="#">ListMarketInformationRequestDTO</a> to the uri specified below.</p>
         /// </summary>
-        /// <param name="listMarketInformationRequestDTO">Get Market Information for the specified list of markets.</param>
+        /// <param name="listMarketInformationRequestDTO"><p>Get Market Information for the specified list of markets.  Post a <a onclick="dojo.hash('#type.ListMarketInformationRequestDTO'); return false;" class="json-link" href="#">ListMarketInformationRequestDTO</a> to the uri specified below.</p></param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
         public virtual void BeginListMarketInformation(ListMarketInformationRequestDTO listMarketInformationRequestDTO, ApiAsyncCallback<ListMarketInformationResponseDTO> callback, object state)
@@ -860,9 +860,9 @@ private Client _client;
 
 
         /// <summary>
-        /// Save Market Information for the specified list of markets.
+        /// Save Market Information for the specified list of markets. Post a <a onclick="dojo.hash('#type.SaveMarketInformationRequestDTO'); return false;" class="json-link" href="#">SaveMarketInformationRequestDTO</a> to the uri specified below.</p>
         /// </summary>
-        /// <param name="listMarketInformationRequestSaveDTO">Save Market Information for the specified list of markets.</param>
+        /// <param name="listMarketInformationRequestSaveDTO">Save Market Information for the specified list of markets.  Post a <a onclick="dojo.hash('#type.SaveMarketInformationRequestDTO'); return false;" class="json-link" href="#">SaveMarketInformationRequestDTO</a> to the uri specified below.</p></param>
         public virtual ApiSaveMarketInformationResponseDTO SaveMarketInformation(SaveMarketInformationRequestDTO listMarketInformationRequestSaveDTO)
         {
             return _client.Request<ApiSaveMarketInformationResponseDTO>("market", "/market/information/save", "POST",
@@ -874,9 +874,9 @@ private Client _client;
 
 
         /// <summary>
-        /// Save Market Information for the specified list of markets.
+        /// Save Market Information for the specified list of markets. Post a <a onclick="dojo.hash('#type.SaveMarketInformationRequestDTO'); return false;" class="json-link" href="#">SaveMarketInformationRequestDTO</a> to the uri specified below.</p>
         /// </summary>
-        /// <param name="listMarketInformationRequestSaveDTO">Save Market Information for the specified list of markets.</param>
+        /// <param name="listMarketInformationRequestSaveDTO">Save Market Information for the specified list of markets.  Post a <a onclick="dojo.hash('#type.SaveMarketInformationRequestDTO'); return false;" class="json-link" href="#">SaveMarketInformationRequestDTO</a> to the uri specified below.</p></param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
         public virtual void BeginSaveMarketInformation(SaveMarketInformationRequestDTO listMarketInformationRequestSaveDTO, ApiAsyncCallback<ApiSaveMarketInformationResponseDTO> callback, object state)
@@ -906,7 +906,7 @@ private Client _client;
 
 
         /// <summary>
-        /// <p>Place an order on a particular market. <p>Do not set any order id fields when requesting a new order, the platform will generate them.</p>
+        /// <p>Place an order on a particular market. Post a <a onclick="dojo.hash('#type.NewStopLimitOrderRequestDTO'); return false;" class="json-link" href="#">NewStopLimitOrderRequestDTO</a> to the uri specified below.</p> <p>Do not set any order id fields when requesting a new order, the platform will generate them.</p>
         /// </summary>
         /// <param name="order">The order request.</param>
         public virtual ApiTradeOrderResponseDTO Order(NewStopLimitOrderRequestDTO order)
@@ -920,7 +920,7 @@ private Client _client;
 
 
         /// <summary>
-        /// <p>Place an order on a particular market. <p>Do not set any order id fields when requesting a new order, the platform will generate them.</p>
+        /// <p>Place an order on a particular market. Post a <a onclick="dojo.hash('#type.NewStopLimitOrderRequestDTO'); return false;" class="json-link" href="#">NewStopLimitOrderRequestDTO</a> to the uri specified below.</p> <p>Do not set any order id fields when requesting a new order, the platform will generate them.</p>
         /// </summary>
         /// <param name="order">The order request.</param>
         /// <param name="callback"></param>
@@ -946,7 +946,7 @@ private Client _client;
 
 
         /// <summary>
-        /// <p>Cancel an order.
+        /// <p>Cancel an order. Post a <a onclick="dojo.hash('#type.CancelOrderRequestDTO'); return false;" class="json-link" href="#">CancelOrderRequestDTO</a> to the uri specified below.</p>
         /// </summary>
         /// <param name="cancelOrder">The cancel order request.</param>
         public virtual ApiTradeOrderResponseDTO CancelOrder(CancelOrderRequestDTO cancelOrder)
@@ -960,7 +960,7 @@ private Client _client;
 
 
         /// <summary>
-        /// <p>Cancel an order.
+        /// <p>Cancel an order. Post a <a onclick="dojo.hash('#type.CancelOrderRequestDTO'); return false;" class="json-link" href="#">CancelOrderRequestDTO</a> to the uri specified below.</p>
         /// </summary>
         /// <param name="cancelOrder">The cancel order request.</param>
         /// <param name="callback"></param>
@@ -986,7 +986,7 @@ private Client _client;
 
 
         /// <summary>
-        /// <p>Update an order (for adding a stop/limit or attaching an OCO relationship).
+        /// <p>Update an order (for adding a stop/limit or attaching an OCO relationship). Post an <a onclick="dojo.hash('#type.UpdateStopLimitOrderRequestDTO'); return false;" class="json-link" href="#">UpdateStopLimitOrderRequestDTO</a> to the uri specified below.</p>
         /// </summary>
         /// <param name="order">The update order request.</param>
         public virtual ApiTradeOrderResponseDTO UpdateOrder(UpdateStopLimitOrderRequestDTO order)
@@ -1000,7 +1000,7 @@ private Client _client;
 
 
         /// <summary>
-        /// <p>Update an order (for adding a stop/limit or attaching an OCO relationship).
+        /// <p>Update an order (for adding a stop/limit or attaching an OCO relationship). Post an <a onclick="dojo.hash('#type.UpdateStopLimitOrderRequestDTO'); return false;" class="json-link" href="#">UpdateStopLimitOrderRequestDTO</a> to the uri specified below.</p>
         /// </summary>
         /// <param name="order">The update order request.</param>
         /// <param name="callback"></param>
@@ -1026,7 +1026,7 @@ private Client _client;
 
 
         /// <summary>
-        /// <p>Queries for a specified trading account's trades / open positions.</p> <p>This uri is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service GetOpenPosition when you get updates on the order stream to get the updated data in this format.</p>
+        /// <p>Queries for a specified trading account's trades / open positions.</p> <p>This uri is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call <a onclick="dojo.hash('#service.GetOpenPosition'); return false;" class="json-link" href="#">GetOpenPosition</a> when you get updates on the order stream to get the updated data in this format.</p>
         /// </summary>
         /// <param name="tradingAccountId">The trading account to get orders for.</param>
         public virtual ListOpenPositionsResponseDTO ListOpenPositions(int tradingAccountId)
@@ -1040,7 +1040,7 @@ private Client _client;
 
 
         /// <summary>
-        /// <p>Queries for a specified trading account's trades / open positions.</p> <p>This uri is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service GetOpenPosition when you get updates on the order stream to get the updated data in this format.</p>
+        /// <p>Queries for a specified trading account's trades / open positions.</p> <p>This uri is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call <a onclick="dojo.hash('#service.GetOpenPosition'); return false;" class="json-link" href="#">GetOpenPosition</a> when you get updates on the order stream to get the updated data in this format.</p>
         /// </summary>
         /// <param name="tradingAccountId">The trading account to get orders for.</param>
         /// <param name="callback"></param>
@@ -1066,7 +1066,7 @@ private Client _client;
 
 
         /// <summary>
-        /// <p>Queries for a specified trading account's active stop / limit orders.</p> <p>This uri is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service GetActiveStopLimitOrder when you get updates on the order stream to get the updated data in this format.</p>
+        /// <p>Queries for a specified trading account's active stop / limit orders.</p> <p>This uri is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call <a onclick="dojo.hash('#service.GetActiveStopLimitOrder'); return false;" class="json-link" href="#">GetActiveStopLimitOrder</a> when you get updates on the order stream to get the updated data in this format.</p>
         /// </summary>
         /// <param name="tradingAccountId">The trading account to get orders for.</param>
         public virtual ListActiveStopLimitOrderResponseDTO ListActiveStopLimitOrders(int tradingAccountId)
@@ -1080,7 +1080,7 @@ private Client _client;
 
 
         /// <summary>
-        /// <p>Queries for a specified trading account's active stop / limit orders.</p> <p>This uri is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service GetActiveStopLimitOrder when you get updates on the order stream to get the updated data in this format.</p>
+        /// <p>Queries for a specified trading account's active stop / limit orders.</p> <p>This uri is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call <a onclick="dojo.hash('#service.GetActiveStopLimitOrder'); return false;" class="json-link" href="#">GetActiveStopLimitOrder</a> when you get updates on the order stream to get the updated data in this format.</p>
         /// </summary>
         /// <param name="tradingAccountId">The trading account to get orders for.</param>
         /// <param name="callback"></param>
@@ -1106,7 +1106,7 @@ private Client _client;
 
 
         /// <summary>
-        /// <p>Queries for an active stop limit order with a specified order id. It returns a null value if the order doesn't exist, or is not an active stop limit order.<p> <p>This uri is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call the HTTP service ListActiveStopLimitOrders for the initial data to display in the grid, and call this uri when you get updates on the order stream to get the updated data in this format.</p> <p>For a more comprehensive order response, see the HTTP service GetOrder
+        /// <p>Queries for an active stop limit order with a specified order id. It returns a null value if the order doesn't exist, or is not an active stop limit order.<p> <p>This uri is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call <a onclick="dojo.hash('#service.ListActiveStopLimitOrders'); return false;" class="json-link" href="#">ListActiveStopLimitOrders</a> for the initial data to display in the grid, and call this uri when you get updates on the order stream to get the updated data in this format.</p> <p>For a more comprehensive order response, see <a onclick="dojo.hash('#service.GetOrder'); return false;" class="json-link" href="#">GetOrder</a><p>
         /// </summary>
         /// <param name="orderId">The requested order id.</param>
         public virtual GetActiveStopLimitOrderResponseDTO GetActiveStopLimitOrder(string orderId)
@@ -1120,7 +1120,7 @@ private Client _client;
 
 
         /// <summary>
-        /// <p>Queries for an active stop limit order with a specified order id. It returns a null value if the order doesn't exist, or is not an active stop limit order.<p> <p>This uri is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call the HTTP service ListActiveStopLimitOrders for the initial data to display in the grid, and call this uri when you get updates on the order stream to get the updated data in this format.</p> <p>For a more comprehensive order response, see the HTTP service GetOrder
+        /// <p>Queries for an active stop limit order with a specified order id. It returns a null value if the order doesn't exist, or is not an active stop limit order.<p> <p>This uri is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call <a onclick="dojo.hash('#service.ListActiveStopLimitOrders'); return false;" class="json-link" href="#">ListActiveStopLimitOrders</a> for the initial data to display in the grid, and call this uri when you get updates on the order stream to get the updated data in this format.</p> <p>For a more comprehensive order response, see <a onclick="dojo.hash('#service.GetOrder'); return false;" class="json-link" href="#">GetOrder</a><p>
         /// </summary>
         /// <param name="orderId">The requested order id.</param>
         /// <param name="callback"></param>
@@ -1146,7 +1146,7 @@ private Client _client;
 
 
         /// <summary>
-        /// <p>Queries for a trade / open position with a specified order id. It returns a null value if the order doesn't exist, or is not a trade / open position.</p> <p>This uri is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call the HTTP service ListOpenPositions for the initial data to display in the grid, and call this uri when you get updates on the order stream to get the updated data in this format.</p> <p>For a more comprehensive order response, see the HTTP service GetOrder
+        /// <p>Queries for a trade / open position with a specified order id. It returns a null value if the order doesn't exist, or is not a trade / open position.</p> <p>This uri is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call <a onclick="dojo.hash('#service.ListOpenPositions'); return false;" class="json-link" href="#">ListOpenPositions</a> for the initial data to display in the grid, and call this uri when you get updates on the order stream to get the updated data in this format.</p> <p>For a more comprehensive order response, see <a onclick="dojo.hash('#service.GetOrder'); return false;" class="json-link" href="#">GetOrder</a><p>
         /// </summary>
         /// <param name="orderId">The requested order id.</param>
         public virtual GetOpenPositionResponseDTO GetOpenPosition(string orderId)
@@ -1160,7 +1160,7 @@ private Client _client;
 
 
         /// <summary>
-        /// <p>Queries for a trade / open position with a specified order id. It returns a null value if the order doesn't exist, or is not a trade / open position.</p> <p>This uri is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call the HTTP service ListOpenPositions for the initial data to display in the grid, and call this uri when you get updates on the order stream to get the updated data in this format.</p> <p>For a more comprehensive order response, see the HTTP service GetOrder
+        /// <p>Queries for a trade / open position with a specified order id. It returns a null value if the order doesn't exist, or is not a trade / open position.</p> <p>This uri is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call <a onclick="dojo.hash('#service.ListOpenPositions'); return false;" class="json-link" href="#">ListOpenPositions</a> for the initial data to display in the grid, and call this uri when you get updates on the order stream to get the updated data in this format.</p> <p>For a more comprehensive order response, see <a onclick="dojo.hash('#service.GetOrder'); return false;" class="json-link" href="#">GetOrder</a><p>
         /// </summary>
         /// <param name="orderId">The requested order id.</param>
         /// <param name="callback"></param>
@@ -1186,7 +1186,7 @@ private Client _client;
 
 
         /// <summary>
-        /// <p>Queries for a specified trading account's trade history. The result set will contain orders with a status of <b>(3 - Open, 9 - Closed)</b>, and includes <b>orders that were a trade / stop / limit order</b>.</p> <p>There's currently no corresponding GetTradeHistory (as with ListOpenPositions).
+        /// <p>Queries for a specified trading account's trade history. The result set will contain orders with a status of <b>(3 - Open, 9 - Closed)</b>, and includes <b>orders that were a trade / stop / limit order</b>.</p> <p>There's currently no corresponding GetTradeHistory (as with ListOpenPositions).</p>
         /// </summary>
         /// <param name="tradingAccountId">The trading account to get orders for.</param>
         /// <param name="maxResults">The maximum number of results to return.</param>
@@ -1202,7 +1202,7 @@ private Client _client;
 
 
         /// <summary>
-        /// <p>Queries for a specified trading account's trade history. The result set will contain orders with a status of <b>(3 - Open, 9 - Closed)</b>, and includes <b>orders that were a trade / stop / limit order</b>.</p> <p>There's currently no corresponding GetTradeHistory (as with ListOpenPositions).
+        /// <p>Queries for a specified trading account's trade history. The result set will contain orders with a status of <b>(3 - Open, 9 - Closed)</b>, and includes <b>orders that were a trade / stop / limit order</b>.</p> <p>There's currently no corresponding GetTradeHistory (as with ListOpenPositions).</p>
         /// </summary>
         /// <param name="tradingAccountId">The trading account to get orders for.</param>
         /// <param name="maxResults">The maximum number of results to return.</param>
@@ -1314,7 +1314,7 @@ private Client _client;
 
 
         /// <summary>
-        /// <p>Place a trade on a particular market.</p> <p>Do not set any order id fields when requesting a new trade, the platform will generate them.</p>
+        /// <p>Place a trade on a particular market. Post a <a onclick="dojo.hash('#type.NewTradeOrderRequestDTO'); return false;" class="json-link" href="#">NewTradeOrderRequestDTO</a> to the uri specified below.</p> <p>Do not set any order id fields when requesting a new trade, the platform will generate them.</p>
         /// </summary>
         /// <param name="trade">The trade request.</param>
         public virtual ApiTradeOrderResponseDTO Trade(NewTradeOrderRequestDTO trade)
@@ -1328,7 +1328,7 @@ private Client _client;
 
 
         /// <summary>
-        /// <p>Place a trade on a particular market.</p> <p>Do not set any order id fields when requesting a new trade, the platform will generate them.</p>
+        /// <p>Place a trade on a particular market. Post a <a onclick="dojo.hash('#type.NewTradeOrderRequestDTO'); return false;" class="json-link" href="#">NewTradeOrderRequestDTO</a> to the uri specified below.</p> <p>Do not set any order id fields when requesting a new trade, the platform will generate them.</p>
         /// </summary>
         /// <param name="trade">The trade request.</param>
         /// <param name="callback"></param>
@@ -1354,7 +1354,7 @@ private Client _client;
 
 
         /// <summary>
-        /// Update a trade (for adding a stop/limit etc).
+        /// Update a trade (for adding a stop/limit etc). Post an <a onclick="dojo.hash('#type.UpdateTradeOrderRequestDTO'); return false;" class="json-link" href="#">UpdateTradeOrderRequestDTO</a> to the uri specified below.</p>
         /// </summary>
         /// <param name="update">The update trade request.</param>
         public virtual ApiTradeOrderResponseDTO UpdateTrade(UpdateTradeOrderRequestDTO update)
@@ -1368,7 +1368,7 @@ private Client _client;
 
 
         /// <summary>
-        /// Update a trade (for adding a stop/limit etc).
+        /// Update a trade (for adding a stop/limit etc). Post an <a onclick="dojo.hash('#type.UpdateTradeOrderRequestDTO'); return false;" class="json-link" href="#">UpdateTradeOrderRequestDTO</a> to the uri specified below.</p>
         /// </summary>
         /// <param name="update">The update trade request.</param>
         /// <param name="callback"></param>

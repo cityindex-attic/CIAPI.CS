@@ -7,6 +7,72 @@ exports.smd =
     "rpc": {
       "target": "",
       "services": {
+          "GetNewsDetail": {
+              "description": "Get the detail of a specific news story",
+              "target": "news",
+              "uriTemplate": "/{storyId}?Source={source}",
+              "contentType": "application/json",
+              "responseContentType": "application/json",
+              "transport": "GET",
+              "envelope": "URL",
+              "returns": {
+                  "$ref": "GetNewsDetailResponseDTO"
+              },
+              "group": "News",
+              "cacheDuration": 10000,
+              "throttleScope": "data",
+              "parameters": [
+            {
+                "type": "string",
+                "name": "storyId",
+                "description": "The news story Id",
+                "demoValue": "12654",
+                "minLength": 1,
+                "maxLength": 9
+            }
+          ]
+          },
+          "GetPriceBars": {
+              "description": "Get historic price bars in OHLC (open, high, low, close) format, suitable for plotting candlestick chartsReturns price bars in ascending order up to the current time.When there are no prices per a particular time period, no price bar is returned. Thus, it can appear that the array of price bars has \"gaps\", i.e. the gap between the datetime of each price bar might not be equal to interval x spanSample Urls: /market/1234/history?interval=MINUTE&span=15&pricebars=180/market/735/history?interval=HOUR&span=1&pricebars=240/market/1577/history?interval=DAY&span=1&pricebars=10",
+              "target": "market",
+              "uriTemplate": "/{marketId}/barhistory?interval={interval}&span={span}&pricebars={priceBars}",
+              "contentType": "application/json",
+              "responseContentType": "application/json",
+              "transport": "GET",
+              "envelope": "URL",
+              "returns": {
+                  "$ref": "GetPriceBarResponseDTO"
+              },
+              "group": "Price History",
+              "cacheDuration": 10000,
+              "throttleScope": "data",
+              "parameters": [
+            {
+                "type": "string",
+                "name": "marketId",
+                "description": "The marketId",
+                "demoValue": "71442"
+            },
+            {
+                "type": "string",
+                "name": "interval",
+                "description": "The pricebar interval",
+                "demoValue": "MINUTE"
+            },
+            {
+                "type": "integer",
+                "name": "span",
+                "description": "The number of each interval per pricebar.",
+                "demoValue": 1
+            },
+            {
+                "type": "string",
+                "name": "priceBars",
+                "description": "The total number of pricebars to return",
+                "demoValue": "15"
+            }
+          ]
+          },
         "LogOn": {
           "description": "<p>Create a new session. This is how you \"log on\" to the CIAPI. Post a <a onclick=\"dojo.hash('#type.ApiLogOnRequestDTO'); return false;\" class=\"json-link\" href=\"#\">ApiLogOnRequestDTO</a> to the uri specified in the following Service Info.</p>",
           "target": "session",
@@ -903,7 +969,7 @@ exports.smd =
         },
         "SaveWatchlist": {
           "description": "Save watchlist.",
-          "target": "watchlists",
+          "target": "watchlist",
           "uriTemplate": "/Save",
           "contentType": "application/json",
           "responseContentType": "application/json",
@@ -925,7 +991,7 @@ exports.smd =
         },
         "DeleteWatchlist": {
           "description": "Delete a watchlist.",
-          "target": "watchlists",
+          "target": "watchlist",
           "uriTemplate": "/delete",
           "contentType": "application/json",
           "responseContentType": "application/json",

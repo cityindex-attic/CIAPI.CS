@@ -1,5 +1,5 @@
 using System;
-namespace  CIAPI.DTO
+namespace CIAPI.DTO
 {
     /// <summary>
     /// A stop or limit order from a historical perspective.

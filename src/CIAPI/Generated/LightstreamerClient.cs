@@ -46,7 +46,10 @@ namespace CIAPI.Streaming.Lightstreamer
             return BuildListener<PriceDTO>("CITYINDEXSTREAMINGDEFAULTPRICES", "PRICES.AC"+ accountOperatorId);
         }
 
- 
+        public IStreamingListener<TradeMarginDTO> BuildTradeMarginListener()
+        {
+            return BuildListener<TradeMarginDTO>("STREAMINGCLIENTACCOUNT", "TRADEMARGIN.ALL" );
+        }
 
         #endregion
     }

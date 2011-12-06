@@ -1,10 +1,10 @@
 ﻿(function () {
 
-    var generator = exports.CSharpRouteGenerator = function (smd, schema, namespaceName, className, imports) {
+    var generator = exports.CSharpRouteGenerator = function (smd, schema, namespaceName, className, imports, routesPatch) {
         this.smd = smd;
         this.schema = schema;
         this._lines = [];
-        
+        this.routesPatch = routesPatch;
 
         this.className = className;
         this.namespaceName = namespaceName;
@@ -135,6 +135,21 @@
                 });
                 var visibility = "public";
                 var subClassName = "default";
+
+                if (self.routesPatch) {
+                    if (self.routesPatch[key]) {
+
+                        if (self.routesPatch[key].visibility) {
+                            visibility = self.routesPatch[key].visibility;
+                        }
+
+                        if (self.routesPatch[key].section) {
+                            subClassName = self.routesPatch[key].section;
+
+                        }
+                    }
+                }
+
 
                 if (!subClasses[subClassName]) {
                     subClasses[subClassName] = "";
