@@ -58,7 +58,9 @@ namespace StreamingClient
             {
                 if (MessageReceived == null) return;
 
-                MessageReceived(this, new MessageEventArgs<TDto>(_groupOrItemName, _messageConverter.Convert(update), _phase));
+                TDto value = _messageConverter.Convert(update);
+                var args = new MessageEventArgs<TDto>(_groupOrItemName, value, _phase);
+                MessageReceived(this, args);
             }
             catch (Exception ex)
             {
