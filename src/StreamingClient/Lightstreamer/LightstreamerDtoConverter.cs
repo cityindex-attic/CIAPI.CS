@@ -17,7 +17,9 @@ namespace StreamingClient.Lightstreamer
             var dto = new TDto();
             foreach (var property in typeof(TDto).GetProperties())
             {
-                PopulateProperty(dto, property.Name, GetCurrentValue(updateInfo, GetFieldIndex(property)));
+                int fieldIndex = GetFieldIndex(property);
+                string value = GetCurrentValue(updateInfo, fieldIndex);
+                PopulateProperty(dto, property.Name, value);
             }
 
             return dto;
@@ -55,9 +57,18 @@ namespace StreamingClient.Lightstreamer
 
         private static string GetCurrentValue(IUpdateInfo updateInfo, int pos)
         {
-            return updateInfo.IsValueChanged(pos)
-                       ? updateInfo.GetNewValue(pos)
-                       : updateInfo.GetOldValue(pos);
+            string value;
+
+            if (updateInfo.IsValueChanged(pos))
+            {
+                value = updateInfo.GetNewValue(pos);
+
+            }
+            else
+            {
+                value = updateInfo.GetOldValue(pos);
+            }
+            return value;
         }
 
 
@@ -75,9 +86,9 @@ namespace StreamingClient.Lightstreamer
             if (uType != null)
             {
                 underlyingType = uType;
-                return true; 
+                return true;
             }
-            return false; 
+            return false;
         }
 
 
@@ -160,7 +171,7 @@ namespace StreamingClient.Lightstreamer
 
 
             }
-            
+
             return convertedValue;
         }
         public void PopulateProperty(TDto dto, string propertyName, string value)

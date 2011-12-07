@@ -129,6 +129,18 @@ namespace CityIndex.JsonClient
 
         public void CreateRequest<TDTO>(string url)
         {
+
+            // silverlight/phone7 crash when certain content is contained in url
+            // in our case this is a back slash. this seems to be a known issue with phone7. is fixed in phone7.1
+            // see http://social.microsoft.com/Forums/fi-FI/Offtopic/thread/f1df988a-403d-43b4-9f5d-20ebde39e55e amongs others
+
+#if WINDOWS_PHONE
+            if(url.Contains("\\"))
+            {
+                throw new ArgumentException("Windows Phone 7 does not like back slashes in urls. Is fixed in 7.1");
+            }
+#endif
+
             CacheItem<TDTO> item = _cache.Get<TDTO>(url);
 
 

@@ -146,6 +146,7 @@ namespace CIAPI.IntegrationTests.Rpc
 
             tradingAccountId = accounts.SpreadBettingAccount.TradingAccountId;
             response = rpcClient.TradesAndOrders.ListTradeHistory(tradingAccountId, maxResults);
+            Assert.IsTrue(response.TradeHistory.Length > 0);
 
         }
 

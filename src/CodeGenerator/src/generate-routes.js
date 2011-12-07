@@ -1,8 +1,8 @@
 ﻿console.log("generating routes....");
 
-var schema = require("./meta/schema.js").schema;
-var smd = require("./meta/smd.js").smd;
-var schemaPatch = require("./meta/schema.patch.js").schemaPatch;
+var schema = require("./meta/schema.json").schema;
+var smd = require("./meta/smd.json").smd;
+//var schemaPatch = require("./meta/schema.patch.js").schemaPatch;
 var routesPatch = require("./meta/routes.patch.js").routesPatch;
 
 var JSchemaProvider = require("./JSchemaProvider.js").JSchemaProvider;
@@ -11,18 +11,18 @@ var CSharpRouteGenerator = require("./CSharpRouteGenerator.js").CSharpRouteGener
 
 //var LSChannelGenerator = require("./CSharpLightStreamerChannelGenerator.js").LSChannelGenerator;
 
-// patch in additional members to DTO
-for (patchTypeName in schemaPatch.properties) {
-    if (schemaPatch.properties.hasOwnProperty(patchTypeName)) {
-        var patchType = schemaPatch.properties[patchTypeName];
-        var targetType = schema.properties[patchTypeName];
-        for (patchPropertyName in patchType.properties) {
-            if (patchType.properties.hasOwnProperty(patchPropertyName)) {
-                targetType.properties[patchPropertyName] = patchType.properties[patchPropertyName];
-            }
-        }
-    }
-}
+//// patch in additional members to DTO
+//for (patchTypeName in schemaPatch.properties) {
+//    if (schemaPatch.properties.hasOwnProperty(patchTypeName)) {
+//        var patchType = schemaPatch.properties[patchTypeName];
+//        var targetType = schema.properties[patchTypeName];
+//        for (patchPropertyName in patchType.properties) {
+//            if (patchType.properties.hasOwnProperty(patchPropertyName)) {
+//                targetType.properties[patchPropertyName] = patchType.properties[patchPropertyName];
+//            }
+//        }
+//    }
+//}
 
 
 

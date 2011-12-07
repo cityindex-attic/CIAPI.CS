@@ -1,5 +1,4 @@
-﻿console.log("code generation disabled....");
-return;
+﻿
 console.log("generating code....");
 
 var schema = require("./meta/schema.js").schema;
@@ -60,11 +59,11 @@ fs.open('../../CIAPI/Generated/Routes.cs', 'w', 666, function (e, id) {
     });
 });
 
-fs.open('../../CIAPI/Generated/LightstreamerClient.cs', 'w', 666, function (e, id) {
-    fs.write(id, channels, 'w', 'utf8', function () {
-        fs.close(id, function () {
-            console.log("  generated CHANNELS");
-        });
-    });
-});
+//fs.open('../../CIAPI/Generated/LightstreamerClient.cs', 'w', 666, function (e, id) {
+//    fs.write(id, channels, 'w', 'utf8', function () {
+//        fs.close(id, function () {
+//            console.log("  generated CHANNELS");
+//        });
+//    });
+//});
 

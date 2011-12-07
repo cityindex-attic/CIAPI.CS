@@ -1,7 +1,7 @@
 ﻿console.log("generating DTO....");
 
-var schema = require("./meta/schema.js").schema;
-var schemaPatch = require("./meta/schema.patch.js").schemaPatch;
+var schema = require("./meta/schema.json").schema;
+
 
 
 var JSchemaProvider = require("./JSchemaProvider.js").JSchemaProvider;

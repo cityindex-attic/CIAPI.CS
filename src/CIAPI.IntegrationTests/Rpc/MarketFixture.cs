@@ -10,6 +10,26 @@ namespace CIAPI.IntegrationTests.Rpc
     [TestFixture]
     public class MarketFixture : RpcFixtureBase
     {
+        [Test]
+        public void CanGetMarketTags()
+        {
+            var rpcClient = BuildRpcClient();
+            var tagResponse = rpcClient.Market.TagLookup();
+            Assert.IsTrue(tagResponse.Tags.Length > 0,"no tags. not sure what this means");
+        }
+
+        [Test]
+        public void CanSearchWithTags()
+        {
+            var rpcClient = BuildRpcClient();
+            var tagResponse = rpcClient.Market.TagLookup();
+            Assert.IsTrue(tagResponse.Tags.Length > 0, "no tags. not sure what this means");
+            int tagId = tagResponse.Tags[0].MarketTagId;
+
+            rpcClient.Market.SearchWithTags("USD", tagId, 100);
+
+            Assert.Fail("cant get any tags with which to figure out how to test this method");
+        }
 
         [Test]
         public void CanListMarketInformation()
