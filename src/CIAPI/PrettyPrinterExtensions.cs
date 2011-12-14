@@ -20,18 +20,29 @@ namespace CIAPI
             foreach (PropertyInfo propertyInfo in dto.GetType().GetProperties())
             {
                 string formattedValue = "";
-                switch (propertyInfo.PropertyType.Name)
+                if (typeof(Array).IsAssignableFrom(propertyInfo.PropertyType))
                 {
-                    case "DateTime":
-                        formattedValue = ((DateTime) propertyInfo.GetValue(dto, null)).ToString("u");
-                        break;
-                    default:
-                        formattedValue = propertyInfo.GetValue(dto, null).ToString();
-                        break;
+                    foreach (var item in (Array)propertyInfo.GetValue(dto, null))
+                    {
+                        formattedValue += item.ToStringWithValues();
+                    }
+                    
+                }
+                else
+                {
+                    switch (propertyInfo.PropertyType.Name)
+                    {
+                        case "DateTime":
+                            formattedValue = ((DateTime)propertyInfo.GetValue(dto, null)).ToString("u");
+                            break;
+                        default:
+                            formattedValue = propertyInfo.GetValue(dto, null).ToString();
+                            break;
+                    }
                 }
                 sb.AppendFormat("\t{0}={1}", propertyInfo.Name, formattedValue);
             }
-            return string.Format("{0}: \n{1}", dto.GetType().Name, sb);
+            return string.Format("{0}: \n{1}\n", dto.GetType().Name, sb);
         }
     }
 }

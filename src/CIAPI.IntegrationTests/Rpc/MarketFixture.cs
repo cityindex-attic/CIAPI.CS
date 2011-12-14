@@ -7,6 +7,10 @@ using NUnit.Framework;
 
 namespace CIAPI.IntegrationTests.Rpc
 {
+    /// <summary>
+    /// WARNING!  Market Tags are a new feature, and have not been defined for many account operators.
+    /// Try testing with an IFX Markets user account.
+    /// </summary>
     [TestFixture]
     public class MarketFixture : RpcFixtureBase
     {
@@ -14,32 +18,83 @@ namespace CIAPI.IntegrationTests.Rpc
         public void CanGetMarketTags()
         {
             var rpcClient = BuildRpcClient();
+
+            //Markets are grouped into a collection of tags.  
+            //You can get a list of available tags from TagLookup
             var tagResponse = rpcClient.Market.TagLookup();
-            Assert.IsTrue(tagResponse.Tags.Length > 0,"no tags. not sure what this means");
+            Assert.IsTrue(tagResponse.Tags.Length > 0,"No tags have been defined for your user's account operator");
+            
+            Console.WriteLine(tagResponse.ToStringWithValues());
+            /* Gives something like:
+             * MarketInformationTagLookupResponseDTO: 
+                    Tags=ApiPrimaryMarketTagDTO: 
+                    Children=ApiMarketTagDTO: 
+                    MarketTagId=8    Name=FX Majors    Type=2
+                ApiMarketTagDTO: 
+                    MarketTagId=9    Name=FX Minors    Type=2
+                ApiMarketTagDTO: 
+                    MarketTagId=14    Name=Euro Crosses    Type=2
+                ApiMarketTagDTO: 
+                    MarketTagId=15    Name=Sterling Crosses    Type=2
+                    MarketTagId=7    Name=Currencies    Type=1
+                ApiPrimaryMarketTagDTO: 
+                    Children=ApiMarketTagDTO: 
+                    MarketTagId=17    Name=Popular    Type=2
+                    MarketTagId=16    Name=FX    Type=1
+            */
+
         }
 
         [Test]
         public void CanSearchWithTags()
         {
             var rpcClient = BuildRpcClient();
+
             var tagResponse = rpcClient.Market.TagLookup();
-            Assert.IsTrue(tagResponse.Tags.Length > 0, "no tags. not sure what this means");
+            Assert.IsTrue(tagResponse.Tags.Length > 0, "No tags have been defined for your user's account operator");
+
+            //Once you have a tag, you can search for all markets associated with that tag
             int tagId = tagResponse.Tags[0].MarketTagId;
+            var allMarketsInTag = rpcClient.Market.SearchWithTags("", tagId, 100);
+            Console.WriteLine(allMarketsInTag.ToStringWithValues());
+            /* Gives something like:
+             * MarketInformationSearchWithTagsResponseDTO: 
+                    Markets=ApiMarketDTO: 
+                    MarketId=400481134    Name=EUR/USD
+                ApiMarketDTO: 
+                    MarketId=400481136    Name=GBP/AUD
+                ApiMarketDTO: 
+                    MarketId=400481139    Name=GBP/JPY
+                ApiMarketDTO: 
+                    MarketId=400481142    Name=GBP/USD
+                Tags=ApiMarketTagDTO: 
+                    MarketTagId=8    Name=FX Majors    Type=2
+                ApiMarketTagDTO: 
+                    MarketTagId=9    Name=FX Minors    Type=2
+                ApiMarketTagDTO: 
+                    MarketTagId=14    Name=Euro Crosses    Type=2
+                ApiMarketTagDTO: 
+                    MarketTagId=15    Name=Sterling Crosses    Type=2
+               */
 
-            rpcClient.Market.SearchWithTags("USD", tagId, 100);
-
-            Assert.Fail("cant get any tags with which to figure out how to test this method");
+            //Or, you can search for all markets in that tag that start with a specific string
+            var allMarketsInTagContainingGBP = rpcClient.Market.SearchWithTags("GBP", tagId, 100);
+            Console.WriteLine(allMarketsInTagContainingGBP.ToStringWithValues());
+            /* Gives something like:
+             * MarketInformationSearchWithTagsResponseDTO: 
+                Markets=ApiMarketDTO: 
+                MarketId=400481136    Name=GBP/AUD
+            ApiMarketDTO: 
+                MarketId=400481139    Name=GBP/JPY
+            ApiMarketDTO: 
+                MarketId=400481142    Name=GBP/USD
+             */
         }
 
         [Test]
         public void CanListMarketInformation()
         {
-
-
-
             var rpcClient = BuildRpcClient();
-
-
 
             var response = rpcClient.Market.ListMarketInformation(new ListMarketInformationRequestDTO()
                                                                       {
