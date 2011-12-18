@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{61F852E9-187A-4ACC-94DC-7943DE8F8F72}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CityIndex.JsonClient</RootNamespace>
+    <AssemblyName>CityIndex.JsonClient</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\CityIndex.JsonClient.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\common\ciapi.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Common.Logging">
+      <HintPath>..\packages\Common.Logging-2.0.0\2.0\release\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.3.5.8\lib\35\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\JsonClient\ApiAsyncCallback.cs">
+      <Link>ApiAsyncCallback.cs</Link>
+    </Compile>
+    <Compile Include="..\JsonClient\ApiAsyncResult.cs">
+      <Link>ApiAsyncResult.cs</Link>
+    </Compile>
+    <Compile Include="..\JsonClient\ApiAsyncResultBase.cs">
+      <Link>ApiAsyncResultBase.cs</Link>
+    </Compile>
+    <Compile Include="..\JsonClient\ApiException.cs">
+      <Link>ApiException.cs</Link>
+    </Compile>
+    <Compile Include="..\JsonClient\CacheCallBack.cs">
+      <Link>CacheCallBack.cs</Link>
+    </Compile>
+    <Compile Include="..\JsonClient\CacheItem.cs">
+      <Link>CacheItem.cs</Link>
+    </Compile>
+    <Compile Include="..\JsonClient\CacheItemBase.cs">
+      <Link>CacheItemBase.cs</Link>
+    </Compile>
+    <Compile Include="..\JsonClient\CacheItemState.cs">
+      <Link>CacheItemState.cs</Link>
+    </Compile>
+    <Compile Include="..\JsonClient\Client.cs">
+      <Link>Client.cs</Link>
+    </Compile>
+    <Compile Include="..\JsonClient\Converters\ApiEnumConverter.cs">
+      <Link>Converters\ApiEnumConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\JsonClient\Converters\UnixDateTimeConverter.cs">
+      <Link>Converters\UnixDateTimeConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\JsonClient\Converters\UnixDateTimeHelper.cs">
+      <Link>Converters\UnixDateTimeHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\JsonClient\HttpUtility.cs">
+      <Link>HttpUtility.cs</Link>
+    </Compile>
+    <Compile Include="..\JsonClient\IJsonClient.cs">
+      <Link>IJsonClient.cs</Link>
+    </Compile>
+    <Compile Include="..\JsonClient\IRequestCache.cs">
+      <Link>IRequestCache.cs</Link>
+    </Compile>
+    <Compile Include="..\JsonClient\IRequestController.cs">
+      <Link>IRequestController.cs</Link>
+    </Compile>
+    <Compile Include="..\JsonClient\IRequestFactory.cs">
+      <Link>IRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\JsonClient\IThrottedRequestQueue.cs">
+      <Link>IThrottedRequestQueue.cs</Link>
+    </Compile>
+    <Compile Include="..\JsonClient\RequestCache.cs">
+      <Link>RequestCache.cs</Link>
+    </Compile>
+    <Compile Include="..\JsonClient\RequestController.cs">
+      <Link>RequestController.cs</Link>
+    </Compile>
+    <Compile Include="..\JsonClient\RequestFactory.cs">
+      <Link>RequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\JsonClient\RequestHolder.cs">
+      <Link>RequestHolder.cs</Link>
+    </Compile>
+    <Compile Include="..\JsonClient\RequestNotificationStatus.cs">
+      <Link>RequestNotificationStatus.cs</Link>
+    </Compile>
+    <Compile Include="..\JsonClient\RequestRetryDiscriminator.cs">
+      <Link>RequestRetryDiscriminator.cs</Link>
+    </Compile>
+    <Compile Include="..\JsonClient\ThrottedRequestQueue.cs">
+      <Link>ThrottedRequestQueue.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{A0E4B915-BAE8-4CF0-9B1A-10DFFD887C5A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CIAPI.IntegrationTests</RootNamespace>
+    <AssemblyName>CIAPI.IntegrationTests</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Common.Logging">
+      <HintPath>..\packages\Common.Logging-2.0.0\2.0\debug\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.3.5.8\lib\35\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework, Version=2.5.8.10295, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NUnit.2.5.7.10213\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\CIAPI.IntegrationTests\Rpc\AccountInformationFixture.cs">
+      <Link>Rpc\AccountInformationFixture.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI.IntegrationTests\Rpc\ApiKeyFixture.cs">
+      <Link>Rpc\ApiKeyFixture.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI.IntegrationTests\Rpc\CfdMarketsFixture.cs">
+      <Link>Rpc\CfdMarketsFixture.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI.IntegrationTests\Rpc\ErrorHandlingFixture.cs">
+      <Link>Rpc\ErrorHandlingFixture.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI.IntegrationTests\Rpc\FaqIssueResolutionFixture.cs">
+      <Link>Rpc\FaqIssueResolutionFixture.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI.IntegrationTests\Rpc\MarketFixture.cs">
+      <Link>Rpc\MarketFixture.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI.IntegrationTests\Rpc\MessagingFixture.cs">
+      <Link>Rpc\MessagingFixture.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI.IntegrationTests\Rpc\NewsFixture.cs">
+      <Link>Rpc\NewsFixture.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI.IntegrationTests\Rpc\PriceHistoryFixture.cs">
+      <Link>Rpc\PriceHistoryFixture.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI.IntegrationTests\Rpc\SpreadMarketsFixture.cs">
+      <Link>Rpc\SpreadMarketsFixture.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI.IntegrationTests\Rpc\TradesAndOrdersFixture.cs">
+      <Link>Rpc\TradesAndOrdersFixture.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI.IntegrationTests\Rpc\WatchListFixture.cs">
+      <Link>Rpc\WatchListFixture.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI.IntegrationTests\Settings.cs">
+      <Link>Settings.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI.IntegrationTests\Streaming\ClientAccountFixture.cs">
+      <Link>Streaming\ClientAccountFixture.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI.IntegrationTests\Streaming\DefaultPricesFixture.cs">
+      <Link>Streaming\DefaultPricesFixture.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI.IntegrationTests\Streaming\MultipleStreamsFixture.cs">
+      <Link>Streaming\MultipleStreamsFixture.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI.IntegrationTests\Streaming\NewsFixture.cs">
+      <Link>Streaming\NewsFixture.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI.IntegrationTests\Streaming\PriceFixture.cs">
+      <Link>Streaming\PriceFixture.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI.IntegrationTests\Streaming\RpcFixtureBase.cs">
+      <Link>Streaming\RpcFixtureBase.cs</Link>
+    </Compile>
+    <Compile Include="..\SampleApps\ConsoleSpikes\Example.FetchNews.cs">
+      <Link>Rpc\Example.FetchNews.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\CIAPI.IntegrationTests\App.config">
+      <Link>App.config</Link>
+    </None>
+    <None Include="..\CIAPI.IntegrationTests\packages.config">
+      <Link>packages.config</Link>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CIAPI-3.5\CIAPI-3.5.csproj">
+      <Project>{95565B7D-B3E4-4BFF-AEA2-20CCABD9CD31}</Project>
+      <Name>CIAPI-3.5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JsonClient-3.5\JsonClient-3.5.csproj">
+      <Project>{61F852E9-187A-4ACC-94DC-7943DE8F8F72}</Project>
+      <Name>JsonClient-3.5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\StreamingClient-3.5\StreamingClient-3.5.csproj">
+      <Project>{2BF0E626-BC3B-4E21-95BB-C429B91E7418}</Project>
+      <Name>StreamingClient-3.5</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

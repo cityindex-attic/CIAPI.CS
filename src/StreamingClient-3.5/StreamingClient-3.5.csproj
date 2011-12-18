@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{2BF0E626-BC3B-4E21-95BB-C429B91E7418}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>StreamingClient</RootNamespace>
+    <AssemblyName>StreamingClient</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\common\ciapi.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Common.Logging">
+      <HintPath>..\packages\Common.Logging-2.0.0\2.0\release\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetClient_N2">
+      <HintPath>..\packages\Lightstreamer 4.0 Client\sdk_client_dotnet\lib\StrongName\DotNetClient_N2.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.3.5.8\lib\35\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\StreamingClient\IMessageConverter.cs">
+      <Link>IMessageConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient\InvalidTopicException.cs">
+      <Link>InvalidTopicException.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient\IStreamingClient.cs">
+      <Link>IStreamingClient.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient\Lightstreamer\HttpUtility.cs">
+      <Link>Lightstreamer\HttpUtility.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient\Lightstreamer\LightstreamerDefaults.cs">
+      <Link>Lightstreamer\LightstreamerDefaults.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient\Lightstreamer\LightstreamerDtoConverter.cs">
+      <Link>Lightstreamer\LightstreamerDtoConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient\Lightstreamer\LSLogger.cs">
+      <Link>Lightstreamer\LSLogger.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient\Lightstreamer\LSLoggerProvider.cs">
+      <Link>Lightstreamer\LSLoggerProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient\Lightstreamer\Move\ConnectionStatus.cs">
+      <Link>Lightstreamer\Move\ConnectionStatus.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient\Lightstreamer\Move\ConnectionStatusEventArgs.cs">
+      <Link>Lightstreamer\Move\ConnectionStatusEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient\Lightstreamer\Move\FaultTolerantClientAdapter.cs">
+      <Link>Lightstreamer\Move\FaultTolerantClientAdapter.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient\Lightstreamer\Move\IStreamingListener.cs">
+      <Link>Lightstreamer\Move\IStreamingListener.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient\Lightstreamer\Move\LightstreamerClient.cs">
+      <Link>Lightstreamer\Move\LightstreamerClient.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient\Lightstreamer\Move\ListenerAdapter.cs">
+      <Link>Lightstreamer\Move\ListenerAdapter.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient\Lightstreamer\Move\MessageEventArgs.cs">
+      <Link>Lightstreamer\Move\MessageEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient\Lightstreamer\Move\TableListener.cs">
+      <Link>Lightstreamer\Move\TableListener.cs</Link>
+    </Compile>
+    <Compile Include="..\StreamingClient\StatusEventArgs.cs">
+      <Link>StatusEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\StreamingClient\packages.config">
+      <Link>packages.config</Link>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

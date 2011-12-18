@@ -70,6 +70,9 @@
     <Compile Include="..\StreamingClient\IStreamingClient.cs">
       <Link>IStreamingClient.cs</Link>
     </Compile>
+    <Compile Include="..\StreamingClient\Lightstreamer\LightstreamerDefaults.cs">
+      <Link>Lightstreamer\LightstreamerDefaults.cs</Link>
+    </Compile>
     <Compile Include="..\StreamingClient\Lightstreamer\LightstreamerDtoConverter.cs">
       <Link>Lightstreamer\LightstreamerDtoConverter.cs</Link>
     </Compile>
@@ -112,10 +115,6 @@
     <ProjectReference Include="..\Common.Logging.Silverlight\Common.Logging.Silverlight.csproj">
       <Project>{74036434-D18E-4404-B854-51395CE40B6C}</Project>
       <Name>Common.Logging.Silverlight</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\StreamingClient.Silverlight.Lightstreamer\StreamingClient.Silverlight.Lightstreamer.csproj">
-      <Project>{7CDFD09D-B156-483E-8969-E38926629CC4}</Project>
-      <Name>StreamingClient.Silverlight.Lightstreamer</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />

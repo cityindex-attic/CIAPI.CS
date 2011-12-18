@@ -108,10 +108,6 @@
       <Project>{DB3089D5-44AC-441C-845C-3596C21C5E34}</Project>
       <Name>JsonClient.Phone7</Name>
     </ProjectReference>
-    <ProjectReference Include="..\StreamingClient.Phone7.Lightstreamer\StreamingClient.Phone7.Lightstreamer.csproj">
-      <Project>{A0676126-F911-47FE-9BBC-4E0350BCCA9E}</Project>
-      <Name>StreamingClient.Phone7.Lightstreamer</Name>
-    </ProjectReference>
     <ProjectReference Include="..\StreamingClient.Phone7\StreamingClient.Phone7.csproj">
       <Project>{43781FA6-57B5-4EF1-A4C4-4900613BDE77}</Project>
       <Name>StreamingClient.Phone7</Name>

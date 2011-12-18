@@ -59,6 +59,8 @@
     <Compile Include="IMessageConverter.cs" />
     <Compile Include="InvalidTopicException.cs" />
     <Compile Include="IStreamingClient.cs" />
+    <Compile Include="Lightstreamer\HttpUtility.cs" />
+    <Compile Include="Lightstreamer\LightstreamerDefaults.cs" />
     <Compile Include="Lightstreamer\LightstreamerDtoConverter.cs" />
     <Compile Include="Lightstreamer\LSLogger.cs" />
     <Compile Include="Lightstreamer\LSLoggerProvider.cs" />
@@ -75,12 +77,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\StreamingClient.Lightstreamer\StreamingClient.Lightstreamer.csproj">
-      <Project>{572A308B-634F-48CF-926D-CFEFB8D00C46}</Project>
-      <Name>StreamingClient.Lightstreamer</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
