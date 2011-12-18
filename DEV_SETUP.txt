@@ -1,6 +1,20 @@
+
+=== .NET ===
 1) Install Visual Studio 2010 or Visual Web Developer 2010 Express - http://www.microsoft.com/express/Web/
 2) Install Windows 7 SKD
 3) Copy C:\Program Files (x86)\MSBuild\Microsoft\VisualStudio\v10.0\WebApplications\* from a machine with full VS10 installation to C:\Program Files\MSBuild\Microsoft\VisualStudio\v10.0\WebApplications\
+
+== Phone 7 ==
+1) Follow instructions for .NET
+2) Install Windows Phone Developer Tools RTW	 - http://www.microsoft.com/download/en/details.aspx?id=13890
+3) Install Silverlight for Windows Phone Toolkit - Feb 2011 - http://silverlight.codeplex.com/releases/view/60291
+
+== Silverlight ==
+1) Follow instructions for .NET
+2) Install Silverlight 4 SDK - http://www.microsoft.com/download/en/details.aspx?id=7335
+3) Install Silverlight 4 Toolkit - April 2010 - http://silverlight.codeplex.com/releases/view/43528
+
+Windows Phone Developer Tools RTW
 
 === Command line build ===
 1) Install MSBuild community tasks - download and install as per tools/msbuildcommunitytasks

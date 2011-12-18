@@ -1,13 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "README", "README", "{236D3C49-DD6D-4D3D-A7B2-82575ACBB1BA}"
-	ProjectSection(SolutionItems) = preProject
-		DEV_SETUP.txt = DEV_SETUP.txt
-		..\LICENSE.txt = ..\LICENSE.txt
-		..\README.markdown = ..\README.markdown
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{845AC73C-EACC-4F7C-A9DC-251F09E55708}"
 	ProjectSection(SolutionItems) = preProject
 		CIAPI.CS.nunit = CIAPI.CS.nunit
@@ -38,6 +31,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Logging.Phone7", "Co
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{96966057-1B2F-4775-B363-F6A14D854B1E}"
 	ProjectSection(SolutionItems) = preProject
+		..\DEV_SETUP.txt = ..\DEV_SETUP.txt
 		..\LICENSE.txt = ..\LICENSE.txt
 		..\NOTICES.txt = ..\NOTICES.txt
 		..\README.markdown = ..\README.markdown
