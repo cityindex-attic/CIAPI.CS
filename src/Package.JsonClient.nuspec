@@ -14,5 +14,7 @@
   	<file src="lib\jsonclient\bin\release\*.pdb" target="lib/NET40"/>
     <file src="lib\jsonclient-3.5\bin\release\*.dll" target="lib/NET35"/>
     <file src="lib\jsonclient-3.5\bin\release\*.pdb" target="lib/NET35"/>
+    <file src="lib\jsonclient.phone7\bin\release\*.dll" target="lib/PHONE7"/>
+    <file src="lib\jsonclient.phone7\bin\release\*.pdb" target="lib/PHONE7"/>
   </files>  
 </package>

@@ -14,6 +14,8 @@
     <file src="lib\ciapi\bin\release\*.pdb" target="lib\Net40"/>
     <file src="lib\ciapi-3.5\bin\release\*.dll" target="lib\Net35"/>
     <file src="lib\ciapi-3.5\bin\release\*.pdb" target="lib\Net35"/>
+    <file src="lib\ciapi.phone7\bin\release\*.dll" target="lib\PHONE7"/>
+    <file src="lib\ciapi.phone7\bin\release\*.pdb" target="lib\PHONE7"/>
     <file src="lib\ciapi.silverlight\bin\release\*.dll" target="lib\Silverlight40"/>
   	<file src="lib\ciapi.silverlight\bin\release\*.pdb" target="lib\Silverlight40"/>
     <file src="..\src\SampleApps\ConsoleSpikes\Example.FetchNews.cs" target="content"/>
