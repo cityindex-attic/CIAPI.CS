@@ -7,10 +7,15 @@
   <Import Project="$(MSBuildProjectDirectory)\..\tools\msbuild\TestsAndMetrics.targets.xml" />
   <Import Project="$(MSBuildProjectDirectory)\..\tools\msbuild\DropsAndPackaging.targets.xml" />
 	
-	<PropertyGroup>
+  <PropertyGroup>
     <Configuration>Release</Configuration>
     <Platform>Any CPU</Platform>
   </PropertyGroup>
+
+	<PropertyGroup>
+		<Major>1</Major>
+		<Minor>12</Minor> <!-- Release tag: release_12-->
+	</PropertyGroup>
 
   <ItemGroup>
     <Assemblies     Include="$(SrcDirectory)\JsonClient\bin\$(Configuration)\CityIndex.JsonClient.dll;

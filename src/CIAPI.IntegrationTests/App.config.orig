@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <configSections>
+    <sectionGroup name="common">
+      <section name="logging"
+               type="Common.Logging.ConfigurationSectionHandler, Common.Logging"
+               requirePermission="false" />
+    </sectionGroup>
+  </configSections>
+  <common>
+    <logging>
+      <factoryAdapter type="Common.Logging.Simple.ConsoleOutLoggerFactoryAdapter, Common.Logging">
+        <arg key="level" value="ALL" />
+      </factoryAdapter>
+    </logging>
+  </common>
+  <appSettings>
+<<<<<<< HEAD
+    <!--<add key="apiRpcUrl" value="https://ciapi.cityindex.com/tradingapi"/>
+    <add key="apiStreamingUrl" value="https://push.cityindex.com"/>
+    <add key="RpcUserName" value="DM715257"/>-->
+
+    <add key="apiRpcUrl" value="https://ciapipreprod.cityindextest9.co.uk/TradingApi"/>
+    <add key="apiStreamingUrl" value="https://pushpreprod.cityindextest9.co.uk"/>
+    <add key="RpcUserName" value="xx189949"/>
+    
+    
+=======
+<!--    <add key="apiRpcUrl" value="https://ciapi.cityindex.com/tradingapi"/>-->
+<!--    <add key="apiStreamingUrl" value="https://push.cityindex.com"/>-->
+<!--    <add key="RpcUserName" value="DM715257"/>-->
+
+	<add key="apiRpcUrl" value="https://ciapipreprod.cityindextest9.co.uk/TradingApi"/>
+	<add key="apiStreamingUrl" value="https://pushpreprod.cityindextest9.co.uk"/>
+	<add key="RpcUserName" value="XX070608"/>
+	  
+>>>>>>> 2eb5e302a1d81cff6d4886fc3e5f342f18211704
+    <add key="RpcPassword" value="password"/>
+    
+  </appSettings>
+</configuration>
