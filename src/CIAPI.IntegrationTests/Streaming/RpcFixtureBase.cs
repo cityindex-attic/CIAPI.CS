@@ -5,9 +5,12 @@ namespace CIAPI.IntegrationTests.Streaming
 {
     public class RpcFixtureBase
     {
-        public Client BuildRpcClient()
+        public Client BuildRpcClient(string apiKey = null)
         {
-            var rpcClient = new Client(Settings.RpcUri);
+            var rpcClient = new Client(Settings.RpcUri)
+                                {
+                                    ApiKey = apiKey
+                                };
             rpcClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);
             return rpcClient;
         }

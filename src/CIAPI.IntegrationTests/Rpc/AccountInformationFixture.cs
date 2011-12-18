@@ -24,8 +24,6 @@ namespace CIAPI.IntegrationTests.Rpc
             rpcClient.LogOut();
             rpcClient.Dispose();
 
-            
-   
         }
  
     }

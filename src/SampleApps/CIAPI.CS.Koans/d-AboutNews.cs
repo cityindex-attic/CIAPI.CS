@@ -69,7 +69,7 @@ namespace CIAPI.CS.Koans
         public void AskingForAnInvalidStoryIdWillGetYouNullStoryDetails()
         {
             const int invalidStoryId = Int32.MaxValue;
-            var newsStory = _rpcClient.News.GetNewsDetail(storyId: invalidStoryId.ToString());
+            var newsStory = _rpcClient.News.GetNewsDetail( storyId: invalidStoryId.ToString());
 
             KoanAssert.That(newsStory.NewsDetail, Is.EqualTo(null), "There are no details for an invalid story Id");
         }

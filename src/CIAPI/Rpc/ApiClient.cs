@@ -9,17 +9,31 @@ namespace CIAPI.Rpc
     public partial class Client : CityIndex.JsonClient.Client
     {
 
-        
-   
-        
+        private string AppendApiKey(string uriTemplate)
+        {
+            uriTemplate += "";
 
+            if (ApiKey != null)
+            {
+                if (uriTemplate == "/")
+                {
+                    uriTemplate = "";
+                }
+                uriTemplate += (uriTemplate.Contains("?") ? "&" : "?");
+                uriTemplate += "api_key=" + ApiKey;
+            }
+            return uriTemplate;
+        }
+
+
+        public string ApiKey { get; set; }
 
         private MagicNumberResolver _magicNumberResolver;
         public MagicNumberResolver MagicNumberResolver
         {
             get
             {
-                if(_magicNumberResolver==null)
+                if (_magicNumberResolver == null)
                 {
                     _magicNumberResolver = new MagicNumberResolver(this);
                 }
@@ -70,7 +84,7 @@ namespace CIAPI.Rpc
             UserName = userName;
             Session = null;
 
-            var response = Request<ApiLogOnResponseDTO>("session", "/", "POST", new Dictionary<string, object>
+            var response = Request<ApiLogOnResponseDTO>("session", AppendApiKey("/"), "POST", new Dictionary<string, object>
                                                                                          {
                                                                                              {"apiLogOnRequest", new ApiLogOnRequestDTO()
                                                                                                                {
@@ -96,7 +110,7 @@ namespace CIAPI.Rpc
             UserName = userName;
             Session = null;
 
-            BeginRequest(callback, state, "session", "/", "POST", new Dictionary<string, object>
+            BeginRequest(callback, state, "session", AppendApiKey("/"), "POST", new Dictionary<string, object>
                                                                       {
                                                                        {"apiLogOnRequest", new ApiLogOnRequestDTO()
                                                                         {
@@ -136,7 +150,7 @@ namespace CIAPI.Rpc
         public bool LogOut()
         {
             var response = Request<ApiLogOffResponseDTO>("session",
-                                                               "/deleteSession?userName={userName}&session={session}",
+                                                              AppendApiKey("/deleteSession?userName={userName}&session={session}"),
                                                                "POST", new Dictionary<string, object>
                                                                            {
                                                                                {"userName", UserName},
@@ -158,7 +172,7 @@ namespace CIAPI.Rpc
         /// <returns></returns>
         public void BeginLogOut(ApiAsyncCallback<ApiLogOffResponseDTO> callback, object state)
         {
-            BeginRequest(callback, state, "session", "/deleteSession?userName={userName}&session={session}", "POST",
+            BeginRequest(callback, state, "session", AppendApiKey("/deleteSession?userName={userName}&session={session}"), "POST",
                          new Dictionary<string, object>
                              {
                                  {"userName", UserName},

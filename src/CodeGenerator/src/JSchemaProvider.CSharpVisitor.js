@@ -186,6 +186,11 @@
                     break;
                 case 5: // type property
                     var propertyType = this.resolveType(current.value);
+                    if (current.value.description) {
+                        this.writeLine("        /// <summary>");
+                        this.writeLine("        /// " + current.value.description);
+                        this.writeLine("        /// </summary>");
+                    };
                     this.writeLine("        public " + propertyType + " " + current.key + " { get; set; }");
                     break;
             }

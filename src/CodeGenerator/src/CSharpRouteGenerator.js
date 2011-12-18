@@ -158,7 +158,9 @@
 
                 serviceText = serviceText.concat("\n" + "        " + visibility + " virtual " + returnType + " " + key + "(" + paramList + ")");
                 serviceText = serviceText.concat("\n" + "        {");
-                serviceText = serviceText.concat("\n" + "            return _client.Request<" + returnType + ">(\"" + target + "\", \"" + uriTemplate + "\", \"" + transport + "\",");
+                serviceText = serviceText.concat("\n" + "            string uriTemplate = _client.AppendApiKey(\"" + uriTemplate + "\");");
+
+                serviceText = serviceText.concat("\n" + "            return _client.Request<" + returnType + ">(\"" + target + "\", uriTemplate , \"" + transport + "\",");
                 serviceText = serviceText.concat("\n" + "            new Dictionary<string, object>");
                 serviceText = serviceText.concat("\n" + "            {");
                 serviceText = serviceText.concat("\n" + requestParamList);
@@ -180,7 +182,9 @@
                 serviceText = serviceText.concat("\n" + "        /// <param name=\"state\"></param>");
                 serviceText = serviceText.concat("\n" + "        " + visibility + " virtual void Begin" + key + "(" + paramList + (paramList ? "," : "") + " ApiAsyncCallback<" + returnType + "> callback, object state)");
                 serviceText = serviceText.concat("\n" + "        {");
-                serviceText = serviceText.concat("\n" + "            _client.BeginRequest(callback, state, \"" + target + "\", \"" + uriTemplate + "\", \"" + transport + "\",");
+                serviceText = serviceText.concat("\n" + "            string uriTemplate = _client.AppendApiKey(\"" + uriTemplate + "\");");
+
+                serviceText = serviceText.concat("\n" + "            _client.BeginRequest(callback, state, \"" + target + "\", uriTemplate , \"" + transport + "\",");
 
                 serviceText = serviceText.concat("\n" + "            new Dictionary<string, object>");
                 serviceText = serviceText.concat("\n" + "            {");
@@ -221,9 +225,9 @@
             });
 
             self.writeLine(subClassProperties);
-            
+
             // to support smd methods that do not have a 'section' in meta or patch
-             self.writeLine("private Client _client;");
+            self.writeLine("private Client _client;");
 
             self.writeLine("        public Client(Uri uri)");
             self.writeLine("            : base(uri, new RequestController(TimeSpan.FromSeconds(0), 2, new RequestFactory(), new ErrorResponseDTOJsonExceptionFactory(), new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10, \"data\"), new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10, \"trading\"),new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10, \"default\")) )");
