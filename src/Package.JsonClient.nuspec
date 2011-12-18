@@ -12,5 +12,7 @@
   <files>
   	<file src="lib\jsonclient\bin\release\*.dll" target="lib"/>
   	<file src="lib\jsonclient\bin\release\*.pdb" target="lib"/>
+    <file src="lib\jsonclient-3.5\bin\release\*.dll" target="lib/3.5"/>
+    <file src="lib\jsonclient-3.5\bin\release\*.pdb" target="lib/3.5"/>
   </files>  
 </package>
