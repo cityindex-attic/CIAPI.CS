@@ -10,12 +10,12 @@
     <licenseUrl>https://github.com/cityindex/CIAPI.CS/raw/master/LICENSE.txt</licenseUrl>
   </metadata>
   <files>
-    <file src="lib\ciapi\bin\release\*.dll" target="lib\net40-full"/>
-    <file src="lib\ciapi\bin\release\*.xml" target="lib\net40-full"/>
-    <file src="lib\ciapi\bin\release\*.pdb" target="lib\net40-full"/>
-    <file src="lib\ciapi-3.5\bin\release\*.dll" target="lib\net35-full"/>
-    <file src="lib\ciapi-3.5\bin\release\*.pdb" target="lib\net35-full"/>
-    <file src="lib\ciapi-3.5\bin\release\*.xml" target="lib\net35-full"/>
+    <file src="lib\ciapi\bin\release\*.dll" target="lib\net40"/>
+    <file src="lib\ciapi\bin\release\*.xml" target="lib\net40"/>
+    <file src="lib\ciapi\bin\release\*.pdb" target="lib\net40"/>
+    <file src="lib\ciapi-3.5\bin\release\*.dll" target="lib\net35"/>
+    <file src="lib\ciapi-3.5\bin\release\*.pdb" target="lib\net35"/>
+    <file src="lib\ciapi-3.5\bin\release\*.xml" target="lib\net35"/>
     <file src="lib\ciapi.phone7\bin\release\*.dll" target="lib\sl3-wp"/>
     <file src="lib\ciapi.phone7\bin\release\*.pdb" target="lib\sl3-wp"/>
     <file src="lib\ciapi.phone7\bin\release\*.xml" target="lib\sl3-wp"/>
