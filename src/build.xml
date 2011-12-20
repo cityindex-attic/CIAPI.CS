@@ -14,7 +14,7 @@
 
 	<PropertyGroup>
 		<Major>1</Major>
-		<Minor>12</Minor> <!-- Release tag: release_12-->
+		<Minor>13</Minor> <!-- Release tag: release_12-->
 	</PropertyGroup>
 
   <ItemGroup>
