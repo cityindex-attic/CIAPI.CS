@@ -44,7 +44,7 @@ namespace CIAPI.CS.Koans
         [Koan(Order = 3)]
         public void UsingTheStoryIdYouCanFetchTheStoryDetails()
         {
-            var newsStory = _rpcClient.News.GetNewsDetail("dj", _ukHeadlines.Headlines[0].StoryId.ToString());
+            var newsStory = _rpcClient.News.GetNewsDetail( _ukHeadlines.Headlines[0].StoryId.ToString());
             KoanAssert.That(newsStory.NewsDetail.Story, Is.Not.Null.Or.Empty, "You now have the full body of the news story");
             KoanAssert.That(newsStory.NewsDetail.Story, Is.StringContaining("<p>"), "which contains simple HTML");
         }
@@ -69,7 +69,7 @@ namespace CIAPI.CS.Koans
         public void AskingForAnInvalidStoryIdWillGetYouNullStoryDetails()
         {
             const int invalidStoryId = Int32.MaxValue;
-            var newsStory = _rpcClient.News.GetNewsDetail(source: "dj", storyId: invalidStoryId.ToString());
+            var newsStory = _rpcClient.News.GetNewsDetail( storyId: invalidStoryId.ToString());
 
             KoanAssert.That(newsStory.NewsDetail, Is.EqualTo(null), "There are no details for an invalid story Id");
         }
@@ -81,7 +81,7 @@ namespace CIAPI.CS.Koans
             GetNewsDetailResponseDTO newsDetailResponseDto = null;
 
             _rpcClient.News.BeginGetNewsDetail(
-                source: "dj",
+                 
                 storyId: _ukHeadlines.Headlines[0].StoryId.ToString(),
                 callback: (response) =>
                               {

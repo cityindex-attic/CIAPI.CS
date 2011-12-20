@@ -10,18 +10,18 @@
     <licenseUrl>https://github.com/cityindex/CIAPI.CS/raw/master/LICENSE.txt</licenseUrl>
   </metadata>
   <files>
-    <file src="lib\ciapi\bin\release\*.dll" target="lib\Net40"/>
-    <file src="lib\ciapi\bin\release\*.xml" target="lib\Net40"/>
-    <file src="lib\ciapi\bin\release\*.pdb" target="lib\Net40"/>
-    <file src="lib\ciapi-3.5\bin\release\*.dll" target="lib\Net35"/>
-    <file src="lib\ciapi-3.5\bin\release\*.pdb" target="lib\Net35"/>
-    <file src="lib\ciapi-3.5\bin\release\*.xml" target="lib\Net35"/>
-    <file src="lib\ciapi.phone7\bin\release\*.dll" target="lib\PHONE7"/>
-    <file src="lib\ciapi.phone7\bin\release\*.pdb" target="lib\PHONE7"/>
-    <file src="lib\ciapi.phone7\bin\release\*.xml" target="lib\PHONE7"/>
-    <file src="lib\ciapi.silverlight\bin\release\*.dll" target="lib\Silverlight40"/>
-  	<file src="lib\ciapi.silverlight\bin\release\*.pdb" target="lib\Silverlight40"/>
-    <file src="lib\ciapi.silverlight\bin\release\*.xml" target="lib\Silverlight40"/>
+    <file src="lib\ciapi\bin\release\*.dll" target="lib\net40-full"/>
+    <file src="lib\ciapi\bin\release\*.xml" target="lib\net40-full"/>
+    <file src="lib\ciapi\bin\release\*.pdb" target="lib\net40-full"/>
+    <file src="lib\ciapi-3.5\bin\release\*.dll" target="lib\net35-full"/>
+    <file src="lib\ciapi-3.5\bin\release\*.pdb" target="lib\net35-full"/>
+    <file src="lib\ciapi-3.5\bin\release\*.xml" target="lib\net35-full"/>
+    <file src="lib\ciapi.phone7\bin\release\*.dll" target="lib\sl3-wp"/>
+    <file src="lib\ciapi.phone7\bin\release\*.pdb" target="lib\sl3-wp"/>
+    <file src="lib\ciapi.phone7\bin\release\*.xml" target="lib\sl3-wp"/>
+    <file src="lib\ciapi.silverlight\bin\release\*.dll" target="lib\sl4"/>
+  	<file src="lib\ciapi.silverlight\bin\release\*.pdb" target="lib\sl4"/>
+    <file src="lib\ciapi.silverlight\bin\release\*.xml" target="lib\sl4"/>
     <file src="..\src\SampleApps\ConsoleSpikes\Example.FetchNews.cs" target="content"/>
   </files>
 </package>
