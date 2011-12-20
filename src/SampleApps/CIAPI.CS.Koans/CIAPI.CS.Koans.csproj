@@ -59,9 +59,29 @@
     <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Common.Logging, Version=2.0.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL" />
+    <Reference Include="CIAPI, Version=1.12.242.0, Culture=neutral, PublicKeyToken=5dfdbaca97c75bb7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\CIAPI.CS.1.12.242.0\lib\Net40\CIAPI.dll</HintPath>
+    </Reference>
+    <Reference Include="CityIndex.JsonClient, Version=1.12.242.0, Culture=neutral, PublicKeyToken=5dfdbaca97c75bb7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\CIAPI.CS.1.12.242.0\lib\Net40\CityIndex.JsonClient.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging, Version=2.0.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\CIAPI.CS.1.12.242.0\lib\Net40\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetClient_N2, Version=2.0.4168.21412, Culture=neutral, PublicKeyToken=8d72f58860ac9835, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\CIAPI.CS.1.12.242.0\lib\Net40\DotNetClient_N2.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\CIAPI.CS.1.12.242.0\lib\Net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\..\packages\NUnit.2.5.7.10213\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="StreamingClient, Version=1.12.242.0, Culture=neutral, PublicKeyToken=5dfdbaca97c75bb7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\CIAPI.CS.1.12.242.0\lib\Net40\StreamingClient.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -76,6 +96,7 @@
     <Compile Include="b-AboutKoans.cs" />
     <Compile Include="e-AboutStreamingNews.cs" />
     <Compile Include="d-AboutNews.cs" />
+    <Compile Include="Example.FetchNews.cs" />
     <Compile Include="KoanRunner\AnimatedFireworks.cs" />
     <Compile Include="KoanRunner\KoanAttribute.cs" />
     <Compile Include="KoanRunner\KoanCategoryAttribute.cs" />
@@ -85,21 +106,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\CIAPI\CIAPI.csproj">
-      <Project>{B40E6F1C-453E-44A2-BA9D-1692378B355C}</Project>
-      <Name>CIAPI</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\JsonClient\JsonClient.csproj">
-      <Project>{D80E56C8-8DD6-4911-9A99-F534C9497D6A}</Project>
-      <Name>JsonClient</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\StreamingClient\StreamingClient.csproj">
-      <Project>{EE5023DC-A20F-4358-9DF1-7D69BB1C322E}</Project>
-      <Name>StreamingClient</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">

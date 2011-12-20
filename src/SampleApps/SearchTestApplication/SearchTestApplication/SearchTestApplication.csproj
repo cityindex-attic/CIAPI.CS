@@ -65,6 +65,12 @@
     <Reference Include="Newtonsoft.Json.Silverlight, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\CIAPI.CS.1.12.242.0\lib\Silverlight40\Newtonsoft.Json.Silverlight.dll</HintPath>
     </Reference>
+    <Reference Include="SilverlightClient">
+      <HintPath>..\..\..\packages\CIAPI.CS.1.12.242.0\lib\Silverlight40\SilverlightClient.dll</HintPath>
+    </Reference>
+    <Reference Include="StreamingClient.Silverlight">
+      <HintPath>..\..\..\packages\CIAPI.CS.1.12.242.0\lib\Silverlight40\StreamingClient.Silverlight.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows" />
     <Reference Include="system" />
     <Reference Include="System.Core" />
@@ -92,6 +98,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="Properties\AppManifest.xml" />
     <None Include="Properties\WMAppManifest.xml" />
   </ItemGroup>

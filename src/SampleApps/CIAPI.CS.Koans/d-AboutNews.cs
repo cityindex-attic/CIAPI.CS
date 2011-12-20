@@ -30,7 +30,7 @@ namespace CIAPI.CS.Koans
             const int numberOfHeadlines = 25;
             _ukHeadlines = _rpcClient.News.ListNewsHeadlinesWithSource("dj", category: "UK", maxResults: numberOfHeadlines);
             _ausHeadlines = _rpcClient.News.ListNewsHeadlinesWithSource("dj", category: "AUS", maxResults: numberOfHeadlines);
-
+            
             KoanAssert.That(_ukHeadlines.Headlines.Length, Is.EqualTo(25), "You should get the number of headlines requested");
 
             //Each headline contains a StoryId, a Headline and a PublishDate
