@@ -675,29 +675,29 @@ namespace CIAPI.DTO
     }
 
     /// <summary>
-    /// The details of a specific price bar, useful for plotting candlestick charts
+    /// The details of a specific price bar, useful for plotting candlestick charts.
     /// </summary>
     [Serializable]
     public partial class PriceBarDTO
     {
         /// <summary>
-        /// The date of the start of the price bar interval
+        /// The starting date for the price bar interval.
         /// </summary>
         public DateTime BarDate { get; set; }
         /// <summary>
-        /// For the equities model of charting, this is the price at the start of the price bar interval.
+        /// The price at the start (open) of the price bar interval.
         /// </summary>
         public decimal Open { get; set; }
         /// <summary>
-        /// The highest price occurring during the interval of the price bar
+        /// The highest price occurring during the interval of the price bar.
         /// </summary>
         public decimal High { get; set; }
         /// <summary>
-        /// The lowest price occurring during the interval of the price bar
+        /// The lowest price occurring during the interval of the price bar.
         /// </summary>
         public decimal Low { get; set; }
         /// <summary>
-        /// The price at the end of the price bar interval
+        /// The price at the end (close) of the price bar interval.
         /// </summary>
         public decimal Close { get; set; }
     }
@@ -991,17 +991,17 @@ namespace CIAPI.DTO
     }
 
     /// <summary>
-    /// The mid price at a particular point in time.
+    /// The mid price at the point in time of the price tick.
     /// </summary>
     [Serializable]
     public partial class PriceTickDTO
     {
         /// <summary>
-        /// The datetime at which a price tick occurred. Accurate to the millisecond
+        /// The date time at which a price tick occurred. Accurate to the millisecond.
         /// </summary>
         public DateTime TickDate { get; set; }
         /// <summary>
-        /// The mid price
+        /// The mid price.
         /// </summary>
         public decimal Price { get; set; }
     }
@@ -1142,6 +1142,9 @@ namespace CIAPI.DTO
         public ApiActiveStopLimitOrderDTO[] ActiveStopLimitOrders { get; set; }
     }
 
+    /// <summary>
+    /// An (empty) response to indicate that the save market information operation has completed.
+    /// </summary>
     [Serializable]
     public partial class ApiSaveMarketInformationResponseDTO
     {
@@ -1280,7 +1283,7 @@ namespace CIAPI.DTO
     }
 
     /// <summary>
-    /// A request for updating a stop/limit order
+    /// A request to update a stop/limit order.
     /// </summary>
     [Serializable]
     public partial class UpdateStopLimitOrderRequestDTO : NewStopLimitOrderRequestDTO
@@ -1288,13 +1291,13 @@ namespace CIAPI.DTO
     }
 
     /// <summary>
-    /// system status
+    /// Response containing the system status.
     /// </summary>
     [Serializable]
     public partial class SystemStatusDTO
     {
         /// <summary>
-        /// a status message
+        /// The status message.
         /// </summary>
         public string StatusMessage { get; set; }
     }
@@ -1441,69 +1444,69 @@ namespace CIAPI.DTO
     }
 
     /// <summary>
-    /// A request for a trade order
+    /// A request for a trade order.
     /// </summary>
     [Serializable]
     public partial class NewTradeOrderRequestDTO
     {
         /// <summary>
-        /// A market's unique identifier
+        /// The unique identifier for a market.
         /// </summary>
         public int MarketId { get; set; }
         /// <summary>
-        /// Currency to place order in
+        /// Currency to place order in.
         /// </summary>
         public string Currency { get; set; }
         /// <summary>
-        /// Flag to indicate whether the trade will automatically roll into the next market when the current market expires
+        /// Flag to indicate whether the trade will automatically roll into the next market interval when the current market interval expires.
         /// </summary>
         public bool AutoRollover { get; set; }
         /// <summary>
-        /// Direction identifier for order/trade, values supported are buy or sell
+        /// Direction identifier for order/trade, values supported are buy or sell.
         /// </summary>
         public string Direction { get; set; }
         /// <summary>
-        /// Size of the order/trade
+        /// Size of the order/trade.
         /// </summary>
         public decimal Quantity { get; set; }
         /// <summary>
-        /// Quote Id
+        /// The quote identifier.
         /// </summary>
         public int? QuoteId { get; set; }
         /// <summary>
-        /// Market prices are quoted as a pair (buy/sell or bid/offer), the BidPrice is the lower of the two
+        /// Market prices are quoted as a pair (buy/sell or bid/offer), the BidPrice is the lower value of the pair.
         /// </summary>
         public decimal BidPrice { get; set; }
         /// <summary>
-        /// Market prices are quote as a pair (buy/sell or bid/offer), the OfferPrice is the higher of the market price pair
+        /// Market prices are quote as a pair (buy/sell or bid/offer), the OfferPrice is the higher value of the pair.
         /// </summary>
         public decimal OfferPrice { get; set; }
         /// <summary>
-        /// Unique identifier for a price tick
+        /// Unique identifier for a price tick.
         /// </summary>
         public string AuditId { get; set; }
         /// <summary>
-        /// TradingAccount associated with the trade/order request
+        /// The ID of the TradingAccount associated with the trade/order request.
         /// </summary>
         public int TradingAccountId { get; set; }
         /// <summary>
-        /// List of IfDone Orders which will be filled when the initial trade/order is triggered
+        /// List of If/Done Orders that will be filled when the initial trade/order is triggered.
         /// </summary>
         public ApiIfDoneDTO[] IfDone { get; set; }
         /// <summary>
-        /// List of existing order id's that require part or full closure
+        /// List of existing order ID's that require part or full closure.
         /// </summary>
         public int[] Close { get; set; }
     }
 
     /// <summary>
-    /// A request for updating a trade order
+    /// A request to update a trade order.
     /// </summary>
     [Serializable]
     public partial class UpdateTradeOrderRequestDTO : NewTradeOrderRequestDTO
     {
         /// <summary>
-        /// Order identifier of the order to update
+        /// The identifier of the order to update.
         /// </summary>
         public int OrderId { get; set; }
     }
@@ -1665,13 +1668,13 @@ namespace CIAPI.DTO
     }
 
     /// <summary>
-    /// system status request.
+    /// System status request.
     /// </summary>
     [Serializable]
     public partial class SystemStatusRequestDTO
     {
         /// <summary>
-        /// depth to test.
+        /// Depth to test.
         /// </summary>
         public string TestDepth { get; set; }
     }
@@ -1720,6 +1723,9 @@ namespace CIAPI.DTO
         public ApiTradeHistoryDTO[] TradeHistory { get; set; }
     }
 
+    /// <summary>
+    /// An (empty) response to indicate the save watchlist operation has completed.
+    /// </summary>
     [Serializable]
     public partial class ApiSaveWatchlistResponseDTO
     {
@@ -1738,13 +1744,13 @@ namespace CIAPI.DTO
     }
 
     /// <summary>
-    /// Get market information for a list of markets.
+    /// Request to update the display order of items in a watchlist.
     /// </summary>
     [Serializable]
     public partial class UpdateWatchlistDisplayOrderRequestDTO
     {
         /// <summary>
-        /// Represents the new client watchlist displayOrderId list sequence
+        /// Represents the new client watchlist displayOrderId list sequence.
         /// </summary>
         public int[] NewDisplayOrderIdSequence { get; set; }
     }

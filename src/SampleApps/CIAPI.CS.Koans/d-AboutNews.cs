@@ -44,12 +44,12 @@ namespace CIAPI.CS.Koans
         [Koan(Order = 3)]
         public void UsingTheStoryIdYouCanFetchTheStoryDetails()
         {
-            var newsStory = _rpcClient.News.GetNewsDetail(_ukHeadlines.Headlines[0].StoryId.ToString());
+            var newsStory = _rpcClient.News.GetNewsDetail("dj", _ukHeadlines.Headlines[0].StoryId.ToString());
             KoanAssert.That(newsStory.NewsDetail.Story, Is.Not.Null.Or.Empty, "You now have the full body of the news story");
             KoanAssert.That(newsStory.NewsDetail.Story, Is.StringContaining("<p>"), "which contains simple HTML");
         }
 
-        [Koan(Order = 4)] 
+        [Koan(Order = 4)]
         // DAVID: we have a serious issue regarding subsequent exceptions (i am working on it)- as it is you get one exception, pick one. 
         // I think the 'be diligent catching async errors' is more important.
         public void AskingForTooManyHeadlinesIsConsideredABadRequest()
@@ -64,23 +64,24 @@ namespace CIAPI.CS.Koans
                 KoanAssert.That(ex.Message, Is.StringContaining("(400) Bad Request"), "The error will talk about (400) Bad Request");
             }
         }
- 
+
         [Koan(Order = 5)]
         public void AskingForAnInvalidStoryIdWillGetYouNullStoryDetails()
         {
             const int invalidStoryId = Int32.MaxValue;
-            var newsStory = _rpcClient.News.GetNewsDetail( storyId: invalidStoryId.ToString());
+            var newsStory = _rpcClient.News.GetNewsDetail(source: "dj", storyId: invalidStoryId.ToString());
 
             KoanAssert.That(newsStory.NewsDetail, Is.EqualTo(null), "There are no details for an invalid story Id");
         }
 
-       [Koan(Order = 6)]
+        [Koan(Order = 6)]
         public void EveryRequestCanBeMadeAsyncronouslyToPreventHangingYourUIThread()
         {
             var gate = new ManualResetEvent(false);
             GetNewsDetailResponseDTO newsDetailResponseDto = null;
 
             _rpcClient.News.BeginGetNewsDetail(
+                source: "dj",
                 storyId: _ukHeadlines.Headlines[0].StoryId.ToString(),
                 callback: (response) =>
                               {
@@ -110,7 +111,7 @@ namespace CIAPI.CS.Koans
         /// I am sure you took a swing at why we are getting an invalid json error when the server clearly returns a 400, no?
         /// This is obviously a threading issue.
         /// </summary>
-       [Koan(Order = 7)]
+        [Koan(Order = 7)]
         public void ExceptionsOnAsyncMethodsNeedToBeManagedCarefully()
         {
             const int maxHeadlines = 500;
@@ -118,7 +119,7 @@ namespace CIAPI.CS.Koans
             ListNewsHeadlinesResponseDTO listNewsHeadlinesResponseDto = null;
 
             _rpcClient.News.BeginListNewsHeadlinesWithSource(
-                source:"dj",
+                source: "dj",
                 category: "UK", maxResults: maxHeadlines + 1,
                 callback: (response) =>
                 {

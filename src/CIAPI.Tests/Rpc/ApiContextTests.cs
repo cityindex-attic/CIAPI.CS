@@ -132,7 +132,7 @@ namespace CIAPI.Tests.Rpc
             Console.WriteLine("DeserializationExceptionIsProperlySurfacedBySyncRequests");
 
             CIAPI.Rpc.Client ctx = BuildAuthenticatedClientAndSetupResponse(BogusJson);
-            Assert.Throws<CIAPI.Rpc.ServerConnectionException>(() => ctx.News.GetNewsDetail("foobar"));
+            Assert.Throws<CIAPI.Rpc.ServerConnectionException>(() => ctx.News.GetNewsDetail("dj", "foobar"));
         }
 
 

@@ -118,9 +118,7 @@
     <None Include="..\CIAPI.IntegrationTests\App.config">
       <Link>App.config</Link>
     </None>
-    <None Include="..\CIAPI.IntegrationTests\packages.config">
-      <Link>packages.config</Link>
-    </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CIAPI-3.5\CIAPI-3.5.csproj">

@@ -50,9 +50,21 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CIAPI.Silverlight">
+      <HintPath>..\..\..\packages\CIAPI.CS.1.12.242.0\lib\Silverlight40\CIAPI.Silverlight.dll</HintPath>
+    </Reference>
+    <Reference Include="CityIndex.JsonClient.Silverlight">
+      <HintPath>..\..\..\packages\CIAPI.CS.1.12.242.0\lib\Silverlight40\CityIndex.JsonClient.Silverlight.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging.Silverlight">
+      <HintPath>..\..\..\packages\CIAPI.CS.1.12.242.0\lib\Silverlight40\Common.Logging.Silverlight.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Phone" />
     <Reference Include="Microsoft.Phone.Controls.Toolkit, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b772ad94eb9ca604, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone.Interop" />
+    <Reference Include="Newtonsoft.Json.Silverlight, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\CIAPI.CS.1.12.242.0\lib\Silverlight40\Newtonsoft.Json.Silverlight.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows" />
     <Reference Include="system" />
     <Reference Include="System.Core" />
@@ -63,6 +75,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Example.FetchNews.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

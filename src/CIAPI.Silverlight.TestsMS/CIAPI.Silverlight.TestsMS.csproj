@@ -73,14 +73,29 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CIAPI.Silverlight, Version=1.12.242.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\CIAPI.CS.1.12.242.0\lib\Silverlight40\CIAPI.Silverlight.dll</HintPath>
+    </Reference>
+    <Reference Include="CityIndex.JsonClient.Silverlight, Version=1.12.242.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\CIAPI.CS.1.12.242.0\lib\Silverlight40\CityIndex.JsonClient.Silverlight.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging.Silverlight, Version=1.12.242.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\CIAPI.CS.1.12.242.0\lib\Silverlight40\Common.Logging.Silverlight.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Silverlight.Testing">
       <HintPath>..\packages\SL4_Testing\Microsoft.Silverlight.Testing.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTesting.Silverlight">
       <HintPath>..\packages\SL4_Testing\Microsoft.VisualStudio.QualityTools.UnitTesting.Silverlight.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json.Silverlight">
-      <HintPath>..\packages\Newtonsoft.Json.3.5.8\lib\SL\Newtonsoft.Json.Silverlight.dll</HintPath>
+    <Reference Include="Newtonsoft.Json.Silverlight, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\CIAPI.CS.1.12.242.0\lib\Silverlight40\Newtonsoft.Json.Silverlight.dll</HintPath>
+    </Reference>
+    <Reference Include="SilverlightClient, Version=1.3.4168.21502, Culture=neutral, PublicKeyToken=8d72f58860ac9835, processorArchitecture=MSIL">
+      <HintPath>..\packages\CIAPI.CS.1.12.242.0\lib\Silverlight40\SilverlightClient.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows" />
     <Reference Include="mscorlib" />
@@ -106,6 +121,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Example.FetchNews.cs" />
     <Compile Include="IntegrationTests01.cs" />
     <Compile Include="IssueResolutionScratchpadFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -123,18 +139,6 @@
     <None Include="Properties\AppManifest.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CIAPI.Silverlight\CIAPI.Silverlight.csproj">
-      <Project>{B26AA333-051A-4C11-B6CD-CECA8FD656E0}</Project>
-      <Name>CIAPI.Silverlight</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Common.Logging.Silverlight\Common.Logging.Silverlight.csproj">
-      <Project>{74036434-D18E-4404-B854-51395CE40B6C}</Project>
-      <Name>Common.Logging.Silverlight</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\JsonClient.Silverlight\JsonClient.Silverlight.csproj">
-      <Project>{0156697E-DEFE-47CF-9EB0-11F120780356}</Project>
-      <Name>JsonClient.Silverlight</Name>
-    </ProjectReference>
     <ProjectReference Include="..\StreamingClient.Silverlight\StreamingClient.Silverlight.csproj">
       <Project>{C552DD3D-3738-4194-95F3-5A988E7D4647}</Project>
       <Name>StreamingClient.Silverlight</Name>
