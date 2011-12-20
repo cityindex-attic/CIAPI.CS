@@ -51,25 +51,25 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CIAPI.Silverlight">
-      <HintPath>..\..\..\packages\CIAPI.CS.1.12.242.0\lib\Silverlight40\CIAPI.Silverlight.dll</HintPath>
+      <HintPath>..\..\..\packages\CIAPI.CS.1.13.244.0\lib\sl4\CIAPI.Silverlight.dll</HintPath>
     </Reference>
     <Reference Include="CityIndex.JsonClient.Silverlight">
-      <HintPath>..\..\..\packages\CIAPI.CS.1.12.242.0\lib\Silverlight40\CityIndex.JsonClient.Silverlight.dll</HintPath>
+      <HintPath>..\..\..\packages\CIAPI.CS.1.13.244.0\lib\sl4\CityIndex.JsonClient.Silverlight.dll</HintPath>
     </Reference>
     <Reference Include="Common.Logging.Silverlight">
-      <HintPath>..\..\..\packages\CIAPI.CS.1.12.242.0\lib\Silverlight40\Common.Logging.Silverlight.dll</HintPath>
+      <HintPath>..\..\..\packages\CIAPI.CS.1.13.244.0\lib\sl4\Common.Logging.Silverlight.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Phone" />
     <Reference Include="Microsoft.Phone.Controls.Toolkit, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b772ad94eb9ca604, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone.Interop" />
     <Reference Include="Newtonsoft.Json.Silverlight">
-      <HintPath>..\..\..\packages\CIAPI.CS.1.12.242.0\lib\Silverlight40\Newtonsoft.Json.Silverlight.dll</HintPath>
+      <HintPath>..\..\..\packages\CIAPI.CS.1.13.244.0\lib\sl4\Newtonsoft.Json.Silverlight.dll</HintPath>
     </Reference>
     <Reference Include="SilverlightClient">
-      <HintPath>..\..\..\packages\CIAPI.CS.1.12.242.0\lib\Silverlight40\SilverlightClient.dll</HintPath>
+      <HintPath>..\..\..\packages\CIAPI.CS.1.13.244.0\lib\sl4\SilverlightClient.dll</HintPath>
     </Reference>
     <Reference Include="StreamingClient.Silverlight">
-      <HintPath>..\..\..\packages\CIAPI.CS.1.12.242.0\lib\Silverlight40\StreamingClient.Silverlight.dll</HintPath>
+      <HintPath>..\..\..\packages\CIAPI.CS.1.13.244.0\lib\sl4\StreamingClient.Silverlight.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows" />
     <Reference Include="system" />
