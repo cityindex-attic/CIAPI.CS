@@ -32,7 +32,7 @@
   
   <Target Name="CopyMSBuildOutputToDropDirectory">
     <ItemGroup>
-      <MSBuildOutputItems Exclude="$(SrcDirectory)\**\*.xml" Include="$(SrcDirectory)\**\bin\$(Configuration)\*.*" />
+      <MSBuildOutputItems Include="$(SrcDirectory)\**\bin\$(Configuration)\*.*" />
     </ItemGroup>
     <Message Text="Copying $(Configuration) dlls output to $(DropLibDirectory)" />
     <Copy ContinueOnError="false" SourceFiles="@(MSBuildOutputItems)" DestinationFiles="@(MSBuildOutputItems ->'$(DropLibDirectory)\%(RecursiveDir)%(Filename)%(Extension)')" />
