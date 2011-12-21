@@ -4,9 +4,10 @@ using System.Text;
 using System.Threading;
 using CIAPI.DTO;
 using CIAPI.IntegrationTests.Streaming;
-using CIAPI.Rpc;
 using CIAPI.Streaming;
+using CityIndex.JsonClient;
 using NUnit.Framework;
+using Client = CIAPI.Rpc.Client;
 
 namespace CIAPI.IntegrationTests.Rpc
 {
@@ -16,7 +17,6 @@ namespace CIAPI.IntegrationTests.Rpc
         [Test]
         public void CanListOpenPositions()
         {
-
             var rpcClient = BuildRpcClient();
 
             AccountInformationResponseDTO accounts = rpcClient.AccountInformation.GetClientAndTradingAccount();
@@ -25,6 +25,42 @@ namespace CIAPI.IntegrationTests.Rpc
             rpcClient.Dispose();
 
         }
- 
+
+        [Test]
+        public void CanChangePassword()
+        {
+            const string NEWPASSWORD = "bingo72652";
+            var rpcClient = new Client(Settings.RpcUri);
+            
+            //Login with existing credentials
+            rpcClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);
+
+            //And change password
+            var changePasswordResponse = rpcClient.AccountInformation.ChangePassword(new ApiChangePasswordRequestDTO()
+                                                                                         {
+                                                                                             UserName = Settings.RpcUserName,
+                                                                                             Password = Settings.RpcPassword,
+                                                                                             NewPassword = NEWPASSWORD
+                                                                                         });
+
+            Assert.IsTrue(changePasswordResponse.IsPasswordChanged);
+            rpcClient.LogOut();
+
+            //Make sure that login existing password fails 
+            Assert.Throws<ApiException>(() => rpcClient.LogIn(Settings.RpcUserName, Settings.RpcUserName));
+
+            //Login with changed password and change back
+            rpcClient.LogIn(Settings.RpcUserName, NEWPASSWORD);
+            changePasswordResponse = rpcClient.AccountInformation.ChangePassword(new ApiChangePasswordRequestDTO()
+                                                                                         {
+                                                                                             UserName = Settings.RpcUserName,
+                                                                                             Password = NEWPASSWORD,
+                                                                                             NewPassword = Settings.RpcPassword
+                                                                                         });
+
+            Assert.IsTrue(changePasswordResponse.IsPasswordChanged);
+            rpcClient.LogOut();
+            rpcClient.Dispose();
+        }
     }
 }
