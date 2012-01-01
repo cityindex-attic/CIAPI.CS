@@ -1,0 +1,2701 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CIAPI</name>
+    </assembly>
+    <members>
+        <member name="T:CIAPI.DTO.ApiChangePasswordRequestDTO">
+            <summary>
+            Request to change a user's password.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiChangePasswordRequestDTO.UserName">
+            <summary>
+            The username of the user whose password is to be changed (case sensitive).
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiChangePasswordRequestDTO.Password">
+            <summary>
+            The user's existing password (case sensitive).
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiChangePasswordRequestDTO.NewPassword">
+            <summary>
+            The user's new password (case sensitive).
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ApiSaveAccountInformationRequestDTO">
+            <summary>
+            Request to change account information.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiSaveAccountInformationRequestDTO.PersonalEmailAddress">
+            <summary>
+            The personal email address for the user.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiSaveAccountInformationRequestDTO.PersonalEmailAddressIsDirty">
+            <summary>
+            Setting to indicate if the personal email value has changed.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.AccountInformationResponseDTO">
+            <summary>
+            Response from an account information query.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.AccountInformationResponseDTO.LogonUserName">
+            <summary>
+            Logon user name.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.AccountInformationResponseDTO.ClientAccountId">
+            <summary>
+            Client account ID.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.AccountInformationResponseDTO.ClientAccountCurrency">
+            <summary>
+            Base currency of the client account.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.AccountInformationResponseDTO.AccountOperatorId">
+            <summary>
+            Account Operator ID.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.AccountInformationResponseDTO.TradingAccounts">
+            <summary>
+            A list of trading accounts.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.AccountInformationResponseDTO.PersonalEmailAddress">
+            <summary>
+            The user's personal email address.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.AccountInformationResponseDTO.HasMultipleEmailAddresses">
+            <summary>
+            Does the user have more than one email address configured?
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ApiStopLimitOrderHistoryDTO">
+            <summary>
+            A stop or limit order from a historical perspective.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiStopLimitOrderHistoryDTO.OrderId">
+            <summary>
+            The order's unique identifier.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiStopLimitOrderHistoryDTO.MarketId">
+            <summary>
+            The markets unique identifier.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiStopLimitOrderHistoryDTO.MarketName">
+            <summary>
+            The market's name.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiStopLimitOrderHistoryDTO.Direction">
+            <summary>
+            The direction, buy or sell.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiStopLimitOrderHistoryDTO.OriginalQuantity">
+            <summary>
+            The quantity of the order when it became a trade / was cancelled etc.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiStopLimitOrderHistoryDTO.Price">
+            <summary>
+            The price / rate that the order was filled at.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiStopLimitOrderHistoryDTO.TriggerPrice">
+            <summary>
+            The price / rate that the the order was set to trigger at.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiStopLimitOrderHistoryDTO.TradingAccountId">
+            <summary>
+            The trading account that the order is on.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiStopLimitOrderHistoryDTO.TypeId">
+            <summary>
+            The type of the order stop, limit or trade.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiStopLimitOrderHistoryDTO.OrderApplicabilityId">
+            <summary>
+            The duration that the order was applicable, i.e. good till cancelled (GTC), good for day (GFD), or good till time (GTT).
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiStopLimitOrderHistoryDTO.Currency">
+            <summary>
+            The trade currency.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiStopLimitOrderHistoryDTO.StatusId">
+            <summary>
+            The order status.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiStopLimitOrderHistoryDTO.LastChangedDateTimeUtc">
+            <summary>
+            The last time that the order changed.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiStopLimitOrderHistoryDTO.CreatedDateTimeUtc">
+            <summary>
+            The creation date and time of the order.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ApiOrderDTO">
+            <summary>
+            Represents an order.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiOrderDTO.OrderId">
+            <summary>
+            The order identifier.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiOrderDTO.MarketId">
+            <summary>
+            A market's unique identifier.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiOrderDTO.Direction">
+            <summary>
+            Direction identifier for trade, values supported are buy or sell.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiOrderDTO.Quantity">
+            <summary>
+            Size of the order.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiOrderDTO.Price">
+            <summary>
+            The price at which the order was filled.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiOrderDTO.TradingAccountId">
+            <summary>
+            The ID of the Trading Account associated with the order.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiOrderDTO.CurrencyId">
+            <summary>
+            Currency ID for order (as represented in the trading system).
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiOrderDTO.StatusId">
+            <summary>
+            Status ID of order (as represented in the trading system).
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiOrderDTO.TypeId">
+            <summary>
+            The type of the order, Trade, stop or limit.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiOrderDTO.IfDone">
+            <summary>
+            List of If/Done Orders which will be filled when the initial order is triggered.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiOrderDTO.OcoOrder">
+            <summary>
+            Corresponding Oco Order (One Cancels the Other).
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ApiStopLimitOrderDTO">
+            <summary>
+            Represents a stop/limit order.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiStopLimitOrderDTO.TriggerPrice">
+            <summary>
+            Price at which the order should be triggered.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiStopLimitOrderDTO.ExpiryDateTimeUTC">
+            <summary>
+            The associated expiry DateTime for a pair of GoodTillDate If/Done orders.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiStopLimitOrderDTO.Applicability">
+            <summary>
+            Identifier which relates to the expiry of the order/trade, i.e. GoodTillDate (GTD), GoodTillCancelled (GTC) or GoodForDay (GFD).
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiClientApplicationMessageTranslationDTO.Key">
+            <summary>
+            Translation key
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiClientApplicationMessageTranslationDTO.Value">
+            <summary>
+            Translation value
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ApiActiveStopLimitOrderDTO">
+            <summary>
+            A stop or limit order that is currently active.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiActiveStopLimitOrderDTO.OrderId">
+            <summary>
+            The order's unique identifier.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiActiveStopLimitOrderDTO.ParentOrderId">
+            <summary>
+            The order's parent OrderId.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiActiveStopLimitOrderDTO.MarketId">
+            <summary>
+            The markets unique identifier.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiActiveStopLimitOrderDTO.MarketName">
+            <summary>
+            The market's name.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiActiveStopLimitOrderDTO.Direction">
+            <summary>
+            The direction, buy or sell.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiActiveStopLimitOrderDTO.Quantity">
+            <summary>
+            The quantity of the product.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiActiveStopLimitOrderDTO.TriggerPrice">
+            <summary>
+            The marked to market price at which the order will trigger at.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiActiveStopLimitOrderDTO.TradingAccountId">
+            <summary>
+            The trading account that the order is on.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiActiveStopLimitOrderDTO.Type">
+            <summary>
+            The type of order, i.e. stop or limit.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiActiveStopLimitOrderDTO.Applicability">
+            <summary>
+            When the order applies until. i.e. good till cancelled (GTC) good for day (GFD) or good till time (GTT).
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiActiveStopLimitOrderDTO.ExpiryDateTimeUTC">
+            <summary>
+            The associated expiry DateTime.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiActiveStopLimitOrderDTO.Currency">
+            <summary>
+            The trade currency.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiActiveStopLimitOrderDTO.Status">
+            <summary>
+            The order status.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiActiveStopLimitOrderDTO.StopOrder">
+            <summary>
+            The if done stop order.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiActiveStopLimitOrderDTO.LimitOrder">
+            <summary>
+            The if done limit order
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiActiveStopLimitOrderDTO.OcoOrder">
+            <summary>
+            The order on the other side of a one Cancels the other relationship.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiActiveStopLimitOrderDTO.LastChangedDateTimeUTC">
+            <summary>
+            The last time that the order changed. Note - Does not include things such as the current market price.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiActiveStopLimitOrderDTO.Applicability_Resolved">
+            <summary>
+            Plain text StatusReason
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ApiMarketEodDTO">
+            <summary>
+            Market end of day (EOD) information.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketEodDTO.MarketEodUnit">
+            <summary>
+            Unit.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketEodDTO.MarketEodAmount">
+            <summary>
+            End of day amount.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ApiLookupDTO">
+            <summary>
+            Generic look up data entities - such as localised textual names.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiLookupDTO.Id">
+            <summary>
+            The lookup ID.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiLookupDTO.Description">
+            <summary>
+            Lookup items description.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiLookupDTO.DisplayOrder">
+            <summary>
+            The order to display the items on a user interface.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiLookupDTO.TranslationTextId">
+            <summary>
+            Translation text ID.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiLookupDTO.TranslationText">
+            <summary>
+            Translated text.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiLookupDTO.IsActive">
+            <summary>
+            Is active flag.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiLookupDTO.IsAllowed">
+            <summary>
+            Is allowed flag.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ApiCultureLookupDTO">
+            <summary>
+            Lookup data specific to a Culture
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiCultureLookupDTO.Code">
+            <summary>
+            2 letter ISO 639 culture code followed by a 2 letter uppercase ISO 3166 culture code
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ApiBasicStopLimitOrderDTO">
+            <summary>
+            A stop or limit order with a limited number of data fields.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiBasicStopLimitOrderDTO.OrderId">
+            <summary>
+            The order's unique identifier.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiBasicStopLimitOrderDTO.TriggerPrice">
+            <summary>
+            The order's trigger price.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiBasicStopLimitOrderDTO.Quantity">
+            <summary>
+            The quantity of the product.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ApiClientAccountWatchlistItemDTO">
+            <summary>
+            API watchlist item.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiClientAccountWatchlistItemDTO.WatchlistId">
+            <summary>
+            ID of the parent watchlist.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiClientAccountWatchlistItemDTO.MarketId">
+            <summary>
+            Watchlist item market ID.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiClientAccountWatchlistItemDTO.DisplayOrder">
+            <summary>
+            Watchlist item display order.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ClientAccountMarginDTO">
+            <summary>
+            The current margin and other account balance data for a specific client account used in the ClientAccountMargin stream.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ClientAccountMarginDTO.Cash">
+            <summary>
+            Cash balance expressed in the clients base currency.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ClientAccountMarginDTO.Margin">
+            <summary>
+            The client account's total margin requirement expressed in base currency.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ClientAccountMarginDTO.MarginIndicator">
+            <summary>
+            Margin indicator expressed as a percentage.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ClientAccountMarginDTO.NetEquity">
+            <summary>
+            Net equity expressed in the clients base currency.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ClientAccountMarginDTO.OpenTradeEquity">
+            <summary>
+            Open trade equity (open / unrealised PNL) expressed in the client's base currency.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ClientAccountMarginDTO.TradeableFunds">
+            <summary>
+            Tradable funds expressed in the client's base currency.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ClientAccountMarginDTO.PendingFunds">
+            <summary>
+            N/A
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ClientAccountMarginDTO.TradingResource">
+            <summary>
+            Trading resource expressed in the client's base currency.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ClientAccountMarginDTO.TotalMarginRequirement">
+            <summary>
+            Total margin requirement expressed in the client's base currency.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ClientAccountMarginDTO.CurrencyId">
+            <summary>
+            The clients base currency ID.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ClientAccountMarginDTO.CurrencyISO">
+            <summary>
+            The clients base currency ISO code.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.NewsDTO">
+            <summary>
+            A headline for a news story.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.NewsDTO.StoryId">
+            <summary>
+            The unique identifier for a news story.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.NewsDTO.Headline">
+            <summary>
+            The news story headline.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.NewsDTO.PublishDate">
+            <summary>
+            The date on which the news story was published. Always in UTC.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.NewsDetailDTO">
+            <summary>
+            Contains details of a specific news story.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.NewsDetailDTO.Story">
+            <summary>
+            The detail of the news story. This can contain HTML characters.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ApiMarketTagDTO">
+            <summary>
+            Basic information about a market tag.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketTagDTO.MarketTagId">
+            <summary>
+            A unique identifier for this market tag.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketTagDTO.Name">
+            <summary>
+            The market tag description. Can be localised if required.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketTagDTO.Type">
+            <summary>
+            Used to determine if the market tag is a primary (1) or secondary (2) tag.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ApiTradingAccountDTO">
+            <summary>
+            Information about a Trading Account.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiTradingAccountDTO.TradingAccountId">
+            <summary>
+            Trading Account ID.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiTradingAccountDTO.TradingAccountCode">
+            <summary>
+            Trading Account Code.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiTradingAccountDTO.TradingAccountStatus">
+            <summary>
+            Trading account status with possible values (Open, Closed).
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiTradingAccountDTO.TradingAccountType">
+            <summary>
+            Trading account type with possible values (Spread, CFD).
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.TradeMarginDTO">
+            <summary>
+            The current margin requirement and open trade equity (OTE) of an order, used in the TradeMargin stream.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.TradeMarginDTO.ClientAccountId">
+            <summary>
+            The client account this message relates to.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.TradeMarginDTO.DirectionId">
+            <summary>
+            The order direction, 1 == Buy and 0 == Sell.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.TradeMarginDTO.MarginRequirementConverted">
+            <summary>
+            The margin requirement converted to the correct currency for this order.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.TradeMarginDTO.MarginRequirementConvertedCurrencyId">
+            <summary>
+            The currency ID of the margin requirement for this order.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.TradeMarginDTO.MarginRequirementConvertedCurrencyISOCode">
+            <summary>
+            The currency ISO code of the margin requirement for this order.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.TradeMarginDTO.MarketId">
+            <summary>
+            The market ID the order is on.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.TradeMarginDTO.MarketTypeId">
+            <summary>
+            The market type ID. 1 = Option Market; 2 = Ordinary Market; 4 = Binary Market.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.TradeMarginDTO.Multiplier">
+            <summary>
+            The margin multiplier.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.TradeMarginDTO.OrderId">
+            <summary>
+            The Order ID.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.TradeMarginDTO.OTEConverted">
+            <summary>
+            The Open Trade Equity converted to the correct currency for this order.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.TradeMarginDTO.OTEConvertedCurrencyId">
+            <summary>
+            The currency ID of the OTE for this order.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.TradeMarginDTO.OTEConvertedCurrencyISOCode">
+            <summary>
+            The currency ISO code of the OTE for this order.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.TradeMarginDTO.PriceCalculatedAt">
+            <summary>
+            The price the calculation was performed at.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.TradeMarginDTO.PriceTakenAt">
+            <summary>
+            The price the order was taken at.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.TradeMarginDTO.Quantity">
+            <summary>
+            The quantity of the order.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.QuoteDTO">
+            <summary>
+            A quote for a specific order request.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.QuoteDTO.QuoteId">
+            <summary>
+            The unique ID of the Quote.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.QuoteDTO.OrderId">
+            <summary>
+            The ID of the Order that the Quote is related to.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.QuoteDTO.MarketId">
+            <summary>
+            The Market the Quote is related to.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.QuoteDTO.BidPrice">
+            <summary>
+            The Price of the original Order request for a Buy.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.QuoteDTO.BidAdjust">
+            <summary>
+            The amount the bid price will be adjusted to become an order when the customer is buying (BidPrice + BidAdjust = BuyPrice).
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.QuoteDTO.OfferPrice">
+            <summary>
+            The Price of the original Order request for a Sell.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.QuoteDTO.OfferAdjust">
+            <summary>
+            The amount the offer price will be adjusted to become an order when the customer is selling (OfferPrice + OfferAdjust = OfferPrice).
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.QuoteDTO.Quantity">
+            <summary>
+            The Quantity is the number of units for the trade i.e CFD Quantity = Number of CFD's to Buy or Sell , FX Quantity = amount in base currency.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.QuoteDTO.CurrencyId">
+            <summary>
+            The system internal ID for the ISO Currency. An API call will be available in the near future to look up the equivalent ISO Code.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.QuoteDTO.StatusId">
+            <summary>
+            The Status ID of the Quote. An API call will be available in the near future to look up the Status values.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.QuoteDTO.TypeId">
+            <summary>
+            The quote type ID.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.QuoteDTO.RequestDateTime">
+            <summary>
+            The timestamp the quote was requested. Always expressed in UTC.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ApiTradeOrderDTO">
+            <summary>
+            Represents a trade order.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.OrderDTO">
+            <summary>
+            An order for a specific Trading Account.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.OrderDTO.OrderId">
+            <summary>
+            The Order identifier.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.OrderDTO.MarketId">
+            <summary>
+            The Market identifier.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.OrderDTO.ClientAccountId">
+            <summary>
+            Client account ID.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.OrderDTO.TradingAccountId">
+            <summary>
+            Trading account ID.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.OrderDTO.CurrencyId">
+            <summary>
+            Trade currency ID.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.OrderDTO.CurrencyISO">
+            <summary>
+            Trade currency ISO code.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.OrderDTO.Direction">
+            <summary>
+            Direction of the order (1 == buy, 0 == sell).
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.OrderDTO.AutoRollover">
+            <summary>
+            Flag indicating whether the order automatically rolls over.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.OrderDTO.ExecutionPrice">
+            <summary>
+            The price the order was executed at.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.OrderDTO.LastChangedTime">
+            <summary>
+            The date and time that the order was last changed. Always expressed in UTC.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.OrderDTO.OpenPrice">
+            <summary>
+            The open price of the order.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.OrderDTO.OriginalLastChangedDateTime">
+            <summary>
+            The date of the order. Always expressed in UTC.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.OrderDTO.OriginalQuantity">
+            <summary>
+            The orders original quantity, before any part / full closures.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.OrderDTO.PositionMethodId">
+            <summary>
+            The position method identifier of the order.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.OrderDTO.Quantity">
+            <summary>
+            The current quantity of the order.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.OrderDTO.Type">
+            <summary>
+            The type of the order (1 = Trade / 2 = Stop / 3 = Limit).
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.OrderDTO.Status">
+            <summary>
+            The order status ID.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.OrderDTO.ReasonId">
+            <summary>
+            The order status reason identifier.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.PriceBarDTO">
+            <summary>
+            The details of a specific price bar, useful for plotting candlestick charts.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.PriceBarDTO.BarDate">
+            <summary>
+            The starting date for the price bar interval.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.PriceBarDTO.Open">
+            <summary>
+            The price at the start (open) of the price bar interval.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.PriceBarDTO.High">
+            <summary>
+            The highest price occurring during the interval of the price bar.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.PriceBarDTO.Low">
+            <summary>
+            The lowest price occurring during the interval of the price bar.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.PriceBarDTO.Close">
+            <summary>
+            The price at the end (close) of the price bar interval.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ApiPrimaryMarketTagDTO">
+            <summary>
+            Market tag information extended to include a list o child tags.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiPrimaryMarketTagDTO.Children">
+            <summary>
+            The list of child tags associated with this market tag.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ApiMarketInformationSaveDTO">
+            <summary>
+            Contains market information to be modified and saved.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketInformationSaveDTO.MarketId">
+            <summary>
+            The ID of the market to be modified.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketInformationSaveDTO.PriceTolerance">
+            <summary>
+            Setting to indicate the user's price tolerance for the given market.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketInformationSaveDTO.PriceToleranceIsDirty">
+            <summary>
+            Flag to indicate if the price tolerance value has changed.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketInformationSaveDTO.MarginFactor">
+            <summary>
+            The user's margin factor for the given market.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketInformationSaveDTO.MarginFactorIsDirty">
+            <summary>
+            Flag to indicate if the margin factor value has changed.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ApiMarketDTO">
+            <summary>
+            Basic information about a Market.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketDTO.MarketId">
+            <summary>
+            A market's unique identifier.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketDTO.Name">
+            <summary>
+            The market name.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ApiTradeHistoryDTO">
+            <summary>
+            A Trade from a historical perspective.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiTradeHistoryDTO.OrderId">
+            <summary>
+            The order ID.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiTradeHistoryDTO.OpeningOrderIds">
+            <summary>
+            The orders that are being closed / part closed by this order.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiTradeHistoryDTO.MarketId">
+            <summary>
+            The market ID.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiTradeHistoryDTO.MarketName">
+            <summary>
+            The name of the market.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiTradeHistoryDTO.Direction">
+            <summary>
+            The direction of the trade.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiTradeHistoryDTO.OriginalQuantity">
+            <summary>
+            The original quantity of the trade, before part closures.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiTradeHistoryDTO.Quantity">
+            <summary>
+            The current quantity of the trade.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiTradeHistoryDTO.Price">
+            <summary>
+            The open price of the trade.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiTradeHistoryDTO.TradingAccountId">
+            <summary>
+            The Trading Account ID that the order is on.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiTradeHistoryDTO.Currency">
+            <summary>
+            The trade currency.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiTradeHistoryDTO.RealisedPnl">
+            <summary>
+            The realised profit and loss.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiTradeHistoryDTO.RealisedPnlCurrency">
+            <summary>
+            The realised Pnl currency.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiTradeHistoryDTO.LastChangedDateTimeUtc">
+            <summary>
+            The last time that the order changed. Note - Does not include things such as the current market price.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiTradeHistoryDTO.ExecutedDateTimeUtc">
+            <summary>
+            The time the order was executed.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ApiClientAccountWatchlistDTO">
+            <summary>
+            Client account watchlist.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiClientAccountWatchlistDTO.WatchlistId">
+            <summary>
+            The ID of the Watchlist.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiClientAccountWatchlistDTO.WatchlistDescription">
+            <summary>
+            Watchlist description.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiClientAccountWatchlistDTO.DisplayOrder">
+            <summary>
+            Watchlist display order.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiClientAccountWatchlistDTO.Items">
+            <summary>
+            Watchlist items.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ApiMarketInformationDTO">
+            <summary>
+            Contains market information.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketInformationDTO.MarketId">
+            <summary>
+            Market ID.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketInformationDTO.Name">
+            <summary>
+            The market name.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketInformationDTO.MarginFactor">
+            <summary>
+            Margin factor, expressed as points or as a percentage.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketInformationDTO.MinMarginFactor">
+            <summary>
+            The minimum margin factor.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketInformationDTO.MaxMarginFactor">
+            <summary>
+            The maximum margin factor.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketInformationDTO.MarginFactorUnits">
+            <summary>
+            The margin factor units.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketInformationDTO.MinDistance">
+            <summary>
+            The minimum distance from the current price you can place an order.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketInformationDTO.WebMinSize">
+            <summary>
+            The minimum quantity that can be traded over the web.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketInformationDTO.MaxSize">
+            <summary>
+            The max size of an order.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketInformationDTO.Market24H">
+            <summary>
+            Flag indicating whether the market is a 24 hour market.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketInformationDTO.PriceDecimalPlaces">
+            <summary>
+            The number of decimal places in the market's price.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketInformationDTO.DefaultQuoteLength">
+            <summary>
+            Default quote length.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketInformationDTO.TradeOnWeb">
+            <summary>
+            Flag indicating whether you can trade this market on the web.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketInformationDTO.LimitUp">
+            <summary>
+            New sell orders will be rejected. Orders resulting in a short open position will be red carded.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketInformationDTO.LimitDown">
+            <summary>
+            New buy orders will be rejected. Orders resulting in a long open position will be red carded.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketInformationDTO.LongPositionOnly">
+            <summary>
+            Cannot open a short position. Equivalent to limit up.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketInformationDTO.CloseOnly">
+            <summary>
+            Can only close open positions. Equivalent to both Limit up and Limit down.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketInformationDTO.MarketEod">
+            <summary>
+            List of market end of day DTOs.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketInformationDTO.PriceTolerance">
+            <summary>
+            Setting to indicate the user's price tolerance for the given market.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketInformationDTO.ConvertPriceToPipsMultiplier">
+            <summary>
+            Multiplier used to calculate the significance of the price tolerance to the appropriate decimal place.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketInformationDTO.MarketSettingsTypeId">
+            <summary>
+            The Id of the type of the market setting, ie Spread, CFD.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiMarketInformationDTO.MarketSettingsType">
+            <summary>
+            The type of the market setting, ie Spread, CFD.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.PriceDTO">
+            <summary>
+            A Price for a specific Market.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.PriceDTO.MarketId">
+            <summary>
+            The Market that the Price is related to.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.PriceDTO.TickDate">
+            <summary>
+            The date of the Price. Always expressed in UTC.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.PriceDTO.Bid">
+            <summary>
+            The current Bid price (price at which the customer can sell).
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.PriceDTO.Offer">
+            <summary>
+            The current Offer price (price at which the customer can buy, sometimes referred to as Ask price).
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.PriceDTO.Price">
+            <summary>
+            The current mid price.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.PriceDTO.High">
+            <summary>
+            The highest price reached for the day.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.PriceDTO.Low">
+            <summary>
+            The lowest price reached for the day.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.PriceDTO.Change">
+            <summary>
+            The change since the last price (always positive). See Direction for direction of the change.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.PriceDTO.Direction">
+            <summary>
+            The direction of movement since the last price. 1 == up, 0 == down.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.PriceDTO.AuditId">
+            <summary>
+            A unique ID for this price. Treat as a unique, but random string.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.PriceTickDTO">
+            <summary>
+            The mid price at the point in time of the price tick.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.PriceTickDTO.TickDate">
+            <summary>
+            The date time at which a price tick occurred. Accurate to the millisecond.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.PriceTickDTO.Price">
+            <summary>
+            The mid price.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ApiIfDoneDTO">
+            <summary>
+            Contains the If/Done stop and limit orders. An If/Done order is comprised of two separate orders linked togehter and requested as a single order. When the first order is executed, the second order becomes an active order. For example, attaching a stop/limit to a trade or order.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiIfDoneDTO.Stop">
+            <summary>
+            The price at which the stop order will be filled.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiIfDoneDTO.Limit">
+            <summary>
+            The price at which the limit order will be filled.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ApiOpenPositionDTO">
+            <summary>
+            A Trade, or order that is currently open.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiOpenPositionDTO.OrderId">
+            <summary>
+            The order's unique identifier.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiOpenPositionDTO.MarketId">
+            <summary>
+            The markets unique identifier.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiOpenPositionDTO.MarketName">
+            <summary>
+            The market's name.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiOpenPositionDTO.Direction">
+            <summary>
+            The direction, buy or sell.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiOpenPositionDTO.Quantity">
+            <summary>
+            The quantity of the order.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiOpenPositionDTO.Price">
+            <summary>
+            The price / rate that the trade was opened at.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiOpenPositionDTO.TradingAccountId">
+            <summary>
+            The trading account that the order is on.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiOpenPositionDTO.Currency">
+            <summary>
+            The trade currency.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiOpenPositionDTO.Status">
+            <summary>
+            The order status.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiOpenPositionDTO.StopOrder">
+            <summary>
+            The stop order attached to this order.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiOpenPositionDTO.LimitOrder">
+            <summary>
+            The limit order attached to this order.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiOpenPositionDTO.LastChangedDateTimeUTC">
+            <summary>
+            The last time that the order changed. Note - Does not include things such as the current market price.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiOpenPositionDTO.Status_Resolved">
+            <summary>
+            Plain text StatusReason
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.GetNewsDetailResponseDTO">
+            <summary>
+            The response from the News Detail GET request.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.GetNewsDetailResponseDTO.NewsDetail">
+            <summary>
+            The details of the news item.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ListStopLimitOrderHistoryResponseDTO">
+            <summary>
+            Contains the result of a ListStopLimitOrderHistory query.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ListStopLimitOrderHistoryResponseDTO.StopLimitOrderHistory">
+            <summary>
+            A list of historical stop / limit orders.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ListMarketInformationResponseDTO">
+            <summary>
+            Response from a market information request.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ListMarketInformationResponseDTO.MarketInformation">
+            <summary>
+            The list of market information for each requested market.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ApiClientApplicationMessageTranslationResponseDTO">
+            <summary>
+            Gives a list of client application specific message translations
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiClientApplicationMessageTranslationResponseDTO.TranslationKeyValuePairs">
+            <summary>
+            List of message translations (key/value pairs)
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ListActiveStopLimitOrderResponseDTO">
+            <summary>
+            Contains the response of a ListActiveStopLimitOrder query.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ListActiveStopLimitOrderResponseDTO.ActiveStopLimitOrders">
+            <summary>
+            The requested list of active stop / limit orders.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ApiSaveMarketInformationResponseDTO">
+            <summary>
+            An (empty) response to indicate that the save market information operation has completed.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ListNewsHeadlinesResponseDTO">
+            <summary>
+            The response from a GET request for News headlines.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ListNewsHeadlinesResponseDTO.Headlines">
+            <summary>
+            A list of News headlines.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.GetActiveStopLimitOrderResponseDTO">
+            <summary>
+            Response containing the active stop limit order.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.GetActiveStopLimitOrderResponseDTO.ActiveStopLimitOrder">
+            <summary>
+            The active stop limit order. If it is null then the active stop limit order does not exist.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.NewStopLimitOrderRequestDTO">
+            <summary>
+            A request for a stop/limit order.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.NewStopLimitOrderRequestDTO.OrderId">
+            <summary>
+            The identifier of the order to update.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.NewStopLimitOrderRequestDTO.MarketId">
+            <summary>
+            The unique identifier for the market.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.NewStopLimitOrderRequestDTO.Currency">
+            <summary>
+            Currency to place order in.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.NewStopLimitOrderRequestDTO.AutoRollover">
+            <summary>
+            Flag to indicate whether the trade will automatically roll into the next market when the current market expires.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.NewStopLimitOrderRequestDTO.Direction">
+            <summary>
+            Direction identifier for order/trade, values supported are buy or sell.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.NewStopLimitOrderRequestDTO.Quantity">
+            <summary>
+            Size of the order/trade.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.NewStopLimitOrderRequestDTO.BidPrice">
+            <summary>
+            Market prices are quoted as a pair (buy/sell or bid/offer), the BidPrice is the lower of the two.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.NewStopLimitOrderRequestDTO.OfferPrice">
+            <summary>
+            Market prices are quoted as a pair (buy/sell or bid/offer), the OfferPrice is the higher of the market price pair.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.NewStopLimitOrderRequestDTO.AuditId">
+            <summary>
+            Unique identifier for a price tick.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.NewStopLimitOrderRequestDTO.TradingAccountId">
+            <summary>
+            The ID of the TradingAccount associated with the trade/order request.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.NewStopLimitOrderRequestDTO.IfDone">
+            <summary>
+            List of If/Done Orders that will be filled when the initial trade/order is triggered.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.NewStopLimitOrderRequestDTO.OcoOrder">
+            <summary>
+            Corresponding OCO Order (One Cancels the Other) if one has been defined.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.NewStopLimitOrderRequestDTO.Applicability">
+            <summary>
+            Identifier which relates to the expiry of the order/trade, i.e. GoodTillDate (GTD), GoodTillCancelled (GTC) or GoodForDay (GFD).
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.NewStopLimitOrderRequestDTO.ExpiryDateTimeUTC">
+            <summary>
+            The associated expiry DateTime for a pair of GoodTillDate IfDone orders.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.NewStopLimitOrderRequestDTO.Guaranteed">
+            <summary>
+            Flag to determine whether an order is guaranteed to trigger and fill at the associated trigger price.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.NewStopLimitOrderRequestDTO.TriggerPrice">
+            <summary>
+            Price at which the order is intended to be triggered.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.UpdateStopLimitOrderRequestDTO">
+            <summary>
+            A request to update a stop/limit order.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.SystemStatusDTO">
+            <summary>
+            Response containing the system status.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.SystemStatusDTO.StatusMessage">
+            <summary>
+            The status message.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ApiOrderResponseDTO">
+            <summary>
+            Response to an order request.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiOrderResponseDTO.OrderId">
+            <summary>
+            Order ID.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiOrderResponseDTO.StatusReason">
+            <summary>
+            Order status reason ID.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiOrderResponseDTO.Status">
+            <summary>
+            Order status ID.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiOrderResponseDTO.Price">
+            <summary>
+            Order fill price.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiOrderResponseDTO.CommissionCharge">
+            <summary>
+            Commission charge.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiOrderResponseDTO.IfDone">
+            <summary>
+            List of If/Done orders.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiOrderResponseDTO.GuaranteedPremium">
+            <summary>
+            Premium for guaranteed orders.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiOrderResponseDTO.OCO">
+            <summary>
+            An order in an OCO relationship with this order.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiOrderResponseDTO.StatusReason_Resolved">
+            <summary>
+            Plain text StatusReason
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiOrderResponseDTO.Status_Resolved">
+            <summary>
+            Plain text StatusReason
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ApiStopLimitResponseDTO">
+            <summary>
+            The response from the stop limit order request
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ListCfdMarketsResponseDTO">
+            <summary>
+            Contains the response of a ListCfdMarkets query.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ListCfdMarketsResponseDTO.Markets">
+            <summary>
+            A list of CFD markets.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.InsertWatchlistItemRequestDTO">
+            <summary>
+            Update watchlist with item request.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.InsertWatchlistItemRequestDTO.ParentWatchlistDisplayOrderId">
+            <summary>
+            The watchlist display order ID to add the item.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.InsertWatchlistItemRequestDTO.MarketId">
+            <summary>
+            The market item to add into the watchlist.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.SaveMarketInformationRequestDTO">
+            <summary>
+            Get market information for a list of markets.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.SaveMarketInformationRequestDTO.MarketInformation">
+            <summary>
+            The list of market information objects to be saved.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.SaveMarketInformationRequestDTO.TradingAccountId">
+            <summary>
+            The trading account on which the market information objects should be saved.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ApiTradeOrderResponseDTO">
+            <summary>
+            The response from the trade request.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiTradeOrderResponseDTO.Status">
+            <summary>
+            The status of the order (Pending, Accepted, Open, etc.)
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiTradeOrderResponseDTO.StatusReason">
+            <summary>
+            The ID corresponding to a more descriptive reason for the order status.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiTradeOrderResponseDTO.OrderId">
+            <summary>
+            The unique identifier associated to the order returned from the underlying trading system.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiTradeOrderResponseDTO.Orders">
+            <summary>
+            List of orders with their associated response.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiTradeOrderResponseDTO.Quote">
+            <summary>
+            Quote response.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiTradeOrderResponseDTO.StatusReason_Resolved">
+            <summary>
+            Plain text StatusReason
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiTradeOrderResponseDTO.Status_Resolved">
+            <summary>
+            Plain text StatusReason
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.NewTradeOrderRequestDTO">
+            <summary>
+            A request for a trade order.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.NewTradeOrderRequestDTO.MarketId">
+            <summary>
+            The unique identifier for a market.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.NewTradeOrderRequestDTO.Currency">
+            <summary>
+            Currency to place order in.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.NewTradeOrderRequestDTO.AutoRollover">
+            <summary>
+            Flag to indicate whether the trade will automatically roll into the next market interval when the current market interval expires.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.NewTradeOrderRequestDTO.Direction">
+            <summary>
+            Direction identifier for order/trade, values supported are buy or sell.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.NewTradeOrderRequestDTO.Quantity">
+            <summary>
+            Size of the order/trade.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.NewTradeOrderRequestDTO.QuoteId">
+            <summary>
+            The quote identifier.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.NewTradeOrderRequestDTO.BidPrice">
+            <summary>
+            Market prices are quoted as a pair (buy/sell or bid/offer), the BidPrice is the lower value of the pair.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.NewTradeOrderRequestDTO.OfferPrice">
+            <summary>
+            Market prices are quote as a pair (buy/sell or bid/offer), the OfferPrice is the higher value of the pair.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.NewTradeOrderRequestDTO.AuditId">
+            <summary>
+            Unique identifier for a price tick.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.NewTradeOrderRequestDTO.TradingAccountId">
+            <summary>
+            The ID of the TradingAccount associated with the trade/order request.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.NewTradeOrderRequestDTO.IfDone">
+            <summary>
+            List of If/Done Orders that will be filled when the initial trade/order is triggered.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.NewTradeOrderRequestDTO.Close">
+            <summary>
+            List of existing order ID's that require part or full closure.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.UpdateTradeOrderRequestDTO">
+            <summary>
+            A request to update a trade order.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.UpdateTradeOrderRequestDTO.OrderId">
+            <summary>
+            The identifier of the order to update.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.GetPriceTickResponseDTO">
+            <summary>
+            The response from a request for historical Price Ticks.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.GetPriceTickResponseDTO.PriceTicks">
+            <summary>
+            An array of price ticks, sorted in ascending order by PriceTick.TickDate.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.GetMarketInformationResponseDTO">
+            <summary>
+            Response from a market information request.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.GetMarketInformationResponseDTO.MarketInformation">
+            <summary>
+            The requested market information.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ApiLogOffRequestDTO">
+            <summary>
+            Request to delete a session (log off).
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiLogOffRequestDTO.UserName">
+            <summary>
+            User name of the session to delete (log off). This is case sensitive.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiLogOffRequestDTO.Session">
+            <summary>
+            Session identifier (session token) to delete (log off).
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ErrorCode">
+            <summary>
+            This is a description of the ErrorCode enum.
+            </summary>
+        </member>
+        <member name="F:CIAPI.DTO.ErrorCode.NoError">
+            <summary>
+            No error has occured.
+            </summary>
+        </member>
+        <member name="F:CIAPI.DTO.ErrorCode.Forbidden">
+            <summary>
+            The server understood the request, but is refusing to fulfill it.
+            </summary>
+        </member>
+        <member name="F:CIAPI.DTO.ErrorCode.InternalServerError">
+            <summary>
+            An unexpected condition was encountered by the server preventing it from fulfilling the request.
+            </summary>
+        </member>
+        <member name="F:CIAPI.DTO.ErrorCode.InvalidParameterType">
+            <summary>
+            Server could not understand request due to an invalid parameter type.
+            </summary>
+        </member>
+        <member name="F:CIAPI.DTO.ErrorCode.ParameterMissing">
+            <summary>
+            Server could not understand request due to a missing parameter.
+            </summary>
+        </member>
+        <member name="F:CIAPI.DTO.ErrorCode.InvalidParameterValue">
+            <summary>
+            Server could not understand request due to an invalid parameter value.
+            </summary>
+        </member>
+        <member name="F:CIAPI.DTO.ErrorCode.InvalidJsonRequest">
+            <summary>
+            Server could not understand request due to an invalid JSON request.
+            </summary>
+        </member>
+        <member name="F:CIAPI.DTO.ErrorCode.InvalidJsonRequestCaseFormat">
+            <summary>
+            Server could not understand request due to an invalid JSON case format.
+            </summary>
+        </member>
+        <member name="F:CIAPI.DTO.ErrorCode.InvalidCredentials">
+            <summary>
+            The credentials used to authenticate are invalid. Either the username, password or both are incorrect.
+            </summary>
+        </member>
+        <member name="F:CIAPI.DTO.ErrorCode.InvalidSession">
+            <summary>
+            The session credentials supplied are invalid.
+            </summary>
+        </member>
+        <member name="F:CIAPI.DTO.ErrorCode.NoDataAvailable">
+            <summary>
+            There is no data available.
+            </summary>
+        </member>
+        <member name="F:CIAPI.DTO.ErrorCode.Throttling">
+            <summary>
+            Request has been throttled.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ApiLogOnRequestDTO">
+            <summary>
+            Request to create a session (log on).
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiLogOnRequestDTO.UserName">
+            <summary>
+            Username is case sensitive.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiLogOnRequestDTO.Password">
+            <summary>
+            Password is case sensitive.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.DeleteWatchlistItemRequestDTO">
+            <summary>
+            Delete watchlist item
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.DeleteWatchlistItemRequestDTO.ParentWatchlistDisplayOrderId">
+            <summary>
+            The watchlist display order id to delete the item from
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.DeleteWatchlistItemRequestDTO.MarketId">
+            <summary>
+            The market item to delete
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ApiLogOffResponseDTO">
+            <summary>
+            Response from a session delete (Log Out) request.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiLogOffResponseDTO.LoggedOut">
+            <summary>
+            Flag indicating the Log Out status.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.MarketInformationSearchWithTagsResponseDTO">
+            <summary>
+            Response from a market search with tags request.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.MarketInformationSearchWithTagsResponseDTO.Markets">
+            <summary>
+            The requested list of market information.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.MarketInformationSearchWithTagsResponseDTO.Tags">
+            <summary>
+            The requested list of market tags.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.SystemStatusRequestDTO">
+            <summary>
+            System status request.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.SystemStatusRequestDTO.TestDepth">
+            <summary>
+            Depth to test.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.GetOrderResponseDTO">
+            <summary>
+            Response containing the order. Only one of the two fields will be populated depending upon the type of order (Trade or Stop / Limit).
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.GetOrderResponseDTO.TradeOrder">
+            <summary>
+            The details of the order if it is a trade / open position.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.GetOrderResponseDTO.StopLimitOrder">
+            <summary>
+            The details of the order if it is a stop limit order.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ListTradeHistoryResponseDTO">
+            <summary>
+            Contains the result of a ListTradeHistory query.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ListTradeHistoryResponseDTO.TradeHistory">
+            <summary>
+            A list of historical trades.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ApiSaveWatchlistResponseDTO">
+            <summary>
+            An (empty) response to indicate the save watchlist operation has completed.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ApiDeleteWatchlistResponseDTO">
+            <summary>
+            Response from a request to delete a watchlist.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiDeleteWatchlistResponseDTO.Deleted">
+            <summary>
+            Flag confirming whether the watchlist was deleted.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.UpdateWatchlistDisplayOrderRequestDTO">
+            <summary>
+            Request to update the display order of items in a watchlist.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.UpdateWatchlistDisplayOrderRequestDTO.NewDisplayOrderIdSequence">
+            <summary>
+            Represents the new client watchlist displayOrderId list sequence.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ListMarketInformationRequestDTO">
+            <summary>
+            Get market information request for a list of markets.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ListMarketInformationRequestDTO.MarketIds">
+            <summary>
+            The list of market IDs to get information for.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ApiQuoteResponseDTO">
+            <summary>
+            Quote response.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiQuoteResponseDTO.QuoteId">
+            <summary>
+            Quote ID.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiQuoteResponseDTO.Status">
+            <summary>
+            Quote status.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiQuoteResponseDTO.StatusReason">
+            <summary>
+            Quote status reason.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ListSpreadMarketsResponseDTO">
+            <summary>
+            Contains the result of a ListSpreadMarkets query.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ListSpreadMarketsResponseDTO.Markets">
+            <summary>
+            A list of Spread Betting markets.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ApiLookupResponseDTO">
+            <summary>
+            Gets the lookup entities from trading database given the lookup name and culture ID.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiLookupResponseDTO.CultureId">
+            <summary>
+            The requested culture ID.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiLookupResponseDTO.LookupEntityName">
+            <summary>
+            The requested lookup name.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiLookupResponseDTO.ApiLookupDTOList">
+            <summary>
+            List of lookup entities from the database.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiLookupResponseDTO.ApiCultureLookupDTOList">
+            <summary>
+            TODO: document me!
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ApiIfDoneResponseDTO">
+            <summary>
+            Response to an If/Done order request.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiIfDoneResponseDTO.Stop">
+            <summary>
+            The Stop order reponse.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiIfDoneResponseDTO.Limit">
+            <summary>
+            The Limit order response.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ApiDeleteWatchlistRequestDTO">
+            <summary>
+            Request to delete a watchlist.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiDeleteWatchlistRequestDTO.WatchlistId">
+            <summary>
+            The ID of the watchlist to delete.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.GetMessagePopupResponseDTO">
+            <summary>
+            Message popup response denoting whether the client application should display a popup notification at startup.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.GetMessagePopupResponseDTO.AskForClientApproval">
+            <summary>
+            Flag indicating if the client application asks for client approval.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.GetMessagePopupResponseDTO.Message">
+            <summary>
+            The message to display to the client.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ApiLogOnResponseDTO">
+            <summary>
+            Response to a CreateSessionRequest (Log On).
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiLogOnResponseDTO.Session">
+            <summary>
+            Your session token (treat as a random string). <BR /> Session tokens are valid for a set period from the time of their creation. <BR /> The period is subject to change, and may vary depending on who you logon as.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ListOpenPositionsResponseDTO">
+            <summary>
+            Contains the result of a ListOpenPositions query.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ListOpenPositionsResponseDTO.OpenPositions">
+            <summary>
+            A list of trades / open positions.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.GetPriceBarResponseDTO">
+            <summary>
+            The response from a price bar history GET request. Contains both an array of finalized price bars, and a partial (not finalized) bar for the current period.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.GetPriceBarResponseDTO.PriceBars">
+            <summary>
+            An array of finalized price bars, sorted in ascending order based on PriceBar.BarDate
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.GetPriceBarResponseDTO.PartialPriceBar">
+            <summary>
+            The (non-finalized) price bar data for the current period (i.e, the period that hasn't yet completed).
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.GetOpenPositionResponseDTO">
+            <summary>
+            Response containing the open position information.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.GetOpenPositionResponseDTO.OpenPosition">
+            <summary>
+            The open position information. If it is null then the open position does not exist.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ApiChangePasswordResponseDTO">
+            <summary>
+            Response to a change password request.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiChangePasswordResponseDTO.IsPasswordChanged">
+            <summary>
+            Was the password change request successful?
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.CancelOrderRequestDTO">
+            <summary>
+            A cancel order request.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.CancelOrderRequestDTO.OrderId">
+            <summary>
+            The order identifier.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.CancelOrderRequestDTO.TradingAccountId">
+            <summary>
+            ID of the trading account associated with the cancel order request.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ListWatchlistResponseDTO">
+            <summary>
+            Response to a client watchlist GET request.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ListWatchlistResponseDTO.ClientAccountId">
+            <summary>
+            Client account ID.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ListWatchlistResponseDTO.ClientAccountWatchlists">
+            <summary>
+            List of client account watchlists.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ListMarketInformationSearchResponseDTO">
+            <summary>
+            Response from a market information search request.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ListMarketInformationSearchResponseDTO.MarketInformation">
+            <summary>
+            The requested list of market information.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.MarketInformationTagLookupResponseDTO">
+            <summary>
+            Response from a market search with tags request.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.MarketInformationTagLookupResponseDTO.Tags">
+            <summary>
+            The requested list of market tags.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ApiErrorResponseDTO">
+            <summary>
+            The response to an error condition.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiErrorResponseDTO.HttpStatus">
+            <summary>
+            The intended HTTP status code. This will be the same value as the actual HTTP status code unless the QueryString contains only200=true. This is useful for JavaScript clients who can only read responses with status code 200.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiErrorResponseDTO.ErrorMessage">
+            <summary>
+            This is a description of the ErrorMessage property.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiErrorResponseDTO.ErrorCode">
+            <summary>
+            The error code.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ApiSimulateOrderResponseDTO">
+            <summary>
+            Simulated order response
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiSimulateOrderResponseDTO.StatusReason">
+            <summary>
+            Simulated order status reason id.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiSimulateOrderResponseDTO.Status">
+            <summary>
+            Simulated order status id.
+            </summary>
+        </member>
+        <member name="T:CIAPI.DTO.ApiSaveWatchlistRequestDTO">
+            <summary>
+            Request to save a watchlist.
+            </summary>
+        </member>
+        <member name="P:CIAPI.DTO.ApiSaveWatchlistRequestDTO.Watchlist">
+            <summary>
+            The watchlist to save. This will update an existing watchlist; or when the watchlistId is omitted or 0 is supplied, it will create a new watchlist.
+            </summary>
+        </member>
+        <member name="M:CIAPI.Rpc.Client.BeforeIssueRequest(System.Net.WebRequest,System.String,System.String,System.String,System.String,System.Collections.Generic.Dictionary{System.String,System.Object},System.TimeSpan,System.String)">
+            <summary>
+            Authenticates the request with the API using request headers.
+            </summary>
+            <param name="request"></param>
+            <param name="url"></param>
+            <param name="target"></param>
+            <param name="uriTemplate"></param>
+            <param name="method"></param>
+            <param name="parameters"></param>
+            <param name="cacheDuration"></param>
+            <param name="throttleScope"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client.LogIn(System.String,System.String)">
+            <summary>
+            Log In
+            </summary>		
+            <param name="userName">Username is case sensitive</param>
+            <param name="password">Password is case sensitive</param>
+            <returns></returns>
+        </member>
+        <member name="M:CIAPI.Rpc.Client.BeginLogIn(System.String,System.String,CityIndex.JsonClient.ApiAsyncCallback{CIAPI.DTO.ApiLogOnResponseDTO},System.Object)">
+            <summary>
+            Log In
+            </summary>		
+            <param name="callback"></param>
+            <param name="state"></param>
+            <param name="userName">Username is case sensitive</param>
+            <param name="password">Password is case sensitive</param>
+            <returns></returns>
+        </member>
+        <member name="M:CIAPI.Rpc.Client.LogOut">
+            <summary>
+            Log out
+            </summary>		
+            <returns></returns>
+        </member>
+        <member name="M:CIAPI.Rpc.Client.BeginLogOut(CityIndex.JsonClient.ApiAsyncCallback{CIAPI.DTO.ApiLogOffResponseDTO},System.Object)">
+            <summary>
+            Log out
+            </summary>		
+            <param name="callback"></param>
+            <param name="state"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._Authentication.LogOn(CIAPI.DTO.ApiLogOnRequestDTO)">
+            <summary>
+            Create a new session. This is how you "log on" to the CIAPI.
+            </summary>
+            <param name="apiLogOnRequest">The request to create a session (log on).</param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._Authentication.BeginLogOn(CIAPI.DTO.ApiLogOnRequestDTO,CityIndex.JsonClient.ApiAsyncCallback{CIAPI.DTO.ApiLogOnResponseDTO},System.Object)">
+            <summary>
+            Create a new session. This is how you "log on" to the CIAPI.
+            </summary>
+            <param name="apiLogOnRequest">The request to create a session (log on).</param>
+            <param name="callback"></param>
+            <param name="state"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._Authentication.DeleteSession(System.String,System.String)">
+            <summary>
+            <p>Delete a session. This is how you "log off" from the CIAPI.</p>
+            </summary>
+            <param name="userName">Username is case sensitive. May be set as a service parameter or as a request header.</param>
+            <param name="session">The session token. May be set as a service parameter or as a request header.</param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._Authentication.BeginDeleteSession(System.String,System.String,CityIndex.JsonClient.ApiAsyncCallback{CIAPI.DTO.ApiLogOffResponseDTO},System.Object)">
+            <summary>
+            <p>Delete a session. This is how you "log off" from the CIAPI.</p>
+            </summary>
+            <param name="userName">Username is case sensitive. May be set as a service parameter or as a request header.</param>
+            <param name="session">The session token. May be set as a service parameter or as a request header.</param>
+            <param name="callback"></param>
+            <param name="state"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._AccountInformation.ChangePassword(CIAPI.DTO.ApiChangePasswordRequestDTO)">
+            <summary>
+            Change a user's password.
+            </summary>
+            <param name="apiChangePasswordRequest">The change password request details.</param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._AccountInformation.BeginChangePassword(CIAPI.DTO.ApiChangePasswordRequestDTO,CityIndex.JsonClient.ApiAsyncCallback{CIAPI.DTO.ApiChangePasswordResponseDTO},System.Object)">
+            <summary>
+            Change a user's password.
+            </summary>
+            <param name="apiChangePasswordRequest">The change password request details.</param>
+            <param name="callback"></param>
+            <param name="state"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._AccountInformation.GetChartingEnabled(System.String)">
+            <summary>
+            Checks whether the supplied User Account is allowed to see Charting Data.
+            </summary>
+            <param name="id">The User Account ID to check.</param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._AccountInformation.BeginGetChartingEnabled(System.String,CityIndex.JsonClient.ApiAsyncCallback{System.Boolean},System.Object)">
+            <summary>
+            Checks whether the supplied User Account is allowed to see Charting Data.
+            </summary>
+            <param name="id">The User Account ID to check.</param>
+            <param name="callback"></param>
+            <param name="state"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._AccountInformation.GetClientAndTradingAccount">
+            <summary>
+            Returns the User's ClientAccountId and a list of their TradingAccounts. There are no parameters for this call.
+            </summary>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._AccountInformation.BeginGetClientAndTradingAccount(CityIndex.JsonClient.ApiAsyncCallback{CIAPI.DTO.AccountInformationResponseDTO},System.Object)">
+            <summary>
+            Returns the User's ClientAccountId and a list of their TradingAccounts. There are no parameters for this call.
+            </summary>
+            <param name="callback"></param>
+            <param name="state"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._AccountInformation.SaveAccountInformation(CIAPI.DTO.ApiSaveAccountInformationRequestDTO)">
+            <summary>
+            Saves the users account information.
+            </summary>
+            <param name="saveAccountInformationRequest">Saves the users account information.</param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._AccountInformation.BeginSaveAccountInformation(CIAPI.DTO.ApiSaveAccountInformationRequestDTO,CityIndex.JsonClient.ApiAsyncCallback{CIAPI.DTO.ApiSaveAccountInformationResponseDTO},System.Object)">
+            <summary>
+            Saves the users account information.
+            </summary>
+            <param name="saveAccountInformationRequest">Saves the users account information.</param>
+            <param name="callback"></param>
+            <param name="state"></param>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:CIAPI.Rpc.Client._PriceHistory.GetPriceBars(System.String,System.String,System.Int32,System.String)" -->
+        <!-- Badly formed XML comment ignored for member "M:CIAPI.Rpc.Client._PriceHistory.BeginGetPriceBars(System.String,System.String,System.Int32,System.String,CityIndex.JsonClient.ApiAsyncCallback{CIAPI.DTO.GetPriceBarResponseDTO},System.Object)" -->
+        <member name="M:CIAPI.Rpc.Client._PriceHistory.GetPriceTicks(System.String,System.String)">
+            <summary>
+            Get historic price ticks for the specified market. Returns price ticks in ascending order up to the current time. The length of time that elapses between each tick is usually different.
+            </summary>
+            <param name="marketId">The marketId.</param>
+            <param name="priceTicks">The total number of price ticks to return.</param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._PriceHistory.BeginGetPriceTicks(System.String,System.String,CityIndex.JsonClient.ApiAsyncCallback{CIAPI.DTO.GetPriceTickResponseDTO},System.Object)">
+            <summary>
+            Get historic price ticks for the specified market. Returns price ticks in ascending order up to the current time. The length of time that elapses between each tick is usually different.
+            </summary>
+            <param name="marketId">The marketId.</param>
+            <param name="priceTicks">The total number of price ticks to return.</param>
+            <param name="callback"></param>
+            <param name="state"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._News.ListNewsHeadlinesWithSource(System.String,System.String,System.Int32)">
+            <summary>
+            Get a list of current news headlines
+            </summary>
+            <param name="source">The news feed source provider. Valid options are: dj|mni|ci.</param>
+            <param name="category">Filter headlines by category. Valid categories depend on the source used:  for dj: uk|aus, for ci: SEMINARSCHINA, for mni: ALL.</param>
+            <param name="maxResults">Specify the maximum number of headlines returned</param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._News.BeginListNewsHeadlinesWithSource(System.String,System.String,System.Int32,CityIndex.JsonClient.ApiAsyncCallback{CIAPI.DTO.ListNewsHeadlinesResponseDTO},System.Object)">
+            <summary>
+            Get a list of current news headlines
+            </summary>
+            <param name="source">The news feed source provider. Valid options are: dj|mni|ci.</param>
+            <param name="category">Filter headlines by category. Valid categories depend on the source used:  for dj: uk|aus, for ci: SEMINARSCHINA, for mni: ALL.</param>
+            <param name="maxResults">Specify the maximum number of headlines returned</param>
+            <param name="callback"></param>
+            <param name="state"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._News.GetNewsDetail(System.String,System.String)">
+            <summary>
+            Get the detail of the specific news story matching the story Id in the parameter.
+            </summary>
+            <param name="source">The news feed source provider. Valid options are dj|mni|ci.</param>
+            <param name="storyId">The news story Id.</param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._News.BeginGetNewsDetail(System.String,System.String,CityIndex.JsonClient.ApiAsyncCallback{CIAPI.DTO.GetNewsDetailResponseDTO},System.Object)">
+            <summary>
+            Get the detail of the specific news story matching the story Id in the parameter.
+            </summary>
+            <param name="source">The news feed source provider. Valid options are dj|mni|ci.</param>
+            <param name="storyId">The news story Id.</param>
+            <param name="callback"></param>
+            <param name="state"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._CFDMarkets.ListCfdMarkets(System.String,System.String,System.Int32,System.Int32)">
+            <summary>
+            Returns a list of CFD markets filtered by market name and/or market code. Leave the market name and code parameters empty to return all markets available to the User.
+            </summary>
+            <param name="searchByMarketName">The characters that the CFD market name starts with (Optional).</param>
+            <param name="searchByMarketCode">The characters that the market code starts with, normally this is the RIC code for the market (Optional).</param>
+            <param name="clientAccountId">The logged on user's ClientAccountId. This only shows you the markets that the user can trade. (Required).</param>
+            <param name="maxResults">The maximum number of markets to return.</param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._CFDMarkets.BeginListCfdMarkets(System.String,System.String,System.Int32,System.Int32,CityIndex.JsonClient.ApiAsyncCallback{CIAPI.DTO.ListCfdMarketsResponseDTO},System.Object)">
+            <summary>
+            Returns a list of CFD markets filtered by market name and/or market code. Leave the market name and code parameters empty to return all markets available to the User.
+            </summary>
+            <param name="searchByMarketName">The characters that the CFD market name starts with (Optional).</param>
+            <param name="searchByMarketCode">The characters that the market code starts with, normally this is the RIC code for the market (Optional).</param>
+            <param name="clientAccountId">The logged on user's ClientAccountId. This only shows you the markets that the user can trade. (Required).</param>
+            <param name="maxResults">The maximum number of markets to return.</param>
+            <param name="callback"></param>
+            <param name="state"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._SpreadMarkets.ListSpreadMarkets(System.String,System.String,System.Int32,System.Int32)">
+            <summary>
+            Returns a list of Spread Betting markets filtered by market name and/or market code. Leave the market name and code parameters empty to return all markets available to the User.
+            </summary>
+            <param name="searchByMarketName">The characters that the Spread market name starts with (Optional).</param>
+            <param name="searchByMarketCode">The characters that the Spread market code starts with, normally this is the RIC code for the market (Optional).</param>
+            <param name="clientAccountId">The logged on user's ClientAccountId. (This only shows you markets that you can trade on.)</param>
+            <param name="maxResults">The maximum number of markets to return.</param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._SpreadMarkets.BeginListSpreadMarkets(System.String,System.String,System.Int32,System.Int32,CityIndex.JsonClient.ApiAsyncCallback{CIAPI.DTO.ListSpreadMarketsResponseDTO},System.Object)">
+            <summary>
+            Returns a list of Spread Betting markets filtered by market name and/or market code. Leave the market name and code parameters empty to return all markets available to the User.
+            </summary>
+            <param name="searchByMarketName">The characters that the Spread market name starts with (Optional).</param>
+            <param name="searchByMarketCode">The characters that the Spread market code starts with, normally this is the RIC code for the market (Optional).</param>
+            <param name="clientAccountId">The logged on user's ClientAccountId. (This only shows you markets that you can trade on.)</param>
+            <param name="maxResults">The maximum number of markets to return.</param>
+            <param name="callback"></param>
+            <param name="state"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._Market.GetMarketInformation(System.String)">
+            <summary>
+            <p>Get Market Information for the single specified market supplied in the parameter.</p>
+            </summary>
+            <param name="marketId">The marketId.</param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._Market.BeginGetMarketInformation(System.String,CityIndex.JsonClient.ApiAsyncCallback{CIAPI.DTO.GetMarketInformationResponseDTO},System.Object)">
+            <summary>
+            <p>Get Market Information for the single specified market supplied in the parameter.</p>
+            </summary>
+            <param name="marketId">The marketId.</param>
+            <param name="callback"></param>
+            <param name="state"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._Market.ListMarketInformationSearch(System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.String,System.Int32)">
+            <summary>
+            <p>Returns market information for the markets that meet the search criteria.</p> The search can be performed by market code and/or market name, and can include CFDs and Spread Bet markets.
+            </summary>
+            <param name="searchByMarketCode">Sets the search to use market code.</param>
+            <param name="searchByMarketName">Sets the search to use market Name.</param>
+            <param name="spreadProductType">Sets the search to include spread bet markets.</param>
+            <param name="cfdProductType">Sets the search to include CFD markets.</param>
+            <param name="binaryProductType">Sets the search to include binary markets.</param>
+            <param name="query">The text to search for. Matches part of market name / code from the start.</param>
+            <param name="maxResults">The maximum number of results to return.</param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._Market.BeginListMarketInformationSearch(System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.String,System.Int32,CityIndex.JsonClient.ApiAsyncCallback{CIAPI.DTO.ListMarketInformationSearchResponseDTO},System.Object)">
+            <summary>
+            <p>Returns market information for the markets that meet the search criteria.</p> The search can be performed by market code and/or market name, and can include CFDs and Spread Bet markets.
+            </summary>
+            <param name="searchByMarketCode">Sets the search to use market code.</param>
+            <param name="searchByMarketName">Sets the search to use market Name.</param>
+            <param name="spreadProductType">Sets the search to include spread bet markets.</param>
+            <param name="cfdProductType">Sets the search to include CFD markets.</param>
+            <param name="binaryProductType">Sets the search to include binary markets.</param>
+            <param name="query">The text to search for. Matches part of market name / code from the start.</param>
+            <param name="maxResults">The maximum number of results to return.</param>
+            <param name="callback"></param>
+            <param name="state"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._Market.SearchWithTags(System.String,System.Int32,System.Int32)">
+            <summary>
+            Get market information and tags for the markets that meet the search criteria.
+            </summary>
+            <param name="query">The text to search for. Matches part of market name / code from the start.</param>
+            <param name="tagId">The ID for the tag to be searched (optional).</param>
+            <param name="maxResults">The maximum number of results to return.  Default is 20.</param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._Market.BeginSearchWithTags(System.String,System.Int32,System.Int32,CityIndex.JsonClient.ApiAsyncCallback{CIAPI.DTO.MarketInformationSearchWithTagsResponseDTO},System.Object)">
+            <summary>
+            Get market information and tags for the markets that meet the search criteria.
+            </summary>
+            <param name="query">The text to search for. Matches part of market name / code from the start.</param>
+            <param name="tagId">The ID for the tag to be searched (optional).</param>
+            <param name="maxResults">The maximum number of results to return.  Default is 20.</param>
+            <param name="callback"></param>
+            <param name="state"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._Market.TagLookup">
+            <summary>
+            <p>Gets all of the tags the the requesting user is allowed to see. Tags are returned in a primary / secondary hierarchy.</p>
+            </summary>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._Market.BeginTagLookup(CityIndex.JsonClient.ApiAsyncCallback{CIAPI.DTO.MarketInformationTagLookupResponseDTO},System.Object)">
+            <summary>
+            <p>Gets all of the tags the the requesting user is allowed to see. Tags are returned in a primary / secondary hierarchy.</p>
+            </summary>
+            <param name="callback"></param>
+            <param name="state"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._Market.ListMarketInformation(CIAPI.DTO.ListMarketInformationRequestDTO)">
+            <summary>
+            Get Market Information for the specified list of markets.
+            </summary>
+            <param name="listMarketInformationRequestDTO">Get Market Information for the specified list of markets.</param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._Market.BeginListMarketInformation(CIAPI.DTO.ListMarketInformationRequestDTO,CityIndex.JsonClient.ApiAsyncCallback{CIAPI.DTO.ListMarketInformationResponseDTO},System.Object)">
+            <summary>
+            Get Market Information for the specified list of markets.
+            </summary>
+            <param name="listMarketInformationRequestDTO">Get Market Information for the specified list of markets.</param>
+            <param name="callback"></param>
+            <param name="state"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._Market.SaveMarketInformation(CIAPI.DTO.SaveMarketInformationRequestDTO)">
+            <summary>
+            Save Market Information for the specified list of markets.
+            </summary>
+            <param name="listMarketInformationRequestSaveDTO">Save Market Information for the specified list of markets.</param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._Market.BeginSaveMarketInformation(CIAPI.DTO.SaveMarketInformationRequestDTO,CityIndex.JsonClient.ApiAsyncCallback{CIAPI.DTO.ApiSaveMarketInformationResponseDTO},System.Object)">
+            <summary>
+            Save Market Information for the specified list of markets.
+            </summary>
+            <param name="listMarketInformationRequestSaveDTO">Save Market Information for the specified list of markets.</param>
+            <param name="callback"></param>
+            <param name="state"></param>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:CIAPI.Rpc.Client._TradesAndOrders.Order(CIAPI.DTO.NewStopLimitOrderRequestDTO)" -->
+        <!-- Badly formed XML comment ignored for member "M:CIAPI.Rpc.Client._TradesAndOrders.BeginOrder(CIAPI.DTO.NewStopLimitOrderRequestDTO,CityIndex.JsonClient.ApiAsyncCallback{CIAPI.DTO.ApiTradeOrderResponseDTO},System.Object)" -->
+        <!-- Badly formed XML comment ignored for member "M:CIAPI.Rpc.Client._TradesAndOrders.CancelOrder(CIAPI.DTO.CancelOrderRequestDTO)" -->
+        <!-- Badly formed XML comment ignored for member "M:CIAPI.Rpc.Client._TradesAndOrders.BeginCancelOrder(CIAPI.DTO.CancelOrderRequestDTO,CityIndex.JsonClient.ApiAsyncCallback{CIAPI.DTO.ApiTradeOrderResponseDTO},System.Object)" -->
+        <!-- Badly formed XML comment ignored for member "M:CIAPI.Rpc.Client._TradesAndOrders.UpdateOrder(CIAPI.DTO.UpdateStopLimitOrderRequestDTO)" -->
+        <!-- Badly formed XML comment ignored for member "M:CIAPI.Rpc.Client._TradesAndOrders.BeginUpdateOrder(CIAPI.DTO.UpdateStopLimitOrderRequestDTO,CityIndex.JsonClient.ApiAsyncCallback{CIAPI.DTO.ApiTradeOrderResponseDTO},System.Object)" -->
+        <member name="M:CIAPI.Rpc.Client._TradesAndOrders.ListOpenPositions(System.Int32)">
+            <summary>
+            <p>Queries for a specified trading account's trades / open positions.</p> <p>This uri is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service GetOpenPosition when you get updates on the order stream to get the updated data in this format.</p>
+            </summary>
+            <param name="tradingAccountId">The trading account to get orders for.</param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._TradesAndOrders.BeginListOpenPositions(System.Int32,CityIndex.JsonClient.ApiAsyncCallback{CIAPI.DTO.ListOpenPositionsResponseDTO},System.Object)">
+            <summary>
+            <p>Queries for a specified trading account's trades / open positions.</p> <p>This uri is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service GetOpenPosition when you get updates on the order stream to get the updated data in this format.</p>
+            </summary>
+            <param name="tradingAccountId">The trading account to get orders for.</param>
+            <param name="callback"></param>
+            <param name="state"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._TradesAndOrders.ListActiveStopLimitOrders(System.Int32)">
+            <summary>
+            <p>Queries for a specified trading account's active stop / limit orders.</p> <p>This uri is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service GetActiveStopLimitOrder when you get updates on the order stream to get the updated data in this format.</p>
+            </summary>
+            <param name="tradingAccountId">The trading account to get orders for.</param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._TradesAndOrders.BeginListActiveStopLimitOrders(System.Int32,CityIndex.JsonClient.ApiAsyncCallback{CIAPI.DTO.ListActiveStopLimitOrderResponseDTO},System.Object)">
+            <summary>
+            <p>Queries for a specified trading account's active stop / limit orders.</p> <p>This uri is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service GetActiveStopLimitOrder when you get updates on the order stream to get the updated data in this format.</p>
+            </summary>
+            <param name="tradingAccountId">The trading account to get orders for.</param>
+            <param name="callback"></param>
+            <param name="state"></param>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:CIAPI.Rpc.Client._TradesAndOrders.GetActiveStopLimitOrder(System.String)" -->
+        <!-- Badly formed XML comment ignored for member "M:CIAPI.Rpc.Client._TradesAndOrders.BeginGetActiveStopLimitOrder(System.String,CityIndex.JsonClient.ApiAsyncCallback{CIAPI.DTO.GetActiveStopLimitOrderResponseDTO},System.Object)" -->
+        <!-- Badly formed XML comment ignored for member "M:CIAPI.Rpc.Client._TradesAndOrders.GetOpenPosition(System.String)" -->
+        <!-- Badly formed XML comment ignored for member "M:CIAPI.Rpc.Client._TradesAndOrders.BeginGetOpenPosition(System.String,CityIndex.JsonClient.ApiAsyncCallback{CIAPI.DTO.GetOpenPositionResponseDTO},System.Object)" -->
+        <!-- Badly formed XML comment ignored for member "M:CIAPI.Rpc.Client._TradesAndOrders.ListTradeHistory(System.Int32,System.Int32)" -->
+        <!-- Badly formed XML comment ignored for member "M:CIAPI.Rpc.Client._TradesAndOrders.BeginListTradeHistory(System.Int32,System.Int32,CityIndex.JsonClient.ApiAsyncCallback{CIAPI.DTO.ListTradeHistoryResponseDTO},System.Object)" -->
+        <member name="M:CIAPI.Rpc.Client._TradesAndOrders.ListStopLimitOrderHistory(System.Int32,System.Int32)">
+            <summary>
+            <p>Queries for a specified trading account's stop / limit order history. The result set includes <b>only orders that were originally stop / limit orders</b> that currently have one of the following statuses <b>(3 - Open, 4 - Cancelled, 5 - Rejected, 9 - Closed, 10 - Red Card)</b>. </p> <p>There's currently no corresponding GetStopLimitOrderHistory (as with ListActiveStopLimitOrders).</p>
+            </summary>
+            <param name="tradingAccountId">The trading account to get orders for.</param>
+            <param name="maxResults">The maximum number of results to return.</param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._TradesAndOrders.BeginListStopLimitOrderHistory(System.Int32,System.Int32,CityIndex.JsonClient.ApiAsyncCallback{CIAPI.DTO.ListStopLimitOrderHistoryResponseDTO},System.Object)">
+            <summary>
+            <p>Queries for a specified trading account's stop / limit order history. The result set includes <b>only orders that were originally stop / limit orders</b> that currently have one of the following statuses <b>(3 - Open, 4 - Cancelled, 5 - Rejected, 9 - Closed, 10 - Red Card)</b>. </p> <p>There's currently no corresponding GetStopLimitOrderHistory (as with ListActiveStopLimitOrders).</p>
+            </summary>
+            <param name="tradingAccountId">The trading account to get orders for.</param>
+            <param name="maxResults">The maximum number of results to return.</param>
+            <param name="callback"></param>
+            <param name="state"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._TradesAndOrders.GetOrder(System.String)">
+            <summary>
+            <p>Queries for an order by a specific order id.</p> <p>The current implementation only returns active orders (i.e. those with a status of <b>1 - Pending, 2 - Accepted, 3 - Open, 6 - Suspended, 8 - Yellow Card, 11 - Triggered</b>).</p>
+            </summary>
+            <param name="orderId">The requested order id.</param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._TradesAndOrders.BeginGetOrder(System.String,CityIndex.JsonClient.ApiAsyncCallback{CIAPI.DTO.GetOrderResponseDTO},System.Object)">
+            <summary>
+            <p>Queries for an order by a specific order id.</p> <p>The current implementation only returns active orders (i.e. those with a status of <b>1 - Pending, 2 - Accepted, 3 - Open, 6 - Suspended, 8 - Yellow Card, 11 - Triggered</b>).</p>
+            </summary>
+            <param name="orderId">The requested order id.</param>
+            <param name="callback"></param>
+            <param name="state"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._TradesAndOrders.Trade(CIAPI.DTO.NewTradeOrderRequestDTO)">
+            <summary>
+            <p>Place a trade on a particular market.</p> <p>Do not set any order id fields when requesting a new trade, the platform will generate them.</p>
+            </summary>
+            <param name="trade">The trade request.</param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._TradesAndOrders.BeginTrade(CIAPI.DTO.NewTradeOrderRequestDTO,CityIndex.JsonClient.ApiAsyncCallback{CIAPI.DTO.ApiTradeOrderResponseDTO},System.Object)">
+            <summary>
+            <p>Place a trade on a particular market.</p> <p>Do not set any order id fields when requesting a new trade, the platform will generate them.</p>
+            </summary>
+            <param name="trade">The trade request.</param>
+            <param name="callback"></param>
+            <param name="state"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._TradesAndOrders.UpdateTrade(CIAPI.DTO.UpdateTradeOrderRequestDTO)">
+            <summary>
+            Update a trade (for adding a stop/limit etc).
+            </summary>
+            <param name="update">The update trade request.</param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._TradesAndOrders.BeginUpdateTrade(CIAPI.DTO.UpdateTradeOrderRequestDTO,CityIndex.JsonClient.ApiAsyncCallback{CIAPI.DTO.ApiTradeOrderResponseDTO},System.Object)">
+            <summary>
+            Update a trade (for adding a stop/limit etc).
+            </summary>
+            <param name="update">The update trade request.</param>
+            <param name="callback"></param>
+            <param name="state"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._Messaging.GetMessage(System.String,System.String,System.String)">
+            <summary>
+             [DESCRIPTION MISSING]
+            </summary>
+            <param name="id"> [DESCRIPTION MISSING]</param>
+            <param name="language"> [DESCRIPTION MISSING]</param>
+            <param name="category"> [DESCRIPTION MISSING]</param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._Messaging.BeginGetMessage(System.String,System.String,System.String,CityIndex.JsonClient.ApiAsyncCallback{System.String},System.Object)">
+            <summary>
+             [DESCRIPTION MISSING]
+            </summary>
+            <param name="id"> [DESCRIPTION MISSING]</param>
+            <param name="language"> [DESCRIPTION MISSING]</param>
+            <param name="category"> [DESCRIPTION MISSING]</param>
+            <param name="callback"></param>
+            <param name="state"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._Messaging.GetMessagePopup(System.String,System.Int32)">
+            <summary>
+             [DESCRIPTION MISSING]
+            </summary>
+            <param name="language"> [DESCRIPTION MISSING]</param>
+            <param name="clientAccountId"> [DESCRIPTION MISSING]</param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._Messaging.BeginGetMessagePopup(System.String,System.Int32,CityIndex.JsonClient.ApiAsyncCallback{CIAPI.DTO.GetMessagePopupResponseDTO},System.Object)">
+            <summary>
+             [DESCRIPTION MISSING]
+            </summary>
+            <param name="language"> [DESCRIPTION MISSING]</param>
+            <param name="clientAccountId"> [DESCRIPTION MISSING]</param>
+            <param name="callback"></param>
+            <param name="state"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._Messaging.AcceptOrRejectMessagePopupResponse(System.Int32,System.Boolean)">
+            <summary>
+             [DESCRIPTION MISSING]
+            </summary>
+            <param name="clientAccountId"> [DESCRIPTION MISSING]</param>
+            <param name="accepted"> [DESCRIPTION MISSING]</param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._Messaging.BeginAcceptOrRejectMessagePopupResponse(System.Int32,System.Boolean,CityIndex.JsonClient.ApiAsyncCallback{CIAPI.NullType},System.Object)">
+            <summary>
+             [DESCRIPTION MISSING]
+            </summary>
+            <param name="clientAccountId"> [DESCRIPTION MISSING]</param>
+            <param name="accepted"> [DESCRIPTION MISSING]</param>
+            <param name="callback"></param>
+            <param name="state"></param>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:CIAPI.Rpc.Client._Messaging.GetSystemLookup(System.String,System.Int32)" -->
+        <!-- Badly formed XML comment ignored for member "M:CIAPI.Rpc.Client._Messaging.BeginGetSystemLookup(System.String,System.Int32,CityIndex.JsonClient.ApiAsyncCallback{CIAPI.DTO.ApiLookupResponseDTO},System.Object)" -->
+        <member name="M:CIAPI.Rpc.Client._Messaging.GetClientApplicationMessageTranslation(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Use the message translation service to get client specific translated textual strings.
+            </summary>
+            <param name="clientApplicationId">Client application identifier. (optional)</param>
+            <param name="cultureId">CultureId which corresponds to a culture code. (optional)</param>
+            <param name="accountOperatorId">Account operator identifier. (optional)</param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._Messaging.BeginGetClientApplicationMessageTranslation(System.Int32,System.Int32,System.Int32,CityIndex.JsonClient.ApiAsyncCallback{CIAPI.DTO.ApiClientApplicationMessageTranslationResponseDTO},System.Object)">
+            <summary>
+            Use the message translation service to get client specific translated textual strings.
+            </summary>
+            <param name="clientApplicationId">Client application identifier. (optional)</param>
+            <param name="cultureId">CultureId which corresponds to a culture code. (optional)</param>
+            <param name="accountOperatorId">Account operator identifier. (optional)</param>
+            <param name="callback"></param>
+            <param name="state"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._Watchlist.GetWatchlists">
+            <summary>
+            Gets all watchlists for the user account.
+            </summary>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._Watchlist.BeginGetWatchlists(CityIndex.JsonClient.ApiAsyncCallback{CIAPI.DTO.ListWatchlistResponseDTO},System.Object)">
+            <summary>
+            Gets all watchlists for the user account.
+            </summary>
+            <param name="callback"></param>
+            <param name="state"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._Watchlist.SaveWatchlist(CIAPI.DTO.ApiSaveWatchlistRequestDTO)">
+            <summary>
+            Save watchlist.
+            </summary>
+            <param name="apiSaveWatchlistRequestDto">The watchlist to save.</param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._Watchlist.BeginSaveWatchlist(CIAPI.DTO.ApiSaveWatchlistRequestDTO,CityIndex.JsonClient.ApiAsyncCallback{CIAPI.DTO.ApiSaveWatchlistResponseDTO},System.Object)">
+            <summary>
+            Save watchlist.
+            </summary>
+            <param name="apiSaveWatchlistRequestDto">The watchlist to save.</param>
+            <param name="callback"></param>
+            <param name="state"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._Watchlist.DeleteWatchlist(CIAPI.DTO.ApiDeleteWatchlistRequestDTO)">
+            <summary>
+            Delete a watchlist.
+            </summary>
+            <param name="deleteWatchlistRequestDto">The watchlist to delete.</param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._Watchlist.BeginDeleteWatchlist(CIAPI.DTO.ApiDeleteWatchlistRequestDTO,CityIndex.JsonClient.ApiAsyncCallback{CIAPI.DTO.ApiDeleteWatchlistResponseDTO},System.Object)">
+            <summary>
+            Delete a watchlist.
+            </summary>
+            <param name="deleteWatchlistRequestDto">The watchlist to delete.</param>
+            <param name="callback"></param>
+            <param name="state"></param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._ExceptionHandling.GenerateException(System.Int32)">
+            <summary>
+            Raises an error condition when an unexpected or uncontrolled event occurs.
+            </summary>
+            <param name="errorCode">The error code for the condition encountered.</param>
+        </member>
+        <member name="M:CIAPI.Rpc.Client._ExceptionHandling.BeginGenerateException(System.Int32,CityIndex.JsonClient.ApiAsyncCallback{CIAPI.DTO.ApiErrorResponseDTO},System.Object)">
+            <summary>
+            Raises an error condition when an unexpected or uncontrolled event occurs.
+            </summary>
+            <param name="errorCode">The error code for the condition encountered.</param>
+            <param name="callback"></param>
+            <param name="state"></param>
+        </member>
+        <member name="T:CIAPI.PrettyPrinterExtensions">
+            <summary>
+             Useful logging and debugging extensions
+            </summary>
+        </member>
+        <member name="M:CIAPI.PrettyPrinterExtensions.ToStringWithValues(System.Object)">
+            <summary>
+             Create string showing values of all public properties for object
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="T:CIAPI.NullType">
+            <summary>
+            empty class to enable return of void methods
+            </summary>
+        </member>
+    </members>
+</doc>

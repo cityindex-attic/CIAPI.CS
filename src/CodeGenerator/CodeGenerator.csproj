@@ -97,6 +97,7 @@
     <Content Include="node-0.4.7-cygwin\bin\tar.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="shiftpoint.htm" />
     <Content Include="src\dto-generator.js" />
     <Content Include="src\generate-routes.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

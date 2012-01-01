@@ -1,5 +1,6 @@
 ﻿using CIAPI.IntegrationTests.Streaming;
 using CIAPI.Rpc;
+using CityIndex.JsonClient;
 using NUnit.Framework;
 using System.Text.RegularExpressions;
 
@@ -8,6 +9,17 @@ namespace CIAPI.IntegrationTests.Rpc
     [TestFixture]
     public class NewsFixture : RpcFixtureBase
     {
+
+        [Test(Description = "This test duplicates issue http://faq.labs.cityindex.com/questions/listnewsheadlineswithsource-api-returning-an-error-for-source-mni-and-category-all. When it fails the bug is fixed.")]
+        [ExpectedException(typeof(ApiException))]
+        public void ListNewsHeadlinesWithSourceMNI()
+        {
+            var rpcClient = BuildRpcClient();
+            var headlines = rpcClient.News.ListNewsHeadlinesWithSource("MNI", "ALL", 100);
+
+            
+            
+        }
         [Test]
         public void HowToUseNews()
         {

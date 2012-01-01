@@ -23,7 +23,7 @@ exports.routesPatch = {
         "section": "Market"
     },
     "ChangePassword": {
-        "section": "AccountInformation"
+        "section": "Authentication"
     },
     "GetChartingEnabled": {
         "section": "AccountInformation"

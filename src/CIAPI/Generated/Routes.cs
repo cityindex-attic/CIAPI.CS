@@ -8,13 +8,13 @@ namespace CIAPI.Rpc
     {
 
       public _Authentication Authentication{get; private set;}
-      public _AccountInformation AccountInformation{get; private set;}
       public _PriceHistory PriceHistory{get; private set;}
       public _News News{get; private set;}
       public _CFDMarkets CFDMarkets{get; private set;}
       public _SpreadMarkets SpreadMarkets{get; private set;}
       public _Market Market{get; private set;}
       public _TradesAndOrders TradesAndOrders{get; private set;}
+      public _AccountInformation AccountInformation{get; private set;}
       public _Messaging Messaging{get; private set;}
       public _Watchlist Watchlist{get; private set;}
       public _ExceptionHandling ExceptionHandling{get; private set;}
@@ -25,13 +25,13 @@ private Client _client;
         _client=this;
 
             this. Authentication = new _Authentication(this);
-            this. AccountInformation = new _AccountInformation(this);
             this. PriceHistory = new _PriceHistory(this);
             this. News = new _News(this);
             this. CFDMarkets = new _CFDMarkets(this);
             this. SpreadMarkets = new _SpreadMarkets(this);
             this. Market = new _Market(this);
             this. TradesAndOrders = new _TradesAndOrders(this);
+            this. AccountInformation = new _AccountInformation(this);
             this. Messaging = new _Messaging(this);
             this. Watchlist = new _Watchlist(this);
             this. ExceptionHandling = new _ExceptionHandling(this);
@@ -41,13 +41,13 @@ private Client _client;
         {
 
             this. Authentication = new _Authentication(this);
-            this. AccountInformation = new _AccountInformation(this);
             this. PriceHistory = new _PriceHistory(this);
             this. News = new _News(this);
             this. CFDMarkets = new _CFDMarkets(this);
             this. SpreadMarkets = new _SpreadMarkets(this);
             this. Market = new _Market(this);
             this. TradesAndOrders = new _TradesAndOrders(this);
+            this. AccountInformation = new _AccountInformation(this);
             this. Messaging = new _Messaging(this);
             this. Watchlist = new _Watchlist(this);
             this. ExceptionHandling = new _ExceptionHandling(this);
@@ -146,12 +146,6 @@ private Client _client;
         }
 
 
-        }            
-        public class _AccountInformation
-        {
-            private Client _client;
-            public _AccountInformation(Client client){ this._client = client;}
-
         // ***********************************
         // ChangePassword
         // ***********************************
@@ -189,130 +183,6 @@ private Client _client;
         }
 
         public ApiChangePasswordResponseDTO EndChangePassword(ApiAsyncResult<ApiChangePasswordResponseDTO> asyncResult)
-        {
-            return _client.EndRequest(asyncResult);
-        }
-
-
-        // ***********************************
-        // GetChartingEnabled
-        // ***********************************
-
-
-        /// <summary>
-        /// Checks whether the supplied User Account is allowed to see Charting Data.
-        /// </summary>
-        /// <param name="id">The User Account ID to check.</param>
-        public virtual bool GetChartingEnabled(string id)
-        {
-            string uriTemplate = _client.AppendApiKey("/UserAccount/{id}/ChartingEnabled");
-            return _client.Request<bool>("useraccount", uriTemplate , "GET",
-            new Dictionary<string, object>
-            {
-                { "id", id}
-            }, TimeSpan.FromMilliseconds(0), "data");
-        }
-
-
-        /// <summary>
-        /// Checks whether the supplied User Account is allowed to see Charting Data.
-        /// </summary>
-        /// <param name="id">The User Account ID to check.</param>
-        /// <param name="callback"></param>
-        /// <param name="state"></param>
-        public virtual void BeginGetChartingEnabled(string id, ApiAsyncCallback<bool> callback, object state)
-        {
-            string uriTemplate = _client.AppendApiKey("/UserAccount/{id}/ChartingEnabled");
-            _client.BeginRequest(callback, state, "useraccount", uriTemplate , "GET",
-            new Dictionary<string, object>
-            {
-                { "id", id}
-            }, TimeSpan.FromMilliseconds(0), "data");
-        }
-
-        public bool EndGetChartingEnabled(ApiAsyncResult<bool> asyncResult)
-        {
-            return _client.EndRequest(asyncResult);
-        }
-
-
-        // ***********************************
-        // GetClientAndTradingAccount
-        // ***********************************
-
-
-        /// <summary>
-        /// Returns the User's ClientAccountId and a list of their TradingAccounts. There are no parameters for this call.
-        /// </summary>
-        public virtual AccountInformationResponseDTO GetClientAndTradingAccount()
-        {
-            string uriTemplate = _client.AppendApiKey("/UserAccount/ClientAndTradingAccount");
-            return _client.Request<AccountInformationResponseDTO>("useraccount", uriTemplate , "GET",
-            new Dictionary<string, object>
-            {
-
-            }, TimeSpan.FromMilliseconds(0), "data");
-        }
-
-
-        /// <summary>
-        /// Returns the User's ClientAccountId and a list of their TradingAccounts. There are no parameters for this call.
-        /// </summary>
-        /// <param name="callback"></param>
-        /// <param name="state"></param>
-        public virtual void BeginGetClientAndTradingAccount( ApiAsyncCallback<AccountInformationResponseDTO> callback, object state)
-        {
-            string uriTemplate = _client.AppendApiKey("/UserAccount/ClientAndTradingAccount");
-            _client.BeginRequest(callback, state, "useraccount", uriTemplate , "GET",
-            new Dictionary<string, object>
-            {
-
-            }, TimeSpan.FromMilliseconds(0), "data");
-        }
-
-        public AccountInformationResponseDTO EndGetClientAndTradingAccount(ApiAsyncResult<AccountInformationResponseDTO> asyncResult)
-        {
-            return _client.EndRequest(asyncResult);
-        }
-
-
-        // ***********************************
-        // SaveAccountInformation
-        // ***********************************
-
-
-        /// <summary>
-        /// Saves the users account information.
-        /// </summary>
-        /// <param name="saveAccountInformationRequest">Saves the users account information.</param>
-        public virtual ApiSaveAccountInformationResponseDTO SaveAccountInformation(ApiSaveAccountInformationRequestDTO saveAccountInformationRequest)
-        {
-            string uriTemplate = _client.AppendApiKey("/UserAccount/Save");
-            return _client.Request<ApiSaveAccountInformationResponseDTO>("useraccount", uriTemplate , "POST",
-            new Dictionary<string, object>
-            {
-                { "saveAccountInformationRequest", saveAccountInformationRequest}
-            }, TimeSpan.FromMilliseconds(0), "data");
-        }
-
-
-        /// <summary>
-        /// Saves the users account information.
-        /// </summary>
-        /// <param name="saveAccountInformationRequest">Saves the users account information.</param>
-        /// <param name="callback"></param>
-        /// <param name="state"></param>
-        public virtual void BeginSaveAccountInformation(ApiSaveAccountInformationRequestDTO saveAccountInformationRequest, ApiAsyncCallback<ApiSaveAccountInformationResponseDTO> callback, object state)
-        {
-            string uriTemplate = _client.AppendApiKey("/UserAccount/Save");
-            _client.BeginRequest(callback, state, "useraccount", uriTemplate , "POST",
-            new Dictionary<string, object>
-            {
-                { "saveAccountInformationRequest", saveAccountInformationRequest}
-            }, TimeSpan.FromMilliseconds(0), "data");
-        }
-
-        public ApiSaveAccountInformationResponseDTO EndSaveAccountInformation(ApiAsyncResult<ApiSaveAccountInformationResponseDTO> asyncResult)
         {
             return _client.EndRequest(asyncResult);
         }
@@ -1447,6 +1317,136 @@ private Client _client;
         }
 
         public ApiTradeOrderResponseDTO EndUpdateTrade(ApiAsyncResult<ApiTradeOrderResponseDTO> asyncResult)
+        {
+            return _client.EndRequest(asyncResult);
+        }
+
+
+        }            
+        public class _AccountInformation
+        {
+            private Client _client;
+            public _AccountInformation(Client client){ this._client = client;}
+
+        // ***********************************
+        // GetChartingEnabled
+        // ***********************************
+
+
+        /// <summary>
+        /// Checks whether the supplied User Account is allowed to see Charting Data.
+        /// </summary>
+        /// <param name="id">The User Account ID to check.</param>
+        public virtual bool GetChartingEnabled(string id)
+        {
+            string uriTemplate = _client.AppendApiKey("/UserAccount/{id}/ChartingEnabled");
+            return _client.Request<bool>("useraccount", uriTemplate , "GET",
+            new Dictionary<string, object>
+            {
+                { "id", id}
+            }, TimeSpan.FromMilliseconds(0), "data");
+        }
+
+
+        /// <summary>
+        /// Checks whether the supplied User Account is allowed to see Charting Data.
+        /// </summary>
+        /// <param name="id">The User Account ID to check.</param>
+        /// <param name="callback"></param>
+        /// <param name="state"></param>
+        public virtual void BeginGetChartingEnabled(string id, ApiAsyncCallback<bool> callback, object state)
+        {
+            string uriTemplate = _client.AppendApiKey("/UserAccount/{id}/ChartingEnabled");
+            _client.BeginRequest(callback, state, "useraccount", uriTemplate , "GET",
+            new Dictionary<string, object>
+            {
+                { "id", id}
+            }, TimeSpan.FromMilliseconds(0), "data");
+        }
+
+        public bool EndGetChartingEnabled(ApiAsyncResult<bool> asyncResult)
+        {
+            return _client.EndRequest(asyncResult);
+        }
+
+
+        // ***********************************
+        // GetClientAndTradingAccount
+        // ***********************************
+
+
+        /// <summary>
+        /// Returns the User's ClientAccountId and a list of their TradingAccounts. There are no parameters for this call.
+        /// </summary>
+        public virtual AccountInformationResponseDTO GetClientAndTradingAccount()
+        {
+            string uriTemplate = _client.AppendApiKey("/UserAccount/ClientAndTradingAccount");
+            return _client.Request<AccountInformationResponseDTO>("useraccount", uriTemplate , "GET",
+            new Dictionary<string, object>
+            {
+
+            }, TimeSpan.FromMilliseconds(0), "data");
+        }
+
+
+        /// <summary>
+        /// Returns the User's ClientAccountId and a list of their TradingAccounts. There are no parameters for this call.
+        /// </summary>
+        /// <param name="callback"></param>
+        /// <param name="state"></param>
+        public virtual void BeginGetClientAndTradingAccount( ApiAsyncCallback<AccountInformationResponseDTO> callback, object state)
+        {
+            string uriTemplate = _client.AppendApiKey("/UserAccount/ClientAndTradingAccount");
+            _client.BeginRequest(callback, state, "useraccount", uriTemplate , "GET",
+            new Dictionary<string, object>
+            {
+
+            }, TimeSpan.FromMilliseconds(0), "data");
+        }
+
+        public AccountInformationResponseDTO EndGetClientAndTradingAccount(ApiAsyncResult<AccountInformationResponseDTO> asyncResult)
+        {
+            return _client.EndRequest(asyncResult);
+        }
+
+
+        // ***********************************
+        // SaveAccountInformation
+        // ***********************************
+
+
+        /// <summary>
+        /// Saves the users account information.
+        /// </summary>
+        /// <param name="saveAccountInformationRequest">Saves the users account information.</param>
+        public virtual ApiSaveAccountInformationResponseDTO SaveAccountInformation(ApiSaveAccountInformationRequestDTO saveAccountInformationRequest)
+        {
+            string uriTemplate = _client.AppendApiKey("/UserAccount/Save");
+            return _client.Request<ApiSaveAccountInformationResponseDTO>("useraccount", uriTemplate , "POST",
+            new Dictionary<string, object>
+            {
+                { "saveAccountInformationRequest", saveAccountInformationRequest}
+            }, TimeSpan.FromMilliseconds(0), "data");
+        }
+
+
+        /// <summary>
+        /// Saves the users account information.
+        /// </summary>
+        /// <param name="saveAccountInformationRequest">Saves the users account information.</param>
+        /// <param name="callback"></param>
+        /// <param name="state"></param>
+        public virtual void BeginSaveAccountInformation(ApiSaveAccountInformationRequestDTO saveAccountInformationRequest, ApiAsyncCallback<ApiSaveAccountInformationResponseDTO> callback, object state)
+        {
+            string uriTemplate = _client.AppendApiKey("/UserAccount/Save");
+            _client.BeginRequest(callback, state, "useraccount", uriTemplate , "POST",
+            new Dictionary<string, object>
+            {
+                { "saveAccountInformationRequest", saveAccountInformationRequest}
+            }, TimeSpan.FromMilliseconds(0), "data");
+        }
+
+        public ApiSaveAccountInformationResponseDTO EndSaveAccountInformation(ApiAsyncResult<ApiSaveAccountInformationResponseDTO> asyncResult)
         {
             return _client.EndRequest(asyncResult);
         }

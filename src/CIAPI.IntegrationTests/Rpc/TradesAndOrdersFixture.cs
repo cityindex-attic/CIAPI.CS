@@ -136,13 +136,19 @@ namespace CIAPI.IntegrationTests.Rpc
         [Test]
         public void CanListTradeHistory()
         {
+            // tests issue with 77th trade history item issue - this is definitely a server error
+            // http://faq.labs.cityindex.com/questions/internal-server-error-when-trying-to-get-trade-history
+            // while it is suggested that each side of the trade may be in different currencies
+            // several accounts reportedly reprod the error, so short of a dedicated account with which
+            // to make the same 77+ trades all we can do is check for 77 max
+
             var rpcClient = BuildRpcClient();
 
             AccountInformationResponseDTO accounts = rpcClient.AccountInformation.GetClientAndTradingAccount();
-            int maxResults = 100;
+            int maxResults = 77;
             int tradingAccountId = accounts.CFDAccount.TradingAccountId;
             var response = rpcClient.TradesAndOrders.ListTradeHistory(tradingAccountId, maxResults);
-
+            Assert.IsTrue(response.TradeHistory.Length > 0);
 
             tradingAccountId = accounts.SpreadBettingAccount.TradingAccountId;
             response = rpcClient.TradesAndOrders.ListTradeHistory(tradingAccountId, maxResults);

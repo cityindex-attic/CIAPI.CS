@@ -36,7 +36,7 @@ namespace CIAPI.IntegrationTests.Rpc
             rpcClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);
 
             //And change password
-            var changePasswordResponse = rpcClient.AccountInformation.ChangePassword(new ApiChangePasswordRequestDTO()
+            var changePasswordResponse = rpcClient.Authentication.ChangePassword(new ApiChangePasswordRequestDTO()
                                                                                          {
                                                                                              UserName = Settings.RpcUserName,
                                                                                              Password = Settings.RpcPassword,
@@ -51,7 +51,7 @@ namespace CIAPI.IntegrationTests.Rpc
 
             //Login with changed password and change back
             rpcClient.LogIn(Settings.RpcUserName, NEWPASSWORD);
-            changePasswordResponse = rpcClient.AccountInformation.ChangePassword(new ApiChangePasswordRequestDTO()
+            changePasswordResponse = rpcClient.Authentication.ChangePassword(new ApiChangePasswordRequestDTO()
                                                                                          {
                                                                                              UserName = Settings.RpcUserName,
                                                                                              Password = NEWPASSWORD,

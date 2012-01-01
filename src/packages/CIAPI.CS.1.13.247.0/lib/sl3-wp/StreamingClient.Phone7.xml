@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>StreamingClient.Phone7</name>
+    </assembly>
+    <members>
+        <member name="M:StreamingClient.Lightstreamer.LightstreamerDtoConverter`1.IsTypeNullable(System.Type,System.Type@)">
+            <summary>
+            public for testing - too lazy to show internals
+            </summary>
+            <param name="type"></param>
+            <param name="underlyingType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:StreamingClient.Lightstreamer.LightstreamerDtoConverter`1.ConvertPropertyValue(System.Type,System.String,System.String)">
+            <summary>
+            public for testing - too lazy to show internals
+            </summary>
+            <param name="pType"></param>
+            <param name="propertyName"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:StreamingClient.FaultTolerantLsClientAdapter.TearDownListener(StreamingClient.IStreamingListener)">
+            <summary>
+            Allows consumer to stop and remove a listener from this client.
+            </summary>
+        </member>
+        <member name="M:StreamingClient.FaultTolerantLsClientAdapter.PauseAndRetryStartClient(System.Int32,System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="ph"></param>
+            <param name="ee"></param>
+        </member>
+        <member name="M:StreamingClient.FaultTolerantLsClientAdapter.CheckPhase(System.Int32)">
+            <summary>
+            helps insure that operations are only performed on active connection/listener
+            </summary>
+            <param name="ph"></param>
+            <returns></returns>
+        </member>
+        <member name="T:StreamingClient.FaultTolerantLsClientAdapter.ClientStartStop">
+            <summary>
+            nested class to provide access to private members
+            </summary>
+        </member>
+        <member name="M:StreamingClient.Lightstreamer.LightstreamerClient.TearDownListener(StreamingClient.IStreamingListener)">
+            <summary>
+            Allows consumer to stop and remove a listener from this client.
+            </summary>
+        </member>
+        <member name="T:StreamingClient.ListenerAdapter`1">
+            <summary>
+            the purpose of this adapter is to allow consumer to maintain handlers
+            for listener events even when the internal listener is reinstantiated due
+            to fault tolerance events
+            </summary>
+        </member>
+        <member name="M:StreamingClient.TableListener`1.IsUpdateNull(Lightstreamer.DotNet.Client.IUpdateInfo)">
+            <summary>
+            It seems some streams have a 'spin-up' process that can return an all null update
+            until the data starts streaming. We were not catching this and null updates were
+            sometimes throwing exceptions that were logged and then swallowed by LS. I think
+            a better way is to determine if the update is emtpy (null) and simply not fire if so.
+            
+            Follows is a very simple check
+            </summary>
+            <param name="update"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

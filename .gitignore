@@ -35,3 +35,4 @@ PrecompiledWeb
 *.xap
 .wave-vs.net.backup
 !/CodeGenerator/node-0.4.7-cygwin/bin/*.*
+src/CodeGenerator/shiftpoint.htm
