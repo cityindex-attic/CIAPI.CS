@@ -148,7 +148,7 @@ namespace CityIndex.JsonClient
                     {
                         
                     }
-                    paramText = Regex.Replace(paramText, "\"(password\":\\s?)\"[^\"]*\"", "\"$1\"*****\"", RegexOptions.IgnoreCase);
+                    paramText = Regex.Replace(paramText, "\"(\\w*password\":\\s?)\"[^\"]*\"", "\"$1\"*****\"", RegexOptions.IgnoreCase);
                     sb.AppendFormat("\t{0}: {1}\r\n", kvp.Key, paramText);
                 }
             }
