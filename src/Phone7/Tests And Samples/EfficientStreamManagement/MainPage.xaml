@@ -21,13 +21,14 @@
         </Grid.RowDefinitions>
 
  
-<Button Content="Listener Set One" Grid.Row="0" Height="72" HorizontalAlignment="Left" Margin="10,10,0,0" Name="button1" VerticalAlignment="Top" Width="Auto" Click="button1_Click" IsEnabled="False" />
-<Button Content="Listener Set Two" Grid.Row="0" Height="72" HorizontalAlignment="Right" Margin="10,10,0,0" Name="button2" VerticalAlignment="Top" Width="Auto" Click="button2_Click" IsEnabled="False" />        
+
         <!--ContentPanel - place additional content here-->
-        <Grid x:Name="ContentPanel" Grid.Row="2" Margin="12,0,12,0">
-            <ListBox Height="Auto" HorizontalAlignment="Stretch" Margin="10,10,0,0" Name="listBox1" VerticalAlignment="Stretch" />
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <ListBox Height="442" HorizontalAlignment="Left" Margin="12,6,0,0" Name="listBox1" VerticalAlignment="Top" Width="438" />
+            <Button Content="Set 1" Height="72" HorizontalAlignment="Left" Margin="0,483,0,0" Name="button1" VerticalAlignment="Top" Width="150" Click="button1_Click" />
+            <Button Content="Set 2" Height="72" HorizontalAlignment="Left" Margin="156,483,0,0" Name="button2" VerticalAlignment="Top" Width="150" Click="button2_Click" />
+            <Button Content="Set 3" Height="72" HorizontalAlignment="Left" Margin="312,483,0,0" Name="button3" VerticalAlignment="Top" Width="150" Click="button3_Click" />
         </Grid>
-        
     </Grid>
  
      

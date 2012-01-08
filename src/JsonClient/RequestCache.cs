@@ -55,13 +55,23 @@ namespace CityIndex.JsonClient
         {
             //lock (_lock)
             {
+                CacheItem<TDTO> item = null;
                 url = url.ToLower();
 
                 EnsureItemCurrency(url);
 
-                return _items.ContainsKey(url)
-                           ? GetItem<TDTO>(url)
-                           : CreateAndAddItem<TDTO>(url);
+                if (_items.ContainsKey(url))
+                {
+                    item =GetItem<TDTO>(url);
+                    Log.DebugFormat("Fetched {0} from cache",item.Url);
+                }
+                else
+                {
+                    item = CreateAndAddItem<TDTO>(url);
+                    
+                }
+
+                return item;
             }
         }
 

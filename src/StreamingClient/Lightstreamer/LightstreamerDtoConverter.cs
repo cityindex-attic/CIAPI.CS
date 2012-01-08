@@ -166,7 +166,7 @@ namespace StreamingClient.Lightstreamer
                     default:
                         throw new NotImplementedException(string.Format("Cannot populate fields of type {0} such as {1} on type {2}",
                                                             propertyType.FullName, propertyName, typeof(TDto).FullName));
-                        break;
+                   
                 }
 
 

@@ -24,6 +24,7 @@ namespace EfficientStreamManagement
         private IStreamingListener<NewsDTO> _newsListener;
         private IStreamingListener<OrderDTO> _orderslistener;
         private IStreamingListener<PriceDTO> _priceListener;
+        private IStreamingListener<QuoteDTO> _quotesListener;
 
 
         // Constructor
@@ -47,32 +48,40 @@ namespace EfficientStreamManagement
             StreamingClient = StreamingClientFactory.CreateStreamingClient(STREAMING_URI, RpcClient.UserName,
                                                                            RpcClient.Session);
             Dispatcher.BeginInvoke(() =>
-                                       {
-                                           listBox1.Items.Add("rpc client logged in");
-                                           button1.IsEnabled = true;
-                                           button2.IsEnabled = true;
-                                       });
+            {
+                listBox1.Items.Add("rpc client logged in");
+                button1.IsEnabled = true;
+                button2.IsEnabled = true;
+            });
         }
 
 
         private void button1_Click(object sender, RoutedEventArgs e)
         {
             new Thread(() =>
-                           {
-                               TearDownListeners();
-                               BuildListenerSetOne();
-                           }).Start();
+            {
+                TearDownListeners();
+                BuildListenerSetOne();
+            }).Start();
         }
 
         private void button2_Click(object sender, RoutedEventArgs e)
         {
             new Thread(() =>
-                           {
-                               TearDownListeners();
-                               BuildListenerSetTwo();
-                           }).Start();
+            {
+                TearDownListeners();
+                BuildListenerSetTwo();
+            }).Start();
         }
 
+        private void button3_Click(object sender, RoutedEventArgs e)
+        {
+            new Thread(() =>
+            {
+                TearDownListeners();
+                BuildListenerSetThree();
+            }).Start();
+        }
 
         private void TearDownListeners()
         {
@@ -101,6 +110,13 @@ namespace EfficientStreamManagement
                 _orderslistener.MessageReceived -= _orderslistener_MessageReceived;
                 StreamingClient.TearDownListener(_orderslistener);
             }
+
+            if (_quotesListener != null)
+            {
+                _quotesListener.MessageReceived -= _quotesListener_MessageReceived;
+                StreamingClient.TearDownListener(_quotesListener);
+            }
+
             Dispatcher.BeginInvoke(() => listBox1.Items.Add("all listeners torn down"));
         }
 
@@ -124,6 +140,18 @@ namespace EfficientStreamManagement
             Dispatcher.BeginInvoke(() => listBox1.Items.Add("listener set two built"));
         }
 
+        private void BuildListenerSetThree()
+        {
+            Dispatcher.BeginInvoke(() => listBox1.Items.Add("building listener set three"));
+            _quotesListener = StreamingClient.BuildQuotesListener();
+            _quotesListener.MessageReceived += _quotesListener_MessageReceived;
+            Dispatcher.BeginInvoke(() => listBox1.Items.Add("listener set two three"));
+        }
+
+        private void _quotesListener_MessageReceived(object sender, MessageEventArgs<QuoteDTO> e)
+        {
+            Dispatcher.BeginInvoke(() => listBox1.Items.Add(e.Data.QuoteId));
+        }
 
         private void _orderslistener_MessageReceived(object sender, MessageEventArgs<OrderDTO> e)
         {

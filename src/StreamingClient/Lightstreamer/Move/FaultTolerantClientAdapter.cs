@@ -37,6 +37,14 @@ namespace StreamingClient
 
         internal readonly LSClient Client;
         private readonly Dictionary<string, IStreamingListener> _currentListeners = new Dictionary<string, IStreamingListener>();
+        ///<summary>
+        ///</summary>
+        public int ListenerCount{
+            get
+            {
+                return _currentListeners.Count;
+            }
+        }
 
 
         public FaultTolerantLsClientAdapter(string streamingUri, string userName, string sessionId, string adapterSet)

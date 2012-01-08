@@ -50,6 +50,13 @@ namespace StreamingClient.Lightstreamer
                 {
                     var adapter = _adapters[listener.AdapterSet];
                     adapter.TearDownListener(listener);
+                    if(adapter.ListenerCount==0)
+                    {
+                        _adapters.Remove(listener.AdapterSet);
+                        adapter.Dispose();
+
+                    }
+                    
                 }
             }
             
