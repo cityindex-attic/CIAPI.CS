@@ -3,17 +3,16 @@
   
   <!-- Version defaults - override these as per SemVer standard - http://semver.org/ -->
   <PropertyGroup>
-    <Major Condition="'$(Major)'!=''">0</Major>
-    <Minor Condition="'$(Minor)'!=''">0</Minor>
-    <Patch Condition="'$(Patch)'!=''">0</Patch>
-    <Build>0</Build>
-    <!--Jenkins sets BUILD_NUMBER -->
-    <Build Condition="'$(BUILD_NUMBER)'!=''">$(BUILD_NUMBER)</Build>
-    <PreRelease Condition="'$(PreRelease)'!=''">-bleeding-$(Build)</PreRelease>
+    <Major Condition="'$(Major)'==''">0</Major>
+    <Minor Condition="'$(Minor)'==''">0</Minor>
+    <Patch Condition="'$(Patch)'==''">0</Patch>
+    <Build>0</Build> 
+    <Build Condition="'$(BUILD_NUMBER)'!=''">$(BUILD_NUMBER)</Build>  <!-- Use the Jenkins build number if available -->
+    <PreRelease Condition="'$(PreRelease)'!=''">-$(PreRelease)-$(Build)</PreRelease><!--nuget requires a - prefix -->
   </PropertyGroup>
 
   <Target Name="UpdateVersion">
-    <Message Text="Version: $(Major).$(Minor).$(Patch)$(PreRelease)+build-$(Build)" />
+    <Message Text="Version: $(Major).$(Minor).$(Patch)$(PreRelease)" />
 
     <CreateItem Include="$(SrcDirectory)\**\AssemblyInfo.cs">
       <Output TaskParameter="Include" ItemName="AssemblyInfos"/>

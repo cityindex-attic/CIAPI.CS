@@ -18,7 +18,7 @@
   </Target>
 
   <Target Name="PublishToNugetOrg" DependsOnTargets="Package">
-	    <Exec Command='"$(NuGetEXE)" push $(DropDirectory)\CIAPI.CS.$(Major).$(Minor).$(Build).$(Revision).nupkg' ContinueOnError='false' WorkingDirectory='$(DropDirectory)'/>
+	    <Exec Command='"$(NuGetEXE)" push $(DropDirectory)\CIAPI.CS.$(Major).$(Minor).$(Patch)$(PreRelease).nupkg' ContinueOnError='false' WorkingDirectory='$(DropDirectory)'/>
   </Target>
   
   <Target Name="CreateDropDirectories">

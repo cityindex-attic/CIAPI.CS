@@ -12,9 +12,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{845AC73C
 	ProjectSection(SolutionItems) = preProject
 		build.xml = build.xml
 		CIAPI.CS.nunit = CIAPI.CS.nunit
-		Package.CIAPI.nuspec.xml = Package.CIAPI.nuspec.xml
-		Package.JsonClient.nuspec.xml = Package.JsonClient.nuspec.xml
+		..\tools\msbuild\CommonProperties.targets.xml = ..\tools\msbuild\CommonProperties.targets.xml
+		..\tools\msbuild\DropsAndPackaging.targets.xml = ..\tools\msbuild\DropsAndPackaging.targets.xml
+		Package.CIAPI.nuspec = Package.CIAPI.nuspec
 		PartCover4.settings.xml = PartCover4.settings.xml
+		..\tools\msbuild\TestsAndMetrics.targets.xml = ..\tools\msbuild\TestsAndMetrics.targets.xml
+		..\tools\msbuild\Versioning.targets.xml = ..\tools\msbuild\Versioning.targets.xml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SampleApps", "SampleApps", "{358F3488-9C36-4B4C-B593-1A21D1B18E35}"
