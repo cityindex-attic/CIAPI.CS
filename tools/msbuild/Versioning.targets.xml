@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Go" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  
+  <!-- Version defaults - override these as per SemVer standard - http://semver.org/ -->
   <PropertyGroup>
-    <Major Condition="'$(Major)'!=''">1</Major>
+    <Major Condition="'$(Major)'!=''">0</Major>
     <Minor Condition="'$(Minor)'!=''">0</Minor>
+    <Patch Condition="'$(Patch)'!=''">0</Patch>
     <Build>0</Build>
-    <Revision>0</Revision>
-    
-    <!--Hudson sets BUILD_NUMBER -->
+    <!--Jenkins sets BUILD_NUMBER -->
     <Build Condition="'$(BUILD_NUMBER)'!=''">$(BUILD_NUMBER)</Build>
+    <PreRelease Condition="'$(PreRelease)'!=''">-bleeding-$(Build)</PreRelease>
   </PropertyGroup>
 
-  
   <Target Name="UpdateVersion">
-    <Message Text="Version: $(Major).$(Minor).$(Build).$(Revision)" />
+    <Message Text="Version: $(Major).$(Minor).$(Patch)$(PreRelease)+build-$(Build)" />
 
     <CreateItem Include="$(SrcDirectory)\**\AssemblyInfo.cs">
       <Output TaskParameter="Include" ItemName="AssemblyInfos"/>
@@ -22,17 +23,17 @@
 
     <FileUpdate Files="%(AssemblyInfos.FullPath)"
                 Regex="AssemblyVersion\s*\(\s*\&quot;(\d+\.\d+\.(\d+|\*)\.(\d+|\*))\&quot;\s*\)"
-                ReplacementText="AssemblyVersion(&quot;$(Major).$(Minor).$(Build).$(Revision)&quot;)" />
+                ReplacementText="AssemblyVersion(&quot;$(Major).$(Minor).$(Patch).$(Build)&quot;)" />
     <FileUpdate Files="%(AssemblyInfos.FullPath)"
                 Regex="AssemblyFileVersion\s*\(\s*\&quot;(\d+\.\d+\.(\d+|\*)\.(\d+|\*))\&quot;\s*\)"
-                ReplacementText="AssemblyFileVersion(&quot;$(Major).$(Minor).$(Build).$(Revision)&quot;)"/>
+                ReplacementText="AssemblyFileVersion(&quot;$(Major).$(Minor).$(Patch).$(Build)&quot;)"/>
 
     <Message Text="Updating NuGet package version"/>
     <FileUpdate Files="$(SrcDirectory)\Package.CIAPI.nuspec"
                 Regex="&lt;version&gt;(.*?)&lt;/version&gt;"
-                ReplacementText="&lt;version&gt;$(Major).$(Minor).$(Build).$(Revision)&lt;/version&gt;" />
+                ReplacementText="&lt;version&gt;$(Major).$(Minor).$(Patch)$(PreRelease)&lt;/version&gt;" />
     <FileUpdate Files="$(SrcDirectory)\Package.JsonClient.nuspec"
                 Regex="&lt;version&gt;(.*?)&lt;/version&gt;"
-                ReplacementText="&lt;version&gt;$(Major).$(Minor).$(Build).$(Revision)&lt;/version&gt;" />                
+                ReplacementText="&lt;version&gt;$(Major).$(Minor).$(Patch)$(PreRelease)&lt;/version&gt;" />                
   </Target>
 </Project>
