@@ -3,7 +3,7 @@
   <metadata>
     <id>CIAPI.CS</id>
     <title>CIAPI.CS</title>
-    <version>1.0.0.0</version>
+    <version>1.14.0-bleeding-0</version>
     <authors>CityIndex Ltd, Sky Sanders, David Laing</authors>
     <description>.NET client library for CityIndex Trading API</description>
     <language>en-GB</language>

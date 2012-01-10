@@ -32,7 +32,7 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("1.14.0.0")]
+[assembly: AssemblyFileVersion("1.14.0.0")]
 
 [assembly: InternalsVisibleTo("CityIndex.JsonClient.Tests, PublicKey=0024000004800000940000000602000000240000525341310004000001000100b7bed198deeb5003cd33f655cd54ee5e4d55d54479e60929ad9a9ec563692cc1dd16859b0a1242f6b429f6f7f617467cf68ead7db2d10a857a5cb86cb913bfb85e2ee79ee20c2069c8d1119078fcd39ea5e5058e4764e13ba545e4447b50f03a3a073c52e503cf6811cd72b15d639f5bf6c4054aaf1aad93bdf83783929f9eb7")]
