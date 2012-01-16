@@ -53,6 +53,52 @@ private Client _client;
             this. ExceptionHandling = new _ExceptionHandling(this);
         }            
 
+        // ***********************************
+        // GetVersionInformation
+        // ***********************************
+
+
+        /// <summary>
+        /// Gets version information for a specific client application and (optionally) account operator.
+        /// </summary>
+        /// <param name="appKey">a string to uniquely identify the application.</param>
+        /// <param name="accountOperatorId">an optional parameter to identify the account operator string to uniquely identify the application.</param>
+        public virtual GetVersionInformationResponseDTO GetVersionInformation(string appKey, int accountOperatorId)
+        {
+            string uriTemplate = _client.AppendApiKey("/clientapplication/versioninformation?AppKey={appKey}&AccountOperatorId={accountOperatorId}");
+            return _client.Request<GetVersionInformationResponseDTO>("clientapplication/versioninformation", uriTemplate , "GET",
+            new Dictionary<string, object>
+            {
+                { "appKey", appKey}, 
+                { "accountOperatorId", accountOperatorId}
+            }, TimeSpan.FromMilliseconds(360000), "default");
+        }
+
+
+        /// <summary>
+        /// Gets version information for a specific client application and (optionally) account operator.
+        /// </summary>
+        /// <param name="appKey">a string to uniquely identify the application.</param>
+        /// <param name="accountOperatorId">an optional parameter to identify the account operator string to uniquely identify the application.</param>
+        /// <param name="callback"></param>
+        /// <param name="state"></param>
+        public virtual void BeginGetVersionInformation(string appKey, int accountOperatorId, ApiAsyncCallback<GetVersionInformationResponseDTO> callback, object state)
+        {
+            string uriTemplate = _client.AppendApiKey("/clientapplication/versioninformation?AppKey={appKey}&AccountOperatorId={accountOperatorId}");
+            _client.BeginRequest(callback, state, "clientapplication/versioninformation", uriTemplate , "GET",
+            new Dictionary<string, object>
+            {
+                { "appKey", appKey}, 
+                { "accountOperatorId", accountOperatorId}
+            }, TimeSpan.FromMilliseconds(360000), "default");
+        }
+
+        public GetVersionInformationResponseDTO EndGetVersionInformation(ApiAsyncResult<GetVersionInformationResponseDTO> asyncResult)
+        {
+            return _client.EndRequest(asyncResult);
+        }
+
+
         public class _Authentication
         {
             private Client _client;
@@ -202,7 +248,7 @@ private Client _client;
         /// <summary>
         /// Get historic price bars for the specified market in OHLC (open, high, low, close) format, suitable for plotting in candlestick charts. Returns price bars in ascending order up to the current time. When there are no prices for a particular time period, no price bar is returned. Thus, it can appear that the array of price bars has "gaps", i.e. the gap between the date & time of each price bar might not be equal to interval x span. Sample Urls: <ul> <li>/market/1234/history?interval=MINUTE&span=15&pricebars=180</li> <li>/market/735/history?interval=HOUR&span=1&pricebars=240</li> <li>/market/1577/history?interval=DAY&span=1&pricebars=10</li> </ul>
         /// </summary>
-        /// <param name="marketId">The marketId.</param>
+        /// <param name="marketId">The ID of the market.</param>
         /// <param name="interval">The pricebar interval.</param>
         /// <param name="span">The number of each interval per pricebar.</param>
         /// <param name="priceBars">The total number of pricebars to return.</param>
@@ -223,7 +269,7 @@ private Client _client;
         /// <summary>
         /// Get historic price bars for the specified market in OHLC (open, high, low, close) format, suitable for plotting in candlestick charts. Returns price bars in ascending order up to the current time. When there are no prices for a particular time period, no price bar is returned. Thus, it can appear that the array of price bars has "gaps", i.e. the gap between the date & time of each price bar might not be equal to interval x span. Sample Urls: <ul> <li>/market/1234/history?interval=MINUTE&span=15&pricebars=180</li> <li>/market/735/history?interval=HOUR&span=1&pricebars=240</li> <li>/market/1577/history?interval=DAY&span=1&pricebars=10</li> </ul>
         /// </summary>
-        /// <param name="marketId">The marketId.</param>
+        /// <param name="marketId">The ID of the market.</param>
         /// <param name="interval">The pricebar interval.</param>
         /// <param name="span">The number of each interval per pricebar.</param>
         /// <param name="priceBars">The total number of pricebars to return.</param>
@@ -256,7 +302,7 @@ private Client _client;
         /// <summary>
         /// Get historic price ticks for the specified market. Returns price ticks in ascending order up to the current time. The length of time that elapses between each tick is usually different.
         /// </summary>
-        /// <param name="marketId">The marketId.</param>
+        /// <param name="marketId">The market ID.</param>
         /// <param name="priceTicks">The total number of price ticks to return.</param>
         public virtual GetPriceTickResponseDTO GetPriceTicks(string marketId, string priceTicks)
         {
@@ -273,7 +319,7 @@ private Client _client;
         /// <summary>
         /// Get historic price ticks for the specified market. Returns price ticks in ascending order up to the current time. The length of time that elapses between each tick is usually different.
         /// </summary>
-        /// <param name="marketId">The marketId.</param>
+        /// <param name="marketId">The market ID.</param>
         /// <param name="priceTicks">The total number of price ticks to return.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
@@ -306,11 +352,11 @@ private Client _client;
 
 
         /// <summary>
-        /// Get a list of current news headlines
+        /// Get a list of current news headlines.
         /// </summary>
         /// <param name="source">The news feed source provider. Valid options are: dj|mni|ci.</param>
         /// <param name="category">Filter headlines by category. Valid categories depend on the source used:  for dj: uk|aus, for ci: SEMINARSCHINA, for mni: ALL.</param>
-        /// <param name="maxResults">Specify the maximum number of headlines returned</param>
+        /// <param name="maxResults">Specify the maximum number of headlines returned.</param>
         public virtual ListNewsHeadlinesResponseDTO ListNewsHeadlinesWithSource(string source, string category, int maxResults)
         {
             string uriTemplate = _client.AppendApiKey("/{source}/{category}?MaxResults={maxResults}");
@@ -325,11 +371,11 @@ private Client _client;
 
 
         /// <summary>
-        /// Get a list of current news headlines
+        /// Get a list of current news headlines.
         /// </summary>
         /// <param name="source">The news feed source provider. Valid options are: dj|mni|ci.</param>
         /// <param name="category">Filter headlines by category. Valid categories depend on the source used:  for dj: uk|aus, for ci: SEMINARSCHINA, for mni: ALL.</param>
-        /// <param name="maxResults">Specify the maximum number of headlines returned</param>
+        /// <param name="maxResults">Specify the maximum number of headlines returned.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
         public virtual void BeginListNewsHeadlinesWithSource(string source, string category, int maxResults, ApiAsyncCallback<ListNewsHeadlinesResponseDTO> callback, object state)
@@ -356,13 +402,13 @@ private Client _client;
 
 
         /// <summary>
-        /// Get the detail of the specific news story matching the story Id in the parameter.
+        /// Get the detail of the specific news story matching the story ID in the parameter.
         /// </summary>
         /// <param name="source">The news feed source provider. Valid options are dj|mni|ci.</param>
-        /// <param name="storyId">The news story Id.</param>
+        /// <param name="storyId">The news story ID.</param>
         public virtual GetNewsDetailResponseDTO GetNewsDetail(string source, string storyId)
         {
-            string uriTemplate = _client.AppendApiKey("/detail/{source}/{storyId}");
+            string uriTemplate = _client.AppendApiKey("/{source}/{storyId}");
             return _client.Request<GetNewsDetailResponseDTO>("news", uriTemplate , "GET",
             new Dictionary<string, object>
             {
@@ -373,15 +419,15 @@ private Client _client;
 
 
         /// <summary>
-        /// Get the detail of the specific news story matching the story Id in the parameter.
+        /// Get the detail of the specific news story matching the story ID in the parameter.
         /// </summary>
         /// <param name="source">The news feed source provider. Valid options are dj|mni|ci.</param>
-        /// <param name="storyId">The news story Id.</param>
+        /// <param name="storyId">The news story ID.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
         public virtual void BeginGetNewsDetail(string source, string storyId, ApiAsyncCallback<GetNewsDetailResponseDTO> callback, object state)
         {
-            string uriTemplate = _client.AppendApiKey("/detail/{source}/{storyId}");
+            string uriTemplate = _client.AppendApiKey("/{source}/{storyId}");
             _client.BeginRequest(callback, state, "news", uriTemplate , "GET",
             new Dictionary<string, object>
             {
@@ -410,20 +456,22 @@ private Client _client;
         /// <summary>
         /// Returns a list of CFD markets filtered by market name and/or market code. Leave the market name and code parameters empty to return all markets available to the User.
         /// </summary>
-        /// <param name="searchByMarketName">The characters that the CFD market name starts with (Optional).</param>
-        /// <param name="searchByMarketCode">The characters that the market code starts with, normally this is the RIC code for the market (Optional).</param>
+        /// <param name="searchByMarketName">The characters that the CFD market name starts with. (Optional).</param>
+        /// <param name="searchByMarketCode">The characters that the market code starts with, normally this is the RIC code for the market. (Optional).</param>
         /// <param name="clientAccountId">The logged on user's ClientAccountId. This only shows you the markets that the user can trade. (Required).</param>
         /// <param name="maxResults">The maximum number of markets to return.</param>
-        public virtual ListCfdMarketsResponseDTO ListCfdMarkets(string searchByMarketName, string searchByMarketCode, int clientAccountId, int maxResults)
+        /// <param name="useMobileShortName">True if the market name should be in short form. Helpful when displaying data on a small screen.</param>
+        public virtual ListCfdMarketsResponseDTO ListCfdMarkets(string searchByMarketName, string searchByMarketCode, int clientAccountId, int maxResults, bool useMobileShortName)
         {
-            string uriTemplate = _client.AppendApiKey("?MarketName={searchByMarketName}&MarketCode={searchByMarketCode}&ClientAccountId={clientAccountId}&MaxResults={maxResults}");
+            string uriTemplate = _client.AppendApiKey("?MarketName={searchByMarketName}&MarketCode={searchByMarketCode}&ClientAccountId={clientAccountId}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}");
             return _client.Request<ListCfdMarketsResponseDTO>("cfd/markets", uriTemplate , "GET",
             new Dictionary<string, object>
             {
                 { "searchByMarketName", searchByMarketName}, 
                 { "searchByMarketCode", searchByMarketCode}, 
                 { "clientAccountId", clientAccountId}, 
-                { "maxResults", maxResults}
+                { "maxResults", maxResults}, 
+                { "useMobileShortName", useMobileShortName}
             }, TimeSpan.FromMilliseconds(0), "data");
         }
 
@@ -431,22 +479,24 @@ private Client _client;
         /// <summary>
         /// Returns a list of CFD markets filtered by market name and/or market code. Leave the market name and code parameters empty to return all markets available to the User.
         /// </summary>
-        /// <param name="searchByMarketName">The characters that the CFD market name starts with (Optional).</param>
-        /// <param name="searchByMarketCode">The characters that the market code starts with, normally this is the RIC code for the market (Optional).</param>
+        /// <param name="searchByMarketName">The characters that the CFD market name starts with. (Optional).</param>
+        /// <param name="searchByMarketCode">The characters that the market code starts with, normally this is the RIC code for the market. (Optional).</param>
         /// <param name="clientAccountId">The logged on user's ClientAccountId. This only shows you the markets that the user can trade. (Required).</param>
         /// <param name="maxResults">The maximum number of markets to return.</param>
+        /// <param name="useMobileShortName">True if the market name should be in short form. Helpful when displaying data on a small screen.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginListCfdMarkets(string searchByMarketName, string searchByMarketCode, int clientAccountId, int maxResults, ApiAsyncCallback<ListCfdMarketsResponseDTO> callback, object state)
+        public virtual void BeginListCfdMarkets(string searchByMarketName, string searchByMarketCode, int clientAccountId, int maxResults, bool useMobileShortName, ApiAsyncCallback<ListCfdMarketsResponseDTO> callback, object state)
         {
-            string uriTemplate = _client.AppendApiKey("?MarketName={searchByMarketName}&MarketCode={searchByMarketCode}&ClientAccountId={clientAccountId}&MaxResults={maxResults}");
+            string uriTemplate = _client.AppendApiKey("?MarketName={searchByMarketName}&MarketCode={searchByMarketCode}&ClientAccountId={clientAccountId}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}");
             _client.BeginRequest(callback, state, "cfd/markets", uriTemplate , "GET",
             new Dictionary<string, object>
             {
                 { "searchByMarketName", searchByMarketName}, 
                 { "searchByMarketCode", searchByMarketCode}, 
                 { "clientAccountId", clientAccountId}, 
-                { "maxResults", maxResults}
+                { "maxResults", maxResults}, 
+                { "useMobileShortName", useMobileShortName}
             }, TimeSpan.FromMilliseconds(0), "data");
         }
 
@@ -470,20 +520,22 @@ private Client _client;
         /// <summary>
         /// Returns a list of Spread Betting markets filtered by market name and/or market code. Leave the market name and code parameters empty to return all markets available to the User.
         /// </summary>
-        /// <param name="searchByMarketName">The characters that the Spread market name starts with (Optional).</param>
-        /// <param name="searchByMarketCode">The characters that the Spread market code starts with, normally this is the RIC code for the market (Optional).</param>
+        /// <param name="searchByMarketName">The characters that the Spread market name starts with. (Optional).</param>
+        /// <param name="searchByMarketCode">The characters that the Spread market code starts with, normally this is the RIC code for the market. (Optional).</param>
         /// <param name="clientAccountId">The logged on user's ClientAccountId. (This only shows you markets that you can trade on.)</param>
         /// <param name="maxResults">The maximum number of markets to return.</param>
-        public virtual ListSpreadMarketsResponseDTO ListSpreadMarkets(string searchByMarketName, string searchByMarketCode, int clientAccountId, int maxResults)
+        /// <param name="useMobileShortName">True if the market name should be in short form. Helpful when displaying data on a small screen.</param>
+        public virtual ListSpreadMarketsResponseDTO ListSpreadMarkets(string searchByMarketName, string searchByMarketCode, int clientAccountId, int maxResults, bool useMobileShortName)
         {
-            string uriTemplate = _client.AppendApiKey("?MarketName={searchByMarketName}&MarketCode={searchByMarketCode}&ClientAccountId={clientAccountId}&MaxResults={maxResults}");
+            string uriTemplate = _client.AppendApiKey("?MarketName={searchByMarketName}&MarketCode={searchByMarketCode}&ClientAccountId={clientAccountId}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}");
             return _client.Request<ListSpreadMarketsResponseDTO>("spread/markets", uriTemplate , "GET",
             new Dictionary<string, object>
             {
                 { "searchByMarketName", searchByMarketName}, 
                 { "searchByMarketCode", searchByMarketCode}, 
                 { "clientAccountId", clientAccountId}, 
-                { "maxResults", maxResults}
+                { "maxResults", maxResults}, 
+                { "useMobileShortName", useMobileShortName}
             }, TimeSpan.FromMilliseconds(0), "data");
         }
 
@@ -491,22 +543,24 @@ private Client _client;
         /// <summary>
         /// Returns a list of Spread Betting markets filtered by market name and/or market code. Leave the market name and code parameters empty to return all markets available to the User.
         /// </summary>
-        /// <param name="searchByMarketName">The characters that the Spread market name starts with (Optional).</param>
-        /// <param name="searchByMarketCode">The characters that the Spread market code starts with, normally this is the RIC code for the market (Optional).</param>
+        /// <param name="searchByMarketName">The characters that the Spread market name starts with. (Optional).</param>
+        /// <param name="searchByMarketCode">The characters that the Spread market code starts with, normally this is the RIC code for the market. (Optional).</param>
         /// <param name="clientAccountId">The logged on user's ClientAccountId. (This only shows you markets that you can trade on.)</param>
         /// <param name="maxResults">The maximum number of markets to return.</param>
+        /// <param name="useMobileShortName">True if the market name should be in short form. Helpful when displaying data on a small screen.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginListSpreadMarkets(string searchByMarketName, string searchByMarketCode, int clientAccountId, int maxResults, ApiAsyncCallback<ListSpreadMarketsResponseDTO> callback, object state)
+        public virtual void BeginListSpreadMarkets(string searchByMarketName, string searchByMarketCode, int clientAccountId, int maxResults, bool useMobileShortName, ApiAsyncCallback<ListSpreadMarketsResponseDTO> callback, object state)
         {
-            string uriTemplate = _client.AppendApiKey("?MarketName={searchByMarketName}&MarketCode={searchByMarketCode}&ClientAccountId={clientAccountId}&MaxResults={maxResults}");
+            string uriTemplate = _client.AppendApiKey("?MarketName={searchByMarketName}&MarketCode={searchByMarketCode}&ClientAccountId={clientAccountId}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}");
             _client.BeginRequest(callback, state, "spread/markets", uriTemplate , "GET",
             new Dictionary<string, object>
             {
                 { "searchByMarketName", searchByMarketName}, 
                 { "searchByMarketCode", searchByMarketCode}, 
                 { "clientAccountId", clientAccountId}, 
-                { "maxResults", maxResults}
+                { "maxResults", maxResults}, 
+                { "useMobileShortName", useMobileShortName}
             }, TimeSpan.FromMilliseconds(0), "data");
         }
 
@@ -530,7 +584,7 @@ private Client _client;
         /// <summary>
         /// <p>Get Market Information for the single specified market supplied in the parameter.</p>
         /// </summary>
-        /// <param name="marketId">The marketId.</param>
+        /// <param name="marketId">The market ID.</param>
         public virtual GetMarketInformationResponseDTO GetMarketInformation(string marketId)
         {
             string uriTemplate = _client.AppendApiKey("/{marketId}/information");
@@ -545,7 +599,7 @@ private Client _client;
         /// <summary>
         /// <p>Get Market Information for the single specified market supplied in the parameter.</p>
         /// </summary>
-        /// <param name="marketId">The marketId.</param>
+        /// <param name="marketId">The market ID.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
         public virtual void BeginGetMarketInformation(string marketId, ApiAsyncCallback<GetMarketInformationResponseDTO> callback, object state)
@@ -579,9 +633,10 @@ private Client _client;
         /// <param name="binaryProductType">Sets the search to include binary markets.</param>
         /// <param name="query">The text to search for. Matches part of market name / code from the start.</param>
         /// <param name="maxResults">The maximum number of results to return.</param>
-        public virtual ListMarketInformationSearchResponseDTO ListMarketInformationSearch(bool searchByMarketCode, bool searchByMarketName, bool spreadProductType, bool cfdProductType, bool binaryProductType, string query, int maxResults)
+        /// <param name="useMobileShortName">True if the market name should be in short form.  Helpful when displaying data on a small screen.</param>
+        public virtual ListMarketInformationSearchResponseDTO ListMarketInformationSearch(bool searchByMarketCode, bool searchByMarketName, bool spreadProductType, bool cfdProductType, bool binaryProductType, string query, int maxResults, bool useMobileShortName)
         {
-            string uriTemplate = _client.AppendApiKey("/market/informationsearch?SearchByMarketCode={searchByMarketCode}&SearchByMarketName={searchByMarketName}&SpreadProductType={spreadProductType}&CfdProductType={cfdProductType}&BinaryProductType={binaryProductType}&Query={query}&MaxResults={maxResults}");
+            string uriTemplate = _client.AppendApiKey("/market/informationsearch?SearchByMarketCode={searchByMarketCode}&SearchByMarketName={searchByMarketName}&SpreadProductType={spreadProductType}&CfdProductType={cfdProductType}&BinaryProductType={binaryProductType}&Query={query}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}");
             return _client.Request<ListMarketInformationSearchResponseDTO>("market", uriTemplate , "GET",
             new Dictionary<string, object>
             {
@@ -591,7 +646,8 @@ private Client _client;
                 { "cfdProductType", cfdProductType}, 
                 { "binaryProductType", binaryProductType}, 
                 { "query", query}, 
-                { "maxResults", maxResults}
+                { "maxResults", maxResults}, 
+                { "useMobileShortName", useMobileShortName}
             }, TimeSpan.FromMilliseconds(0), "data");
         }
 
@@ -606,11 +662,12 @@ private Client _client;
         /// <param name="binaryProductType">Sets the search to include binary markets.</param>
         /// <param name="query">The text to search for. Matches part of market name / code from the start.</param>
         /// <param name="maxResults">The maximum number of results to return.</param>
+        /// <param name="useMobileShortName">True if the market name should be in short form.  Helpful when displaying data on a small screen.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginListMarketInformationSearch(bool searchByMarketCode, bool searchByMarketName, bool spreadProductType, bool cfdProductType, bool binaryProductType, string query, int maxResults, ApiAsyncCallback<ListMarketInformationSearchResponseDTO> callback, object state)
+        public virtual void BeginListMarketInformationSearch(bool searchByMarketCode, bool searchByMarketName, bool spreadProductType, bool cfdProductType, bool binaryProductType, string query, int maxResults, bool useMobileShortName, ApiAsyncCallback<ListMarketInformationSearchResponseDTO> callback, object state)
         {
-            string uriTemplate = _client.AppendApiKey("/market/informationsearch?SearchByMarketCode={searchByMarketCode}&SearchByMarketName={searchByMarketName}&SpreadProductType={spreadProductType}&CfdProductType={cfdProductType}&BinaryProductType={binaryProductType}&Query={query}&MaxResults={maxResults}");
+            string uriTemplate = _client.AppendApiKey("/market/informationsearch?SearchByMarketCode={searchByMarketCode}&SearchByMarketName={searchByMarketName}&SpreadProductType={spreadProductType}&CfdProductType={cfdProductType}&BinaryProductType={binaryProductType}&Query={query}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}");
             _client.BeginRequest(callback, state, "market", uriTemplate , "GET",
             new Dictionary<string, object>
             {
@@ -620,7 +677,8 @@ private Client _client;
                 { "cfdProductType", cfdProductType}, 
                 { "binaryProductType", binaryProductType}, 
                 { "query", query}, 
-                { "maxResults", maxResults}
+                { "maxResults", maxResults}, 
+                { "useMobileShortName", useMobileShortName}
             }, TimeSpan.FromMilliseconds(0), "data");
         }
 
@@ -639,17 +697,19 @@ private Client _client;
         /// Get market information and tags for the markets that meet the search criteria.
         /// </summary>
         /// <param name="query">The text to search for. Matches part of market name / code from the start.</param>
-        /// <param name="tagId">The ID for the tag to be searched (optional).</param>
-        /// <param name="maxResults">The maximum number of results to return.  Default is 20.</param>
-        public virtual MarketInformationSearchWithTagsResponseDTO SearchWithTags(string query, int tagId, int maxResults)
+        /// <param name="tagId">The ID for the tag to be searched. (Optional).</param>
+        /// <param name="maxResults">The maximum number of results to return. Default is 20.</param>
+        /// <param name="useMobileShortName">True if the market name should be in short form. Helpful when displaying data on a small screen.</param>
+        public virtual MarketInformationSearchWithTagsResponseDTO SearchWithTags(string query, int tagId, int maxResults, bool useMobileShortName)
         {
-            string uriTemplate = _client.AppendApiKey("/market/searchwithtags?Query={query}&TagId={tagId}&MaxResults={maxResults}");
+            string uriTemplate = _client.AppendApiKey("/market/searchwithtags?Query={query}&TagId={tagId}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}");
             return _client.Request<MarketInformationSearchWithTagsResponseDTO>("market", uriTemplate , "GET",
             new Dictionary<string, object>
             {
                 { "query", query}, 
                 { "tagId", tagId}, 
-                { "maxResults", maxResults}
+                { "maxResults", maxResults}, 
+                { "useMobileShortName", useMobileShortName}
             }, TimeSpan.FromMilliseconds(0), "data");
         }
 
@@ -658,19 +718,21 @@ private Client _client;
         /// Get market information and tags for the markets that meet the search criteria.
         /// </summary>
         /// <param name="query">The text to search for. Matches part of market name / code from the start.</param>
-        /// <param name="tagId">The ID for the tag to be searched (optional).</param>
-        /// <param name="maxResults">The maximum number of results to return.  Default is 20.</param>
+        /// <param name="tagId">The ID for the tag to be searched. (Optional).</param>
+        /// <param name="maxResults">The maximum number of results to return. Default is 20.</param>
+        /// <param name="useMobileShortName">True if the market name should be in short form. Helpful when displaying data on a small screen.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginSearchWithTags(string query, int tagId, int maxResults, ApiAsyncCallback<MarketInformationSearchWithTagsResponseDTO> callback, object state)
+        public virtual void BeginSearchWithTags(string query, int tagId, int maxResults, bool useMobileShortName, ApiAsyncCallback<MarketInformationSearchWithTagsResponseDTO> callback, object state)
         {
-            string uriTemplate = _client.AppendApiKey("/market/searchwithtags?Query={query}&TagId={tagId}&MaxResults={maxResults}");
+            string uriTemplate = _client.AppendApiKey("/market/searchwithtags?Query={query}&TagId={tagId}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}");
             _client.BeginRequest(callback, state, "market", uriTemplate , "GET",
             new Dictionary<string, object>
             {
                 { "query", query}, 
                 { "tagId", tagId}, 
-                { "maxResults", maxResults}
+                { "maxResults", maxResults}, 
+                { "useMobileShortName", useMobileShortName}
             }, TimeSpan.FromMilliseconds(0), "data");
         }
 
@@ -686,7 +748,7 @@ private Client _client;
 
 
         /// <summary>
-        /// <p>Gets all of the tags the the requesting user is allowed to see. Tags are returned in a primary / secondary hierarchy.</p>
+        /// <p>Gets all of the tags that the requesting user is allowed to see. Tags are returned in a primary / secondary hierarchy.</p> There are no parameters in this call.
         /// </summary>
         public virtual MarketInformationTagLookupResponseDTO TagLookup()
         {
@@ -700,7 +762,7 @@ private Client _client;
 
 
         /// <summary>
-        /// <p>Gets all of the tags the the requesting user is allowed to see. Tags are returned in a primary / secondary hierarchy.</p>
+        /// <p>Gets all of the tags that the requesting user is allowed to see. Tags are returned in a primary / secondary hierarchy.</p> There are no parameters in this call.
         /// </summary>
         /// <param name="callback"></param>
         /// <param name="state"></param>
@@ -816,7 +878,7 @@ private Client _client;
 
 
         /// <summary>
-        /// <p>Place an order on a particular market. <p>Do not set any order id fields when requesting a new order, the platform will generate them.</p>
+        /// <p>Place an order on a particular market. <p>Do not set any order ID fields when requesting a new order, the platform will generate them.</p>
         /// </summary>
         /// <param name="order">The order request.</param>
         public virtual ApiTradeOrderResponseDTO Order(NewStopLimitOrderRequestDTO order)
@@ -831,7 +893,7 @@ private Client _client;
 
 
         /// <summary>
-        /// <p>Place an order on a particular market. <p>Do not set any order id fields when requesting a new order, the platform will generate them.</p>
+        /// <p>Place an order on a particular market. <p>Do not set any order ID fields when requesting a new order, the platform will generate them.</p>
         /// </summary>
         /// <param name="order">The order request.</param>
         /// <param name="callback"></param>
@@ -944,7 +1006,7 @@ private Client _client;
         /// <summary>
         /// <p>Queries for a specified trading account's trades / open positions.</p> <p>This uri is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service GetOpenPosition when you get updates on the order stream to get the updated data in this format.</p>
         /// </summary>
-        /// <param name="tradingAccountId">The trading account to get orders for.</param>
+        /// <param name="tradingAccountId">The ID of the trading account to get orders for.</param>
         public virtual ListOpenPositionsResponseDTO ListOpenPositions(int tradingAccountId)
         {
             string uriTemplate = _client.AppendApiKey("/order/openpositions?TradingAccountId={tradingAccountId}");
@@ -959,7 +1021,7 @@ private Client _client;
         /// <summary>
         /// <p>Queries for a specified trading account's trades / open positions.</p> <p>This uri is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service GetOpenPosition when you get updates on the order stream to get the updated data in this format.</p>
         /// </summary>
-        /// <param name="tradingAccountId">The trading account to get orders for.</param>
+        /// <param name="tradingAccountId">The ID of the trading account to get orders for.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
         public virtual void BeginListOpenPositions(int tradingAccountId, ApiAsyncCallback<ListOpenPositionsResponseDTO> callback, object state)
@@ -986,7 +1048,7 @@ private Client _client;
         /// <summary>
         /// <p>Queries for a specified trading account's active stop / limit orders.</p> <p>This uri is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service GetActiveStopLimitOrder when you get updates on the order stream to get the updated data in this format.</p>
         /// </summary>
-        /// <param name="tradingAccountId">The trading account to get orders for.</param>
+        /// <param name="tradingAccountId">The ID of the trading account to get orders for.</param>
         public virtual ListActiveStopLimitOrderResponseDTO ListActiveStopLimitOrders(int tradingAccountId)
         {
             string uriTemplate = _client.AppendApiKey("/order/activestoplimitorders?TradingAccountId={tradingAccountId}");
@@ -1001,7 +1063,7 @@ private Client _client;
         /// <summary>
         /// <p>Queries for a specified trading account's active stop / limit orders.</p> <p>This uri is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service GetActiveStopLimitOrder when you get updates on the order stream to get the updated data in this format.</p>
         /// </summary>
-        /// <param name="tradingAccountId">The trading account to get orders for.</param>
+        /// <param name="tradingAccountId">The ID of the trading account to get orders for.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
         public virtual void BeginListActiveStopLimitOrders(int tradingAccountId, ApiAsyncCallback<ListActiveStopLimitOrderResponseDTO> callback, object state)
@@ -1026,9 +1088,9 @@ private Client _client;
 
 
         /// <summary>
-        /// <p>Queries for an active stop limit order with a specified order id. It returns a null value if the order doesn't exist, or is not an active stop limit order.<p> <p>This uri is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call the HTTP service ListActiveStopLimitOrders for the initial data to display in the grid, and call this uri when you get updates on the order stream to get the updated data in this format.</p> <p>For a more comprehensive order response, see the HTTP service GetOrder
+        /// <p>Queries for an active stop limit order with a specified order ID. It returns a null value if the order doesn't exist, or is not an active stop limit order.<p> <p>This uri is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call the HTTP service ListActiveStopLimitOrders for the initial data to display in the grid, and call this uri when you get updates on the order stream to get the updated data in this format.</p> <p>For a more comprehensive order response, see the HTTP service GetOrder.
         /// </summary>
-        /// <param name="orderId">The requested order id.</param>
+        /// <param name="orderId">The requested order ID.</param>
         public virtual GetActiveStopLimitOrderResponseDTO GetActiveStopLimitOrder(string orderId)
         {
             string uriTemplate = _client.AppendApiKey("/{orderId}/activestoplimitorder");
@@ -1041,9 +1103,9 @@ private Client _client;
 
 
         /// <summary>
-        /// <p>Queries for an active stop limit order with a specified order id. It returns a null value if the order doesn't exist, or is not an active stop limit order.<p> <p>This uri is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call the HTTP service ListActiveStopLimitOrders for the initial data to display in the grid, and call this uri when you get updates on the order stream to get the updated data in this format.</p> <p>For a more comprehensive order response, see the HTTP service GetOrder
+        /// <p>Queries for an active stop limit order with a specified order ID. It returns a null value if the order doesn't exist, or is not an active stop limit order.<p> <p>This uri is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call the HTTP service ListActiveStopLimitOrders for the initial data to display in the grid, and call this uri when you get updates on the order stream to get the updated data in this format.</p> <p>For a more comprehensive order response, see the HTTP service GetOrder.
         /// </summary>
-        /// <param name="orderId">The requested order id.</param>
+        /// <param name="orderId">The requested order ID.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
         public virtual void BeginGetActiveStopLimitOrder(string orderId, ApiAsyncCallback<GetActiveStopLimitOrderResponseDTO> callback, object state)
@@ -1068,9 +1130,9 @@ private Client _client;
 
 
         /// <summary>
-        /// <p>Queries for a trade / open position with a specified order id. It returns a null value if the order doesn't exist, or is not a trade / open position.</p> <p>This uri is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call the HTTP service ListOpenPositions for the initial data to display in the grid, and call this uri when you get updates on the order stream to get the updated data in this format.</p> <p>For a more comprehensive order response, see the HTTP service GetOrder
+        /// <p>Queries for a trade / open position with a specified order ID. It returns a null value if the order doesn't exist, or is not a trade / open position.</p> <p>This uri is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call the HTTP service ListOpenPositions for the initial data to display in the grid, and call this uri when you get updates on the order stream to get the updated data in this format.</p> <p>For a more comprehensive order response, see the HTTP service GetOrder.
         /// </summary>
-        /// <param name="orderId">The requested order id.</param>
+        /// <param name="orderId">The requested order ID.</param>
         public virtual GetOpenPositionResponseDTO GetOpenPosition(string orderId)
         {
             string uriTemplate = _client.AppendApiKey("/{orderId}/openposition");
@@ -1083,9 +1145,9 @@ private Client _client;
 
 
         /// <summary>
-        /// <p>Queries for a trade / open position with a specified order id. It returns a null value if the order doesn't exist, or is not a trade / open position.</p> <p>This uri is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call the HTTP service ListOpenPositions for the initial data to display in the grid, and call this uri when you get updates on the order stream to get the updated data in this format.</p> <p>For a more comprehensive order response, see the HTTP service GetOrder
+        /// <p>Queries for a trade / open position with a specified order ID. It returns a null value if the order doesn't exist, or is not a trade / open position.</p> <p>This uri is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call the HTTP service ListOpenPositions for the initial data to display in the grid, and call this uri when you get updates on the order stream to get the updated data in this format.</p> <p>For a more comprehensive order response, see the HTTP service GetOrder.
         /// </summary>
-        /// <param name="orderId">The requested order id.</param>
+        /// <param name="orderId">The requested order ID.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
         public virtual void BeginGetOpenPosition(string orderId, ApiAsyncCallback<GetOpenPositionResponseDTO> callback, object state)
@@ -1112,7 +1174,7 @@ private Client _client;
         /// <summary>
         /// <p>Queries for a specified trading account's trade history. The result set will contain orders with a status of <b>(3 - Open, 9 - Closed)</b>, and includes <b>orders that were a trade / stop / limit order</b>.</p> <p>There's currently no corresponding GetTradeHistory (as with ListOpenPositions).
         /// </summary>
-        /// <param name="tradingAccountId">The trading account to get orders for.</param>
+        /// <param name="tradingAccountId">The ID of the trading account to get orders for.</param>
         /// <param name="maxResults">The maximum number of results to return.</param>
         public virtual ListTradeHistoryResponseDTO ListTradeHistory(int tradingAccountId, int maxResults)
         {
@@ -1129,7 +1191,7 @@ private Client _client;
         /// <summary>
         /// <p>Queries for a specified trading account's trade history. The result set will contain orders with a status of <b>(3 - Open, 9 - Closed)</b>, and includes <b>orders that were a trade / stop / limit order</b>.</p> <p>There's currently no corresponding GetTradeHistory (as with ListOpenPositions).
         /// </summary>
-        /// <param name="tradingAccountId">The trading account to get orders for.</param>
+        /// <param name="tradingAccountId">The ID of the trading account to get orders for.</param>
         /// <param name="maxResults">The maximum number of results to return.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
@@ -1158,7 +1220,7 @@ private Client _client;
         /// <summary>
         /// <p>Queries for a specified trading account's stop / limit order history. The result set includes <b>only orders that were originally stop / limit orders</b> that currently have one of the following statuses <b>(3 - Open, 4 - Cancelled, 5 - Rejected, 9 - Closed, 10 - Red Card)</b>. </p> <p>There's currently no corresponding GetStopLimitOrderHistory (as with ListActiveStopLimitOrders).</p>
         /// </summary>
-        /// <param name="tradingAccountId">The trading account to get orders for.</param>
+        /// <param name="tradingAccountId">The ID of the trading account to get orders for.</param>
         /// <param name="maxResults">The maximum number of results to return.</param>
         public virtual ListStopLimitOrderHistoryResponseDTO ListStopLimitOrderHistory(int tradingAccountId, int maxResults)
         {
@@ -1175,7 +1237,7 @@ private Client _client;
         /// <summary>
         /// <p>Queries for a specified trading account's stop / limit order history. The result set includes <b>only orders that were originally stop / limit orders</b> that currently have one of the following statuses <b>(3 - Open, 4 - Cancelled, 5 - Rejected, 9 - Closed, 10 - Red Card)</b>. </p> <p>There's currently no corresponding GetStopLimitOrderHistory (as with ListActiveStopLimitOrders).</p>
         /// </summary>
-        /// <param name="tradingAccountId">The trading account to get orders for.</param>
+        /// <param name="tradingAccountId">The ID of the trading account to get orders for.</param>
         /// <param name="maxResults">The maximum number of results to return.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
@@ -1202,9 +1264,9 @@ private Client _client;
 
 
         /// <summary>
-        /// <p>Queries for an order by a specific order id.</p> <p>The current implementation only returns active orders (i.e. those with a status of <b>1 - Pending, 2 - Accepted, 3 - Open, 6 - Suspended, 8 - Yellow Card, 11 - Triggered</b>).</p>
+        /// <p>Queries for an order by a specific order ID.</p> <p>The current implementation only returns active orders (i.e. those with a status of <b>1 - Pending, 2 - Accepted, 3 - Open, 6 - Suspended, 8 - Yellow Card, 11 - Triggered</b>).</p>
         /// </summary>
-        /// <param name="orderId">The requested order id.</param>
+        /// <param name="orderId">The requested order ID.</param>
         public virtual GetOrderResponseDTO GetOrder(string orderId)
         {
             string uriTemplate = _client.AppendApiKey("/{orderId}");
@@ -1217,9 +1279,9 @@ private Client _client;
 
 
         /// <summary>
-        /// <p>Queries for an order by a specific order id.</p> <p>The current implementation only returns active orders (i.e. those with a status of <b>1 - Pending, 2 - Accepted, 3 - Open, 6 - Suspended, 8 - Yellow Card, 11 - Triggered</b>).</p>
+        /// <p>Queries for an order by a specific order ID.</p> <p>The current implementation only returns active orders (i.e. those with a status of <b>1 - Pending, 2 - Accepted, 3 - Open, 6 - Suspended, 8 - Yellow Card, 11 - Triggered</b>).</p>
         /// </summary>
-        /// <param name="orderId">The requested order id.</param>
+        /// <param name="orderId">The requested order ID.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
         public virtual void BeginGetOrder(string orderId, ApiAsyncCallback<GetOrderResponseDTO> callback, object state)
@@ -1244,7 +1306,7 @@ private Client _client;
 
 
         /// <summary>
-        /// <p>Place a trade on a particular market.</p> <p>Do not set any order id fields when requesting a new trade, the platform will generate them.</p>
+        /// <p>Place a trade on a particular market.</p> <p>Do not set any order ID fields when requesting a new trade, the platform will generate them.</p>
         /// </summary>
         /// <param name="trade">The trade request.</param>
         public virtual ApiTradeOrderResponseDTO Trade(NewTradeOrderRequestDTO trade)
@@ -1259,7 +1321,7 @@ private Client _client;
 
 
         /// <summary>
-        /// <p>Place a trade on a particular market.</p> <p>Do not set any order id fields when requesting a new trade, the platform will generate them.</p>
+        /// <p>Place a trade on a particular market.</p> <p>Do not set any order ID fields when requesting a new trade, the platform will generate them.</p>
         /// </summary>
         /// <param name="trade">The trade request.</param>
         /// <param name="callback"></param>
@@ -1327,48 +1389,6 @@ private Client _client;
         {
             private Client _client;
             public _AccountInformation(Client client){ this._client = client;}
-
-        // ***********************************
-        // GetChartingEnabled
-        // ***********************************
-
-
-        /// <summary>
-        /// Checks whether the supplied User Account is allowed to see Charting Data.
-        /// </summary>
-        /// <param name="id">The User Account ID to check.</param>
-        public virtual bool GetChartingEnabled(string id)
-        {
-            string uriTemplate = _client.AppendApiKey("/UserAccount/{id}/ChartingEnabled");
-            return _client.Request<bool>("useraccount", uriTemplate , "GET",
-            new Dictionary<string, object>
-            {
-                { "id", id}
-            }, TimeSpan.FromMilliseconds(0), "data");
-        }
-
-
-        /// <summary>
-        /// Checks whether the supplied User Account is allowed to see Charting Data.
-        /// </summary>
-        /// <param name="id">The User Account ID to check.</param>
-        /// <param name="callback"></param>
-        /// <param name="state"></param>
-        public virtual void BeginGetChartingEnabled(string id, ApiAsyncCallback<bool> callback, object state)
-        {
-            string uriTemplate = _client.AppendApiKey("/UserAccount/{id}/ChartingEnabled");
-            _client.BeginRequest(callback, state, "useraccount", uriTemplate , "GET",
-            new Dictionary<string, object>
-            {
-                { "id", id}
-            }, TimeSpan.FromMilliseconds(0), "data");
-        }
-
-        public bool EndGetChartingEnabled(ApiAsyncResult<bool> asyncResult)
-        {
-            return _client.EndRequest(asyncResult);
-        }
-
 
         // ***********************************
         // GetClientAndTradingAccount
@@ -1459,148 +1479,6 @@ private Client _client;
             public _Messaging(Client client){ this._client = client;}
 
         // ***********************************
-        // GetMessage
-        // ***********************************
-
-
-        /// <summary>
-        ///  [DESCRIPTION MISSING]
-        /// </summary>
-        /// <param name="id"> [DESCRIPTION MISSING]</param>
-        /// <param name="language"> [DESCRIPTION MISSING]</param>
-        /// <param name="category"> [DESCRIPTION MISSING]</param>
-        public virtual string GetMessage(string id, string language, string category)
-        {
-            string uriTemplate = _client.AppendApiKey("/Message/{id}?language={language}&category={category}");
-            return _client.Request<string>("message", uriTemplate , "GET",
-            new Dictionary<string, object>
-            {
-                { "id", id}, 
-                { "language", language}, 
-                { "category", category}
-            }, TimeSpan.FromMilliseconds(3600000), "default");
-        }
-
-
-        /// <summary>
-        ///  [DESCRIPTION MISSING]
-        /// </summary>
-        /// <param name="id"> [DESCRIPTION MISSING]</param>
-        /// <param name="language"> [DESCRIPTION MISSING]</param>
-        /// <param name="category"> [DESCRIPTION MISSING]</param>
-        /// <param name="callback"></param>
-        /// <param name="state"></param>
-        public virtual void BeginGetMessage(string id, string language, string category, ApiAsyncCallback<string> callback, object state)
-        {
-            string uriTemplate = _client.AppendApiKey("/Message/{id}?language={language}&category={category}");
-            _client.BeginRequest(callback, state, "message", uriTemplate , "GET",
-            new Dictionary<string, object>
-            {
-                { "id", id}, 
-                { "language", language}, 
-                { "category", category}
-            }, TimeSpan.FromMilliseconds(3600000), "default");
-        }
-
-        public string EndGetMessage(ApiAsyncResult<string> asyncResult)
-        {
-            return _client.EndRequest(asyncResult);
-        }
-
-
-        // ***********************************
-        // GetMessagePopup
-        // ***********************************
-
-
-        /// <summary>
-        ///  [DESCRIPTION MISSING]
-        /// </summary>
-        /// <param name="language"> [DESCRIPTION MISSING]</param>
-        /// <param name="clientAccountId"> [DESCRIPTION MISSING]</param>
-        public virtual GetMessagePopupResponseDTO GetMessagePopup(string language, int clientAccountId)
-        {
-            string uriTemplate = _client.AppendApiKey("/message/popup?language={language}&ClientAccountId={clientAccountId}");
-            return _client.Request<GetMessagePopupResponseDTO>("message", uriTemplate , "GET",
-            new Dictionary<string, object>
-            {
-                { "language", language}, 
-                { "clientAccountId", clientAccountId}
-            }, TimeSpan.FromMilliseconds(0), "default");
-        }
-
-
-        /// <summary>
-        ///  [DESCRIPTION MISSING]
-        /// </summary>
-        /// <param name="language"> [DESCRIPTION MISSING]</param>
-        /// <param name="clientAccountId"> [DESCRIPTION MISSING]</param>
-        /// <param name="callback"></param>
-        /// <param name="state"></param>
-        public virtual void BeginGetMessagePopup(string language, int clientAccountId, ApiAsyncCallback<GetMessagePopupResponseDTO> callback, object state)
-        {
-            string uriTemplate = _client.AppendApiKey("/message/popup?language={language}&ClientAccountId={clientAccountId}");
-            _client.BeginRequest(callback, state, "message", uriTemplate , "GET",
-            new Dictionary<string, object>
-            {
-                { "language", language}, 
-                { "clientAccountId", clientAccountId}
-            }, TimeSpan.FromMilliseconds(0), "default");
-        }
-
-        public GetMessagePopupResponseDTO EndGetMessagePopup(ApiAsyncResult<GetMessagePopupResponseDTO> asyncResult)
-        {
-            return _client.EndRequest(asyncResult);
-        }
-
-
-        // ***********************************
-        // AcceptOrRejectMessagePopupResponse
-        // ***********************************
-
-
-        /// <summary>
-        ///  [DESCRIPTION MISSING]
-        /// </summary>
-        /// <param name="clientAccountId"> [DESCRIPTION MISSING]</param>
-        /// <param name="accepted"> [DESCRIPTION MISSING]</param>
-        public virtual NullType AcceptOrRejectMessagePopupResponse(int clientAccountId, bool accepted)
-        {
-            string uriTemplate = _client.AppendApiKey("/message/popupchoice?ClientAccountId={clientAccountId}&Accepted={accepted}");
-            return _client.Request<NullType>("message", uriTemplate , "GET",
-            new Dictionary<string, object>
-            {
-                { "clientAccountId", clientAccountId}, 
-                { "accepted", accepted}
-            }, TimeSpan.FromMilliseconds(0), "default");
-        }
-
-
-        /// <summary>
-        ///  [DESCRIPTION MISSING]
-        /// </summary>
-        /// <param name="clientAccountId"> [DESCRIPTION MISSING]</param>
-        /// <param name="accepted"> [DESCRIPTION MISSING]</param>
-        /// <param name="callback"></param>
-        /// <param name="state"></param>
-        public virtual void BeginAcceptOrRejectMessagePopupResponse(int clientAccountId, bool accepted, ApiAsyncCallback<NullType> callback, object state)
-        {
-            string uriTemplate = _client.AppendApiKey("/message/popupchoice?ClientAccountId={clientAccountId}&Accepted={accepted}");
-            _client.BeginRequest(callback, state, "message", uriTemplate , "GET",
-            new Dictionary<string, object>
-            {
-                { "clientAccountId", clientAccountId}, 
-                { "accepted", accepted}
-            }, TimeSpan.FromMilliseconds(0), "default");
-        }
-
-        public NullType EndAcceptOrRejectMessagePopupResponse(ApiAsyncResult<NullType> asyncResult)
-        {
-            return _client.EndRequest(asyncResult);
-        }
-
-
-        // ***********************************
         // GetSystemLookup
         // ***********************************
 
@@ -1608,8 +1486,8 @@ private Client _client;
         /// <summary>
         /// Use the message lookup service to get localised textual names for the various status code & Ids returned by the API. For example, a query for OrderStatusReasons will contain text names for all the possible values of OrderStatusReason in the ApiOrderResponseDTO. You should only request the list once per session (for each entity you're interested in).
         /// </summary>
-        /// <param name="lookupEntityName">The entity to lookup (eg OrderStatusReason, InstructionStatusReason, OrderApplicability or Culture)</param>
-        /// <param name="cultureId">The cultureId used to override the translated text description. (optional)</param>
+        /// <param name="lookupEntityName">The entity to lookup (eg OrderStatusReason, InstructionStatusReason, OrderApplicability or Culture).</param>
+        /// <param name="cultureId">The cultureId used to override the translated text description. (Optional)</param>
         public virtual ApiLookupResponseDTO GetSystemLookup(string lookupEntityName, int cultureId)
         {
             string uriTemplate = _client.AppendApiKey("/message/lookup?lookupEntityName={lookupEntityName}&cultureId={cultureId}");
@@ -1625,8 +1503,8 @@ private Client _client;
         /// <summary>
         /// Use the message lookup service to get localised textual names for the various status code & Ids returned by the API. For example, a query for OrderStatusReasons will contain text names for all the possible values of OrderStatusReason in the ApiOrderResponseDTO. You should only request the list once per session (for each entity you're interested in).
         /// </summary>
-        /// <param name="lookupEntityName">The entity to lookup (eg OrderStatusReason, InstructionStatusReason, OrderApplicability or Culture)</param>
-        /// <param name="cultureId">The cultureId used to override the translated text description. (optional)</param>
+        /// <param name="lookupEntityName">The entity to lookup (eg OrderStatusReason, InstructionStatusReason, OrderApplicability or Culture).</param>
+        /// <param name="cultureId">The cultureId used to override the translated text description. (Optional)</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
         public virtual void BeginGetSystemLookup(string lookupEntityName, int cultureId, ApiAsyncCallback<ApiLookupResponseDTO> callback, object state)
@@ -1654,9 +1532,9 @@ private Client _client;
         /// <summary>
         /// Use the message translation service to get client specific translated textual strings.
         /// </summary>
-        /// <param name="clientApplicationId">Client application identifier. (optional)</param>
-        /// <param name="cultureId">CultureId which corresponds to a culture code. (optional)</param>
-        /// <param name="accountOperatorId">Account operator identifier. (optional)</param>
+        /// <param name="clientApplicationId">Client application identifier. (Optional)</param>
+        /// <param name="cultureId">CultureId which corresponds to a culture code. (Optional)</param>
+        /// <param name="accountOperatorId">Account operator identifier. (Optional)</param>
         public virtual ApiClientApplicationMessageTranslationResponseDTO GetClientApplicationMessageTranslation(int clientApplicationId, int cultureId, int accountOperatorId)
         {
             string uriTemplate = _client.AppendApiKey("/message/translation?clientApplicationId={clientApplicationId}&cultureId={cultureId}&accountOperatorId={accountOperatorId}");
@@ -1673,9 +1551,9 @@ private Client _client;
         /// <summary>
         /// Use the message translation service to get client specific translated textual strings.
         /// </summary>
-        /// <param name="clientApplicationId">Client application identifier. (optional)</param>
-        /// <param name="cultureId">CultureId which corresponds to a culture code. (optional)</param>
-        /// <param name="accountOperatorId">Account operator identifier. (optional)</param>
+        /// <param name="clientApplicationId">Client application identifier. (Optional)</param>
+        /// <param name="cultureId">CultureId which corresponds to a culture code. (Optional)</param>
+        /// <param name="accountOperatorId">Account operator identifier. (Optional)</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
         public virtual void BeginGetClientApplicationMessageTranslation(int clientApplicationId, int cultureId, int accountOperatorId, ApiAsyncCallback<ApiClientApplicationMessageTranslationResponseDTO> callback, object state)
@@ -1708,7 +1586,7 @@ private Client _client;
 
 
         /// <summary>
-        /// Gets all watchlists for the user account.
+        /// Gets all watchlists for the user account. There are no parameters for this call.
         /// </summary>
         public virtual ListWatchlistResponseDTO GetWatchlists()
         {
@@ -1722,7 +1600,7 @@ private Client _client;
 
 
         /// <summary>
-        /// Gets all watchlists for the user account.
+        /// Gets all watchlists for the user account. There are no parameters for this call.
         /// </summary>
         /// <param name="callback"></param>
         /// <param name="state"></param>

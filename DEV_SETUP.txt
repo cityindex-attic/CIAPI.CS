@@ -12,8 +12,10 @@
 1) Follow instructions for .NET
 2) Install Silverlight 4 SDK - http://www.microsoft.com/download/en/details.aspx?id=7335
 3) Install Silverlight 4 Toolkit - April 2010 - http://silverlight.codeplex.com/releases/view/43528
+4) Install Silverlight Developers - http://silverlight.dlservice.microsoft.com/download/5/5/7/55748E53-D673-4225-8072-4C7A377BB513/runtime/Silverlight_Developer.exe
 
 === Command line build ===
 1) Install MSBuild community tasks - download and install as per tools/msbuildcommunitytasks
 2) Install PartCover - tools/partcover4
-3) Run reflector - tools\reflector - select .NET4.0 client; then go Options > Add ins and include tools\reflector\plugins\Reflector.CodeMetrics.dll
+3) DEPRECIATED Run reflector - tools\reflector - select .NET4.0 client; then go Options > Add ins and include tools\reflector\plugins\Reflector.CodeMetrics.dll
+4) Install NuGet command line (v1.6+) in C:\Program Files (x86)\NuGet, and ensure at latest version (nuget update --self)

@@ -16,7 +16,7 @@ namespace CIAPI.IntegrationTests.Rpc
             AccountInformationResponseDTO accounts = rpcClient.AccountInformation.GetClientAndTradingAccount();
 
             // TODO: publish somewhere that search term is a 'StartsWith' not a 'Contains'
-            var response = rpcClient.SpreadMarkets.ListSpreadMarkets("GBP/USD", null, accounts.ClientAccountId, 100);
+            var response = rpcClient.SpreadMarkets.ListSpreadMarkets("GBP/USD", null, accounts.ClientAccountId, 100, false);
             Assert.Greater(response.Markets.Length,0);
             
         }

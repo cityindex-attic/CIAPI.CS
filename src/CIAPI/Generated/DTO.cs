@@ -481,7 +481,7 @@ namespace CIAPI.DTO
         /// </summary>
         public decimal MarginRequirementConverted { get; set; }
         /// <summary>
-        /// The currency ID of the margin requirement for this order.
+        /// The currency ID of the margin requirement for this order. See the "Currency ID" section of the CIAPI User Guide for a listing of the currency IDs.
         /// </summary>
         public int MarginRequirementConvertedCurrencyId { get; set; }
         /// <summary>
@@ -940,6 +940,10 @@ namespace CIAPI.DTO
         /// The type of the market setting, ie Spread, CFD.
         /// </summary>
         public string MarketSettingsType { get; set; }
+        /// <summary>
+        /// A short summary of the market name used when presenting the market name on mobile clients.
+        /// </summary>
+        public string MobileShortName { get; set; }
     }
 
     /// <summary>
@@ -1621,6 +1625,18 @@ namespace CIAPI.DTO
         /// Password is case sensitive.
         /// </summary>
         public string Password { get; set; }
+        /// <summary>
+        /// A unique key use to identify the client application.
+        /// </summary>
+        public string AppKey { get; set; }
+        /// <summary>
+        /// The version of he client application.
+        /// </summary>
+        public string AppVersion { get; set; }
+        /// <summary>
+        /// Any comments the client applications what to associate with this session. Optional.
+        /// </summary>
+        public string AppComments { get; set; }
     }
 
     /// <summary>
@@ -1693,6 +1709,26 @@ namespace CIAPI.DTO
         /// The details of the order if it is a stop limit order.
         /// </summary>
         public ApiStopLimitOrderDTO StopLimitOrder { get; set; }
+    }
+
+    /// <summary>
+    /// The response containing version information and upgrade url of the client application.
+    /// </summary>
+    [Serializable]
+    public partial class GetVersionInformationResponseDTO
+    {
+        /// <summary>
+        /// The minimum version of the client application that can be used. If the installed version is less than this it shouldn't be used.
+        /// </summary>
+        public string MinimumRequiredVersion { get; set; }
+        /// <summary>
+        /// The latest version of the client application that can be used.
+        /// </summary>
+        public string LatestVersion { get; set; }
+        /// <summary>
+        /// The url of the upgrade.
+        /// </summary>
+        public string UpgradeUrl { get; set; }
     }
 
     /// <summary>
@@ -1897,6 +1933,14 @@ namespace CIAPI.DTO
         /// Your session token (treat as a random string). <BR /> Session tokens are valid for a set period from the time of their creation. <BR /> The period is subject to change, and may vary depending on who you logon as.
         /// </summary>
         public string Session { get; set; }
+        /// <summary>
+        /// Flag used it indicate if a password change is needed.
+        /// </summary>
+        public bool PasswordChangeRequired { get; set; }
+        /// <summary>
+        /// Flag used it indicate if the account operator to which this use is associated is allowed to access the application.
+        /// </summary>
+        public bool AllowedAccountOperator { get; set; }
     }
 
     /// <summary>

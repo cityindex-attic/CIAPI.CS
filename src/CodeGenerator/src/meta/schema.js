@@ -1,6 +1,7 @@
 exports.schema =
 {
     "namespace": "CIAPI.DTO",
+    "version": "0.991.1.0",
     "properties": {
         "ApiStopLimitOrderHistoryDTO": {
             "id": "ApiStopLimitOrderHistoryDTO",
@@ -645,7 +646,7 @@ exports.schema =
                     "type": "integer",
                     "minValue": -2147483648,
                     "maxValue": 2147483647,
-                    "description": "The currency ID of the margin requirement for this order."
+          "description": "The currency ID of the margin requirement for this order. See the \"Currency ID\" section of the CIAPI User Guide for a listing of the currency IDs."
                 },
                 "MarginRequirementConvertedCurrencyISOCode": {
                     "type": "string",
@@ -1312,7 +1313,11 @@ exports.schema =
                 "MarketSettingsType": {
                     "type": "string",
                     "description": "The type of the market setting, ie Spread, CFD."
-                }
+        },
+        "MobileShortName": {
+          "type": "string",
+          "description": "A short summary of the market name used when presenting the market name on mobile clients."
+        }
             },
             "description": "Contains market information."
         },
@@ -2181,7 +2186,19 @@ exports.schema =
                     "minLength": 6,
                     "maxLength": 20,
                     "description": "Password is case sensitive."
-                }
+        },
+        "AppKey": {
+          "type": "string",
+          "description": "A unique key use to identify the client application."
+        },
+        "AppVersion": {
+          "type": "string",
+          "description": "The version of he client application."
+        },
+        "AppComments": {
+          "type": "string",
+          "description": "Any comments the client applications what to associate with this session. Optional."
+        }
             },
             "description": "Request to create a session (log on)."
         },
@@ -2270,6 +2287,25 @@ exports.schema =
             },
             "description": "Response containing the order. Only one of the two fields will be populated depending upon the type of order (Trade or Stop / Limit)."
         },
+    "GetVersionInformationResponseDTO": {
+      "id": "GetVersionInformationResponseDTO",
+      "type": "object",
+      "properties": {
+        "MinimumRequiredVersion": {
+          "type": "string",
+          "description": "The minimum version of the client application that can be used. If the installed version is less than this it shouldn't be used."
+        },
+        "LatestVersion": {
+          "type": "string",
+          "description": "The latest version of the client application that can be used."
+        },
+        "UpgradeUrl": {
+          "type": "string",
+          "description": "The url of the upgrade."
+        }
+      },
+      "description": "The response containing version information and upgrade url of the client application."
+    },
         "ApiSaveAccountInformationRequestDTO": {
             "id": "ApiSaveAccountInformationRequestDTO",
             "type": "object",
@@ -2507,7 +2543,15 @@ exports.schema =
                     "minLength": 36,
                     "maxLength": 100,
                     "description": "Your session token (treat as a random string). <BR /> Session tokens are valid for a set period from the time of their creation. <BR /> The period is subject to change, and may vary depending on who you logon as."
-                }
+        },
+        "PasswordChangeRequired": {
+          "type": "boolean",
+          "description": "Flag used it indicate if a password change is needed."
+        },
+        "AllowedAccountOperator": {
+          "type": "boolean",
+          "description": "Flag used it indicate if the account operator to which this use is associated is allowed to access the application."
+        }
             },
             "description": "Response to a CreateSessionRequest (Log On)."
         },
