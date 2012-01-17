@@ -62,9 +62,13 @@ See the [Integration tests](https://github.com/cityindex/CIAPI.CS/tree/master/sr
 for examples on how to use the library.
 
 ### Support
-Please post your questions to [faq.labs.cityindex.com](http://faq.labs.cityindex.com); tagging them ciapi-cs.
+Refer to the [CIAPI.docs](https://ciapipreprod.cityindextest9.co.uk/CIAPI.docs) for an overview of the available API methods
+and what each of them do.
 
-Please use the [GitHub issue tracker](https://github.com/cityindex/CIAPI.CS/issues) to report bugs and make feature requests.
+If you get stuck, search [faq.labs.cityindex.com](http://faq.labs.cityindex.com) for help.  
+If you are still stuck, post a new FAQ question; tagging it ciapi.cs.
+
+Use the [GitHub issue tracker](https://github.com/cityindex/CIAPI.CS/issues) to report bugs and make feature requests.
 
 *NB! Bugs reported without attached test cases (preferably as unit tests) will not be investigated*
 
