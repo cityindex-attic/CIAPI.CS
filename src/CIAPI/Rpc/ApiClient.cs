@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Reflection;
 using CIAPI.DTO;
 using CityIndex.JsonClient;
 
@@ -8,6 +9,13 @@ namespace CIAPI.Rpc
 {
     public partial class Client : CityIndex.JsonClient.Client
     {
+
+        private static string GetVersionNumber()
+        {
+            var asm = Assembly.GetExecutingAssembly();
+            var parts = asm.FullName.Split(',');
+            return parts[1].Split('=')[1];
+        }
 
         private string AppendApiKey(string uriTemplate)
         {

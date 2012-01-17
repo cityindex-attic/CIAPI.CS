@@ -7,8 +7,10 @@ namespace CityIndex.JsonClient
     ///</summary>
     public interface IRequestController : IDisposable
     {
-        
 
+        ///<summary>
+        ///</summary>
+        string UserAgent { get; set; }
         ///<summary>
         ///</summary>
         IRequestCache Cache { get; }

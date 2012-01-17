@@ -10,6 +10,7 @@ using Common.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
+
 namespace CityIndex.JsonClient
 {
     ///<summary>
@@ -70,6 +71,7 @@ namespace CityIndex.JsonClient
         ///<param name="cacheDuration"></param>
         ///<param name="throttleScope"></param>
         ///<param name="url"></param>
+
         ///<param name="cb"></param>
         ///<param name="state"></param>
         ///<typeparam name="TDTO"></typeparam>
@@ -92,13 +94,7 @@ namespace CityIndex.JsonClient
                     item.UriTemplate = uriTemplate;
                     item.Url = url;
 
-                    WebRequest request = RequestFactory.Create(url);
-                    request.Method = method.ToUpper();
 
-#if !SILVERLIGHT
-                    // silverlight crossdomain request does not support content type (?!)
-                    request.ContentType = "application/json";
-#endif
                     item.ItemState = CacheItemState.Pending;
                     CreateRequest<TDTO>(url);
                     break;
@@ -116,6 +112,8 @@ namespace CityIndex.JsonClient
         {
             get { return _retryCount; }
         }
+
+        public string UserAgent { get; set; }
 
         public IRequestCache Cache
         {
@@ -145,6 +143,18 @@ namespace CityIndex.JsonClient
 
 
             item.Request = _requestFactory.Create(url);
+            if (item.Request is HttpWebRequest)
+            {
+                ((HttpWebRequest)item.Request).UserAgent = UserAgent;
+            }
+
+
+
+
+#if !SILVERLIGHT
+            // silverlight crossdomain request does not support content type (?!)
+            item.Request.ContentType = "application/json";
+#endif
             item.Request.Method = item.Method.ToUpper();
 
             OnBeforeIssueRequest(new CacheItemEventArgs(item));
@@ -349,7 +359,7 @@ namespace CityIndex.JsonClient
                                 responseText = ApiException.GetResponseText(wex);
                                 item.ResponseText = responseText;
                                 bool isTimeout = wex.Message.ToLower().Contains("the request was aborted");
-                                                                
+
                                 if (item.RetryCount > 0)
                                 {
                                     if (isTimeout)

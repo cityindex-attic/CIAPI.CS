@@ -21,11 +21,19 @@ namespace CityIndex.JsonClient
         #region Fields
 
         
+
+        ///<summary>
+        ///</summary>
+        public string UserAgent
+        {
+            get { return RequestController.UserAgent; }
+            set { RequestController.UserAgent = value; }
+        }
 #pragma warning disable 169
         private static readonly ILog Log = LogManager.GetLogger(typeof(Client));
 #pragma warning restore 169
         private readonly Uri _uri;
-        private readonly object _lockObj = new object();
+
         private readonly IRequestController _requestController;
 
         #endregion
@@ -52,10 +60,10 @@ namespace CityIndex.JsonClient
         ///</summary>
         ///<param name="uri"></param>
         ///<param name="requestController"></param>
-        
+
         public Client(Uri uri, IRequestController requestController)
         {
-            
+
             _requestController = requestController;
 
             _requestController.BeforeBuildUrl += (o, e) => BeforeBuildUrl(e.Item.Target, e.Item.UriTemplate, e.Item.Method, e.Item.Parameters, e.Item.CacheDuration, e.Item.ThrottleScope);
@@ -74,7 +82,7 @@ namespace CityIndex.JsonClient
         ///</summary>
         ///<param name="uri"></param>
         public Client(Uri uri)
-            : this(uri, new RequestController(TimeSpan.FromSeconds(0), 2, new RequestFactory(),new NullJsonExceptionFactory(), new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10, "default")))
+            : this(uri, new RequestController(TimeSpan.FromSeconds(0), 2, new RequestFactory(), new NullJsonExceptionFactory(), new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10, "default")))
         {
 
         }
@@ -150,7 +158,7 @@ namespace CityIndex.JsonClient
         /// <param name="cacheDuration"></param>
         /// <param name="throttleScope"></param>
         /// <returns></returns>
-        public TDTO Request<TDTO>(string target, string uriTemplate, string method, Dictionary<string, object> parameters, TimeSpan cacheDuration, string throttleScope) 
+        public TDTO Request<TDTO>(string target, string uriTemplate, string method, Dictionary<string, object> parameters, TimeSpan cacheDuration, string throttleScope)
         {
 #if SILVERLIGHT
             if (System.Windows.Deployment.Current.Dispatcher.CheckAccess())
@@ -197,7 +205,7 @@ namespace CityIndex.JsonClient
         ///<param name="method"></param>
         ///<typeparam name="TDTO"></typeparam>
         ///<returns></returns>
-        public TDTO Request<TDTO>(string target, string method) 
+        public TDTO Request<TDTO>(string target, string method)
         {
             return Request<TDTO>(target, null, method, null, TimeSpan.FromMilliseconds(0), null);
         }
@@ -211,7 +219,7 @@ namespace CityIndex.JsonClient
         ///<param name="parameters"></param>
         ///<typeparam name="TDTO"></typeparam>
         ///<returns></returns>
-        public TDTO Request<TDTO>(string target, string uriTemplate, string method, Dictionary<string, object> parameters) 
+        public TDTO Request<TDTO>(string target, string uriTemplate, string method, Dictionary<string, object> parameters)
         {
             return Request<TDTO>(target, uriTemplate, method, parameters, TimeSpan.FromMilliseconds(0), null);
         }
@@ -236,7 +244,7 @@ namespace CityIndex.JsonClient
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void BeginRequest<TDTO>(ApiAsyncCallback<TDTO> cb, object state, string target, string uriTemplate,
                                        string method, Dictionary<string, object> parameters, TimeSpan cacheDuration,
-                                       string throttleScope) 
+                                       string throttleScope)
         {
             //lock (_lockObj)
             {
@@ -248,9 +256,9 @@ namespace CityIndex.JsonClient
                 string url = BuildUrl(target, uriTemplate, _uri.AbsoluteUri);
 
                 url = ApplyUriTemplateParameters(localParams, url);
-                
 
-                _requestController.ProcessCacheItem(target, uriTemplate, method, localParams, cacheDuration, throttleScope, url, cb, state);
+
+                _requestController.ProcessCacheItem(target, uriTemplate, method, localParams, cacheDuration, throttleScope, url,  cb, state);
             }
         }
 
@@ -263,7 +271,7 @@ namespace CityIndex.JsonClient
         ///<param name="target"></param>
         ///<param name="method"></param>
         ///<typeparam name="TDTO"></typeparam>
-        public void BeginRequest<TDTO>(ApiAsyncCallback<TDTO> cb, object state, string target, string method) 
+        public void BeginRequest<TDTO>(ApiAsyncCallback<TDTO> cb, object state, string target, string method)
         {
             BeginRequest(cb, state, target, null, method, null, TimeSpan.FromMilliseconds(0), "default");
         }
@@ -278,7 +286,7 @@ namespace CityIndex.JsonClient
         ///<param name="method"></param>
         ///<param name="parameters"></param>
         ///<typeparam name="TDTO"></typeparam>
-        public void BeginRequest<TDTO>(ApiAsyncCallback<TDTO> cb, object state, string target, string uriTemplate, string method, Dictionary<string, object> parameters) 
+        public void BeginRequest<TDTO>(ApiAsyncCallback<TDTO> cb, object state, string target, string uriTemplate, string method, Dictionary<string, object> parameters)
         {
             BeginRequest(cb, state, target, uriTemplate, method, parameters, TimeSpan.FromMilliseconds(0), "default");
         }
@@ -294,7 +302,7 @@ namespace CityIndex.JsonClient
         /// <exception cref="ApiException">the exception, if any, that occurred during execution of the request</exception>
         // ReSharper disable MemberCanBeMadeStatic.Local
         // this method currently qualifies as a static member. please do not make it so, we will be doing housekeeping in here at a later date.
-        public virtual TDTO EndRequest<TDTO>(ApiAsyncResult<TDTO> asyncResult) 
+        public virtual TDTO EndRequest<TDTO>(ApiAsyncResult<TDTO> asyncResult)
         // ReSharper restore MemberCanBeMadeStatic.Local
         {
 
@@ -328,10 +336,10 @@ namespace CityIndex.JsonClient
                         parameters.Remove(key);
                         if (paramValue != null)
                         {
-                            
+
                             return paramValue.ToString();
                         }
-                        
+
                     }
                     return null;
                 });

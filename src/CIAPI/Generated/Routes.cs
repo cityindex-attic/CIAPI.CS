@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using CityIndex.JsonClient;
 using CIAPI.DTO;
 namespace CIAPI.Rpc
@@ -22,6 +23,15 @@ private Client _client;
         public Client(Uri uri)
             : base(uri, new RequestController(TimeSpan.FromSeconds(0), 2, new RequestFactory(), new ErrorResponseDTOJsonExceptionFactory(), new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10, "data"), new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10, "trading"),new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10, "default")) )
         {
+	#if SILVERLIGHT
+	#if WINDOWS_PHONE
+	        UserAgent = "CIAPI.PHONE7."+ GetVersionNumber();
+#else
+	        UserAgent = "CIAPI.SILVERLIGHT."+ GetVersionNumber();
+#endif
+#else
+            UserAgent = "CIAPI.CS." + GetVersionNumber();
+	#endif
         _client=this;
 
             this. Authentication = new _Authentication(this);
@@ -39,6 +49,16 @@ private Client _client;
         public Client(Uri uri, IRequestController requestController)
             : base(uri, requestController)
         {
+	#if SILVERLIGHT
+	#if WINDOWS_PHONE
+	        UserAgent = "CIAPI.PHONE7."+ GetVersionNumber();
+	#else
+	        UserAgent = "CIAPI.SILVERLIGHT."+ GetVersionNumber();
+	#endif
+	#else
+	        UserAgent = "CIAPI.CS." + GetVersionNumber();
+	#endif
+        _client=this;
 
             this. Authentication = new _Authentication(this);
             this. PriceHistory = new _PriceHistory(this);
