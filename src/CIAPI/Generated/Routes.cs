@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using CityIndex.JsonClient;
 using CIAPI.DTO;
 namespace CIAPI.Rpc
@@ -26,11 +25,11 @@ private Client _client;
 	#if SILVERLIGHT
 	#if WINDOWS_PHONE
 	        UserAgent = "CIAPI.PHONE7."+ GetVersionNumber();
-#else
+	#else
 	        UserAgent = "CIAPI.SILVERLIGHT."+ GetVersionNumber();
-#endif
-#else
-            UserAgent = "CIAPI.CS." + GetVersionNumber();
+	#endif
+	#else
+	        UserAgent = "CIAPI.CS." + GetVersionNumber();
 	#endif
         _client=this;
 
