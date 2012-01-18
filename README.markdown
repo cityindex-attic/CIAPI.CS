@@ -1,4 +1,4 @@
-#  CIAPI.CS 
+#  CIAPI.CS [Complete][Supported]
 A complete .NET client library for connecting to the CityIndex Trading API.
 
 Includes builds for:
