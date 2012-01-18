@@ -44,7 +44,7 @@ Note that in order to connect to the CityIndex Trading API you must be a CityInd
 CityIndex terms and conditions related to usage of your account.
 
 ### Getting started
-Compiled version of CIAPI.CS are distributed via NuGet.org.  You must be running NuGet v1.6+.
+Compiled versions of CIAPI.CS are distributed via NuGet.org.  You must be running NuGet v1.6+.
 
 To install the latest stable version, search for CIAPI.CS in the NuGet VS2010 GUI, or run:
 
