@@ -17,7 +17,7 @@ namespace CIAPI.Testing
         public static MockClient AuthenticatedClient()
         {
             _requestFactory = new TestRequestFactory();
-            var requestController = new RequestController(TimeSpan.FromSeconds(0), 0, _requestFactory, new ErrorResponseDTOJsonExceptionFactory(), new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10, "data"), new ThrottedRequestQueue(TimeSpan.FromSeconds(3), 1, 3, "trading"));
+            var requestController = new RequestController(TimeSpan.FromSeconds(0), 0, _requestFactory, new ErrorResponseDTOJsonExceptionFactory(), new ThrottledRequestQueue(TimeSpan.FromSeconds(5), 30, 10, "data"), new ThrottledRequestQueue(TimeSpan.FromSeconds(3), 1, 3, "trading"));
 
             var authenticatedClient = new MockClient
             {

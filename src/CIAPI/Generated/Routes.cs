@@ -20,7 +20,7 @@ namespace CIAPI.Rpc
       public _ExceptionHandling ExceptionHandling{get; private set;}
 private Client _client;
         public Client(Uri uri)
-            : base(uri, new RequestController(TimeSpan.FromSeconds(0), 2, new RequestFactory(), new ErrorResponseDTOJsonExceptionFactory(), new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10, "data"), new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10, "trading"),new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10, "default")) )
+            : base(uri, new RequestController(TimeSpan.FromSeconds(0), 2, new RequestFactory(), new ErrorResponseDTOJsonExceptionFactory(), new ThrottledRequestQueue(TimeSpan.FromSeconds(5), 30, 10, "data"), new ThrottledRequestQueue(TimeSpan.FromSeconds(5), 30, 10, "trading"),new ThrottledRequestQueue(TimeSpan.FromSeconds(5), 30, 10, "default")) )
         {
 	#if SILVERLIGHT
 	#if WINDOWS_PHONE

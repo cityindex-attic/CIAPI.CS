@@ -18,13 +18,13 @@ namespace CityIndex.JsonClient
     /// queue items and the cache items and resolve the cache items that are cleared.
     /// this will probably mean the introduction of a 'cancelled' CacheItemState
     /// </summary>
-    public sealed class ThrottedRequestQueue : IThrottedRequestQueue
+    public sealed class ThrottledRequestQueue : IThrottledRequestQueue
     {
 
         #region Fields
 
         private readonly string _scope;
-        private static readonly ILog Log = LogManager.GetLogger(typeof(ThrottedRequestQueue));
+        private static readonly ILog Log = LogManager.GetLogger(typeof(ThrottledRequestQueue));
         private readonly int _maxPendingRequests;
         private readonly Queue<DateTimeOffset> _requestTimes = new Queue<DateTimeOffset>();
         private readonly Queue<RequestHolder> _requests = new Queue<RequestHolder>();
@@ -44,24 +44,24 @@ namespace CityIndex.JsonClient
         #region Constructors
 
         /// <summary>
-        /// Insantiates a <see cref="ThrottedRequestQueue"/> with default parameters.
+        /// Insantiates a <see cref="ThrottledRequestQueue"/> with default parameters.
         /// throttleWindowTime = 5 seconds
         /// throttleWindowCount = 30
         /// maxPendingRequests = 10
         /// </summary>
-        public ThrottedRequestQueue()
+        public ThrottledRequestQueue()
             : this(TimeSpan.FromSeconds(5), 30, 10, "default")
         {
         }
 
         /// <summary>
-        /// Insantiates a <see cref="ThrottedRequestQueue"/> with supplied parameters.
+        /// Insantiates a <see cref="ThrottledRequestQueue"/> with supplied parameters.
         /// </summary>
         /// <param name="throttleWindowTime">The window in which to restrice issued requests to <paramref name="throttleWindowCount"/></param>
         /// <param name="throttleWindowCount">The maximum number of requests to issue in the amount of time described by <paramref name="throttleWindowTime"/></param>
         /// <param name="maxPendingRequests">The maximum allowed number of active requests.</param>
         /// <param name="scope"></param>
-        public ThrottedRequestQueue(TimeSpan throttleWindowTime, int throttleWindowCount, int maxPendingRequests, string scope)
+        public ThrottledRequestQueue(TimeSpan throttleWindowTime, int throttleWindowCount, int maxPendingRequests, string scope)
         {
             _scope = scope;
             _throttleWindowTime = throttleWindowTime;
@@ -71,7 +71,7 @@ namespace CityIndex.JsonClient
 
         #endregion
 
-        #region IThrottedRequestQueue Members
+        #region IThrottledRequestQueue Members
 
         public string Scope
         {

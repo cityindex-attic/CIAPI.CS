@@ -18,7 +18,7 @@ namespace CityIndex.JsonClient
         ///<summary>
         ///</summary>
         ///<param name="key"></param>
-        IThrottedRequestQueue this[string key] { get; }
+        IThrottledRequestQueue this[string key] { get; }
 
         ///<summary>
         ///</summary>
