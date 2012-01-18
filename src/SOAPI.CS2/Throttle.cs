@@ -7,9 +7,9 @@ namespace SOAPI.CS2
     {
         static Throttle()
         {
-            Instance = new ThrottedRequestQueue(TimeSpan.FromSeconds(6), 25, 10,"");
+            Instance = new ThrottledRequestQueue(TimeSpan.FromSeconds(6), 25, 10,"");
         }
 
-        public static IThrottedRequestQueue Instance { get; set; }
+        public static IThrottledRequestQueue Instance { get; set; }
     }
 }

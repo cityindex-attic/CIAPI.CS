@@ -26,7 +26,7 @@ namespace CityIndex.JsonClient
         private readonly object _lock = new object();
         private readonly IRequestFactory _requestFactory;
         private readonly int _retryCount;
-        private readonly Dictionary<string, IThrottedRequestQueue> _scopes;
+        private readonly Dictionary<string, IThrottledRequestQueue> _scopes;
         private readonly AutoResetEvent _waitHandle;
         private static ILog Log = LogManager.GetLogger(typeof(RequestController));
 
@@ -35,7 +35,7 @@ namespace CityIndex.JsonClient
 
         ///<summary>
         ///</summary>
-        public RequestController(TimeSpan defaultCacheDuration, int retryCount, IRequestFactory requestFactory, IJsonExceptionFactory jsonExceptionFactory, params IThrottedRequestQueue[] scopes)
+        public RequestController(TimeSpan defaultCacheDuration, int retryCount, IRequestFactory requestFactory, IJsonExceptionFactory jsonExceptionFactory, params IThrottledRequestQueue[] scopes)
         {
 
             _jsonExceptionFactory = jsonExceptionFactory;
@@ -120,7 +120,7 @@ namespace CityIndex.JsonClient
             get { return _cache; }
         }
 
-        public IThrottedRequestQueue this[string key]
+        public IThrottledRequestQueue this[string key]
         {
             get { return _scopes[key]; }
         }
@@ -288,7 +288,7 @@ namespace CityIndex.JsonClient
         private void EnqueueRequest<TDTO>(string url)
         {
             CacheItem<TDTO> outerItem = _cache.Get<TDTO>(url);
-            IThrottedRequestQueue throttle = this[outerItem.ThrottleScope];
+            IThrottledRequestQueue throttle = this[outerItem.ThrottleScope];
 
             WebRequest request = outerItem.Request;
 

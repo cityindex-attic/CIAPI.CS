@@ -230,7 +230,7 @@
             self.writeLine("private Client _client;");
 
             self.writeLine("        public Client(Uri uri)");
-            self.writeLine("            : base(uri, new RequestController(TimeSpan.FromSeconds(0), 2, new RequestFactory(), new ErrorResponseDTOJsonExceptionFactory(), new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10, \"data\"), new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10, \"trading\"),new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10, \"default\")) )");
+            self.writeLine("            : base(uri, new RequestController(TimeSpan.FromSeconds(0), 2, new RequestFactory(), new ErrorResponseDTOJsonExceptionFactory(), new ThrottledRequestQueue(TimeSpan.FromSeconds(5), 30, 10, \"data\"), new ThrottledRequestQueue(TimeSpan.FromSeconds(5), 30, 10, \"trading\"),new ThrottledRequestQueue(TimeSpan.FromSeconds(5), 30, 10, \"default\")) )");
             self.writeLine("        {");
             self.writeLine('	#if SILVERLIGHT');
             self.writeLine('	#if WINDOWS_PHONE');
