@@ -5,7 +5,7 @@ using System.Threading;
 using CIAPI.DTO;
 using CIAPI.Rpc;
 using CIAPI.Streaming;
-using Common.Logging;
+using CityIndex.ReflectiveLoggingAdapter;
 using StreamingClient;
 using IStreamingClient = CIAPI.Streaming.IStreamingClient;
 
