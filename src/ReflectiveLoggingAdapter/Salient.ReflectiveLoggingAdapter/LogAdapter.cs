@@ -68,6 +68,7 @@ namespace CityIndex.ReflectiveLoggingAdapter
 
         }
 
+        
 
         private void AddMethodInfo(string methodName, params Type[] ptypes)
         {
