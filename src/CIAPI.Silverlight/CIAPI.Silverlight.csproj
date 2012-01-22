@@ -109,13 +109,13 @@
     <Compile Include="Serializable.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Common.Logging.Silverlight\Common.Logging.Silverlight.csproj">
-      <Project>{74036434-D18E-4404-B854-51395CE40B6C}</Project>
-      <Name>Common.Logging.Silverlight</Name>
-    </ProjectReference>
     <ProjectReference Include="..\JsonClient.Silverlight\JsonClient.Silverlight.csproj">
       <Project>{0156697E-DEFE-47CF-9EB0-11F120780356}</Project>
       <Name>JsonClient.Silverlight</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ReflectiveLoggingAdapter\Salient.ReflectiveLoggingAdapter.Silverlight\CityIndex.ReflectiveLoggingAdapter.Silverlight.csproj">
+      <Project>{025CEB17-A337-40D1-9619-46A556E54EA2}</Project>
+      <Name>CityIndex.ReflectiveLoggingAdapter.Silverlight</Name>
     </ProjectReference>
     <ProjectReference Include="..\StreamingClient.Silverlight\StreamingClient.Silverlight.csproj">
       <Project>{C552DD3D-3738-4194-95F3-5A988E7D4647}</Project>

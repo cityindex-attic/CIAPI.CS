@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
-using Common.Logging;
+using CityIndex.ReflectiveLoggingAdapter;
 
 
 namespace CityIndex.JsonClient.Tests

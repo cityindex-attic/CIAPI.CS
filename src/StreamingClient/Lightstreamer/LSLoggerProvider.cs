@@ -1,5 +1,5 @@
 ﻿using System;
-using Common.Logging;
+using CityIndex.ReflectiveLoggingAdapter;
 using Lightstreamer.DotNet.Client.Log;
 
 namespace StreamingClient.Lightstreamer

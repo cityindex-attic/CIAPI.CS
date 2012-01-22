@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using Common.Logging;
+using CityIndex.ReflectiveLoggingAdapter;
 using Newtonsoft.Json;
 
 namespace CityIndex.JsonClient

@@ -2,13 +2,13 @@
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using Common.Logging;
+using CityIndex.ReflectiveLoggingAdapter;
 
 namespace CIAPI.CS.Koans.KoanRunner
 {
     class Program
     {
-        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILog _logger = LogManager.GetLogger(typeof(Program));
         static void Main(string[] args)
         {
             PrepareConsole();

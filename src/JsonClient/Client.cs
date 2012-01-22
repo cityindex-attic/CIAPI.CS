@@ -4,7 +4,7 @@ using System.Net;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Threading;
-using Common.Logging;
+using CityIndex.ReflectiveLoggingAdapter;
 
 #if SILVERLIGHT
 using System.Net.Browser;

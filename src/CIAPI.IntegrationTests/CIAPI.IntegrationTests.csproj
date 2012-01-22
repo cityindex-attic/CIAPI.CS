@@ -31,7 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Common.Logging, Version=2.0.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL" />
     <Reference Include="Newtonsoft.Json, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.3.5.8\lib\35\Newtonsoft.Json.dll</HintPath>
@@ -82,6 +81,10 @@
     <ProjectReference Include="..\JsonClient\JsonClient.csproj">
       <Project>{D80E56C8-8DD6-4911-9A99-F534C9497D6A}</Project>
       <Name>JsonClient</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ReflectiveLoggingAdapter\Salient.ReflectiveLoggingAdapter\CityIndex.ReflectiveLoggingAdapter.csproj">
+      <Project>{BC595784-3DE8-4F7C-879F-31E6509CADA7}</Project>
+      <Name>CityIndex.ReflectiveLoggingAdapter</Name>
     </ProjectReference>
     <ProjectReference Include="..\StreamingClient\StreamingClient.csproj">
       <Project>{EE5023DC-A20F-4358-9DF1-7D69BB1C322E}</Project>

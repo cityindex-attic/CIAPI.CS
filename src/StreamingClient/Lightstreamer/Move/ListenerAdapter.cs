@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Threading;
-using Common.Logging;
+
 using Lightstreamer.DotNet.Client;
+using CityIndex.ReflectiveLoggingAdapter;
 using StreamingClient.Lightstreamer;
 
 namespace StreamingClient

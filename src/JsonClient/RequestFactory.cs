@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Net;
-using Common.Logging;
+using CityIndex.ReflectiveLoggingAdapter;
 
 namespace CityIndex.JsonClient
 {

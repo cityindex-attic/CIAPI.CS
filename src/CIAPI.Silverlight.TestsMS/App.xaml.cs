@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows;
-using Common.Logging;
+using CityIndex.ReflectiveLoggingAdapter;
 using Microsoft.Silverlight.Testing;
 
 namespace CIAPI.Silverlight.TestsMS

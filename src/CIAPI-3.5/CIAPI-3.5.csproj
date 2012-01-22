@@ -40,9 +40,6 @@
     <AssemblyOriginatorKeyFile>..\common\ciapi.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Common.Logging">
-      <HintPath>..\packages\Common.Logging-2.0.0\2.0\release\Common.Logging.dll</HintPath>
-    </Reference>
     <Reference Include="DotNetClient_N2">
       <HintPath>..\packages\Lightstreamer 4.0 Client\sdk_client_dotnet\lib\StrongName\DotNetClient_N2.dll</HintPath>
     </Reference>
@@ -106,6 +103,10 @@
     <ProjectReference Include="..\JsonClient-3.5\JsonClient-3.5.csproj">
       <Project>{61F852E9-187A-4ACC-94DC-7943DE8F8F72}</Project>
       <Name>JsonClient-3.5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ReflectiveLoggingAdapter\Salient.ReflectiveLoggingAdapter\CityIndex.ReflectiveLoggingAdapter.csproj">
+      <Project>{BC595784-3DE8-4F7C-879F-31E6509CADA7}</Project>
+      <Name>CityIndex.ReflectiveLoggingAdapter</Name>
     </ProjectReference>
     <ProjectReference Include="..\StreamingClient-3.5\StreamingClient-3.5.csproj">
       <Project>{2BF0E626-BC3B-4E21-95BB-C429B91E7418}</Project>

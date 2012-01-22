@@ -94,6 +94,12 @@
     </Content>
     <Content Include="SplashScreenImage.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ReflectiveLoggingAdapter\Salient.ReflectiveLoggingAdapter.Phone7\CityIndex.ReflectiveLoggingAdapter.Phone7.csproj">
+      <Project>{6DB2C3F7-B230-48C0-8119-D33BAD9C5E0F}</Project>
+      <Name>CityIndex.ReflectiveLoggingAdapter.Phone7</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

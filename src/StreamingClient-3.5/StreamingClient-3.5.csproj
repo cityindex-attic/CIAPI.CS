@@ -39,9 +39,6 @@
     <AssemblyOriginatorKeyFile>..\common\ciapi.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Common.Logging">
-      <HintPath>..\packages\Common.Logging-2.0.0\2.0\release\Common.Logging.dll</HintPath>
-    </Reference>
     <Reference Include="DotNetClient_N2">
       <HintPath>..\packages\Lightstreamer 4.0 Client\sdk_client_dotnet\lib\StrongName\DotNetClient_N2.dll</HintPath>
     </Reference>
@@ -52,7 +49,6 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -112,6 +108,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ReflectiveLoggingAdapter\Salient.ReflectiveLoggingAdapter\CityIndex.ReflectiveLoggingAdapter.csproj">
+      <Project>{BC595784-3DE8-4F7C-879F-31E6509CADA7}</Project>
+      <Name>CityIndex.ReflectiveLoggingAdapter</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

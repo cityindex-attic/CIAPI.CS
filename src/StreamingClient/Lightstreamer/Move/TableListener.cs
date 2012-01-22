@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using Common.Logging;
+ 
 using Lightstreamer.DotNet.Client;
+using CityIndex.ReflectiveLoggingAdapter;
 using StreamingClient.Lightstreamer;
 
 namespace StreamingClient

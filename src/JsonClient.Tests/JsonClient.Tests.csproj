@@ -41,9 +41,6 @@
     <Reference Include="CassiniDev4-lib">
       <HintPath>..\packages\CassiniDev4\CassiniDev4-lib.dll</HintPath>
     </Reference>
-    <Reference Include="Common.Logging">
-      <HintPath>..\packages\Common.Logging-2.0.0\2.0\release\Common.Logging.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.3.5.8\lib\35\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -91,6 +88,10 @@
     <ProjectReference Include="..\JsonClient\JsonClient.csproj">
       <Project>{D80E56C8-8DD6-4911-9A99-F534C9497D6A}</Project>
       <Name>JsonClient</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ReflectiveLoggingAdapter\Salient.ReflectiveLoggingAdapter\CityIndex.ReflectiveLoggingAdapter.csproj">
+      <Project>{BC595784-3DE8-4F7C-879F-31E6509CADA7}</Project>
+      <Name>CityIndex.ReflectiveLoggingAdapter</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

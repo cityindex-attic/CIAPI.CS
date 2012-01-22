@@ -6,8 +6,8 @@ using System.Web;
 using System.Web.Security;
 using System.Web.SessionState;
 using CIAPI.Rpc;
-using Common.Logging;
-using Common.Logging.Simple;
+using Salient.ReflectiveLoggingAdapter;
+
 
 namespace ApplicationScopingExample
 {

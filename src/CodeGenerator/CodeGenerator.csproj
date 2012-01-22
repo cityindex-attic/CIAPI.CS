@@ -97,7 +97,6 @@
     <Content Include="node-0.4.7-cygwin\bin\tar.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="shiftpoint.htm" />
     <Content Include="src\dto-generator.js" />
     <Content Include="src\generate-routes.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -123,7 +122,6 @@
     <Content Include="src\generate.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="src\meta\Copy of smd.js" />
     <Content Include="src\meta\routes.patch.js" />
     <Content Include="src\meta\schema.patch.js" />
     <Content Include="TestHarness.htm" />

@@ -1,9 +1,6 @@
 ﻿using System;
-using Common.Logging;
+using CityIndex.ReflectiveLoggingAdapter;
 using Lightstreamer.DotNet.Client.Log;
-#if !SILVERLIGHT
-    using Common.Logging.Simple;
-#endif
 
 namespace StreamingClient.Lightstreamer
 {
@@ -19,11 +16,11 @@ namespace StreamingClient.Lightstreamer
             _wrapped = new DebugAppender(logName, logLevel, showLevel, showDateTime, showLogName, dateTimeFormat);
 #endif
 #else
-            _wrapped = new Common.Logging.Simple.ConsoleOutLogger(logName, logLevel, showLevel, showDateTime, showLogName, dateTimeFormat);
+            _wrapped = new DebugAppender(logName, logLevel, showLevel, showDateTime, showLogName, dateTimeFormat);
 #endif
 
         }
-        private AbstractSimpleLogger _wrapped;
+        private ILog _wrapped;
 
         public void Error(string line)
         {

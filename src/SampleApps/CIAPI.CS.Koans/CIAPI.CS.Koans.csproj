@@ -67,9 +67,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\CIAPI.CS.1.13.244.0\lib\net40\CityIndex.JsonClient.dll</HintPath>
     </Reference>
-    <Reference Include="Common.Logging, Version=2.0.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\CIAPI.CS.1.13.244.0\lib\net40\Common.Logging.dll</HintPath>
-    </Reference>
     <Reference Include="DotNetClient_N2, Version=2.0.4168.21412, Culture=neutral, PublicKeyToken=8d72f58860ac9835, processorArchitecture=MSIL">
       <HintPath>..\..\packages\CIAPI.CS.1.13.244.0\lib\net40\DotNetClient_N2.dll</HintPath>
     </Reference>
@@ -130,6 +127,12 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\ReflectiveLoggingAdapter\Salient.ReflectiveLoggingAdapter\CityIndex.ReflectiveLoggingAdapter.csproj">
+      <Project>{BC595784-3DE8-4F7C-879F-31E6509CADA7}</Project>
+      <Name>CityIndex.ReflectiveLoggingAdapter</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

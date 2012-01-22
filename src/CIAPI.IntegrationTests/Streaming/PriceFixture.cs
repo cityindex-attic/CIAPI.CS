@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using CIAPI.DTO;
 using CIAPI.Streaming;
-using Common.Logging;
+using CityIndex.ReflectiveLoggingAdapter;
 using NUnit.Framework;
 using IStreamingClient = CIAPI.Streaming.IStreamingClient;
 
@@ -12,7 +12,7 @@ namespace CIAPI.IntegrationTests.Streaming
     [TestFixture]
     public class PriceFixture : RpcFixtureBase
     {
-        private ILog _logger = LogManager.GetCurrentClassLogger();
+        private ILog _logger = LogManager.GetLogger(typeof(PriceFixture));
 
  
 

@@ -135,9 +135,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Common.Logging.Phone7\Common.Logging.Phone7.csproj">
-      <Project>{06CA6C00-672E-4B49-8FD4-A4A9AB453C5A}</Project>
-      <Name>Common.Logging.Phone7</Name>
+    <ProjectReference Include="..\ReflectiveLoggingAdapter\Salient.ReflectiveLoggingAdapter.Phone7\CityIndex.ReflectiveLoggingAdapter.Phone7.csproj">
+      <Project>{6DB2C3F7-B230-48C0-8119-D33BAD9C5E0F}</Project>
+      <Name>CityIndex.ReflectiveLoggingAdapter.Phone7</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />

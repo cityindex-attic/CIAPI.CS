@@ -6,7 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading;
-using Common.Logging;
+using CityIndex.ReflectiveLoggingAdapter;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
