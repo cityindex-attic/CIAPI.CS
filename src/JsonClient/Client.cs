@@ -82,7 +82,7 @@ namespace CityIndex.JsonClient
         ///</summary>
         ///<param name="uri"></param>
         public Client(Uri uri)
-            : this(uri, new RequestController(TimeSpan.FromSeconds(0), 2, new RequestFactory(), new NullJsonExceptionFactory(), new ThrottedRequestQueue(TimeSpan.FromSeconds(5), 30, 10, "default")))
+            : this(uri, new RequestController(TimeSpan.FromSeconds(0), 2, new RequestFactory(), new NullJsonExceptionFactory(), new ThrottledRequestQueue(TimeSpan.FromSeconds(5), 30, 10, "default")))
         {
 
         }

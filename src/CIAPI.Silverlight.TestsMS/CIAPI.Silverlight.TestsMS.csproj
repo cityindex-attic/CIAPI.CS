@@ -73,26 +73,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CIAPI.Silverlight">
-      <HintPath>..\packages\CIAPI.CS.1.13.244.0\lib\sl4\CIAPI.Silverlight.dll</HintPath>
-    </Reference>
-    <Reference Include="CityIndex.JsonClient.Silverlight">
-      <HintPath>..\packages\CIAPI.CS.1.13.244.0\lib\sl4\CityIndex.JsonClient.Silverlight.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Silverlight.Testing">
       <HintPath>..\packages\SL4_Testing\Microsoft.Silverlight.Testing.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTesting.Silverlight">
       <HintPath>..\packages\SL4_Testing\Microsoft.VisualStudio.QualityTools.UnitTesting.Silverlight.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json.Silverlight">
-      <HintPath>..\packages\CIAPI.CS.1.13.244.0\lib\sl4\Newtonsoft.Json.Silverlight.dll</HintPath>
-    </Reference>
-    <Reference Include="SilverlightClient">
-      <HintPath>..\packages\CIAPI.CS.1.13.244.0\lib\sl4\SilverlightClient.dll</HintPath>
-    </Reference>
-    <Reference Include="StreamingClient.Silverlight">
-      <HintPath>..\packages\CIAPI.CS.1.13.244.0\lib\sl4\StreamingClient.Silverlight.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows" />
     <Reference Include="mscorlib" />
@@ -133,13 +118,24 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
     <None Include="Properties\AppManifest.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CIAPI.Silverlight\CIAPI.Silverlight.csproj">
+      <Project>{B26AA333-051A-4C11-B6CD-CECA8FD656E0}</Project>
+      <Name>CIAPI.Silverlight</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JsonClient.Silverlight\JsonClient.Silverlight.csproj">
+      <Project>{0156697E-DEFE-47CF-9EB0-11F120780356}</Project>
+      <Name>JsonClient.Silverlight</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ReflectiveLoggingAdapter\Salient.ReflectiveLoggingAdapter.Silverlight\CityIndex.ReflectiveLoggingAdapter.Silverlight.csproj">
       <Project>{025CEB17-A337-40D1-9619-46A556E54EA2}</Project>
       <Name>CityIndex.ReflectiveLoggingAdapter.Silverlight</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\StreamingClient.Silverlight\StreamingClient.Silverlight.csproj">
+      <Project>{C552DD3D-3738-4194-95F3-5A988E7D4647}</Project>
+      <Name>StreamingClient.Silverlight</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
