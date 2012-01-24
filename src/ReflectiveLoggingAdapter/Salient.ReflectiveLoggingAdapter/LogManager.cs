@@ -18,15 +18,17 @@ namespace CityIndex.ReflectiveLoggingAdapter
 
         public static ILog GetLogger(Type type)
         {
-            var inner = GetInnerLogger(type.Name,LogLevel.All,true,true,true,"u");
+            var inner = CreateInnerLogger(type.Name, LogLevel.All, true, true, true, "u");
             return new LogAdapter(inner);
         }
+
         public static ILog GetLogger(string logName, LogLevel logLevel, bool showLevel, bool showDateTime, bool showLogName,
                              string dateTimeFormat)
         {
-            var inner = GetInnerLogger(logName, logLevel, showLevel, showDateTime,showLogName, dateTimeFormat);
+            var inner = CreateInnerLogger(logName, logLevel, showLevel, showDateTime, showLogName, dateTimeFormat);
             return new LogAdapter(inner);
         }
+
         private static object GetInnerLogger(string logName, LogLevel logLevel, bool showLevel, bool showDateTime, bool showLogName,
                              string dateTimeFormat)
         {

@@ -10,11 +10,16 @@ namespace CIAPI.Rpc
     public partial class Client : CityIndex.JsonClient.Client
     {
 
+        private static string _versionNumber;
         private static string GetVersionNumber()
         {
-            var asm = Assembly.GetExecutingAssembly();
-            var parts = asm.FullName.Split(',');
-            return parts[1].Split('=')[1];
+            if (string.IsNullOrEmpty(_versionNumber))
+            {
+                var asm = Assembly.GetExecutingAssembly();
+                var parts = asm.FullName.Split(',');
+                _versionNumber = parts[1].Split('=')[1];
+            }
+            return _versionNumber;
         }
 
         private string AppendApiKey(string uriTemplate)
