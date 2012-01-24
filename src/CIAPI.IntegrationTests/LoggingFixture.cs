@@ -36,6 +36,10 @@ namespace CIAPI.IntegrationTests
                 return log4net.LogManager.GetLogger(logName);
             };
 
+
+            var logger = LogManager.GetLogger(typeof (string));
+
+
             var rpcClient = BuildRpcClient();
 
             //Make some HTTP requests
