@@ -26,7 +26,9 @@ namespace CIAPI.IntegrationTests
         [Test]
         public void RouteLoggingToLog4Net()
         {
+            //Make Log4Net to configure itself from the App.Config
             log4net.Config.XmlConfigurator.Configure();
+
             //replace the default DebugLogger with Log4Net, which - in this example - has been configured in App.Config to 
             //write to the console and prefix each message with [LOG4NET]
             LogManager.CreateInnerLogger = (logName, logLevel, showLevel, showDateTime, showLogName, dateTimeFormat) =>
@@ -35,10 +37,6 @@ namespace CIAPI.IntegrationTests
                 // this will be called whenever CIAPI requires a logger
                 return log4net.LogManager.GetLogger(logName);
             };
-
-
-            var logger = LogManager.GetLogger(typeof (string));
-
 
             var rpcClient = BuildRpcClient();
 
