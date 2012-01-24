@@ -39,16 +39,7 @@ namespace CityIndex.ReflectiveLoggingAdapter.Tests
             inner.AssertWasCalled(i => i.Debug(obj, exception));
 
 
-            // DebugFormat String, Object[]
-            adapter.DebugFormat(format, obj);
-            inner.AssertWasCalled(i => i.DebugFormat(format, obj));
-
-
-            // DebugFormat String, Exception, Object[]
-            adapter.DebugFormat(format, exception, obj);
-            inner.AssertWasCalled(i => i.DebugFormat(format, exception, obj));
-
-
+ 
             // Error Object
             adapter.Error(obj);
             inner.AssertWasCalled(i => i.Error(obj));
@@ -57,15 +48,7 @@ namespace CityIndex.ReflectiveLoggingAdapter.Tests
             adapter.Error(obj, exception);
             inner.AssertWasCalled(i => i.Error(obj, exception));
 
-            // ErrorFormat String, Object[]
-            adapter.ErrorFormat(format, obj);
-            inner.AssertWasCalled(i => i.ErrorFormat(format, obj));
-
-            // ErrorFormat String, Exception, Object[]
-            adapter.ErrorFormat(format, exception, obj);
-            inner.AssertWasCalled(i => i.ErrorFormat(format, exception, obj));
-
-
+ 
 
 
             // Fatal Object
@@ -76,16 +59,7 @@ namespace CityIndex.ReflectiveLoggingAdapter.Tests
             adapter.Fatal(obj, exception);
             inner.AssertWasCalled(i => i.Fatal(obj, exception));
 
-            // FatalFormat String, Object[]
-            adapter.FatalFormat(format, obj);
-            inner.AssertWasCalled(i => i.FatalFormat(format, obj));
-
-
-            // FatalFormat String, Exception, Object[]
-            adapter.FatalFormat(format, exception, obj);
-            inner.AssertWasCalled(i => i.FatalFormat(format, exception, obj));
-
-
+ 
 
 
 
@@ -98,16 +72,7 @@ namespace CityIndex.ReflectiveLoggingAdapter.Tests
             adapter.Info(obj, exception);
             inner.AssertWasCalled(i => i.Info(obj, exception));
 
-            // InfoFormat String, Object[]
-            adapter.InfoFormat(format, obj);
-            inner.AssertWasCalled(i => i.InfoFormat(format, obj));
-
-
-            // InfoFormat String, Exception, Object[]
-            adapter.InfoFormat(format, exception, obj);
-            inner.AssertWasCalled(i => i.InfoFormat(format, exception, obj));
-
-
+ 
 
 
             // Trace Object
@@ -118,16 +83,7 @@ namespace CityIndex.ReflectiveLoggingAdapter.Tests
             adapter.Trace(obj, exception);
             inner.AssertWasCalled(i => i.Trace(obj, exception));
 
-            // TraceFormat String, Object[]
-            adapter.TraceFormat(format, obj);
-            inner.AssertWasCalled(i => i.TraceFormat(format, obj));
-
-
-            // TraceFormat String, Exception, Object[]
-            adapter.TraceFormat(format, exception, obj);
-            inner.AssertWasCalled(i => i.TraceFormat(format, exception, obj));
-
-            
+      
 
 
 
@@ -139,15 +95,7 @@ namespace CityIndex.ReflectiveLoggingAdapter.Tests
             adapter.Warn(obj, exception);
             inner.AssertWasCalled(i => i.Warn(obj, exception));
 
-            // WarnFormat String, Object[]
-            adapter.WarnFormat(format, obj);
-            inner.AssertWasCalled(i => i.WarnFormat(format, obj));
-
-
-            // WarnFormat String, Exception, Object[]
-            adapter.WarnFormat(format, exception, obj);
-            inner.AssertWasCalled(i => i.WarnFormat(format, exception, obj));
-
+ 
             
         }
 
@@ -182,15 +130,6 @@ namespace CityIndex.ReflectiveLoggingAdapter.Tests
             Assert.AreEqual("Debug(object message, Exception exception)", innerMessage);
 
 
-            // DebugFormat String, Object[]
-            adapter.DebugFormat(format, obj);
-            Assert.AreEqual("DebugFormat(string format, params object[] args)", innerMessage);
-
-
-            // DebugFormat String, Exception, Object[]
-            adapter.DebugFormat(format, exception, obj);
-            Assert.AreEqual("DebugFormat(string format, Exception exception, params object[] args)", innerMessage);
-
 
 
 
@@ -202,14 +141,6 @@ namespace CityIndex.ReflectiveLoggingAdapter.Tests
             adapter.Error(obj, exception);
             Assert.AreEqual("Error(object message, Exception exception)", innerMessage);
 
-            // ErrorFormat String, Object[]
-            adapter.ErrorFormat(format, obj);
-            Assert.AreEqual("ErrorFormat(string format, params object[] args)", innerMessage);
-
-            
-            // ErrorFormat String, Exception, Object[]
-            adapter.ErrorFormat(format, exception, obj);
-            Assert.AreEqual("ErrorFormat(string format, Exception exception, params object[] args)", innerMessage);
 
 
 
@@ -222,14 +153,6 @@ namespace CityIndex.ReflectiveLoggingAdapter.Tests
             adapter.Fatal(obj, exception);
             Assert.AreEqual("Fatal(object message, Exception exception)", innerMessage);
 
-            // FatalFormat String, Object[]
-            adapter.FatalFormat(format, obj);
-            Assert.AreEqual("FatalFormat(string format, params object[] args)", innerMessage);
-
-            
-            // FatalFormat String, Exception, Object[]
-            adapter.FatalFormat(format, exception, obj);
-            Assert.AreEqual("FatalFormat(string format, Exception exception, params object[] args)", innerMessage);
 
 
 
@@ -244,14 +167,6 @@ namespace CityIndex.ReflectiveLoggingAdapter.Tests
             adapter.Info(obj, exception);
             Assert.AreEqual("Info(object message, Exception exception)", innerMessage);
 
-            // InfoFormat String, Object[]
-            adapter.InfoFormat(format, obj);
-            Assert.AreEqual("InfoFormat(string format, params object[] args)", innerMessage);
-
-
-            // InfoFormat String, Exception, Object[]
-            adapter.InfoFormat(format, exception, obj);
-            Assert.AreEqual("InfoFormat(string format, Exception exception, params object[] args)", innerMessage);
 
 
             // Trace Object
@@ -262,14 +177,6 @@ namespace CityIndex.ReflectiveLoggingAdapter.Tests
             adapter.Trace(obj, exception);
             Assert.AreEqual("Trace(object message, Exception exception)", innerMessage);
 
-            // TraceFormat String, Object[]
-            adapter.TraceFormat(format, obj);
-            Assert.AreEqual("TraceFormat(string format, params object[] args)", innerMessage);
-
-
-            // TraceFormat String, Exception, Object[]
-            adapter.TraceFormat(format, exception, obj);
-            Assert.AreEqual("TraceFormat(string format, Exception exception, params object[] args)", innerMessage);
 
             
 
@@ -283,14 +190,6 @@ namespace CityIndex.ReflectiveLoggingAdapter.Tests
             adapter.Warn(obj, exception);
             Assert.AreEqual("Warn(object message, Exception exception)", innerMessage);
 
-            // WarnFormat String, Object[]
-            adapter.WarnFormat(format, obj);
-            Assert.AreEqual("WarnFormat(string format, params object[] args)", innerMessage);
-
-
-            // WarnFormat String, Exception, Object[]
-            adapter.WarnFormat(format, exception, obj);
-            Assert.AreEqual("WarnFormat(string format, Exception exception, params object[] args)", innerMessage);
 
 
         }

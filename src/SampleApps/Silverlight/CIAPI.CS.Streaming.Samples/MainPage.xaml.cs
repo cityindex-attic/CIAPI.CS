@@ -44,7 +44,7 @@ namespace CIAPI.CS.Streaming.Samples
                     {
                         _rcpClient.EndLogIn(loginResult);
 
-                        _logger.DebugFormat("Session is: {0}", _rcpClient.Session);
+                        _logger.Debug(string.Format("Session is: {0}", _rcpClient.Session));
                         Log("Creating streaming client...");
                         _streamingClient = StreamingClientFactory.CreateStreamingClient(streamingUri, userName, _rcpClient.Session);
                         _streamingClient.StatusChanged += (s, message) 

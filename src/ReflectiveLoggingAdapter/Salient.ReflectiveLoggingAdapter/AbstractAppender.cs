@@ -1,9 +1,43 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 
 namespace CityIndex.ReflectiveLoggingAdapter
 {
+    public class CapturingAppender : AbstractAppender
+    {
+        public class LogItem
+        {
+            public LogLevel Level { get; set; }
+            public string Message { get; set; }
+            public Exception Exception { get; set; }
+        }
+        public CapturingAppender(string logName, LogLevel logLevel, bool showLevel, bool showDateTime, bool showLogName, string dateTimeFormat)
+            : base(logName, logLevel, showLevel, showDateTime, showLogName, dateTimeFormat)
+        {
+            _items = new List<LogItem>();
+        }
+
+        private readonly List<LogItem> _items;
+        public IEnumerable<LogItem> GetItems()
+        {
+            lock (_items)
+            {
+                LogItem[] items = _items.ToArray();
+                _items.Clear();
+                return items;
+            }
+
+        }
+
+
+
+        protected override void WriteInternal(LogLevel level, object message, Exception exception)
+        {
+            _items.Add(new LogItem() { Exception = exception, Level = level, Message = message.ToString() });
+        }
+    }
     public abstract class AbstractAppender : ILog
     {
         protected AbstractAppender(string logName, LogLevel logLevel, bool showLevel, bool showDateTime, bool showLogName,
@@ -156,7 +190,7 @@ namespace CityIndex.ReflectiveLoggingAdapter
         {
             if (IsErrorEnabled)
             {
-                WriteInternal(LogLevel.Error , message, null);
+                WriteInternal(LogLevel.Error, message, null);
             }
 
         }
@@ -165,7 +199,7 @@ namespace CityIndex.ReflectiveLoggingAdapter
         {
             if (IsErrorEnabled)
             {
-                WriteInternal(LogLevel.Error , message, exception);
+                WriteInternal(LogLevel.Error, message, exception);
             }
 
         }
@@ -195,7 +229,7 @@ namespace CityIndex.ReflectiveLoggingAdapter
         {
             if (IsFatalEnabled)
             {
-                WriteInternal(LogLevel.Fatal , message, null);
+                WriteInternal(LogLevel.Fatal, message, null);
             }
 
         }
@@ -204,7 +238,7 @@ namespace CityIndex.ReflectiveLoggingAdapter
         {
             if (IsFatalEnabled)
             {
-                WriteInternal(LogLevel.Fatal , message, exception);
+                WriteInternal(LogLevel.Fatal, message, exception);
             }
 
 
@@ -246,7 +280,7 @@ namespace CityIndex.ReflectiveLoggingAdapter
         {
             if (IsInfoEnabled)
             {
-                WriteInternal(LogLevel.Info , message, exception);
+                WriteInternal(LogLevel.Info, message, exception);
             }
 
 
@@ -278,7 +312,7 @@ namespace CityIndex.ReflectiveLoggingAdapter
         {
             if (IsTraceEnabled)
             {
-                WriteInternal(LogLevel.Trace , message, null);
+                WriteInternal(LogLevel.Trace, message, null);
             }
 
 
@@ -288,7 +322,7 @@ namespace CityIndex.ReflectiveLoggingAdapter
         {
             if (IsTraceEnabled)
             {
-                WriteInternal(LogLevel.Trace , message, exception);
+                WriteInternal(LogLevel.Trace, message, exception);
             }
 
 
@@ -298,7 +332,7 @@ namespace CityIndex.ReflectiveLoggingAdapter
         {
             if (IsTraceEnabled)
             {
-                WriteInternal(LogLevel.Trace,string.Format(CultureInfo.InvariantCulture, format, args), null);
+                WriteInternal(LogLevel.Trace, string.Format(CultureInfo.InvariantCulture, format, args), null);
             }
 
 
@@ -330,7 +364,7 @@ namespace CityIndex.ReflectiveLoggingAdapter
         {
             if (IsWarnEnabled)
             {
-                WriteInternal(LogLevel.Warn , message, exception);
+                WriteInternal(LogLevel.Warn, message, exception);
             }
 
 

@@ -19,52 +19,33 @@ namespace CityIndex.ReflectiveLoggingAdapter
             AddMethodInfo("Debug", new[] { typeof(object) });
             AddMethodInfo("Debug", new[] { typeof(object), typeof(Exception) });
 
-            AddMethodInfo("DebugFormat", new[] { typeof(string), typeof(object[]) });
-            
-            AddMethodInfo("DebugFormat", new[] { typeof(string), typeof(Exception), typeof(object[]) });
-            
-
+     
 
 
             AddMethodInfo("Error", new[] { typeof(object) });
             AddMethodInfo("Error", new[] { typeof(object), typeof(Exception) });
 
-            AddMethodInfo("ErrorFormat", new[] { typeof(string), typeof(object[]) });
-            
-            AddMethodInfo("ErrorFormat", new[] { typeof(string), typeof(Exception), typeof(object[]) });
-            
+       
 
             AddMethodInfo("Fatal", new[] { typeof(object) });
             AddMethodInfo("Fatal", new[] { typeof(object), typeof(Exception) });
 
-            AddMethodInfo("FatalFormat", new[] { typeof(string), typeof(object[]) });
-            
-            AddMethodInfo("FatalFormat", new[] { typeof(string), typeof(Exception), typeof(object[]) });
-            
+       
 
             AddMethodInfo("Info", new[] { typeof(object) });
             AddMethodInfo("Info", new[] { typeof(object), typeof(Exception) });
 
-            AddMethodInfo("InfoFormat", new[] { typeof(string), typeof(object[]) });
-            
-            AddMethodInfo("InfoFormat", new[] { typeof(string), typeof(Exception), typeof(object[]) });
-            
+    
 
             AddMethodInfo("Trace", new[] { typeof(object) });
             AddMethodInfo("Trace", new[] { typeof(object), typeof(Exception) });
 
-            AddMethodInfo("TraceFormat", new[] { typeof(string), typeof(object[]) });
-            
-            AddMethodInfo("TraceFormat", new[] { typeof(string), typeof(Exception), typeof(object[]) });
-            
+       
 
             AddMethodInfo("Warn", new[] { typeof(object) });
             AddMethodInfo("Warn", new[] { typeof(object), typeof(Exception) });
 
-            AddMethodInfo("WarnFormat", new[] { typeof(string), typeof(object[]) });
-            
-            AddMethodInfo("WarnFormat", new[] { typeof(string), typeof(Exception), typeof(object[]) });
-            
+     
 
         }
 
@@ -117,37 +98,7 @@ namespace CityIndex.ReflectiveLoggingAdapter
         }
 
         #region Debug
-
-        public bool IsTraceEnabled
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public bool IsDebugEnabled
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public bool IsErrorEnabled
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public bool IsFatalEnabled
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public bool IsInfoEnabled
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public bool IsWarnEnabled
-        {
-            get { throw new NotImplementedException(); }
-        }
-
+ 
         public virtual void Debug(object message)
         {
             ExecuteLoggingAction("Debug Object", message);
@@ -160,22 +111,7 @@ namespace CityIndex.ReflectiveLoggingAdapter
 
         #endregion
 
-
-        #region DebugFormat
-        public virtual void DebugFormat(string format, params object[] args)
-        {
-            ExecuteLoggingAction("DebugFormat String, Object[]",format, args);
-
-        }
-
-        
-
-        public virtual void DebugFormat(string format, Exception exception, params object[] args)
-        {
-            ExecuteLoggingAction("DebugFormat String, Exception, Object[]",format, exception, args);
-        }
-
-        #endregion
+ 
 
         #region Error
         public virtual void Error(object message)
@@ -189,19 +125,7 @@ namespace CityIndex.ReflectiveLoggingAdapter
         }
         #endregion
 
-        #region ErrorFormat
-        public virtual void ErrorFormat(string format, params object[] args)
-        {
-            ExecuteLoggingAction("ErrorFormat String, Object[]", format, args);
-        }
-
-
-        public virtual void ErrorFormat(string format, Exception exception, params object[] args)
-        {
-            ExecuteLoggingAction("ErrorFormat String, Exception, Object[]", format, exception, args);
-        }
-
-        #endregion
+  
 
         #region Fatal
         public virtual void Fatal(object message)
@@ -215,19 +139,7 @@ namespace CityIndex.ReflectiveLoggingAdapter
         }
         #endregion
 
-        #region FatalFormat
-        public virtual void FatalFormat(string format, params object[] args)
-        {
-            ExecuteLoggingAction("FatalFormat String, Object[]", format, args);
-        }
-
-
-        public virtual void FatalFormat(string format, Exception exception, params object[] args)
-        {
-            ExecuteLoggingAction("FatalFormat String, Exception, Object[]", format, exception, args);
-        }
-
-        #endregion
+ 
 
         #region Info
         public virtual void Info(object message)
@@ -241,19 +153,7 @@ namespace CityIndex.ReflectiveLoggingAdapter
         }
         #endregion
 
-        #region InfoFormat
-        public virtual void InfoFormat(string format, params object[] args)
-        {
-            ExecuteLoggingAction("InfoFormat String, Object[]", format, args);
-        }
-
-
-        public virtual void InfoFormat(string format, Exception exception, params object[] args)
-        {
-            ExecuteLoggingAction("InfoFormat String, Exception, Object[]",format, exception, args);
-        }
-
-        #endregion
+  
 
         #region Trace
         public virtual void Trace(object message)
@@ -267,18 +167,7 @@ namespace CityIndex.ReflectiveLoggingAdapter
         }
         #endregion
 
-        #region TraceFormat
-        public virtual void TraceFormat(string format, params object[] args)
-        {
-            ExecuteLoggingAction("TraceFormat String, Object[]", format, args);
-        }
-
-        public virtual void TraceFormat(string format, Exception exception, params object[] args)
-        {
-            ExecuteLoggingAction("TraceFormat String, Exception, Object[]", format, exception, args);
-        }
-
-        #endregion
+    
 
         #region Warn
         public virtual void Warn(object message)
@@ -292,20 +181,7 @@ namespace CityIndex.ReflectiveLoggingAdapter
         }
         #endregion
 
-        #region WarnFormat
-        public virtual void WarnFormat(string format, params object[] args)
-        {
-            ExecuteLoggingAction("WarnFormat String, Object[]", format, args);
-        }
-
-
-        public virtual void WarnFormat(string format, Exception exception, params object[] args)
-        {
-            ExecuteLoggingAction("WarnFormat String, Exception, Object[]", format, exception, args);
-        }
-
-
-        #endregion
+   
  
     }
 }

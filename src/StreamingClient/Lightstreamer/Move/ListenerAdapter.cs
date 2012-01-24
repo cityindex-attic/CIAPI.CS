@@ -64,8 +64,7 @@ namespace StreamingClient
 
             string schema = _messageConverter.GetFieldList();
             string channel = _channel.ToUpper();
-            Logger.DebugFormat("Subscribing to group:{0}, schema {1}, dataAdapter {2}", groupOrItemName, schema,
-                               channel);
+            Logger.Debug(string.Format("Subscribing to group:{0}, schema {1}, dataAdapter {2}", groupOrItemName, schema,channel));
 
             var simpleTableInfo = new SimpleTableInfo(
                 groupOrItemName,
@@ -80,7 +79,7 @@ namespace StreamingClient
                                {
                                    _subscribedTableKey = _lsClient.Client.SubscribeTable(simpleTableInfo, _listener,
                                                                                          false);
-                                   Logger.DebugFormat("Subscribed to table with key: {0}", _subscribedTableKey);
+                                   Logger.Debug(string.Format("Subscribed to table with key: {0}", _subscribedTableKey));
                                }
                                catch (Exception exInner)
                                {
@@ -107,7 +106,7 @@ namespace StreamingClient
             if (_subscribedTableKey == null) return;
 
             string message = String.Format("Unsubscribing from table with key: {0}", _subscribedTableKey);
-            Logger.DebugFormat(message);
+            Logger.Debug(message);
             new Thread(() =>
                            {
                                try

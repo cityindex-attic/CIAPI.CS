@@ -114,7 +114,7 @@ namespace CIAPI.IntegrationTests.Streaming
 
                     foreach (var price in prices)
                     {
-                        _logger.DebugFormat(price.ToStringWithValues());
+                        _logger.Debug(price.ToStringWithValues());
                     }
                 }
 

@@ -4,7 +4,8 @@ namespace CityIndex.ReflectiveLoggingAdapter
 {
     public class LogManager
     {
-        public delegate object CreateInnerLoggerDelegate(Type type);
+        public delegate object CreateInnerLoggerDelegate(string logName, LogLevel logLevel, bool showLevel, bool showDateTime, bool showLogName,
+                             string dateTimeFormat);
 
         static LogManager()
         {
@@ -17,13 +18,19 @@ namespace CityIndex.ReflectiveLoggingAdapter
 
         public static ILog GetLogger(Type type)
         {
-            object inner = GetInnerLogger(type);
+            var inner = GetInnerLogger(type.Name,LogLevel.All,true,true,true,"u");
             return new LogAdapter(inner);
         }
-
-        private static object GetInnerLogger(Type type)
+        public static ILog GetLogger(string logName, LogLevel logLevel, bool showLevel, bool showDateTime, bool showLogName,
+                             string dateTimeFormat)
         {
-            return new DebugAppender(type.Name, LogLevel.All, true, true, true, "u");
+            var inner = GetInnerLogger(logName, logLevel, showLevel, showDateTime,showLogName, dateTimeFormat);
+            return new LogAdapter(inner);
+        }
+        private static object GetInnerLogger(string logName, LogLevel logLevel, bool showLevel, bool showDateTime, bool showLogName,
+                             string dateTimeFormat)
+        {
+            return new DebugAppender(logName, logLevel, showLevel, showDateTime,showLogName, dateTimeFormat);
         }
 
     }

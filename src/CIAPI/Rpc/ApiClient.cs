@@ -87,7 +87,7 @@ namespace CIAPI.Rpc
         /// <param name="userName">Username is case sensitive</param>
         /// <param name="password">Password is case sensitive</param>
         /// <returns></returns>
-        public void LogIn(String userName, String password)
+        public ApiLogOnResponseDTO LogIn(String userName, String password)
         {
             UserName = userName;
             Session = null;
@@ -102,6 +102,7 @@ namespace CIAPI.Rpc
                                                                                          }, TimeSpan.FromMilliseconds(0),
                                                              "data");
             Session = response.Session;
+            return response;
         }
 
         /// <summary>
@@ -145,10 +146,11 @@ namespace CIAPI.Rpc
         }
 
 
-        public void EndLogIn(ApiAsyncResult<ApiLogOnResponseDTO> asyncResult)
+        public ApiLogOnResponseDTO EndLogIn(ApiAsyncResult<ApiLogOnResponseDTO> asyncResult)
         {
             ApiLogOnResponseDTO response = EndRequest(asyncResult);
             Session = response.Session;
+            return response;
         }
 
         /// <summary>

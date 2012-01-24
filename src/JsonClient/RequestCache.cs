@@ -63,7 +63,7 @@ namespace CityIndex.JsonClient
                 if (_items.ContainsKey(url))
                 {
                     item =GetItem<TDTO>(url);
-                    Log.DebugFormat("Fetched {0} from cache",item.Url);
+                    Log.Debug(string.Format("Fetched {0} from cache", item.Url));
                 }
                 else
                 {

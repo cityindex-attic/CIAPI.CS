@@ -74,25 +74,25 @@ namespace StreamingClient
 
         void IHandyTableListener.OnRawUpdatesLost(int itemPos, string itemName, int lostUpdates)
         {
-            Logger.DebugFormat("OnRawUpdatesLost fired -> itemPos: {0} ietmName: {1} lostUpdates:{2}", itemPos, itemName, lostUpdates);
+            Logger.Debug(string.Format("OnRawUpdatesLost fired -> itemPos: {0} ietmName: {1} lostUpdates:{2}", itemPos, itemName, lostUpdates));
             /* do nothing */
         }
 
         void IHandyTableListener.OnSnapshotEnd(int itemPos, string itemName)
         {
-            Logger.DebugFormat("OnSnapshotEnd fired -> itemPos: {0} ietmName: {1}", itemPos, itemName);
+            Logger.Debug(string.Format("OnSnapshotEnd fired -> itemPos: {0} ietmName: {1}", itemPos, itemName));
             /* do nothing */
         }
 
         void IHandyTableListener.OnUnsubscr(int itemPos, string itemName)
         {
-            Logger.DebugFormat("OnUnsubscr fired -> itemPos: {0} ietmName: {1}", itemPos, itemName);
+            Logger.Debug(string.Format("OnUnsubscr fired -> itemPos: {0} ietmName: {1}", itemPos, itemName));
             /* do nothing */
         }
 
         void IHandyTableListener.OnUnsubscrAll()
         {
-            Logger.DebugFormat("OnUnsubscrAll fired");
+            Logger.Debug("OnUnsubscrAll fired");
             /* do nothing */
         }
     }
