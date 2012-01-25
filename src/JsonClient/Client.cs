@@ -18,9 +18,11 @@ namespace CityIndex.JsonClient
     /// </summary>
     public class Client : IJsonClient
     {
+        public string BasicHttpAuthUsername { get; set; }
+        public string BasicHttpAuthPassword { get; set; }
         #region Fields
 
-        
+
 
         ///<summary>
         ///</summary>
@@ -55,13 +57,40 @@ namespace CityIndex.JsonClient
             }
         }
 
+        ///<summary>
+        ///</summary>
+        ///<param name="uri"></param>
+        ///<param name="requestController"></param>
+        ///<param name="basicAuthUsername"></param>
+        ///<param name="basicAuthPassword"></param>
+        public Client(Uri uri, IRequestController requestController, string basicAuthUsername, string basicAuthPassword)
+        {
 
+            _requestController = requestController;
+            if (!string.IsNullOrEmpty(basicAuthUsername))
+            {
+                _requestController.BasicHttpAuthUsername = basicAuthUsername;
+                _requestController.BasicHttpAuthPassword = basicAuthPassword;
+
+            }
+            _requestController.BeforeBuildUrl += (o, e) => BeforeBuildUrl(e.Item.Target, e.Item.UriTemplate, e.Item.Method, e.Item.Parameters, e.Item.CacheDuration, e.Item.ThrottleScope);
+            _requestController.BeforeIssueRequest += (o, e) => BeforeIssueRequest(e.Item.Request, e.Item.Url, e.Item.Target, e.Item.UriTemplate, e.Item.Method, e.Item.Parameters, e.Item.CacheDuration, e.Item.ThrottleScope);
+
+            string url = uri.AbsoluteUri;
+
+            if (!url.EndsWith("/"))
+            {
+                url = uri.AbsoluteUri + "/";
+            }
+            _uri = new Uri(url);
+        }
         ///<summary>
         ///</summary>
         ///<param name="uri"></param>
         ///<param name="requestController"></param>
 
         public Client(Uri uri, IRequestController requestController)
+            : this(uri, requestController, null, null)
         {
 
             _requestController = requestController;
@@ -78,6 +107,16 @@ namespace CityIndex.JsonClient
             _uri = new Uri(url);
         }
 
+        ///<summary>
+        ///</summary>
+        ///<param name="uri"></param>
+        ///<param name="basicAuthUsername"></param>
+        ///<param name="basicAuthPassword"></param>
+        public Client(Uri uri, string basicAuthUsername, string basicAuthPassword)
+            : this(uri, new RequestController(TimeSpan.FromSeconds(0), 2, new RequestFactory(), new NullJsonExceptionFactory(), new ThrottledRequestQueue(TimeSpan.FromSeconds(5), 30, 10, "default")),basicAuthUsername, basicAuthPassword)
+        {
+
+        }
         ///<summary>
         ///</summary>
         ///<param name="uri"></param>
@@ -258,7 +297,7 @@ namespace CityIndex.JsonClient
                 url = ApplyUriTemplateParameters(localParams, url);
 
 
-                _requestController.ProcessCacheItem(target, uriTemplate, method, localParams, cacheDuration, throttleScope, url,  cb, state);
+                _requestController.ProcessCacheItem(target, uriTemplate, method, localParams, cacheDuration, throttleScope, url, cb, state);
             }
         }
 

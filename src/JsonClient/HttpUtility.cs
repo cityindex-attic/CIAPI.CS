@@ -35,8 +35,8 @@ using System.Text;
 
 namespace CityIndex.JsonClient
 {
-	public sealed class HttpUtility
-	{
+    public sealed class HttpUtility
+    {
         public static string UrlEncode(string str)
         {
             return UrlEncode(str, Encoding.UTF8);
@@ -71,15 +71,16 @@ namespace CityIndex.JsonClient
             // avoided GetByteCount call
             byte[] bytes = new byte[Enc.GetMaxByteCount(s.Length)];
             int realLen = Enc.GetBytes(s, 0, s.Length, bytes, 0);
-            return Encoding.ASCII.GetString(UrlEncodeToBytes(bytes, 0, realLen));
+            byte[] t2 = UrlEncodeToBytes(bytes, 0, realLen);
+            return Encoding.UTF8.GetString(t2, 0, t2.Length);
         }
 
-		public static byte [] UrlEncodeToBytes (byte [] bytes, int offset, int count)
-		{
-			if (bytes == null)
-				return null;
-			return HttpEncoder.UrlEncodeToBytes (bytes, offset, count);
-		}
+        public static byte[] UrlEncodeToBytes(byte[] bytes, int offset, int count)
+        {
+            if (bytes == null)
+                return null;
+            return HttpEncoder.UrlEncodeToBytes(bytes, offset, count);
+        }
 
         private class HttpEncoder
         {
@@ -174,7 +175,7 @@ namespace CityIndex.JsonClient
                     result.WriteByte((byte)c);
             }
         }
-	}
-      
-	
+    }
+
+
 }

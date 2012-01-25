@@ -26,7 +26,7 @@ namespace CIAPI.IntegrationTests.Rpc
 
         }
 
-        [Test]
+        [Test,Ignore("if this test breaks the account is in unexpected state. test manually")]
         public void CanChangePassword()
         {
             const string NEWPASSWORD = "bingo72652";

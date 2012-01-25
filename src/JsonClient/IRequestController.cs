@@ -7,7 +7,16 @@ namespace CityIndex.JsonClient
     ///</summary>
     public interface IRequestController : IDisposable
     {
+        ///<summary>
+        ///</summary>
+        ContentType ContentType { get; set; }
 
+        ///<summary>
+        ///</summary>
+        string BasicHttpAuthUsername { get; set; }
+        ///<summary>
+        ///</summary>
+        string BasicHttpAuthPassword { get; set; } 
         ///<summary>
         ///</summary>
         string UserAgent { get; set; }

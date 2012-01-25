@@ -91,6 +91,9 @@
     <Compile Include="..\JsonClient\Converters\UnixDateTimeHelper.cs">
       <Link>Converters\UnixDateTimeHelper.cs</Link>
     </Compile>
+    <Compile Include="..\JsonClient\HttpUtility.cs">
+      <Link>HttpUtility.cs</Link>
+    </Compile>
     <Compile Include="..\JsonClient\IJsonClient.cs">
       <Link>IJsonClient.cs</Link>
     </Compile>

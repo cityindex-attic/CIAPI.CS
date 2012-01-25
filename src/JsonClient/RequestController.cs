@@ -13,11 +13,34 @@ using Newtonsoft.Json.Linq;
 
 namespace CityIndex.JsonClient
 {
+    public enum ContentType
+    {
+        JSON,
+
+        FORM
+    }
+
+    public enum Compression
+    {
+        NONE,
+        GZIP,
+        DEFLATE
+    }
+
     ///<summary>
     /// Default throttle scope manager implementation
     ///</summary>
     public class RequestController : IRequestController
     {
+        ///<summary>
+        ///</summary>
+        public ContentType ContentType { get; set; }
+
+        ///<summary>
+        ///</summary>
+        public Compression Compression { get; set; }
+        public string BasicHttpAuthUsername { get; set; }
+        public string BasicHttpAuthPassword { get; set; }
 
         private IJsonExceptionFactory _jsonExceptionFactory;
         private const int BackgroundInterval = 50;
@@ -125,6 +148,13 @@ namespace CityIndex.JsonClient
             get { return _scopes[key]; }
         }
 
+        private static void SetBasicAuthHeader(WebRequest req, String userName, String userPassword)
+        {
+            string authInfo = userName + ":" + userPassword;
+            authInfo = Convert.ToBase64String(Encoding.UTF8.GetBytes(authInfo));
+            req.Headers["Authorization"] = "Basic " + authInfo;
+        }
+
         public void CreateRequest<TDTO>(string url)
         {
 
@@ -133,7 +163,7 @@ namespace CityIndex.JsonClient
             // see http://social.microsoft.com/Forums/fi-FI/Offtopic/thread/f1df988a-403d-43b4-9f5d-20ebde39e55e amongs others
 
 #if WINDOWS_PHONE
-            if(url.Contains("\\"))
+            if (url.Contains("\\"))
             {
                 throw new ArgumentException("Windows Phone 7 does not like back slashes in urls. Is fixed in 7.1");
             }
@@ -148,26 +178,38 @@ namespace CityIndex.JsonClient
                 ((HttpWebRequest)item.Request).UserAgent = UserAgent;
             }
 
+            if (!string.IsNullOrEmpty(BasicHttpAuthUsername))
+            {
+                SetBasicAuthHeader(item.Request, BasicHttpAuthUsername, BasicHttpAuthPassword);
+            }
 
 
 
 #if !SILVERLIGHT
             // silverlight crossdomain request does not support content type (?!)
-            item.Request.ContentType = "application/json";
+            switch (ContentType)
+            {
+                case ContentType.FORM:
+                    item.Request.ContentType = "application/x-www-form-urlencoded";
+                    break;
+                case ContentType.JSON:
+                    item.Request.ContentType = "application/json";
+                    break;
+            }
+            if (item.Request is HttpWebRequest)
+            {
+                ((HttpWebRequest)item.Request).Accept = "application/json";
+            }
+
+
 #endif
             item.Request.Method = item.Method.ToUpper();
 
             OnBeforeIssueRequest(new CacheItemEventArgs(item));
 
-            if (item.Method.ToUpper() == "POST")
+            if (item.Method.ToUpper() == "POST" )
             {
-                // if post then parameters should contain zero or one items
-                if (item.Parameters.Count > 1)
-                {
 
-                    throw new ArgumentException("POST method with too many parameters");
-
-                }
                 SetPostEntityAndEnqueueRequest<TDTO>(url);
             }
             else
@@ -229,9 +271,30 @@ namespace CityIndex.JsonClient
 
 
             byte[] bodyValue = new byte[] { };
-            if (item.Parameters.Count == 1)
+            switch (ContentType)
             {
-                bodyValue = CreatePostEntity(item.Parameters.First().Value);
+                case ContentType.JSON:
+                    // if post then parameters should contain zero or one items
+                    if (item.Parameters.Count > 1)
+                    {
+
+                        throw new ArgumentException("POST method with too many parameters");
+
+                    }
+                    if (item.Parameters.Count == 1)
+                    {
+                        bodyValue = CreatePostEntity(item.Parameters.First().Value);
+                    }
+
+                    break;
+                case ContentType.FORM:
+                    var sb = new StringBuilder();
+                    foreach (var p in item.Parameters)
+                    {
+                        EncodeAndAddItem(ref sb, p.Key, p.Value.ToString());
+                    }
+                    bodyValue = Encoding.UTF8.GetBytes(sb.ToString());
+                    break;
             }
 
 
@@ -273,11 +336,30 @@ namespace CityIndex.JsonClient
         {
             // #TODO: this could be exposed on interface and made virtual to allow custom serialization
 
+            string body = "";
 
-            var body = JsonConvert.SerializeObject(value, Formatting.None, new JsonConverter[] { });
+
+
+            body = JsonConvert.SerializeObject(value, Formatting.None, new JsonConverter[] { });
+
             byte[] bodyValue = Encoding.UTF8.GetBytes(body);
 
             return bodyValue;
+        }
+
+        private void EncodeAndAddItem(ref StringBuilder baseRequest, string key, string dataItem)
+        {
+            if (baseRequest == null)
+            {
+                baseRequest = new StringBuilder();
+            }
+            if (baseRequest.Length != 0)
+            {
+                baseRequest.Append("&");
+            }
+            baseRequest.Append(key);
+            baseRequest.Append("=");
+            baseRequest.Append(CityIndex.JsonClient.HttpUtility.UrlEncode(dataItem));
         }
 
 

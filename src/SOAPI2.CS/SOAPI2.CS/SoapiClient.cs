@@ -7,13 +7,11 @@ using SOAPI2.CS.DTO;
 
 namespace SOAPI2.CS
 {
+
     public class SoapiClient : Client
     {
 
-
-        //https://stackexchange.com/oauth/dialog?client_id=24&scope=no_expiry,read_inbox&redirect_uri=https://stackexchange.com/oauth/login_success
-
-
+        // https://stackexchange.com/oauth/dialog?client_id=24&scope=no_expiry,read_inbox&redirect_uri=https://stackexchange.com/oauth/login_success
 
         // #TODO implement 'backoff' logic  ?   ????
         // if backoff is set we need to bump the cache item expiration by that number of seconds, if necessary
