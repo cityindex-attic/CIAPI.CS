@@ -29,32 +29,7 @@ namespace AMEEClient
             base.BeforeIssueRequest(request, url, target, uriTemplate, method, parameters, cacheDuration, throttleScope);
         }
 
-        public GetProfilesResponse GetProfiles()
-        {
-            string uriTemplate = "/";
-            return Request<GetProfilesResponse>("profiles", uriTemplate, "GET",
-                                        new Dictionary<string, object>
-                                            {
-                                            }, TimeSpan.FromMilliseconds(0), "default");
-        }
-        public DeleteProfileResponse DeleteProfile(string uid)
-        {
-            string uriTemplate = "/{uid}"; // prevent caching
-            return Request<DeleteProfileResponse>("profiles", uriTemplate, "DELETE",
-                                        new Dictionary<string, object>
-                                        {
-                                            {"uid",uid}
-                                        }, TimeSpan.FromMilliseconds(0), "default");
-        }
-        public CreateProfileResponse CreateProfile()
-        {
-            string uriTemplate = "/"; // prevent caching
-            return Request<CreateProfileResponse>("profiles", uriTemplate, "POST",
-                                        new Dictionary<string, object>
-                                        {
-                                            {"profile",true}
-                                        }, TimeSpan.FromMilliseconds(0), "default");
-        }
+      
 
         public DataItemResponse GetDataItem(string path, string uid)
         {
@@ -63,7 +38,9 @@ namespace AMEEClient
 
             var parameters = new Dictionary<string, object>() { { "uid", uid } };
 
-            return Request<DataItemResponse>("data", uriTemplate, "GET", parameters, TimeSpan.FromMilliseconds(0), "default");
+            return Request<DataItemResponse>("data", uriTemplate, "GET", parameters, 
+                cacheDuration: TimeSpan.FromSeconds(30), 
+                throttleScope: "default");
         }
         public DrillDownResponse GetDrillDown(string path, params ValueItem[] selections)
         {
@@ -79,22 +56,27 @@ namespace AMEEClient
 
             return Request<DrillDownResponse>("data", uriTemplate, "GET", parameters, TimeSpan.FromMilliseconds(0), "default");
         }
-        public CalculateResponse Calculate(string profileUid, string path, params ValueItem[] selections)
+        /// <summary>
+        /// Turns out you can perform calculations just by appending some querystring parameters to the
+        /// "GetDataItem" uri.  Calculation results are in then in the Amounts array
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="uid"></param>
+        /// <param name="selections"></param>
+        /// <returns></returns>
+        public DataItemResponse Calculate(string path, string uid, params ValueItem[] selections)
         {
+            string uriTemplate = "/" + path.Trim(' ', '/') + "/{uid}";
 
-            string uriTemplate = "/{profileUid}/" + path.Trim(' ', '/') + "/";
-
-            var parameters = new Dictionary<string, object>
-                                 {
-                                     {"profileUid", profileUid}
-                                 };
-
+            var parameters = new Dictionary<string, object>() { { "uid", uid } };
             foreach (var item in selections)
             {
-                parameters.Add(item.Name, item.Value);
+                uriTemplate = AppendParameter(uriTemplate, item.Name, item.Value);
             }
 
-            return Request<CalculateResponse>("profiles", uriTemplate, "POST", parameters, TimeSpan.FromMilliseconds(0), "default");
+            return Request<DataItemResponse>("data", uriTemplate, "GET", parameters,
+                cacheDuration: TimeSpan.FromMilliseconds(0),
+                throttleScope: "default");
         }
 
         // #TODO: move AppendParameter functionality to JSONCLIENT
@@ -123,6 +105,36 @@ namespace AMEEClient
         }
         //DrillDownResponse
         //transport/defra/fuel
+
+        #region Profiles - will probably be phased out in future
+
+        public GetProfilesResponse GetProfiles()
+        {
+            string uriTemplate = "/";
+            return Request<GetProfilesResponse>("profiles", uriTemplate, "GET", new Dictionary<string, object> { },
+                                                cacheDuration: TimeSpan.FromMilliseconds(0),
+                                                throttleScope: "default");
+        }
+        public DeleteProfileResponse DeleteProfile(string uid)
+        {
+            string uriTemplate = "/{uid}"; // prevent caching
+            return Request<DeleteProfileResponse>("profiles", uriTemplate, "DELETE",
+                                                  new Dictionary<string, object>
+                                                      {
+                                                          {"uid",uid}
+                                                      }, TimeSpan.FromMilliseconds(0), "default");
+        }
+        public CreateProfileResponse CreateProfile()
+        {
+            string uriTemplate = "/"; // prevent caching
+            return Request<CreateProfileResponse>("profiles", uriTemplate, "POST",
+                                                  new Dictionary<string, object>
+                                                      {
+                                                          {"profile",true}
+                                                      }, TimeSpan.FromMilliseconds(0), "default");
+        }
+
+        #endregion
     }
 
     public class nullResponse
