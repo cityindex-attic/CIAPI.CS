@@ -32,6 +32,7 @@ namespace UsageExamples
 
         private static void ExternalLogging()
         {
+            log4net.Config.XmlConfigurator.Configure();
             // demonstrates how to inject an external logger
             LogManager.CreateInnerLogger = (logName, logLevel, showLevel, showDateTime, showLogName, dateTimeFormat) =>
                                                {

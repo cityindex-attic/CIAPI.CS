@@ -44,16 +44,11 @@ namespace AMEEClient.Tests
             var item = client.GetDataItem(path, choice.Name);
 
         }
-        // transport/defra/passenger/flight
-        // transport/defra/route 
-        // transport/defra/vehicle
-        // transport/defra/vehicle/class
-        // transport/defra/vehicle/hgv
-        // transport/defra/fuel
-        // transport/defra/passenger
+ 
 
         /// <summary>
         /// http://www.amee.com/developer/docs/ch03.php
+        /// http://www.amee.com/developer/docs/ch04.php
         /// 
         /// </summary>
         [Test]

@@ -1,0 +1,203 @@
+
+
+
+
+<!DOCTYPE HTML>
+<html lang="en">
+<head> 
+<title>Usage of  /access-tokens/{accessTokens}  - Stack Exchange API</title>
+<link rel="stylesheet" href="/Content/apiv2/all.css?v=43e8736b9fef">
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+
+    <script type="text/javascript" src="/Content/apiv2/js/jquery-ui-1.8.16.custom.min.js"></script>
+    <script type="text/javascript" src="/Content/apiv2/js/console.js?v=2c1ccd33316c"></script>
+    <script type="text/javascript" src="/Content/apiv2/js/prettify.js"></script>
+
+    
+
+    
+    <script type="text/javascript">
+        var parameters = {"page":"number","pagesize":"number","accessTokens":"string list"};
+        var method = "/2.0/access-tokens/{accessTokens}";
+        var filterName = "default";
+        var filter = {"access_token":[{"field":"access_token","included":true},{"field":"account_id","included":true},{"field":"expires_on_date","included":true},{"field":"scope","included":true}],"answer":[{"field":"answer_id","included":true},{"field":"body","included":false},{"field":"comments","included":false},{"field":"community_owned_date","included":true},{"field":"creation_date","included":true},{"field":"down_vote_count","included":false},{"field":"is_accepted","included":true},{"field":"last_activity_date","included":true},{"field":"last_edit_date","included":true},{"field":"link","included":false},{"field":"locked_date","included":true},{"field":"owner","included":true},{"field":"question_id","included":true},{"field":"score","included":true},{"field":"title","included":false},{"field":"up_vote_count","included":false}],"":[{"field":"backoff","included":true},{"field":"error_id","included":true},{"field":"error_message","included":true},{"field":"error_name","included":true},{"field":"has_more","included":true},{"field":"items","included":true},{"field":"page","included":false},{"field":"page_size","included":false},{"field":"quota_max","included":true},{"field":"quota_remaining","included":true},{"field":"total","included":false},{"field":"type","included":false}],"badge":[{"field":"award_count","included":true},{"field":"badge_id","included":true},{"field":"badge_type","included":true},{"field":"description","included":false},{"field":"link","included":true},{"field":"name","included":true},{"field":"rank","included":true},{"field":"user","included":true}],"badge_count":[{"field":"bronze","included":true},{"field":"gold","included":true},{"field":"silver","included":true}],"comment":[{"field":"body","included":false},{"field":"comment_id","included":true},{"field":"creation_date","included":true},{"field":"edited","included":true},{"field":"link","included":false},{"field":"owner","included":true},{"field":"post_id","included":true},{"field":"post_type","included":false},{"field":"reply_to_user","included":true},{"field":"score","included":true}],"error":[{"field":"description","included":true},{"field":"error_id","included":true},{"field":"error_name","included":true}],"event":[{"field":"creation_date","included":true},{"field":"event_id","included":true},{"field":"event_type","included":true},{"field":"excerpt","included":false},{"field":"link","included":false}],"filter":[{"field":"filter","included":true},{"field":"filter_type","included":true},{"field":"included_fields","included":true}],"inbox_item":[{"field":"answer_id","included":true},{"field":"body","included":false},{"field":"comment_id","included":true},{"field":"creation_date","included":true},{"field":"is_unread","included":true},{"field":"item_type","included":true},{"field":"link","included":true},{"field":"question_id","included":true},{"field":"site","included":true},{"field":"title","included":true}],"info":[{"field":"answers_per_minute","included":true},{"field":"api_revision","included":true},{"field":"badges_per_minute","included":true},{"field":"new_active_users","included":true},{"field":"questions_per_minute","included":true},{"field":"site","included":false},{"field":"total_accepted","included":true},{"field":"total_answers","included":true},{"field":"total_badges","included":true},{"field":"total_comments","included":true},{"field":"total_questions","included":true},{"field":"total_unanswered","included":true},{"field":"total_users","included":true},{"field":"total_votes","included":true}],"migration_info":[{"field":"on_date","included":true},{"field":"other_site","included":true},{"field":"question_id","included":true}],"network_user":[{"field":"account_id","included":true},{"field":"answer_count","included":true},{"field":"badge_counts","included":true},{"field":"creation_date","included":true},{"field":"last_access_date","included":true},{"field":"question_count","included":true},{"field":"reputation","included":true},{"field":"site_name","included":true},{"field":"site_url","included":true},{"field":"user_id","included":true},{"field":"user_type","included":false}],"post":[{"field":"body","included":false},{"field":"comments","included":false},{"field":"creation_date","included":true},{"field":"down_vote_count","included":false},{"field":"last_activity_date","included":true},{"field":"last_edit_date","included":true},{"field":"owner","included":true},{"field":"post_id","included":true},{"field":"post_type","included":true},{"field":"score","included":true},{"field":"up_vote_count","included":false}],"privilege":[{"field":"description","included":true},{"field":"reputation","included":true},{"field":"short_description","included":true}],"question":[{"field":"accepted_answer_id","included":true},{"field":"answer_count","included":true},{"field":"answers","included":false},{"field":"body","included":false},{"field":"bounty_amount","included":true},{"field":"bounty_closes_date","included":true},{"field":"closed_date","included":true},{"field":"closed_reason","included":true},{"field":"comments","included":false},{"field":"community_owned_date","included":true},{"field":"creation_date","included":true},{"field":"down_vote_count","included":false},{"field":"favorite_count","included":false},{"field":"is_answered","included":true},{"field":"last_activity_date","included":true},{"field":"last_edit_date","included":true},{"field":"link","included":true},{"field":"locked_date","included":true},{"field":"migrated_from","included":true},{"field":"migrated_to","included":true},{"field":"owner","included":true},{"field":"protected_date","included":true},{"field":"question_id","included":true},{"field":"score","included":true},{"field":"tags","included":true},{"field":"title","included":true},{"field":"up_vote_count","included":false},{"field":"view_count","included":true}],"question_timeline":[{"field":"comment_id","included":true},{"field":"creation_date","included":true},{"field":"down_vote_count","included":true},{"field":"owner","included":true},{"field":"post_id","included":true},{"field":"question_id","included":true},{"field":"revision_guid","included":true},{"field":"timeline_type","included":true},{"field":"up_vote_count","included":true},{"field":"user","included":true}],"related_site":[{"field":"name","included":true},{"field":"relation","included":true},{"field":"site_url","included":true}],"reputation":[{"field":"link","included":false},{"field":"on_date","included":true},{"field":"post_id","included":true},{"field":"post_type","included":true},{"field":"reputation_change","included":true},{"field":"title","included":false},{"field":"user_id","included":true},{"field":"vote_type","included":true}],"revision":[{"field":"body","included":false},{"field":"comment","included":true},{"field":"creation_date","included":true},{"field":"is_rollback","included":true},{"field":"last_body","included":false},{"field":"last_tags","included":true},{"field":"last_title","included":true},{"field":"post_id","included":true},{"field":"post_type","included":true},{"field":"revision_guid","included":true},{"field":"revision_number","included":true},{"field":"revision_type","included":true},{"field":"set_community_wiki","included":true},{"field":"tags","included":true},{"field":"title","included":true},{"field":"user","included":true}],"shallow_user":[{"field":"display_name","included":true},{"field":"link","included":true},{"field":"profile_image","included":true},{"field":"reputation","included":true},{"field":"user_id","included":true},{"field":"user_type","included":true}],"site":[{"field":"aliases","included":true},{"field":"api_site_parameter","included":true},{"field":"audience","included":true},{"field":"closed_beta_date","included":true},{"field":"favicon_url","included":true},{"field":"icon_url","included":true},{"field":"launch_date","included":true},{"field":"logo_url","included":true},{"field":"markdown_extensions","included":true},{"field":"name","included":true},{"field":"open_beta_date","included":true},{"field":"related_sites","included":true},{"field":"site_state","included":true},{"field":"site_type","included":true},{"field":"site_url","included":true},{"field":"styling","included":true},{"field":"twitter_account","included":true}],"styling":[{"field":"link_color","included":true},{"field":"tag_background_color","included":true},{"field":"tag_foreground_color","included":true}],"suggested_edit":[{"field":"approval_date","included":true},{"field":"body","included":false},{"field":"comment","included":true},{"field":"creation_date","included":true},{"field":"post_id","included":true},{"field":"post_type","included":true},{"field":"proposing_user","included":true},{"field":"rejection_date","included":true},{"field":"suggested_edit_id","included":true},{"field":"tags","included":true},{"field":"title","included":true}],"tag":[{"field":"count","included":true},{"field":"has_synonyms","included":true},{"field":"is_moderator_only","included":true},{"field":"is_required","included":true},{"field":"last_activity_date","included":false},{"field":"name","included":true},{"field":"user_id","included":true}],"tag_score":[{"field":"post_count","included":true},{"field":"score","included":true},{"field":"user","included":true}],"tag_synonym":[{"field":"applied_count","included":true},{"field":"creation_date","included":true},{"field":"from_tag","included":true},{"field":"last_applied_date","included":true},{"field":"to_tag","included":true}],"tag_wiki":[{"field":"body","included":false},{"field":"body_last_edit_date","included":true},{"field":"excerpt","included":true},{"field":"excerpt_last_edit_date","included":true},{"field":"last_body_editor","included":false},{"field":"last_excerpt_editor","included":false},{"field":"tag_name","included":true}],"top_tag":[{"field":"answer_count","included":true},{"field":"answer_score","included":true},{"field":"question_count","included":true},{"field":"question_score","included":true},{"field":"tag_name","included":true}],"user":[{"field":"about_me","included":false},{"field":"account_id","included":true},{"field":"age","included":true},{"field":"answer_count","included":false},{"field":"badge_counts","included":true},{"field":"creation_date","included":true},{"field":"display_name","included":true},{"field":"down_vote_count","included":false},{"field":"is_employee","included":true},{"field":"last_access_date","included":true},{"field":"last_modified_date","included":true},{"field":"link","included":true},{"field":"location","included":true},{"field":"profile_image","included":true},{"field":"question_count","included":false},{"field":"reputation","included":true},{"field":"reputation_change_day","included":true},{"field":"reputation_change_month","included":true},{"field":"reputation_change_quarter","included":true},{"field":"reputation_change_week","included":true},{"field":"reputation_change_year","included":true},{"field":"timed_penalty_date","included":true},{"field":"up_vote_count","included":false},{"field":"user_id","included":true},{"field":"user_type","included":true},{"field":"view_count","included":false},{"field":"website_url","included":true}],"user_timeline":[{"field":"badge_id","included":true},{"field":"comment_id","included":true},{"field":"creation_date","included":true},{"field":"detail","included":true},{"field":"link","included":false},{"field":"post_id","included":true},{"field":"post_type","included":true},{"field":"suggested_edit_id","included":true},{"field":"timeline_type","included":true},{"field":"title","included":true},{"field":"user_id","included":true}]};
+        var dependentTypes = ["access_token",""];
+        var dontRequireSite = true;
+    </script>
+
+    <script type="text/javascript">
+        var filterTypeLinks = {"answer.owner":["/docs/types/shallow-user","shallow_user"],"badge.user":["/docs/types/shallow-user","shallow_user"],"comment.owner":["/docs/types/shallow-user","shallow_user"],"comment.reply_to_user":["/docs/types/shallow-user","shallow_user"],"inbox_item.site":["/docs/types/site","site"],"network_user.badge_counts":["/docs/types/badge-count","badge_count"],"post.owner":["/docs/types/shallow-user","shallow_user"],"question.migrated_to":["/docs/types/migration-info","migration_info"],"question.migrated_from":["/docs/types/migration-info","migration_info"],"question.owner":["/docs/types/shallow-user","shallow_user"],"migration_info.other_site":["/docs/types/site","site"],"info.site":["/docs/types/site","site"],"site.styling":["/docs/types/styling","styling"],"question_timeline.user":["/docs/types/shallow-user","shallow_user"],"question_timeline.owner":["/docs/types/shallow-user","shallow_user"],"revision.user":["/docs/types/shallow-user","shallow_user"],"suggested_edit.proposing_user":["/docs/types/shallow-user","shallow_user"],"tag_score.user":["/docs/types/shallow-user","shallow_user"],"tag_wiki.last_body_editor":["/docs/types/shallow-user","shallow_user"],"tag_wiki.last_excerpt_editor":["/docs/types/shallow-user","shallow_user"],"user.badge_counts":["/docs/types/badge-count","badge_count"]};
+
+        var state = window.location.hash;
+        if (state && state.charAt(0) == '#') {
+            state = state.substring(1);
+        }
+
+        // all of these parameters are set in the ConsoleParameters section
+        $(function () {
+            StackExchange.api.v2.console.init(
+                parameters,
+                method,
+                $('#console'),
+                filterName,
+                filter,
+                dependentTypes,
+                typeof (dontRequireSite) != 'undefined',
+                state,
+                filterTypeLinks
+            ); 
+        });
+    </script>
+
+</head>
+<body>
+    <div class="intro">
+	    <div class="wrapper">
+            <a href="/" class="logo">Stack Exchange</a>
+        
+            <div class="nav">
+                <ul>
+                    <li><a href="/docs">Documentation</a></li>
+                </ul>
+            </div>
+	    </div>
+    </div>
+
+    <div class="content">
+        <div class="wrapper">
+            <div class="mainbar">
+            
+
+
+
+
+
+<div class="subheader">
+    <h1>Usage of  /access-tokens/{accessTokens} </h1>
+</div>
+
+<div class="content-page">
+    <h2>Discussion</h2>
+    <div class="type-discussion">
+        
+<p>Reads the properties for a set of access tokens.</p>
+
+<p><code>{accessTokens}</code> can contain up to 20 access tokens.  These are obtained by <a href="/docs/authentication">authenticating a user using OAuth 2.0</a>.</p>
+
+        
+    <p>This method returns a list of <a href="/docs/types/access-token">access_tokens</a>.</p>
+
+    </div>
+
+
+    <h2>Try It</h2>
+    <div id="console" class="console">
+        <div class="console-header">
+            <div class="console-header-left">
+                <div class="site">
+                    <div class="edit-site" title="site">
+                        <span class="current-site">Stack Overflow</span> <a href="#" class="show-site-editor" title="edit-site">[edit]</a>
+                        <span class="site-param" style="display: none;">stackoverflow</span>
+                        <span class="site-url" style="display:none;">http://stackoverflow.com</span>
+                    </div>
+                    <div class="site-editor">
+                        <input type="text" class="site-picker" />
+                    </div>
+                </div>
+                <span style="display:none" class="access-token-url">
+
+                    https://stackexchange.com/oauth/dialog?client_id=1&amp;key=U4DMV*8nvpm3EOpvf69Rxw((&amp;redirect_uri=https%3a%2f%2fapi.stackexchange.com%2fdocs%2foauth_landing
+                </span>
+                <span style="display:none" class="app-key">
+                    U4DMV*8nvpm3EOpvf69Rxw((
+                </span>
+                <span style="display:none" class="scope">
+                </span>
+                <span class="req-url"></span>
+            </div>
+            <div class="console-header-right">
+                <div class="permalink"><a href="#">link</a></div>
+                <div class="console-header-separator"></div>
+                <div class="filter-link">
+                    <div class="edit-filter" title="filter">
+                        <span class="current-filter">default</span> filter <a href="#" class="expand-filter-popup" title="edit filter">[edit] &#9660;</a>
+                    </div>
+                    <div class="editing-filter">
+                        <input type="text" class="manual-filter" /> filter <a href="#" class="collapse-filter-popup">&#9650;</a>
+                    </div>
+                </div>
+            </div>
+            <br style="clear: both;" />
+        </div>
+        <div class="popup-container">
+            <div class="permalink-popup">
+                <input type="text" />
+            </div>
+            <div class="filter-popup">
+                <div class="filter-content">
+                    <div class="filter-vis"></div>
+                    <a href="#" class="filter-invis-link">show [n] types not returned by  /access-tokens/{accessTokens} </a>
+                    <div class="filter-invis"></div>
+                    <div class="unsafe-container">
+                        <input id="filter-unsafe" type="checkbox" name="unsafe" class="filter-unsafe" />
+                        <label for="filter-unsafe">make unsafe <a href="/docs/filters" target="_blank">(?)</a></label>
+                    </div>
+                </div>
+                <div class="filter-controls">
+                    <div class="filter-controls-left">
+                        <a href="#" class="filter-unselect-all">unselect all</a>
+                    </div>
+                    <div class="filter-controls-right">
+                        <a href="#" class="filter-cancel">cancel</a>
+                        &nbsp;&nbsp;
+                        <input type="button" value="save" class="filter-save" />
+                        <input type="button" value="saving&hellip;" class="filter-saving" disabled="disabled" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="parameters"></div>
+        <div class="fetched-url"></div>
+        <div class="run-button-container">
+            <button class="run-button" onclick="StackExchange.api.v2.console.run($('#console'))">Run</button>
+        </div>
+        <br style="clear: both;" />
+        <div class="result">
+            <pre class="prettyprint lang-js"><code></code></pre>
+        </div>
+    </div>
+</div>
+            </div>
+
+
+
+<div class="sidebar">
+    <div class="module help">
+        <ul>
+            <li><a href="/docs">All Documentation</a></li>
+            <li><a href="/docs/authentication">Authentication</a></li>
+            <li><a href="/docs/vectors">Batching Requests</a></li>
+            <li><a href="/docs/change-log">Change Log</a></li>
+            <li><a href="/docs/min-max">Complex Queries</a></li>
+            <li><a href="/docs/compression">Compression</a></li>
+            <li><a href="/docs/dates">Dates</a></li>
+            <li><a href="/docs/error-handling">Error Handling</a></li>
+            <li><a href="/docs/filters">Filters</a></li>
+            <li><a href="/docs/js-lib">Javascript SDK</a></li>
+            <li><a href="/docs/paging">Paging</a></li>
+            <li><a href="/docs/wrapper">Response Wrapper</a></li>
+            <li><a href="/docs/throttle">Rate Limiting</a></li>
+            <li><a href="/docs/user-types">Users</a></li>
+        </ul>
+    </div>
+</div>        </div>
+    </div>
+
+<div class="footer">
+	<div class="wrapper">
+		 <p class="footer-links"><a href="http://stackexchange.com/about">about</a> <a href="http://blog.stackexchange.com">blog</a> <a href="http://stackexchange.com/legal">legal</a> <a href="mailto:team+api@stackexchange.com">contact us</a> <a href="http://stackapps.com/">feedback always welcome</a></p>
+
+            <p style="margin-bottom: 0;">site design / logo &copy; 2012 stack exchange, inc; user contributions licensed under <a href="http://creativecommons.org/licenses/by-sa/3.0/" rel="license">cc-wiki</a> with <a href="http://blog.stackoverflow.com/2009/06/attribution-required/" rel="license">attribution required</a></p>
+    </div>
+</div></body>
+</html>

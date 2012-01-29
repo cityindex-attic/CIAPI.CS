@@ -1,0 +1,309 @@
+
+
+
+
+<!DOCTYPE HTML>
+<html lang="en">
+<head> 
+<title>Stack Exchange API</title>
+<link rel="stylesheet" href="/Content/apiv2/all.css?v=43e8736b9fef">
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+
+</head>
+<body>
+    <div class="intro">
+	    <div class="wrapper">
+            <a href="/" class="logo">Stack Exchange</a>
+        
+            <div class="nav">
+                <ul>
+                    <li><a href="/docs" class="youarehere">Documentation</a></li>
+                </ul>
+            </div>
+	    </div>
+    </div>
+
+    <div class="content">
+        <div class="wrapper">
+            <div class="mainbar">
+            
+
+
+<div class="content-section">
+    <p>This is the documentation for the v2.0 <b>read-only</b> (with optional <a href="/docs/authentication">authentication</a>) Stack Exchange API.  If you have additional questions, or believe
+    you have encountered a bug, don't hesitate to post a question on <a href="http://stackapps.com">Stack Apps</a>.</p>
+
+    <p>If your application is in a runnable state (even a beta one), Stack Apps is also the place to <a href="http://stackapps.com/questions/7/how-to-list-your-application-library-wrapper-here">list it</a>.</p>
+</div>
+
+<h2>General</h2>
+<div class="content-section">
+    <p>All API responses are <a href="http://en.wikipedia.org/wiki/JSON">JSON</a>, we do support <a href="http://en.wikipedia.org/wiki/JSONP">JSONP</a> with the <code>callback</code> query parameter.
+    Every response in the API is returned in a common <a href="/docs/wrapper">"wrapper" object</a>, for easier and more consistent parsing.</p>
+
+    <p>Additionally, all API responses are compressed.  The <code>Content-Encoding</code> header is always set, but some proxies will strip this out.  The proper way to decode API responses can be found <a href="/docs/compression">here</a>.</p>
+
+    <p>API usage is subject to a <a href="/docs/throttle">number of throttles</a>.  In general, applications should strive to make as few
+    requests as possible to satisfy their function.</p>
+
+    <p>API responses are heavily cached.  Polling for changes should be done sparingly in any case, and polling at a rate faster than once a minute (for semantically identical requests) is considered abusive.</p>
+
+    <p>Developers can trim API responses down to just the fields they are interested in using <a href="/docs/filters">custom filters</a>.  Many types have fields that
+    are not normally returned (question bodies, for example) that can likewise be requested via a custom filter.</p>
+
+    <p>There are a few methods which require that the application be acting on behalf of a user in order to be invoked.  For authentication purposes,
+    the Stack Exchange API <a href="/docs/authentication">implements OAuth 2.0</a> (templated on Facebook's implementation in pursuit of developer
+    familiarity).</p>
+
+    <p>A number of methods in the Stack Exchange API accept dates as parameters and return dates as properties, the format of these dates is <a href="/docs/dates">consistent
+    and documented</a>.  The cliff-notes version is, all dates in the Stack Exchange API are in <a href="http://en.wikipedia.org/wiki/Unix_time">unix epoch time</a>.</p>
+
+    <p>Unless otherwise noted, the maximum size of any page is <code>100</code>, any <code>{ids}</code> parameter likewise is capped at <code>100</code> elements, all indexes
+    start at 1.</p>
+        
+    <p>If a parameter name is plural it accepts <a href="/docs/vectors">vectorized requests</a>, otherwise a single value may be passed. 
+    Compare <a href="/docs/user-inbox">users/{id}/inbox</a> and <a href="/docs/users-by-ids">/users/{ids}</a>.</p>
+
+    <p>It is possible to compose <a href="/docs/min-max">reasonably complex queries</a> against the live Stack Exchange sites using the <code>min</code>, <code>max</code>, 
+    <code>fromdate</code>, <code>todate</code>, and <code>sort</code> parameters.  Most, but not all, methods accept some or all of these parameters,
+    the documentation for individual methods will highlight which do.  Most methods also have a common set of <a href="/docs/paging">paging parameters</a>.</p>
+</div>
+
+<div class="subheader">
+    <a name="docs"></a>
+    <div id="tabs">
+
+        <a class="youarehere" href="/docs?tab=category#docs" title="group by concept">by category</a>
+        <a class="" href="/docs?tab=type#docs" title="group by type">by type</a>
+    </div>
+</div>
+
+
+<h2>Per-Site Methods</h2>
+<div class="content-section">
+    <p>Each of these methods operates on a single site at a time, identified <code>site</code> parameter.  This parameter can be the full domain name (ie. "stackoverflow.com"),
+    or a short form identified by <code>api_site_parameter</code> on the <a href="/docs/types/site">site object</a>.</p>
+</div>
+
+<h3>Answers</h3>
+
+<ul>
+    <li><a href="/docs/answers">/answers</a> &ndash; Get all answers on the site.</li>
+    <li><a href="/docs/answers-by-ids">/answers/{ids}</a> &ndash; Get answers identified by a set of ids.</li>
+    <li><a href="/docs/comments-on-answers">/answers/{ids}/comments</a> &ndash; Get comments on the answers identified by a set of ids.</li>
+</ul>
+
+<h3>Badges</h3>
+
+<ul>
+    <li><a href="/docs/badges">/badges</a>  &ndash; Get all badges on the site, in alphabetical order.</li>
+    <li><a href="/docs/badges-by-ids">/badges/{ids}</a>  &ndash; Get the badges identified by ids.</li>
+    <li><a href="/docs/badges-by-name">/badges/name</a> &ndash; Get all non-tagged-based badges in alphabetical order.</li>
+    <li><a href="/docs/badge-recipients">/badges/recipients</a> &ndash; Get badges recently awarded on the site.</li>
+    <li><a href="/docs/badge-recipients-by-ids">/badges/{ids}/recipients</a> &ndash; Get the recent recipients of the given badges.</li>
+    <li><a href="/docs/badges-by-tag">/badges/tags</a> &ndash; Get all tagged-based badges in alphabetical order.</li>
+</ul>
+
+<h3>Comments</h3>
+
+<ul>
+    <li><a href="/docs/comments">/comments</a> &ndash; Get all comments on the site.</li>
+    <li><a href="/docs/comments-by-ids">/comments/{ids}</a> &ndash; Get comments identified by a set of ids.</li>
+</ul>
+
+<h3>Errors</h3>
+
+<ul>
+    <li><a href="/docs/errors">/errors</a> &ndash; Get descriptions of all the errors that the API could return.</li>
+    <li><a href="/docs/simulate-error">/errors/{id}</a> &ndash; Simulate an API error for testing purposes.</li>
+</ul>
+
+<h3>Events</h3>
+
+<ul>
+    <li><a href="/docs/events">/events</a> &ndash; Get recent events that have occurred on the site.  Effectively a stream of new users and content. <span class="need-auth" title="this method requires an access_token">authentication required</span></li>
+</ul>
+
+<h3>Posts</h3>
+
+<ul>
+    <li><a href="/docs/posts">/posts</a> &ndash; Get all posts (questions and answers) in the system.</li>
+    <li><a href="/docs/posts-by-ids">/posts/{ids}</a> &ndash; Get all posts identified by a set of ids.  Useful for when the type of post (question or answer) is not known.</li>
+    <li><a href="/docs/comments-on-posts">/posts/{ids}/comments</a> &ndash; Get comments on the posts (question or answer) identified by a set of ids.</li>
+    <li><a href="/docs/revisions-by-ids">/posts/{ids}/revisions</a> &ndash; Get revisions on the set of posts in ids.</li>
+    <li><a href="/docs/posts-on-suggested-edits">/posts/{ids}/suggested-edits</a> &ndash; Get suggested edits on the set of posts in ids.</li>
+</ul>
+
+<h3>Privileges</h3>
+    
+<ul>
+    <li><a href="/docs/privileges">/privileges</a> &ndash; Get all the privileges available on the site.</li>
+</ul>
+
+<h3>Questions</h3>
+
+<ul>
+    <li><a href="/docs/questions">/questions</a> &ndash; Get all questions on the site.</li>
+    <li><a href="/docs/questions-by-ids">/questions/{ids}</a> &ndash; Get the questions identified by a set of ids.</li>
+    <li><a href="/docs/answers-on-questions">/questions/{ids}/answers</a> &ndash; Get the answers to the questions identified by a set of ids.</li>
+    <li><a href="/docs/comments-on-questions">/questions/{ids}/comments</a> &ndash; Get the comments on the questions identified by a set of ids.</li>
+    <li><a href="/docs/linked-questions">/questions/{ids}/linked</a> &ndash; Get the questions that link to the questions identified by a set of ids.</li>
+    <li><a href="/docs/related-questions">/questions/{ids}/related</a> &ndash; Get the questions that are related to the questions identified by a set of ids.</li>
+    <li><a href="/docs/questions-timeline">/questions/{ids}/timeline</a> &ndash; Get the timelines of the questions identified by a set of ids.</li>
+    <li><a href="/docs/unanswered-questions">/questions/unanswered</a> &ndash; Get all questions the site considers unanswered.</li>
+    <li><a href="/docs/no-answer-questions">/questions/no-answers</a> &ndash; Get all questions on the site with <b>no</b> answers.</li>
+</ul>
+
+<h3>Revisions</h3>
+
+<ul>
+    <li><a href="/docs/revisions-by-guids">/revisions/{ids}</a> &ndash; Get all revisions identified by a set of ids.</li>
+</ul>
+
+<h3>Search</h3>
+
+<ul>
+    <li><a href="/docs/search">/search</a> &ndash; Search the site for questions meeting certain criteria.</li>
+    <li><a href="/docs/similar">/similar</a> &ndash; Search the site based on similarity to a title.</li>
+</ul>
+
+<h3>Suggested Edits</h3>
+
+<ul>
+    <li><a href="/docs/suggested-edits">/suggested-edits</a> &ndash; Get all the suggested edits on the site.</li>
+    <li><a href="/docs/suggested-edits-by-ids">/suggested-edits/{ids}</a> &ndash; Get the suggested edits identified by a set of ids.</li>
+</ul>
+
+<h3>Info</h3>
+<ul>
+    <li><a href="/docs/info">/info</a> &ndash; Get information about the entire site.</li>
+</ul>
+
+<h3>Tags</h3>
+
+<ul>
+    <li><a href="/docs/tags">/tags</a> &ndash; Get the tags on the site.</li>
+    <li><a href="/docs/tag-synonyms">/tags/synonyms</a> &ndash; Get all the tag synonyms on the site.</li>
+    <li><a href="/docs/faqs-by-tags">/tags/{tags}/faq</a> &ndash; Get frequently asked questions in a set of tags.</li>
+    <li><a href="/docs/related-tags">/tags/{tags}/related</a> &ndash; Get related tags, based on common tag pairings.</li>
+    <li><a href="/docs/synonyms-by-tags">/tags/{tags}/synonyms</a> &ndash; Get the synonyms for a specific set of tags.</li>
+    <li><a href="/docs/top-answerers-on-tags">/tags/{tag}/top-answerers/{period}</a> &ndash; Get the top answer posters in a specific tag, either in the last month or for all time.</li>
+    <li><a href="/docs/top-askers-on-tags">/tags/{tag}/top-askers/{period}</a> &ndash; Get the top question askers in a specific tag, either in the last month or for all time.</li>
+    <li><a href="/docs/wikis-by-tags">/tags/{tags}/wikis</a> &ndash; Get the wiki entries for a set of tags.</li>
+</ul>
+
+<h3>Users</h3>
+
+<div class="content-section">
+    <p>All user methods that take an <code>{ids}</code> parameter have a <code>/me</code> equivalent method that takes an <code>access_token</code> instead.
+    These methods are provided for developer convenience, with the exception of plain <a href="/docs/me">/me</a>, which is actually necessary for discovering
+    which user <a href="/docs/authentication">authenticated</a> to an application.</p>
+</div>
+
+<ul>
+    <li><a href="/docs/users">/users</a> &ndash; Get all users on the site.</li>
+    <li><a href="/docs/users-by-ids">/users/{ids}</a> or <a href="/docs/me">/me</a> &ndash; Get the users identified by a set of ids.</li>
+    <li><a href="/docs/answers-on-users">/users/{ids}/answers</a> or <a href="/docs/me-answers">/me/answers</a> &ndash; Get the answers posted by the users identified by a set of ids.</li>
+    <li><a href="/docs/badges-on-users">/users/{ids}/badges</a> or <a href="/docs/me-badges">/me/badges</a> &ndash; Get the badges earned by the users identified by a set of ids.</li>
+    <li><a href="/docs/comments-on-users">/users/{ids}/comments</a> or <a href="/docs/me-comments">/me/comments</a> &ndash; Get the comments posted by the users identified by a set of ids.</li>
+    <li><a href="/docs/comments-by-users-to-user">/users/{ids}/comments/{toid}</a> or <a href="/docs/me-comments-to">/me/comments/{toid}</a> &ndash; Get the comments posted by a set of users in reply to another user.</li>
+    <li><a href="/docs/favorites-on-users">/users/{ids}/favorites</a> or <a href="/docs/me-favorites">/me/favorites</a> &ndash; Get the questions favorited by users identified by a set of ids.</li>
+    <li><a href="/docs/mentions-on-users">/users/{ids}/mentioned</a> or <a href="/docs/me-mentioned">/me/mentioned</a> &ndash; Get the comments that mention one of the users identified by a set of ids.</li>
+    <li><a href="/docs/privileges-on-users">/users/{id}/privileges</a> or <a href="/docs/me-privileges">/me/privileges</a> &ndash; Get the privileges the given user has on the site.</li>
+    <li><a href="/docs/questions-on-users">/users/{ids}/questions</a> or <a href="/docs/me-questions">/me/questions</a> &ndash; Get the questions asked by the users identified by a set of ids.</li>
+    <li><a href="/docs/no-answer-questions-on-users">/users/{ids}/questions/no-answers</a> or <a href="/docs/me-no-answer-questions">/me/questions/no-answers</a> &ndash; Get the questions asked by a set of users, which have <b>no</b> answers.</li>
+    <li><a href="/docs/unaccepted-questions-on-users">/users/{ids}/questions/unaccepted</a> or <a href="/docs/me-unaccepted-questions">/me/questions/unaccepted</a> &ndash; Get the questions asked by a set of users, which have at least one answer but no accepted answer.</li>
+    <li><a href="/docs/unanswered-questions-on-users">/users/{ids}/questions/unanswered</a> or <a href="/docs/me-unanswered-questions">/me/questions/unanswered</a> &ndash; Get the questions asked by a set of users, which are not considered to be adequately answered.</li>
+    <li><a href="/docs/reputation-on-users">/users/{ids}/reputation</a> or <a href="/docs/me-reputation">/me/reputation</a> &ndash; Get a subset of the reputation changes experienced by the users identified by a set of ids.</li>
+    <li><a href="/docs/suggested-edits-on-users">/users/{ids}/suggested-edits</a> or <a href="/docs/me-suggested-edits">/me/suggested-edits</a> &ndash; Get the suggested edits provided by this user.</li>
+    <li><a href="/docs/tags-on-users">/users/{ids}/tags</a> or <a href="/docs/me-tags">/me/tags</a> &ndash; Get the tags that the users (identified by a set of ids) have been active in.</li>
+    <li><a href="/docs/top-user-answers-in-tags">/users/{id}/tags/{tags}/top-answers</a> or <a href="/docs/me-tags-top-answers">/me/tags/{tags}/top-answers</a> &ndash; get the top answers a user has posted on questions with a set of tags.</li>
+    <li><a href="/docs/top-user-questions-in-tags">/users/{id}/tags/{tags}/top-questions</a> or <a href="/docs/me-tags-top-questions">/me/tags/{tags}/top-questions</a> &ndash; get the top questions a user has posted on questions with a set of tags.</li>
+    <li><a href="/docs/timeline-on-users">/users/{ids}/timeline</a> or <a href="/docs/me-timeline">/me/timeline</a> &ndash; Get a subset of the actions of that have been taken by the users identified by a set of ids.</li>
+    <li><a href="/docs/top-answer-tags-on-users">/users/{id}/top-answer-tags</a> or <a href="/docs/me-top-answer-tags">/me/top-answer-tags</a> &ndash; Get the top 30 tags (by score) a single user has posted answers in.</li>
+    <li><a href="/docs/top-question-tags-on-users">/users/{id}/top-question-tags</a> or <a href="/docs/me-top-question-tags">/me/top-question-tags</a> &ndash; Get the top 30 tags (by score) a single user has asked questions in.</li>
+    <li><a href="/docs/moderators">/users/moderators</a> &ndash; Get the users who have moderation powers on the site.</li>
+    <li><a href="/docs/elected-moderators">/users/moderators/elected</a> &ndash; Get the users who have been elected moderators on the site.</li>
+    <li><a href="/docs/user-inbox">/users/{id}/inbox</a> or <a href="/docs/me-inbox">/me/inbox</a> &ndash; Get a user's inbox. <span class="need-auth" title="this method requires an access_token, with the read_inbox scope">authentication required</span></li>
+    <li><a href="/docs/user-unread-inbox">/users/{id}/inbox/unread</a> or <a href="/docs/me-unread-inbox">/me/inbox/unread</a> &ndash; Get the unread items in a user's inbox.  <span class="need-auth" title="this method requires an access_token, with the read_inbox scope">authentication required</span></li>
+</ul>
+
+<h2>Network Methods</h2>
+
+<div class="content-section">
+    <p>These methods return data across the entire Stack Exchange network of sites.  Accordingly, you do not pass a site parameter to them.</p>
+</div>
+
+<h3>Access Tokens</h3>
+
+<ul>
+    <li><a href="/docs/invalidate-access-tokens">/access-tokens/{accessTokens}/invalidate</a> &ndash; Allows an application to dispose of <code>access_tokens</code> when it is done with them.</li>
+    <li><a href="/docs/read-access-tokens">/access-tokens/{accessTokens}</a> &ndash; Allows an application to inspect <code>access_tokens</code> it has, useful for debugging.</li>
+</ul>
+
+<h3>Applications</h3>
+
+<ul>
+    <li><a href="/docs/application-de-authenticate">/apps/{accessTokens}/de-authenticate</a> &ndash; Allows an application to de-authorize itself for a set of users.</li>
+</ul>
+
+<h3>Filters</h3>
+
+<ul>
+    <li><a href="/docs/create-filter">/filters/create</a> &ndash; Create a new <a href="/docs/filters">filter</a>.</li>
+    <li><a href="/docs/read-filter">/filters/{filters}</a> &ndash; Decode a set of filters, useful for debugging purposes.</li>
+</ul>
+
+<h3>Inbox</h3>
+
+<ul>
+    <li><a href="/docs/inbox">/inbox</a> &ndash; Get a user's inbox, outside of the context of a site. <span class="need-auth" title="this method requires an access_token, with the read_inbox scope">authentication required</span></li>
+    <li><a href="/docs/inbox-unread">/inbox/unread</a> &ndash; Get the unread items in a user's inbox, outside of the context of a site. <span class="need-auth" title="this method requires an access_token, with the read_inbox scope">authentication required</span></li>
+</ul>
+
+<h3>Sites</h3>
+
+<ul>
+    <li><a href="/docs/sites">/sites</a> &ndash; Get all the sites in the Stack Exchange network.</li>
+</ul>
+
+<h3>Users</h3>
+
+<ul>
+    <li><a href="/docs/associated-users">/users/{id}/associated</a> or <a href="/docs/me-associated-users">/me/associated</a> &ndash; Get a user's associated accounts.</li>
+</ul>
+
+            </div>
+
+
+
+<div class="sidebar">
+    <div class="module help">
+        <ul>
+            <li><a href="/docs" class="youarehere">All Documentation</a></li>
+            <li><a href="/docs/authentication">Authentication</a></li>
+            <li><a href="/docs/vectors">Batching Requests</a></li>
+            <li><a href="/docs/change-log">Change Log</a></li>
+            <li><a href="/docs/min-max">Complex Queries</a></li>
+            <li><a href="/docs/compression">Compression</a></li>
+            <li><a href="/docs/dates">Dates</a></li>
+            <li><a href="/docs/error-handling">Error Handling</a></li>
+            <li><a href="/docs/filters">Filters</a></li>
+            <li><a href="/docs/js-lib">Javascript SDK</a></li>
+            <li><a href="/docs/paging">Paging</a></li>
+            <li><a href="/docs/wrapper">Response Wrapper</a></li>
+            <li><a href="/docs/throttle">Rate Limiting</a></li>
+            <li><a href="/docs/user-types">Users</a></li>
+        </ul>
+    </div>
+</div>        </div>
+    </div>
+
+<div class="footer">
+	<div class="wrapper">
+		 <p class="footer-links"><a href="http://stackexchange.com/about">about</a> <a href="http://blog.stackexchange.com">blog</a> <a href="http://stackexchange.com/legal">legal</a> <a href="mailto:team+api@stackexchange.com">contact us</a> <a href="http://stackapps.com/">feedback always welcome</a></p>
+
+            <p style="margin-bottom: 0;">site design / logo &copy; 2012 stack exchange, inc; user contributions licensed under <a href="http://creativecommons.org/licenses/by-sa/3.0/" rel="license">cc-wiki</a> with <a href="http://blog.stackoverflow.com/2009/06/attribution-required/" rel="license">attribution required</a></p>
+    </div>
+</div></body>
+</html>
