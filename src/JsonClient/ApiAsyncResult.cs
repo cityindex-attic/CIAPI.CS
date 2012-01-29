@@ -131,9 +131,9 @@ namespace CityIndex.JsonClient
                 return JsonConvert.DeserializeObject<TDTO>(_responseText);
 
             }
-            catch
+            catch(Exception ex)
             {
-                throw new ApiSerializationException("Invalid JSON.", _responseText);
+                throw new ApiSerializationException("Invalid JSON.", _responseText, ex);
             }
         }
 

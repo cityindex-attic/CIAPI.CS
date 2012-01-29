@@ -4,9 +4,10 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Threading;
 
-namespace SOAPI2.CS.DocScraper
+namespace SOAPI2.DocScraper
 {
     internal class Program
     {
@@ -15,11 +16,19 @@ namespace SOAPI2.CS.DocScraper
             Docs docs = PullFromFile();
             //Docs docs = PullFromWeb();
 
-            
             docs.Validate();
-
+            
             var schema = docs.CreateSchema();
-            Debug.WriteLine(schema.ToString());
+            File.WriteAllText("..\\..\\js\\schema.json",schema.ToString());
+            
+            var smd = docs.CreateSMD(schema);
+            File.WriteAllText("..\\..\\js\\smd.json", smd.ToString());
+
+            var sb = new StringBuilder();
+            var generator = new CodeGenerator(schema, smd);
+            generator.GenerateModel(sb);
+            Debug.WriteLine(sb.ToString());
+
 
         }
 
@@ -40,6 +49,8 @@ namespace SOAPI2.CS.DocScraper
 
         private static void PullMethodDocsFromWeb(Docs docs)
         {
+            
+
             foreach (MethodGroup group in docs.MethodGroups)
             {
                 foreach (MethodInfo method in group.Methods)
@@ -61,9 +72,13 @@ namespace SOAPI2.CS.DocScraper
         }
         private static void PullTypeDocsFromWeb(Docs docs)
         {
+            
             // have to add this manually - is not linked from doc index
             docs.Types.Add(new TypeInfo(docs) { Url = "/docs/types/related-site", Type = "related-site", Name = "related_site" });
 
+            
+            docs.Types.Add(new TypeInfo(docs) { Url = "/docs/wrapper", Type = "response-wrapper", Name = "response_wrapper" });
+            
 
             var types = docs.Types.ToArray();
             foreach (var type in types)
@@ -94,7 +109,9 @@ namespace SOAPI2.CS.DocScraper
         {
             // have to add this manually - is not linked from doc index
             docs.Types.Add(new TypeInfo(docs) { Url = "/docs/types/related-site", Type = "related-site", Name = "related_site" });
-
+            
+            docs.Types.Add(new TypeInfo(docs) { Url = "/docs/wrapper", Type = "response-wrapper", Name = "response_wrapper" });
+            
 
             var types = docs.Types.ToArray();
             foreach (var type in types)

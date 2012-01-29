@@ -3,28 +3,22 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
+using HtmlAgilityPack;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace SOAPI2.CS.DocScraper
+namespace SOAPI2.DocScraper
 {
-    [Serializable]
-    public class Parameter
-    {
-        public string Name { get; set; }
-        public string Type { get; set; }
-        public JToken ParameterObj { get; set; }
-    }
-
     [Serializable]
     public class MethodInfo
     {
         public List<Parameter> Parameters { get; set; }
+        
         public string ScriptMethodUri { get; set; }
         public string ScriptMethodName { get; set; }
         public string ScriptFilter { get; set; }
-        public JArray ScriptDependantTypes { get; set; }
-        public JObject ParamsObj { get; set; }
+        
+
         public bool RequiresAuthentication { get; set; }
         public List<string> RequiredScopes { get; set; }
         public string UriTemplate { get; set; }
@@ -120,7 +114,8 @@ namespace SOAPI2.CS.DocScraper
                 throw new Exception("could not find script dependant types " + UriTemplate);
             }
 
-            ScriptDependantTypes = JArray.Parse(dependantTypesMatch.Groups["types"].Value);
+            
+            // JArray scriptDependantTypes = JArray.Parse(dependantTypesMatch.Groups["types"].Value);
 
 
             var paramMatch = Regex.Match(script, "var parameters = (?<params>{.*?});",
@@ -135,16 +130,13 @@ namespace SOAPI2.CS.DocScraper
                 throw new Exception("could not find script params " + UriTemplate);
             }
             string paramJson = paramMatch.Groups["params"].Value;
-            ParamsObj = JObject.Parse(paramJson);
-
-            var s = ParamsObj.ToString();
-
+            var paramsObj = JObject.Parse(paramJson);
 
 
             // determine parameter name and type.
 
 
-            foreach (var prop in ParamsObj)
+            foreach (var prop in paramsObj)
             {
                 bool addParam = true;
                 var paramName = prop.Key;
@@ -152,12 +144,12 @@ namespace SOAPI2.CS.DocScraper
 
 
                 var parameter = new Parameter
-                                {
-                                    Name = paramName,
-                                    ParameterObj = prop.Value
-                                };
+                                    {
+                                        Name = paramName,
+                                        IsPrimitive = true
+                                    };
 
-
+                TypeInfo pType = null;
                 switch (prop.Value.Type)
                 {
 
@@ -168,6 +160,7 @@ namespace SOAPI2.CS.DocScraper
                         switch (paramName)
                         {
                             case "order":
+                                parameter.IsPrimitive = false;
                                 parameter.Type = "order";
                                 // verify that the shape has not change
                                 if (prop.Value.Children().Count() != 2)
@@ -183,25 +176,28 @@ namespace SOAPI2.CS.DocScraper
                                 {
                                     throw new Exception("badly formed 'order' enum");
                                 }
-                                if (this.Docs.Types.FirstOrDefault(t => t.Type == "order") == null)
+                                
+                                pType = Docs.Types.FirstOrDefault(t => t.Type == "order");
+                                if (pType == null)
                                 {
-                                    var type = new TypeInfo(Docs);
-                                    type.Type = "order";
-                                    type.IsEnum = true;
-                                    type.Inferred = true;
-                                    type.Name = type.Type.Replace(" ", "_").Replace("-", "_").Trim();
+                                    pType = new TypeInfo(Docs);
+                                    pType.Type = "order";
+                                    pType.IsEnum = true;
+                                    pType.Inferred = true;
+                                    pType.Name = pType.Type.Replace(" ", "_").Replace("-", "_").Trim();
                                     foreach (JToken item in prop.Value.Children())
                                     {
                                         var field = new FieldInfo();
                                         field.Type = "string";
                                         field.Name = item.Value<string>();
-                                        type.Fields.Add(field);
+                                        pType.Fields.Add(field);
                                     }
-                                    this.Docs.Types.Add(type);
+                                    this.Docs.Types.Add(pType);
                                 }
 
                                 break;
                             case "period":
+                                parameter.IsPrimitive = false;
                                 parameter.Type = "period";
                                 // verify that the shape has not change
                                 if (prop.Value.Children().Count() != 2)
@@ -217,22 +213,23 @@ namespace SOAPI2.CS.DocScraper
                                 {
                                     throw new Exception("badly formed 'period' enum");
                                 }
-                                if (this.Docs.Types.FirstOrDefault(t => t.Type == "period") == null)
+                                pType = Docs.Types.FirstOrDefault(t => t.Type == "period");
+                                if (pType == null)
                                 {
-                                    var type = new TypeInfo(Docs);
-                                    type.Type = "period";
-                                    type.IsEnum = true;
-                                    type.Inferred = true;
-                                    string typeType = type.Type;
-                                    type.Name = typeType.Replace(" ", "_").Replace("-", "_").Trim();
+                                    pType = new TypeInfo(Docs);
+                                    pType.Type = "period";
+                                    pType.IsEnum = true;
+                                    pType.Inferred = true;
+                                    string typeType = pType.Type;
+                                    pType.Name = typeType.Replace(" ", "_").Replace("-", "_").Trim();
                                     foreach (JToken item in prop.Value.Children())
                                     {
                                         var field = new FieldInfo();
                                         field.Type = "string";
                                         field.Name = item.Value<string>();
-                                        type.Fields.Add(field);
+                                        pType.Fields.Add(field);
                                     }
-                                    this.Docs.Types.Add(type);
+                                    this.Docs.Types.Add(pType);
                                 }
                                 break;
                             case "unsafe":
@@ -262,7 +259,7 @@ namespace SOAPI2.CS.DocScraper
                         {
 
                             case "sort":
-
+                                parameter.IsPrimitive = false;
                                 parameter.Type = "sort_" + this.Name;
 
                                 // this is an enum type with added meta to help inform use of min/max.
@@ -276,13 +273,14 @@ namespace SOAPI2.CS.DocScraper
 
                                 // this will also help us determine what type of values are
                                 // appropriate for min/max);
-                                if (this.Docs.Types.FirstOrDefault(t => t.Type == parameter.Type) == null)
+                                pType = this.Docs.Types.FirstOrDefault(t => t.Type == parameter.Type);
+                                if (pType == null)
                                 {
-                                    var type = new TypeInfo(Docs);
-                                    type.Type = parameter.Type;
-                                    type.Name = parameter.Type;
-                                    type.IsEnum = true;
-                                    type.Inferred = true;
+                                    pType = new TypeInfo(Docs);
+                                    pType.Type = parameter.Type;
+                                    pType.Name = parameter.Type;
+                                    pType.IsEnum = true;
+                                    pType.Inferred = true;
 
                                     foreach (JProperty item in prop.Value.Children())
                                     {
@@ -290,9 +288,9 @@ namespace SOAPI2.CS.DocScraper
                                         field.Type = "string";
                                         field.Name = item.Name;
                                         field.Description = "min/max are " + ((JValue)item.Value).Value;
-                                        type.Fields.Add(field);
+                                        pType.Fields.Add(field);
                                     }
-                                    this.Docs.Types.Add(type);
+                                    this.Docs.Types.Add(pType);
                                 }
                                 break;
                             default:
@@ -315,15 +313,32 @@ namespace SOAPI2.CS.DocScraper
                                 addParam = false;
                                 break;
                             case "depends":
-                                parameter.Type = "object";
+                                parameter.Type = "string";
+                                parameter.Format = "sort-dependant";
                                 break;
                             case "date":
+
+                                parameter.Type = "number";
+                                parameter.Format = "utc-millisec";
+
+                                break;
                             case "guid list":
+                                parameter.Type = "string";
+                                parameter.Format = "guid-list";
+                                break;
                             case "number":
+                                parameter.Type = "number";
+                                break;
                             case "number list":
+                                parameter.Type = "string";
+                                parameter.Format = "number-list";
+                                break;
                             case "string":
+                                parameter.Type = "string";
+                                break;
                             case "string list":
-                                parameter.Type = propType.Replace(" ", "_").Replace("-", "_").Trim();
+                                parameter.Type = "string";
+                                parameter.Format = "string-list";
                                 break;
                             default:
                                 throw new Exception("unexpected property type");
@@ -344,20 +359,17 @@ namespace SOAPI2.CS.DocScraper
         }
         private void SetDescription()
         {
-            var summaryMatch = Regex.Match(Source, "<h2>Discussion</h2>(?<summary>.*?)<h2>Try It</h2>",
-                                                       RegexOptions.Singleline | RegexOptions.IgnoreCase |
-                                                       RegexOptions.ExplicitCapture);
-            if (!summaryMatch.Success)
+            var hdoc = new HtmlDocument();
+            hdoc.LoadHtml(_source);
+            var discussionNode = hdoc.DocumentNode.SelectSingleNode("//div[@class='type-discussion']");
+            if (discussionNode == null)
             {
                 throw new Exception("could not find summary in method source " + UriTemplate);
             }
-            string summary = summaryMatch.Groups["summary"].Value.Trim();
-            if (string.IsNullOrEmpty(summary))
-            {
-                throw new Exception("summary is empty in method source " + UriTemplate);
-            }
+
+
             //<span class="need-auth" title="this method requires an access_token">authentication required</span>
-            Description = summary;
+            Description = discussionNode.InnerText;
 
         }
         private void ParseSource()
@@ -369,7 +381,7 @@ namespace SOAPI2.CS.DocScraper
             ParseScript();
 
 
-            if (Name =="errors_by_id")
+            if (Name == "errors_by_id")
             {
                 // TODO: edge case ErrorsById
                 return;

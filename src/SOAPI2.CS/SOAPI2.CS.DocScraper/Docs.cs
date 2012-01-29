@@ -6,10 +6,10 @@ using System.Text;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json.Linq;
 
-namespace SOAPI2.CS.DocScraper
+namespace SOAPI2.DocScraper
 {
     /// <summary>
-    /// #TODO: parse https://api.stackexchange.com/docs/wrapper
+    /// #TODO: Vectorized Requests : guid_list, string_list and number_list are semicolon separated list of values
     /// </summary>
     [Serializable]
     public class Docs
@@ -34,12 +34,104 @@ namespace SOAPI2.CS.DocScraper
         }
         private string _methodsIndex;
         private string _typesIndex;
-        private static JObject CreateJRef(string fieldType)
+        private static JObject CreateGenericJRef(string fieldType)
         {
             var fieldTypeObj = new JObject();
 
-            fieldTypeObj["$ref"] = "#." + fieldType;
+            fieldTypeObj["$ref"] = "#.response_wrapper<" + fieldType + ">";
             return fieldTypeObj;
+        }
+        private static JObject CreateSingleJRef(string fieldType)
+        {
+            var fieldTypeObj = new JObject();
+
+            fieldTypeObj["$ref"] = "#." + fieldType ;
+            return fieldTypeObj;
+        }
+        public JObject CreateSMD(JObject schema)
+        {
+            var smdObj = new JObject();
+            smdObj["SMDVersion"] = "2.6";
+            smdObj["version"] = ".1";
+            smdObj["description"] = "Service description for Stack Exchange API v2";
+            smdObj["target"] = "https://api.stackexchange.com/2.0";
+            JObject servicesObj = new JObject();
+            smdObj["services"] = servicesObj;
+
+            //
+            foreach (var group in this.MethodGroups)
+            {
+                foreach (var method in group.Methods)
+                {
+                    var serviceObj = new JObject();
+
+                    serviceObj["contentType"] = "application/json";
+                    serviceObj["responseContentType"] = "application/json";
+                    serviceObj["transport"] = "GET";
+                    serviceObj["envelope"] = "JSON";
+                    serviceObj["cacheDuration"] = "60000";
+                    serviceObj["throttleScope"] = "default";
+                    if (!string.IsNullOrEmpty(group.GroupName))
+                    {
+                        serviceObj["group"] = group.GroupName;    
+                    }
+                    
+                    if (method.RequiresAuthentication)
+                    {
+                        serviceObj["authentication_scopes"] = new JArray(method.RequiredScopes.ToArray());
+
+                    }
+
+                    serviceObj["uriTemplate"] = method.UriTemplate;
+
+                    if (!string.IsNullOrEmpty(method.ReturnType))
+                    {
+                        serviceObj["returns"] = CreateGenericJRef(method.ReturnType);    
+                    }
+                    
+
+                    JArray paramsObj = new JArray();
+                    serviceObj["parameters"] = paramsObj;
+                    foreach (var parameter in method.Parameters)
+                    {
+                        var paramObj = new JObject();
+
+                        paramObj["name"] = parameter.Name;
+                        //paramObj["description"] = null;
+
+                        
+
+                        if(parameter.IsPrimitive)
+                        {
+                            paramObj["type"] = parameter.Type;    
+                        }
+                        else
+                        {
+                            paramObj["type"] = CreateSingleJRef(parameter.Type);    
+                        }
+                        
+
+                        if (!string.IsNullOrEmpty(parameter.Format))
+                        {
+                            paramObj["format"] = parameter.Format;    
+                        }
+                        
+
+
+                        paramsObj.Add(paramObj);
+                    }
+
+
+                    if (!string.IsNullOrEmpty(method.Description))
+                    {
+                        serviceObj["description"] = method.Description;    
+                    }
+                    
+
+                    servicesObj[method.Name] = serviceObj;
+                }
+            }
+            return smdObj;
         }
         public JObject CreateSchema()
         {
@@ -53,6 +145,7 @@ namespace SOAPI2.CS.DocScraper
 
                 typesObj[type.Name] = typeObj;
                 typeObj["id"] = type.Name;
+
                 
                 if (type.IsEnum)
                 {
@@ -74,46 +167,60 @@ namespace SOAPI2.CS.DocScraper
 
                         string fieldType = field.Type;
 
-                        JToken fieldTypeObj=null;
+                        JToken fieldTypeObj = null;
 
                         string format = "";
 
                         if (field.IsPrimitive && !field.IsEnum)
                         {
-                      
-                            
 
-                            
+
+
+
                             switch (fieldType)
                             {
                                 case "date":
-                                    fieldType = "string";
+                                    fieldType = "number";
                                     format = "utc-millisec";
                                     break;
                                 case "decimal":
                                     fieldType = "number";
-                                    format = "integer";
+                                    format = "decimal";
                                     break;
                                 case "integer":
                                     fieldType = "number";
-                                    format = "decimal";
+                                    format = "integer";
                                     break;
-                                case"boolean":
+                                case "boolean":
                                 case "string":
+                                case "number":
                                     //noop
                                     break;
-                                    default:
+                                default:
+
                                     throw new Exception("unrecogized primitive type " + fieldType);
+
                             }
-                            
-                            
+
+
                             fieldTypeObj = new JValue(fieldType);
                         }
                         else
                         {
+                            fieldTypeObj = CreateSingleJRef(fieldType);
+
+                            //if (fieldType == type.GenericType)
+                            //{
+                                
+                            //    fieldTypeObj = CreateGenericJRef(fieldType);
+                            //}
+                            //else
+                            //{
+                            //    fieldTypeObj = CreateSingleJRef(fieldType);
+                                
+                            //}
                             
-                            fieldTypeObj = CreateJRef(fieldType);
-                            
+
                         }
 
 
@@ -135,13 +242,28 @@ namespace SOAPI2.CS.DocScraper
                         }
 
 
-                        fieldObj["description"] = field.Description;
-                        fieldObj["included_by_default"] = field.IncludedInDefaultFilter;
-                        fieldObj["unsafe"] = field.UnchangedInUnsafeFilters;
+                        if (!string.IsNullOrEmpty(field.Description))
+                        {
+                            fieldObj["description"] = field.Description;    
+                        }
+                        
+                        if (field.IncludedInDefaultFilter)
+                        {
+                            fieldObj["included_by_default"] = field.IncludedInDefaultFilter;    
+                        }
+                        
+                        if (field.UnchangedInUnsafeFilters)
+                        {
+                            fieldObj["unsafe"] = field.UnchangedInUnsafeFilters;    
+                        }
+                        
                     }
 
                 }
-
+                if (!string.IsNullOrEmpty(type.GenericType))
+                {
+                    typeObj["generic_type"] = type.GenericType;
+                }
                 typeObj["description"] = type.Description;
             }
 
@@ -183,7 +305,7 @@ namespace SOAPI2.CS.DocScraper
         {
             string types = TypesIndex;
             // they broke this saturday - grrrr
-//            types = types.Substring(0, types.IndexOf("<div id=\"footer\">")).Trim();  
+            //            types = types.Substring(0, types.IndexOf("<div id=\"footer\">")).Trim();  
             types = types.Substring(0, types.IndexOf("<div class=\"footer\">")).Trim();
             const string STR_H2TopLevelTypesh2 = "<h2>Top Level Types</h2>";
             types = types.Substring(types.IndexOf(STR_H2TopLevelTypesh2) + STR_H2TopLevelTypesh2.Length).Trim();
@@ -375,7 +497,7 @@ namespace SOAPI2.CS.DocScraper
                 {
                     ValidateReturnType(method);
                     ValidateParameterTypes(method);
-                    
+
                 }
 
                 foreach (var type in this.Types)
@@ -385,6 +507,7 @@ namespace SOAPI2.CS.DocScraper
                         string pType = field.Type;
                         switch (pType)
                         {
+                            
                             case "boolean":
                             case "date":
                             case "guid_list":
@@ -393,18 +516,24 @@ namespace SOAPI2.CS.DocScraper
                             case "string":
                             case "string_list":
                             case "object":
+                                // is primitive
                                 break;
                             case "integer": //#TODO: ask why Integer is being used as field type but not parameter type?
                             case "decimal": //#TODO: ask why Decimal is being used as field type but not parameter type?
                                 // is primitive
-                                //Debug.WriteLine(string.Format("{1} {0}",type.Name,pType));
+
                                 break;
                             default:
-                                var type2 = Types.FirstOrDefault(t => t.Name == pType);
-                                        if (type2 == null)
-                                        {
-                                            throw new Exception(string.Format("field type not found {0}.{1} {2}", type.Name, field.Name, pType));
-                                        }
+                                if (type.GenericType != pType)
+                                {
+                                    var type2 = Types.FirstOrDefault(t => t.Name == pType);
+                                    if (type2 == null)
+                                    {
+
+                                        throw new Exception(string.Format("field type not found {0}.{1} {2}", type.Name, field.Name, pType));
+                                    }
+                                }
+                                
                                 break;
                         }
 

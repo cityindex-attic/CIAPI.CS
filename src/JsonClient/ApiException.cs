@@ -139,6 +139,16 @@ namespace CityIndex.JsonClient
         {
             ResponseText = responseText;
         }
+        ///<summary>
+        ///</summary>
+        ///<param name="message"></param>
+        ///<param name="responseText"></param>
+        ///<param name="inner"></param>
+        public ApiSerializationException(string message, string responseText,Exception inner)
+            : base(message, inner)
+        {
+            ResponseText = responseText;
+        }
     }
 
 

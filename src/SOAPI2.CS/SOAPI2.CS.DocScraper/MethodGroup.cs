@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SOAPI2.CS.DocScraper
+namespace SOAPI2.DocScraper
 {
     [Serializable]
     public class MethodGroup

@@ -47,9 +47,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CodeGenerator.cs" />
     <Compile Include="Docs.cs" />
+    <Compile Include="FieldInfo.cs" />
+    <Compile Include="Generated\Model.cs" />
     <Compile Include="MethodGroup.cs" />
     <Compile Include="MethodInfo.cs" />
+    <Compile Include="Parameter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serializer.cs" />
@@ -58,22 +62,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="enums.txt" />
-    <Content Include="js\Schema.js" />
-    <Content Include="node-0.4.7-cygwin\bin\cygcrypto-0.9.8.dll" />
-    <Content Include="node-0.4.7-cygwin\bin\cyggcc_s-1.dll" />
-    <Content Include="node-0.4.7-cygwin\bin\cygiconv-2.dll" />
-    <Content Include="node-0.4.7-cygwin\bin\cygintl-8.dll" />
-    <Content Include="node-0.4.7-cygwin\bin\cygpath.exe" />
-    <Content Include="node-0.4.7-cygwin\bin\cygssl-0.9.8.dll" />
-    <Content Include="node-0.4.7-cygwin\bin\cygstdc++-6.dll" />
-    <Content Include="node-0.4.7-cygwin\bin\cygwin1.dll" />
-    <Content Include="node-0.4.7-cygwin\bin\cygz.dll" />
-    <Content Include="node-0.4.7-cygwin\bin\env.exe" />
-    <Content Include="node-0.4.7-cygwin\bin\gzip.exe" />
-    <Content Include="node-0.4.7-cygwin\bin\man.exe" />
-    <Content Include="node-0.4.7-cygwin\bin\node.exe" />
-    <Content Include="node-0.4.7-cygwin\bin\su.exe" />
-    <Content Include="node-0.4.7-cygwin\bin\tar.exe" />
     <Content Include="parameters and types.txt" />
     <Content Include="serialized\docs.bin" />
     <Content Include="sorts.txt" />
@@ -81,15 +69,9 @@
   <ItemGroup>
     <Folder Include="html\methods\" />
     <Folder Include="html\types\" />
+    <Folder Include="js\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="node-0.4.7-cygwin\bin\node-waf" />
-    <None Include="node-0.4.7-cygwin\bin\node_modules" />
-    <None Include="node-0.4.7-cygwin\bin\npm" />
-    <None Include="node-0.4.7-cygwin\bin\runnode.cmd" />
-    <None Include="node-0.4.7-cygwin\bin\setenv.cmd" />
-    <None Include="node-0.4.7-cygwin\bin\shell.cmd" />
-    <None Include="node-0.4.7-cygwin\bin\sudo.cmd" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,0 +1,4948 @@
+{
+  "SMDVersion": "2.6",
+  "version": ".1",
+  "description": "Service description for Stack Exchange API v2",
+  "target": "https://api.stackexchange.com/2.0",
+  "services": {
+    "answers": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Answers",
+      "uriTemplate": "/answers",
+      "returns": {
+        "$ref": "#.response_wrapper<answer>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_answers"
+          }
+        }
+      ],
+      "description": "\r\n        \r\nReturns all the undeleted answers in the system.\r\n\r\nThe sorts accepted by this method operate on the follow fields of the answer object:\r\n    \r\n        activity &ndash; last_activity_date\r\n        creation &ndash; creation_date\r\n        votes &ndash; score\r\n    \r\n    It is possible to create moderately complex queries using sort, min, max, fromdate, and todate.\r\n\r\n\r\n        \r\n    This method returns a list of answers.\r\n\r\n    "
+    },
+    "answers_by_ids": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Answers",
+      "uriTemplate": "/answers/{ids}",
+      "returns": {
+        "$ref": "#.response_wrapper<answer>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_answers_by_ids"
+          }
+        },
+        {
+          "name": "ids",
+          "type": "string",
+          "format": "number-list"
+        }
+      ],
+      "description": "\r\n        \r\nGets the set of answers identified by ids.\r\n\r\nThis is meant for batch fetcing of questions. A useful trick to poll for updates is to sort by activity, with a minimum date of the last time you polled.\r\n\r\n{ids} can contain up to 100 separate ids, to find ids programatically look for answer_id on answer objects.\r\n\r\nThe sorts accepted by this method operate on the follow fields of the answer object:\r\n    \r\n        activity &ndash; last_activity_date\r\n        creation &ndash; creation_date\r\n        votes &ndash; score\r\n    \r\n    It is possible to create moderately complex queries using sort, min, max, fromdate, and todate.\r\n\r\n\r\n        \r\n    This method returns a list of answers.\r\n\r\n    "
+    },
+    "answers_by_ids_comments": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Answers",
+      "uriTemplate": "/answers/{ids}/comments",
+      "returns": {
+        "$ref": "#.response_wrapper<comment>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_answers_by_ids_comments"
+          }
+        },
+        {
+          "name": "ids",
+          "type": "string",
+          "format": "number-list"
+        }
+      ],
+      "description": "\r\n        \r\nGets the comments on a set of answers.\r\n\r\nIf you know that you have an answer id and need the comments, use this method. If you know you have a question id, use /questions/{id}/comments. If you are unsure, use /posts/{id}/comments.\r\n\r\n{ids} can contain up to 100 separate ids, to find ids programatically look for answer_id on answer objects.\r\n\r\nThe sorts accepted by this method operate on the follow fields of the comment object:\r\n    \r\n        creation &ndash; creation_date\r\n        votes &ndash; score\r\n    \r\n    It is possible to create moderately complex queries using sort, min, max, fromdate, and todate.\r\n\r\n\r\n        \r\n    This method returns a list of comments.\r\n\r\n    "
+    },
+    "badges": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Badges",
+      "uriTemplate": "/badges",
+      "returns": {
+        "$ref": "#.response_wrapper<badge>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_badges"
+          }
+        },
+        {
+          "name": "inname",
+          "type": "string"
+        }
+      ],
+      "description": "\r\n        \r\nReturns all the badges in the system.\r\n\r\nBadge sorts are a tad complicated.  For the purposes of sorting (and min/max) tag_based is considered\r\nto be greater than named.\r\n\r\nThis means that you can get a list of all tag based badges by passing min=tag_based, and conversely\r\nall the named badges by passing max=named, with sort=type.\r\n\r\nFor ranks, bronze is greater than silver which is greater than gold.  Along with sort=rank, set max=gold\r\nfor just gold badges, max=silver&min=silver for just silver, and min=bronze for just bronze.\r\n\r\n        \r\n    This method returns a list of badges.\r\n\r\n    "
+    },
+    "badges_by_ids": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Badges",
+      "uriTemplate": "/badges/{ids}",
+      "returns": {
+        "$ref": "#.response_wrapper<badge>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_badges_by_ids"
+          }
+        },
+        {
+          "name": "ids",
+          "type": "string",
+          "format": "number-list"
+        }
+      ],
+      "description": "\r\n        \r\nGets the badges identified in id.\r\n\r\nNote that badge ids are not constant across sites, and thus should be looked up via the /badges method. A badge id on a single site is, however, guaranteed to be stable.\r\n\r\nBadge sorts are a tad complicated.  For the purposes of sorting (and min/max) tag_based is considered\r\nto be greater than named.\r\n\r\nThis means that you can get a list of all tag based badges by passing min=tag_based, and conversely\r\nall the named badges by passing max=named, with sort=type.\r\n\r\nFor ranks, bronze is greater than silver which is greater than gold.  Along with sort=rank, set max=gold\r\nfor just gold badges, max=silver&min=silver for just silver, and min=bronze for just bronze.\r\n\r\n{ids} can contain up to 100 separate ids, to find ids programatically look for badge_id on badge objects.\r\n\r\n        \r\n    This method returns a list of badges.\r\n\r\n    "
+    },
+    "badges_name": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Badges",
+      "uriTemplate": "/badges/name",
+      "returns": {
+        "$ref": "#.response_wrapper<badge>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_badges_name"
+          }
+        },
+        {
+          "name": "inname",
+          "type": "string"
+        }
+      ],
+      "description": "\r\n        \r\nGets all explicitly named badges in the system.\r\n\r\nA named badged stands in opposition to a tag-based badge. These are referred to as general badges on the sites themselves.\r\n\r\nFor the rank sort, bronze is greater than silver which is greater than gold.  Along with sort=rank, set max=gold\r\nfor just gold badges, max=silver&min=silver for just silver, and min=bronze for just bronze.\r\n\r\n        \r\n    This method returns a list of badges.\r\n\r\n    "
+    },
+    "badges_recipients": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Badges",
+      "uriTemplate": "/badges/recipients",
+      "returns": {
+        "$ref": "#.response_wrapper<badge>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        }
+      ],
+      "description": "\r\n        \r\nReturns recently awarded badges in the system.\r\n\r\nAs these badges have been awarded, they will have the badge.user property set.\r\n\r\n        \r\n    This method returns a list of badges.\r\n\r\n    "
+    },
+    "badges_by_ids_recipients": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Badges",
+      "uriTemplate": "/badges/{ids}/recipients",
+      "returns": {
+        "$ref": "#.response_wrapper<badge>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "ids",
+          "type": "string",
+          "format": "number-list"
+        }
+      ],
+      "description": "\r\n        \r\nReturns recently awarded badges in the system, constrained to a certain set of badges.\r\n\r\nAs these badges have been awarded, they will have the badge.user property set.\r\n\r\n{ids} can contain up to 100 separate ids, to find ids programatically look for badge_id on badge objects.\r\n\r\n        \r\n    This method returns a list of badges.\r\n\r\n    "
+    },
+    "badges_tags": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Badges",
+      "uriTemplate": "/badges/tags",
+      "returns": {
+        "$ref": "#.response_wrapper<badge>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_badges_tags"
+          }
+        },
+        {
+          "name": "inname",
+          "type": "string"
+        }
+      ],
+      "description": "\r\n        \r\nReturns the badges that are awarded for participation in specific tags.\r\n\r\nFor the rank sort, bronze is greater than silver which is greater than gold.  Along with sort=rank, set max=gold\r\nfor just gold badges, max=silver&min=silver for just silver, and min=bronze for just bronze.\r\n\r\n        \r\n    This method returns a list of badges.\r\n\r\n    "
+    },
+    "comments": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Comments",
+      "uriTemplate": "/comments",
+      "returns": {
+        "$ref": "#.response_wrapper<comment>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_comments"
+          }
+        }
+      ],
+      "description": "\r\n        \r\nGets all the comments on the site.\r\n\r\nIf you're filtering for interesting comments (by score, creation date, etc.) make use of the sort paramter with appropriate min and max values.\r\n\r\nIf you're looking to query conversations between users, instead use the /users/{ids}/mentioned and /users/{ids}/comments/{toid} methods.\r\n\r\nThe sorts accepted by this method operate on the follow fields of the comment object:\r\n    \r\n        creation &ndash; creation_date\r\n        votes &ndash; score\r\n    \r\n    It is possible to create moderately complex queries using sort, min, max, fromdate, and todate.\r\n\r\n\r\n        \r\n    This method returns a list of comments.\r\n\r\n    "
+    },
+    "comments_by_ids": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Comments",
+      "uriTemplate": "/comments/{ids}",
+      "returns": {
+        "$ref": "#.response_wrapper<comment>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_comments_by_ids"
+          }
+        },
+        {
+          "name": "ids",
+          "type": "string",
+          "format": "number-list"
+        }
+      ],
+      "description": "\r\n        \r\nGets the comments identified in id.\r\n\r\nThis method is most useful if you have a cache of comment ids obtained through other means (such as /questions/{id}/comments) but suspect the data may be stale.\r\n\r\n{ids} can contain up to 100 separate ids, to find ids programatically look for comment_id on comment objects.\r\n\r\nThe sorts accepted by this method operate on the follow fields of the comment object:\r\n    \r\n        creation &ndash; creation_date\r\n        votes &ndash; score\r\n    \r\n    It is possible to create moderately complex queries using sort, min, max, fromdate, and todate.\r\n\r\n\r\n        \r\n    This method returns a list of comments.\r\n\r\n    "
+    },
+    "errors": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Errors",
+      "uriTemplate": "/errors",
+      "returns": {
+        "$ref": "#.response_wrapper<error>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        }
+      ],
+      "description": "\r\n        \r\nReturns the various error codes that can be produced by the API.\r\n\r\nThis method is provided for discovery, documentation, and testing purposes, it is not expected many applications will consume it during normal operation.\r\n\r\nFor testing purposes, look into the /errors/{id} method which simulates errors given a code.\r\n\r\n        \r\n    This method returns a list of errors.\r\n\r\n    "
+    },
+    "errors_by_id": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Errors",
+      "uriTemplate": "/errors/{id}",
+      "parameters": [
+        {
+          "name": "id",
+          "type": "number"
+        }
+      ],
+      "description": "\r\n        \r\nThis method allows you to generate an error.\r\n\r\nThis method is only intended for use when testing an application or library. Unlike other methods in the API, its contract is not frozen, and new error codes may be added at any time.\r\n\r\n        \r\n    This method results in an error, which will be expressed with a 400 HTTP status code and setting the error* properties\r\n    on the wrapper object.\r\n\r\n    "
+    },
+    "events": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Events",
+      "authentication_scopes": [],
+      "uriTemplate": "/events",
+      "returns": {
+        "$ref": "#.response_wrapper<event>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "since",
+          "type": "number",
+          "format": "utc-millisec"
+        }
+      ],
+      "description": "\r\n        \r\nReturns a stream of events that have occurred on the site.\r\n\r\nThe API considers the following \"events\":\r\n    \r\n        posting a question\r\n        posting an answer\r\n        posting a comment\r\n        editing a post\r\n        creating a user\r\n    \r\n\r\n\r\nEvents are only accessible for 15 minutes after they occurred, and by default only events in the last 5 minutes are returned.  You can specify the age of the oldest event returned\r\nby setting the since parameter.\r\n\r\nIt is advised that developers batch events by ids and make as few subsequent requests to other methods as possible.\r\n\r\n        \r\n    This method returns a list of events.\r\n\r\n    "
+    },
+    "posts": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Posts",
+      "uriTemplate": "/posts",
+      "returns": {
+        "$ref": "#.response_wrapper<post>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_posts"
+          }
+        }
+      ],
+      "description": "\r\n        \r\nFetches all posts (questions and answers) in the system.\r\n\r\nIn many ways this method is the union of /questions and /answers, returning both\r\nsets of data albeit only the common fields.\r\n\r\nMost applications should use the question or answer specific methods, but /posts is available for those\r\nrare cases where any activity is of intereset.  Examples of such queries would be: \"all posts on Jan. 1st 2011\" or \"top 10 posts by score\r\nof all time\".\r\n\r\nThe sorts accepted by this method operate on the follow fields of the post object:\r\n    \r\n        activity &ndash; last_activity_date\r\n        creation &ndash; creation_date\r\n        votes &ndash; score\r\n    \r\n    It is possible to create moderately complex queries using sort, min, max, fromdate, and todate.\r\n\r\n\r\n        \r\n    This method returns a list of posts.\r\n\r\n    "
+    },
+    "posts_by_ids": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Posts",
+      "uriTemplate": "/posts/{ids}",
+      "returns": {
+        "$ref": "#.response_wrapper<post>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_posts_by_ids"
+          }
+        },
+        {
+          "name": "ids",
+          "type": "string",
+          "format": "number-list"
+        }
+      ],
+      "description": "\r\n        \r\nFetches a set of posts by ids.\r\n\r\nThis method is meant for grabbing an object when unsure whether an id identifies a question or an answer.  This is most common\r\nwith user entered data.\r\n\r\n{ids} can contain up to 100 separate ids, to find ids programatically look for post_id, answer_id, or question_id on \r\npost, answer, and question objects respectively.\r\n\r\nThe sorts accepted by this method operate on the follow fields of the post object:\r\n    \r\n        activity &ndash; last_activity_date\r\n        creation &ndash; creation_date\r\n        votes &ndash; score\r\n    \r\n    It is possible to create moderately complex queries using sort, min, max, fromdate, and todate.\r\n\r\n\r\n        \r\n    This method returns a list of posts.\r\n\r\n    "
+    },
+    "posts_by_ids_comments": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Posts",
+      "uriTemplate": "/posts/{ids}/comments",
+      "returns": {
+        "$ref": "#.response_wrapper<comment>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_posts_by_ids_comments"
+          }
+        },
+        {
+          "name": "ids",
+          "type": "string",
+          "format": "number-list"
+        }
+      ],
+      "description": "\r\n        \r\nGets the comments on the posts identified in ids, regardless of the type of the posts.\r\n\r\nThis method is meant for cases when you are unsure of the type of the post id provided. Generally, this would be due to obtaining the post id directly from a user.\r\n\r\n{ids} can contain up to 100 separate ids, to find ids programatically look for post_id, answer_id, or question_id on \r\npost, answer, and question objects respectively.\r\n\r\nThe sorts accepted by this method operate on the follow fields of the comment object:\r\n    \r\n        creation &ndash; creation_date\r\n        votes &ndash; score\r\n    \r\n    It is possible to create moderately complex queries using sort, min, max, fromdate, and todate.\r\n\r\n\r\n        \r\n    This method returns a list of comments.\r\n\r\n    "
+    },
+    "posts_by_ids_revisions": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Posts",
+      "uriTemplate": "/posts/{ids}/revisions",
+      "returns": {
+        "$ref": "#.response_wrapper<revision>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "ids",
+          "type": "string",
+          "format": "number-list"
+        }
+      ],
+      "description": "\r\n        \r\nReturns edit revisions for the posts identified in ids.\r\n\r\n{ids} can contain up to 100 separate ids, to find ids programatically look for post_id, answer_id, or question_id on \r\npost, answer, and question objects respectively.\r\n\r\n        \r\n    This method returns a list of revisions.\r\n\r\n    "
+    },
+    "posts_by_ids_suggested_edits": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Posts",
+      "uriTemplate": "/posts/{ids}/suggested-edits",
+      "returns": {
+        "$ref": "#.response_wrapper<suggested_edit>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_posts_by_ids_suggested_edits"
+          }
+        },
+        {
+          "name": "ids",
+          "type": "string",
+          "format": "number-list"
+        }
+      ],
+      "description": "\r\n        \r\nReturns suggsted edits on the posts identified in ids.\r\n\r\n{ids} can contain up to 100 separate ids, to find ids programatically look for post_id, answer_id, or question_id on \r\npost, answer, and question objects respectively.\r\n\r\n        \r\n    This method returns a list of suggested-edits.\r\n\r\n    "
+    },
+    "privileges": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Privileges",
+      "uriTemplate": "/privileges",
+      "returns": {
+        "$ref": "#.response_wrapper<privilege>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        }
+      ],
+      "description": "\r\n        \r\nReturns the earnable privileges on a site.\r\n\r\nPrivileges define abilities a user can earn (via reputation) on any Stack Exchange site.\r\n\r\nWhile fairly stable, over time they do change. New ones are introduced with new features, and the reputation requirements change as a site matures.\r\n\r\n        \r\n    This method returns a list of privileges.\r\n\r\n    "
+    },
+    "questions": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Questions",
+      "uriTemplate": "/questions",
+      "returns": {
+        "$ref": "#.response_wrapper<question>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_questions"
+          }
+        },
+        {
+          "name": "tagged",
+          "type": "string",
+          "format": "string-list"
+        }
+      ],
+      "description": "\r\n        \r\nGets all the questions on the site.\r\n\r\nThis method allows you make fairly flexible queries across the entire corpus of questions on a site. \r\nFor example, getting all questions asked in the the week of Jan 1st 2011 with scores of 10 or more is a \r\nsingle query with parameters sort=votes&min=10&fromdate=1293840000&todate=1294444800.\r\n\r\nTo constrain questions returned to those with a set of tags, use the tagged parameter with a \r\nsemi-colon delimited list of tags.\r\nThis is an and contraint, passing tagged=c;java will return only those questions with\r\nboth tags.  As such, passing more than 5 tags will always return zero results.\r\n\r\nThe sorts accepted by this method operate on the follow fields of the question object:\r\n    \r\n        activity &ndash; last_activity_date\r\n        creation &ndash; creation_date\r\n        votes &ndash; score\r\n        hot &ndash; by the formula ordering the hot tab\r\n            Does not accept min or max\r\n        \r\n        week &ndash; by the formula ordering the week tab\r\n            Does not accept min or max\r\n        \r\n        month &ndash; by the formula ordering the month tab\r\n            Does not accept min or max\r\n        \r\n    \r\n    It is possible to create moderately complex queries using sort, min, max, fromdate, and todate.\r\n\r\n\r\n        \r\n    This method returns a list of questions.\r\n\r\n    "
+    },
+    "questions_by_ids": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Questions",
+      "uriTemplate": "/questions/{ids}",
+      "returns": {
+        "$ref": "#.response_wrapper<question>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_questions_by_ids"
+          }
+        },
+        {
+          "name": "ids",
+          "type": "string",
+          "format": "number-list"
+        }
+      ],
+      "description": "\r\n        \r\nReturns the questions identified in {ids}.\r\n\r\nThis is most useful for fetching fresh data when maintaining a cache of question ids, or polling for changes.\r\n\r\n{ids} can contain up to 100 separate ids, to find ids programatically look for question_id on question objects.\r\n\r\nThe sorts accepted by this method operate on the follow fields of the question object:\r\n    \r\n        activity &ndash; last_activity_date\r\n        creation &ndash; creation_date\r\n        votes &ndash; score\r\n    \r\n    It is possible to create moderately complex queries using sort, min, max, fromdate, and todate.\r\n\r\n\r\n        \r\n    This method returns a list of questions.\r\n\r\n    "
+    },
+    "questions_by_ids_answers": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Questions",
+      "uriTemplate": "/questions/{ids}/answers",
+      "returns": {
+        "$ref": "#.response_wrapper<answer>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_questions_by_ids_answers"
+          }
+        },
+        {
+          "name": "ids",
+          "type": "string",
+          "format": "number-list"
+        }
+      ],
+      "description": "\r\n        \r\nGets the answers to a set of questions identified in id.\r\n\r\nThis method is most useful if you have a set of interesting questions, and you wish to obtain all of their answers at once or if you are polling for new or updates answers (in conjunction with sort=activity).\r\n\r\n{ids} can contain up to 100 separate ids, to find ids programatically look for question_id on question objects.\r\n\r\nThe sorts accepted by this method operate on the follow fields of the answer object:\r\n    \r\n        activity &ndash; last_activity_date\r\n        creation &ndash; creation_date\r\n        votes &ndash; score\r\n    \r\n    It is possible to create moderately complex queries using sort, min, max, fromdate, and todate.\r\n\r\n\r\n        \r\n    This method returns a list of answers.\r\n\r\n    "
+    },
+    "questions_by_ids_comments": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Questions",
+      "uriTemplate": "/questions/{ids}/comments",
+      "returns": {
+        "$ref": "#.response_wrapper<comment>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_questions_by_ids_comments"
+          }
+        },
+        {
+          "name": "ids",
+          "type": "string",
+          "format": "number-list"
+        }
+      ],
+      "description": "\r\n        \r\nGets the comments on a question.\r\n\r\nIf you know that you have an question id and need the comments, use this method. If you know you have a answer id, use /answers/{ids}/comments. If you are unsure, use /posts/{ids}/comments.\r\n\r\n{ids} can contain up to 100 separate ids, to find ids programatically look for question_id on question objects.\r\n\r\nThe sorts accepted by this method operate on the follow fields of the comment object:\r\n    \r\n        creation &ndash; creation_date\r\n        votes &ndash; score\r\n    \r\n    It is possible to create moderately complex queries using sort, min, max, fromdate, and todate.\r\n\r\n\r\n        \r\n    This method returns a list of comments.\r\n\r\n    "
+    },
+    "questions_by_ids_linked": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Questions",
+      "uriTemplate": "/questions/{ids}/linked",
+      "returns": {
+        "$ref": "#.response_wrapper<question>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_questions_by_ids_linked"
+          }
+        },
+        {
+          "name": "ids",
+          "type": "string",
+          "format": "number-list"
+        }
+      ],
+      "description": "\r\n        \r\nGets questions which link to those questions identified in {ids}.\r\n\r\nThis method only considers questions that are linked within a site, and will never return questions from another Stack Exchange site.\r\n\r\nA question is considered \"linked\" when it explicitly includes a hyperlink to another question, there are no other heuristics.\r\n\r\n{ids} can contain up to 100 separate ids, to find ids programatically look for question_id on question objects.\r\n\r\nThe sorts accepted by this method operate on the follow fields of the question object:\r\n    \r\n        activity &ndash; last_activity_date\r\n        creation &ndash; creation_date\r\n        votes &ndash; score\r\n        rank &ndash; a priority sort by site applies, subject to change at any time\r\n            Does not accept min or max\r\n        \r\n    \r\n    It is possible to create moderately complex queries using sort, min, max, fromdate, and todate.\r\n\r\n\r\n        \r\n    This method returns a list of questions.\r\n\r\n    "
+    },
+    "questions_by_ids_related": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Questions",
+      "uriTemplate": "/questions/{ids}/related",
+      "returns": {
+        "$ref": "#.response_wrapper<question>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_questions_by_ids_related"
+          }
+        },
+        {
+          "name": "ids",
+          "type": "string",
+          "format": "number-list"
+        }
+      ],
+      "description": "\r\n        \r\nReturns questions that the site considers related to those identified in {ids}.\r\n\r\nThe algorithm for determining if questions are related is not documented, and subject to change at any time. Futhermore, these values are very heavily cached, and may not update immediately after a question has been editted. It is also not guaranteed that a question will be considered related to any number (even non-zero) of questions, and a consumer should be able to handle a variable number of returned questions.\r\n\r\n{ids} can contain up to 100 separate ids, to find ids programatically look for question_id on question objects.\r\n\r\nThe sorts accepted by this method operate on the follow fields of the question object:\r\n    \r\n        activity &ndash; last_activity_date\r\n        creation &ndash; creation_date\r\n        votes &ndash; score\r\n        rank &ndash; a priority sort by site applies, subject to change at any time\r\n            Does not accept min or max\r\n        \r\n    \r\n    It is possible to create moderately complex queries using sort, min, max, fromdate, and todate.\r\n\r\n\r\n        \r\n    This method returns a list of questions.\r\n\r\n    "
+    },
+    "questions_by_ids_timeline": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Questions",
+      "uriTemplate": "/questions/{ids}/timeline",
+      "returns": {
+        "$ref": "#.response_wrapper<question_timeline>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "ids",
+          "type": "string",
+          "format": "number-list"
+        }
+      ],
+      "description": "\r\n        \r\nReturns a subset of the events that have happened to the questions identified in id.\r\n\r\nThis provides data similar to that found on a question's timeline page.\r\n\r\nVoting data is scrubbed to deter inferencing of voter identity.\r\n\r\n{ids} can contain up to 100 separate ids, to find ids programatically look for question_id on question objects.\r\n\r\n        \r\n    This method returns a list of question timeline events.\r\n\r\n    "
+    },
+    "questions_unanswered": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Questions",
+      "uriTemplate": "/questions/unanswered",
+      "returns": {
+        "$ref": "#.response_wrapper<question>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_questions_unanswered"
+          }
+        },
+        {
+          "name": "tagged",
+          "type": "string",
+          "format": "string-list"
+        }
+      ],
+      "description": "\r\n        \r\nReturns questions the site considers to be unanswered.\r\n\r\nNote that just because a question has an answer, that does not mean it is considered answered. While the rules are subject to change, at this time a question must have at least one upvoted answer to be considered answered.\r\n\r\nTo constrain questions returned to those with a set of tags, use the tagged parameter with a \r\nsemi-colon delimited list of tags.\r\nThis is an and contraint, passing tagged=c;java will return only those questions with\r\nboth tags.  As such, passing more than 5 tags will always return zero results.\r\n\r\nCompare with /questions/no-answers.\r\n\r\nThis method corresponds roughly with the unanswered tab.\r\n\r\nThe sorts accepted by this method operate on the follow fields of the question object:\r\n    \r\n        activity &ndash; last_activity_date\r\n        creation &ndash; creation_date\r\n        votes &ndash; score\r\n    \r\n    It is possible to create moderately complex queries using sort, min, max, fromdate, and todate.\r\n\r\n\r\n        \r\n    This method returns a list of questions.\r\n\r\n    "
+    },
+    "questions_no_answers": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Questions",
+      "uriTemplate": "/questions/no-answers",
+      "returns": {
+        "$ref": "#.response_wrapper<question>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_questions_no_answers"
+          }
+        },
+        {
+          "name": "tagged",
+          "type": "string",
+          "format": "string-list"
+        }
+      ],
+      "description": "\r\n        \r\nReturns questions which have received no answers.\r\n\r\nCompare with /questions/unanswered which mearly returns questions that the sites consider insufficiently well answered.\r\n\r\nThis method corresponds roughly with the this site tab.\r\n\r\nTo constrain questions returned to those with a set of tags, use the tagged parameter with a \r\nsemi-colon delimited list of tags.\r\nThis is an and contraint, passing tagged=c;java will return only those questions with\r\nboth tags.  As such, passing more than 5 tags will always return zero results.\r\n\r\nThe sorts accepted by this method operate on the follow fields of the question object:\r\n    \r\n        activity &ndash; last_activity_date\r\n        creation &ndash; creation_date\r\n        votes &ndash; score\r\n    \r\n    It is possible to create moderately complex queries using sort, min, max, fromdate, and todate.\r\n\r\n\r\n        \r\n    This method returns a list of questions.\r\n\r\n    "
+    },
+    "revisions_by_ids": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Revisions",
+      "uriTemplate": "/revisions/{ids}",
+      "returns": {
+        "$ref": "#.response_wrapper<revision>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "ids",
+          "type": "string",
+          "format": "guid-list"
+        }
+      ],
+      "description": "\r\n        \r\nReturns edit revisions identified by ids in {ids}.\r\n\r\n{ids} can contain up to 20 separate ids, to find ids programatically look for revision_guid on revision objects.\r\nNote that unlike most other id types in the API, revision_guid is a string.\r\n\r\n        \r\n    This method returns a list of revisions.\r\n\r\n    "
+    },
+    "search": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Search",
+      "uriTemplate": "/search",
+      "returns": {
+        "$ref": "#.response_wrapper<question>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_search"
+          }
+        },
+        {
+          "name": "tagged",
+          "type": "string",
+          "format": "string-list"
+        },
+        {
+          "name": "nottagged",
+          "type": "string",
+          "format": "string-list"
+        },
+        {
+          "name": "intitle",
+          "type": "string"
+        }
+      ],
+      "description": "\r\n        \r\nSearches a site for any questions which fit the given criteria.\r\n\r\nThis method is intentionally quite limited. For more general searching, you should use a proper internet search engine restricted to the domain of the site in question.\r\n\r\nAt least one of tagged or intitle must be set on this method. nottagged is only used if tagged is also set, for performance reasons.\r\n\r\ntagged and nottagged are semi-colon delimited list of tags.  At least 1 tag in tagged will\r\nbe on each returned question if it is passed, making it the OR equivalent of the AND version of tagged on /questions.\r\n\r\nThe sorts accepted by this method operate on the follow fields of the question object:\r\n    \r\n        activity &ndash; last_activity_date\r\n        creation &ndash; creation_date\r\n        votes &ndash; score\r\n        relevance &ndash; matches the relevance tab on the site itself\r\n            Does not accept min or max\r\n        \r\n    \r\n    It is possible to create moderately complex queries using sort, min, max, fromdate, and todate.\r\n\r\n\r\n        \r\n    This method returns a list of questions.\r\n\r\n    "
+    },
+    "similar": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Search",
+      "uriTemplate": "/similar",
+      "returns": {
+        "$ref": "#.response_wrapper<question>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_similar"
+          }
+        },
+        {
+          "name": "tagged",
+          "type": "string",
+          "format": "string-list"
+        },
+        {
+          "name": "nottagged",
+          "type": "string",
+          "format": "string-list"
+        },
+        {
+          "name": "title",
+          "type": "string"
+        }
+      ],
+      "description": "\r\n        \r\nReturns questions which are similar to a hypothetical one based on a title and tag combination.\r\n\r\nThis method is roughly equivalent to a site's related questions suggestion on the ask page.\r\n\r\nThis method is useful for correlating data outside of a Stack Exchange site with similar content within one.\r\n\r\nNote that title must always be passed as a parameter.  tagged and nottagged are optional, semi-colon\r\ndelimited lists of tags. \r\n\r\nIf tagged is passed it is treated as a preference, there is no guarantee that questions returned\r\nwill have any of those tags.  nottagged is treated as a requirement, no questions will be returned with those\r\ntags.\r\n\r\nThe sorts accepted by this method operate on the follow fields of the question object:\r\n    \r\n        activity &ndash; last_activity_date\r\n        creation &ndash; creation_date\r\n        votes &ndash; score\r\n        relevance &ndash; order by \"how similar\" the questions are, most likely candidate first with a descending order\r\n            Does not accept min or max\r\n        \r\n    \r\n    It is possible to create moderately complex queries using sort, min, max, fromdate, and todate.\r\n\r\n\r\n        \r\n    This method returns a list of questions.\r\n\r\n    "
+    },
+    "suggested_edits": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Suggested_Edits",
+      "uriTemplate": "/suggested-edits",
+      "returns": {
+        "$ref": "#.response_wrapper<suggested_edit>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_suggested_edits"
+          }
+        }
+      ],
+      "description": "\r\n        \r\nReturns all the suggested edits in the systems.\r\n\r\n        \r\n    This method returns a list of suggested-edits.\r\n\r\nThe sorts accepted by this method operate on the follow fields of the suggested_edit object:\r\n    \r\n        creation &ndash; creation_date\r\n        approval &ndash; approval_date\r\n            Does not return unapproved suggested_edits\r\n        \r\n        rejection &ndash; rejection_date\r\n            Does not return unrejected suggested_edits\r\n        \r\n    \r\n    It is possible to create moderately complex queries using sort, min, max, fromdate, and todate.\r\n\r\n\r\n    "
+    },
+    "suggested_edits_by_ids": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Suggested_Edits",
+      "uriTemplate": "/suggested-edits/{ids}",
+      "returns": {
+        "$ref": "#.response_wrapper<suggested_edit>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_suggested_edits_by_ids"
+          }
+        },
+        {
+          "name": "ids",
+          "type": "string",
+          "format": "number-list"
+        }
+      ],
+      "description": "\r\n        \r\nReturns suggested edits identified in ids.\r\n\r\n{ids} can contain up to 100 separate ids, to find ids programatically look for suggested_edit_id on suggested_edit objects.\r\n\r\nThe sorts accepted by this method operate on the follow fields of the suggested_edit object:\r\n    \r\n        creation &ndash; creation_date\r\n        approval &ndash; approval_date\r\n            Does not return unapproved suggested_edits\r\n        \r\n        rejection &ndash; rejection_date\r\n            Does not return unrejected suggested_edits\r\n        \r\n    \r\n    It is possible to create moderately complex queries using sort, min, max, fromdate, and todate.\r\n\r\n\r\n        \r\n    This method returns a list of suggested-edits.\r\n\r\n    "
+    },
+    "info": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Info",
+      "uriTemplate": "/info",
+      "returns": {
+        "$ref": "#.response_wrapper<info>"
+      },
+      "parameters": [],
+      "description": "\r\n        \r\nReturns a collection of statistics about the site.\r\n\r\nData to facilitate per-site customization, discover related sites, and aggregate statistics is all returned by this method.\r\n\r\nThis data is cached very aggressively, by design. Query sparingly, ideally no more than once an hour.\r\n\r\n        \r\n    This method returns an info object.\r\n\r\n    "
+    },
+    "tags": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Tags",
+      "uriTemplate": "/tags",
+      "returns": {
+        "$ref": "#.response_wrapper<tag>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_tags"
+          }
+        },
+        {
+          "name": "inname",
+          "type": "string"
+        }
+      ],
+      "description": "\r\n        \r\nReturns the tags found on a site.\r\n\r\nThe inname parameter lets a consumer filter down to tags that contain a certain substring.\r\nFor example, inname=own would return both \"download\" and \"owner\" amongst others.\r\n\r\n        \r\n    This method returns a list of tags.\r\n\r\nThe sorts accepted by this method operate on the follow fields of the tag object:\r\n    \r\n        popular &ndash; count\r\n        activity &ndash; the creation_date of the last question asked with the tag\r\n        name &ndash; name\r\n    \r\n    It is possible to create moderately complex queries using sort, min, max, fromdate, and todate.\r\n\r\n\r\n    "
+    },
+    "tags_synonyms": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Tags",
+      "uriTemplate": "/tags/synonyms",
+      "returns": {
+        "$ref": "#.response_wrapper<tag_synonym>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_tags_synonyms"
+          }
+        }
+      ],
+      "description": "\r\n        \r\nReturns all tag synonyms found a site.\r\n\r\nWhen searching for synonyms of specific tags, it is better to use /tags/{tags}/synonyms over this method.\r\n\r\nThe sorts accepted by this method operate on the follow fields of the tag_synonym object:\r\n    \r\n        creation &ndash; creation_date\r\n        applied &ndash; applied_count\r\n        activity &ndash; last_applied_date\r\n    \r\n    It is possible to create moderately complex queries using sort, min, max, fromdate, and todate.\r\n\r\n\r\n        \r\n    This method returns a list of tag_synonyms.\r\n\r\n    "
+    },
+    "tags_by_tags_faq": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Tags",
+      "uriTemplate": "/tags/{tags}/faq",
+      "returns": {
+        "$ref": "#.response_wrapper<question>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "tags",
+          "type": "string",
+          "format": "string-list"
+        }
+      ],
+      "description": "\r\n        \r\nReturns the frequently asked questions for the given set of tags in {tags}.\r\n\r\nFor a question to be returned, it must have all the tags in {tags} and be considered \"frequently asked\".\r\nThe exact algorithm for determining whether a question is considered a FAQ is subject to change at any time.\r\n\r\n{tags} can contain up to 5 individual tags per request.\r\n\r\n        \r\n    This method returns a list of questions.\r\n\r\n    "
+    },
+    "tags_by_tags_related": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Tags",
+      "uriTemplate": "/tags/{tags}/related",
+      "returns": {
+        "$ref": "#.response_wrapper<tag>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "tags",
+          "type": "string",
+          "format": "string-list"
+        }
+      ],
+      "description": "\r\n        \r\nReturns the tags that are most related to those in {tags}.\r\n\r\nIncluding multiple tags in {tags} is equivalent to asking for \"tags related to tag #1 and tag #2\" not\r\n\"tags related to tag #1 or tag #2\".\r\n\r\ncount on tag objects returned is the number of question with that tag that also share all those in {tags}.\r\n\r\n{tags} can contain up to 4 individual tags per request.\r\n\r\n        \r\n    This method returns a list of tags.\r\n\r\n    "
+    },
+    "tags_by_tags_synonyms": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Tags",
+      "uriTemplate": "/tags/{tags}/synonyms",
+      "returns": {
+        "$ref": "#.response_wrapper<tag_synonym>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_tags_by_tags_synonyms"
+          }
+        },
+        {
+          "name": "tags",
+          "type": "string",
+          "format": "string-list"
+        }
+      ],
+      "description": "\r\n        \r\nGets all the synonyms that point to the tags identified in {tags}.  If you're looking to discover all the tag\r\nsynonyms on a site, use the /tags/synonyms methods instead of call this method on all \r\ntags.\r\n\r\n{tags} can contain up to 20 individual tags per request.\r\n\r\nThe sorts accepted by this method operate on the follow fields of the tag_synonym object:\r\n    \r\n        creation &ndash; creation_date\r\n        applied &ndash; applied_count\r\n        activity &ndash; last_applied_date\r\n    \r\n    It is possible to create moderately complex queries using sort, min, max, fromdate, and todate.\r\n\r\n\r\n        \r\n    This method returns a list of tag synonyms.\r\n\r\n    "
+    },
+    "tags_by_tag_top_answerers_by_period": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Tags",
+      "uriTemplate": "/tags/{tag}/top-answerers/{period}",
+      "returns": {
+        "$ref": "#.response_wrapper<tag_score>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "tag",
+          "type": "string"
+        },
+        {
+          "name": "period",
+          "type": {
+            "$ref": "#.period"
+          }
+        }
+      ],
+      "description": "\r\n        \r\nReturns the top 30 answerers active in a single tag, of either all-time or the last 30 days.\r\n\r\nThis is a view onto the data presented on the tag info page on the sites.\r\n\r\n        \r\n    This method returns a list of tag score objects.\r\n\r\n    "
+    },
+    "tags_by_tag_top_askers_by_period": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Tags",
+      "uriTemplate": "/tags/{tag}/top-askers/{period}",
+      "returns": {
+        "$ref": "#.response_wrapper<tag_score>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "tag",
+          "type": "string"
+        },
+        {
+          "name": "period",
+          "type": {
+            "$ref": "#.period"
+          }
+        }
+      ],
+      "description": "\r\n        \r\nReturns the top 30 answerers active in a single tag, of either all-time or the last 30 days.\r\n\r\nThis is a view onto the data presented on the tag info page on the sites.\r\n\r\n        \r\n    This method returns a list of tag score objects.\r\n\r\n    "
+    },
+    "tags_by_tags_wikis": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Tags",
+      "uriTemplate": "/tags/{tags}/wikis",
+      "returns": {
+        "$ref": "#.response_wrapper<tag_wiki>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "tags",
+          "type": "string",
+          "format": "string-list"
+        }
+      ],
+      "description": "\r\n        \r\nReturns the wikis that go with the given set of tags in {tags}.\r\n\r\nBe aware that not all tags have wikis.\r\n\r\n{tags} can contain up to 20 individual tags per request.\r\n\r\n        \r\n    This method returns a list of tag wikis.\r\n\r\n    "
+    },
+    "users": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Users",
+      "uriTemplate": "/users",
+      "returns": {
+        "$ref": "#.response_wrapper<user>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_users"
+          }
+        },
+        {
+          "name": "inname",
+          "type": "string"
+        }
+      ],
+      "description": "\r\n        \r\nReturns all users on a site.\r\n\r\n        \r\n    This method returns a list of users.\r\n\r\nThe sorts accepted by this method operate on the follow fields of the user object:\r\n    \r\n        reputation &ndash; reputation\r\n        creation &ndash; creation_date\r\n        name &ndash; display_name\r\n        modified &ndash; last_modified_date\r\n    \r\n    It is possible to create moderately complex queries using sort, min, max, fromdate, and todate.\r\n\r\n\r\nThe inname parameter lets consumers filter the results down to just those users with a certain\r\nsubstring in their display name.  For example, inname=kevin will return all users with both users\r\nnamed simply \"Kevin\" or those with Kevin as one of (or part of) their names; such as \"Kevin Montrose\".\r\n\r\n    "
+    },
+    "users_by_ids": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Users",
+      "uriTemplate": "/users/{ids}",
+      "returns": {
+        "$ref": "#.response_wrapper<user>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_users_by_ids"
+          }
+        },
+        {
+          "name": "ids",
+          "type": "string",
+          "format": "number-list"
+        }
+      ],
+      "description": "\r\n        \r\nGets the users identified in ids in {ids}.\r\n\r\nTypically this method will be called to fetch user profiles when you have obtained user ids from some other source, such as /questions.\r\n\r\n{ids} can contain up to 100 separate ids, to find ids programatically look for user_id on user or shallow_user objects.\r\n\r\nThe sorts accepted by this method operate on the follow fields of the user object:\r\n    \r\n        reputation &ndash; reputation\r\n        creation &ndash; creation_date\r\n        name &ndash; display_name\r\n        modified &ndash; last_modified_date\r\n    \r\n    It is possible to create moderately complex queries using sort, min, max, fromdate, and todate.\r\n\r\n\r\n        \r\n    This method returns a list of users.\r\n\r\n    "
+    },
+    "me": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Users",
+      "authentication_scopes": [],
+      "uriTemplate": "/me",
+      "returns": {
+        "$ref": "#.response_wrapper<user>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_me"
+          }
+        },
+        {
+          "name": "ids",
+          "type": "string",
+          "format": "number-list"
+        }
+      ],
+      "description": "\r\n        \r\nGets the users identified in ids in {ids}.\r\n\r\nTypically this method will be called to fetch user profiles when you have obtained user ids from some other source, such as /questions.\r\n\r\n{ids} can contain up to 100 separate ids, to find ids programatically look for user_id on user or shallow_user objects.\r\n\r\nThe sorts accepted by this method operate on the follow fields of the user object:\r\n    \r\n        reputation &ndash; reputation\r\n        creation &ndash; creation_date\r\n        name &ndash; display_name\r\n        modified &ndash; last_modified_date\r\n    \r\n    It is possible to create moderately complex queries using sort, min, max, fromdate, and todate.\r\n\r\n\r\n        \r\n    This method returns a list of users.\r\n\r\n    "
+    },
+    "users_by_ids_answers": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Users",
+      "uriTemplate": "/users/{ids}/answers",
+      "returns": {
+        "$ref": "#.response_wrapper<answer>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_users_by_ids_answers"
+          }
+        },
+        {
+          "name": "ids",
+          "type": "string",
+          "format": "number-list"
+        }
+      ],
+      "description": "\r\n        \r\nReturns the answers the users in {ids} have posted.\r\n\r\n{ids} can contain up to 100 separate ids, to find ids programatically look for user_id on user or shallow_user objects.\r\n\r\nThe sorts accepted by this method operate on the follow fields of the answer object:\r\n    \r\n        activity &ndash; last_activity_date\r\n        creation &ndash; creation_date\r\n        votes &ndash; score\r\n    \r\n    It is possible to create moderately complex queries using sort, min, max, fromdate, and todate.\r\n\r\n\r\n        \r\n    This method returns a list of answers.\r\n\r\n    "
+    },
+    "me_answers": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Users",
+      "authentication_scopes": [],
+      "uriTemplate": "/me/answers",
+      "returns": {
+        "$ref": "#.response_wrapper<answer>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_me_answers"
+          }
+        },
+        {
+          "name": "ids",
+          "type": "string",
+          "format": "number-list"
+        }
+      ],
+      "description": "\r\n        \r\nReturns the answers the users in {ids} have posted.\r\n\r\n{ids} can contain up to 100 separate ids, to find ids programatically look for user_id on user or shallow_user objects.\r\n\r\nThe sorts accepted by this method operate on the follow fields of the answer object:\r\n    \r\n        activity &ndash; last_activity_date\r\n        creation &ndash; creation_date\r\n        votes &ndash; score\r\n    \r\n    It is possible to create moderately complex queries using sort, min, max, fromdate, and todate.\r\n\r\n\r\n        \r\n    This method returns a list of answers.\r\n\r\n    "
+    },
+    "users_by_ids_badges": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Users",
+      "uriTemplate": "/users/{ids}/badges",
+      "returns": {
+        "$ref": "#.response_wrapper<badge>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_users_by_ids_badges"
+          }
+        },
+        {
+          "name": "ids",
+          "type": "string",
+          "format": "number-list"
+        }
+      ],
+      "description": "\r\n        \r\nGet the badges the users in {ids} have earned.\r\n\r\nBadge sorts are a tad complicated.  For the purposes of sorting (and min/max) tag_based is considered\r\nto be greater than named.\r\n\r\nThis means that you can get a list of all tag based badges a user has by passing min=tag_based, and conversely\r\nall the named badges by passing max=named, with sort=type.\r\n\r\nFor ranks, bronze is greater than silver which is greater than gold.  Along with sort=rank, set max=gold\r\nfor just gold badges, max=silver&min=silver for just silver, and min=bronze for just bronze.\r\n\r\n{ids} can contain up to 100 separate ids, to find ids programatically look for user_id on user or shallow_user objects.\r\n\r\n        \r\n    This method returns a list of badges.\r\n\r\n    "
+    },
+    "me_badges": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Users",
+      "authentication_scopes": [],
+      "uriTemplate": "/me/badges",
+      "returns": {
+        "$ref": "#.response_wrapper<badge>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_me_badges"
+          }
+        },
+        {
+          "name": "ids",
+          "type": "string",
+          "format": "number-list"
+        }
+      ],
+      "description": "\r\n        \r\nGet the badges the users in {ids} have earned.\r\n\r\nBadge sorts are a tad complicated.  For the purposes of sorting (and min/max) tag_based is considered\r\nto be greater than named.\r\n\r\nThis means that you can get a list of all tag based badges a user has by passing min=tag_based, and conversely\r\nall the named badges by passing max=named, with sort=type.\r\n\r\nFor ranks, bronze is greater than silver which is greater than gold.  Along with sort=rank, set max=gold\r\nfor just gold badges, max=silver&min=silver for just silver, and min=bronze for just bronze.\r\n\r\n{ids} can contain up to 100 separate ids, to find ids programatically look for user_id on user or shallow_user objects.\r\n\r\n        \r\n    This method returns a list of badges.\r\n\r\n    "
+    },
+    "users_by_ids_comments": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Users",
+      "uriTemplate": "/users/{ids}/comments",
+      "returns": {
+        "$ref": "#.response_wrapper<comment>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_users_by_ids_comments"
+          }
+        },
+        {
+          "name": "ids",
+          "type": "string",
+          "format": "number-list"
+        }
+      ],
+      "description": "\r\n        \r\nGet the comments posted by users in {ids}.\r\n\r\n{ids} can contain up to 100 separate ids, to find ids programatically look for user_id on user or shallow_user objects.\r\n\r\nThe sorts accepted by this method operate on the follow fields of the comment object:\r\n    \r\n        creation &ndash; creation_date\r\n        votes &ndash; score\r\n    \r\n    It is possible to create moderately complex queries using sort, min, max, fromdate, and todate.\r\n\r\n\r\n        \r\n    This method returns a list of comments.\r\n\r\n    "
+    },
+    "me_comments": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Users",
+      "authentication_scopes": [],
+      "uriTemplate": "/me/comments",
+      "returns": {
+        "$ref": "#.response_wrapper<comment>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_me_comments"
+          }
+        },
+        {
+          "name": "ids",
+          "type": "string",
+          "format": "number-list"
+        }
+      ],
+      "description": "\r\n        \r\nGet the comments posted by users in {ids}.\r\n\r\n{ids} can contain up to 100 separate ids, to find ids programatically look for user_id on user or shallow_user objects.\r\n\r\nThe sorts accepted by this method operate on the follow fields of the comment object:\r\n    \r\n        creation &ndash; creation_date\r\n        votes &ndash; score\r\n    \r\n    It is possible to create moderately complex queries using sort, min, max, fromdate, and todate.\r\n\r\n\r\n        \r\n    This method returns a list of comments.\r\n\r\n    "
+    },
+    "users_by_ids_comments_to_id": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Users",
+      "uriTemplate": "/users/{ids}/comments/{toid}",
+      "returns": {
+        "$ref": "#.response_wrapper<comment>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_users_by_ids_comments_to_id"
+          }
+        },
+        {
+          "name": "ids",
+          "type": "string",
+          "format": "number-list"
+        },
+        {
+          "name": "toid",
+          "type": "number"
+        }
+      ],
+      "description": "\r\n        \r\nGet the comments that the users in {ids} have posted in reply to the single user identified in {toid}.\r\n\r\nThis method is useful for extracting conversations, especially over time or across multiple posts.\r\n\r\n{ids} can contain up to 100 separate ids, to find ids programatically look for user_id on user or shallow_user objects.  \r\n{toid} can contain only 1 id, found in the same manner as those in {ids}.\r\n\r\nThe sorts accepted by this method operate on the follow fields of the comment object:\r\n    \r\n        creation &ndash; creation_date\r\n        votes &ndash; score\r\n    \r\n    It is possible to create moderately complex queries using sort, min, max, fromdate, and todate.\r\n\r\n\r\n        \r\n    This method returns a list of comments.\r\n\r\n    "
+    },
+    "me_comments_to_id": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Users",
+      "authentication_scopes": [],
+      "uriTemplate": "/me/comments/{toid}",
+      "returns": {
+        "$ref": "#.response_wrapper<comment>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_me_comments_to_id"
+          }
+        },
+        {
+          "name": "ids",
+          "type": "string",
+          "format": "number-list"
+        },
+        {
+          "name": "toid",
+          "type": "number"
+        }
+      ],
+      "description": "\r\n        \r\nGet the comments that the users in {ids} have posted in reply to the single user identified in {toid}.\r\n\r\nThis method is useful for extracting conversations, especially over time or across multiple posts.\r\n\r\n{ids} can contain up to 100 separate ids, to find ids programatically look for user_id on user or shallow_user objects.  \r\n{toid} can contain only 1 id, found in the same manner as those in {ids}.\r\n\r\nThe sorts accepted by this method operate on the follow fields of the comment object:\r\n    \r\n        creation &ndash; creation_date\r\n        votes &ndash; score\r\n    \r\n    It is possible to create moderately complex queries using sort, min, max, fromdate, and todate.\r\n\r\n\r\n        \r\n    This method returns a list of comments.\r\n\r\n    "
+    },
+    "users_by_ids_favorites": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Users",
+      "uriTemplate": "/users/{ids}/favorites",
+      "returns": {
+        "$ref": "#.response_wrapper<question>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_users_by_ids_favorites"
+          }
+        },
+        {
+          "name": "ids",
+          "type": "string",
+          "format": "number-list"
+        }
+      ],
+      "description": "\r\n        \r\nGet the questions that users in {ids} have favorited.\r\n\r\nThis method is effectively a view onto a user's favorites tab.\r\n\r\n{ids} can contain up to 100 separate ids, to find ids programatically look for user_id on user or shallow_user objects.\r\n\r\nThe sorts accepted by this method operate on the follow fields of the question object:\r\n    \r\n        activity &ndash; last_activity_date\r\n        creation &ndash; creation_date\r\n        votes &ndash; score\r\n        added &ndash; when the user favorited the question\r\n    \r\n    It is possible to create moderately complex queries using sort, min, max, fromdate, and todate.\r\n\r\n\r\n        \r\n    This method returns a list of questions.\r\n\r\n    "
+    },
+    "me_favorites": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Users",
+      "authentication_scopes": [],
+      "uriTemplate": "/me/favorites",
+      "returns": {
+        "$ref": "#.response_wrapper<question>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_me_favorites"
+          }
+        },
+        {
+          "name": "ids",
+          "type": "string",
+          "format": "number-list"
+        }
+      ],
+      "description": "\r\n        \r\nGet the questions that users in {ids} have favorited.\r\n\r\nThis method is effectively a view onto a user's favorites tab.\r\n\r\n{ids} can contain up to 100 separate ids, to find ids programatically look for user_id on user or shallow_user objects.\r\n\r\nThe sorts accepted by this method operate on the follow fields of the question object:\r\n    \r\n        activity &ndash; last_activity_date\r\n        creation &ndash; creation_date\r\n        votes &ndash; score\r\n        added &ndash; when the user favorited the question\r\n    \r\n    It is possible to create moderately complex queries using sort, min, max, fromdate, and todate.\r\n\r\n\r\n        \r\n    This method returns a list of questions.\r\n\r\n    "
+    },
+    "users_by_ids_mentioned": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Users",
+      "uriTemplate": "/users/{ids}/mentioned",
+      "returns": {
+        "$ref": "#.response_wrapper<comment>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_users_by_ids_mentioned"
+          }
+        },
+        {
+          "name": "ids",
+          "type": "string",
+          "format": "number-list"
+        }
+      ],
+      "description": "\r\n        \r\nGets all the comments that the users in {ids} were mentioned in.\r\n\r\nNote, to count as a mention the comment must be considered to be \"in reply to\" a user. Most importantly, this means that a comment can only be in reply to a single user.\r\n\r\n{ids} can contain up to 100 separate ids, to find ids programatically look for user_id on user or shallow_user objects.\r\n\r\nThe sorts accepted by this method operate on the follow fields of the comment object:\r\n    \r\n        creation &ndash; creation_date\r\n        votes &ndash; score\r\n    \r\n    It is possible to create moderately complex queries using sort, min, max, fromdate, and todate.\r\n\r\n\r\n        \r\n    This method returns a list of comments.\r\n\r\n    "
+    },
+    "me_mentioned": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Users",
+      "authentication_scopes": [],
+      "uriTemplate": "/me/mentioned",
+      "returns": {
+        "$ref": "#.response_wrapper<comment>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_me_mentioned"
+          }
+        },
+        {
+          "name": "ids",
+          "type": "string",
+          "format": "number-list"
+        }
+      ],
+      "description": "\r\n        \r\nGets all the comments that the users in {ids} were mentioned in.\r\n\r\nNote, to count as a mention the comment must be considered to be \"in reply to\" a user. Most importantly, this means that a comment can only be in reply to a single user.\r\n\r\n{ids} can contain up to 100 separate ids, to find ids programatically look for user_id on user or shallow_user objects.\r\n\r\nThe sorts accepted by this method operate on the follow fields of the comment object:\r\n    \r\n        creation &ndash; creation_date\r\n        votes &ndash; score\r\n    \r\n    It is possible to create moderately complex queries using sort, min, max, fromdate, and todate.\r\n\r\n\r\n        \r\n    This method returns a list of comments.\r\n\r\n    "
+    },
+    "users_by_id_privileges": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Users",
+      "uriTemplate": "/users/{id}/privileges",
+      "returns": {
+        "$ref": "#.response_wrapper<privilege>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "id",
+          "type": "number"
+        }
+      ],
+      "description": "\r\n        \r\nReturns the privileges a user has.\r\n\r\nApplications are encouraged to calculate privileges themselves, without repeated queries to this method.\r\nA simple check against the results returned by /privileges and user.user_type would\r\nbe sufficient.\r\n\r\n{id} can contain only a single, to find it programatically look for user_id on user or shallow_user objects.\r\n\r\n        \r\n    This method returns a list of privileges.\r\n\r\n    "
+    },
+    "me_privileges": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Users",
+      "authentication_scopes": [],
+      "uriTemplate": "/me/privileges",
+      "returns": {
+        "$ref": "#.response_wrapper<privilege>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "id",
+          "type": "number"
+        }
+      ],
+      "description": "\r\n        \r\nReturns the privileges a user has.\r\n\r\nApplications are encouraged to calculate privileges themselves, without repeated queries to this method.\r\nA simple check against the results returned by /privileges and user.user_type would\r\nbe sufficient.\r\n\r\n{id} can contain only a single, to find it programatically look for user_id on user or shallow_user objects.\r\n\r\n        \r\n    This method returns a list of privileges.\r\n\r\n    "
+    },
+    "users_by_ids_questions": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Users",
+      "uriTemplate": "/users/{ids}/questions",
+      "returns": {
+        "$ref": "#.response_wrapper<question>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_users_by_ids_questions"
+          }
+        },
+        {
+          "name": "ids",
+          "type": "string",
+          "format": "number-list"
+        }
+      ],
+      "description": "\r\n        \r\nGets the questions asked by the users in {ids}.\r\n\r\n{ids} can contain up to 100 separate ids, to find ids programatically look for user_id on user or shallow_user objects.\r\n\r\nThe sorts accepted by this method operate on the follow fields of the question object:\r\n    \r\n        activity &ndash; last_activity_date\r\n        creation &ndash; creation_date\r\n        votes &ndash; score\r\n    \r\n    It is possible to create moderately complex queries using sort, min, max, fromdate, and todate.\r\n\r\n\r\n        \r\n    This method returns a list of questions.\r\n\r\n    "
+    },
+    "me_questions": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Users",
+      "authentication_scopes": [],
+      "uriTemplate": "/me/questions",
+      "returns": {
+        "$ref": "#.response_wrapper<question>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_me_questions"
+          }
+        },
+        {
+          "name": "ids",
+          "type": "string",
+          "format": "number-list"
+        }
+      ],
+      "description": "\r\n        \r\nGets the questions asked by the users in {ids}.\r\n\r\n{ids} can contain up to 100 separate ids, to find ids programatically look for user_id on user or shallow_user objects.\r\n\r\nThe sorts accepted by this method operate on the follow fields of the question object:\r\n    \r\n        activity &ndash; last_activity_date\r\n        creation &ndash; creation_date\r\n        votes &ndash; score\r\n    \r\n    It is possible to create moderately complex queries using sort, min, max, fromdate, and todate.\r\n\r\n\r\n        \r\n    This method returns a list of questions.\r\n\r\n    "
+    },
+    "users_by_ids_questions_no_answers": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Users",
+      "uriTemplate": "/users/{ids}/questions/no-answers",
+      "returns": {
+        "$ref": "#.response_wrapper<question>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_users_by_ids_questions_no_answers"
+          }
+        },
+        {
+          "name": "ids",
+          "type": "string",
+          "format": "number-list"
+        }
+      ],
+      "description": "\r\n        \r\nGets the questions asked by the users in {ids} which have no answers.\r\n\r\nQuestions returns by this method actually have zero undeleted answers. It is completely disjoint /users/{ids}/questions/unanswered and /users/{ids}/questions/unaccepted, which only return questions with at least one answer, subject to other contraints.\r\n\r\n{ids} can contain up to 100 separate ids, to find ids programatically look for user_id on user or shallow_user objects.\r\n\r\nThe sorts accepted by this method operate on the follow fields of the question object:\r\n    \r\n        activity &ndash; last_activity_date\r\n        creation &ndash; creation_date\r\n        votes &ndash; score\r\n    \r\n    It is possible to create moderately complex queries using sort, min, max, fromdate, and todate.\r\n\r\n\r\n        \r\n    This method returns a list of questions.\r\n\r\n    "
+    },
+    "me_questions_no_answers": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Users",
+      "authentication_scopes": [],
+      "uriTemplate": "/me/questions/no-answers",
+      "returns": {
+        "$ref": "#.response_wrapper<question>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_me_questions_no_answers"
+          }
+        },
+        {
+          "name": "ids",
+          "type": "string",
+          "format": "number-list"
+        }
+      ],
+      "description": "\r\n        \r\nGets the questions asked by the users in {ids} which have no answers.\r\n\r\nQuestions returns by this method actually have zero undeleted answers. It is completely disjoint /users/{ids}/questions/unanswered and /users/{ids}/questions/unaccepted, which only return questions with at least one answer, subject to other contraints.\r\n\r\n{ids} can contain up to 100 separate ids, to find ids programatically look for user_id on user or shallow_user objects.\r\n\r\nThe sorts accepted by this method operate on the follow fields of the question object:\r\n    \r\n        activity &ndash; last_activity_date\r\n        creation &ndash; creation_date\r\n        votes &ndash; score\r\n    \r\n    It is possible to create moderately complex queries using sort, min, max, fromdate, and todate.\r\n\r\n\r\n        \r\n    This method returns a list of questions.\r\n\r\n    "
+    },
+    "users_by_ids_questions_unaccepted": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Users",
+      "uriTemplate": "/users/{ids}/questions/unaccepted",
+      "returns": {
+        "$ref": "#.response_wrapper<question>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_users_by_ids_questions_unaccepted"
+          }
+        },
+        {
+          "name": "ids",
+          "type": "string",
+          "format": "number-list"
+        }
+      ],
+      "description": "\r\n        \r\nGets the questions asked by the users in {ids} which have at least one answer, but no accepted answer.\r\n\r\nQuestions returned by this method have answers, but the owner has not opted to accept any of them.\r\n\r\n{ids} can contain up to 100 separate ids, to find ids programatically look for user_id on user or shallow_user objects.\r\n\r\nThe sorts accepted by this method operate on the follow fields of the question object:\r\n    \r\n        activity &ndash; last_activity_date\r\n        creation &ndash; creation_date\r\n        votes &ndash; score\r\n    \r\n    It is possible to create moderately complex queries using sort, min, max, fromdate, and todate.\r\n\r\n\r\n        \r\n    This method returns a list of questions.\r\n\r\n    "
+    },
+    "me_questions_unaccepted": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Users",
+      "authentication_scopes": [],
+      "uriTemplate": "/me/questions/unaccepted",
+      "returns": {
+        "$ref": "#.response_wrapper<question>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_me_questions_unaccepted"
+          }
+        },
+        {
+          "name": "ids",
+          "type": "string",
+          "format": "number-list"
+        }
+      ],
+      "description": "\r\n        \r\nGets the questions asked by the users in {ids} which have at least one answer, but no accepted answer.\r\n\r\nQuestions returned by this method have answers, but the owner has not opted to accept any of them.\r\n\r\n{ids} can contain up to 100 separate ids, to find ids programatically look for user_id on user or shallow_user objects.\r\n\r\nThe sorts accepted by this method operate on the follow fields of the question object:\r\n    \r\n        activity &ndash; last_activity_date\r\n        creation &ndash; creation_date\r\n        votes &ndash; score\r\n    \r\n    It is possible to create moderately complex queries using sort, min, max, fromdate, and todate.\r\n\r\n\r\n        \r\n    This method returns a list of questions.\r\n\r\n    "
+    },
+    "users_by_ids_questions_unanswered": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Users",
+      "uriTemplate": "/users/{ids}/questions/unanswered",
+      "returns": {
+        "$ref": "#.response_wrapper<question>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_users_by_ids_questions_unanswered"
+          }
+        },
+        {
+          "name": "ids",
+          "type": "string",
+          "format": "number-list"
+        }
+      ],
+      "description": "\r\n        \r\nGets the questions asked by the users in {ids} which the site consideres unanswered, while still having at least one answer posted.\r\n\r\nThese rules are subject to change, but currently any question without at least one upvoted or accepted answer is considered unanswered.\r\n\r\nTo get the set of questions that a user probably considers unanswered, the returned questions should be unioned with those returned by /users/{id}/questions/no-answers. These methods are distinct so that truly unanswered (that is, zero posted answers) questions can be easily separated from mearly poorly or inadequately answered ones.\r\n\r\n{ids} can contain up to 100 separate ids, to find ids programatically look for user_id on user or shallow_user objects.\r\n\r\nThe sorts accepted by this method operate on the follow fields of the question object:\r\n    \r\n        activity &ndash; last_activity_date\r\n        creation &ndash; creation_date\r\n        votes &ndash; score\r\n    \r\n    It is possible to create moderately complex queries using sort, min, max, fromdate, and todate.\r\n\r\n\r\n        \r\n    This method returns a list of questions.\r\n\r\n    "
+    },
+    "me_questions_unanswered": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Users",
+      "authentication_scopes": [],
+      "uriTemplate": "/me/questions/unanswered",
+      "returns": {
+        "$ref": "#.response_wrapper<question>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_me_questions_unanswered"
+          }
+        },
+        {
+          "name": "ids",
+          "type": "string",
+          "format": "number-list"
+        }
+      ],
+      "description": "\r\n        \r\nGets the questions asked by the users in {ids} which the site consideres unanswered, while still having at least one answer posted.\r\n\r\nThese rules are subject to change, but currently any question without at least one upvoted or accepted answer is considered unanswered.\r\n\r\nTo get the set of questions that a user probably considers unanswered, the returned questions should be unioned with those returned by /users/{id}/questions/no-answers. These methods are distinct so that truly unanswered (that is, zero posted answers) questions can be easily separated from mearly poorly or inadequately answered ones.\r\n\r\n{ids} can contain up to 100 separate ids, to find ids programatically look for user_id on user or shallow_user objects.\r\n\r\nThe sorts accepted by this method operate on the follow fields of the question object:\r\n    \r\n        activity &ndash; last_activity_date\r\n        creation &ndash; creation_date\r\n        votes &ndash; score\r\n    \r\n    It is possible to create moderately complex queries using sort, min, max, fromdate, and todate.\r\n\r\n\r\n        \r\n    This method returns a list of questions.\r\n\r\n    "
+    },
+    "users_by_ids_reputation": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Users",
+      "uriTemplate": "/users/{ids}/reputation",
+      "returns": {
+        "$ref": "#.response_wrapper<reputation>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "ids",
+          "type": "string",
+          "format": "number-list"
+        }
+      ],
+      "description": "\r\n        \r\nGets a subset of the reputation changes for users in {ids}.\r\n\r\nReputation changes are intentionally scrubbed of some data to make it difficult to correlate votes on particular posts with user reputation changes. That being said, this method returns enough data for reasonable display of reputation trends.\r\n\r\n{ids} can contain up to 100 separate ids, to find ids programatically look for user_id on user or shallow_user objects.\r\n\r\n        \r\n    This method returns a list of reputation objects.\r\n\r\n    "
+    },
+    "me_reputation": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Users",
+      "authentication_scopes": [],
+      "uriTemplate": "/me/reputation",
+      "returns": {
+        "$ref": "#.response_wrapper<reputation>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "ids",
+          "type": "string",
+          "format": "number-list"
+        }
+      ],
+      "description": "\r\n        \r\nGets a subset of the reputation changes for users in {ids}.\r\n\r\nReputation changes are intentionally scrubbed of some data to make it difficult to correlate votes on particular posts with user reputation changes. That being said, this method returns enough data for reasonable display of reputation trends.\r\n\r\n{ids} can contain up to 100 separate ids, to find ids programatically look for user_id on user or shallow_user objects.\r\n\r\n        \r\n    This method returns a list of reputation objects.\r\n\r\n    "
+    },
+    "users_by_ids_suggested_edits": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Users",
+      "uriTemplate": "/users/{ids}/suggested-edits",
+      "returns": {
+        "$ref": "#.response_wrapper<suggested_edit>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_users_by_ids_suggested_edits"
+          }
+        },
+        {
+          "name": "ids",
+          "type": "string",
+          "format": "number-list"
+        }
+      ],
+      "description": "\r\n        \r\nReturns the suggested edits a users in {ids} have submitted.\r\n\r\n{ids} can contain up to 100 separate ids, to find ids programatically look for user_id on user or shallow_user objects.\r\n\r\nThe sorts accepted by this method operate on the follow fields of the suggested_edit object:\r\n    \r\n        creation &ndash; creation_date\r\n        approval &ndash; approval_date\r\n            Does not return unapproved suggested_edits\r\n        \r\n        rejection &ndash; rejection_date\r\n            Does not return unrejected suggested_edits\r\n        \r\n    \r\n    It is possible to create moderately complex queries using sort, min, max, fromdate, and todate.\r\n\r\n\r\n        \r\n    This method returns a list of suggested-edits.\r\n\r\n    "
+    },
+    "me_suggested_edits": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Users",
+      "authentication_scopes": [],
+      "uriTemplate": "/me/suggested-edits",
+      "returns": {
+        "$ref": "#.response_wrapper<suggested_edit>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_me_suggested_edits"
+          }
+        },
+        {
+          "name": "ids",
+          "type": "string",
+          "format": "number-list"
+        }
+      ],
+      "description": "\r\n        \r\nReturns the suggested edits a users in {ids} have submitted.\r\n\r\n{ids} can contain up to 100 separate ids, to find ids programatically look for user_id on user or shallow_user objects.\r\n\r\nThe sorts accepted by this method operate on the follow fields of the suggested_edit object:\r\n    \r\n        creation &ndash; creation_date\r\n        approval &ndash; approval_date\r\n            Does not return unapproved suggested_edits\r\n        \r\n        rejection &ndash; rejection_date\r\n            Does not return unrejected suggested_edits\r\n        \r\n    \r\n    It is possible to create moderately complex queries using sort, min, max, fromdate, and todate.\r\n\r\n\r\n        \r\n    This method returns a list of suggested-edits.\r\n\r\n    "
+    },
+    "users_by_ids_tags": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Users",
+      "uriTemplate": "/users/{ids}/tags",
+      "returns": {
+        "$ref": "#.response_wrapper<tag>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_users_by_ids_tags"
+          }
+        },
+        {
+          "name": "ids",
+          "type": "string",
+          "format": "number-list"
+        }
+      ],
+      "description": "\r\n        \r\nReturns the tags the users identified in {ids} have been active in.\r\n\r\nThis route corresponds roughly to user's stats tab, but does not include tag scores. A subset of tag scores are available (on a single user basis) in /users/{id}/top-answer-tags and /users/{id}/top-question-tags.\r\n\r\n{ids} can contain up to 100 separate ids, to find ids programatically look for user_id on user or shallow_user objects.\r\n\r\nThe sorts accepted by this method operate on the follow fields of the tag object:\r\n    \r\n        popular &ndash; count\r\n        activity &ndash; the creation_date of the last question asked with the tag\r\n        name &ndash; name\r\n    \r\n    It is possible to create moderately complex queries using sort, min, max, fromdate, and todate.\r\n\r\n\r\n        \r\n    This method returns a list of tags.\r\n\r\n    "
+    },
+    "me_tags": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Users",
+      "authentication_scopes": [],
+      "uriTemplate": "/me/tags",
+      "returns": {
+        "$ref": "#.response_wrapper<tag>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_me_tags"
+          }
+        },
+        {
+          "name": "ids",
+          "type": "string",
+          "format": "number-list"
+        }
+      ],
+      "description": "\r\n        \r\nReturns the tags the users identified in {ids} have been active in.\r\n\r\nThis route corresponds roughly to user's stats tab, but does not include tag scores. A subset of tag scores are available (on a single user basis) in /users/{id}/top-answer-tags and /users/{id}/top-question-tags.\r\n\r\n{ids} can contain up to 100 separate ids, to find ids programatically look for user_id on user or shallow_user objects.\r\n\r\nThe sorts accepted by this method operate on the follow fields of the tag object:\r\n    \r\n        popular &ndash; count\r\n        activity &ndash; the creation_date of the last question asked with the tag\r\n        name &ndash; name\r\n    \r\n    It is possible to create moderately complex queries using sort, min, max, fromdate, and todate.\r\n\r\n\r\n        \r\n    This method returns a list of tags.\r\n\r\n    "
+    },
+    "users_by_id_tags_by_tags_top_answers": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Users",
+      "uriTemplate": "/users/{id}/tags/{tags}/top-answers",
+      "returns": {
+        "$ref": "#.response_wrapper<answer>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_users_by_id_tags_by_tags_top_answers"
+          }
+        },
+        {
+          "name": "id",
+          "type": "number"
+        },
+        {
+          "name": "tags",
+          "type": "string",
+          "format": "string-list"
+        }
+      ],
+      "description": "\r\n        \r\nReturns the top 30 answers a user has posted in response to questions with the given tags.\r\n\r\n{id} can contain a single id, to find it programatically look for user_id on user or shallow_user objects.  {tags} is limited to 5 tags, passing more will result in an error.\r\n\r\nThe sorts accepted by this method operate on the follow fields of the answer object:\r\n    \r\n        activity &ndash; last_activity_date\r\n        creation &ndash; creation_date\r\n        votes &ndash; score\r\n    \r\n    It is possible to create moderately complex queries using sort, min, max, fromdate, and todate.\r\n\r\n\r\n        \r\n    This method returns a list of answers.\r\n\r\n    "
+    },
+    "me_tags_by_tags_top_answers": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Users",
+      "authentication_scopes": [],
+      "uriTemplate": "/me/tags/{tags}/top-answers",
+      "returns": {
+        "$ref": "#.response_wrapper<answer>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_me_tags_by_tags_top_answers"
+          }
+        },
+        {
+          "name": "id",
+          "type": "number"
+        },
+        {
+          "name": "tags",
+          "type": "string",
+          "format": "string-list"
+        }
+      ],
+      "description": "\r\n        \r\nReturns the top 30 answers a user has posted in response to questions with the given tags.\r\n\r\n{id} can contain a single id, to find it programatically look for user_id on user or shallow_user objects.  {tags} is limited to 5 tags, passing more will result in an error.\r\n\r\nThe sorts accepted by this method operate on the follow fields of the answer object:\r\n    \r\n        activity &ndash; last_activity_date\r\n        creation &ndash; creation_date\r\n        votes &ndash; score\r\n    \r\n    It is possible to create moderately complex queries using sort, min, max, fromdate, and todate.\r\n\r\n\r\n        \r\n    This method returns a list of answers.\r\n\r\n    "
+    },
+    "users_by_id_tags_by_tags_top_questions": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Users",
+      "uriTemplate": "/users/{id}/tags/{tags}/top-questions",
+      "returns": {
+        "$ref": "#.response_wrapper<question>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_users_by_id_tags_by_tags_top_questions"
+          }
+        },
+        {
+          "name": "id",
+          "type": "number"
+        },
+        {
+          "name": "tags",
+          "type": "string",
+          "format": "string-list"
+        }
+      ],
+      "description": "\r\n        \r\nReturns the top 30 questions a user has asked with the given tags.\r\n\r\n{id} can contain a single id, to find it programatically look for user_id on user or shallow_user objects.  {tags} is limited to 5 tags, passing more will result in an error.\r\n\r\nThe sorts accepted by this method operate on the follow fields of the question object:\r\n    \r\n        activity &ndash; last_activity_date\r\n        creation &ndash; creation_date\r\n        votes &ndash; score\r\n    \r\n    It is possible to create moderately complex queries using sort, min, max, fromdate, and todate.\r\n\r\n\r\n        \r\n    This method returns a list of questions.\r\n\r\n    "
+    },
+    "me_tags_by_tags_top_questions": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Users",
+      "authentication_scopes": [],
+      "uriTemplate": "/me/tags/{tags}/top-questions",
+      "returns": {
+        "$ref": "#.response_wrapper<question>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_me_tags_by_tags_top_questions"
+          }
+        },
+        {
+          "name": "id",
+          "type": "number"
+        },
+        {
+          "name": "tags",
+          "type": "string",
+          "format": "string-list"
+        }
+      ],
+      "description": "\r\n        \r\nReturns the top 30 questions a user has asked with the given tags.\r\n\r\n{id} can contain a single id, to find it programatically look for user_id on user or shallow_user objects.  {tags} is limited to 5 tags, passing more will result in an error.\r\n\r\nThe sorts accepted by this method operate on the follow fields of the question object:\r\n    \r\n        activity &ndash; last_activity_date\r\n        creation &ndash; creation_date\r\n        votes &ndash; score\r\n    \r\n    It is possible to create moderately complex queries using sort, min, max, fromdate, and todate.\r\n\r\n\r\n        \r\n    This method returns a list of questions.\r\n\r\n    "
+    },
+    "users_by_ids_timeline": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Users",
+      "uriTemplate": "/users/{ids}/timeline",
+      "returns": {
+        "$ref": "#.response_wrapper<user_timeline>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "ids",
+          "type": "string",
+          "format": "number-list"
+        }
+      ],
+      "description": "\r\n        \r\nReturns a subset of the actions the users in {ids} have taken on the site.\r\n\r\nThis method returns users' posts, edits, and earned badges in the order they were accomplished. It is possible to filter to just a window of activity using the fromdate and todate parameters.\r\n\r\n{ids} can contain up to 100 separate ids, to find ids programatically look for user_id on user or shallow_user objects.\r\n\r\n        \r\n    This method returns a list of user timeline objects.\r\n\r\n    "
+    },
+    "me_timeline": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Users",
+      "authentication_scopes": [],
+      "uriTemplate": "/me/timeline",
+      "returns": {
+        "$ref": "#.response_wrapper<user_timeline>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "ids",
+          "type": "string",
+          "format": "number-list"
+        }
+      ],
+      "description": "\r\n        \r\nReturns a subset of the actions the users in {ids} have taken on the site.\r\n\r\nThis method returns users' posts, edits, and earned badges in the order they were accomplished. It is possible to filter to just a window of activity using the fromdate and todate parameters.\r\n\r\n{ids} can contain up to 100 separate ids, to find ids programatically look for user_id on user or shallow_user objects.\r\n\r\n        \r\n    This method returns a list of user timeline objects.\r\n\r\n    "
+    },
+    "users_by_id_top_answer_tags": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Users",
+      "uriTemplate": "/users/{id}/top-answer-tags",
+      "returns": {
+        "$ref": "#.response_wrapper<top_tag>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "id",
+          "type": "number"
+        }
+      ],
+      "description": "\r\n        \r\nReturns a single user's top tags by answer score.\r\n\r\nThis a subset of the data returned on a user's stats tab.\r\n\r\n{id} can contain a single id, to find it programatically look for user_id on user or shallow_user objects.\r\n\r\n        \r\n    This method returns a list of top_tag objects.\r\n\r\n    "
+    },
+    "me_top_answer_tags": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Users",
+      "authentication_scopes": [],
+      "uriTemplate": "/me/top-answer-tags",
+      "returns": {
+        "$ref": "#.response_wrapper<top_tag>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "id",
+          "type": "number"
+        }
+      ],
+      "description": "\r\n        \r\nReturns a single user's top tags by answer score.\r\n\r\nThis a subset of the data returned on a user's stats tab.\r\n\r\n{id} can contain a single id, to find it programatically look for user_id on user or shallow_user objects.\r\n\r\n        \r\n    This method returns a list of top_tag objects.\r\n\r\n    "
+    },
+    "users_by_id_top_question_tags": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Users",
+      "uriTemplate": "/users/{id}/top-question-tags",
+      "returns": {
+        "$ref": "#.response_wrapper<top_tag>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "id",
+          "type": "number"
+        }
+      ],
+      "description": "\r\n        \r\nReturns a single user's top tags by question score.\r\n\r\nThis a subset of the data returned on a user's stats tab.\r\n\r\n{id} can contain a single id, to find it programatically look for user_id on user or shallow_user objects.\r\n\r\n        \r\n    This method returns a list of top_tag objects.\r\n\r\n    "
+    },
+    "me_top_question_tags": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Users",
+      "authentication_scopes": [],
+      "uriTemplate": "/me/top-question-tags",
+      "returns": {
+        "$ref": "#.response_wrapper<top_tag>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "id",
+          "type": "number"
+        }
+      ],
+      "description": "\r\n        \r\nReturns a single user's top tags by question score.\r\n\r\nThis a subset of the data returned on a user's stats tab.\r\n\r\n{id} can contain a single id, to find it programatically look for user_id on user or shallow_user objects.\r\n\r\n        \r\n    This method returns a list of top_tag objects.\r\n\r\n    "
+    },
+    "users_moderators": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Users",
+      "uriTemplate": "/users/moderators",
+      "returns": {
+        "$ref": "#.response_wrapper<answer>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_users_moderators"
+          }
+        }
+      ],
+      "description": "\r\n        \r\nGets those users on a site who can exercise moderation powers.\r\n\r\nNote, employees of Stack Exchange Inc. will be returned if they have been granted moderation powers on a site even if they have never been appointed or elected explicitly. This method checks abilities, not the manner in which they were obtained.\r\n\r\nThe sorts accepted by this method operate on the follow fields of the user object:\r\n    \r\n        reputation &ndash; reputation\r\n        creation &ndash; creation_date\r\n        name &ndash; display_name\r\n        modified &ndash; last_modified_date\r\n    \r\n    It is possible to create moderately complex queries using sort, min, max, fromdate, and todate.\r\n\r\n\r\n        \r\n    This method returns a list of users.\r\n\r\n    "
+    },
+    "users_moderators_elected": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Users",
+      "uriTemplate": "/users/moderators/elected",
+      "returns": {
+        "$ref": "#.response_wrapper<user>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "fromdate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "todate",
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        {
+          "name": "order",
+          "type": {
+            "$ref": "#.order"
+          }
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "format": "sort-dependant"
+        },
+        {
+          "name": "sort",
+          "type": {
+            "$ref": "#.sort_users_moderators_elected"
+          }
+        }
+      ],
+      "description": "\r\n        \r\nReturns those users on a site who both have moderator powers, and were actually elected.\r\n\r\nThis method excludes Stack Exchange Inc. employees, unless they were actually elected moderators on a site (which can only have\r\nhappened prior to their employment).\r\n\r\nThe sorts accepted by this method operate on the follow fields of the user object:\r\n    \r\n        reputation &ndash; reputation\r\n        creation &ndash; creation_date\r\n        name &ndash; display_name\r\n        modified &ndash; last_modified_date\r\n    \r\n    It is possible to create moderately complex queries using sort, min, max, fromdate, and todate.\r\n\r\n\r\n        \r\n    This method returns a list of users.\r\n\r\n    "
+    },
+    "users_by_id_inbox": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Users",
+      "authentication_scopes": [
+        null
+      ],
+      "uriTemplate": "/users/{id}/inbox",
+      "returns": {
+        "$ref": "#.response_wrapper<inbox_item>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "id",
+          "type": "number"
+        }
+      ],
+      "description": "\r\n        \r\nReturns a user's inbox.\r\n\r\nThis method requires an access_token, with a scope containing \"read_inbox\".\r\n\r\nThis method is effectively an alias for /inbox.  It is provided for consumers who make\r\nstrong assumptions about operating within the context of a single site rather than the Stack Exchange network as a whole.\r\n\r\n{id} can contain a single id, to find it programatically look for user_id on user or shallow_user objects.\r\n\r\n        \r\n    This method returns a list of inbox items.\r\n\r\n    "
+    },
+    "me_inbox": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Users",
+      "authentication_scopes": [
+        null
+      ],
+      "uriTemplate": "/me/inbox",
+      "returns": {
+        "$ref": "#.response_wrapper<inbox_item>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "id",
+          "type": "number"
+        }
+      ],
+      "description": "\r\n        \r\nReturns a user's inbox.\r\n\r\nThis method requires an access_token, with a scope containing \"read_inbox\".\r\n\r\nThis method is effectively an alias for /inbox.  It is provided for consumers who make\r\nstrong assumptions about operating within the context of a single site rather than the Stack Exchange network as a whole.\r\n\r\n{id} can contain a single id, to find it programatically look for user_id on user or shallow_user objects.\r\n\r\n        \r\n    This method returns a list of inbox items.\r\n\r\n    "
+    },
+    "users_by_id_inbox_unread": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Users",
+      "authentication_scopes": [
+        null
+      ],
+      "uriTemplate": "/users/{id}/inbox/unread",
+      "returns": {
+        "$ref": "#.response_wrapper<inbox_item>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "id",
+          "type": "number"
+        },
+        {
+          "name": "since",
+          "type": "number",
+          "format": "utc-millisec"
+        }
+      ],
+      "description": "\r\n        \r\nReturns the unread items in a user's inbox.\r\n\r\nThis method requires an access_token, with a scope containing \"read_inbox\".\r\n\r\nThis method is effectively an alias for /inbox/unread.  It is provided for consumers who make\r\nstrong assumptions about operating within the context of a single site rather than the Stack Exchange network as a whole.\r\n\r\n{id} can contain a single id, to find it programatically look for user_id on user or shallow_user objects.\r\n\r\n        \r\n    This method returns a list of inbox items.\r\n\r\n    "
+    },
+    "me_inbox_unread": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Users",
+      "authentication_scopes": [
+        null
+      ],
+      "uriTemplate": "/me/inbox/unread",
+      "returns": {
+        "$ref": "#.response_wrapper<inbox_item>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "id",
+          "type": "number"
+        },
+        {
+          "name": "since",
+          "type": "number",
+          "format": "utc-millisec"
+        }
+      ],
+      "description": "\r\n        \r\nReturns the unread items in a user's inbox.\r\n\r\nThis method requires an access_token, with a scope containing \"read_inbox\".\r\n\r\nThis method is effectively an alias for /inbox/unread.  It is provided for consumers who make\r\nstrong assumptions about operating within the context of a single site rather than the Stack Exchange network as a whole.\r\n\r\n{id} can contain a single id, to find it programatically look for user_id on user or shallow_user objects.\r\n\r\n        \r\n    This method returns a list of inbox items.\r\n\r\n    "
+    },
+    "access_tokens___invalidate": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Access_Tokens",
+      "uriTemplate": "/access-tokens/{accessTokens}/invalidate",
+      "returns": {
+        "$ref": "#.response_wrapper<access_token>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "accessTokens",
+          "type": "string",
+          "format": "string-list"
+        }
+      ],
+      "description": "\r\n        \r\nImmediately expires the access tokens passed.  This method is meant to allow an application to discard any active access tokens it no longer needs.\r\n\r\n{accessTokens} can contain up to 20 access tokens.  These are obtained by authenticating a user using OAuth 2.0.\r\n\r\n        \r\n    This method returns a list of access_tokens.\r\n\r\n    "
+    },
+    "access_tokens__": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Access_Tokens",
+      "uriTemplate": "/access-tokens/{accessTokens}",
+      "returns": {
+        "$ref": "#.response_wrapper<access_token>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "accessTokens",
+          "type": "string",
+          "format": "string-list"
+        }
+      ],
+      "description": "\r\n        \r\nReads the properties for a set of access tokens.\r\n\r\n{accessTokens} can contain up to 20 access tokens.  These are obtained by authenticating a user using OAuth 2.0.\r\n\r\n        \r\n    This method returns a list of access_tokens.\r\n\r\n    "
+    },
+    "apps___de_authenticate": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Applications",
+      "uriTemplate": "/apps/{accessTokens}/de-authenticate",
+      "returns": {
+        "$ref": "#.response_wrapper<access_token>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "accessTokens",
+          "type": "string",
+          "format": "string-list"
+        }
+      ],
+      "description": "\r\n        \r\nPassing valid access_tokens to this method causes the application that created them to be de-authorized by the user associated with each\r\naccess_token.  This will remove the application from their apps tab, and cause all other existing access_tokens to be destroyed.\r\n\r\nThis method is meant for uninstalling applications, recovering from access_token leaks, \r\nor simply as a stronger form of /access-tokens/{accessTokens}/invalidate.\r\n\r\nNothing prevents a user from re-authenticate to an application that has de-authenticated itself, the user will be prompted to approve the application\r\nagain however.\r\n\r\n{accessTokens} can contain up to 20 access tokens.  These are obtained by authenticating a user using OAuth 2.0.\r\n\r\n        \r\n    This method returns a list of access_tokens.\r\n\r\n    "
+    },
+    "filters_create": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Filters",
+      "uriTemplate": "/filters/create",
+      "returns": {
+        "$ref": "#.response_wrapper<filter>"
+      },
+      "parameters": [
+        {
+          "name": "include",
+          "type": "string",
+          "format": "string-list"
+        },
+        {
+          "name": "exclude",
+          "type": "string",
+          "format": "string-list"
+        },
+        {
+          "name": "base",
+          "type": "string"
+        },
+        {
+          "name": "unsafe",
+          "type": "boolean"
+        }
+      ],
+      "description": "\r\n        \r\nCreates a new filter given a list of includes, excludes, a base filter, and whether or not this filter should be \"unsafe\".\r\n\r\nFilter \"safety\" is defined as follows.  Any string returned as a result of an API call with a safe filter will be inline-able into\r\nHTML without script-injection concerns.  That is to say, no additional sanitizing (encoding, HTML tag stripping, etc.) will be necessary on returned\r\nstrings.  Applications that wish to handle sanitizing themselves should create an unsafe filter.  All filters are safe by default, under the assumption\r\nthat double-encoding bugs are more desirable than script injections.\r\n\r\nIf no base filter is specified, the default filter is assumed.  When building a filter from scratch, the none built-in filter is useful.\r\n\r\nWhen the size of the parameters being sent to this method grows to large, problems can occur.  This method will accept POST requests\r\nto mitigate this.\r\n\r\nIt is not expected that many applications will call this method at runtime, filters should be pre-calculated and \"baked in\" in the common\r\ncases.  Furthermore, there are a number of built-in filters which cover common use cases.\r\n\r\n        \r\n    This method returns a single filter.\r\n\r\n    "
+    },
+    "filters__": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Filters",
+      "uriTemplate": "/filters/{filters}",
+      "returns": {
+        "$ref": "#.response_wrapper<filter>"
+      },
+      "parameters": [
+        {
+          "name": "filters",
+          "type": "string",
+          "format": "string-list"
+        }
+      ],
+      "description": "\r\n        \r\nReturns the fields included by the given filters, and the \"safeness\" of those filters.\r\n\r\nIt is not expected that this method will be consumed by many applications at runtime, it is provided\r\nto aid in debugging.\r\n\r\n{filters} can contain up to 20 filters.  Filters are obtained via calls to /filters/create, or by using a built-in filter.\r\n\r\n        \r\n    This method returns a list of filters.\r\n\r\n    "
+    },
+    "inbox": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Inbox",
+      "authentication_scopes": [
+        null
+      ],
+      "uriTemplate": "/inbox",
+      "returns": {
+        "$ref": "#.response_wrapper<inbox_item>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        }
+      ],
+      "description": "\r\n        \r\nReturns a user's inbox.\r\n\r\nThis method requires an access_token, with a scope containing \"read_inbox\".\r\n\r\n        \r\n    This method returns a list of inbox items.\r\n\r\n    "
+    },
+    "inbox_unread": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Inbox",
+      "authentication_scopes": [
+        null
+      ],
+      "uriTemplate": "/inbox/unread",
+      "returns": {
+        "$ref": "#.response_wrapper<inbox_item>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "since",
+          "type": "number",
+          "format": "utc-millisec"
+        }
+      ],
+      "description": "\r\n        \r\nReturns the unread items in a user's inbox.\r\n\r\nThis method requires an access_token, with a scope containing \"read_inbox\".\r\n\r\n        \r\n    This method returns a list of inbox items.\r\n\r\n    "
+    },
+    "sites": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Sites",
+      "uriTemplate": "/sites",
+      "returns": {
+        "$ref": "#.response_wrapper<site>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        }
+      ],
+      "description": "\r\n        \r\nReturns all sites in the network.\r\n\r\nThis method allows for discovery of new sites, and changes to existing ones. \r\nBe aware that unlike normal API methods, this method should be fetched very infrequently, it is very unusual for these values to change more than once on any given day. \r\nIt is suggested that you cache its return for at least one day, unless your app encounters evidence that it has changed (such as from the /info method).\r\n\r\nThe pagesize parameter for this method is unbounded, in acknowledgement that for many applications repeatedly fetching from /sites would\r\ncomplicate start-up tasks needlessly.\r\n\r\n        \r\n    This method returns a list of sites.\r\n\r\n    "
+    },
+    "users_by_id_associated": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Users",
+      "uriTemplate": "/users/{id}/associated",
+      "returns": {
+        "$ref": "#.response_wrapper<network_user>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "ids",
+          "type": "string",
+          "format": "number-list"
+        }
+      ],
+      "description": "\r\n        \r\nReturns all of a user's associated accounts, given their account_ids in {ids}.\r\n\r\n{ids} can contain up to 100 separate ids, to find ids programatically look for account_id on user objects.\r\n\r\n        \r\n    This method returns a list of network_users.\r\n\r\n    "
+    },
+    "me_associated": {
+      "contentType": "application/json",
+      "responseContentType": "application/json",
+      "transport": "GET",
+      "envelope": "JSON",
+      "cacheDuration": "60000",
+      "throttleScope": "default",
+      "group": "Users",
+      "authentication_scopes": [],
+      "uriTemplate": "/me/associated",
+      "returns": {
+        "$ref": "#.response_wrapper<network_user>"
+      },
+      "parameters": [
+        {
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "name": "pagesize",
+          "type": "number"
+        },
+        {
+          "name": "ids",
+          "type": "string",
+          "format": "number-list"
+        }
+      ],
+      "description": "\r\n        \r\nReturns all of a user's associated accounts, given their account_ids in {ids}.\r\n\r\n{ids} can contain up to 100 separate ids, to find ids programatically look for account_id on user objects.\r\n\r\n        \r\n    This method returns a list of network_users.\r\n\r\n    "
+    }
+  }
+}

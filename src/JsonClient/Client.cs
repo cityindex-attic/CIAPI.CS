@@ -217,7 +217,15 @@ namespace CityIndex.JsonClient
                 {
                     try
                     {
-                        response = EndRequest(ar);
+                        try
+                        {
+                            response = EndRequest(ar);
+                        }
+                        catch (Exception ex)
+                        {
+                            
+                            throw;
+                        }
                     }
                     catch (Exception ex)
                     {

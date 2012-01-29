@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
-namespace SOAPI2.CS.DocScraper
+namespace SOAPI2.DocScraper
 {
     public class Serializer<T> 
     {

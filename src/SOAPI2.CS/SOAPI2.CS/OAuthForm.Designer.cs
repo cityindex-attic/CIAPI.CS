@@ -1,4 +1,4 @@
-﻿namespace SOAPI2.CS
+﻿namespace SOAPI2
 {
     partial class OAuthForm
     {

@@ -45,13 +45,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DTO\CommonResponse.cs" />
-    <Compile Include="DTO\Error.cs" />
-    <Compile Include="DTO\ErrorsResponse.cs" />
-    <Compile Include="DTO\InfoResponse.cs" />
-    <Compile Include="DTO\Site.cs" />
-    <Compile Include="DTO\SitesResponse.cs" />
-    <Compile Include="DTO\Styling.cs" />
+    <Compile Include="Converters\UnixDateTimeConverter.cs" />
+    <Compile Include="Converters\UnixDateTimeHelper.cs" />
+    <Compile Include="Model\Model.cs" />
     <Compile Include="OAuthForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -60,9 +56,6 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SoapiClient.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="DTO\sites.json.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\JsonClient-3.5\JsonClient-3.5.csproj">

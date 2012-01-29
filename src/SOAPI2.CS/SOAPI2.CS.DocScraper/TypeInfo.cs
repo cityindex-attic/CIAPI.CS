@@ -5,26 +5,12 @@ using System.Text.RegularExpressions;
 using HtmlAgilityPack;
 using Newtonsoft.Json.Linq;
 
-namespace SOAPI2.CS.DocScraper
+namespace SOAPI2.DocScraper
 {
-    [Serializable]
-    public class FieldInfo
-    {
-        public string EnumValues { get; set; }
-        public bool IsArray { get; set; }
-        public bool IsEnum { get; set; }
-        public bool IsPrimitive { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public bool IncludedInDefaultFilter { get; set; }
-        public bool UnchangedInUnsafeFilters { get; set; }
-
-        public String Type { get; set; }
-    }
-
     [Serializable]
     public class TypeInfo
     {
+        public string GenericType { get; set; }
         public bool IsEnum { get; set; }
         
         public List<FieldInfo> Fields { get; set; }
@@ -63,9 +49,21 @@ namespace SOAPI2.CS.DocScraper
                     throw new Exception("could not find summary node for " + Type);
                 }
                 Description = summaryNode.InnerText.Trim();
+                HtmlNode fieldsList;
                 
+
                 
-                var fieldsList = sourceDoc.DocumentNode.SelectSingleNode("//div[@id='fields']/ul");
+                if(this.Name=="response_wrapper")
+                {
+                    // #EDGE CASE
+
+                    fieldsList = sourceDoc.DocumentNode.SelectSingleNode("//div[@id='discussion']/ul");
+                }
+                else
+                {
+                    fieldsList = sourceDoc.DocumentNode.SelectSingleNode("//div[@id='fields']/ul");    
+                }
+                
                 if (fieldsList == null)
                 {
                     throw new Exception("could not find fields list for " + Type);
@@ -152,6 +150,8 @@ namespace SOAPI2.CS.DocScraper
                         
                     }
 
+
+                    
                     //// clean up repeated words ?
 
 
@@ -184,6 +184,13 @@ namespace SOAPI2.CS.DocScraper
                             
                         }
                         this.Docs.Types.Add(type);
+                    }
+
+                    // #EDGE CASE
+                    if(fieldType=="the_type_found_in_type")
+                    {
+                        GenericType = fieldType;
+                        fieldInfo.IsPrimitive = false;
                     }
                     
                 }

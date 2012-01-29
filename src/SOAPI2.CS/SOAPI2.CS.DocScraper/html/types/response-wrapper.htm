@@ -1,0 +1,161 @@
+
+
+
+
+<!DOCTYPE HTML>
+<html lang="en">
+<head> 
+<title> Common Wrapper Object  - Stack Exchange API</title>
+<link rel="stylesheet" href="/Content/apiv2/all.css?v=43e8736b9fef">
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+
+</head>
+<body>
+    <div class="intro">
+	    <div class="wrapper">
+            <a href="/" class="logo">Stack Exchange</a>
+        
+            <div class="nav">
+                <ul>
+                    <li><a href="/docs">Documentation</a></li>
+                </ul>
+            </div>
+	    </div>
+    </div>
+
+    <div class="content">
+        <div class="wrapper">
+            <div class="mainbar">
+            
+
+<div class="subheader">
+    <h1>Common Wrapper Object</h1>
+</div>
+
+<div class="content-page">
+    <div id="discussion">
+        <h2>Discussion</h2>
+        
+        <p>All responses in the Stack Exchange API share a common format, so as to make parsing these responses simpler.</p>
+
+        <p>The <code>error_*</code> fields, while technically elligible for filtering, will not actually be excluded in an
+        error case.  This is by design.</p>
+
+        <p><code>page</code> and <code>page_size</code> are whatever was passed into the method.</p>
+
+        <p>If you're looking to just select <code>total</code>, exclude the <code>items</code> field in favor of excluding all
+        the properties on the returned type.</p>
+
+        <p>When building filters, this common wrapper object has no name.  Refer to it with a leading <code>.</code>, so the items
+        field would be refered to via <code>.items</code>.</p>
+
+        <p>The <code>backoff</code> field is only set when the API detects the request took an unusually long time to run.  When it is set
+        an application must wait that number of seconds before calling that method again.  Note that for the purposes of throttling and
+        <code>backoff</code>, the /me routes are considered the same as their /users/{ids} equivalent.</p>
+
+        <h2>Fields</h2>
+
+        <ul>
+            <li><span class="included" title="this field is included in the default filter">âœ”</span> backoff
+                <ul>
+                    <li>number</li>
+                </ul>
+            </li>
+            <li><span class="included" title="this field is included in the default filter">âœ”</span> error_id
+                <ul>
+                    <li>number</li>
+                </ul>
+            </li>
+            <li><span class="included" title="this field is included in the default filter">âœ”</span> error_message
+                <ul>
+                    <li>string</li>
+                </ul>
+            </li>
+            <li><span class="included" title="this field is included in the default filter">âœ”</span> error_name
+                <ul>
+                    <li>string</li>
+                </ul>
+            </li>
+            
+            <li><span class="included" title="this field is included in the default filter">âœ”</span> has_more
+                <ul>
+                    <li>boolean</li>
+                </ul>
+            </li>
+            <li><span class="included" title="this field is included in the default filter">âœ”</span> items
+                <ul>
+                    <li>an array of the type found in <code>type</code></li>
+                </ul>
+            </li>
+            <li><span class="excluded" title="this field is excluded in the default filter">âœ˜</span> page
+                <ul>
+                    <li>number</li>
+                </ul>
+            </li>
+            <li><span class="excluded" title="this field is excluded in the default filter">âœ˜</span> page_size
+                <ul>
+                    <li>number</li>
+                </ul>
+            </li>
+            <li><span class="included" title="this field is included in the default filter">âœ”</span> quota_max
+                <ul>
+                    <li>number</li>
+                </ul>
+            </li>
+            <li><span class="included" title="this field is included in the default filter">âœ”</span> quota_remaining
+                <ul>
+                    <li>number</li>
+                </ul>
+            </li>
+            <li><span class="excluded" title="this field is excluded in the default filter">âœ˜</span> total
+                <ul>
+                    <li>number</li>
+                </ul>
+            </li>
+            <li><span class="excluded" title="this field is excluded in the default filter">âœ˜</span> type
+                <ul>
+                    <li>string</li>
+                </ul>
+            </li>
+        </ul>
+
+        <div>
+            Fields marked with <span class="included">âœ”</span> are included in the default filter, those marked with 
+            <span class="excluded">âœ˜</span> are excluded in the default filter.
+        </div>
+    </div>
+</div>
+            </div>
+
+
+
+<div class="sidebar">
+    <div class="module help">
+        <ul>
+            <li><a href="/docs">All Documentation</a></li>
+            <li><a href="/docs/authentication">Authentication</a></li>
+            <li><a href="/docs/vectors">Batching Requests</a></li>
+            <li><a href="/docs/change-log">Change Log</a></li>
+            <li><a href="/docs/min-max">Complex Queries</a></li>
+            <li><a href="/docs/compression">Compression</a></li>
+            <li><a href="/docs/dates">Dates</a></li>
+            <li><a href="/docs/error-handling">Error Handling</a></li>
+            <li><a href="/docs/filters">Filters</a></li>
+            <li><a href="/docs/js-lib">Javascript SDK</a></li>
+            <li><a href="/docs/paging">Paging</a></li>
+            <li><a href="/docs/wrapper" class="youarehere">Response Wrapper</a></li>
+            <li><a href="/docs/throttle">Rate Limiting</a></li>
+            <li><a href="/docs/user-types">Users</a></li>
+        </ul>
+    </div>
+</div>        </div>
+    </div>
+
+<div class="footer">
+	<div class="wrapper">
+		 <p class="footer-links"><a href="http://stackexchange.com/about">about</a> <a href="http://blog.stackexchange.com">blog</a> <a href="http://stackexchange.com/legal">legal</a> <a href="mailto:team+api@stackexchange.com">contact us</a> <a href="http://stackapps.com/">feedback always welcome</a></p>
+
+            <p style="margin-bottom: 0;">site design / logo &copy; 2012 stack exchange, inc; user contributions licensed under <a href="http://creativecommons.org/licenses/by-sa/3.0/" rel="license">cc-wiki</a> with <a href="http://blog.stackoverflow.com/2009/06/attribution-required/" rel="license">attribution required</a></p>
+    </div>
+</div></body>
+</html>

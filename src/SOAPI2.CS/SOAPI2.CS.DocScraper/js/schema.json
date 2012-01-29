@@ -1,0 +1,2219 @@
+{
+  "properties": {
+    "answer": {
+      "id": "answer",
+      "type": "object",
+      "properties": {
+        "question_id": {
+          "type": "number",
+          "format": "integer"
+        },
+        "answer_id": {
+          "type": "number",
+          "format": "integer"
+        },
+        "locked_date": {
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        "creation_date": {
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        "last_edit_date": {
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        "last_activity_date": {
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        "score": {
+          "type": "number",
+          "format": "integer"
+        },
+        "community_owned_date": {
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        "is_accepted": {
+          "type": "boolean"
+        },
+        "body": {
+          "type": "string",
+          "unsafe": true
+        },
+        "owner": {
+          "type": {
+            "$ref": "#.shallow_user"
+          }
+        },
+        "title": {
+          "type": "string"
+        },
+        "up_vote_count": {
+          "type": "number",
+          "format": "integer"
+        },
+        "down_vote_count": {
+          "type": "number",
+          "format": "integer"
+        },
+        "comments": {
+          "type": "array",
+          "items": [
+            {
+              "$ref": "#.comment"
+            }
+          ]
+        },
+        "link": {
+          "type": "string",
+          "unsafe": true
+        }
+      },
+      "description": "Discussion\r\n        \r\n    This type represents an answer to a question on one of the Stack Exchange sites, such as this famous answer of bobince's.\r\n\r\n    As on the question page, it is possible to fetch the comments on an answer as part of a call; though this is not done by default."
+    },
+    "question": {
+      "id": "question",
+      "type": "object",
+      "properties": {
+        "question_id": {
+          "type": "number",
+          "format": "integer"
+        },
+        "last_edit_date": {
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        "creation_date": {
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        "last_activity_date": {
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        "locked_date": {
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        "score": {
+          "type": "number",
+          "format": "integer"
+        },
+        "community_owned_date": {
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        "answer_count": {
+          "type": "number",
+          "format": "integer"
+        },
+        "accepted_answer_id": {
+          "type": "number",
+          "format": "integer"
+        },
+        "migrated_to": {
+          "type": {
+            "$ref": "#.migration_info"
+          }
+        },
+        "migrated_from": {
+          "type": {
+            "$ref": "#.migration_info"
+          }
+        },
+        "bounty_closes_date": {
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        "bounty_amount": {
+          "type": "number",
+          "format": "integer"
+        },
+        "closed_date": {
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        "protected_date": {
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        "body": {
+          "type": "string",
+          "unsafe": true
+        },
+        "title": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "array",
+          "items": [
+            "string"
+          ]
+        },
+        "closed_reason": {
+          "type": "string"
+        },
+        "up_vote_count": {
+          "type": "number",
+          "format": "integer"
+        },
+        "down_vote_count": {
+          "type": "number",
+          "format": "integer"
+        },
+        "favorite_count": {
+          "type": "number",
+          "format": "integer"
+        },
+        "view_count": {
+          "type": "number",
+          "format": "integer"
+        },
+        "owner": {
+          "type": {
+            "$ref": "#.shallow_user"
+          }
+        },
+        "comments": {
+          "type": "array",
+          "items": [
+            {
+              "$ref": "#.comment"
+            }
+          ]
+        },
+        "answers": {
+          "type": "array",
+          "items": [
+            {
+              "$ref": "#.answer"
+            }
+          ]
+        },
+        "link": {
+          "type": "string",
+          "unsafe": true
+        },
+        "is_answered": {
+          "type": "boolean"
+        }
+      },
+      "description": "Discussion\r\n        \r\n    This type represents a question on one of the Stack Exchange sites, such as this famous RegEx question.\r\n\r\n    This type is heavily inspired by the question page itself, and can optionally return comments and answers accordingly."
+    },
+    "access_token": {
+      "id": "access_token",
+      "type": "object",
+      "properties": {
+        "access_token": {
+          "type": "string"
+        },
+        "expires_on_date": {
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        "account_id": {
+          "type": "number",
+          "format": "integer"
+        },
+        "scope": {
+          "type": "array",
+          "items": [
+            "string"
+          ]
+        }
+      },
+      "description": "Discussion\r\n        \r\n    This type describes an access_token that was created as part of an OAuth flow."
+    },
+    "badge": {
+      "id": "badge",
+      "type": "object",
+      "properties": {
+        "badge_id": {
+          "type": "number",
+          "format": "integer"
+        },
+        "rank": {
+          "type": {
+            "$ref": "#.badge_rank"
+          }
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string",
+          "unsafe": true
+        },
+        "award_count": {
+          "type": "number",
+          "format": "integer"
+        },
+        "badge_type": {
+          "type": {
+            "$ref": "#.badge_type"
+          }
+        },
+        "user": {
+          "type": {
+            "$ref": "#.shallow_user"
+          }
+        },
+        "link": {
+          "type": "string",
+          "unsafe": true
+        }
+      },
+      "description": "Discussion\r\n        \r\n    This type represents a badge on a Stack Exchange site.\r\n\r\n    Some badge, like Autobiographer, are held in common across all Stack Exchange site.  Others, like most tag badges, very\r\n    on a site by site basis.\r\n\r\n    Remember that ids are never guaranteed to be the same between sites, even if a badge exists on both sites."
+    },
+    "comment": {
+      "id": "comment",
+      "type": "object",
+      "properties": {
+        "comment_id": {
+          "type": "number",
+          "format": "integer"
+        },
+        "post_id": {
+          "type": "number",
+          "format": "integer"
+        },
+        "creation_date": {
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        "post_type": {
+          "type": {
+            "$ref": "#.comment_post_type"
+          }
+        },
+        "score": {
+          "type": "number",
+          "format": "integer"
+        },
+        "edited": {
+          "type": "boolean"
+        },
+        "body": {
+          "type": "string",
+          "unsafe": true
+        },
+        "owner": {
+          "type": {
+            "$ref": "#.shallow_user"
+          }
+        },
+        "reply_to_user": {
+          "type": {
+            "$ref": "#.shallow_user"
+          }
+        },
+        "link": {
+          "type": "string",
+          "unsafe": true
+        }
+      },
+      "description": "Discussion\r\n        \r\n    All Questions and Answers on a Stack Exchange site can be commented on, and this type represents those comments.\r\n\r\n    Comments can also be optionally directed at users, when this is the case the reply_to_user property is set (if it is requested in the current filter)."
+    },
+    "error": {
+      "id": "error",
+      "type": "object",
+      "properties": {
+        "error_id": {
+          "type": "number",
+          "format": "integer"
+        },
+        "error_name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "description": "Discussion\r\n        \r\n    This type is used to describe the errors that can be returned by the Stack Exchange API.\r\n\r\n    It is not expected that many applications will concern themselves with this type.  It is made available\r\n    for development and testing purposes."
+    },
+    "event": {
+      "id": "event",
+      "type": "object",
+      "properties": {
+        "event_type": {
+          "type": {
+            "$ref": "#.event_type"
+          }
+        },
+        "event_id": {
+          "type": "number",
+          "format": "integer"
+        },
+        "creation_date": {
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        "link": {
+          "type": "string",
+          "unsafe": true
+        },
+        "excerpt": {
+          "type": "string",
+          "unsafe": true
+        }
+      },
+      "description": "Discussion\r\n        \r\n    This type describes an event that has recently occurred on a Stack Exchange site.\r\n\r\n    A minimal ammount of information is present in these events for scaling purposes.  It is expected\r\n    that most applications will make follow up calls to the API to \"flesh out\" the event objects for their\r\n    own purposes."
+    },
+    "filter": {
+      "id": "filter",
+      "type": "object",
+      "properties": {
+        "filter": {
+          "type": "string"
+        },
+        "included_fields": {
+          "type": "array",
+          "items": [
+            "string"
+          ]
+        },
+        "filter_type": {
+          "type": {
+            "$ref": "#.filter_type"
+          }
+        }
+      },
+      "description": "Discussion\r\n        \r\n    This type describes a filter on the Stack Exchange API.\r\n\r\n    When passing a filter to methods in the API, it should be referred to by name alone."
+    },
+    "inbox_item": {
+      "id": "inbox_item",
+      "type": "object",
+      "properties": {
+        "item_type": {
+          "type": {
+            "$ref": "#.inbox_item_type"
+          }
+        },
+        "question_id": {
+          "type": "number",
+          "format": "integer"
+        },
+        "answer_id": {
+          "type": "number",
+          "format": "integer"
+        },
+        "comment_id": {
+          "type": "number",
+          "format": "integer"
+        },
+        "title": {
+          "type": "string"
+        },
+        "creation_date": {
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        "is_unread": {
+          "type": "boolean"
+        },
+        "site": {
+          "type": {
+            "$ref": "#.site"
+          }
+        },
+        "body": {
+          "type": "string",
+          "unsafe": true
+        },
+        "link": {
+          "type": "string",
+          "unsafe": true
+        }
+      },
+      "description": "Discussion\r\n        \r\n    This type represents an item in a user's Global Inbox.\r\n\r\n    Be aware that the types of items returned by this method are subject to change at any time.  In particular, new types may be introduced\r\n    without warning.  Applications should deal with these changes gracefully.\r\n\r\n    Applications should not publish a user's inbox without their explicit consent, as while most item types are public in nature there are a few\r\n    which are (and should remain) private."
+    },
+    "info": {
+      "id": "info",
+      "type": "object",
+      "properties": {
+        "total_questions": {
+          "type": "number",
+          "format": "integer"
+        },
+        "total_unanswered": {
+          "type": "number",
+          "format": "integer"
+        },
+        "total_accepted": {
+          "type": "number",
+          "format": "integer"
+        },
+        "total_answers": {
+          "type": "number",
+          "format": "integer"
+        },
+        "questions_per_minute": {
+          "type": "number",
+          "format": "decimal"
+        },
+        "answers_per_minute": {
+          "type": "number",
+          "format": "decimal"
+        },
+        "total_comments": {
+          "type": "number",
+          "format": "integer"
+        },
+        "total_votes": {
+          "type": "number",
+          "format": "integer"
+        },
+        "total_badges": {
+          "type": "number",
+          "format": "integer"
+        },
+        "badges_per_minute": {
+          "type": "number",
+          "format": "decimal"
+        },
+        "total_users": {
+          "type": "number",
+          "format": "integer"
+        },
+        "new_active_users": {
+          "type": "number",
+          "format": "integer"
+        },
+        "api_revision": {
+          "type": "string"
+        },
+        "site": {
+          "type": {
+            "$ref": "#.site"
+          }
+        }
+      },
+      "description": "Discussion\r\n        \r\n    This type describes a site in the Stack Exchange network."
+    },
+    "network_user": {
+      "id": "network_user",
+      "type": "object",
+      "properties": {
+        "site_name": {
+          "type": "string"
+        },
+        "site_url": {
+          "type": "string"
+        },
+        "user_id": {
+          "type": "number",
+          "format": "integer"
+        },
+        "reputation": {
+          "type": "number",
+          "format": "integer"
+        },
+        "account_id": {
+          "type": "number",
+          "format": "integer"
+        },
+        "creation_date": {
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        "user_type": {
+          "type": {
+            "$ref": "#.network_user_type"
+          }
+        },
+        "badge_counts": {
+          "type": {
+            "$ref": "#.badge_count"
+          }
+        },
+        "last_access_date": {
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        "answer_count": {
+          "type": "number",
+          "format": "integer"
+        },
+        "question_count": {
+          "type": "number",
+          "format": "integer"
+        }
+      },
+      "description": "Discussion\r\n        \r\n    This type represents a user, however it is greatly reduced when compared to the full User type to \r\n    reduce the amount of work that needs to be done to fetch it from multiple sites in the network."
+    },
+    "user": {
+      "id": "user",
+      "type": "object",
+      "properties": {
+        "user_id": {
+          "type": "number",
+          "format": "integer"
+        },
+        "user_type": {
+          "type": {
+            "$ref": "#.user_type"
+          }
+        },
+        "creation_date": {
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        "display_name": {
+          "type": "string"
+        },
+        "profile_image": {
+          "type": "string",
+          "unsafe": true
+        },
+        "reputation": {
+          "type": "number",
+          "format": "integer"
+        },
+        "reputation_change_day": {
+          "type": "number",
+          "format": "integer"
+        },
+        "reputation_change_week": {
+          "type": "number",
+          "format": "integer"
+        },
+        "reputation_change_month": {
+          "type": "number",
+          "format": "integer"
+        },
+        "reputation_change_quarter": {
+          "type": "number",
+          "format": "integer"
+        },
+        "reputation_change_year": {
+          "type": "number",
+          "format": "integer"
+        },
+        "age": {
+          "type": "number",
+          "format": "integer"
+        },
+        "last_access_date": {
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        "last_modified_date": {
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        "is_employee": {
+          "type": "boolean"
+        },
+        "link": {
+          "type": "string",
+          "unsafe": true
+        },
+        "website_url": {
+          "type": "string",
+          "unsafe": true
+        },
+        "location": {
+          "type": "string"
+        },
+        "account_id": {
+          "type": "number",
+          "format": "integer"
+        },
+        "timed_penalty_date": {
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        "badge_counts": {
+          "type": {
+            "$ref": "#.badge_count"
+          }
+        },
+        "question_count": {
+          "type": "number",
+          "format": "integer"
+        },
+        "answer_count": {
+          "type": "number",
+          "format": "integer"
+        },
+        "up_vote_count": {
+          "type": "number",
+          "format": "integer"
+        },
+        "down_vote_count": {
+          "type": "number",
+          "format": "integer"
+        },
+        "about_me": {
+          "type": "string",
+          "unsafe": true
+        },
+        "view_count": {
+          "type": "number",
+          "format": "integer"
+        }
+      },
+      "description": "Discussion\r\n        \r\n    This type describes a user on a Stack Exchange site.\r\n\r\n    There are a number of different user types returned by the Stack Exchange API, depending on the method.  Others include shallow_user and network_user."
+    },
+    "post": {
+      "id": "post",
+      "type": "object",
+      "properties": {
+        "post_id": {
+          "type": "number",
+          "format": "integer"
+        },
+        "post_type": {
+          "type": {
+            "$ref": "#.post_type"
+          }
+        },
+        "body": {
+          "type": "string",
+          "unsafe": true
+        },
+        "owner": {
+          "type": {
+            "$ref": "#.shallow_user"
+          }
+        },
+        "creation_date": {
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        "last_activity_date": {
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        "last_edit_date": {
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        "score": {
+          "type": "number",
+          "format": "integer"
+        },
+        "up_vote_count": {
+          "type": "number",
+          "format": "integer"
+        },
+        "down_vote_count": {
+          "type": "number",
+          "format": "integer"
+        },
+        "comments": {
+          "type": "array",
+          "items": [
+            {
+              "$ref": "#.comment"
+            }
+          ]
+        }
+      },
+      "description": "Discussion\r\n        \r\n    This type represents the intersection of the Question and Answer types.\r\n\r\n    It's used in cases where it would be beneficial to mix questions and answers in a response."
+    },
+    "privilege": {
+      "id": "privilege",
+      "type": "object",
+      "properties": {
+        "short_description": {
+          "type": "string",
+          "unsafe": true
+        },
+        "description": {
+          "type": "string",
+          "unsafe": true
+        },
+        "reputation": {
+          "type": "number",
+          "format": "integer"
+        }
+      },
+      "description": "Discussion\r\n        \r\n    Represents a privilege a user may have on a Stack Exchange site.\r\n\r\n    Applications should be aware of, and be able to deal with, the possibility of new privileges being introduced and old ones being removed."
+    },
+    "question_timeline": {
+      "id": "question_timeline",
+      "type": "object",
+      "properties": {
+        "timeline_type": {
+          "type": {
+            "$ref": "#.question_timeline_type"
+          }
+        },
+        "question_id": {
+          "type": "number",
+          "format": "integer"
+        },
+        "post_id": {
+          "type": "number",
+          "format": "integer"
+        },
+        "comment_id": {
+          "type": "number",
+          "format": "integer"
+        },
+        "revision_guid": {
+          "type": "string"
+        },
+        "up_vote_count": {
+          "type": "number",
+          "format": "integer"
+        },
+        "down_vote_count": {
+          "type": "number",
+          "format": "integer"
+        },
+        "creation_date": {
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        "user": {
+          "type": {
+            "$ref": "#.shallow_user"
+          }
+        },
+        "owner": {
+          "type": {
+            "$ref": "#.shallow_user"
+          }
+        }
+      },
+      "description": "Discussion\r\n        \r\n    This type represents events in the history of a Question."
+    },
+    "reputation": {
+      "id": "reputation",
+      "type": "object",
+      "properties": {
+        "user_id": {
+          "type": "number",
+          "format": "integer"
+        },
+        "post_id": {
+          "type": "number",
+          "format": "integer"
+        },
+        "post_type": {
+          "type": {
+            "$ref": "#.reputation_post_type"
+          }
+        },
+        "vote_type": {
+          "type": {
+            "$ref": "#.reputation_vote_type"
+          }
+        },
+        "title": {
+          "type": "string"
+        },
+        "link": {
+          "type": "string",
+          "unsafe": true
+        },
+        "reputation_change": {
+          "type": "number",
+          "format": "integer"
+        },
+        "on_date": {
+          "type": "number",
+          "format": "utc-millisec"
+        }
+      },
+      "description": "Discussion\r\n        \r\n    This type represents a change in reputation for a User.\r\n\r\n    All methods that return this data will scrub it to a degree, to increase the difficulty of correlating reputation changes\r\n    with down voting."
+    },
+    "revision": {
+      "id": "revision",
+      "type": "object",
+      "properties": {
+        "revision_guid": {
+          "type": "string"
+        },
+        "revision_number": {
+          "type": "number",
+          "format": "integer"
+        },
+        "revision_type": {
+          "type": {
+            "$ref": "#.revision_type"
+          }
+        },
+        "post_type": {
+          "type": {
+            "$ref": "#.revision_post_type"
+          }
+        },
+        "post_id": {
+          "type": "number",
+          "format": "integer"
+        },
+        "comment": {
+          "type": "string"
+        },
+        "creation_date": {
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        "is_rollback": {
+          "type": "boolean"
+        },
+        "last_body": {
+          "type": "string",
+          "unsafe": true
+        },
+        "last_title": {
+          "type": "string"
+        },
+        "last_tags": {
+          "type": "array",
+          "items": [
+            "string"
+          ]
+        },
+        "body": {
+          "type": "string",
+          "unsafe": true
+        },
+        "title": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "array",
+          "items": [
+            "string"
+          ]
+        },
+        "set_community_wiki": {
+          "type": "boolean"
+        },
+        "user": {
+          "type": {
+            "$ref": "#.shallow_user"
+          }
+        }
+      },
+      "description": "Discussion\r\n        \r\n    This type represents that state of a Post at some point in its history.\r\n\r\n    Note that under some circumstances multiple edits can result in only a single revision."
+    },
+    "site": {
+      "id": "site",
+      "type": "object",
+      "properties": {
+        "site_type": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "logo_url": {
+          "type": "string"
+        },
+        "api_site_parameter": {
+          "type": "string"
+        },
+        "site_url": {
+          "type": "string"
+        },
+        "audience": {
+          "type": "string"
+        },
+        "icon_url": {
+          "type": "string"
+        },
+        "aliases": {
+          "type": "array",
+          "items": [
+            "string"
+          ]
+        },
+        "site_state": {
+          "type": {
+            "$ref": "#.site_state"
+          }
+        },
+        "styling": {
+          "type": {
+            "$ref": "#.styling"
+          }
+        },
+        "closed_beta_date": {
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        "open_beta_date": {
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        "launch_date": {
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        "favicon_url": {
+          "type": "string"
+        },
+        "related_sites": {
+          "type": "array",
+          "items": [
+            {
+              "$ref": "#.related_site"
+            }
+          ]
+        },
+        "twitter_account": {
+          "type": "string"
+        },
+        "markdown_extensions": {
+          "type": "array",
+          "items": [
+            "string"
+          ]
+        }
+      },
+      "description": "Discussion\r\n        \r\n    This type represents a site in the Stack Exchange network."
+    },
+    "suggested_edit": {
+      "id": "suggested_edit",
+      "type": "object",
+      "properties": {
+        "suggested_edit_id": {
+          "type": "number",
+          "format": "integer"
+        },
+        "post_id": {
+          "type": "number",
+          "format": "integer"
+        },
+        "post_type": {
+          "type": {
+            "$ref": "#.suggested_edit_post_type"
+          }
+        },
+        "body": {
+          "type": "string",
+          "unsafe": true
+        },
+        "title": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "array",
+          "items": [
+            "string"
+          ]
+        },
+        "comment": {
+          "type": "string"
+        },
+        "creation_date": {
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        "approval_date": {
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        "rejection_date": {
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        "proposing_user": {
+          "type": {
+            "$ref": "#.shallow_user"
+          }
+        }
+      },
+      "description": "Discussion\r\n        \r\n    This type represents a suggested edit on a Stack Exchange site."
+    },
+    "tag": {
+      "id": "tag",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "count": {
+          "type": "number",
+          "format": "integer"
+        },
+        "is_required": {
+          "type": "boolean"
+        },
+        "is_moderator_only": {
+          "type": "boolean"
+        },
+        "user_id": {
+          "type": "number",
+          "format": "integer"
+        },
+        "has_synonyms": {
+          "type": "boolean"
+        },
+        "last_activity_date": {
+          "type": "number",
+          "format": "utc-millisec"
+        }
+      },
+      "description": "Discussion\r\n        \r\n    This type represents a tag on a Stack Exchange site.\r\n\r\n    Applications should be prepared for the destruction of tags, though this tends to be a rare event."
+    },
+    "tag_synonym": {
+      "id": "tag_synonym",
+      "type": "object",
+      "properties": {
+        "from_tag": {
+          "type": "string"
+        },
+        "to_tag": {
+          "type": "string"
+        },
+        "applied_count": {
+          "type": "number",
+          "format": "integer"
+        },
+        "last_applied_date": {
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        "creation_date": {
+          "type": "number",
+          "format": "utc-millisec"
+        }
+      },
+      "description": "Discussion\r\n        \r\n    This type represents a mapping from one tag to another, as part of a Stack Exchange sites tag synonym list.\r\n\r\n    Note that even if a tag has been designated a synonym of another tag, that tag may still appear on some older questions in the system.\r\n\r\n    Applications should be able to gracefully handle both the introduction of synonyms and their removal."
+    },
+    "tag_score": {
+      "id": "tag_score",
+      "type": "object",
+      "properties": {
+        "user": {
+          "type": {
+            "$ref": "#.shallow_user"
+          }
+        },
+        "score": {
+          "type": "number",
+          "format": "integer"
+        },
+        "post_count": {
+          "type": "number",
+          "format": "integer"
+        }
+      },
+      "description": "Discussion\r\n        \r\n    This type represents a user's statistics within a tag.\r\n\r\n    Note that this data is often heavily cached or normalized, and thus methods return it may lag significantly behind\r\n    other methods returning similar data."
+    },
+    "tag_wiki": {
+      "id": "tag_wiki",
+      "type": "object",
+      "properties": {
+        "tag_name": {
+          "type": "string"
+        },
+        "body": {
+          "type": "string",
+          "unsafe": true
+        },
+        "excerpt": {
+          "type": "string"
+        },
+        "body_last_edit_date": {
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        "excerpt_last_edit_date": {
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        "last_body_editor": {
+          "type": {
+            "$ref": "#.shallow_user"
+          }
+        },
+        "last_excerpt_editor": {
+          "type": {
+            "$ref": "#.shallow_user"
+          }
+        }
+      },
+      "description": "Discussion\r\n        \r\n    This type represents the community edited wiki for a given Tag.\r\n\r\n    Note that not all tags have a wiki."
+    },
+    "top_tag": {
+      "id": "top_tag",
+      "type": "object",
+      "properties": {
+        "tag_name": {
+          "type": "string",
+          "unsafe": true
+        },
+        "question_score": {
+          "type": "number",
+          "format": "integer"
+        },
+        "question_count": {
+          "type": "number",
+          "format": "integer"
+        },
+        "answer_score": {
+          "type": "number",
+          "format": "integer"
+        },
+        "answer_count": {
+          "type": "number",
+          "format": "integer"
+        }
+      },
+      "description": "Discussion\r\n        \r\n    This type describes a user's score and activity in a given Tag."
+    },
+    "user_timeline": {
+      "id": "user_timeline",
+      "type": "object",
+      "properties": {
+        "creation_date": {
+          "type": "number",
+          "format": "utc-millisec"
+        },
+        "post_type": {
+          "type": {
+            "$ref": "#.user_timeline_post_type"
+          }
+        },
+        "timeline_type": {
+          "type": {
+            "$ref": "#.user_timeline_type"
+          }
+        },
+        "user_id": {
+          "type": "number",
+          "format": "integer"
+        },
+        "post_id": {
+          "type": "number",
+          "format": "integer"
+        },
+        "comment_id": {
+          "type": "number",
+          "format": "integer"
+        },
+        "suggested_edit_id": {
+          "type": "number",
+          "format": "integer"
+        },
+        "badge_id": {
+          "type": "number",
+          "format": "integer"
+        },
+        "title": {
+          "type": "string"
+        },
+        "detail": {
+          "type": "string",
+          "unsafe": true
+        },
+        "link": {
+          "type": "string",
+          "unsafe": true
+        }
+      },
+      "description": "Discussion\r\n        \r\n    This type describes public actions a User has taken."
+    },
+    "badge_count": {
+      "id": "badge_count",
+      "type": "object",
+      "properties": {
+        "gold": {
+          "type": "number",
+          "format": "integer"
+        },
+        "silver": {
+          "type": "number",
+          "format": "integer"
+        },
+        "bronze": {
+          "type": "number",
+          "format": "integer"
+        }
+      },
+      "description": "Discussion\r\n        \r\n    This type represents the total Badges, segregated by rank, a user has earned."
+    },
+    "migration_info": {
+      "id": "migration_info",
+      "type": "object",
+      "properties": {
+        "question_id": {
+          "type": "number",
+          "format": "integer"
+        },
+        "other_site": {
+          "type": {
+            "$ref": "#.site"
+          }
+        },
+        "on_date": {
+          "type": "number",
+          "format": "utc-millisec"
+        }
+      },
+      "description": "Discussion\r\n        \r\n    This type represents a question's migration to or from a different site in the Stack Exchange network."
+    },
+    "shallow_user": {
+      "id": "shallow_user",
+      "type": "object",
+      "properties": {
+        "user_id": {
+          "type": "number",
+          "format": "integer"
+        },
+        "display_name": {
+          "type": "string"
+        },
+        "reputation": {
+          "type": "number",
+          "format": "integer"
+        },
+        "user_type": {
+          "type": {
+            "$ref": "#.shallow_user_type"
+          }
+        },
+        "profile_image": {
+          "type": "string",
+          "unsafe": true
+        },
+        "link": {
+          "type": "string",
+          "unsafe": true
+        }
+      },
+      "description": "Discussion\r\n        \r\n    This type represents a user, but omits many of the fields found on the full User type.\r\n\r\n    This type is mostly analogous to the \"user card\" found on many pages (like the question page) on a Stack Exchange site."
+    },
+    "styling": {
+      "id": "styling",
+      "type": "object",
+      "properties": {
+        "link_color": {
+          "type": "string"
+        },
+        "tag_foreground_color": {
+          "type": "string"
+        },
+        "tag_background_color": {
+          "type": "string"
+        }
+      },
+      "description": "Discussion\r\n        \r\n    This type represents some stylings of a site in the Stack Exchange network.\r\n\r\n    These stylings are meant to allow developers to subtly vary the presentation of resources in their applications\r\n    so as to indicate to users the original source site.\r\n\r\n    Applications should be able to gracefully handle these styles changes, though they can safely assume that these\r\n    style changes are infrequent."
+    },
+    "order": {
+      "id": "order",
+      "type": "string",
+      "enum": [
+        "desc",
+        "asc"
+      ],
+      "description": null
+    },
+    "sort_answers": {
+      "id": "sort_answers",
+      "type": "string",
+      "enum": [
+        "activity",
+        "creation",
+        "votes"
+      ],
+      "description": null
+    },
+    "sort_answers_by_ids": {
+      "id": "sort_answers_by_ids",
+      "type": "string",
+      "enum": [
+        "activity",
+        "creation",
+        "votes"
+      ],
+      "description": null
+    },
+    "sort_answers_by_ids_comments": {
+      "id": "sort_answers_by_ids_comments",
+      "type": "string",
+      "enum": [
+        "creation",
+        "votes"
+      ],
+      "description": null
+    },
+    "sort_badges": {
+      "id": "sort_badges",
+      "type": "string",
+      "enum": [
+        "rank",
+        "name",
+        "type"
+      ],
+      "description": null
+    },
+    "sort_badges_by_ids": {
+      "id": "sort_badges_by_ids",
+      "type": "string",
+      "enum": [
+        "rank",
+        "name",
+        "type"
+      ],
+      "description": null
+    },
+    "sort_badges_name": {
+      "id": "sort_badges_name",
+      "type": "string",
+      "enum": [
+        "rank",
+        "name"
+      ],
+      "description": null
+    },
+    "sort_badges_tags": {
+      "id": "sort_badges_tags",
+      "type": "string",
+      "enum": [
+        "rank",
+        "name"
+      ],
+      "description": null
+    },
+    "sort_comments": {
+      "id": "sort_comments",
+      "type": "string",
+      "enum": [
+        "creation",
+        "votes"
+      ],
+      "description": null
+    },
+    "sort_comments_by_ids": {
+      "id": "sort_comments_by_ids",
+      "type": "string",
+      "enum": [
+        "creation",
+        "votes"
+      ],
+      "description": null
+    },
+    "sort_posts": {
+      "id": "sort_posts",
+      "type": "string",
+      "enum": [
+        "activity",
+        "creation",
+        "votes"
+      ],
+      "description": null
+    },
+    "sort_posts_by_ids": {
+      "id": "sort_posts_by_ids",
+      "type": "string",
+      "enum": [
+        "activity",
+        "creation",
+        "votes"
+      ],
+      "description": null
+    },
+    "sort_posts_by_ids_comments": {
+      "id": "sort_posts_by_ids_comments",
+      "type": "string",
+      "enum": [
+        "creation",
+        "votes"
+      ],
+      "description": null
+    },
+    "sort_posts_by_ids_suggested_edits": {
+      "id": "sort_posts_by_ids_suggested_edits",
+      "type": "string",
+      "enum": [
+        "creation",
+        "approval",
+        "rejection"
+      ],
+      "description": null
+    },
+    "sort_questions": {
+      "id": "sort_questions",
+      "type": "string",
+      "enum": [
+        "activity",
+        "votes",
+        "creation",
+        "hot",
+        "week",
+        "month"
+      ],
+      "description": null
+    },
+    "sort_questions_by_ids": {
+      "id": "sort_questions_by_ids",
+      "type": "string",
+      "enum": [
+        "activity",
+        "votes",
+        "creation"
+      ],
+      "description": null
+    },
+    "sort_questions_by_ids_answers": {
+      "id": "sort_questions_by_ids_answers",
+      "type": "string",
+      "enum": [
+        "activity",
+        "creation",
+        "votes"
+      ],
+      "description": null
+    },
+    "sort_questions_by_ids_comments": {
+      "id": "sort_questions_by_ids_comments",
+      "type": "string",
+      "enum": [
+        "creation",
+        "votes"
+      ],
+      "description": null
+    },
+    "sort_questions_by_ids_linked": {
+      "id": "sort_questions_by_ids_linked",
+      "type": "string",
+      "enum": [
+        "activity",
+        "votes",
+        "creation",
+        "rank"
+      ],
+      "description": null
+    },
+    "sort_questions_by_ids_related": {
+      "id": "sort_questions_by_ids_related",
+      "type": "string",
+      "enum": [
+        "activity",
+        "votes",
+        "creation",
+        "rank"
+      ],
+      "description": null
+    },
+    "sort_questions_unanswered": {
+      "id": "sort_questions_unanswered",
+      "type": "string",
+      "enum": [
+        "activity",
+        "votes",
+        "creation"
+      ],
+      "description": null
+    },
+    "sort_questions_no_answers": {
+      "id": "sort_questions_no_answers",
+      "type": "string",
+      "enum": [
+        "activity",
+        "votes",
+        "creation"
+      ],
+      "description": null
+    },
+    "sort_search": {
+      "id": "sort_search",
+      "type": "string",
+      "enum": [
+        "activity",
+        "votes",
+        "creation",
+        "relevance"
+      ],
+      "description": null
+    },
+    "sort_similar": {
+      "id": "sort_similar",
+      "type": "string",
+      "enum": [
+        "activity",
+        "votes",
+        "creation",
+        "relevance"
+      ],
+      "description": null
+    },
+    "sort_suggested_edits": {
+      "id": "sort_suggested_edits",
+      "type": "string",
+      "enum": [
+        "creation",
+        "approval",
+        "rejection"
+      ],
+      "description": null
+    },
+    "sort_suggested_edits_by_ids": {
+      "id": "sort_suggested_edits_by_ids",
+      "type": "string",
+      "enum": [
+        "creation",
+        "approval",
+        "rejection"
+      ],
+      "description": null
+    },
+    "sort_tags": {
+      "id": "sort_tags",
+      "type": "string",
+      "enum": [
+        "popular",
+        "activity",
+        "name"
+      ],
+      "description": null
+    },
+    "sort_tags_synonyms": {
+      "id": "sort_tags_synonyms",
+      "type": "string",
+      "enum": [
+        "creation",
+        "applied",
+        "activity"
+      ],
+      "description": null
+    },
+    "sort_tags_by_tags_synonyms": {
+      "id": "sort_tags_by_tags_synonyms",
+      "type": "string",
+      "enum": [
+        "creation",
+        "applied",
+        "activity"
+      ],
+      "description": null
+    },
+    "period": {
+      "id": "period",
+      "type": "string",
+      "enum": [
+        "all_time",
+        "month"
+      ],
+      "description": null
+    },
+    "sort_users": {
+      "id": "sort_users",
+      "type": "string",
+      "enum": [
+        "reputation",
+        "creation",
+        "name",
+        "modified"
+      ],
+      "description": null
+    },
+    "sort_users_by_ids": {
+      "id": "sort_users_by_ids",
+      "type": "string",
+      "enum": [
+        "reputation",
+        "creation",
+        "name",
+        "modified"
+      ],
+      "description": null
+    },
+    "sort_me": {
+      "id": "sort_me",
+      "type": "string",
+      "enum": [
+        "reputation",
+        "creation",
+        "name",
+        "modified"
+      ],
+      "description": null
+    },
+    "sort_users_by_ids_answers": {
+      "id": "sort_users_by_ids_answers",
+      "type": "string",
+      "enum": [
+        "activity",
+        "creation",
+        "votes"
+      ],
+      "description": null
+    },
+    "sort_me_answers": {
+      "id": "sort_me_answers",
+      "type": "string",
+      "enum": [
+        "activity",
+        "creation",
+        "votes"
+      ],
+      "description": null
+    },
+    "sort_users_by_ids_badges": {
+      "id": "sort_users_by_ids_badges",
+      "type": "string",
+      "enum": [
+        "rank",
+        "name",
+        "type",
+        "awarded"
+      ],
+      "description": null
+    },
+    "sort_me_badges": {
+      "id": "sort_me_badges",
+      "type": "string",
+      "enum": [
+        "rank",
+        "name",
+        "type",
+        "awarded"
+      ],
+      "description": null
+    },
+    "sort_users_by_ids_comments": {
+      "id": "sort_users_by_ids_comments",
+      "type": "string",
+      "enum": [
+        "creation",
+        "votes"
+      ],
+      "description": null
+    },
+    "sort_me_comments": {
+      "id": "sort_me_comments",
+      "type": "string",
+      "enum": [
+        "creation",
+        "votes"
+      ],
+      "description": null
+    },
+    "sort_users_by_ids_comments_to_id": {
+      "id": "sort_users_by_ids_comments_to_id",
+      "type": "string",
+      "enum": [
+        "creation",
+        "votes"
+      ],
+      "description": null
+    },
+    "sort_me_comments_to_id": {
+      "id": "sort_me_comments_to_id",
+      "type": "string",
+      "enum": [
+        "creation",
+        "votes"
+      ],
+      "description": null
+    },
+    "sort_users_by_ids_favorites": {
+      "id": "sort_users_by_ids_favorites",
+      "type": "string",
+      "enum": [
+        "activity",
+        "votes",
+        "creation",
+        "added"
+      ],
+      "description": null
+    },
+    "sort_me_favorites": {
+      "id": "sort_me_favorites",
+      "type": "string",
+      "enum": [
+        "activity",
+        "votes",
+        "creation",
+        "added"
+      ],
+      "description": null
+    },
+    "sort_users_by_ids_mentioned": {
+      "id": "sort_users_by_ids_mentioned",
+      "type": "string",
+      "enum": [
+        "creation",
+        "votes"
+      ],
+      "description": null
+    },
+    "sort_me_mentioned": {
+      "id": "sort_me_mentioned",
+      "type": "string",
+      "enum": [
+        "creation",
+        "votes"
+      ],
+      "description": null
+    },
+    "sort_users_by_ids_questions": {
+      "id": "sort_users_by_ids_questions",
+      "type": "string",
+      "enum": [
+        "activity",
+        "votes",
+        "creation"
+      ],
+      "description": null
+    },
+    "sort_me_questions": {
+      "id": "sort_me_questions",
+      "type": "string",
+      "enum": [
+        "activity",
+        "votes",
+        "creation"
+      ],
+      "description": null
+    },
+    "sort_users_by_ids_questions_no_answers": {
+      "id": "sort_users_by_ids_questions_no_answers",
+      "type": "string",
+      "enum": [
+        "activity",
+        "votes",
+        "creation"
+      ],
+      "description": null
+    },
+    "sort_me_questions_no_answers": {
+      "id": "sort_me_questions_no_answers",
+      "type": "string",
+      "enum": [
+        "activity",
+        "votes",
+        "creation"
+      ],
+      "description": null
+    },
+    "sort_users_by_ids_questions_unaccepted": {
+      "id": "sort_users_by_ids_questions_unaccepted",
+      "type": "string",
+      "enum": [
+        "activity",
+        "votes",
+        "creation"
+      ],
+      "description": null
+    },
+    "sort_me_questions_unaccepted": {
+      "id": "sort_me_questions_unaccepted",
+      "type": "string",
+      "enum": [
+        "activity",
+        "votes",
+        "creation"
+      ],
+      "description": null
+    },
+    "sort_users_by_ids_questions_unanswered": {
+      "id": "sort_users_by_ids_questions_unanswered",
+      "type": "string",
+      "enum": [
+        "activity",
+        "votes",
+        "creation"
+      ],
+      "description": null
+    },
+    "sort_me_questions_unanswered": {
+      "id": "sort_me_questions_unanswered",
+      "type": "string",
+      "enum": [
+        "activity",
+        "votes",
+        "creation"
+      ],
+      "description": null
+    },
+    "sort_users_by_ids_suggested_edits": {
+      "id": "sort_users_by_ids_suggested_edits",
+      "type": "string",
+      "enum": [
+        "creation",
+        "approval",
+        "rejection"
+      ],
+      "description": null
+    },
+    "sort_me_suggested_edits": {
+      "id": "sort_me_suggested_edits",
+      "type": "string",
+      "enum": [
+        "creation",
+        "approval",
+        "rejection"
+      ],
+      "description": null
+    },
+    "sort_users_by_ids_tags": {
+      "id": "sort_users_by_ids_tags",
+      "type": "string",
+      "enum": [
+        "popular",
+        "activity",
+        "name"
+      ],
+      "description": null
+    },
+    "sort_me_tags": {
+      "id": "sort_me_tags",
+      "type": "string",
+      "enum": [
+        "popular",
+        "activity",
+        "name"
+      ],
+      "description": null
+    },
+    "sort_users_by_id_tags_by_tags_top_answers": {
+      "id": "sort_users_by_id_tags_by_tags_top_answers",
+      "type": "string",
+      "enum": [
+        "activity",
+        "creation",
+        "votes"
+      ],
+      "description": null
+    },
+    "sort_me_tags_by_tags_top_answers": {
+      "id": "sort_me_tags_by_tags_top_answers",
+      "type": "string",
+      "enum": [
+        "activity",
+        "creation",
+        "votes"
+      ],
+      "description": null
+    },
+    "sort_users_by_id_tags_by_tags_top_questions": {
+      "id": "sort_users_by_id_tags_by_tags_top_questions",
+      "type": "string",
+      "enum": [
+        "activity",
+        "votes",
+        "creation"
+      ],
+      "description": null
+    },
+    "sort_me_tags_by_tags_top_questions": {
+      "id": "sort_me_tags_by_tags_top_questions",
+      "type": "string",
+      "enum": [
+        "activity",
+        "votes",
+        "creation"
+      ],
+      "description": null
+    },
+    "sort_users_moderators": {
+      "id": "sort_users_moderators",
+      "type": "string",
+      "enum": [
+        "reputation",
+        "creation",
+        "name",
+        "modified"
+      ],
+      "description": null
+    },
+    "sort_users_moderators_elected": {
+      "id": "sort_users_moderators_elected",
+      "type": "string",
+      "enum": [
+        "reputation",
+        "creation",
+        "name",
+        "modified"
+      ],
+      "description": null
+    },
+    "related_site": {
+      "id": "related_site",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "site_url": {
+          "type": "string",
+          "unsafe": true
+        },
+        "relation": {
+          "type": {
+            "$ref": "#.related_site_relation"
+          }
+        }
+      },
+      "description": "Discussion\r\n        \r\n    This type represents a site that is related in some way to another site.\r\n\r\n    Examples include chat and meta, and parent sites.\r\n\r\n    Applications should be able to gracefully handle the additon of new related site types."
+    },
+    "response_wrapper": {
+      "id": "response_wrapper",
+      "type": "object",
+      "properties": {
+        "backoff": {
+          "type": "number"
+        },
+        "error_id": {
+          "type": "number"
+        },
+        "error_message": {
+          "type": "string"
+        },
+        "error_name": {
+          "type": "string"
+        },
+        "has_more": {
+          "type": "boolean"
+        },
+        "items": {
+          "type": "array",
+          "items": [
+            {
+              "$ref": "#.the_type_found_in_type"
+            }
+          ]
+        },
+        "page": {
+          "type": "number"
+        },
+        "page_size": {
+          "type": "number"
+        },
+        "quota_max": {
+          "type": "number"
+        },
+        "quota_remaining": {
+          "type": "number"
+        },
+        "total": {
+          "type": "number"
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "generic_type": "the_type_found_in_type",
+      "description": "Discussion\r\n        \r\n        All responses in the Stack Exchange API share a common format, so as to make parsing these responses simpler.\r\n\r\n        The error_* fields, while technically elligible for filtering, will not actually be excluded in an\r\n        error case.  This is by design.\r\n\r\n        page and page_size are whatever was passed into the method.\r\n\r\n        If you're looking to just select total, exclude the items field in favor of excluding all\r\n        the properties on the returned type.\r\n\r\n        When building filters, this common wrapper object has no name.  Refer to it with a leading ., so the items\r\n        field would be refered to via .items.\r\n\r\n        The backoff field is only set when the API detects the request took an unusually long time to run.  When it is set\r\n        an application must wait that number of seconds before calling that method again.  Note that for the purposes of throttling and\r\n        backoff, the /me routes are considered the same as their /users/{ids} equivalent.\r\n\r\n        Fields\r\n\r\n        \r\n            âœ” backoff\r\n                \r\n                    number\r\n                \r\n            \r\n            âœ” error_id\r\n                \r\n                    number\r\n                \r\n            \r\n            âœ” error_message\r\n                \r\n                    string\r\n                \r\n            \r\n            âœ” error_name\r\n                \r\n                    string\r\n                \r\n            \r\n            \r\n            âœ” has_more\r\n                \r\n                    boolean\r\n                \r\n            \r\n            âœ” items\r\n                \r\n                    an array of the type found in type\r\n                \r\n            \r\n            âœ˜ page\r\n                \r\n                    number\r\n                \r\n            \r\n            âœ˜ page_size\r\n                \r\n                    number\r\n                \r\n            \r\n            âœ” quota_max\r\n                \r\n                    number\r\n                \r\n            \r\n            âœ” quota_remaining\r\n                \r\n                    number\r\n                \r\n            \r\n            âœ˜ total\r\n                \r\n                    number\r\n                \r\n            \r\n            âœ˜ type\r\n                \r\n                    string\r\n                \r\n            \r\n        \r\n\r\n        \r\n            Fields marked with âœ” are included in the default filter, those marked with \r\n            âœ˜ are excluded in the default filter."
+    },
+    "badge_rank": {
+      "id": "badge_rank",
+      "type": "string",
+      "enum": [
+        "gold",
+        "silver",
+        "bronze"
+      ],
+      "description": null
+    },
+    "badge_type": {
+      "id": "badge_type",
+      "type": "string",
+      "enum": [
+        "named",
+        "tag_based"
+      ],
+      "description": null
+    },
+    "comment_post_type": {
+      "id": "comment_post_type",
+      "type": "string",
+      "enum": [
+        "question",
+        "answer"
+      ],
+      "description": null
+    },
+    "event_type": {
+      "id": "event_type",
+      "type": "string",
+      "enum": [
+        "question_posted",
+        "answer_posted",
+        "comment_posted",
+        "post_edited",
+        "user_created"
+      ],
+      "description": null
+    },
+    "filter_type": {
+      "id": "filter_type",
+      "type": "string",
+      "enum": [
+        "safe",
+        "unsafe",
+        "invalid"
+      ],
+      "description": null
+    },
+    "inbox_item_type": {
+      "id": "inbox_item_type",
+      "type": "string",
+      "enum": [
+        "comment",
+        "chat_message",
+        "new_answer",
+        "careers_message",
+        "careers_invitations",
+        "meta_question"
+      ],
+      "description": null
+    },
+    "network_user_type": {
+      "id": "network_user_type",
+      "type": "string",
+      "enum": [
+        "unregistered",
+        "registered",
+        "moderator",
+        "does_not_exist"
+      ],
+      "description": null
+    },
+    "user_type": {
+      "id": "user_type",
+      "type": "string",
+      "enum": [
+        "unregistered",
+        "registered",
+        "moderator",
+        "does_not_exist"
+      ],
+      "description": null
+    },
+    "post_type": {
+      "id": "post_type",
+      "type": "string",
+      "enum": [
+        "question",
+        "answer"
+      ],
+      "description": null
+    },
+    "question_timeline_type": {
+      "id": "question_timeline_type",
+      "type": "string",
+      "enum": [
+        "question",
+        "answer",
+        "comment",
+        "unaccepted_answer",
+        "accepted_answer",
+        "vote_aggregate",
+        "revision",
+        "post_state_changed"
+      ],
+      "description": null
+    },
+    "reputation_post_type": {
+      "id": "reputation_post_type",
+      "type": "string",
+      "enum": [
+        "question",
+        "answer"
+      ],
+      "description": null
+    },
+    "reputation_vote_type": {
+      "id": "reputation_vote_type",
+      "type": "string",
+      "enum": [
+        "accepts",
+        "up_votes",
+        "down_votes",
+        "bounties_offered",
+        "bounties_won",
+        "spam",
+        "suggested_edits"
+      ],
+      "description": null
+    },
+    "revision_type": {
+      "id": "revision_type",
+      "type": "string",
+      "enum": [
+        "single_user",
+        "vote_based"
+      ],
+      "description": null
+    },
+    "revision_post_type": {
+      "id": "revision_post_type",
+      "type": "string",
+      "enum": [
+        "question",
+        "answer"
+      ],
+      "description": null
+    },
+    "site_state": {
+      "id": "site_state",
+      "type": "string",
+      "enum": [
+        "normal",
+        "closed_beta",
+        "open_beta",
+        "linked_meta"
+      ],
+      "description": null
+    },
+    "suggested_edit_post_type": {
+      "id": "suggested_edit_post_type",
+      "type": "string",
+      "enum": [
+        "question",
+        "answer"
+      ],
+      "description": null
+    },
+    "user_timeline_post_type": {
+      "id": "user_timeline_post_type",
+      "type": "string",
+      "enum": [
+        "question",
+        "answer"
+      ],
+      "description": null
+    },
+    "user_timeline_type": {
+      "id": "user_timeline_type",
+      "type": "string",
+      "enum": [
+        "commented",
+        "asked",
+        "answered",
+        "badge",
+        "revision",
+        "accepted",
+        "reviewed",
+        "suggested"
+      ],
+      "description": null
+    },
+    "shallow_user_type": {
+      "id": "shallow_user_type",
+      "type": "string",
+      "enum": [
+        "unregistered",
+        "registered",
+        "moderator",
+        "does_not_exist"
+      ],
+      "description": null
+    },
+    "related_site_relation": {
+      "id": "related_site_relation",
+      "type": "string",
+      "enum": [
+        "parent",
+        "meta",
+        "chat",
+        "other"
+      ],
+      "description": null
+    }
+  }
+}

@@ -8,7 +8,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
-namespace SOAPI2.CS
+namespace SOAPI2
 {
     public partial class OAuthForm : Form
     {

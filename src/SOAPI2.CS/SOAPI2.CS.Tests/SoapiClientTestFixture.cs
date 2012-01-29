@@ -4,18 +4,8 @@ using System.Linq;
 using System.Text;
 using NUnit.Framework;
 
-namespace SOAPI2.CS.Tests
+namespace SOAPI2.Tests
 {
-    [TestFixture, RequiresSTA]
-    public class OAuthFixture
-    {
-        [Test]
-        public void Test()
-        {
-            OAuthForm form = new OAuthForm();
-            form.ShowDialog();
-        }
-    }
     [TestFixture]
     public class SoapiClientTestFixture
     {
@@ -27,7 +17,7 @@ namespace SOAPI2.CS.Tests
         {
             var client = new SoapiClient(Apikey,AppId);
             var response = client.GetSites(1, 10);
-            Assert.AreEqual(10, response.Items.Length);
+            Assert.AreEqual(10, response.Items.Count);
         }
 
         [Test]
@@ -35,7 +25,7 @@ namespace SOAPI2.CS.Tests
         {
             var client = new SoapiClient(Apikey, AppId);
             var response = client.GetErrors("stackoverflow", 1, 100);
-            Assert.Greater(response.Items.Length, 0);
+            Assert.Greater(response.Items.Count, 0);
 
         }
         [Test]
@@ -44,7 +34,7 @@ namespace SOAPI2.CS.Tests
             var client = new SoapiClient(Apikey, AppId);
             var response = client.GetInfo("stackoverflow");
  
-            Assert.Greater(response.Items.Length, 0);
+            Assert.Greater(response.Items.Count, 0);
         }
     }
 }

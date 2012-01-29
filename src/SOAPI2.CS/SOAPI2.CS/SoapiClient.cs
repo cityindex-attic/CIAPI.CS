@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Net;
 using System.Reflection;
 using CityIndex.JsonClient;
-using SOAPI2.CS.DTO;
+using SOAPI2.Model;
 
-namespace SOAPI2.CS
+
+namespace SOAPI2
 {
 
     public class SoapiClient : Client
@@ -71,10 +72,10 @@ namespace SOAPI2.CS
 
         #region network wide methods
 
-        public SitesResponse GetSites(int page, int pagesize)
+        public ResponseWrapperClass<SiteClass> GetSites(int page, int pagesize)
         {
             string uriTemplate = AppendApiKey("?pagesize={pagesize}&page={page}");
-            var response = Request<SitesResponse>("sites", uriTemplate, "GET",
+            var response = Request<ResponseWrapperClass<SiteClass>>("sites", uriTemplate, "GET",
                                                       new Dictionary<string, object>
                                                           {
                                                               {"page", page},
@@ -89,10 +90,10 @@ namespace SOAPI2.CS
         #region site specific methods
 
 
-        public ErrorsResponse GetErrors(string site, int page, int pagesize)
+        public ResponseWrapperClass<ErrorClass> GetErrors(string site, int page, int pagesize)
         {
             string uriTemplate = AppendApiKey("?site={site}&pagesize={pagesize}&page={page}");
-            return Request<ErrorsResponse>("errors", uriTemplate, "GET",
+            return Request<ResponseWrapperClass<ErrorClass>>("errors", uriTemplate, "GET",
                                            new Dictionary<string, object>
                                                {
                                                    {"site", site},
@@ -101,10 +102,10 @@ namespace SOAPI2.CS
                                                }, TimeSpan.FromMilliseconds(60000), "default");
         }
 
-        public InfoResponse GetInfo(string site)
+        public ResponseWrapperClass<InfoClass> GetInfo(string site)
         {
             string uriTemplate = AppendApiKey("?site={site}");
-            return Request<InfoResponse>("info", uriTemplate, "GET",
+            return Request<ResponseWrapperClass<InfoClass>>("info", uriTemplate, "GET",
                                          new Dictionary<string, object>
                                              {
                                                  {"site", site}
