@@ -75,7 +75,7 @@ namespace AMEEClient
             }
 
             return Request<DataItemResponse>("data", uriTemplate, "GET", parameters,
-                cacheDuration: TimeSpan.FromMilliseconds(0),
+                cacheDuration: TimeSpan.FromSeconds(30),
                 throttleScope: "default");
         }
 
