@@ -1,0 +1,249 @@
+
+
+
+
+<!DOCTYPE HTML>
+<html lang="en">
+<head> 
+<title> question  - Stack Exchange API</title>
+<link rel="stylesheet" href="/Content/apiv2/all.css?v=43e8736b9fef">
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+
+    <script type="text/javascript" src="/Content/apiv2/js/jquery-ui-1.8.16.custom.min.js"></script>
+    <script type="text/javascript" src="/Content/apiv2/js/console.js?v=2c1ccd33316c"></script>
+
+</head>
+<body>
+    <div class="intro">
+	    <div class="wrapper">
+            <a href="/" class="logo">Stack Exchange</a>
+        
+            <div class="nav">
+                <ul>
+                    <li><a href="/docs">Documentation</a></li>
+                </ul>
+            </div>
+	    </div>
+    </div>
+
+    <div class="content">
+        <div class="wrapper">
+            <div class="mainbar">
+            
+
+
+
+
+
+<div class="subheader">
+    <h1>Type  question </h1>
+</div>
+
+<div class="content-page">
+    <div id="discussion">
+        <h2>Discussion</h2>
+        
+    <p>This type represents a question on one of the Stack Exchange sites, such as this famous <a href="http://stackoverflow.com/questions/1732348/regex-match-open-tags-except-xhtml-self-contained-tags">RegEx question</a>.</p>
+
+    <p>This type is heavily inspired by the question page itself, and can optionally return comments and answers accordingly.</p>
+
+    </div>
+
+    <div id="fields" class="type-fields">
+        <h2>Fields</h2>
+        
+    <ul>
+<li><span class='included' title='this field is included in the default filter'>âœ”</span> question_id
+<ul>
+<li>integer</li>
+</ul>
+</li>
+<li><span class='included' title='this field is included in the default filter'>âœ”</span> last_edit_date
+<ul>
+<li>date</li>
+</ul>
+</li>
+<li><span class='included' title='this field is included in the default filter'>âœ”</span> creation_date
+<ul>
+<li>date</li>
+</ul>
+</li>
+<li><span class='included' title='this field is included in the default filter'>âœ”</span> last_activity_date
+<ul>
+<li>date</li>
+</ul>
+</li>
+<li><span class='included' title='this field is included in the default filter'>âœ”</span> locked_date
+<ul>
+<li>date</li>
+</ul>
+</li>
+<li><span class='included' title='this field is included in the default filter'>âœ”</span> score
+<ul>
+<li>integer</li>
+</ul>
+</li>
+<li><span class='included' title='this field is included in the default filter'>âœ”</span> community_owned_date
+<ul>
+<li>date</li>
+</ul>
+</li>
+<li><span class='included' title='this field is included in the default filter'>âœ”</span> answer_count
+<ul>
+<li>integer</li>
+</ul>
+</li>
+<li><span class='included' title='this field is included in the default filter'>âœ”</span> accepted_answer_id
+<ul>
+<li>integer</li>
+</ul>
+</li>
+<li><span class='included' title='this field is included in the default filter'>âœ”</span> migrated_to
+<ul>
+<li><a href="/docs/types/migration-info">migration_info</a></li>
+</ul>
+</li>
+<li><span class='included' title='this field is included in the default filter'>âœ”</span> migrated_from
+<ul>
+<li><a href="/docs/types/migration-info">migration_info</a></li>
+</ul>
+</li>
+<li><span class='included' title='this field is included in the default filter'>âœ”</span> bounty_closes_date
+<ul>
+<li>date</li>
+</ul>
+</li>
+<li><span class='included' title='this field is included in the default filter'>âœ”</span> bounty_amount
+<ul>
+<li>integer</li>
+</ul>
+</li>
+<li><span class='included' title='this field is included in the default filter'>âœ”</span> closed_date
+<ul>
+<li>date</li>
+</ul>
+</li>
+<li><span class='included' title='this field is included in the default filter'>âœ”</span> protected_date
+<ul>
+<li>date</li>
+</ul>
+</li>
+<li><span class='excluded' title='this field is excluded in the default filter'>âœ˜</span> body
+<ul>
+<li>string</li>
+<li>unchanged in <a href="/docs/filters">unsafe filters</a></li>
+</ul>
+</li>
+<li><span class='included' title='this field is included in the default filter'>âœ”</span> title
+<ul>
+<li>string</li>
+</ul>
+</li>
+<li><span class='included' title='this field is included in the default filter'>âœ”</span> tags
+<ul>
+<li>an array of string</li>
+</ul>
+</li>
+<li><span class='included' title='this field is included in the default filter'>âœ”</span> closed_reason
+<ul>
+<li>string</li>
+</ul>
+</li>
+<li><span class='excluded' title='this field is excluded in the default filter'>âœ˜</span> up_vote_count
+<ul>
+<li>integer</li>
+</ul>
+</li>
+<li><span class='excluded' title='this field is excluded in the default filter'>âœ˜</span> down_vote_count
+<ul>
+<li>integer</li>
+</ul>
+</li>
+<li><span class='excluded' title='this field is excluded in the default filter'>âœ˜</span> favorite_count
+<ul>
+<li>integer</li>
+</ul>
+</li>
+<li><span class='included' title='this field is included in the default filter'>âœ”</span> view_count
+<ul>
+<li>integer</li>
+</ul>
+</li>
+<li><span class='included' title='this field is included in the default filter'>âœ”</span> owner
+<ul>
+<li><a href="/docs/types/shallow-user">shallow_user</a></li>
+</ul>
+</li>
+<li><span class='excluded' title='this field is excluded in the default filter'>âœ˜</span> comments
+<ul>
+<li>an array of <a href="/docs/types/comment">comment</a></li>
+</ul>
+</li>
+<li><span class='excluded' title='this field is excluded in the default filter'>âœ˜</span> answers
+<ul>
+<li>an array of <a href="/docs/types/answer">answer</a></li>
+</ul>
+</li>
+<li><span class='included' title='this field is included in the default filter'>âœ”</span> link
+<ul>
+<li>string</li>
+<li>unchanged in <a href="/docs/filters">unsafe filters</a></li>
+</ul>
+</li>
+<li><span class='included' title='this field is included in the default filter'>âœ”</span> is_answered
+<ul>
+<li>boolean</li>
+</ul>
+</li>
+</ul>
+
+
+
+        <div>
+            Fields marked with <span class='included'>âœ”</span> are included in the default filter, those marked with 
+            <span class='excluded'>âœ˜</span> are excluded in the default filter.
+        </div>
+    </div>
+
+    <div id="methods">
+        <h2>Methods That Return This Type</h2>
+
+        
+    <a href='/docs/questions'>questions</a><br><a href='/docs/questions-by-ids'>questions/{ids}</a><br><a href='/docs/linked-questions'>questions/{ids}/linked</a><br><a href='/docs/related-questions'>questions/{ids}/related</a><br><a href='/docs/unanswered-questions'>questions/unanswered</a><br><a href='/docs/no-answer-questions'>questions/no-answers</a><br><a href='/docs/search'>search</a><br><a href='/docs/similar'>similar</a><br><a href='/docs/f-a-qs-by-tags'>tags/{tags}/faq</a><br><a href='/docs/favorites-on-users'>users/{ids}/favorites</a><br><a href='/docs/questions-on-users'>users/{ids}/questions</a><br><a href='/docs/no-answer-questions-on-users'>users/{ids}/questions/no-answers</a><br><a href='/docs/unaccepted-questions-on-users'>users/{ids}/questions/unaccepted</a><br><a href='/docs/unanswered-questions-on-users'>users/{ids}/questions/unanswered</a><br><a href='/docs/top-user-questions-in-tags'>users/{id}/tags/{tags}/top-questions</a><br><a href='/docs/me-favorites'>me/favorites</a><br><a href='/docs/me-questions'>me/questions</a><br><a href='/docs/me-no-answer-questions'>me/questions/no-answers</a><br><a href='/docs/me-unaccepted-questions'>me/questions/unaccepted</a><br><a href='/docs/me-unanswered-questions'>me/questions/unanswered</a><br><a href='/docs/me-tags-top-questions'>me/tags/{tags}/top-questions</a>
+
+    </div>
+</div>
+            </div>
+
+
+
+<div class="sidebar">
+    <div class="module help">
+        <ul>
+            <li><a href="/docs">All Documentation</a></li>
+            <li><a href="/docs/authentication">Authentication</a></li>
+            <li><a href="/docs/vectors">Batching Requests</a></li>
+            <li><a href="/docs/change-log">Change Log</a></li>
+            <li><a href="/docs/min-max">Complex Queries</a></li>
+            <li><a href="/docs/compression">Compression</a></li>
+            <li><a href="/docs/dates">Dates</a></li>
+            <li><a href="/docs/error-handling">Error Handling</a></li>
+            <li><a href="/docs/filters">Filters</a></li>
+            <li><a href="/docs/js-lib">Javascript SDK</a></li>
+            <li><a href="/docs/paging">Paging</a></li>
+            <li><a href="/docs/wrapper">Response Wrapper</a></li>
+            <li><a href="/docs/throttle">Rate Limiting</a></li>
+            <li><a href="/docs/user-types">Users</a></li>
+        </ul>
+    </div>
+</div>        </div>
+    </div>
+
+<div class="footer">
+	<div class="wrapper">
+		 <p class="footer-links"><a href="http://stackexchange.com/about">about</a> <a href="http://blog.stackexchange.com">blog</a> <a href="http://stackexchange.com/legal">legal</a> <a href="mailto:team+api@stackexchange.com">contact us</a> <a href="http://stackapps.com/">feedback always welcome</a></p>
+
+            <p style="margin-bottom: 0;">site design / logo &copy; 2012 stack exchange, inc; user contributions licensed under <a href="http://creativecommons.org/licenses/by-sa/3.0/" rel="license">cc-wiki</a> with <a href="http://blog.stackoverflow.com/2009/06/attribution-required/" rel="license">attribution required</a></p>
+    </div>
+</div></body>
+</html>

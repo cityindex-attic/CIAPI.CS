@@ -1,0 +1,15 @@
+﻿"period": [
+    "all_time",
+    "month"
+  ]
+  
+  "order": [
+    "desc",
+    "asc"
+  ],
+
+  "unsafe": [
+    "false",
+    "true"
+  ]
+

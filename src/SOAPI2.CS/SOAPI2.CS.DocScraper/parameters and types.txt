@@ -1,0 +1,49 @@
+﻿excluding sort, period, order and unsafe enums (why they are not all represented similarly is beyond me)
+these are all of the parameter names and types used in the S.E. V2 api. (unless i screwed up)
+
+"accessTokens"	: "string list"
+"access_token"	: "access_token"
+"base"					: "string"
+"exclude"				: "string list"
+"fromdate"			: "date"
+"id"						: "number"
+"ids"						: "guid list"
+"ids"						: "number list"
+"include"				: "string list"
+"inname"				: "string"
+"intitle"				: "string"
+"max"						: "depends"
+"min"						: "depends"
+"nottagged"			: "string list"
+"page"					: "number"
+"pagesize"			: "number"
+"scope"					: "read_inbox"
+"since"					: "date"
+"tag"						: "string"
+"tagged"				: "string list"
+"tags"					: "string list"
+"title"					: "string"
+"todate"				: "date"
+"toid"					: "number"
+
+
+
+types....
+
+
+
+"number"
+"number list"
+"string"
+"string list"
+
+"access_token"
+"date"
+"guid list"
+
+
+"read_inbox"
+
+
+depends.... depends on sort. define as object or create multitude of overloads and validations rules.
+

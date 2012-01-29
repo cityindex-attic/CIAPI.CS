@@ -1,0 +1,159 @@
+
+
+
+
+<!DOCTYPE HTML>
+<html lang="en">
+<head> 
+<title> comment  - Stack Exchange API</title>
+<link rel="stylesheet" href="/Content/apiv2/all.css?v=43e8736b9fef">
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+
+    <script type="text/javascript" src="/Content/apiv2/js/jquery-ui-1.8.16.custom.min.js"></script>
+    <script type="text/javascript" src="/Content/apiv2/js/console.js?v=2c1ccd33316c"></script>
+
+</head>
+<body>
+    <div class="intro">
+	    <div class="wrapper">
+            <a href="/" class="logo">Stack Exchange</a>
+        
+            <div class="nav">
+                <ul>
+                    <li><a href="/docs">Documentation</a></li>
+                </ul>
+            </div>
+	    </div>
+    </div>
+
+    <div class="content">
+        <div class="wrapper">
+            <div class="mainbar">
+            
+
+
+
+
+
+<div class="subheader">
+    <h1>Type  comment </h1>
+</div>
+
+<div class="content-page">
+    <div id="discussion">
+        <h2>Discussion</h2>
+        
+    <p>All <a href="/docs/type/question">Questions</a> and <a href="/docs/type/answer">Answers</a> on a Stack Exchange site can be commented on, and this type represents those comments.</p>
+
+    <p>Comments can also be optionally directed at users, when this is the case the reply_to_user property is set (if it is requested in the current filter).</p>
+
+    </div>
+
+    <div id="fields" class="type-fields">
+        <h2>Fields</h2>
+        
+    <ul>
+<li><span class='included' title='this field is included in the default filter'>âœ”</span> comment_id
+<ul>
+<li>integer</li>
+</ul>
+</li>
+<li><span class='included' title='this field is included in the default filter'>âœ”</span> post_id
+<ul>
+<li>integer</li>
+</ul>
+</li>
+<li><span class='included' title='this field is included in the default filter'>âœ”</span> creation_date
+<ul>
+<li>date</li>
+</ul>
+</li>
+<li><span class='excluded' title='this field is excluded in the default filter'>âœ˜</span> post_type
+<ul>
+<li>one of <code>question</code>, or <code>answer</code></li>
+</ul>
+</li>
+<li><span class='included' title='this field is included in the default filter'>âœ”</span> score
+<ul>
+<li>integer</li>
+</ul>
+</li>
+<li><span class='included' title='this field is included in the default filter'>âœ”</span> edited
+<ul>
+<li>boolean</li>
+</ul>
+</li>
+<li><span class='excluded' title='this field is excluded in the default filter'>âœ˜</span> body
+<ul>
+<li>string</li>
+<li>unchanged in <a href="/docs/filters">unsafe filters</a></li>
+</ul>
+</li>
+<li><span class='included' title='this field is included in the default filter'>âœ”</span> owner
+<ul>
+<li><a href="/docs/types/shallow-user">shallow_user</a></li>
+</ul>
+</li>
+<li><span class='included' title='this field is included in the default filter'>âœ”</span> reply_to_user
+<ul>
+<li><a href="/docs/types/shallow-user">shallow_user</a></li>
+</ul>
+</li>
+<li><span class='excluded' title='this field is excluded in the default filter'>âœ˜</span> link
+<ul>
+<li>string</li>
+<li>unchanged in <a href="/docs/filters">unsafe filters</a></li>
+</ul>
+</li>
+</ul>
+
+
+
+        <div>
+            Fields marked with <span class='included'>âœ”</span> are included in the default filter, those marked with 
+            <span class='excluded'>âœ˜</span> are excluded in the default filter.
+        </div>
+    </div>
+
+    <div id="methods">
+        <h2>Methods That Return This Type</h2>
+
+        
+    <a href='/docs/comments-on-answers'>answers/{ids}/comments</a><br><a href='/docs/comments'>comments</a><br><a href='/docs/comments-by-ids'>comments/{ids}</a><br><a href='/docs/comments-on-posts'>posts/{ids}/comments</a><br><a href='/docs/comments-on-questions'>questions/{ids}/comments</a><br><a href='/docs/comments-on-users'>users/{ids}/comments</a><br><a href='/docs/comments-by-users-to-user'>users/{ids}/comments/{toid}</a><br><a href='/docs/mentions-on-users'>users/{ids}/mentioned</a><br><a href='/docs/me-comments'>me/comments</a><br><a href='/docs/me-comments-to'>me/comments/{toid}</a><br><a href='/docs/me-mentioned'>me/mentioned</a>
+
+    </div>
+</div>
+            </div>
+
+
+
+<div class="sidebar">
+    <div class="module help">
+        <ul>
+            <li><a href="/docs">All Documentation</a></li>
+            <li><a href="/docs/authentication">Authentication</a></li>
+            <li><a href="/docs/vectors">Batching Requests</a></li>
+            <li><a href="/docs/change-log">Change Log</a></li>
+            <li><a href="/docs/min-max">Complex Queries</a></li>
+            <li><a href="/docs/compression">Compression</a></li>
+            <li><a href="/docs/dates">Dates</a></li>
+            <li><a href="/docs/error-handling">Error Handling</a></li>
+            <li><a href="/docs/filters">Filters</a></li>
+            <li><a href="/docs/js-lib">Javascript SDK</a></li>
+            <li><a href="/docs/paging">Paging</a></li>
+            <li><a href="/docs/wrapper">Response Wrapper</a></li>
+            <li><a href="/docs/throttle">Rate Limiting</a></li>
+            <li><a href="/docs/user-types">Users</a></li>
+        </ul>
+    </div>
+</div>        </div>
+    </div>
+
+<div class="footer">
+	<div class="wrapper">
+		 <p class="footer-links"><a href="http://stackexchange.com/about">about</a> <a href="http://blog.stackexchange.com">blog</a> <a href="http://stackexchange.com/legal">legal</a> <a href="mailto:team+api@stackexchange.com">contact us</a> <a href="http://stackapps.com/">feedback always welcome</a></p>
+
+            <p style="margin-bottom: 0;">site design / logo &copy; 2012 stack exchange, inc; user contributions licensed under <a href="http://creativecommons.org/licenses/by-sa/3.0/" rel="license">cc-wiki</a> with <a href="http://blog.stackoverflow.com/2009/06/attribution-required/" rel="license">attribution required</a></p>
+    </div>
+</div></body>
+</html>

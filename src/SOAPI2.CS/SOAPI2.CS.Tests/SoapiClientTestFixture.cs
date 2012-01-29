@@ -6,6 +6,16 @@ using NUnit.Framework;
 
 namespace SOAPI2.CS.Tests
 {
+    [TestFixture, RequiresSTA]
+    public class OAuthFixture
+    {
+        [Test]
+        public void Test()
+        {
+            OAuthForm form = new OAuthForm();
+            form.ShowDialog();
+        }
+    }
     [TestFixture]
     public class SoapiClientTestFixture
     {

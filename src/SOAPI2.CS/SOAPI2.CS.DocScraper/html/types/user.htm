@@ -1,0 +1,246 @@
+
+
+
+
+<!DOCTYPE HTML>
+<html lang="en">
+<head> 
+<title> user  - Stack Exchange API</title>
+<link rel="stylesheet" href="/Content/apiv2/all.css?v=43e8736b9fef">
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+
+    <script type="text/javascript" src="/Content/apiv2/js/jquery-ui-1.8.16.custom.min.js"></script>
+    <script type="text/javascript" src="/Content/apiv2/js/console.js?v=2c1ccd33316c"></script>
+
+</head>
+<body>
+    <div class="intro">
+	    <div class="wrapper">
+            <a href="/" class="logo">Stack Exchange</a>
+        
+            <div class="nav">
+                <ul>
+                    <li><a href="/docs">Documentation</a></li>
+                </ul>
+            </div>
+	    </div>
+    </div>
+
+    <div class="content">
+        <div class="wrapper">
+            <div class="mainbar">
+            
+
+
+
+
+
+<div class="subheader">
+    <h1>Type  user </h1>
+</div>
+
+<div class="content-page">
+    <div id="discussion">
+        <h2>Discussion</h2>
+        
+    <p>This type describes a user on a Stack Exchange site.</p>
+
+    <p>There are a number of different user types returned by the Stack Exchange API, depending on the method.  Others include <a href="/docs/types/shallow-user">shallow_user</a> and <a href="/docs/types/network-user">network_user</a>.</p>
+
+    </div>
+
+    <div id="fields" class="type-fields">
+        <h2>Fields</h2>
+        
+    <ul>
+<li><span class='included' title='this field is included in the default filter'>âœ”</span> user_id
+<ul>
+<li>integer</li>
+</ul>
+</li>
+<li><span class='included' title='this field is included in the default filter'>âœ”</span> user_type
+<ul>
+<li>one of <code>unregistered</code>, <code>registered</code>, <code>moderator</code>, or <code>does_not_exist</code></li>
+</ul>
+</li>
+<li><span class='included' title='this field is included in the default filter'>âœ”</span> creation_date
+<ul>
+<li>date</li>
+</ul>
+</li>
+<li><span class='included' title='this field is included in the default filter'>âœ”</span> display_name
+<ul>
+<li>string</li>
+</ul>
+</li>
+<li><span class='included' title='this field is included in the default filter'>âœ”</span> profile_image
+<ul>
+<li>string</li>
+<li>unchanged in <a href="/docs/filters">unsafe filters</a></li>
+</ul>
+</li>
+<li><span class='included' title='this field is included in the default filter'>âœ”</span> reputation
+<ul>
+<li>integer</li>
+</ul>
+</li>
+<li><span class='included' title='this field is included in the default filter'>âœ”</span> reputation_change_day
+<ul>
+<li>integer</li>
+</ul>
+</li>
+<li><span class='included' title='this field is included in the default filter'>âœ”</span> reputation_change_week
+<ul>
+<li>integer</li>
+</ul>
+</li>
+<li><span class='included' title='this field is included in the default filter'>âœ”</span> reputation_change_month
+<ul>
+<li>integer</li>
+</ul>
+</li>
+<li><span class='included' title='this field is included in the default filter'>âœ”</span> reputation_change_quarter
+<ul>
+<li>integer</li>
+</ul>
+</li>
+<li><span class='included' title='this field is included in the default filter'>âœ”</span> reputation_change_year
+<ul>
+<li>integer</li>
+</ul>
+</li>
+<li><span class='included' title='this field is included in the default filter'>âœ”</span> age
+<ul>
+<li>integer</li>
+</ul>
+</li>
+<li><span class='included' title='this field is included in the default filter'>âœ”</span> last_access_date
+<ul>
+<li>date</li>
+</ul>
+</li>
+<li><span class='included' title='this field is included in the default filter'>âœ”</span> last_modified_date
+<ul>
+<li>date</li>
+</ul>
+</li>
+<li><span class='included' title='this field is included in the default filter'>âœ”</span> is_employee
+<ul>
+<li>boolean</li>
+</ul>
+</li>
+<li><span class='included' title='this field is included in the default filter'>âœ”</span> link
+<ul>
+<li>string</li>
+<li>unchanged in <a href="/docs/filters">unsafe filters</a></li>
+</ul>
+</li>
+<li><span class='included' title='this field is included in the default filter'>âœ”</span> website_url
+<ul>
+<li>string</li>
+<li>unchanged in <a href="/docs/filters">unsafe filters</a></li>
+</ul>
+</li>
+<li><span class='included' title='this field is included in the default filter'>âœ”</span> location
+<ul>
+<li>string</li>
+</ul>
+</li>
+<li><span class='included' title='this field is included in the default filter'>âœ”</span> account_id
+<ul>
+<li>integer</li>
+</ul>
+</li>
+<li><span class='included' title='this field is included in the default filter'>âœ”</span> timed_penalty_date
+<ul>
+<li>date</li>
+</ul>
+</li>
+<li><span class='included' title='this field is included in the default filter'>âœ”</span> badge_counts
+<ul>
+<li><a href="/docs/types/badge-count">badge_count</a></li>
+</ul>
+</li>
+<li><span class='excluded' title='this field is excluded in the default filter'>âœ˜</span> question_count
+<ul>
+<li>integer</li>
+</ul>
+</li>
+<li><span class='excluded' title='this field is excluded in the default filter'>âœ˜</span> answer_count
+<ul>
+<li>integer</li>
+</ul>
+</li>
+<li><span class='excluded' title='this field is excluded in the default filter'>âœ˜</span> up_vote_count
+<ul>
+<li>integer</li>
+</ul>
+</li>
+<li><span class='excluded' title='this field is excluded in the default filter'>âœ˜</span> down_vote_count
+<ul>
+<li>integer</li>
+</ul>
+</li>
+<li><span class='excluded' title='this field is excluded in the default filter'>âœ˜</span> about_me
+<ul>
+<li>string</li>
+<li>unchanged in <a href="/docs/filters">unsafe filters</a></li>
+</ul>
+</li>
+<li><span class='excluded' title='this field is excluded in the default filter'>âœ˜</span> view_count
+<ul>
+<li>integer</li>
+</ul>
+</li>
+</ul>
+
+
+
+        <div>
+            Fields marked with <span class='included'>âœ”</span> are included in the default filter, those marked with 
+            <span class='excluded'>âœ˜</span> are excluded in the default filter.
+        </div>
+    </div>
+
+    <div id="methods">
+        <h2>Methods That Return This Type</h2>
+
+        
+    <a href='/docs/users'>users</a><br><a href='/docs/users-by-ids'>users/{ids}</a><br><a href='/docs/moderators'>users/moderators</a><br><a href='/docs/elected-moderators'>users/moderators/elected</a><br><a href='/docs/me'>me</a>
+
+    </div>
+</div>
+            </div>
+
+
+
+<div class="sidebar">
+    <div class="module help">
+        <ul>
+            <li><a href="/docs">All Documentation</a></li>
+            <li><a href="/docs/authentication">Authentication</a></li>
+            <li><a href="/docs/vectors">Batching Requests</a></li>
+            <li><a href="/docs/change-log">Change Log</a></li>
+            <li><a href="/docs/min-max">Complex Queries</a></li>
+            <li><a href="/docs/compression">Compression</a></li>
+            <li><a href="/docs/dates">Dates</a></li>
+            <li><a href="/docs/error-handling">Error Handling</a></li>
+            <li><a href="/docs/filters">Filters</a></li>
+            <li><a href="/docs/js-lib">Javascript SDK</a></li>
+            <li><a href="/docs/paging">Paging</a></li>
+            <li><a href="/docs/wrapper">Response Wrapper</a></li>
+            <li><a href="/docs/throttle">Rate Limiting</a></li>
+            <li><a href="/docs/user-types">Users</a></li>
+        </ul>
+    </div>
+</div>        </div>
+    </div>
+
+<div class="footer">
+	<div class="wrapper">
+		 <p class="footer-links"><a href="http://stackexchange.com/about">about</a> <a href="http://blog.stackexchange.com">blog</a> <a href="http://stackexchange.com/legal">legal</a> <a href="mailto:team+api@stackexchange.com">contact us</a> <a href="http://stackapps.com/">feedback always welcome</a></p>
+
+            <p style="margin-bottom: 0;">site design / logo &copy; 2012 stack exchange, inc; user contributions licensed under <a href="http://creativecommons.org/licenses/by-sa/3.0/" rel="license">cc-wiki</a> with <a href="http://blog.stackoverflow.com/2009/06/attribution-required/" rel="license">attribution required</a></p>
+    </div>
+</div></body>
+</html>
