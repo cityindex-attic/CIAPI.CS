@@ -5,8 +5,8 @@
 
 == Phone 7 ==
 1) Follow instructions for .NET
-2) Install Windows Phone Developer Tools RTW	 - http://www.microsoft.com/download/en/details.aspx?id=13890
-3) Install Silverlight for Windows Phone Toolkit - Feb 2011 - http://silverlight.codeplex.com/releases/view/60291
+2) Install Windows Phone SDK 7.1	 - http://www.microsoft.com/download/en/details.aspx?displaylang=en&id=27570
+3) Windows Phone Toolkit - Nov 2011 (7.1 SDK) - http://silverlight.codeplex.com/releases/view/75888
 
 == Silverlight ==
 1) Follow instructions for .NET

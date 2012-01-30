@@ -47,11 +47,11 @@ namespace PhoneApp1
             });
             ThreadPool.QueueUserWorkItem(_ =>
             {
-                for (int i = 0; i < 3; ++i)
+                for (int i = 0; i < 5; ++i)
                 {
                     ThreadPool.QueueUserWorkItem(__ =>
                     {
-                        for (int j = 1; j <= 125; ++j) PerformRequest();
+                        for (int j = 1; j <= 525; ++j) PerformRequest();
                     });
                 }
                 Thread.Sleep(10000);
