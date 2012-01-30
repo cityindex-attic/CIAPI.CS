@@ -9,7 +9,7 @@ using SOAPI2.Model;
 namespace SOAPI2
 {
 
-    public class SoapiClient : Client
+    public partial class SoapiClient : Client
     {
 
         // https://stackexchange.com/oauth/dialog?client_id=24&scope=no_expiry,read_inbox&redirect_uri=https://stackexchange.com/oauth/login_success
@@ -24,17 +24,11 @@ namespace SOAPI2
 
         // unique requests should already be cached for at least 1 minute by default so this may not be an issue
 
-
+        private SoapiClient _client;
         private static string _versionNumber;
         private readonly string _apiKey;
         private readonly string _appId;
-        public SoapiClient(string apiKey,string appId)
-            : base(new Uri("https://api.stackexchange.com/2.0/"))
-        {
-            _appId = appId;
-            _apiKey = apiKey;
-            UserAgent = "CIAPI.CS." + GetVersionNumber();
-        }
+
 
         private static string GetVersionNumber()
         {

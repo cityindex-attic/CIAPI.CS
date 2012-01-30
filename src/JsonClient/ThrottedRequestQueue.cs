@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -169,9 +170,18 @@ namespace CityIndex.JsonClient
                 if (_processingQueue) return;
                 if (_requests.Count == 0) return;
 
-                RequestHolder request = _requests.Peek();
-
                 _processingQueue = true;
+
+                // #TODO: can this return null
+                RequestHolder request = _requests.Peek();
+                
+#if DEBUG
+                // #FIXME: REMOVE ME REMOVE ME
+                if (request==null)
+                {
+                    Debugger.Break();
+                }
+#endif                
 
                 try
                 {

@@ -11,6 +11,7 @@ namespace SOAPI2.DocScraper
 {
     internal class Program
     {
+        
         private static void Main(string[] args)
         {
             Docs docs = PullFromFile();
@@ -26,10 +27,11 @@ namespace SOAPI2.DocScraper
 
             var sb = new StringBuilder();
             var generator = new CodeGenerator(schema, smd);
+            generator.GenerateRoutes(sb);
+            File.WriteAllText("..\\..\\..\\SOAPI2.CS\\Routes.cs",sb.ToString());
+            sb = new StringBuilder();
             generator.GenerateModel(sb);
-            Debug.WriteLine(sb.ToString());
-
-
+            File.WriteAllText("..\\..\\..\\SOAPI2.CS\\Model.cs", sb.ToString());
         }
 
         private static void PullMethodDocsFromFile(Docs docs)

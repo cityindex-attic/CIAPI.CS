@@ -23,16 +23,16 @@ namespace CityIndex.JsonClient
 
         #region cTor
 
-        
+
 
         /// <summary>
         /// Instantiates a <see cref="RequestCache"/> with supplied <paramref name="defaultCacheDuration"/>
         /// </summary>
         /// <param name="defaultCacheDuration">The default cache lifespan to apply to <see cref="CacheItem{TDTO}"/></param>
-        
+
         public RequestCache(TimeSpan defaultCacheDuration)
         {
-            
+
 
             _defaultCacheDuration = defaultCacheDuration;
             _lock = new object();
@@ -62,13 +62,13 @@ namespace CityIndex.JsonClient
 
                 if (_items.ContainsKey(url))
                 {
-                    item =GetItem<TDTO>(url);
+                    item = GetItem<TDTO>(url);
                     Log.Debug(string.Format("Fetched {0} from cache", item.Url));
                 }
                 else
                 {
                     item = CreateAndAddItem<TDTO>(url);
-                    
+
                 }
 
                 return item;
@@ -118,7 +118,18 @@ namespace CityIndex.JsonClient
                     throw new InvalidOperationException(
                         "Item is not completed. Removing would orphan asynchronous callbacks.");
                 }
-                _items.Remove(url);
+
+                try
+                {
+                    _items.Remove(url);
+                }
+                catch (Exception ex2)
+                {
+
+                    Log.Warn(string.Format("Unable to remove item {0} from cache", item), ex2);
+                    // swallow
+                }
+                
                 return item;
             }
         }
@@ -153,8 +164,17 @@ namespace CityIndex.JsonClient
 
                 foreach (string item in toRemove)
                 {
-                    _items.Remove(item);
-                    Log.Info(string.Format("Removed {0} from cache", item));
+                    try
+                    {
+                        _items.Remove(item);
+                        Log.Info(string.Format("Removed {0} from cache", item));
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Warn(string.Format("Unable to remove item {0} from cache", item), ex);
+                        // swallow
+                    }
+                    
                 }
             }
         }

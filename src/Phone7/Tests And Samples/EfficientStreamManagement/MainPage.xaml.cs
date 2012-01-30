@@ -13,13 +13,13 @@ namespace EfficientStreamManagement
 {
     public partial class MainPage : PhoneApplicationPage
     {
-        private const string USERNAME = "XX531040";
+        private const string USERNAME = "DM715257";
         private const string PASSWORD = "password";
         public static Client RpcClient;
         public static IStreamingClient StreamingClient;
 
-        private static readonly Uri RPC_URI = new Uri("https://ciapipreprod.cityindextest9.co.uk/TradingApi");
-        private static readonly Uri STREAMING_URI = new Uri("https://pushpreprod.cityindextest9.co.uk");
+        private static readonly Uri RPC_URI = new Uri("https://ciapi.cityindex.com/tradingapi");
+        private static readonly Uri STREAMING_URI = new Uri("https://push.cityindex.com");
         private IStreamingListener<ClientAccountMarginDTO> _clientAccountMarginsListener;
         private IStreamingListener<NewsDTO> _newsListener;
         private IStreamingListener<OrderDTO> _orderslistener;

@@ -29,7 +29,7 @@ private Client _client;
 	        UserAgent = "CIAPI.SILVERLIGHT."+ GetVersionNumber();
 	#endif
 	#else
-	        UserAgent = "SOAPI2." + GetVersionNumber() + " - in development";
+	        UserAgent = "CIAPI.CS." + GetVersionNumber() ;
 	#endif
         _client=this;
 

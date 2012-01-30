@@ -47,7 +47,8 @@
   <ItemGroup>
     <Compile Include="Converters\UnixDateTimeConverter.cs" />
     <Compile Include="Converters\UnixDateTimeHelper.cs" />
-    <Compile Include="Model\Model.cs" />
+    <Compile Include="ErrorResponseDTOJsonExceptionFactory.cs" />
+    <Compile Include="Model.cs" />
     <Compile Include="OAuthForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -55,6 +56,7 @@
       <DependentUpon>OAuthForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Routes.cs" />
     <Compile Include="SoapiClient.cs" />
   </ItemGroup>
   <ItemGroup>

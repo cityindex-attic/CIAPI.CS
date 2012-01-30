@@ -51,14 +51,14 @@ namespace SOAPI2.DocScraper
                     else
                     {
                         fieldType = reference.Substring(2).PascalCased();
-                    }    
+                    }
                 }
                 else
                 {
                     // could be a generic type param?
                     fieldType = reference.Substring(2).PascalCased();
                 }
-                
+
             }
             return fieldType;
         }
@@ -71,7 +71,7 @@ namespace SOAPI2.DocScraper
         {
             var tabs = "";
 
-            
+
             sb.AppendLine(string.Format("{0}using {1};", tabs, "System"));
             sb.AppendLine(string.Format("{0}using {1};", tabs, "System.Collections.Generic"));
             sb.AppendLine(string.Format("{0}using {1};", tabs, "SOAPI2.Converters"));
@@ -153,11 +153,11 @@ namespace SOAPI2.DocScraper
                         {
                             fieldType = GetComplexFieldType(fieldValue);
 
-                            
+
                         }
                         else
                         {
-                            
+
                             fieldType = (string)fieldValue["type"];
                             switch (fieldType)
                             {
@@ -198,7 +198,7 @@ namespace SOAPI2.DocScraper
                                                 jsonConverter = "UnixDateTimeOffsetConverter";
                                                 break;
 
-                                            case"decimal":
+                                            case "decimal":
                                                 fieldType = "decimal";
                                                 break;
                                             case "integer":
@@ -222,9 +222,9 @@ namespace SOAPI2.DocScraper
                                     {
                                         switch ((string)fieldValue["format"])
                                         {
-                              
-                                            
-                                            
+
+
+
                                             default:
                                                 throw new NotImplementedException("format " + (string)fieldValue["format"]);
                                         }
@@ -262,6 +262,155 @@ namespace SOAPI2.DocScraper
             tabs = "";
             sb.AppendLine(string.Format("{0}}}", tabs));
 
+        }
+
+        private Dictionary<string, Dictionary<string, JObject>> GetGroupedMethods()
+        {
+            var groupedMethods = new Dictionary<string, Dictionary<string, JObject>>();
+            foreach (JProperty kvp in _smd["services"])
+            {
+                var serviceName = kvp.Name;
+                string serviceGroupName = (string)kvp.Value["group"];
+                Dictionary<string, JObject> serviceGroup = null;
+
+                if (groupedMethods.ContainsKey(serviceGroupName))
+                {
+                    serviceGroup = groupedMethods[serviceGroupName];
+                }
+                else
+                {
+                    serviceGroup = new Dictionary<string, JObject>();
+                    groupedMethods.Add(serviceGroupName, serviceGroup);
+                }
+                serviceGroup.Add(serviceName, (JObject)kvp.Value);
+            }
+            return groupedMethods;
+        }
+        public void GenerateRoutes(StringBuilder sb)
+        {
+
+            var tabs = "";
+
+            sb.AppendLine(string.Format("{0}using {1};", tabs, "System"));
+            sb.AppendLine(string.Format("{0}using {1};", tabs, "System.Collections.Generic"));
+            sb.AppendLine(string.Format("{0}using {1};", tabs, "Newtonsoft.Json"));
+            sb.AppendLine(string.Format("{0}using {1};", tabs, "CityIndex.JsonClient"));
+            sb.AppendLine(string.Format("{0}using {1};", tabs, "SOAPI2.Converters"));
+            sb.AppendLine(string.Format("{0}using {1};", tabs, "SOAPI2.Model"));
+            sb.AppendLine(string.Format("{0}namespace {1}", tabs, "SOAPI2"));
+            sb.AppendLine(string.Format("{0}{{", tabs));
+            tabs = "\t";
+
+            sb.AppendLine(string.Format("{0}public partial class SoapiClient", tabs));
+            sb.AppendLine(string.Format("{0}{{", tabs));
+            var groupedMethods = GetGroupedMethods();
+
+            var groupNames = groupedMethods.Keys.ToArray();
+            tabs = "\t\t";
+            sb.AppendLine("        public SoapiClient(string apiKey, string appId) // #TODO: uri from SMD target");
+            sb.AppendLine("            : base(new Uri(\"https://api.stackexchange.com/2.0/\"), new RequestController(TimeSpan.FromSeconds(0), 2, new RequestFactory(), new ErrorResponseDTOJsonExceptionFactory(), new ThrottledRequestQueue(TimeSpan.FromSeconds(5), 30, 10, \"data\"), new ThrottledRequestQueue(TimeSpan.FromSeconds(5), 30, 10, \"trading\"), new ThrottledRequestQueue(TimeSpan.FromSeconds(5), 30, 10, \"default\")))");
+            sb.AppendLine("        {");
+            sb.AppendLine("");
+            sb.AppendLine("   ");
+            sb.AppendLine("");
+            sb.AppendLine("#if SILVERLIGHT");
+            sb.AppendLine("#if WINDOWS_PHONE");
+            sb.AppendLine("		  UserAgent = \"SOAPI2.PHONE7.\"+ GetVersionNumber();");
+            sb.AppendLine("#else");
+            sb.AppendLine("		  UserAgent = \"SOAPI2.SILVERLIGHT.\"+ GetVersionNumber();");
+            sb.AppendLine("#endif");
+            sb.AppendLine("#else");
+            sb.AppendLine("            UserAgent = \"SOAPI2.\" + GetVersionNumber();");
+            sb.AppendLine("#endif");
+            sb.AppendLine("            _client = this;");
+            sb.AppendLine("            _appId = appId;");
+            sb.AppendLine("            _apiKey = apiKey;");
+            foreach (string groupName in groupNames)
+            {
+                sb.AppendLine(string.Format("{0}    this.{1} = new _{1}(this);", tabs, groupName));
+            }
+ 
+            sb.AppendLine("");
+            sb.AppendLine("        }");
+            sb.AppendLine("        public SoapiClient(string apiKey, string appId,Uri uri, IRequestController requestController)");
+            sb.AppendLine("            : base(uri, requestController)");
+            sb.AppendLine("        {");
+            sb.AppendLine("");
+            sb.AppendLine("   ");
+            sb.AppendLine("#if SILVERLIGHT");
+            sb.AppendLine("#if WINDOWS_PHONE");
+            sb.AppendLine("		  UserAgent = \"SOAPI2.PHONE7.\"+ GetVersionNumber();");
+            sb.AppendLine("#else");
+            sb.AppendLine("		  UserAgent = \"SOAPI2.SILVERLIGHT.\"+ GetVersionNumber();");
+            sb.AppendLine("#endif");
+            sb.AppendLine("#else");
+            sb.AppendLine("            UserAgent = \"SOAPI2.\" + GetVersionNumber();");
+            sb.AppendLine("#endif");
+            sb.AppendLine("            _client = this;");
+            sb.AppendLine("            _appId = appId;");
+            sb.AppendLine("            _apiKey = apiKey;");
+            sb.AppendLine("");
+            foreach (string groupName in groupNames)
+            {
+                sb.AppendLine(string.Format("{0}    this.{1} = new _{1}(this);", tabs, groupName));
+            }
+ 
+            sb.AppendLine("        }");
+
+ 
+
+            foreach (string groupName in groupNames)
+            {
+                // create sub types for clean architecture
+
+                string subGroupTypeName = "_" + groupName;
+                
+                sb.AppendLine(string.Format("{0}public class {1}", tabs, subGroupTypeName));
+                sb.AppendLine(string.Format("{0}{{", tabs));
+                sb.AppendLine(string.Format("{0}\tprivate SoapiClient _client;", tabs));
+                sb.AppendLine(string.Format("{0}\tpublic {1}(SoapiClient client)", tabs, subGroupTypeName));
+                sb.AppendLine(string.Format("{0}\t{{", tabs));
+                sb.AppendLine(string.Format("{0}\t\t_client=client;", tabs));
+                sb.AppendLine(string.Format("{0}\t}}", tabs));
+
+                // methods
+
+                var group = groupedMethods[groupName];
+                foreach (var kvp in group)
+                {
+                    var methodName = kvp.Key;
+                    var methodObj = kvp.Value;
+                    var contentType = (string)methodObj["contentType"];
+                    var responseContentType = (string)methodObj["responseContentType"];
+                    var transport = (string)methodObj["transport"];
+                    var envelope = (string)methodObj["envelope"];
+                    var cacheDuration = (string)methodObj["cacheDuration"];
+                    var throttleScope = (string)methodObj["throttleScope"];
+                    var uriTemplate = (string)methodObj["uriTemplate"];
+                    var returns = (JObject) methodObj["returns"];
+                    
+                    var description = (string)methodObj["description"];
+
+                    string returnType = "void";
+                    if (returns != null)
+                    {
+                        returnType = GetReferenceType(returns);    
+                    }
+                    
+                    sb.AppendLine(string.Format("{0}\tpublic {2} Get{1}()", tabs, methodName.PascalCased(), returnType));
+                    sb.AppendLine(string.Format("{0}\t{{", tabs));
+                    sb.AppendLine(string.Format("{0}\t\tthrow new NotImplementedException();", tabs));
+                    sb.AppendLine(string.Format("{0}\t}}", tabs));
+                }
+                sb.AppendLine(string.Format("{0}}}", tabs));
+                sb.AppendLine(string.Format("{0}public {1} {2}{{get; private set;}}", tabs, subGroupTypeName, groupName));
+
+
+            }
+            tabs = "\t";
+            sb.AppendLine(string.Format("{0}}}", tabs));
+            tabs = "";
+            sb.AppendLine(string.Format("{0}}}", tabs));
         }
     }
 }
