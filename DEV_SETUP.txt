@@ -8,6 +8,8 @@
 2) Install Windows Phone SDK 7.1	 - http://www.microsoft.com/download/en/details.aspx?displaylang=en&id=27570
 3) Windows Phone Toolkit - Nov 2011 (7.1 SDK) - http://silverlight.codeplex.com/releases/view/75888
 
+NOTE: installing phone tools on a Server SKU requires some hacking: see http://blogs.msdn.com/b/astebner/archive/2010/05/02/10005980.aspx
+
 == Silverlight ==
 1) Follow instructions for .NET
 2) Install Silverlight 4 SDK - http://www.microsoft.com/download/en/details.aspx?id=7335
