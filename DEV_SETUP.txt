@@ -1,5 +1,6 @@
 === .NET ===
 1) Install Visual Studio 2010 or Visual Web Developer 2010 Express - http://www.microsoft.com/express/Web/
+2) Ensure you have VS2010 SP1 installed - http://www.microsoft.com/download/en/details.aspx?id=23691
 2) Install Windows 7 SKD
 3) Copy C:\Program Files (x86)\MSBuild\Microsoft\VisualStudio\v10.0\WebApplications\* from a machine with full VS10 installation to C:\Program Files\MSBuild\Microsoft\VisualStudio\v10.0\WebApplications\
 
