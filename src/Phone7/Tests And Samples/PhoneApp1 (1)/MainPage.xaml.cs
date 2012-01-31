@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Windows;
+using CityIndex.ReflectiveLoggingAdapter;
 using Client = CIAPI.Rpc.Client;
 
 namespace PhoneApp1
@@ -30,6 +31,11 @@ namespace PhoneApp1
         private void BuildClients()
         {
             Dispatcher.BeginInvoke(() => listBox1.Items.Add("creating rpc client"));
+
+            //Hook up a logger for the CIAPI.CS libraries
+            LogManager.CreateInnerLogger = (logName, logLevel, showLevel, showDateTime, showLogName, dateTimeFormat)
+                                            => new SimpleDebugAppender(logName, logLevel, showLevel, showDateTime, showLogName, dateTimeFormat);
+
             RpcClient = new Client(RPC_URI);
             RpcClient.BeginLogIn(USERNAME, PASSWORD, ar =>
             {
