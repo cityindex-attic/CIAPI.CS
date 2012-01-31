@@ -5,8 +5,8 @@
 	<PropertyGroup>
 	<Major>3</Major>          <!-- Major = breaking changes (consumers will need to change existing calls) -->
 	<Minor>0</Minor>          <!-- Minor = New features added but still backwards compatible -->
-    <Patch>0</Patch>          <!-- Patch = Bug fixes only (still backwards compatible) -->
-    <PreRelease></PreRelease> <!-- empty for stable build, (text} for bleedingedge build. -->
+    <Patch>1</Patch>          <!-- Patch = Bug fixes only (still backwards compatible) -->
+    <PreRelease>bleeding</PreRelease> <!-- empty for stable build, (text} for bleedingedge build. -->
   </PropertyGroup>
   
   <Import Project="$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets" />
