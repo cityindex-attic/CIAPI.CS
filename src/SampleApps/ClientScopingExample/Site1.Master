@@ -1,0 +1,31 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site1.master.cs" Inherits="ClientScopingExample.Site1" %>
+
+<%@ Import Namespace="ClientScopingExample" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div id="header" style="border: 1px solid blue">
+        Global RPC Status:<%=Global.GlobalRpcStatus %></div>
+    <div>
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        </asp:ContentPlaceHolder>
+        <div id="global_headlines_container" style="border: 1px solid blue">
+            <p>
+                (this could be default prices.)</p>
+            <p>
+                <b>HEADLINES</b> (each time a page is rendered for any client, headlines will be
+                shown by the global Application client, but caching will ensure that server load
+                is mitigated)</p>
+            <asp:Literal ID="global_headlines" Mode="PassThrough" runat="server"></asp:Literal>
+            
+        </div>
+    </div>
+    </form>
+</body>
+</html>
