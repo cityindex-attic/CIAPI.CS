@@ -17,6 +17,7 @@
 
   <PropertyGroup>
     <Configuration>Release</Configuration>
+    <Configuration Condition="'$(PreRelease)'!=''">Debug</Configuration>
     <Platform>Any CPU</Platform>
   </PropertyGroup>
 
