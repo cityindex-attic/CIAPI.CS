@@ -4,10 +4,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{845AC73C-EACC-4F7C-A9DC-251F09E55708}"
 	ProjectSection(SolutionItems) = preProject
 		build.xml = build.xml
-		CIAPI.CS.nunit = CIAPI.CS.nunit
 		Package.CIAPI.nuspec = Package.CIAPI.nuspec
 		Package.JsonClient.nuspec = Package.JsonClient.nuspec
-		PartCover4.settings.xml = PartCover4.settings.xml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SampleApps", "SampleApps", "{358F3488-9C36-4B4C-B593-1A21D1B18E35}"
@@ -24,6 +22,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonClient.Silverlight.Test
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{96966057-1B2F-4775-B363-F6A14D854B1E}"
 	ProjectSection(SolutionItems) = preProject
+		..\DEV_SETUP.txt = ..\DEV_SETUP.txt
 		..\LICENSE.txt = ..\LICENSE.txt
 		..\NOTICES.txt = ..\NOTICES.txt
 	EndProjectSection
@@ -123,6 +122,14 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SOAPI2.CS.DocScraper", "SOAPI2.CS\SOAPI2.CS.DocScraper\SOAPI2.CS.DocScraper.csproj", "{EE676C02-BC52-4342-8731-60DFA1E058AD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhoneApp1", "Phone7\Tests And Samples\PhoneApp1 (1)\PhoneApp1.csproj", "{14ECEEC4-8D8E-414D-A76C-6E167544E9BC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "targets", "targets", "{F1429752-01E4-4BED-84CC-00BD20E8D2F4}"
+	ProjectSection(SolutionItems) = preProject
+		..\tools\msbuild\CommonProperties.targets.xml = ..\tools\msbuild\CommonProperties.targets.xml
+		..\tools\msbuild\DropsAndPackaging.targets.xml = ..\tools\msbuild\DropsAndPackaging.targets.xml
+		..\tools\msbuild\TestsAndMetrics.targets.xml = ..\tools\msbuild\TestsAndMetrics.targets.xml
+		..\tools\msbuild\Versioning.targets.xml = ..\tools\msbuild\Versioning.targets.xml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -567,6 +574,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{F1429752-01E4-4BED-84CC-00BD20E8D2F4} = {845AC73C-EACC-4F7C-A9DC-251F09E55708}
 		{683AFB5D-FA3E-486B-AFF4-5375F1B24229} = {358F3488-9C36-4B4C-B593-1A21D1B18E35}
 		{A9347E3A-E64D-4D1F-96A4-561291C862AF} = {358F3488-9C36-4B4C-B593-1A21D1B18E35}
 		{55FBFD26-44B9-46BA-B1B7-624C2EF06EE2} = {358F3488-9C36-4B4C-B593-1A21D1B18E35}
