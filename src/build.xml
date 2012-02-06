@@ -25,7 +25,7 @@
     <Assemblies     Include="$(SrcDirectory)\JsonClient\bin\$(Configuration)\CityIndex.JsonClient.dll;
                              $(SrcDirectory)\StreamingClient\bin\$(Configuration)\StreamingClient.dll;
                              $(SrcDirectory)\CIAPI\bin\$(Configuration)\CIAPI.dll"/>
-    <TestAssemblies Include="$(SrcDirectory)\JsonClient.Tests\bin\$(Configuration)\JsonClient.Tests.dll;
+    <TestAssemblies Include="$(SrcDirectory)\JsonClient.Tests\bin\$(Configuration)\CityIndex.JsonClient.Tests.dll;
                              $(SrcDirectory)\StreamingClient.Tests\bin\$(Configuration)\StreamingClient.Tests.dll;
                              $(SrcDirectory)\CIAPI.Tests\bin\$(Configuration)\CIAPI.Tests.dll"/>
   </ItemGroup>

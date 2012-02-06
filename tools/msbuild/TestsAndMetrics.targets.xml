@@ -3,25 +3,20 @@
   <PropertyGroup>
     <ReportsDirectory>$(RootDirectory)\reports</ReportsDirectory>
     <SimianEXE>$(RootDirectory)\tools\simian-2.3.31\bin\simian-2.3.31.exe</SimianEXE>
-    <PartCover4Directory>$(ProgramFiles86)\PartCover\PartCover .NET 4.0</PartCover4Directory>
   </PropertyGroup>
   
-  <!-- Runs unit tests through PartCover to calculate unit test covereage-->
-  <!-- Use %2a instead of * and %3f instead of ? to prevent expansion -->
-  <!-- %40 = @  %25 = % %24 = $ -->
-  <Target Name="RunTests" DependsOnTargets="CreateReportDirectories; UpdatePartCover4Settings">
+  <!-- Runs unit tests -->
+  <Target Name="RunTests" DependsOnTargets="CreateReportDirectories">
 
-    <Exec Command="&quot;$(PartCover4Directory)\PartCover.exe&quot; --settings $(SrcDirectory)\PartCover4.settings.xml --output $(ReportsDirectory)\PartCover-results.xml"
-      ContinueOnError="false"
-      WorkingDirectory="$(ReportsDirectory)">
-      <Output TaskParameter="ExitCode" ItemName="ExitCodes"/>
-    </Exec>
-
-    <XslTransformation XslInputPath="$(RootDirectory)\tools\partcover4\xslt\PartCoverFullReport.xslt"
-                      XmlInputPaths="$(ReportsDirectory)\PartCover-results.xml"
-                      OutputPaths="$(ReportsDirectory)\PartCover-results-PartCoverFullReport.html" />
-
-    <Error Text="Test error occurred" Condition="'%(ExitCodes.Identity)'>0"/>
+	<NUnit DisableShadowCopy="True"
+		   Force32Bit="true"
+		   WorkingDirectory="$(ReportsDirectory)"
+		   OutputXmlFile="NUnitResults.xml" 
+		   ErrorOutputFile="NUnitResults-errors.xml"
+		   ExcludeCategory="DependsOnExternalResource"
+		   ToolPath="$(RootDirectory)\tools\nunit-runner\"
+		   ProjectConfiguration="$(Configuration)"
+		   Assemblies="@(TestAssemblies)" />
   </Target>
 
   <Target Name="CreateReportDirectories">
@@ -81,17 +76,5 @@
       IgnoreExitCode="true"
 	    ContinueOnError="true"
       WorkingDirectory="$(SrcDirectory)" />
-  </Target>
-  
-  <Target Name="UpdatePartCover4Settings">
-    <ItemGroup>
-      <pc4_settings Include="--target &quot;$(NUnitEXE)&quot;"/>
-      <pc4_settings Include="--target-work-dir &quot;$(ReportsDirectory)&quot;"/>
-<!--      target-args &quot;%(TestAssemblies.Identity) $(NUnitArgs) /xml:%(TestAssemblies.Identity).NUnitResults.xml&quot;-->
-      <pc4_settings Include="--include [%2a]%2a"/>
-      <pc4_settings Include="--exclude [nunit%2a]%2a"/>
-      <pc4_settings Include="--exclude [log4net%2a]%2a"/>
-      <pc4_settings Include="--exclude [MyProject.Core.Tests%2a]%2a"/>
-    </ItemGroup>
   </Target>
 </Project>
