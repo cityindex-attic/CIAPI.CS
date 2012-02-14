@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Net;
 using System.Reflection;
 using CIAPI.DTO;
-using CityIndex.JsonClient;
+using Salient.JsonClient;
 
 namespace CIAPI.Rpc
 {
-    public partial class Client : CityIndex.JsonClient.Client
+    public partial class Client : Salient.JsonClient.Client
     {
 
         private static string _versionNumber;

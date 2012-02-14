@@ -1,6 +1,6 @@
 ﻿using CIAPI.IntegrationTests.Streaming;
-using CityIndex.JsonClient;
-using CityIndex.ReflectiveLoggingAdapter;
+using Salient.JsonClient;
+using Salient.ReflectiveLoggingAdapter;
 using NUnit.Framework;
 
 namespace CIAPI.IntegrationTests

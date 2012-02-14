@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 using CIAPI.Rpc;
-using CityIndex.JsonClient;
-using CityIndex.JsonClient.Tests;
+using Salient.JsonClient;
+using Salient.JsonClient.Tests;
 using Client = CIAPI.Rpc.Client;
 
 namespace CIAPI.Testing

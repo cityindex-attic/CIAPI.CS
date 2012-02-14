@@ -1,7 +1,0 @@
-﻿<#@ template hostspecific="True" debug="True" #>
-<#@ output extension="cs" #>
-<#+ 
-
-
-
-#>

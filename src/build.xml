@@ -5,7 +5,7 @@
 	<PropertyGroup>
 	<Major>3</Major>          <!-- Major = breaking changes (consumers will need to change existing calls) -->
 	<Minor>0</Minor>          <!-- Minor = New features added but still backwards compatible -->
-    <Patch>1</Patch>          <!-- Patch = Bug fixes only (still backwards compatible) -->
+    <Patch>3</Patch>          <!-- Patch = Bug fixes only (still backwards compatible) -->
     <PreRelease>bleeding</PreRelease> <!-- empty for stable build, (text} for bleedingedge build. -->
   </PropertyGroup>
   
@@ -16,37 +16,33 @@
   <Import Project="$(MSBuildProjectDirectory)\..\tools\msbuild\DropsAndPackaging.targets.xml" />
 
   <PropertyGroup>
-    <Configuration>Release</Configuration>
+    <Configuration>Release</Configuration
     <Configuration Condition="'$(PreRelease)'!=''">Debug</Configuration>
     <Platform>Any CPU</Platform>
   </PropertyGroup>
 
   <ItemGroup>
-    <Assemblies     Include="$(SrcDirectory)\JsonClient\bin\$(Configuration)\CityIndex.JsonClient.dll;
-                             $(SrcDirectory)\StreamingClient\bin\$(Configuration)\StreamingClient.dll;
-                             $(SrcDirectory)\CIAPI\bin\$(Configuration)\CIAPI.dll"/>
-    <TestAssemblies Include="$(SrcDirectory)\JsonClient.Tests\bin\$(Configuration)\CityIndex.JsonClient.Tests.dll;
-                             $(SrcDirectory)\StreamingClient.Tests\bin\$(Configuration)\StreamingClient.Tests.dll;
-                             $(SrcDirectory)\CIAPI.Tests\bin\$(Configuration)\CIAPI.Tests.dll"/>
+    <Assemblies     Include="$(SrcDirectory)\CIAPI\bin\$(Configuration)\CIAPI.dll"/>
+    <TestAssemblies Include="$(SrcDirectory)\CIAPI.Tests\bin\$(Configuration)\CIAPI.Tests.dll"/>
   </ItemGroup>
 
-  <!-- Used to build the stable master branch -->
-  <Target Name="Go" DependsOnTargets="UpdateVersion; 
-                                      Build; 
-                                      RunTests; 
-                                      Package">
+  <!-- 
+  
+  Nunit does not want to load JsonConvert - interweb says it is a permissions issue see https://github.com/bitpusher/Salient.JsonClient/issues/1 
+  #TODO: re-enable RunTests
+  
+  -->
+  <Target Name="Go" DependsOnTargets="UpdateVersion;Build;RunTests;Package">
                                       
     <!-- CalculateMetrics  calculation of metrics disabled until replacement for Reflector can be integrated -->
   </Target>
   
   <!-- Used to build the Dev branch - everything except packaging -->
-  <Target Name="GoDev" DependsOnTargets="UpdateVersion; 
-                                      Build; 
-                                      RunTests">
+  <Target Name="GoDev" DependsOnTargets="UpdateVersion;Build;RunTests">
   </Target>
 
   <Target Name="Build">
-    <MSBuild Projects="$(SrcDirectory)\CIAPI.CS.Silverlight.Phone7.sln" Targets="Rebuild" 
+    <MSBuild Projects="$(SrcDirectory)\CIAPI.sln" Targets="Rebuild" 
              Properties="Configuration=$(Configuration);Platform=$(Platform);EnableCodeAnalysis=true;GenerateDocumentation=true" />
   </Target>
 </Project>

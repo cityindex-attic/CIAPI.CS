@@ -17,6 +17,8 @@
     <SilverlightApplication>false</SilverlightApplication>
     <ValidateXaml>true</ValidateXaml>
     <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\CIAPI\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <!-- This property group is only here to support building this project using the 
        MSBuild 3.5 toolset. In order to work correctly with this older toolset, it needs 
@@ -47,9 +49,16 @@
     <DocumentationFile>Bin\Release\StreamingClient.Silverlight.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CityIndex.ReflectiveLoggingAdapter.Silverlight">
+      <HintPath>..\packages\CityIndex.ReflectiveLoggingAdapter.1.0.0\lib\sl4\CityIndex.ReflectiveLoggingAdapter.Silverlight.dll</HintPath>
+    </Reference>
     <Reference Include="mscorlib" />
-    <Reference Include="Newtonsoft.Json.Silverlight">
-      <HintPath>..\packages\Newtonsoft.Json.3.5.8\lib\SL\Newtonsoft.Json.Silverlight.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=4.0.8.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.4.0.8\lib\sl4\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Salient.ReflectiveLoggingAdapter.Silverlight">
+      <HintPath>..\packages\Salient.ReflectiveLoggingAdapter.3.0.2\lib\sl4\Salient.ReflectiveLoggingAdapter.Silverlight.dll</HintPath>
     </Reference>
     <Reference Include="SilverlightClient">
       <HintPath>..\packages\Lightstreamer 4.0 Client\sdk_client_silverlight\lib\StrongName\SilverlightClient.dll</HintPath>
@@ -113,10 +122,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ReflectiveLoggingAdapter\Salient.ReflectiveLoggingAdapter.Silverlight\CityIndex.ReflectiveLoggingAdapter.Silverlight.csproj">
-      <Project>{025CEB17-A337-40D1-9619-46A556E54EA2}</Project>
-      <Name>CityIndex.ReflectiveLoggingAdapter.Silverlight</Name>
-    </ProjectReference>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>
@@ -126,6 +132,7 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

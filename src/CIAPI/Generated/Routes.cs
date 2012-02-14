@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using CityIndex.JsonClient;
+using Salient.JsonClient;
 using CIAPI.DTO;
 namespace CIAPI.Rpc
 {
@@ -29,7 +29,7 @@ private Client _client;
 	        UserAgent = "CIAPI.SILVERLIGHT."+ GetVersionNumber();
 	#endif
 	#else
-	        UserAgent = "CIAPI.CS." + GetVersionNumber() ;
+	        UserAgent = "CIAPI.CS." + GetVersionNumber();
 	#endif
         _client=this;
 

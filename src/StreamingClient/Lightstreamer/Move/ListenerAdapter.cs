@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading;
 
 using Lightstreamer.DotNet.Client;
-using CityIndex.ReflectiveLoggingAdapter;
+using Salient.ReflectiveLoggingAdapter;
 using StreamingClient.Lightstreamer;
 
 namespace StreamingClient

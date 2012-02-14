@@ -1,4 +1,4 @@
-﻿using CityIndex.JsonClient;
+﻿using Salient.JsonClient;
 
 namespace CIAPI.Rpc
 {

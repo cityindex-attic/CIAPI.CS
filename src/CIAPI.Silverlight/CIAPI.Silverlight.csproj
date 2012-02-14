@@ -17,6 +17,8 @@
     <SilverlightApplication>false</SilverlightApplication>
     <ValidateXaml>true</ValidateXaml>
     <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\CIAPI\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <!-- This property group is only here to support building this project using the 
        MSBuild 3.5 toolset. In order to work correctly with this older toolset, it needs 
@@ -47,10 +49,23 @@
     <DocumentationFile>Bin\Release\CIAPI.Silverlight.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CityIndex.JsonClient.Silverlight">
+      <HintPath>..\packages\CityIndex.JsonClient.1.0.0\lib\sl4\CityIndex.JsonClient.Silverlight.dll</HintPath>
+    </Reference>
+    <Reference Include="CityIndex.ReflectiveLoggingAdapter.Silverlight">
+      <HintPath>..\packages\CityIndex.JsonClient.1.0.0\lib\sl4\CityIndex.ReflectiveLoggingAdapter.Silverlight.dll</HintPath>
+    </Reference>
     <Reference Include="mscorlib" />
-    <Reference Include="Newtonsoft.Json.Silverlight, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
-    <Reference Include="SilverlightClient">
-      <HintPath>..\packages\Lightstreamer 4.0 Client\sdk_client_silverlight\lib\StrongName\SilverlightClient.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=4.0.8.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Salient.JsonClient.3.1.2\lib\sl40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Salient.JsonClient.Silverlight, Version=3.1.2.8, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Salient.JsonClient.3.1.2\lib\sl40\Salient.JsonClient.Silverlight.dll</HintPath>
+    </Reference>
+    <Reference Include="Salient.ReflectiveLoggingAdapter.Silverlight, Version=3.0.2.6, Culture=neutral, PublicKeyToken=f53a41098b9ed911, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Salient.JsonClient.3.1.2\lib\sl40\Salient.ReflectiveLoggingAdapter.Silverlight.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows" />
     <Reference Include="system" />
@@ -109,20 +124,15 @@
     <Compile Include="Serializable.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\JsonClient.Silverlight\JsonClient.Silverlight.csproj">
-      <Project>{0156697E-DEFE-47CF-9EB0-11F120780356}</Project>
-      <Name>JsonClient.Silverlight</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ReflectiveLoggingAdapter\Salient.ReflectiveLoggingAdapter.Silverlight\CityIndex.ReflectiveLoggingAdapter.Silverlight.csproj">
-      <Project>{025CEB17-A337-40D1-9619-46A556E54EA2}</Project>
-      <Name>CityIndex.ReflectiveLoggingAdapter.Silverlight</Name>
-    </ProjectReference>
     <ProjectReference Include="..\StreamingClient.Silverlight\StreamingClient.Silverlight.csproj">
       <Project>{C552DD3D-3738-4194-95F3-5A988E7D4647}</Project>
       <Name>StreamingClient.Silverlight</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
@@ -131,6 +141,7 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

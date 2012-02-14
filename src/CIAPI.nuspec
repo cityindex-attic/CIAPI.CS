@@ -1,0 +1,34 @@
+﻿<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
+  <metadata>
+    <version>3.0.2-bleeding-0</version>
+    <authors>CityIndex Ltd,Sky Sanders,David Laing</authors>
+    <owners>CityIndex Ltd,Sky Sanders,David Laing</owners>
+    <licenseUrl>https://github.com/cityindex/CIAPI.CS/raw/master/LICENSE.txt</licenseUrl>
+    <dependencies>
+      <dependency id="Newtonsoft.Json" />
+      <dependency id="Salient.ReflectiveLoggingAdapter" />
+      <dependency id="Salient.JsonClient" />
+    </dependencies>
+    <id>CIAPI.CS</id>
+    <title>CIAPI.CS</title>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>.NET client library for CityIndex Trading API</description>
+    <language>en-GB</language>
+  </metadata>
+  <files>
+    <file src="..\src\samples\ConsoleSpikes\Example.FetchNews.cs" target="content"/>
+    <file src="..\dist\lib\ciapi-3.5\bin\**\*.dll" target="lib\net35\CIAPI.dll" />
+    <file src="..\dist\lib\ciapi-3.5\bin\**\*.pdb" target="lib\net35\CIAPI.pdb" />
+    <file src="..\dist\lib\ciapi-3.5\bin\**\*.XML" target="lib\net35\CIAPI.XML" />
+    <file src="..\dist\lib\ciapi\bin\**\*.dll" target="lib\net40\CIAPI.dll" />
+    <file src="..\dist\lib\ciapi\bin\**\*.pdb" target="lib\net40\CIAPI.pdb" />
+    <file src="..\dist\lib\ciapi\bin\**\*.XML" target="lib\net40\CIAPI.XML" />
+    <file src="..\dist\lib\ciapi.phone7\bin\**\*.dll" target="lib\sl3-wp\CIAPI.Phone7.dll" />
+    <file src="..\dist\lib\ciapi.phone7\bin\**\*.pdb" target="lib\sl3-wp\CIAPI.Phone7.pdb" />
+    <file src="..\dist\lib\ciapi.phone7\bin\**\*.XML" target="lib\sl3-wp\CIAPI.Phone7.XML" />
+    <file src="..\dist\lib\ciapi.silverlight\bin\**\*.dll" target="lib\sl4\CIAPI.Silverlight.dll" />
+    <file src="..\dist\lib\ciapi.silverlight\bin\**\*.pdb" target="lib\sl4\CIAPI.Silverlight.pdb" />
+    <file src="..\dist\lib\ciapi.silverlight\bin\**\*.XML" target="lib\sl4\CIAPI.Silverlight.XML" />
+  </files>
+</package>

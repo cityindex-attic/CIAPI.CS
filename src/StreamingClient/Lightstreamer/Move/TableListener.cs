@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
  
 using Lightstreamer.DotNet.Client;
-using CityIndex.ReflectiveLoggingAdapter;
+using Salient.ReflectiveLoggingAdapter;
 using StreamingClient.Lightstreamer;
 
 namespace StreamingClient

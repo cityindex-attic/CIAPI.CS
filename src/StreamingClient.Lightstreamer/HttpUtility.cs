@@ -33,7 +33,7 @@ using System;
 using System.IO;
 using System.Text;
 
-namespace CityIndex.JsonClient
+namespace Salient.JsonClient
 {
 	public sealed class HttpUtility
 	{

@@ -7,7 +7,7 @@ using StreamingClient;
 
 namespace CIAPI.IntegrationTests.Streaming
 {
-    [TestFixture]
+    [TestFixture,Ignore("NEWS adapter is alive but starved of data. Use RPC News calls instead.")]
     public class NewsFixture:RpcFixtureBase
     {
         
@@ -20,7 +20,7 @@ namespace CIAPI.IntegrationTests.Streaming
             var streamingClient = BuildStreamingClient();
             //streamingClient.Connect();
 
-            var newsListener = streamingClient.BuildNewsHeadlinesListener("UK");
+            var newsListener = streamingClient.BuildNewsHeadlinesListener("ALL");
             //newsListener.Start();
 
             NewsDTO actual = null;

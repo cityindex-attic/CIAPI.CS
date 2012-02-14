@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using CIAPI.DTO;
 using CIAPI.Streaming;
-using CityIndex.ReflectiveLoggingAdapter;
+using Salient.ReflectiveLoggingAdapter;
 using NUnit.Framework;
 using IStreamingClient = CIAPI.Streaming.IStreamingClient;
 

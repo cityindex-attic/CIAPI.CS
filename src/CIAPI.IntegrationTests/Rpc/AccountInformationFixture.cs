@@ -5,7 +5,7 @@ using System.Threading;
 using CIAPI.DTO;
 using CIAPI.IntegrationTests.Streaming;
 using CIAPI.Streaming;
-using CityIndex.JsonClient;
+using Salient.JsonClient;
 using NUnit.Framework;
 using Client = CIAPI.Rpc.Client;
 

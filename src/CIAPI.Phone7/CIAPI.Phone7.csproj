@@ -18,6 +18,8 @@
     <SilverlightApplication>false</SilverlightApplication>
     <ValidateXaml>true</ValidateXaml>
     <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\CIAPI\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -42,15 +44,22 @@
     <DocumentationFile>Bin\Release\CIAPI.Phone7.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json.Silverlight, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
+    <Reference Include="Newtonsoft.Json, Version=4.0.8.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Salient.JsonClient.3.1.2\lib\sl3-wp\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Salient.JsonClient.Phone7, Version=3.1.2.8, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Salient.JsonClient.3.1.2\lib\sl3-wp\Salient.JsonClient.Phone7.dll</HintPath>
+    </Reference>
+    <Reference Include="Salient.ReflectiveLoggingAdapter.Phone7, Version=3.0.2.6, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Salient.JsonClient.3.1.2\lib\sl3-wp\Salient.ReflectiveLoggingAdapter.Phone7.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows" />
     <Reference Include="system" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Net" />
-    <Reference Include="WindowsPhoneClient">
-      <HintPath>..\packages\Lightstreamer 4.0 Client\sdk_client_windows_phone\lib\StrongName\WindowsPhoneClient.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\CIAPI.Silverlight\Serializable.cs">
@@ -101,14 +110,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\JsonClient.Phone7\JsonClient.Phone7.csproj">
-      <Project>{DB3089D5-44AC-441C-845C-3596C21C5E34}</Project>
-      <Name>JsonClient.Phone7</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ReflectiveLoggingAdapter\Salient.ReflectiveLoggingAdapter.Phone7\CityIndex.ReflectiveLoggingAdapter.Phone7.csproj">
-      <Project>{6DB2C3F7-B230-48C0-8119-D33BAD9C5E0F}</Project>
-      <Name>CityIndex.ReflectiveLoggingAdapter.Phone7</Name>
-    </ProjectReference>
     <ProjectReference Include="..\StreamingClient.Phone7\StreamingClient.Phone7.csproj">
       <Project>{43781FA6-57B5-4EF1-A4C4-4900613BDE77}</Project>
       <Name>StreamingClient.Phone7</Name>
@@ -117,10 +118,13 @@
   <ItemGroup>
     <Content Include="README_FIRST.txt" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions />
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

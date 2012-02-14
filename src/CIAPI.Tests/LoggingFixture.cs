@@ -1,4 +1,4 @@
-﻿using CityIndex.ReflectiveLoggingAdapter;
+﻿using Salient.ReflectiveLoggingAdapter;
 using NUnit.Framework;
 using Rhino.Mocks;
 

@@ -1,6 +1,6 @@
 ﻿using System;
 using CIAPI.DTO;
-using CityIndex.JsonClient;
+using Salient.JsonClient;
 using Newtonsoft.Json;
 
 namespace CIAPI.Rpc

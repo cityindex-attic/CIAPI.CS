@@ -52,7 +52,7 @@
 
 
 
-            var rpcGenerator = new CSharpRouteGenerator(smd.services.rpc, schema, "CIAPI.Rpc", "Client", ["System", "System.Collections.Generic", "CityIndex.JsonClient", "CIAPI.DTO"], routesPatch);
+            var rpcGenerator = new CSharpRouteGenerator(smd.services.rpc, schema, "CIAPI.Rpc", "Client", ["System", "System.Collections.Generic", "Salient.JsonClient", "CIAPI.DTO"], routesPatch);
             var rpcRoutes = rpcGenerator.generate();
             document.getElementById("routes").value = rpcRoutes;
 

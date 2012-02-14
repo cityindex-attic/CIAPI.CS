@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Go" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ReportsDirectory>$(RootDirectory)\reports</ReportsDirectory>
+    <SimianEXE>$(RootDirectory)\tools\simian-2.3.31\bin\simian-2.3.31.exe</SimianEXE>
+  </PropertyGroup>
+<<<<<<< HEAD
+
+  <!-- Runs unit tests -->
+  <Target Name="RunTests" DependsOnTargets="CreateReportDirectories">
+
+    <NUnit DisableShadowCopy="True"
+         Force32Bit="true"
+         WorkingDirectory="$(ReportsDirectory)"
+         OutputXmlFile="NUnitResults.xml"
+         ErrorOutputFile="NUnitResults-errors.xml"
+         ExcludeCategory="DependsOnExternalResource"
+         ToolPath="$(RootDirectory)\tools\nunit-runner\"
+         ProjectConfiguration="$(Configuration)"
+         Assemblies="@(TestAssemblies)" />
+=======
+  
+  <!-- Runs unit tests -->
+  <Target Name="RunTests" DependsOnTargets="CreateReportDirectories">
+
+	<NUnit DisableShadowCopy="True"
+		   Force32Bit="true"
+		   WorkingDirectory="$(ReportsDirectory)"
+		   OutputXmlFile="NUnitResults.xml" 
+		   ErrorOutputFile="NUnitResults-errors.xml"
+		   ExcludeCategory="DependsOnExternalResource"
+		   ToolPath="$(RootDirectory)\tools\nunit-runner\"
+		   ProjectConfiguration="$(Configuration)"
+		   Assemblies="@(TestAssemblies)" />
+>>>>>>> origin/HEAD
+  </Target>
+
+  <Target Name="CreateReportDirectories">
+    <Message Text="Making the report directories at '$(ReportsDirectory)'." />
+    <RemoveDir Directories="$(ReportsDirectory)" Condition="Exists('$(ReportsDirectory)')" ContinueOnError="True" />
+    <MakeDir Directories="$(ReportsDirectory)"/>
+  </Target>
+
+  <Target Name="CalculateMetrics" DependsOnTargets="CalculateComplexityMetrics; CalculateCRAPMetrics; CalculateDuplicationMetrics"></Target>
+
+  <Target Name="CalculateComplexityMetrics">
+    <Message Text="Calculating complexity metrics"/>
+    <Exec Command="&quot;$(RootDirectory)\tools\reflector\Reflector.exe&quot; /Run:Reflector.CodeMetrics /Assembly:&quot;%(Assemblies.Identity)&quot; /OutputPath:&quot;CodeMetrics-%(Assemblies.Filename).xml&quot;"
+      ContinueOnError="false"
+      WorkingDirectory="$(ReportsDirectory)" />
+
+    <Message Text="Merging metrics into single file"/>
+
+    <ReadLinesFromFile File="$(ReportsDirectory)\CodeMetrics-%(Assemblies.FileName).xml">
+      <Output TaskParameter="Lines" ItemName="lines"/>
+    </ReadLinesFromFile>
+    <WriteLinesToFile File="$(ReportsDirectory)\CodeMetrics-Concatted.xml" Lines="&lt;all&gt;;@(Lines);&lt;/all&gt;" Overwrite="true" />
+
+    <XslTransformation XslInputPath="$(RootDirectory)\tools\reflector\mergeCodeMetrics.xslt"
+                      XmlInputPaths="$(ReportsDirectory)\CodeMetrics-Concatted.xml"
+                      OutputPaths="$(ReportsDirectory)\CodeMetrics.xml" />
+
+    <Message Text="Deleting un-merged files"/>
+    <Delete Files="$(ReportsDirectory)\CodeMetrics-%(Assemblies.FileName).xml;$(ReportsDirectory)\CodeMetrics-Concatted.xml" />
+  </Target>
+
+  <Target Name="CalculateCRAPMetrics">
+    <Exec Command="&quot;$(RootDirectory)\tools\crap4net\Crap4Net-Console.exe&quot;"
+      ContinueOnError="false"
+      WorkingDirectory="$(ReportsDirectory)" />
+    <MakeDir Directories="$(ReportsDirectory)\Crap"/>
+
+    <XslTransformation XslInputPath="$(RootDirectory)\tools\crap4net\xslt\Crap4j\Crap4JSummaryReport.xslt"
+                        XmlInputPaths="$(ReportsDirectory)\CrapReport.xml"
+                        OutputPaths="$(ReportsDirectory)\Crap\index.html" />
+    <XslTransformation XslInputPath="$(RootDirectory)\tools\crap4net\xslt\Crap4j\Crap4jDetails.xslt"
+                        XmlInputPaths="$(ReportsDirectory)\CrapReport.xml"
+                        OutputPaths="$(ReportsDirectory)\Crap\detail_crap.html" />
+    <XslTransformation XslInputPath="$(RootDirectory)\tools\crap4net\xslt\Crap4j\detail_complexity.xslt"
+                        XmlInputPaths="$(ReportsDirectory)\CrapReport.xml"
+                        OutputPaths="$(ReportsDirectory)\Crap\detail_complexity.html" />
+    <XslTransformation XslInputPath="$(RootDirectory)\tools\crap4net\xslt\Crap4j\detail_coverage.xslt"
+                        XmlInputPaths="$(ReportsDirectory)\CrapReport.xml"
+                        OutputPaths="$(ReportsDirectory)\Crap\detail_coverage.html" />
+    <XslTransformation XslInputPath="$(RootDirectory)\tools\crap4net\xslt\Crap4j\detail_crap_load.xslt"
+                        XmlInputPaths="$(ReportsDirectory)\CrapReport.xml"
+                        OutputPaths="$(ReportsDirectory)\Crap\detail_crap_load.html" />
+  </Target>
+
+  <Target Name="CalculateDuplicationMetrics">
+    <Exec Command="&quot;$(SimianEXE)&quot; -formatter=xml:&quot;$(ReportsDirectory)\Simian.Result.xml&quot; -excludes=**/*.Designer.cs -excludes=**/StreamingClient.Lightstreamer/** -excludes=**/StreamingClient.Silverlight.Lightstreamer/** -excludes=**/obj/ -threshold=10 -reportDuplicateText+ **/*.cs"
+      IgnoreExitCode="true"
+	    ContinueOnError="true"
+      WorkingDirectory="$(SrcDirectory)" />
+  </Target>
+</Project>

@@ -14,6 +14,8 @@
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\CIAPI\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -40,12 +42,16 @@
     <AssemblyOriginatorKeyFile>..\common\ciapi.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DotNetClient_N2">
-      <HintPath>..\packages\Lightstreamer 4.0 Client\sdk_client_dotnet\lib\StrongName\DotNetClient_N2.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=4.0.8.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Salient.JsonClient.3.1.2\lib\net35\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=4.0.7.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+    <Reference Include="Salient.JsonClient.35, Version=3.1.2.8, Culture=neutral, PublicKeyToken=b412daeaa648e3eb, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.4.0.7\lib\net35\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Salient.JsonClient.3.1.2\lib\net35\Salient.JsonClient.35.dll</HintPath>
+    </Reference>
+    <Reference Include="Salient.ReflectiveLoggingAdapter.35, Version=3.0.2.6, Culture=neutral, PublicKeyToken=b9b5972b9f69332b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Salient.JsonClient.3.1.2\lib\net35\Salient.ReflectiveLoggingAdapter.35.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -100,14 +106,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\JsonClient-3.5\JsonClient-3.5.csproj">
-      <Project>{61F852E9-187A-4ACC-94DC-7943DE8F8F72}</Project>
-      <Name>JsonClient-3.5</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ReflectiveLoggingAdapter\Salient.ReflectiveLoggingAdapter\CityIndex.ReflectiveLoggingAdapter.csproj">
-      <Project>{BC595784-3DE8-4F7C-879F-31E6509CADA7}</Project>
-      <Name>CityIndex.ReflectiveLoggingAdapter</Name>
-    </ProjectReference>
     <ProjectReference Include="..\StreamingClient-3.5\StreamingClient-3.5.csproj">
       <Project>{2BF0E626-BC3B-4E21-95BB-C429B91E7418}</Project>
       <Name>StreamingClient-3.5</Name>
@@ -121,6 +119,7 @@
     <PreBuildEvent>
     </PreBuildEvent>
   </PropertyGroup>
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
