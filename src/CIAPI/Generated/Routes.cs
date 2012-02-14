@@ -84,7 +84,7 @@ private Client _client;
         /// <param name="accountOperatorId">an optional parameter to identify the account operator string to uniquely identify the application.</param>
         public virtual GetVersionInformationResponseDTO GetVersionInformation(string appKey, int accountOperatorId)
         {
-            string uriTemplate = _client.AppendApiKey("/clientapplication/versioninformation?AppKey={appKey}&AccountOperatorId={accountOperatorId}");
+            string uriTemplate = _client.AppendApiKey("?AppKey={appKey}&AccountOperatorId={accountOperatorId}");
             return _client.Request<GetVersionInformationResponseDTO>("clientapplication/versioninformation", uriTemplate , "GET",
             new Dictionary<string, object>
             {
@@ -103,7 +103,7 @@ private Client _client;
         /// <param name="state"></param>
         public virtual void BeginGetVersionInformation(string appKey, int accountOperatorId, ApiAsyncCallback<GetVersionInformationResponseDTO> callback, object state)
         {
-            string uriTemplate = _client.AppendApiKey("/clientapplication/versioninformation?AppKey={appKey}&AccountOperatorId={accountOperatorId}");
+            string uriTemplate = _client.AppendApiKey("?AppKey={appKey}&AccountOperatorId={accountOperatorId}");
             _client.BeginRequest(callback, state, "clientapplication/versioninformation", uriTemplate , "GET",
             new Dictionary<string, object>
             {
@@ -655,7 +655,7 @@ private Client _client;
         /// <param name="useMobileShortName">True if the market name should be in short form.  Helpful when displaying data on a small screen.</param>
         public virtual ListMarketInformationSearchResponseDTO ListMarketInformationSearch(bool searchByMarketCode, bool searchByMarketName, bool spreadProductType, bool cfdProductType, bool binaryProductType, string query, int maxResults, bool useMobileShortName)
         {
-            string uriTemplate = _client.AppendApiKey("/market/informationsearch?SearchByMarketCode={searchByMarketCode}&SearchByMarketName={searchByMarketName}&SpreadProductType={spreadProductType}&CfdProductType={cfdProductType}&BinaryProductType={binaryProductType}&Query={query}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}");
+            string uriTemplate = _client.AppendApiKey("/informationsearch?SearchByMarketCode={searchByMarketCode}&SearchByMarketName={searchByMarketName}&SpreadProductType={spreadProductType}&CfdProductType={cfdProductType}&BinaryProductType={binaryProductType}&Query={query}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}");
             return _client.Request<ListMarketInformationSearchResponseDTO>("market", uriTemplate , "GET",
             new Dictionary<string, object>
             {
@@ -686,7 +686,7 @@ private Client _client;
         /// <param name="state"></param>
         public virtual void BeginListMarketInformationSearch(bool searchByMarketCode, bool searchByMarketName, bool spreadProductType, bool cfdProductType, bool binaryProductType, string query, int maxResults, bool useMobileShortName, ApiAsyncCallback<ListMarketInformationSearchResponseDTO> callback, object state)
         {
-            string uriTemplate = _client.AppendApiKey("/market/informationsearch?SearchByMarketCode={searchByMarketCode}&SearchByMarketName={searchByMarketName}&SpreadProductType={spreadProductType}&CfdProductType={cfdProductType}&BinaryProductType={binaryProductType}&Query={query}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}");
+            string uriTemplate = _client.AppendApiKey("/informationsearch?SearchByMarketCode={searchByMarketCode}&SearchByMarketName={searchByMarketName}&SpreadProductType={spreadProductType}&CfdProductType={cfdProductType}&BinaryProductType={binaryProductType}&Query={query}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}");
             _client.BeginRequest(callback, state, "market", uriTemplate , "GET",
             new Dictionary<string, object>
             {
@@ -721,7 +721,7 @@ private Client _client;
         /// <param name="useMobileShortName">True if the market name should be in short form. Helpful when displaying data on a small screen.</param>
         public virtual MarketInformationSearchWithTagsResponseDTO SearchWithTags(string query, int tagId, int maxResults, bool useMobileShortName)
         {
-            string uriTemplate = _client.AppendApiKey("/market/searchwithtags?Query={query}&TagId={tagId}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}");
+            string uriTemplate = _client.AppendApiKey("/searchwithtags?Query={query}&TagId={tagId}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}");
             return _client.Request<MarketInformationSearchWithTagsResponseDTO>("market", uriTemplate , "GET",
             new Dictionary<string, object>
             {
@@ -744,7 +744,7 @@ private Client _client;
         /// <param name="state"></param>
         public virtual void BeginSearchWithTags(string query, int tagId, int maxResults, bool useMobileShortName, ApiAsyncCallback<MarketInformationSearchWithTagsResponseDTO> callback, object state)
         {
-            string uriTemplate = _client.AppendApiKey("/market/searchwithtags?Query={query}&TagId={tagId}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}");
+            string uriTemplate = _client.AppendApiKey("/searchwithtags?Query={query}&TagId={tagId}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}");
             _client.BeginRequest(callback, state, "market", uriTemplate , "GET",
             new Dictionary<string, object>
             {
@@ -771,7 +771,7 @@ private Client _client;
         /// </summary>
         public virtual MarketInformationTagLookupResponseDTO TagLookup()
         {
-            string uriTemplate = _client.AppendApiKey("/market/taglookup");
+            string uriTemplate = _client.AppendApiKey("/taglookup");
             return _client.Request<MarketInformationTagLookupResponseDTO>("market", uriTemplate , "GET",
             new Dictionary<string, object>
             {
@@ -787,7 +787,7 @@ private Client _client;
         /// <param name="state"></param>
         public virtual void BeginTagLookup( ApiAsyncCallback<MarketInformationTagLookupResponseDTO> callback, object state)
         {
-            string uriTemplate = _client.AppendApiKey("/market/taglookup");
+            string uriTemplate = _client.AppendApiKey("/taglookup");
             _client.BeginRequest(callback, state, "market", uriTemplate , "GET",
             new Dictionary<string, object>
             {
@@ -812,7 +812,7 @@ private Client _client;
         /// <param name="listMarketInformationRequestDTO">Get Market Information for the specified list of markets.</param>
         public virtual ListMarketInformationResponseDTO ListMarketInformation(ListMarketInformationRequestDTO listMarketInformationRequestDTO)
         {
-            string uriTemplate = _client.AppendApiKey("/market/information");
+            string uriTemplate = _client.AppendApiKey("/information");
             return _client.Request<ListMarketInformationResponseDTO>("market", uriTemplate , "POST",
             new Dictionary<string, object>
             {
@@ -829,7 +829,7 @@ private Client _client;
         /// <param name="state"></param>
         public virtual void BeginListMarketInformation(ListMarketInformationRequestDTO listMarketInformationRequestDTO, ApiAsyncCallback<ListMarketInformationResponseDTO> callback, object state)
         {
-            string uriTemplate = _client.AppendApiKey("/market/information");
+            string uriTemplate = _client.AppendApiKey("/information");
             _client.BeginRequest(callback, state, "market", uriTemplate , "POST",
             new Dictionary<string, object>
             {
@@ -854,7 +854,7 @@ private Client _client;
         /// <param name="listMarketInformationRequestSaveDTO">Save Market Information for the specified list of markets.</param>
         public virtual ApiSaveMarketInformationResponseDTO SaveMarketInformation(SaveMarketInformationRequestDTO listMarketInformationRequestSaveDTO)
         {
-            string uriTemplate = _client.AppendApiKey("/market/information/save");
+            string uriTemplate = _client.AppendApiKey("/information/save");
             return _client.Request<ApiSaveMarketInformationResponseDTO>("market", uriTemplate , "POST",
             new Dictionary<string, object>
             {
@@ -871,7 +871,7 @@ private Client _client;
         /// <param name="state"></param>
         public virtual void BeginSaveMarketInformation(SaveMarketInformationRequestDTO listMarketInformationRequestSaveDTO, ApiAsyncCallback<ApiSaveMarketInformationResponseDTO> callback, object state)
         {
-            string uriTemplate = _client.AppendApiKey("/market/information/save");
+            string uriTemplate = _client.AppendApiKey("/information/save");
             _client.BeginRequest(callback, state, "market", uriTemplate , "POST",
             new Dictionary<string, object>
             {
@@ -1028,7 +1028,7 @@ private Client _client;
         /// <param name="tradingAccountId">The ID of the trading account to get orders for.</param>
         public virtual ListOpenPositionsResponseDTO ListOpenPositions(int tradingAccountId)
         {
-            string uriTemplate = _client.AppendApiKey("/order/openpositions?TradingAccountId={tradingAccountId}");
+            string uriTemplate = _client.AppendApiKey("/openpositions?TradingAccountId={tradingAccountId}");
             return _client.Request<ListOpenPositionsResponseDTO>("order", uriTemplate , "GET",
             new Dictionary<string, object>
             {
@@ -1045,7 +1045,7 @@ private Client _client;
         /// <param name="state"></param>
         public virtual void BeginListOpenPositions(int tradingAccountId, ApiAsyncCallback<ListOpenPositionsResponseDTO> callback, object state)
         {
-            string uriTemplate = _client.AppendApiKey("/order/openpositions?TradingAccountId={tradingAccountId}");
+            string uriTemplate = _client.AppendApiKey("/openpositions?TradingAccountId={tradingAccountId}");
             _client.BeginRequest(callback, state, "order", uriTemplate , "GET",
             new Dictionary<string, object>
             {
@@ -1070,7 +1070,7 @@ private Client _client;
         /// <param name="tradingAccountId">The ID of the trading account to get orders for.</param>
         public virtual ListActiveStopLimitOrderResponseDTO ListActiveStopLimitOrders(int tradingAccountId)
         {
-            string uriTemplate = _client.AppendApiKey("/order/activestoplimitorders?TradingAccountId={tradingAccountId}");
+            string uriTemplate = _client.AppendApiKey("/activestoplimitorders?TradingAccountId={tradingAccountId}");
             return _client.Request<ListActiveStopLimitOrderResponseDTO>("order", uriTemplate , "GET",
             new Dictionary<string, object>
             {
@@ -1087,7 +1087,7 @@ private Client _client;
         /// <param name="state"></param>
         public virtual void BeginListActiveStopLimitOrders(int tradingAccountId, ApiAsyncCallback<ListActiveStopLimitOrderResponseDTO> callback, object state)
         {
-            string uriTemplate = _client.AppendApiKey("/order/activestoplimitorders?TradingAccountId={tradingAccountId}");
+            string uriTemplate = _client.AppendApiKey("/activestoplimitorders?TradingAccountId={tradingAccountId}");
             _client.BeginRequest(callback, state, "order", uriTemplate , "GET",
             new Dictionary<string, object>
             {
@@ -1197,7 +1197,7 @@ private Client _client;
         /// <param name="maxResults">The maximum number of results to return.</param>
         public virtual ListTradeHistoryResponseDTO ListTradeHistory(int tradingAccountId, int maxResults)
         {
-            string uriTemplate = _client.AppendApiKey("/order/tradehistory?TradingAccountId={tradingAccountId}&MaxResults={maxResults}");
+            string uriTemplate = _client.AppendApiKey("/tradehistory?TradingAccountId={tradingAccountId}&MaxResults={maxResults}");
             return _client.Request<ListTradeHistoryResponseDTO>("order", uriTemplate , "GET",
             new Dictionary<string, object>
             {
@@ -1216,7 +1216,7 @@ private Client _client;
         /// <param name="state"></param>
         public virtual void BeginListTradeHistory(int tradingAccountId, int maxResults, ApiAsyncCallback<ListTradeHistoryResponseDTO> callback, object state)
         {
-            string uriTemplate = _client.AppendApiKey("/order/tradehistory?TradingAccountId={tradingAccountId}&MaxResults={maxResults}");
+            string uriTemplate = _client.AppendApiKey("/tradehistory?TradingAccountId={tradingAccountId}&MaxResults={maxResults}");
             _client.BeginRequest(callback, state, "order", uriTemplate , "GET",
             new Dictionary<string, object>
             {
@@ -1243,7 +1243,7 @@ private Client _client;
         /// <param name="maxResults">The maximum number of results to return.</param>
         public virtual ListStopLimitOrderHistoryResponseDTO ListStopLimitOrderHistory(int tradingAccountId, int maxResults)
         {
-            string uriTemplate = _client.AppendApiKey("/order/stoplimitorderhistory?TradingAccountId={tradingAccountId}&MaxResults={maxResults}");
+            string uriTemplate = _client.AppendApiKey("/stoplimitorderhistory?TradingAccountId={tradingAccountId}&MaxResults={maxResults}");
             return _client.Request<ListStopLimitOrderHistoryResponseDTO>("order", uriTemplate , "GET",
             new Dictionary<string, object>
             {
@@ -1262,7 +1262,7 @@ private Client _client;
         /// <param name="state"></param>
         public virtual void BeginListStopLimitOrderHistory(int tradingAccountId, int maxResults, ApiAsyncCallback<ListStopLimitOrderHistoryResponseDTO> callback, object state)
         {
-            string uriTemplate = _client.AppendApiKey("/order/stoplimitorderhistory?TradingAccountId={tradingAccountId}&MaxResults={maxResults}");
+            string uriTemplate = _client.AppendApiKey("/stoplimitorderhistory?TradingAccountId={tradingAccountId}&MaxResults={maxResults}");
             _client.BeginRequest(callback, state, "order", uriTemplate , "GET",
             new Dictionary<string, object>
             {
@@ -1419,7 +1419,7 @@ private Client _client;
         /// </summary>
         public virtual AccountInformationResponseDTO GetClientAndTradingAccount()
         {
-            string uriTemplate = _client.AppendApiKey("/UserAccount/ClientAndTradingAccount");
+            string uriTemplate = _client.AppendApiKey("/ClientAndTradingAccount");
             return _client.Request<AccountInformationResponseDTO>("useraccount", uriTemplate , "GET",
             new Dictionary<string, object>
             {
@@ -1435,7 +1435,7 @@ private Client _client;
         /// <param name="state"></param>
         public virtual void BeginGetClientAndTradingAccount( ApiAsyncCallback<AccountInformationResponseDTO> callback, object state)
         {
-            string uriTemplate = _client.AppendApiKey("/UserAccount/ClientAndTradingAccount");
+            string uriTemplate = _client.AppendApiKey("/ClientAndTradingAccount");
             _client.BeginRequest(callback, state, "useraccount", uriTemplate , "GET",
             new Dictionary<string, object>
             {
@@ -1460,7 +1460,7 @@ private Client _client;
         /// <param name="saveAccountInformationRequest">Saves the users account information.</param>
         public virtual ApiSaveAccountInformationResponseDTO SaveAccountInformation(ApiSaveAccountInformationRequestDTO saveAccountInformationRequest)
         {
-            string uriTemplate = _client.AppendApiKey("/UserAccount/Save");
+            string uriTemplate = _client.AppendApiKey("/Save");
             return _client.Request<ApiSaveAccountInformationResponseDTO>("useraccount", uriTemplate , "POST",
             new Dictionary<string, object>
             {
@@ -1477,7 +1477,7 @@ private Client _client;
         /// <param name="state"></param>
         public virtual void BeginSaveAccountInformation(ApiSaveAccountInformationRequestDTO saveAccountInformationRequest, ApiAsyncCallback<ApiSaveAccountInformationResponseDTO> callback, object state)
         {
-            string uriTemplate = _client.AppendApiKey("/UserAccount/Save");
+            string uriTemplate = _client.AppendApiKey("/Save");
             _client.BeginRequest(callback, state, "useraccount", uriTemplate , "POST",
             new Dictionary<string, object>
             {
@@ -1509,7 +1509,7 @@ private Client _client;
         /// <param name="cultureId">The cultureId used to override the translated text description. (Optional)</param>
         public virtual ApiLookupResponseDTO GetSystemLookup(string lookupEntityName, int cultureId)
         {
-            string uriTemplate = _client.AppendApiKey("/message/lookup?lookupEntityName={lookupEntityName}&cultureId={cultureId}");
+            string uriTemplate = _client.AppendApiKey("/lookup?lookupEntityName={lookupEntityName}&cultureId={cultureId}");
             return _client.Request<ApiLookupResponseDTO>("message", uriTemplate , "GET",
             new Dictionary<string, object>
             {
@@ -1528,7 +1528,7 @@ private Client _client;
         /// <param name="state"></param>
         public virtual void BeginGetSystemLookup(string lookupEntityName, int cultureId, ApiAsyncCallback<ApiLookupResponseDTO> callback, object state)
         {
-            string uriTemplate = _client.AppendApiKey("/message/lookup?lookupEntityName={lookupEntityName}&cultureId={cultureId}");
+            string uriTemplate = _client.AppendApiKey("/lookup?lookupEntityName={lookupEntityName}&cultureId={cultureId}");
             _client.BeginRequest(callback, state, "message", uriTemplate , "GET",
             new Dictionary<string, object>
             {
@@ -1556,7 +1556,7 @@ private Client _client;
         /// <param name="accountOperatorId">Account operator identifier. (Optional)</param>
         public virtual ApiClientApplicationMessageTranslationResponseDTO GetClientApplicationMessageTranslation(int clientApplicationId, int cultureId, int accountOperatorId)
         {
-            string uriTemplate = _client.AppendApiKey("/message/translation?clientApplicationId={clientApplicationId}&cultureId={cultureId}&accountOperatorId={accountOperatorId}");
+            string uriTemplate = _client.AppendApiKey("/translation?clientApplicationId={clientApplicationId}&cultureId={cultureId}&accountOperatorId={accountOperatorId}");
             return _client.Request<ApiClientApplicationMessageTranslationResponseDTO>("message", uriTemplate , "GET",
             new Dictionary<string, object>
             {
@@ -1577,7 +1577,7 @@ private Client _client;
         /// <param name="state"></param>
         public virtual void BeginGetClientApplicationMessageTranslation(int clientApplicationId, int cultureId, int accountOperatorId, ApiAsyncCallback<ApiClientApplicationMessageTranslationResponseDTO> callback, object state)
         {
-            string uriTemplate = _client.AppendApiKey("/message/translation?clientApplicationId={clientApplicationId}&cultureId={cultureId}&accountOperatorId={accountOperatorId}");
+            string uriTemplate = _client.AppendApiKey("/translation?clientApplicationId={clientApplicationId}&cultureId={cultureId}&accountOperatorId={accountOperatorId}");
             _client.BeginRequest(callback, state, "message", uriTemplate , "GET",
             new Dictionary<string, object>
             {

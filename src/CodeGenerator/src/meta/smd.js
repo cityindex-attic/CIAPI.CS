@@ -364,7 +364,7 @@ exports.smd =
         "ListMarketInformationSearch": {
           "description": "<p>Returns market information for the markets that meet the search criteria.</p> The search can be performed by market code and/or market name, and can include CFDs and Spread Bet markets.",
           "target": "market",
-          "uriTemplate": "/market/informationsearch?SearchByMarketCode={searchByMarketCode}&SearchByMarketName={searchByMarketName}&SpreadProductType={spreadProductType}&CfdProductType={cfdProductType}&BinaryProductType={binaryProductType}&Query={query}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}",
+          "uriTemplate": "/informationsearch?SearchByMarketCode={searchByMarketCode}&SearchByMarketName={searchByMarketName}&SpreadProductType={spreadProductType}&CfdProductType={cfdProductType}&BinaryProductType={binaryProductType}&Query={query}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}",
           "contentType": "application/json",
           "responseContentType": "application/json",
           "transport": "GET",
@@ -429,7 +429,7 @@ exports.smd =
         "SearchWithTags": {
           "description": "Get market information and tags for the markets that meet the search criteria.",
           "target": "market",
-          "uriTemplate": "/market/searchwithtags?Query={query}&TagId={tagId}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}",
+          "uriTemplate": "/searchwithtags?Query={query}&TagId={tagId}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}",
           "contentType": "application/json",
           "responseContentType": "application/json",
           "transport": "GET",
@@ -470,7 +470,7 @@ exports.smd =
         "TagLookup": {
           "description": "<p>Gets all of the tags that the requesting user is allowed to see. Tags are returned in a primary / secondary hierarchy.</p> There are no parameters in this call.",
           "target": "market",
-          "uriTemplate": "/market/taglookup",
+          "uriTemplate": "/taglookup",
           "contentType": "application/json",
           "responseContentType": "application/json",
           "transport": "GET",
@@ -486,7 +486,7 @@ exports.smd =
         "ListMarketInformation": {
           "description": "Get Market Information for the specified list of markets.",
           "target": "market",
-          "uriTemplate": "/market/information",
+          "uriTemplate": "/information",
           "contentType": "application/json",
           "responseContentType": "application/json",
           "transport": "POST",
@@ -508,7 +508,7 @@ exports.smd =
         "SaveMarketInformation": {
           "description": "Save Market Information for the specified list of markets.",
           "target": "market",
-          "uriTemplate": "/market/information/save",
+          "uriTemplate": "/information/save",
           "contentType": "application/json",
           "responseContentType": "application/json",
           "transport": "POST",
@@ -594,7 +594,7 @@ exports.smd =
         "ListOpenPositions": {
           "description": "<p>Queries for a specified trading account's trades / open positions.</p> <p>This uri is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service GetOpenPosition when you get updates on the order stream to get the updated data in this format.</p>",
           "target": "order",
-          "uriTemplate": "/order/openpositions?TradingAccountId={tradingAccountId}",
+          "uriTemplate": "/openpositions?TradingAccountId={tradingAccountId}",
           "contentType": "application/json",
           "responseContentType": "application/json",
           "transport": "GET",
@@ -615,7 +615,7 @@ exports.smd =
         "ListActiveStopLimitOrders": {
           "description": "<p>Queries for a specified trading account's active stop / limit orders.</p> <p>This uri is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service GetActiveStopLimitOrder when you get updates on the order stream to get the updated data in this format.</p>",
           "target": "order",
-          "uriTemplate": "/order/activestoplimitorders?TradingAccountId={tradingAccountId}",
+          "uriTemplate": "/activestoplimitorders?TradingAccountId={tradingAccountId}",
           "contentType": "application/json",
           "responseContentType": "application/json",
           "transport": "GET",
@@ -678,7 +678,7 @@ exports.smd =
         "ListTradeHistory": {
           "description": "<p>Queries for a specified trading account's trade history. The result set will contain orders with a status of <b>(3 - Open, 9 - Closed)</b>, and includes <b>orders that were a trade / stop / limit order</b>.</p> <p>There's currently no corresponding GetTradeHistory (as with ListOpenPositions).",
           "target": "order",
-          "uriTemplate": "/order/tradehistory?TradingAccountId={tradingAccountId}&MaxResults={maxResults}",
+          "uriTemplate": "/tradehistory?TradingAccountId={tradingAccountId}&MaxResults={maxResults}",
           "contentType": "application/json",
           "responseContentType": "application/json",
           "transport": "GET",
@@ -704,7 +704,7 @@ exports.smd =
         "ListStopLimitOrderHistory": {
           "description": "<p>Queries for a specified trading account's stop / limit order history. The result set includes <b>only orders that were originally stop / limit orders</b> that currently have one of the following statuses <b>(3 - Open, 4 - Cancelled, 5 - Rejected, 9 - Closed, 10 - Red Card)</b>. </p> <p>There's currently no corresponding GetStopLimitOrderHistory (as with ListActiveStopLimitOrders).</p>",
           "target": "order",
-          "uriTemplate": "/order/stoplimitorderhistory?TradingAccountId={tradingAccountId}&MaxResults={maxResults}",
+          "uriTemplate": "/stoplimitorderhistory?TradingAccountId={tradingAccountId}&MaxResults={maxResults}",
           "contentType": "application/json",
           "responseContentType": "application/json",
           "transport": "GET",
@@ -795,7 +795,7 @@ exports.smd =
         "GetClientAndTradingAccount": {
           "description": "Returns the User's ClientAccountId and a list of their TradingAccounts. There are no parameters for this call.",
           "target": "useraccount",
-          "uriTemplate": "/UserAccount/ClientAndTradingAccount",
+          "uriTemplate": "/ClientAndTradingAccount",
           "contentType": "application/json",
           "responseContentType": "application/json",
           "transport": "GET",
@@ -811,7 +811,7 @@ exports.smd =
         "SaveAccountInformation": {
           "description": "Saves the users account information.",
           "target": "useraccount",
-          "uriTemplate": "/UserAccount/Save",
+          "uriTemplate": "/Save",
           "contentType": "application/json",
           "responseContentType": "application/json",
           "transport": "POST",
@@ -832,7 +832,7 @@ exports.smd =
         "GetSystemLookup": {
           "description": "Use the message lookup service to get localised textual names for the various status code & Ids returned by the API. For example, a query for OrderStatusReasons will contain text names for all the possible values of OrderStatusReason in the ApiOrderResponseDTO. You should only request the list once per session (for each entity you're interested in).",
           "target": "message",
-          "uriTemplate": "/message/lookup?lookupEntityName={lookupEntityName}&cultureId={cultureId}",
+          "uriTemplate": "/lookup?lookupEntityName={lookupEntityName}&cultureId={cultureId}",
           "contentType": "application/json",
           "responseContentType": "application/json",
           "transport": "GET",
@@ -858,7 +858,7 @@ exports.smd =
         "GetClientApplicationMessageTranslation": {
           "description": "Use the message translation service to get client specific translated textual strings.",
           "target": "message",
-          "uriTemplate": "/message/translation?clientApplicationId={clientApplicationId}&cultureId={cultureId}&accountOperatorId={accountOperatorId}",
+          "uriTemplate": "/translation?clientApplicationId={clientApplicationId}&cultureId={cultureId}&accountOperatorId={accountOperatorId}",
           "contentType": "application/json",
           "responseContentType": "application/json",
           "transport": "GET",
@@ -949,7 +949,7 @@ exports.smd =
         "GetVersionInformation": {
           "description": "Gets version information for a specific client application and (optionally) account operator.",
           "target": "clientapplication/versioninformation",
-          "uriTemplate": "/clientapplication/versioninformation?AppKey={appKey}&AccountOperatorId={accountOperatorId}",
+          "uriTemplate": "?AppKey={appKey}&AccountOperatorId={accountOperatorId}",
           "contentType": "application/json",
           "responseContentType": "application/json",
           "transport": "GET",
