@@ -35,28 +35,6 @@ namespace CIAPI.Tests.Streaming
         }
 
 
-        //[Test]
-        //public void EnsureInnerLoggerIsCalled()
-        //{
 
-
-            
-
-        //    //Sky TODO - test the mockInnerLogger gets called by the RPC client and the StreamingClient
-
-        //    var client = StreamingClientFactory.CreateStreamingClient(new Uri("http://a.server.com/"), "username",
-        //                                                              "sessionId");
-            
-        //    // this is a unit test, not integration. 
-        //    var lsLogger = loggers["com.lightstreamer.ls_client.actions"];
-
-
-        //    var factoryLogger = loggers["CIAPI.Streaming.Lightstreamer.LightstreamerClient"];
-                
-        //    Assert.Greater(factoryLogger.GetItems().ToArray().Length, 0);
-
-
-
-        //}
     }
 }

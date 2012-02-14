@@ -23,15 +23,10 @@
 
   <ItemGroup>
     <Assemblies     Include="$(SrcDirectory)\CIAPI\bin\$(Configuration)\CIAPI.dll"/>
-    <TestAssemblies Include="$(SrcDirectory)\CIAPI.Tests\bin\$(Configuration)\CIAPI.Tests.dll"/>
+    <TestAssemblies Include="$(SrcDirectory)\CIAPI.Tests\bin\$(Configuration)\CIAPI.Tests.dll;$(SrcDirectory)\LoggingTests\bin\$(Configuration)\LoggingTests.dll"/>
   </ItemGroup>
 
-  <!-- 
-  
-  Nunit does not want to load JsonConvert - interweb says it is a permissions issue see https://github.com/bitpusher/Salient.JsonClient/issues/1 
-  #TODO: re-enable RunTests
-  
-  -->
+ 
   <Target Name="Go" DependsOnTargets="UpdateVersion;Build;RunTests;Package">
                                       
     <!-- CalculateMetrics  calculation of metrics disabled until replacement for Reflector can be integrated -->
