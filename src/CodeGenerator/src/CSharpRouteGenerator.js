@@ -243,6 +243,8 @@
             self.writeLine('	#endif');
             self.writeLine("        _client=this;");
             self.writeLine(subClassInitializer);
+            self.writeLine('        Log.Debug("Rpc.Client created for " + uri.AbsoluteUri);');
+            
             self.writeLine("        }");
             self.writeLine("        public Client(Uri uri, IRequestController requestController)");
             self.writeLine("            : base(uri, requestController)");
@@ -258,6 +260,7 @@
             self.writeLine('	#endif');
             self.writeLine("        _client=this;");
             self.writeLine(subClassInitializer);
+            self.writeLine('        Log.Debug("Rpc.Client created for " + uri.AbsoluteUri);');
             self.writeLine("        }            ");
 
 

@@ -44,6 +44,7 @@ private Client _client;
             this. Messaging = new _Messaging(this);
             this. Watchlist = new _Watchlist(this);
             this. ExceptionHandling = new _ExceptionHandling(this);
+        Log.Debug("Rpc.Client created for " + uri.AbsoluteUri);
         }
         public Client(Uri uri, IRequestController requestController)
             : base(uri, requestController)
@@ -70,6 +71,7 @@ private Client _client;
             this. Messaging = new _Messaging(this);
             this. Watchlist = new _Watchlist(this);
             this. ExceptionHandling = new _ExceptionHandling(this);
+        Log.Debug("Rpc.Client created for " + uri.AbsoluteUri);
         }            
 
         // ***********************************

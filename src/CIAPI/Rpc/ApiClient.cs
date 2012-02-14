@@ -4,12 +4,13 @@ using System.Net;
 using System.Reflection;
 using CIAPI.DTO;
 using Salient.JsonClient;
+using Salient.ReflectiveLoggingAdapter;
 
 namespace CIAPI.Rpc
 {
     public partial class Client : Salient.JsonClient.Client
     {
-
+        private static readonly ILog Log = LogManager.GetLogger(typeof(Client));
         private static string _versionNumber;
         private static string GetVersionNumber()
         {

@@ -24,7 +24,7 @@ namespace CIAPI.IntegrationTests.Rpc
             }
             catch (Exception ex)
             {
-                Assert.That(ex.Message, Is.StringContaining("remote name could not be resolved"), "Expecting some info explaining that the server Url is invalid");                
+                Assert.That(ex.Message, Is.StringContaining("Invalid response received.  Are you connecting to the correct server Url?"), "Expecting some info explaining that the server Url is invalid");                
             }
         }
 

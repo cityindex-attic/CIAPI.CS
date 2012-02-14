@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading;
 using CIAPI.DTO;
@@ -8,10 +9,12 @@ using Salient.JsonClient;
 using Salient.JsonClient.Tests;
 using Newtonsoft.Json;
 using NUnit.Framework;
+using Salient.ReflectiveLoggingAdapter;
 using Client = CIAPI.Rpc.Client;
 
 namespace CIAPI.Tests.Rpc
 {
+
 
     [TestFixture]
     public class ExceptionHandling
@@ -44,6 +47,60 @@ namespace CIAPI.Tests.Rpc
         private const string LoggedIn = "{\"Session\":\"D2FF3E4D-01EA-4741-86F0-437C919B5559\"}";
         private const string LoggedOut = "{\"LoggedOut\":true}";
         private const string AuthError = "{ \"ErrorMessage\": \"sample value\", \"ErrorCode\": 403 }";
+
+
+        //[Test,Ignore()]
+        //public void EnsureInnerLoggerIsCalled()
+        //{
+ 
+
+        //    Dictionary<string, CapturingAppender> loggers = new Dictionary<string, CapturingAppender>();
+        //    LogManager.CreateInnerLogger = (logName, logLevel, showLevel, showDateTime, showLogName, dateTimeFormat) =>
+        //    {
+        //        // create external logger implementation and return instance.
+        //        // this will be called whenever CIAPI requires a logger
+        //        var l = new CapturingAppender(logName, logLevel, showLevel, showDateTime, showLogName,
+        //                                               dateTimeFormat);
+        //        loggers.Add(logName, l);
+        //        return l;
+        //    };
+
+        //    //Sky TODO - test the mockInnerLogger gets called by the RPC client and the StreamingClient
+
+
+        //    Console.WriteLine("CanLogin");
+
+        //    var ctx = BuildAuthenticatedClientAndSetupResponse(LoggedIn);
+
+        //    ctx.LogIn(TestConfig.ApiUsername, TestConfig.ApiPassword);
+
+        //    Assert.IsNotNullOrEmpty(ctx.Session);
+
+        //    var requestFactoryLogger = loggers["Salient.JsonClient.RequestFactory"];
+        //    var throttleLogger = loggers["Salient.JsonClient.ThrottledRequestQueue"];
+        //    var controllerLogger = loggers["Salient.JsonClient.RequestController"];
+        //    var cacheLogger = loggers["Salient.JsonClient.RequestCache"];
+        //    var rpcClientLogger = loggers["CIAPI.Rpc.Client"];
+        //    var jsonClientLogger = loggers["Salient.JsonClient.Client"];
+
+        //    new AutoResetEvent(false).WaitOne(10000);
+
+
+        //    Assert.Greater(requestFactoryLogger.GetItems().ToArray().Length, 0);
+
+        //    Assert.Greater(throttleLogger.GetItems().ToArray().Length, 0);
+
+        //    Assert.Greater(controllerLogger.GetItems().ToArray().Length, 0);
+
+        //    Assert.Greater(cacheLogger.GetItems().ToArray().Length, 0);
+
+        //    Assert.Greater(rpcClientLogger.GetItems().ToArray().Length, 0);
+
+        //    Assert.Greater(jsonClientLogger.GetItems().ToArray().Length, 0);
+
+
+
+        //}
 
         [Test]
         public void CanLogin()

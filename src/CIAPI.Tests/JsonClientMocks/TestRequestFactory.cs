@@ -21,6 +21,7 @@ namespace Salient.JsonClient.Tests
         public TestRequestFactory()
         {
             RequestTimeout = TimeSpan.FromSeconds(30);
+            Log.Debug("factory created");
         }
 
         public WebRequest NextRequest

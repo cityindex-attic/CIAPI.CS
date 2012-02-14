@@ -11,12 +11,14 @@ namespace StreamingClient.Lightstreamer
 #if SILVERLIGHT
 
 #if WINDOWS_PHONE
-            _wrapped = new DebugAppender(logName, logLevel, showLevel, showDateTime, showLogName, dateTimeFormat);
+            
+            _wrapped = LogManager.GetLogger(logName, logLevel, showLevel, showDateTime, showLogName, dateTimeFormat);
 #else
-            _wrapped = new DebugAppender(logName, logLevel, showLevel, showDateTime, showLogName, dateTimeFormat);
+            _wrapped = LogManager.GetLogger(logName, logLevel, showLevel, showDateTime, showLogName, dateTimeFormat);
 #endif
 #else
-            _wrapped = new DebugAppender(logName, logLevel, showLevel, showDateTime, showLogName, dateTimeFormat);
+
+            _wrapped = LogManager.GetLogger(logName, logLevel, showLevel, showDateTime, showLogName, dateTimeFormat);
 #endif
 
         }
