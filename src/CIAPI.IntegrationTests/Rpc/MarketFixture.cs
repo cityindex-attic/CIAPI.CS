@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using CIAPI.DTO;
 using CIAPI.IntegrationTests.Streaming;
@@ -95,15 +97,16 @@ namespace CIAPI.IntegrationTests.Rpc
         public void CanListMarketInformation()
         {
             var rpcClient = BuildRpcClient();
+            var marketList = GetAvailableCFDMarkets(rpcClient);
 
-            var response = rpcClient.Market.ListMarketInformation(new ListMarketInformationRequestDTO()
-                                                                      {
+            var response = rpcClient.Market.ListMarketInformation(
+                new ListMarketInformationRequestDTO
+                    { 
+                        MarketIds = marketList.ToList().Select(m => m.MarketId).ToArray()
+                    }
+            );
 
-
-                                                                          MarketIds = new int[] { 71442 }
-                                                                      });
-
-            Assert.AreEqual(1, response.MarketInformation.Length);
+            Assert.AreEqual(marketList.Length, response.MarketInformation.Length);
 
             rpcClient.LogOut();
         }
@@ -138,25 +141,25 @@ namespace CIAPI.IntegrationTests.Rpc
         {
             var rpcClient = BuildRpcClient();
 
-            var response = rpcClient.Market.ListMarketInformationSearch(false, true, true, false, false, "GBP/USD", 100, false);
+            var response = rpcClient.Market.ListMarketInformationSearch(false, true, false, true, false, "GBP", 10, false);
             Assert.Greater(response.MarketInformation.Length, 1);
             rpcClient.LogOut();
         }
+
         [Test]
         public void CanGetMarketInformation()
         {
-
             var rpcClient = BuildRpcClient();
+            var marketList = GetAvailableCFDMarkets(rpcClient);
 
-            for (int i = 0; i < 10; i++)
+            foreach (var market in marketList)
             {
-                var response = rpcClient.Market.GetMarketInformation("71442");
-                Assert.IsTrue(response.MarketInformation.MarketId == 71442);
+                var response = rpcClient.Market.GetMarketInformation(market.MarketId.ToString());
+                Assert.IsTrue(response.MarketInformation.MarketId == market.MarketId);
             }
 
             rpcClient.LogOut();
         }
-
 
         [Test]
         public void CanSaveMarketInformation()
@@ -164,13 +167,13 @@ namespace CIAPI.IntegrationTests.Rpc
             var rpcClient = BuildRpcClient();
 
             var clientAccount = rpcClient.AccountInformation.GetClientAndTradingAccount();
-
+            var marketList = GetAvailableCFDMarkets(rpcClient);
 
             var tolerances = new[]
             {
-                new ApiMarketInformationSaveDTO()
-                {
-                    MarketId = 71442,
+                new ApiMarketInformationSaveDTO
+                    {
+                    MarketId = marketList[0].MarketId,
                     PriceTolerance = 10
                 }
             };
@@ -178,7 +181,7 @@ namespace CIAPI.IntegrationTests.Rpc
             var saveMarketInfoRespnse = rpcClient.Market.SaveMarketInformation(new SaveMarketInformationRequestDTO()
             {
                 MarketInformation = tolerances,
-                TradingAccountId = clientAccount.SpreadBettingAccount.TradingAccountId
+                TradingAccountId = clientAccount.CFDAccount.TradingAccountId
             });
 
             // ApiSaveMarketInformationResponseDTO is devoid of properties, nothing to check as long as the call succeeds

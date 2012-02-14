@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Text;
+using CIAPI.DTO;
 using CIAPI.Rpc;
 using CIAPI.Streaming;
+using NUnit.Framework;
 using Salient.ReflectiveLoggingAdapter;
 
 namespace CIAPI.IntegrationTests.Streaming
@@ -31,6 +33,13 @@ namespace CIAPI.IntegrationTests.Streaming
             var authenticatedClient = new CIAPI.Rpc.Client(Settings.RpcUri);
             authenticatedClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);
             return StreamingClientFactory.CreateStreamingClient(Settings.StreamingUri, Settings.RpcUserName, authenticatedClient.Session);
+        }
+
+        protected ApiMarketInformationDTO[] GetAvailableCFDMarkets(Client rpcClient)
+        {
+            var marketList = rpcClient.Market.ListMarketInformationSearch(false, true, false, true, false, "GBP", 10, false);
+            Assert.That(marketList.MarketInformation.Length, Is.GreaterThanOrEqualTo(1), "There should be at least 1 CFD market availbe");
+            return marketList.MarketInformation;
         }
     }
 

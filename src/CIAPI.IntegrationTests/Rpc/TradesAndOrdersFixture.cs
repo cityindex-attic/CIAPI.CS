@@ -2,6 +2,7 @@
 using System.Threading;
 using CIAPI.DTO;
 using CIAPI.IntegrationTests.Streaming;
+using CIAPI.Rpc;
 using CIAPI.Streaming;
 using NUnit.Framework;
 using StreamingClient;
@@ -12,42 +13,33 @@ namespace CIAPI.IntegrationTests.Rpc
     [TestFixture]
     public class TradesAndOrdersFixture : RpcFixtureBase
     {
-        private IStreamingClient streamingClient;
+        private IStreamingClient _streamingClient;
+        private int _CFDmarketId;
+        private Client _rpcClient;
+        private AccountInformationResponseDTO _accounts;
 
         [TestFixtureSetUp]
         public void SetupFixture()
         {
-            var authenticatedClient = new CIAPI.Rpc.Client(Settings.RpcUri);
-            authenticatedClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);
-            streamingClient = StreamingClientFactory.CreateStreamingClient(Settings.StreamingUri, Settings.RpcUserName, authenticatedClient.Session);
+            _rpcClient = BuildRpcClient();
+            _streamingClient = StreamingClientFactory.CreateStreamingClient(Settings.StreamingUri, Settings.RpcUserName, _rpcClient.Session);
+            _CFDmarketId = GetAvailableCFDMarkets(_rpcClient)[0].MarketId;
+            _accounts = _rpcClient.AccountInformation.GetClientAndTradingAccount();
         }
 
         [TestFixtureTearDown]
         public void TearDown()
         {
-            streamingClient.Dispose();
+            _streamingClient.Dispose();
         }
 
         [Test]
         public void CanTrade()
         {
+            var marketInfo = GetMarketInfo(_CFDmarketId);
 
-            //MarketId: 80905
-            //Name: "GBP/USD (per 0.0001) Rolling Spread"
-
-
-            //MarketId: 400516274
-            //Name: "GBP/USD (per 0.0001) Dec 11 Spread"
-
-            var rpcClient = BuildRpcClient();
-
-
-
-            AccountInformationResponseDTO accounts = rpcClient.AccountInformation.GetClientAndTradingAccount();
-
-            PriceDTO marketInfo = GetMarketInfo(80905);
-
-            NewTradeOrderRequestDTO trade = new NewTradeOrderRequestDTO()
+            //BUY
+            var trade = new NewTradeOrderRequestDTO()
             {
                 AuditId = marketInfo.AuditId,
                 AutoRollover = false,
@@ -60,16 +52,17 @@ namespace CIAPI.IntegrationTests.Rpc
                 OfferPrice = marketInfo.Offer,
                 Quantity = 1,
                 QuoteId = null,
-                TradingAccountId = accounts.SpreadBettingAccount.TradingAccountId
+                TradingAccountId = _accounts.CFDAccount.TradingAccountId
             };
-            var response = rpcClient.TradesAndOrders.Trade(trade);
-            rpcClient.MagicNumberResolver.ResolveMagicNumbers(response);
+            var response = _rpcClient.TradesAndOrders.Trade(trade);
+            _rpcClient.MagicNumberResolver.ResolveMagicNumbers(response);
 
             Assert.AreEqual(response.Status_Resolved, "Accepted");
 
-            marketInfo = GetMarketInfo(80905);
+            //And then SELL again
+            marketInfo = GetMarketInfo(_CFDmarketId);
 
-            int orderId = response.OrderId;
+            var orderId = response.OrderId;
             trade = new NewTradeOrderRequestDTO()
             {
                 AuditId = marketInfo.AuditId,
@@ -83,11 +76,11 @@ namespace CIAPI.IntegrationTests.Rpc
                 OfferPrice = marketInfo.Offer,
                 Quantity = 1,
                 QuoteId = null,
-                TradingAccountId = accounts.SpreadBettingAccount.TradingAccountId
+                TradingAccountId = _accounts.CFDAccount.TradingAccountId
             };
 
-            response = rpcClient.TradesAndOrders.Trade(trade);
-            rpcClient.MagicNumberResolver.ResolveMagicNumbers(response);
+            response = _rpcClient.TradesAndOrders.Trade(trade);
+            _rpcClient.MagicNumberResolver.ResolveMagicNumbers(response);
 
             Assert.AreEqual(response.Status_Resolved, "Accepted");
 
@@ -96,41 +89,32 @@ namespace CIAPI.IntegrationTests.Rpc
         [Test]
         public void CanListActiveStopLimitOrders()
         {
-            var rpcClient = BuildRpcClient();
+            int tradingAccountId = _accounts.CFDAccount.TradingAccountId;
+            var response = _rpcClient.TradesAndOrders.ListActiveStopLimitOrders(tradingAccountId);
 
-            AccountInformationResponseDTO accounts = rpcClient.AccountInformation.GetClientAndTradingAccount();
-            int tradingAccountId = accounts.CFDAccount.TradingAccountId;
-            var response = rpcClient.TradesAndOrders.ListActiveStopLimitOrders(tradingAccountId);
-
-            tradingAccountId = accounts.SpreadBettingAccount.TradingAccountId;
-            response = rpcClient.TradesAndOrders.ListActiveStopLimitOrders(tradingAccountId);
+            tradingAccountId = _accounts.SpreadBettingAccount.TradingAccountId;
+            response = _rpcClient.TradesAndOrders.ListActiveStopLimitOrders(tradingAccountId);
         }
 
         [Test]
         public void CanListOpenPositions()
         {
-            var rpcClient = BuildRpcClient();
+            int tradingAccountId = _accounts.SpreadBettingAccount.TradingAccountId;
+            var response = _rpcClient.TradesAndOrders.ListOpenPositions(tradingAccountId);
 
-            AccountInformationResponseDTO accounts = rpcClient.AccountInformation.GetClientAndTradingAccount();
-            int tradingAccountId = accounts.SpreadBettingAccount.TradingAccountId;
-            var response = rpcClient.TradesAndOrders.ListOpenPositions(tradingAccountId);
-
-            tradingAccountId = accounts.CFDAccount.TradingAccountId;
-            response = rpcClient.TradesAndOrders.ListOpenPositions(tradingAccountId);
+            tradingAccountId = _accounts.CFDAccount.TradingAccountId;
+            response = _rpcClient.TradesAndOrders.ListOpenPositions(tradingAccountId);
         }
 
         [Test]
         public void CanListStopLimitOrderHistory()
         {
-            var rpcClient = BuildRpcClient();
-
-            AccountInformationResponseDTO accounts = rpcClient.AccountInformation.GetClientAndTradingAccount();
             int maxResults = 100;
-            int tradingAccountId = accounts.CFDAccount.TradingAccountId;
-            var response = rpcClient.TradesAndOrders.ListStopLimitOrderHistory(tradingAccountId, maxResults);
+            int tradingAccountId = _accounts.CFDAccount.TradingAccountId;
+            var response = _rpcClient.TradesAndOrders.ListStopLimitOrderHistory(tradingAccountId, maxResults);
 
-            tradingAccountId = accounts.SpreadBettingAccount.TradingAccountId;
-            response = rpcClient.TradesAndOrders.ListStopLimitOrderHistory(tradingAccountId, maxResults);
+            tradingAccountId = _accounts.SpreadBettingAccount.TradingAccountId;
+            response = _rpcClient.TradesAndOrders.ListStopLimitOrderHistory(tradingAccountId, maxResults);
         }
 
         [Test]
@@ -142,16 +126,13 @@ namespace CIAPI.IntegrationTests.Rpc
             // several accounts reportedly reprod the error, so short of a dedicated account with which
             // to make the same 77+ trades all we can do is check for 77 max
 
-            var rpcClient = BuildRpcClient();
-
-            AccountInformationResponseDTO accounts = rpcClient.AccountInformation.GetClientAndTradingAccount();
             int maxResults = 77;
-            int tradingAccountId = accounts.CFDAccount.TradingAccountId;
-            var response = rpcClient.TradesAndOrders.ListTradeHistory(tradingAccountId, maxResults);
+            int tradingAccountId = _accounts.CFDAccount.TradingAccountId;
+            var response = _rpcClient.TradesAndOrders.ListTradeHistory(tradingAccountId, maxResults);
             Assert.IsTrue(response.TradeHistory.Length > 0);
 
-            tradingAccountId = accounts.SpreadBettingAccount.TradingAccountId;
-            response = rpcClient.TradesAndOrders.ListTradeHistory(tradingAccountId, maxResults);
+            tradingAccountId = _accounts.SpreadBettingAccount.TradingAccountId;
+            response = _rpcClient.TradesAndOrders.ListTradeHistory(tradingAccountId, maxResults);
             Assert.IsTrue(response.TradeHistory.Length > 0);
 
         }
@@ -159,57 +140,39 @@ namespace CIAPI.IntegrationTests.Rpc
         [Test]
         public void CanOrder()
         {
-            var rpcClient = BuildRpcClient();
-
-            AccountInformationResponseDTO accounts = rpcClient.AccountInformation.GetClientAndTradingAccount();
-            NewStopLimitOrderRequestDTO order = new NewStopLimitOrderRequestDTO()
+            var order = new NewStopLimitOrderRequestDTO()
                                                     {
 
                                                     };
-            var response = rpcClient.TradesAndOrders.Order(order);
+            var response = _rpcClient.TradesAndOrders.Order(order);
         }
 
         [Test]
         public void CanCancelOrder()
         {
-            var rpcClient = BuildRpcClient();
-
-            AccountInformationResponseDTO accounts = rpcClient.AccountInformation.GetClientAndTradingAccount();
-            CancelOrderRequestDTO order = new CancelOrderRequestDTO();
-            var response = rpcClient.TradesAndOrders.CancelOrder(order);
+            var order = new CancelOrderRequestDTO();
+            var response = _rpcClient.TradesAndOrders.CancelOrder(order);
         }
 
         [Test]
         public void CanGetOrder()
         {
-            var rpcClient = BuildRpcClient();
-
-            AccountInformationResponseDTO accounts = rpcClient.AccountInformation.GetClientAndTradingAccount();
             string order = "";
-            var response = rpcClient.TradesAndOrders.GetOrder(order);
+            var response = _rpcClient.TradesAndOrders.GetOrder(order);
         }
 
         [Test]
         public void CanGetOpenPosition()
         {
-            var rpcClient = BuildRpcClient();
-
-            AccountInformationResponseDTO accounts = rpcClient.AccountInformation.GetClientAndTradingAccount();
-
             string orderId = "";
-            var response = rpcClient.TradesAndOrders.GetOpenPosition(orderId);
+            var response = _rpcClient.TradesAndOrders.GetOpenPosition(orderId);
         }
         [Test]
         public void CanGetActiveStopLimitOrder()
         {
-            var rpcClient = BuildRpcClient();
-
-            AccountInformationResponseDTO accounts = rpcClient.AccountInformation.GetClientAndTradingAccount();
             string orderId = "";
-            var response = rpcClient.TradesAndOrders.GetActiveStopLimitOrder(orderId);
+            var response = _rpcClient.TradesAndOrders.GetActiveStopLimitOrder(orderId);
         }
-
-
 
         private PriceDTO GetMarketInfo(int marketId)
         {
@@ -218,7 +181,7 @@ namespace CIAPI.IntegrationTests.Rpc
 
             try
             {
-                listener = streamingClient.BuildPricesListener(marketId);
+                listener = _streamingClient.BuildPricesListener(marketId);
                 var gate = new AutoResetEvent(false);
 
                 listener.MessageReceived += (o, s) =>
@@ -235,7 +198,7 @@ namespace CIAPI.IntegrationTests.Rpc
             }
             finally
             {
-                streamingClient.TearDownListener(listener);
+                _streamingClient.TearDownListener(listener);
             }
 
             return marketInfo;
@@ -245,11 +208,8 @@ namespace CIAPI.IntegrationTests.Rpc
         [Test]
         public void CanUpdateOrder()
         {
-            var rpcClient = BuildRpcClient();
-
-            AccountInformationResponseDTO accounts = rpcClient.AccountInformation.GetClientAndTradingAccount();
-            UpdateStopLimitOrderRequestDTO update = new UpdateStopLimitOrderRequestDTO();
-            var response = rpcClient.TradesAndOrders.UpdateOrder(update);
+            var update = new UpdateStopLimitOrderRequestDTO();
+            var response = _rpcClient.TradesAndOrders.UpdateOrder(update);
         }
 
         [Test]
@@ -257,13 +217,11 @@ namespace CIAPI.IntegrationTests.Rpc
         {
             var rpcClient = BuildRpcClient();
 
-
-
             AccountInformationResponseDTO accounts = rpcClient.AccountInformation.GetClientAndTradingAccount();
 
-            PriceDTO marketInfo = GetMarketInfo(80905);
+            PriceDTO marketInfo = GetMarketInfo(_CFDmarketId);
 
-            NewTradeOrderRequestDTO trade = new NewTradeOrderRequestDTO()
+            var trade = new NewTradeOrderRequestDTO()
             {
                 AuditId = marketInfo.AuditId,
                 AutoRollover = false,
@@ -276,15 +234,18 @@ namespace CIAPI.IntegrationTests.Rpc
                 OfferPrice = marketInfo.Offer,
                 Quantity = 1,
                 QuoteId = null,
-                TradingAccountId = accounts.SpreadBettingAccount.TradingAccountId
+                TradingAccountId = accounts.CFDAccount.TradingAccountId
             };
             var order = rpcClient.TradesAndOrders.Trade(trade);
             rpcClient.MagicNumberResolver.ResolveMagicNumbers(order);
 
             Assert.AreEqual(order.Status_Resolved, "Accepted");
-            UpdateTradeOrderRequestDTO update = new UpdateTradeOrderRequestDTO()
-                {
+
+            var update = new UpdateTradeOrderRequestDTO
+                             {
                     OrderId = order.OrderId,
+                    MarketId = trade.MarketId,
+                    Currency = trade.Currency,
                     IfDone = new[] 
                         { 
                             new ApiIfDoneDTO 
@@ -296,11 +257,21 @@ namespace CIAPI.IntegrationTests.Rpc
                                             IfDone = null,
                                             MarketId = marketInfo.MarketId,
                                             Quantity = 1,
-                                            TradingAccountId = accounts.SpreadBettingAccount.TradingAccountId    
+                                            TradingAccountId = accounts.CFDAccount.TradingAccountId    
                                         }
                                 }
-                        }
+                        },
+                    AuditId = trade.AuditId,
+                    AutoRollover = trade.AutoRollover,
+                    BidPrice = trade.BidPrice,
+                    Close = trade.Close,
+                    Direction = trade.Direction,
+                    OfferPrice = trade.OfferPrice,
+                    Quantity = trade.Quantity,
+                    QuoteId = trade.QuoteId,
+                    TradingAccountId = trade.TradingAccountId
                 };
+
             var response = rpcClient.TradesAndOrders.UpdateTrade(update);
         }
     }
