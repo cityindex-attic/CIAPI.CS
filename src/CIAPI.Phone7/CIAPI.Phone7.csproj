@@ -86,6 +86,9 @@
     <Compile Include="..\CIAPI\NullType.cs">
       <Link>NullType.cs</Link>
     </Compile>
+    <Compile Include="..\CIAPI\PrettyPrinterExtensions.cs">
+      <Link>PrettyPrinterExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\CIAPI\ResolvableDTO.cs">
       <Link>ResolvableDTO.cs</Link>
     </Compile>
