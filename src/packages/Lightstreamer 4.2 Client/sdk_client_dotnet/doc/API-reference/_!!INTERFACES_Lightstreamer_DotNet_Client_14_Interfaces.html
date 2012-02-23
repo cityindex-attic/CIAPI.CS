@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
+<html>
+<head>
+<title>Interfaces</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="generator" content="Doc-O-Matic" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <link rel="STYLESHEET" href="default.css" type="text/css" />
+
+<script type="text/javascript" src="scripts.js"></script>
+</head>
+<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '_!!INTERFACES_Lightstreamer_DotNet_Client_14_Interfaces.html');" onmousedown="onBodyMouseDown();">
+
+<!-- Begin Popups -->
+
+<!-- End Popups -->
+
+<!-- Begin Page Header -->
+<div class="Element710" id="areafixed">
+<div class="Element92">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="33%">
+<div class="Element1">
+Lightstreamer .Net Client 2.0</div>
+</td><td width="34%">
+<div class="Element2">
+<a href="contents.html" target="tocidx"><img src="btn_globals_contents_black.gif" border="0" alt="Contents" title="Contents" onmouseover="switchImage(this, 'btn_globals_contents_black_hover.gif');" onmouseout="switchImage(this, 'btn_globals_contents_black.gif');"></a><a href="idx.html" target="tocidx"><img src="btn_globals_index_black.gif" border="0" alt="Index" title="Index" onmouseover="switchImage(this, 'btn_globals_index_black_hover.gif');" onmouseout="switchImage(this, 'btn_globals_index_black.gif');"></a><a href="index.html" target="topic"><img src="btn_globals_home_black.gif" border="0" alt="Home" title="Home" onmouseover="switchImage(this, 'btn_globals_home_black_hover.gif');" onmouseout="switchImage(this, 'btn_globals_home_black.gif');"></a></div>
+</td><td width="33%">
+</td></tr></table><div class="Element27">
+Interfaces</div>
+<div class="Element28">
+<a href="!!INTERFACES_Lightstreamer_DotNet_Client.html" target="topic">Interfaces</a>&nbsp; <a href="_!!INTERFACES_Lightstreamer_DotNet_Client_14_Interfaces_Interfaces.html" target="topic">Legend</a></div>
+</div>
+</div>
+
+<!-- End Page Header -->
+
+<!-- Begin Client Area -->
+<div class="Element720" id="areascroll">
+<div class="Element721">
+
+<!-- Begin Page Content -->
+<div class="Element58">
+<div class="Element14">
+Interfaces</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element201">
+ &nbsp;</div></td><td class="Element200" valign="top" width="30%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="60%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="30%">
+<div class="Element203">
+<a href="Lightstreamer_DotNet_Client_IConnectionListener.html" target="topic">IConnectionListener</a>&nbsp;</div></td><td class="Element206" valign="top" width="60%">
+<div class="Element207">
+Receives notifications of connection activity and errors.<br>The notification sequence follows the pattern:<br>[CE [SS (NB | DE | AW(true) AW(false) )* [AW(true)] [E | F1 | F2] C] ] <br>where F1 and F2 represent the two versions of <a href="Lightstreamer_DotNet_Client_IConnectionListener_OnFailure@PushConnException.html" target="topic">OnFailure</a>().<br>A distinct listener must be used for any distinct connection opened. <br>All notifications are sent in sequence on a dedicated thread.<br>&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="30%">
+<div class="Element203">
+<a href="Lightstreamer_DotNet_Client_IHandyTableListener.html" target="topic">IHandyTableListener</a>&nbsp;</div></td><td class="Element206" valign="top" width="60%">
+<div class="Element207">
+A fully-featured listener interface, which receives notification of data updates and subscription termination for a table.<br>Upon update of each item, the current and previous state of all fields is provided. If the subscription configuration enables the &quot;COMMAND logic&quot;, then the special &quot;key&quot; and &quot;command&quot; fields are determined and the updates are meant as ADD, UPDATE and DELETE commands on the rows of an underlying table, identified by a key value. In this case, the old field values related with an update are referred to the same key.<br>Both names and positional information are available to identify specific items and... <a href="Lightstreamer_DotNet_Client_IHandyTableListener.html" target="topic">more</a>&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="30%">
+<div class="Element203">
+<a href="Lightstreamer_DotNet_Client_ISendMessageListener.html" target="topic">ISendMessageListener</a>&nbsp;</div></td><td class="Element206" valign="top" width="60%">
+<div class="Element207">
+Receives notifications of server responses to sent messages. All notifications are sent in sequence on a dedicated thread.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="30%">
+<div class="Element203">
+<a href="Lightstreamer_DotNet_Client_IUpdateInfo.html" target="topic">IUpdateInfo</a>&nbsp;</div></td><td class="Element206" valign="top" width="60%">
+<div class="Element207">
+Implemented by Lightstreamer to provide information about an update for a subscribed item. The new and previous values for the subscribed fields are reported.<br>If the table subscription configuration enables the &quot;COMMAND logic&quot;, then the old field values are referred to the same key.<br>Both names and positional information can be used to identify the specific fields, unless a <a href="Lightstreamer_DotNet_Client_SimpleTableInfo.html" target="topic">SimpleTableInfo</a> was used to describe the related table; in that case, only positional information can be used.<br>&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+</div>
+<!-- End Page Content -->
+
+<!-- Begin Page Footer -->
+<div class="Element93">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="100%">
+<div class="Element3">
+<a href="http://www.lightstreamer.com/" target="_blank">Copyright (C) 2004-2011 Weswit s.r.l.</a></div>
+</td></tr><tr><td width="100%">
+<div class="Element4">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="idx.html" target="tocidx">Index</a> | <a href="index.html" target="topic">Home</a></div>
+</td></tr></table></div>
+
+<!-- End Page Footer -->
+</div>
+</div>
+
+<!-- End Client Area -->
+</body></html>

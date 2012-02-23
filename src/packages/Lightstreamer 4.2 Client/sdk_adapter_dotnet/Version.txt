@@ -1,2 +1,0 @@
-Lightstreamer Remote .NET Adapter Server version 1.7.4175.16355
-Compatible with Lightstreamer Remote Interface since version 1.4
