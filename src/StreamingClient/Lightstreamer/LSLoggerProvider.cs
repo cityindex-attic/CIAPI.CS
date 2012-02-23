@@ -1,6 +1,6 @@
 ﻿using System;
-using Salient.ReflectiveLoggingAdapter;
 using Lightstreamer.DotNet.Client.Log;
+using Salient.ReflectiveLoggingAdapter;
 
 namespace StreamingClient.Lightstreamer
 {

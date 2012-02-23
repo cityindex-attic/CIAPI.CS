@@ -24,10 +24,33 @@
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <ListBox Height="442" HorizontalAlignment="Left" Margin="12,6,0,0" Name="listBox1" VerticalAlignment="Top" Width="438" />
-            <Button Content="Set 1" Height="72" HorizontalAlignment="Left" Margin="0,483,0,0" Name="button1" VerticalAlignment="Top" Width="150" Click="button1_Click" />
-            <Button Content="Set 2" Height="72" HorizontalAlignment="Left" Margin="156,483,0,0" Name="button2" VerticalAlignment="Top" Width="150" Click="button2_Click" />
-            <Button Content="Set 3" Height="72" HorizontalAlignment="Left" Margin="312,483,0,0" Name="button3" VerticalAlignment="Top" Width="150" Click="button3_Click" />
+            <Button Background ="Green" Content="Start all" Height="80" HorizontalAlignment="Left" Margin="158,0,0,0" Name="startAllButton" VerticalAlignment="Top" Width="146" Click="startAllButton_Click" />
+            <Button Content="Stop All" Height="80" HorizontalAlignment="Left" Margin="310,0,0,0" Name="stop_ALL" VerticalAlignment="Top" Width="146" Click="stop_ALL_Click" Background="Red" />
+
+            <TextBox Height="55" HorizontalAlignment="Left" Margin="0,71,0,0" Name="textBox1" Text="CITYINDEXSTREAMING ( 5 x Prices )" VerticalAlignment="Top" Width="256" FontSize="14" TextAlignment="Left" />
+            <Button Content="Start" Height="53" HorizontalAlignment="Left" Margin="253,161,0,0" Name="start_CITYINDEXSTREAMING" VerticalAlignment="Top" Width="119" Click="start_CITYINDEXSTREAMING_Click" FontSize="14"/>
+            <TextBox Height="52" HorizontalAlignment="Left" Margin="12,114,0,0" Name="lastPrice1TextBox" Text="" VerticalAlignment="Top" Width="94" FontSize="16" />
+            <TextBox Height="52" HorizontalAlignment="Left" Margin="99,114,0,0" Name="lastPrice2TextBox" Text="" VerticalAlignment="Top" Width="94" FontSize="16" />
+            <TextBox Height="52" HorizontalAlignment="Left" Margin="186,114,0,0" Name="lastPrice3TextBox" Text="" VerticalAlignment="Top" Width="94" FontSize="16" />
+            <TextBox Height="52" HorizontalAlignment="Left" Margin="270,114,0,0" Name="lastPrice4TextBox" Text="" VerticalAlignment="Top" Width="94" FontSize="16" />
+            <TextBox Height="52" HorizontalAlignment="Left" Margin="353,114,0,0" Name="lastPrice5TextBox" Text="" VerticalAlignment="Top" Width="94" FontSize="16" />
+
+            <TextBox FontSize="14" Height="53" HorizontalAlignment="Left" Margin="6,161,0,0" Name="textBox2" Text="CLIENTACCOUNT (1 x Margin)" TextAlignment="Left" VerticalAlignment="Top" Width="254" />
+            <Button Content="Start" Height="54" HorizontalAlignment="Right" Margin="0,72,88,0" Name="start_STREAMINGCLIENTACCOUNT" VerticalAlignment="Top" Width="119" Click="start_STREAMINGCLIENTACCOUNT_Click" FontSize="14" />
+            <TextBox FontSize="14" Height="53" HorizontalAlignment="Left" Margin="16,211,0,0" Name="lastMarginTextbox" Text="" VerticalAlignment="Top" Width="397" />
+
+            <TextBox FontSize="16" Height="58" HorizontalAlignment="Left" Margin="3,259,0,0" Name="textBox3" Text="TRADINGACCOUNT (order)" TextAlignment="Left" VerticalAlignment="Top" Width="253" />
+            <Button FontSize="14" Content="Start" Height="58" HorizontalAlignment="Left" Margin="270,259,0,0" Name="start_STREAMINGTRADINGACCOUNT" VerticalAlignment="Top" Width="119" Click="start_STREAMINGTRADINGACCOUNT_Click" />
+            <TextBox HorizontalAlignment="Left" Margin="12,310,0,404" Name="lastOrderTextbox" Text="" Width="397" FontSize="16" />
+
+            <TextBox FontSize="16" Height="58" HorizontalAlignment="Left" Margin="3,376,0,0" Name="textBox4" Text="DEFAULTPRICES" TextAlignment="Left" VerticalAlignment="Top" Width="191" />
+            <Button Content="Start" FontSize="14" Height="58" HorizontalAlignment="Left" Margin="270,376,0,0" Name="start_CITYINDEXSTREAMINGDEFAULTPRICES" VerticalAlignment="Top" Width="119" Click="start_CITYINDEXSTREAMINGDEFAULTPRICES_Click" />
+            <TextBox FontSize="14" Height="49" HorizontalAlignment="Left" Margin="12,426,0,0" Name="lastDefaultPriceTextbox" Text="" VerticalAlignment="Top" Width="397" />
+
+            <Button Content="MarketSearch" Height="66" HorizontalAlignment="Left" Margin="221,473,0,0" Name="marketSearchButton" VerticalAlignment="Top" Width="188" FontSize="20" Click="marketSearchButton_Click" />
+            <TextBox FontSize="14" Height="78" HorizontalAlignment="Left" Margin="16,524,0,0" Name="marketSearchTextBox" Text="" VerticalAlignment="Top" Width="411" />
+
+            <ListBox Height="154" HorizontalAlignment="Left" Margin="12,608,0,0" Name="listBox1" VerticalAlignment="Top" Width="438" FontSize="12" />
         </Grid>
     </Grid>
  
