@@ -62,7 +62,7 @@
       <HintPath>..\packages\Salient.ReflectiveLoggingAdapter.3.0.4\lib\sl4\Salient.ReflectiveLoggingAdapter.Silverlight.dll</HintPath>
     </Reference>
     <Reference Include="SilverlightClient">
-      <HintPath>..\packages\Lightstreamer 4.0 Client\sdk_client_silverlight\lib\StrongName\SilverlightClient.dll</HintPath>
+      <HintPath>..\packages\Lightstreamer 4.2 Client\sdk_client_silverlight\lib\StrongName\SilverlightClient.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows" />
     <Reference Include="system" />
