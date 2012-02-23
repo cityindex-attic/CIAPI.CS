@@ -1,0 +1,132 @@
+<?xml version="1.0"?>
+
+<adapters_conf id="PORTFOLIODEMO_REMOTE">
+
+    <!-- Mandatory. The Metadata Adapter is the Java Proxy Adapter with socket-based transport. -->
+    <metadata_provider>
+
+        <!-- Mandatory. The NetworkedMetadataProvider communicates with its
+             remote counterpart through standard TCP sockets. It listens on
+             a specific port and waits for its counterpart to connect. -->
+        <adapter_class>com.lightstreamer.adapters.remote.metadata.NetworkedMetadataProvider</adapter_class>
+
+        <!-- Mandatory for NetworkedMetadataProvider. The request/reply port to listen on. -->
+        <param name="request_reply_port">6683</param>
+
+        <!-- Optional. The local network interface to bind to.
+             If not specified, it will bind to any available interface. -->
+        <!--
+        <param name="interface">192.168.1.1</param>
+        -->
+
+        <!-- Optional. Name of the Proxy Metadata Adapter, to better identify its threads when
+             assessing problems. If not specified, it will be assigned a progressive number. -->
+        <!--
+        <param name="name">NetPortfolioMetadata</param>
+        -->
+
+        <!-- Optional. Timeout for sent requests. A negative value stands for
+             an unlimited timeout.
+             Timed out requests are considered as failed and later answers are
+             ignored.
+             Default: 10000 ms (10 seconds). -->
+        <!--
+        <param name="timeout">10000</param>
+        -->
+
+        <!-- Optional. If set to false, suppresses clearing of the cached profile data
+             for a user when no sessions for the user are active. This is only for
+             troubleshooting purpose, as profile data are always refreshed upon
+             notifyUser requests.
+             Default: true. -->
+        <!--
+        <param name="clear_on_session_close">true</param>
+        -->
+
+        <!-- Optional. Sets the minimum time (in milliseconds) cached profile data are kept;
+             these cached data are needed in order to manage request processing before a session
+             is fully started. Ignored if clear_on_session_close is false.
+             Default: 10000 ms (10 seconds). -->
+        <!--
+        <param name="user_data_timeout">1000</param>
+        -->
+
+    </metadata_provider>
+
+
+    <!-- Mandatory. The Data Adapter is the Java Proxy Adapter with socket-based transport. -->
+    <data_provider name="PORTFOLIO_ADAPTER">
+
+        <!-- Mandatory. The NetworkedDataProvider communicates with its remote
+             counterpart through standard TCP sockets. It listens on two
+             specific ports and waits for its counterpart to connect. -->
+        <adapter_class>com.lightstreamer.adapters.remote.data.NetworkedDataProvider</adapter_class>
+
+        <!-- Mandatory for NetworkedDataProvider. The request/reply port to listen on. -->
+        <param name="request_reply_port">6681</param>
+
+        <!-- Mandatory for NetworkedDataProvider. The notification port to listen on. -->
+        <param name="notify_port">6682</param>
+
+        <!-- Optional. The local network interface to bind to.
+             If not specified, it will bind to any available interface. -->
+        <!--
+        <param name="interface">192.168.1.1</param>
+        -->
+
+        <!-- Optional. Name of the Proxy Data Adapter, to better identify its threads when
+             assessing problems. If not specified, it will be assigned a progressive number. -->
+        <!--
+        <param name="name">MyPortfolioData</param>
+        -->
+
+        <!-- Optional. Timeout for sent requests. A negative value stands for
+             an unlimited timeout.
+             Timed out requests are considered as failed and later answers are
+             ignored.
+             Default: 10000 ms (10 seconds). -->
+        <!--
+        <param name="timeout">10000</param>
+        -->
+
+    </data_provider>
+
+
+    <!-- Mandatory. The Data Adapter is the Java Proxy Adapter with socket-based transport. -->
+    <data_provider name="QUOTE_ADAPTER">
+
+        <!-- Mandatory. The NetworkedDataProvider communicates with its remote
+             counterpart through standard TCP sockets. It listens on two
+             specific ports and waits for its counterpart to connect. -->
+        <adapter_class>com.lightstreamer.adapters.remote.data.NetworkedDataProvider</adapter_class>
+
+        <!-- Mandatory for NetworkedDataProvider. The request/reply port to listen on. -->
+        <param name="request_reply_port">6684</param>
+
+        <!-- Mandatory for NetworkedDataProvider. The notification port to listen on. -->
+        <param name="notify_port">6685</param>
+
+        <!-- Optional. The local network interface to bind to.
+             If not specified, it will bind to any available interface. -->
+        <!--
+        <param name="interface">192.168.1.1</param>
+        -->
+
+        <!-- Optional. Name of the Proxy Data Adapter, to better identify its threads when
+             assessing problems. If not specified, it will be assigned a progressive number. -->
+        <!--
+        <param name="name">MyFeedData</param>
+        -->
+
+        <!-- Optional. Timeout for sent requests. A negative value stands for
+             an unlimited timeout.
+             Timed out requests are considered as failed and later answers are
+             ignored.
+             Default: 10000 ms (10 seconds). -->
+        <!--
+        <param name="timeout">10000</param>
+        -->
+
+    </data_provider>
+
+</adapters_conf>

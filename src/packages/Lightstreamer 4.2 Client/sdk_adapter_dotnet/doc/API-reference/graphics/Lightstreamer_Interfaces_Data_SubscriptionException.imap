@@ -1,0 +1,3 @@
+0,0,102,15::
+132,0,334,15:L:Lightstreamer.Interfaces.Data.DataException
+364,0,595,15:L:Lightstreamer.Interfaces.Data.SubscriptionException

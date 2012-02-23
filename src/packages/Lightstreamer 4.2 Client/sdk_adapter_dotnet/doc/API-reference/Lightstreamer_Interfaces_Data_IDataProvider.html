@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
+<html>
+<head>
+<title>IDataProvider Interface</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="generator" content="Doc-O-Matic" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <link rel="STYLESHEET" href="default.css" type="text/css" />
+
+<script type="text/javascript" src="scripts.js"></script>
+</head>
+<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', 'Lightstreamer_Interfaces_Data_IDataProvider.html');" onmousedown="onBodyMouseDown();">
+
+<!-- Begin Popups -->
+
+<!-- End Popups -->
+
+<!-- Begin Page Header -->
+<div class="Element710" id="areafixed">
+<div class="Element731">
+<div class="Element730">
+<a href="#" onclick="ToggleAllElements('436C61737320486965726172636879,47726F7570,4C696E6B73', 'linkToggleAllElements', 'imgToggleAllElements', 'Collapse All', 'Expand All');"><img src="btn_collapse_2.gif" border="0" alt="" title="" id="imgToggleAllElements"></a><a href="#" id="linkToggleAllElements" onclick="ToggleAllElements('436C61737320486965726172636879,47726F7570,4C696E6B73', 'linkToggleAllElements', 'imgToggleAllElements', 'Collapse All', 'Expand All');">Collapse All</a></div>
+</div>
+<div class="Element92">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="33%">
+<div class="Element1">
+Lightstreamer .Net Adapter 1.6</div>
+</td><td width="34%">
+<div class="Element2">
+<a href="contents.html" target="tocidx"><img src="btn_globals_contents_black.gif" border="0" alt="Contents" title="Contents" onmouseover="switchImage(this, 'btn_globals_contents_black_hover.gif');" onmouseout="switchImage(this, 'btn_globals_contents_black.gif');"></a><a href="idx.html" target="tocidx"><img src="btn_globals_index_black.gif" border="0" alt="Index" title="Index" onmouseover="switchImage(this, 'btn_globals_index_black_hover.gif');" onmouseout="switchImage(this, 'btn_globals_index_black.gif');"></a><a href="index.html" target="topic"><img src="btn_globals_home_black.gif" border="0" alt="Home" title="Home" onmouseover="switchImage(this, 'btn_globals_home_black_hover.gif');" onmouseout="switchImage(this, 'btn_globals_home_black.gif');"></a></div>
+</td><td width="33%">
+<div class="Element90">
+<a href="!!INTERFACES_Lightstreamer_Interfaces_Data.html" target="topic"><img src="btn_prev_black.gif" border="0" alt="Previous" title="Previous" onmouseover="switchImage(this, 'btn_prev_black_hover.gif');" onmouseout="switchImage(this, 'btn_prev_black.gif');"></a><a href="!!INTERFACES_Lightstreamer_Interfaces_Data.html" target="topic"><img src="btn_up_black.gif" border="0" alt="Up" title="Up" onmouseover="switchImage(this, 'btn_up_black_hover.gif');" onmouseout="switchImage(this, 'btn_up_black.gif');"></a><a href="!!MEMBEROVERVIEW_Lightstreamer_Interfaces_Data_IDataProvider.html" target="topic"><img src="btn_next_black.gif" border="0" alt="Next" title="Next" onmouseover="switchImage(this, 'btn_next_black_hover.gif');" onmouseout="switchImage(this, 'btn_next_black.gif');"></a></div>
+</td></tr></table><div class="Element5">
+IDataProvider Interface</div>
+<div class="Element7">
+<a href="!!MEMBERTYPE_Methods_Lightstreamer_Interfaces_Data_IDataProvider.html" target="topic">IDataProvider Methods</a>&nbsp; <a href="!!MEMBEROVERVIEW_Lightstreamer_Interfaces_Data_IDataProvider.html" target="topic">IDataProvider Members</a>&nbsp; <a href="!!INTERFACES_Lightstreamer_Interfaces_Data.html" target="topic">Interfaces</a></div>
+</div>
+</div>
+
+<!-- End Page Header -->
+
+<!-- Begin Client Area -->
+<div class="Element720" id="areascroll">
+<div class="Element721">
+
+<!-- Begin Page Content -->
+<div class="Element58">
+<a name="53756D6D617279"></a><div class="Element11">
+<div class="Element10">
+<p class="Element10">
+Provides an interface to be implemented by a Remote Data Adapter in order to attach a Data Provider to Lightstreamer. The configuration of a Remote Adapter instance requires the following info:&nbsp;</p>
+<p class="Element10">
+- an optional name for the instance;&nbsp;</p>
+<p class="Element10">
+- the Remote Adapter class name;&nbsp;</p>
+<p class="Element10">
+- optional configuration parameters.&nbsp;</p>
+<p class="Element10">
+A single instance of each configured Remote Adapter is created by Lightstreamer at startup, through a Remote Server instance. For this purpose, any Remote Data Adapter must provide a void constructor. After creation, the init method is called, providing the Remote Data Adapter with the configuration information; then, the Remote Server sets itself as the Remote Data Adapter listener, by calling the setListener method.&nbsp;</p>
+<p class="Element10">
+Data Providers are used by Lightstreamer Kernel to obtain all data to be pushed to the Clients. Any Item requested by a Client must refer to one supplied by the configured Data Adapters.&nbsp;</p>
+<p class="Element10">
+A Data Provider supplies data in a publish/subscribe way. Lightstreamer asks for data by calling the subscribe and unsubscribe methods for various Items and the Data Adapter sends ItemEvents to its listener in an asynchronous way.&nbsp;</p>
+<p class="Element10">
+A Data Adapter can also support Snapshot management. Upon subscription to an item, the current state of the Item data can be sent to the Server before the updates. This allows the Server to maintain the Item state, by integrating the new ItemEvents into the state (in a way that depends on the Item type) and to make this state available to the Clients.&nbsp;</p>
+<p class="Element10">
+Note that the interaction between the Server and the Data Adapter and the interaction between the Server and any Client are independent activities. As a consequence, the very first ItemEvents sent by the Data Adapter to the Server for an Item just subscribed to might be processed before the Server starts feeding any client, even the client that caused the subscription to the Item to be invoked; then, such events would not be forwarded to any client. If it is desirable that a client receives all the ItemEvents that have been produced for an Item by the Data Adapter since subscription time, then the support for the Item Snapshot can be leveraged.&nbsp;</p>
+<p class="Element10">
+Lightstreamer ensures that calls to subscribe and unsubscribe for the same Item will be interleaved, without redundant calls; whenever subscribe throws an exception, the corresponding unsubscribe call is not issued.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p></div>
+</div>
+<a name="436C61737320486965726172636879"></a><div class="Element14">
+<a onclick="toggleVisibilityStored('436C61737320486965726172636879');" class="a_Element14"><img src="btn_collapse_2.gif" border="0" alt="" title="" id="img436C61737320486965726172636879">Class Hierarchy</a></div>
+<div id="div436C61737320486965726172636879">
+<div class="Element151"><div class="Element150"><pre class="Element150"><img src="Lightstreamer_Interfaces_Data_IDataProvider.png" border="0" alt="" title="" usemap="#Lightstreamer_Interfaces_Data_IDataProvider"><map class="Element150" name="Lightstreamer_Interfaces_Data_IDataProvider"><area class="Element150" shape="rect" coords="0,0,202,15" href="Lightstreamer_Interfaces_Data_IDataProvider.html"></map></pre></div></div>
+</div>
+<a name="432B2B"></a><div class="Element99">
+C++</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #871F78">public</span></strong>: <strong><span style="color: #871F78">__interface</span></strong> <strong><span style="color: #660000">IDataProvider</span></strong>;</pre></div></div>
+<a name="4323"></a><div class="Element99">
+C#</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #871F78">public</span></strong> <strong><span style="color: #871F78">interface</span></strong> <strong><span style="color: #660000">IDataProvider</span></strong>;</pre></div></div>
+<a name="56697375616C204261736963"></a><div class="Element99">
+Visual Basic</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #871F78">Public</span></strong> <strong><span style="color: #871F78">Interface</span></strong> <strong><span style="color: #660000">IDataProvider</span></strong></pre></div></div>
+<a name="47726F7570"></a><div class="Element14">
+<a onclick="toggleVisibilityStored('47726F7570');" class="a_Element14"><img src="btn_collapse_2.gif" border="0" alt="" title="" id="img47726F7570">Group</a></div>
+<div id="div47726F7570">
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+<a href="!!INTERFACES_Lightstreamer_Interfaces_Data.html" target="topic">Interfaces</a></p></div>
+</div>
+</div>
+<a name="4C696E6B73"></a><div class="Element14">
+<a onclick="toggleVisibilityStored('4C696E6B73');" class="a_Element14"><img src="btn_collapse_2.gif" border="0" alt="" title="" id="img4C696E6B73">Links</a></div>
+<div id="div4C696E6B73">
+<div class="Element11">
+<div class="Element10">
+<a href="!!MEMBERTYPE_Methods_Lightstreamer_Interfaces_Data_IDataProvider.html" target="topic">IDataProvider Methods</a>, <a href="!!MEMBEROVERVIEW_Lightstreamer_Interfaces_Data_IDataProvider.html" target="topic">IDataProvider Members</a>, <a href="!!INTERFACES_Lightstreamer_Interfaces_Data.html" target="topic">Interfaces</a></div>
+</div>
+</div>
+</div>
+<!-- End Page Content -->
+
+<!-- Begin Page Footer -->
+<div class="Element93">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="100%">
+<div class="Element3">
+<a href="http://www.lightstreamer.com/">Copyright (C) 2004-2010 Weswit s.r.l.</a></div>
+</td></tr><tr><td width="100%">
+<div class="Element4">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="idx.html" target="tocidx">Index</a> | <a href="index.html" target="topic">Home</a></div>
+</td></tr></table></div>
+
+<!-- End Page Footer -->
+</div>
+</div>
+
+<!-- End Client Area -->
+</body></html>

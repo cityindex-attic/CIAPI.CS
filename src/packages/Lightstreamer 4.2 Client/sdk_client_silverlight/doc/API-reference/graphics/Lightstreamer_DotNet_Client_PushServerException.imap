@@ -1,0 +1,3 @@
+0,0,57,15::
+87,0,286,15:L:Lightstreamer.DotNet.Client.ClientException
+316,0,539,15:L:Lightstreamer.DotNet.Client.PushServerException

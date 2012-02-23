@@ -1,0 +1,6 @@
+0,45,57,60::
+87,45,286,60:L:Lightstreamer.DotNet.Client.ClientException
+316,0,539,15:L:Lightstreamer.DotNet.Client.PushConnException
+316,30,539,45:L:Lightstreamer.DotNet.Client.PushServerException
+316,60,539,75:L:Lightstreamer.DotNet.Client.PushUserException
+316,90,539,105:L:Lightstreamer.DotNet.Client.SubscrException

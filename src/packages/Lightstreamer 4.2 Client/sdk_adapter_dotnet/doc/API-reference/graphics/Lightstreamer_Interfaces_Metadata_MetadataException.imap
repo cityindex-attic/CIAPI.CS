@@ -1,0 +1,8 @@
+0,75,102,90::
+132,75,372,90:L:Lightstreamer.Interfaces.Metadata.MetadataException
+402,0,677,15:L:Lightstreamer.Interfaces.Metadata.AccessException
+402,30,677,45:L:Lightstreamer.Interfaces.Metadata.CreditsException
+402,60,677,75:L:Lightstreamer.Interfaces.Metadata.ItemsException
+402,90,677,105:L:Lightstreamer.Interfaces.Metadata.MetadataProviderException
+402,120,677,135:L:Lightstreamer.Interfaces.Metadata.NotificationException
+402,150,677,165:L:Lightstreamer.Interfaces.Metadata.SchemaException

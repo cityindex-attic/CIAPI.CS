@@ -1,0 +1,217 @@
+<?xml version="1.0"?>
+
+<adapters_conf id="STOCKLISTDEMO_REMOTE">
+
+    <!-- Mandatory. The Metadata Adapter is the Java Proxy Adapter with socket-based transport. -->
+    <metadata_provider>
+
+        <!-- Mandatory. The RobustNetworkedMetadataProvider communicates with
+             its remote counterpart through standard TCP sockets. It listens
+             on a specific port and waits for its counterpart to connect.
+             Moreover, this Metadata Adapter manages the case in which the remote
+             counterpart is missing, by just refusing all new requests from the
+             clients and storing all state change notifications that have to be
+             sent to the backend (namely, session closing and table closing
+             notifications).
+             Meanwhile, this Metadata Adapter keeps waiting for a connection
+             from a new remote server; upon connection, it will flush pending
+             notifications, then start working normally. -->
+        <adapter_class>com.lightstreamer.adapters.remote.metadata.RobustNetworkedMetadataProvider</adapter_class>
+
+        <!-- Mandatory for NetworkedMetadataProvider. The request/reply port to listen on. -->
+        <param name="request_reply_port">6663</param>
+
+        <!-- Optional, specific for RobustNetworkedMetadataProvider.
+             The timeout for reconnection attempts. After an unsuccessful attempt
+             by a remote server to connect to this Proxy Adapter, the Adapter can
+             retry accepting more connection attempts after waiting for this time.
+             A negative value prevents further attempts, so that no remote server
+             will be available.
+             Default: -1. -->
+        <param name="connection_recovery_timeout_millis">10000</param>
+
+        <!-- Optional, specific for RobustNetworkedMetadataProvider.
+             The timeout for the first connection attempt. Upon the Proxy Adapter
+             initialization at Lightstreamer Server startup, if a remote server
+             is not available, Lightstreamer Server startup can be delayed until
+             this timeout expires.
+             A negative value stands for an unlimited timeout.
+             Note that, as soon as Lightstreamer Server startup completes,
+             until a connection to a remote server is still missing, all client
+             requests will be refused.
+             Default: -1. -->
+        <param name="first_connection_timeout_millis">10000</param>
+
+        <!-- Optional, specific for RobustNetworkedMetadataProvider.
+             The strategy to be adopted whenever a new remote server is available
+             in order to resend the state change notifications that could not
+             or might not have been sent to the previous remote server.
+             This involves the notifications of session closing and the optional
+             notifications of table closing.
+             Note that the Proxy Adapter has no way of knowing exactly if a
+             notification has been processed by a remote server if no answer
+             had been received at the time the connection was closed. Also
+             Consider that the answers from the remote server are not expected
+             to come in the same sequence as the requests.
+             Hence, no perfect recovery is possible and the remote server must
+             be able to deal with an imperfect notification sequence.
+             Currently, the only available options are:
+
+             - pessimistic
+               All notifications since the first one that could not or may not
+               have been processed by the previous remote server are resent
+               to the new one.
+               This ensures that all notifications are processed at least once,
+               but may cause some notifications to be issued for a second time.
+               Even notifications that did get an answer could be resent,
+               in order to preserve the original sequence.
+               Note that timed out requests (see the "timeout" setting) are
+               considered as processed.
+
+             - optimistic
+               Only notifications after the last one that got an answer by the
+               previous remote server are resent to the new one.
+
+             - unneeded
+               No notifications are resent. In case the close notifications
+               are ignored by the remote server implementation, this can save
+               a possibly long playback of unneeded messages.
+               Note that table notifications, for both opening and closing, are
+               already omitted, unless requested by the remote server through
+               the wantsTablesNotification method.
+
+             Default: pessimistic. -->
+        <param name="close_notifications_recovery">unneeded</param>
+
+        <!-- Optional. The local network interface to bind to.
+             If not specified, it will bind to any available interface. -->
+        <!--
+        <param name="interface">192.168.1.1</param>
+        -->
+
+        <!-- Optional. Name of the Proxy Metadata Adapter, to better identify its threads when
+             assessing problems. If not specified, it will be assigned a progressive number. -->
+        <!--
+        <param name="name">NetStockListMetadata</param>
+        -->
+
+        <!-- Optional. Timeout for sent requests. A negative value stands for
+             an unlimited timeout.
+             Timed out requests are considered as failed and later answers are
+             ignored.
+             Default: 10000 ms (10 seconds). -->
+        <!--
+        <param name="timeout">10000</param>
+        -->
+
+        <!-- Optional. If set to false, suppresses clearing of the cached profile data
+             for a user when no sessions for the user are active. This is only for
+             troubleshooting purpose, as profile data are always refreshed upon
+             notifyUser requests.
+             Default: true. -->
+        <!--
+        <param name="clear_on_session_close">true</param>
+        -->
+
+        <!-- Optional. Sets the minimum time (in milliseconds) cached profile data are kept;
+             these cached data are needed in order to manage request processing before a session
+             is fully started. Ignored if clear_on_session_close is false.
+             Default: 10000 ms (10 seconds). -->
+        <!--
+        <param name="user_data_timeout">1000</param>
+        -->
+
+    </metadata_provider>
+
+
+    <!-- Mandatory. The Data Adapter is the Java Proxy Adapter with socket-based transport. -->
+    <data_provider name="QUOTE_ADAPTER">
+
+        <!-- Mandatory. The RobustNetworkedDataProvider communicates with its
+             remote counterpart through standard TCP sockets. It listens on two
+             specific ports and waits for its counterpart to connect.
+             Moreover, this Data Adapter manages the case in which the remote
+             counterpart is missing, by accepting subscriptions and sending empty
+             snapshots to the clients, when requested (note that the clients
+             should be able to manage null field values for items subscribed to
+             in MERGE mode).
+             This Data Adapter also manages failures of the remote counterpart,
+             by waiting for connection from a new remote server and trying
+             to recover the data flow. -->
+        <adapter_class>com.lightstreamer.adapters.remote.data.RobustNetworkedDataProvider</adapter_class>
+
+        <!-- Mandatory for RobustNetworkedDataProvider. The request/reply port to listen on. -->
+        <param name="request_reply_port">6661</param>
+
+        <!-- Mandatory for RobustNetworkedDataProvider. The notification port to listen on. -->
+        <param name="notify_port">6662</param>
+
+        <!-- Optional, specific for RobustNetworkedDataProvider.
+             The timeout for reconnection attempts. After an unsuccessful attempt
+             by a remote server to connect to this Proxy Adapter, the Adapter can
+             retry accepting more connection attempts after waiting for this time.
+             A negative value prevents further attempts, so that no remote server
+             will be available.
+             Default: -1. -->
+        <param name="connection_recovery_timeout_millis">10000</param>
+
+        <!-- Optional, specific for RobustNetworkedDataProvider.
+             The strategy to be adopted whenever a new remote server is available
+             in order to restore the data flow for items that were subscribed to
+             while no remote server was available.
+             No sophisticated recovery algorithms are available, as they could
+             only depend on the specific item meanings.
+             Currently, the only available options are:
+
+             - leave_hole
+               The real time update flow is just restarted; this may give rise
+               to an inconsistent overall flow:
+               for RAW and DISTINCT subscriptions, there will be a hole in the
+               event sequence;
+               for MERGE and COMMAND subscriptions, out of date field values
+               might be mixed with up to date field values on the same item or key;
+               for COMMAND subscriptions, some keys might be missing for some
+               time and others might remain garbage for long time; some harmless
+               warning messages might also be issued by the Server.
+
+             - use_snapshot
+               The snapshot of the item is requested to the remote server and
+               it is sent in the update flow "as is"; this strategy is suitable
+               for MERGE subscriptions, while in other cases it may give rise
+               to an inconsistent overall flow:
+               for RAW subscriptions, there will be a hole in the event sequence
+               and possible spurious entries;
+               for DISTINCT subscriptions, there migth be either a hole or some
+               duplicates in the event sequence;
+               for COMMAND subscriptions, some keys might just remain garbage
+               for long time; some harmless warning messages might also be
+               issued by the Server.
+
+             The configured strategy will be applied with all items.
+             Default: leave_hole. -->
+        <param name="events_recovery">use_snapshot</param>
+
+        <!-- Optional. The local network interface to bind to.
+             If not specified, it will bind to any available interface. -->
+        <!--
+        <param name="interface">192.168.1.1</param>
+        -->
+
+        <!-- Optional. Name of the Proxy Data Adapter, to better identify its threads when
+             assessing problems. If not specified, it will be assigned a progressive number. -->
+        <!--
+        <param name="name">MyFeedData</param>
+        -->
+
+        <!-- Optional. Timeout for sent requests. A negative value stands for
+             an unlimited timeout.
+             Timed out requests are considered as failed and later answers are
+             ignored.
+             Default: 10000 ms (10 seconds). -->
+        <!--
+        <param name="timeout">10000</param>
+        -->
+
+    </data_provider>
+
+</adapters_conf>

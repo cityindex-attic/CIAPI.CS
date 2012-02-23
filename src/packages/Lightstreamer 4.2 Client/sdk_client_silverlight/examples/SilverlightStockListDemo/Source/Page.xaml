@@ -1,0 +1,162 @@
+﻿<UserControl xmlns:data="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Data"  x:Class="SilverlightDemo.Page"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" mc:Ignorable="d" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DesignHeight="478" d:DesignWidth="1138" 
+    xmlns:dataInput="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Data.Input"
+    xmlns:prim="clr-namespace:System.Windows.Controls.Primitives;assembly=System.Windows.Controls.Data"
+   >
+
+    <UserControl.Resources>
+        <Style x:Name="DataGridColumnHeaderStyle" TargetType="prim:DataGridColumnHeader">
+            <Setter Property="HorizontalContentAlignment" Value="Right" />
+        </Style>
+    </UserControl.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto" BorderThickness="0">
+        <Grid Margin="10,10,10,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition MaxWidth="150" Width="150*"></ColumnDefinition>
+                <ColumnDefinition Width="960*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="13*"></RowDefinition>
+                <RowDefinition Height="212*" />
+                <RowDefinition Height="225*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Button x:Name="myButton" Margin="6,132,0,43" HorizontalAlignment="Left" Width="100" Height="50" Content="Clean log" Click="myButton_Click"></Button>
+            <TextBox x:Name="myComment" Margin="0,132,6,44" Grid.Column="1" HorizontalAlignment="Stretch" IsReadOnly="True" VerticalScrollBarVisibility="Auto" Height="60" MaxHeight="60"></TextBox>
+            
+            <data:DataGrid x:Name="myStockList" Margin="5" Grid.Row="1" Grid.ColumnSpan="2" IsReadOnly="True" Grid.RowSpan="5" AutoGenerateColumns="False" FontWeight="Bold" CanUserSortColumns="True" MinColumnWidth="90">
+                <data:DataGrid.Columns>
+                    <data:DataGridTemplateColumn DisplayIndex="1" Header="Stock Name" CanUserReorder="True" CanUserResize="True" CanUserSort="True" Width="Auto" SortMemberPath="StockName">
+                        <data:DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Background="{Binding StockNameColor}">
+                                    <TextBlock Padding="5" FontWeight="Normal" Text="{Binding StockName}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </data:DataGridTemplateColumn.CellTemplate>
+                    </data:DataGridTemplateColumn>
+
+                    <data:DataGridTemplateColumn DisplayIndex="2" Header="Last Price" HeaderStyle="{StaticResource DataGridColumnHeaderStyle}" CanUserReorder="True" CanUserResize="True" CanUserSort="True" Width="Auto" SortMemberPath="LastPrice">
+                        <data:DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Background="{Binding LastPriceColor}">
+                                    <TextBlock Padding="5" FontWeight="Normal" Text="{Binding LastPrice}" TextAlignment="Right" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </data:DataGridTemplateColumn.CellTemplate>
+                    </data:DataGridTemplateColumn>
+
+                    <data:DataGridTemplateColumn DisplayIndex="3" Header="Time" HeaderStyle="{StaticResource DataGridColumnHeaderStyle}" CanUserReorder="True" CanUserResize="True" CanUserSort="True" Width="Auto" SortMemberPath="Time">
+                        <data:DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Background="{Binding TimeColor}">
+                                    <TextBlock Padding="5" FontWeight="Normal" Text="{Binding Time}" TextAlignment="Right" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </data:DataGridTemplateColumn.CellTemplate>
+                    </data:DataGridTemplateColumn>
+
+                    <data:DataGridTemplateColumn DisplayIndex="4" Header="Change" HeaderStyle="{StaticResource DataGridColumnHeaderStyle}" CanUserReorder="True" CanUserResize="True" CanUserSort="True" Width="Auto" SortMemberPath="PctChange">
+                        <data:DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Background="{Binding PctChangeColor}">
+                                    <TextBlock Padding="5" FontWeight="Normal" Text="{Binding PctChange}" TextAlignment="Right" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </data:DataGridTemplateColumn.CellTemplate>
+                    </data:DataGridTemplateColumn>
+
+                    <data:DataGridTemplateColumn DisplayIndex="5" Header="Bid Quantity" HeaderStyle="{StaticResource DataGridColumnHeaderStyle}" CanUserReorder="True" CanUserResize="True" CanUserSort="True" Width="Auto" SortMemberPath="BidQuantity">
+                        <data:DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Background="{Binding BidQuantityColor}">
+                                    <TextBlock Padding="5" FontWeight="Normal" Text="{Binding BidQuantity}" TextAlignment="Right" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </data:DataGridTemplateColumn.CellTemplate>
+                    </data:DataGridTemplateColumn>
+
+                    <data:DataGridTemplateColumn DisplayIndex="6" Header="Bid" HeaderStyle="{StaticResource DataGridColumnHeaderStyle}" CanUserReorder="True" CanUserResize="True" CanUserSort="True" Width="Auto" SortMemberPath="Bid">
+                        <data:DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Background="{Binding BidColor}">
+                                    <TextBlock Padding="5" FontWeight="Normal" Text="{Binding Bid}" TextAlignment="Right" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </data:DataGridTemplateColumn.CellTemplate>
+                    </data:DataGridTemplateColumn>
+
+                    <data:DataGridTemplateColumn DisplayIndex="7" Header="Ask" HeaderStyle="{StaticResource DataGridColumnHeaderStyle}" CanUserReorder="True" CanUserResize="True" CanUserSort="True" Width="Auto" SortMemberPath="Ask">
+                        <data:DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Background="{Binding AskColor}">
+                                    <TextBlock Padding="5" FontWeight="Normal" Text="{Binding Ask}" TextAlignment="Right" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </data:DataGridTemplateColumn.CellTemplate>
+                    </data:DataGridTemplateColumn>
+
+                    <data:DataGridTemplateColumn DisplayIndex="8" Header="Ask Quantity" HeaderStyle="{StaticResource DataGridColumnHeaderStyle}" CanUserReorder="True" CanUserResize="True" CanUserSort="True" Width="Auto" SortMemberPath="AskQuantity">
+                        <data:DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Background="{Binding AskQuantityColor}">
+                                    <TextBlock Padding="5" FontWeight="Normal" Text="{Binding AskQuantity}" TextAlignment="Right" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </data:DataGridTemplateColumn.CellTemplate>
+                    </data:DataGridTemplateColumn>
+
+                    <data:DataGridTemplateColumn DisplayIndex="9" Header="Min" HeaderStyle="{StaticResource DataGridColumnHeaderStyle}" CanUserReorder="True" CanUserResize="True" CanUserSort="True" Width="Auto" SortMemberPath="Min">
+                        <data:DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Background="{Binding MinColor}">
+                                    <TextBlock Padding="5" FontWeight="Normal" Text="{Binding Min}" TextAlignment="Right" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </data:DataGridTemplateColumn.CellTemplate>
+                    </data:DataGridTemplateColumn>
+
+                    <data:DataGridTemplateColumn DisplayIndex="10" Header="Max" HeaderStyle="{StaticResource DataGridColumnHeaderStyle}" CanUserReorder="True" CanUserResize="True" CanUserSort="True" Width="Auto" SortMemberPath="Max">
+                        <data:DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Background="{Binding MaxColor}">
+                                    <TextBlock Padding="5" FontWeight="Normal" Text="{Binding Max}" TextAlignment="Right" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </data:DataGridTemplateColumn.CellTemplate>
+                    </data:DataGridTemplateColumn>
+
+                    <data:DataGridTemplateColumn DisplayIndex="11" Header="Ref." HeaderStyle="{StaticResource DataGridColumnHeaderStyle}" CanUserReorder="True" CanUserResize="True" CanUserSort="True" Width="Auto" SortMemberPath="RefPrice">
+                        <data:DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Background="{Binding RefPriceColor}">
+                                    <TextBlock Padding="5" FontWeight="Normal" Text="{Binding RefPrice}" TextAlignment="Right" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </data:DataGridTemplateColumn.CellTemplate>
+                    </data:DataGridTemplateColumn>
+
+                    <data:DataGridTemplateColumn DisplayIndex="12" Header="Open" HeaderStyle="{StaticResource DataGridColumnHeaderStyle}" CanUserReorder="True" CanUserResize="True" CanUserSort="True" Width="Auto" SortMemberPath="OpenPrice">
+                        <data:DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Background="{Binding OpenPriceColor}">
+                                    <TextBlock Padding="5" FontWeight="Normal" Text="{Binding OpenPrice}" TextAlignment="Right" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </data:DataGridTemplateColumn.CellTemplate>
+                    </data:DataGridTemplateColumn>
+
+
+                </data:DataGrid.Columns>
+            </data:DataGrid>
+            <dataInput:Label Grid.Column="1" Height="29" HorizontalAlignment="Left" Margin="214,44,0,0" Name="label1" VerticalAlignment="Top" Width="403" Content="Lightstreamer :: Silverlight :: Stock-List Demo" FontWeight="Bold" FontSize="15" />
+            <Image Grid.ColumnSpan="2" Height="80" HorizontalAlignment="Left" Margin="6,6,0,0" Name="logoImg" Stretch="Fill" VerticalAlignment="Top" Width="308" Source="/SilverlightDemo;component/images/Lighstreamer.png" />
+            <Image Height="51" HorizontalAlignment="Left" Name="statusImg" Stretch="Fill" VerticalAlignment="Top" Width="21" Source="/SilverlightDemo;component/images/status_disconnected.png" Margin="-12,-12,0,0" />
+        </Grid>
+    </ScrollViewer>
+
+    
+</UserControl>

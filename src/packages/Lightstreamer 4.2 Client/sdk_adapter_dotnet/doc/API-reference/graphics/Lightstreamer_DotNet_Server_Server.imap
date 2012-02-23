@@ -1,0 +1,3 @@
+0,15,168,30:L:Lightstreamer.DotNet.Server.Server
+198,0,440,15:L:Lightstreamer.DotNet.Server.DataProviderServer
+198,30,440,45:L:Lightstreamer.DotNet.Server.MetadataProviderServer

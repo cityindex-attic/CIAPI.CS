@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
+<html>
+<head>
+<title>IHandyTableListener Methods Public Methods</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="generator" content="Doc-O-Matic" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <link rel="STYLESHEET" href="default.css" type="text/css" />
+
+<script type="text/javascript" src="scripts.js"></script>
+</head>
+<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '_!!MEMBERTYPE_Methods_Lightstreamer_DotNet_Client_IHandyTableListener_14_Public_Methods.html');" onmousedown="onBodyMouseDown();">
+
+<!-- Begin Popups -->
+
+<!-- End Popups -->
+
+<!-- Begin Page Header -->
+<div class="Element710" id="areafixed">
+<div class="Element92">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="33%">
+<div class="Element1">
+Lightstreamer Silverlight Client 1.3</div>
+</td><td width="34%">
+<div class="Element2">
+<a href="contents.html" target="tocidx"><img src="btn_globals_contents_black.gif" border="0" alt="Contents" title="Contents" onmouseover="switchImage(this, 'btn_globals_contents_black_hover.gif');" onmouseout="switchImage(this, 'btn_globals_contents_black.gif');"></a><a href="idx.html" target="tocidx"><img src="btn_globals_index_black.gif" border="0" alt="Index" title="Index" onmouseover="switchImage(this, 'btn_globals_index_black_hover.gif');" onmouseout="switchImage(this, 'btn_globals_index_black.gif');"></a><a href="index.html" target="topic"><img src="btn_globals_home_black.gif" border="0" alt="Home" title="Home" onmouseover="switchImage(this, 'btn_globals_home_black_hover.gif');" onmouseout="switchImage(this, 'btn_globals_home_black.gif');"></a></div>
+</td><td width="33%">
+</td></tr></table><div class="Element27">
+IHandyTableListener Methods Public Methods</div>
+<div class="Element28">
+<a href="!!MEMBERTYPE_Methods_Lightstreamer_DotNet_Client_IHandyTableListener.html" target="topic">IHandyTableListener Methods</a>&nbsp; <a href="_!!MEMBERTYPE_Methods_Lightstreamer_DotNet_Client_IHandyTableListener_14_Public_Methods_Public_Methods.html" target="topic">Legend</a></div>
+</div>
+</div>
+
+<!-- End Page Header -->
+
+<!-- Begin Client Area -->
+<div class="Element720" id="areascroll">
+<div class="Element721">
+
+<!-- Begin Page Content -->
+<div class="Element58">
+<div class="Element14">
+Public Methods</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element201">
+ &nbsp;</div></td><td class="Element200" valign="top" width="30%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="60%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="30%">
+<div class="Element203">
+<a href="Lightstreamer_DotNet_Client_IHandyTableListener_OnRawUpdatesLost@int@string@int.html" target="topic">OnRawUpdatesLost</a>&nbsp;</div></td><td class="Element206" valign="top" width="60%">
+<div class="Element207">
+Notification of one or more updates that were suppressed in the Server because of internal memory limitations. The notification can be sent if the subscription mode is RAW or COMMAND. It can also be sent if the subscription mode is MERGE or DISTINCT and unfiltered dispatching has been requested. In all these cases, an update loss may be unacceptable for the client (in filtered COMMAND mode, this applies to ADD and DELETE events only). &nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="30%">
+<div class="Element203">
+<a href="Lightstreamer_DotNet_Client_IHandyTableListener_OnSnapshotEnd@int@string.html" target="topic">OnSnapshotEnd</a>&nbsp;</div></td><td class="Element206" valign="top" width="60%">
+<div class="Element207">
+Notification that no more snapshot events are coming for an item. This notification is always received once, when the item is subscribed in DISTINCT or COMMAND mode and the snapshot is requested. &nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="30%">
+<div class="Element203">
+<a href="Lightstreamer_DotNet_Client_IHandyTableListener_OnUnsubscr@int@string.html" target="topic">OnUnsubscr</a>&nbsp;</div></td><td class="Element206" valign="top" width="60%">
+<div class="Element207">
+Notification of the unsubscription of an item in the table. It is sent before <a href="Lightstreamer_DotNet_Client_IHandyTableListener_OnUnsubscrAll.html" target="topic">OnUnsubscrAll</a>. Any data notification received after this call can be ignored.<br>If a <a href="Lightstreamer_DotNet_Client_SimpleTableInfo.html" target="topic">SimpleTableInfo</a> was used to describe the table, then the notification may not be sent for some item in the group; however, if any data notification is sent for an item, then it is guaranteed that the unsubscription notification for that item will also be sent.<br>&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="30%">
+<div class="Element203">
+<a href="Lightstreamer_DotNet_Client_IHandyTableListener_OnUnsubscrAll.html" target="topic">OnUnsubscrAll</a>&nbsp;</div></td><td class="Element206" valign="top" width="60%">
+<div class="Element207">
+Notification of the unsubscription of all the items in the table. The unsubscription may be subsequent to an UnsubscribeTable call or to the closure of the connection. There is no guarantee that this call will not be followed by some further <a href="Lightstreamer_DotNet_Client_IHandyTableListener_OnUpdate@int@string@IUpdateInfo.html" target="topic">OnUpdate</a> call. Such extra calls should be ignored. &nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="30%">
+<div class="Element203">
+<a href="Lightstreamer_DotNet_Client_IHandyTableListener_OnUpdate@int@string@IUpdateInfo.html" target="topic">OnUpdate</a>&nbsp;</div></td><td class="Element206" valign="top" width="60%">
+<div class="Element207">
+Notification of an update of the values for an item in the table. Field value information is supplied through a suitable value object; as such, the value object can be stored and inquired in a different thread, if needed. &nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+</div>
+<!-- End Page Content -->
+
+<!-- Begin Page Footer -->
+<div class="Element93">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="100%">
+<div class="Element3">
+<a href="http://www.lightstreamer.com/" target="_blank">Copyright (C) 2004-2011 Weswit s.r.l.</a></div>
+</td></tr><tr><td width="100%">
+<div class="Element4">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="idx.html" target="tocidx">Index</a> | <a href="index.html" target="topic">Home</a></div>
+</td></tr></table></div>
+
+<!-- End Page Footer -->
+</div>
+</div>
+
+<!-- End Client Area -->
+</body></html>

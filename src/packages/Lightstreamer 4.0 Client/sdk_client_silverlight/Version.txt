@@ -1,2 +1,0 @@
-Lightstreamer Silverlight Client Library version 1.3.4168.21501
-Compatible with Lightstreamer Server since version 4.0
