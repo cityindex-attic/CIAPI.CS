@@ -70,9 +70,9 @@ namespace StreamingClient.Lightstreamer
                 if (!_adapters.ContainsKey(dataAdapter))
                 {
 #if WINDOWS_PHONE
-                    if(_adapters.Count==2)
+                    if(_adapters.Count==5)
                     {
-                        throw new Exception("Max concurrent streams for WP7 is 2");
+                        throw new Exception("Max concurrent lightstreamer adapters for WP7.1 is 5");
                     }
 #endif
                     var adp = new FaultTolerantLsClientAdapter(_streamingUri, _userName, _sessionId, dataAdapter);
