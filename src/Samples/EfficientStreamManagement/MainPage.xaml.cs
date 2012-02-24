@@ -18,37 +18,37 @@ namespace EfficientStreamManagement
     {
         //This is an IFX Markets Test account on live
         //Use FlexITP at : https://trade.loginandtrade.com/tp/fx/
-        //Ensure the account has some open positions
         private const string USERNAME = "XX055187"; 
         private const string PASSWORD = "password";
         private const int ACCOUNTOPERATORID = 3321;  //IFX Markets (test)
-        private const int PRICEMARKETID = 400481142; // GBP/USD
-        public static Client RpcClient;
-        public static IStreamingClient StreamingClient;
-
+        private int[] PRICEMARKETIDS = new[]{ 400481136, 400481137, 400481138, 400481139, 400481140, 400481141, 400481142 }; //GBP/AUD, GBP/CAD, GBP/CHF, GBP/JPY, GBP/NZD, GBP/SGD, GBP/USD
         private static readonly Uri RPC_URI = new Uri("https://ciapi.cityindex.com/tradingapi");
         private static readonly Uri STREAMING_URI = new Uri("https://push.cityindex.com");
+
+        public static Client RpcClient;
+        public static IStreamingClient StreamingClient;
         private IStreamingListener<ClientAccountMarginDTO> _clientAccountMarginsListener;
-        private IStreamingListener<NewsDTO> _newsListener;
-        private IStreamingListener<OrderDTO> _orderslistener;
         private IStreamingListener<PriceDTO> _priceListener;
         private IStreamingListener<PriceDTO> _defaultPriceListener;
         private IStreamingListener<QuoteDTO> _quotesListener;
 
-        // Constructor
+        #region Setup and helper functions
+
         public MainPage()
         {
             InitializeComponent();
             //Hook up a logger for the CIAPI.CS libraries
             LogManager.CreateInnerLogger = (logName, logLevel, showLevel, showDateTime, showLogName, dateTimeFormat)
-                         => new SimpleDebugAppender(logName, logLevel, showLevel, showDateTime, showLogName, dateTimeFormat);
+                                           =>
+                                           new SimpleDebugAppender(logName, logLevel, showLevel, showDateTime,
+                                                                   showLogName, dateTimeFormat);
 
             BuildClients();
         }
 
         private void BuildClients()
         {
-            Dispatcher.BeginInvoke(() => listBox1.Items.Add("creating rpc client"));
+            Dispatcher.BeginInvoke(() => statusUpdatesListBox.Items.Add("creating rpc client"));
             RpcClient = new Client(RPC_URI);
             RpcClient.BeginLogIn(USERNAME, PASSWORD, InitializeStreamingClient, null);
         }
@@ -64,69 +64,105 @@ namespace EfficientStreamManagement
         private void LogToScreen(string message)
         {
             Dispatcher.BeginInvoke(() =>
-                {
-                    listBox1.Items.Add(message);
-                    listBox1.ScrollIntoView(listBox1.Items[listBox1.Items.Count-1]);
-                });
-
+                                       {
+                                           statusUpdatesListBox.Items.Add(message);
+                                           statusUpdatesListBox.ScrollIntoView(
+                                               statusUpdatesListBox.Items[statusUpdatesListBox.Items.Count - 1]);
+                                       });
         }
 
+        #endregion
+
+        #region Button Click handlers
 
         private void start_CITYINDEXSTREAMING_Click(object sender, RoutedEventArgs e)
         {
             new Thread(() =>
-            {
-                BuildListener_CITYINDEXSTREAMING_DataAdapterSet();
-            }).Start();
+                           {
+                               BuildListener_CITYINDEXSTREAMING_DataAdapterSet();
+                           }).Start();
         }
 
         private void start_STREAMINGCLIENTACCOUNT_Click(object sender, RoutedEventArgs e)
         {
             new Thread(() =>
-            {
-                BuildListener_STREAMINGCLIENTACCOUNT_DataAdapterSet();
-            }).Start();
+                           {
+                               BuildListener_STREAMINGCLIENTACCOUNT_DataAdapterSet();
+                           }).Start();
         }
 
         private void start_STREAMINGTRADINGACCOUNT_Click(object sender, RoutedEventArgs e)
         {
             new Thread(() =>
-            {
-                BuildListener_STREAMINGTRADINGACCOUNT_DataAdapterSet();
-            }).Start();
+                           {
+                               BuildListener_STREAMINGTRADINGACCOUNT_DataAdapterSet();
+                           }).Start();
         }
 
         private void start_CITYINDEXSTREAMINGDEFAULTPRICES_Click(object sender, RoutedEventArgs e)
         {
             new Thread(() =>
+                           {
+                               BuildListener_CITYINDEXSTREAMINGDEFAULTPRICES_DataAdapterSet();
+                           }).Start();
+        }
+
+        private void startAllButton_Click(object sender, RoutedEventArgs e)
+        {
+            new Thread(() =>
             {
+                LogToScreen("building all listeners");
+                BuildListener_CITYINDEXSTREAMING_DataAdapterSet();
                 BuildListener_CITYINDEXSTREAMINGDEFAULTPRICES_DataAdapterSet();
+                BuildListener_STREAMINGCLIENTACCOUNT_DataAdapterSet();
+                BuildListener_STREAMINGTRADINGACCOUNT_DataAdapterSet();
+                GetMarketInfo();
+                LogToScreen("done building all listeners");
             }).Start();
-        }
-
-        private void stop_CITYINDEXSTREAMING_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void stop_STREAMINGCLIENTACCOUNT_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void stop_CITYINDEXSTREAMINGDEFAULTPRICES_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void stop_STREAMINGTRADINGACCOUNT_Click(object sender, RoutedEventArgs e)
-        {
-
         }
 
         private void stop_ALL_Click(object sender, RoutedEventArgs e)
         {
             TearDownListeners();
+        }
+
+        private void getMarketInfo_Click(object sender, RoutedEventArgs e)
+        {
+            GetMarketInfo();
+        }
+
+        #endregion
+
+        private void BuildListener_CITYINDEXSTREAMING_DataAdapterSet()
+        {
+            LogToScreen("building listener on CITYINDEXSTREAMING data adapter");
+            _priceListener = StreamingClient.BuildPricesListener(PRICEMARKETIDS);
+            _priceListener.MessageReceived += PriceListenerMessageReceived;
+            LogToScreen("listener on CITYINDEXSTREAMING built");
+        }
+
+        private void BuildListener_CITYINDEXSTREAMINGDEFAULTPRICES_DataAdapterSet()
+        {
+            LogToScreen("building listener on CITYINDEXSTREAMINGDEFAULTPRICES data adapter");
+            _defaultPriceListener = StreamingClient.BuildDefaultPricesListener(ACCOUNTOPERATORID);
+            _defaultPriceListener.MessageReceived += _defaultPricesListener_MessageReceived;
+            LogToScreen("listener on CITYINDEXSTREAMING built");
+        }
+
+        private void BuildListener_STREAMINGCLIENTACCOUNT_DataAdapterSet()
+        {
+            LogToScreen("building listener on CITYINDEXCLIENTACCOUNT data adapter");
+            _clientAccountMarginsListener = StreamingClient.BuildClientAccountMarginListener();
+            _clientAccountMarginsListener.MessageReceived += ClientAccountMarginsListenerMessageReceived;
+            Dispatcher.BeginInvoke(() => statusUpdatesListBox.Items.Add("listener on CITYINDEXCLIENTACCOUNT built"));
+        }
+
+        private void BuildListener_STREAMINGTRADINGACCOUNT_DataAdapterSet()
+        {
+            LogToScreen("building listener on CITYINDEXTRADINGACCOUNT data adapter");
+            _quotesListener = StreamingClient.BuildQuotesListener();
+            _quotesListener.MessageReceived += _quotesListener_MessageReceived;
+            Dispatcher.BeginInvoke(() => statusUpdatesListBox.Items.Add("listener on CITYINDEXTRADINGACCOUNT built"));
         }
 
         private void TearDownListeners()
@@ -151,18 +187,6 @@ namespace EfficientStreamManagement
                 StreamingClient.TearDownListener(_clientAccountMarginsListener);
             }
 
-            if (_newsListener != null)
-            {
-                _newsListener.MessageReceived -= _newsListener_MessageReceived;
-                StreamingClient.TearDownListener(_newsListener);
-            }
-
-            if (_orderslistener != null)
-            {
-                _orderslistener.MessageReceived -= _orderslistener_MessageReceived;
-                StreamingClient.TearDownListener(_orderslistener);
-            }
-
             if (_quotesListener != null)
             {
                 _quotesListener.MessageReceived -= _quotesListener_MessageReceived;
@@ -172,55 +196,14 @@ namespace EfficientStreamManagement
             LogToScreen("all listeners torn down");
         }
 
-        private void BuildListener_CITYINDEXSTREAMING_DataAdapterSet()
+        private void GetMarketInfo()
         {
-            LogToScreen("building listener on CITYINDEXSTREAMING data adapter");
-            _priceListener = StreamingClient.BuildPricesListener(PRICEMARKETID);
-            _priceListener.MessageReceived += PriceListenerMessageReceived;
-            LogToScreen("listener on CITYINDEXSTREAMING built");
-        }
-
-        private void BuildListener_CITYINDEXSTREAMINGDEFAULTPRICES_DataAdapterSet()
-        {
-            LogToScreen("building listener on CITYINDEXSTREAMINGDEFAULTPRICES data adapter");
-            _defaultPriceListener = StreamingClient.BuildDefaultPricesListener(ACCOUNTOPERATORID);
-            _defaultPriceListener.MessageReceived += _defaultPricesListener_MessageReceived;
-            LogToScreen("listener on CITYINDEXSTREAMING built");
-        }
-
-        private void BuildListener_STREAMINGCLIENTACCOUNT_DataAdapterSet()
-        {
-            LogToScreen("building listener on CITYINDEXCLIENTACCOUNT data adapter");
-            _clientAccountMarginsListener = StreamingClient.BuildClientAccountMarginListener();
-            _clientAccountMarginsListener.MessageReceived += ClientAccountMarginsListenerMessageReceived;
-            Dispatcher.BeginInvoke(() => listBox1.Items.Add("listener on CITYINDEXCLIENTACCOUNT built"));
-        }
-
-        private void BuildListener_STREAMINGTRADINGACCOUNT_DataAdapterSet()
-        {
-            LogToScreen("building listener on CITYINDEXTRADINGACCOUNT data adapter");
-            _quotesListener = StreamingClient.BuildQuotesListener();
-            _quotesListener.MessageReceived += _quotesListener_MessageReceived;
-            Dispatcher.BeginInvoke(() => listBox1.Items.Add("listener on CITYINDEXTRADINGACCOUNT built"));
-        }
-
-        private void startAllButton_Click(object sender, RoutedEventArgs e)
-        {
-            new Thread(() =>
+            LogToScreen("Getting marketinfo for 7 markets");
+            foreach (var marketId in PRICEMARKETIDS)
             {
-                LogToScreen("building all listeners");
-                _priceListener = StreamingClient.BuildPricesListener(PRICEMARKETID);
-                _priceListener.MessageReceived += PriceListenerMessageReceived;
-                _defaultPriceListener = StreamingClient.BuildDefaultPricesListener(ACCOUNTOPERATORID);
-                _defaultPriceListener.MessageReceived += _defaultPricesListener_MessageReceived;
-                _clientAccountMarginsListener = StreamingClient.BuildClientAccountMarginListener();
-                _clientAccountMarginsListener.MessageReceived += ClientAccountMarginsListenerMessageReceived;
-                _quotesListener = StreamingClient.BuildQuotesListener();
-                _quotesListener.MessageReceived += _quotesListener_MessageReceived;
-                LogToScreen("done building all listeners");
-            }).Start();
+                RpcClient.Market.BeginGetMarketInformation(marketId.ToString(), OnGetMarketInfoResponse, null);
+            }
         }
-
 
         private void _defaultPricesListener_MessageReceived(object sender, MessageEventArgs<PriceDTO> e) 
         {
@@ -232,16 +215,6 @@ namespace EfficientStreamManagement
             Dispatcher.BeginInvoke(() => lastOrderTextbox.Text = e.Data.ToStringWithValues());
         }
 
-        private void _orderslistener_MessageReceived(object sender, MessageEventArgs<OrderDTO> e)
-        {
-            Dispatcher.BeginInvoke(() => lastOrderTextbox.Text = e.Data.ToStringWithValues());
-
-        }
-
-        private void _newsListener_MessageReceived(object sender, MessageEventArgs<NewsDTO> e)
-        {
-        }
-
         private void ClientAccountMarginsListenerMessageReceived(object sender,
                                                                  MessageEventArgs<ClientAccountMarginDTO> e)
         {
@@ -250,19 +223,35 @@ namespace EfficientStreamManagement
 
         private void PriceListenerMessageReceived(object sender, MessageEventArgs<PriceDTO> e)
         {
-            Dispatcher.BeginInvoke(() => lastPrice1TextBox.Text = e.Data.Price.ToString());
+            Dispatcher.BeginInvoke(() =>
+                                       {
+                                           if (PRICEMARKETIDS[1] == e.Data.MarketId)
+                                           {
+                                               lastPrice1TextBox.Text = e.Data.Price.ToString();
+                                           }
+                                           if (PRICEMARKETIDS[2] == e.Data.MarketId)
+                                           {
+                                               lastPrice2TextBox.Text = e.Data.Price.ToString();
+                                           }
+                                           if (PRICEMARKETIDS[3] == e.Data.MarketId)
+                                           {
+                                               lastPrice3TextBox.Text = e.Data.Price.ToString();
+                                           }
+                                           if (PRICEMARKETIDS[4] == e.Data.MarketId)
+                                           {
+                                               lastPrice4TextBox.Text = e.Data.Price.ToString();
+                                           }
+                                           if (PRICEMARKETIDS[5] == e.Data.MarketId)
+                                           {
+                                               lastPrice5TextBox.Text = e.Data.Price.ToString();
+                                           }
+                                       });
         }
-
-        private void marketSearchButton_Click(object sender, RoutedEventArgs e)
+        
+        private void OnGetMarketInfoResponse(ApiAsyncResult<GetMarketInformationResponseDTO> asyncresult)
         {
-            RpcClient.Market.BeginListMarketInformationSearch(false, true, false, true, false, marketSearchTextBox.Text, 10, false, OnMarketSearchResponse, null);
+            var result = RpcClient.Market.EndGetMarketInformation(asyncresult);
+            LogToScreen(string.Format("{0}->{1}", result.MarketInformation.MarketId, result.MarketInformation.Name));
         }
-
-        private void OnMarketSearchResponse(ApiAsyncResult<ListMarketInformationSearchResponseDTO> asyncresult)
-        {
-            var result = RpcClient.Market.EndListMarketInformationSearch(asyncresult);
-            LogToScreen(String.Join(", ", result.MarketInformation.Select(m => m.Name).ToArray()));
-        }
-
     }
 }
