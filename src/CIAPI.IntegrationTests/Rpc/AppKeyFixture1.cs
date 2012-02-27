@@ -6,7 +6,7 @@ using NUnit.Framework;
 namespace CIAPI.IntegrationTests.Rpc
 {
     [TestFixture]
-    public class AppKeyFixture : RpcFixtureBase
+    public class AppKeyFixture1 : RpcFixtureBase
     {
         [Test]
         public void AppKeyIsAppendedToLogonRequest()
