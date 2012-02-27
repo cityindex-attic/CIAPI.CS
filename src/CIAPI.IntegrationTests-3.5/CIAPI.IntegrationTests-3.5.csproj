@@ -68,7 +68,7 @@
     <Compile Include="..\CIAPI.IntegrationTests\Rpc\AccountInformationFixture.cs">
       <Link>Rpc\AccountInformationFixture.cs</Link>
     </Compile>
-    <Compile Include="..\CIAPI.IntegrationTests\Rpc\ApiKeyFixture.cs">
+    <Compile Include="..\CIAPI.IntegrationTests\Rpc\AppKeyFixture.cs">
       <Link>Rpc\ApiKeyFixture.cs</Link>
     </Compile>
     <Compile Include="..\CIAPI.IntegrationTests\Rpc\CfdMarketsFixture.cs">
