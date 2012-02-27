@@ -19,7 +19,7 @@ namespace CIAPI.IntegrationTests.Rpc
         {
             try
             {
-                var rpcClient = new Client(new Uri("http://invalidservername.asiuhd8h38hsh.wam/TradingApi"));
+                var rpcClient = new Client(new Uri("http://invalidservername.asiuhd8h38hsh.wam/TradingApi"), AppKey);
                 rpcClient.LogIn("username", "password");
             }
             catch (Exception ex)

@@ -12,10 +12,11 @@ namespace ConsoleSpikes
         private static readonly Uri STREAMING_URI = new Uri("https://pushpreprod.cityindextest9.co.uk");
         private const string USERNAME = "xx189949";
         private const string PASSWORD = "password";
+        private const string AppKey = "testkey-for-ConsoleSpikes";
 
         public void FetchNews_sync()
         {
-            var ctx = new CIAPI.Rpc.Client(RPC_URI);
+            var ctx = new CIAPI.Rpc.Client(RPC_URI, AppKey);
             ctx.LogIn(USERNAME, PASSWORD);
 
             ListNewsHeadlinesResponseDTO news = ctx.News.ListNewsHeadlinesWithSource("dj", "UK", 10);
@@ -27,7 +28,7 @@ namespace ConsoleSpikes
 
         public void FetchNews_async()
         {
-            var ctx = new CIAPI.Rpc.Client(RPC_URI);
+            var ctx = new CIAPI.Rpc.Client(RPC_URI, AppKey);
             var gate = new AutoResetEvent(false);
             ctx.BeginLogIn(USERNAME, PASSWORD, a =>
             {
@@ -54,7 +55,7 @@ namespace ConsoleSpikes
         public void SubscribeToNewsHeadlineStream()
         {
             //First we need a valid session, obtained from the Rpc client
-            var ctx = new CIAPI.Rpc.Client(RPC_URI);
+            var ctx = new CIAPI.Rpc.Client(RPC_URI, AppKey);
             ctx.LogIn(USERNAME, PASSWORD);
 
             //Next we create a connection to the streaming api, using the authenticated session

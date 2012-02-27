@@ -19,7 +19,7 @@ namespace CIAPI.IntegrationTests.Streaming
         [TestFixtureSetUp]
         public void SetupFixture()
         {
-            _authenticatedClient = new Client(Settings.RpcUri);
+            _authenticatedClient = new Client(Settings.RpcUri, AppKey);
             _authenticatedClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);
             _streamingClient = StreamingClientFactory.CreateStreamingClient(Settings.StreamingUri, Settings.RpcUserName, _authenticatedClient.Session);
         }

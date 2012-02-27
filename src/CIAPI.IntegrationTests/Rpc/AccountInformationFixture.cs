@@ -14,6 +14,7 @@ namespace CIAPI.IntegrationTests.Rpc
     [TestFixture]
     public class AccountInformationFixture : RpcFixtureBase
     {
+
         [Test]
         public void CanListOpenPositions()
         {
@@ -30,7 +31,7 @@ namespace CIAPI.IntegrationTests.Rpc
         public void CanChangePassword()
         {
             const string NEWPASSWORD = "bingo72652";
-            var rpcClient = new Client(Settings.RpcUri);
+            var rpcClient = new Client(Settings.RpcUri, AppKey);
             
             //Login with existing credentials
             rpcClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);

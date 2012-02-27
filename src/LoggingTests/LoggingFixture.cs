@@ -140,7 +140,7 @@ namespace LoggingTests
             TestRequestFactory factory = new TestRequestFactory();
             var requestController = new RequestController(TimeSpan.FromSeconds(0), 2, factory, new ErrorResponseDTOJsonExceptionFactory(), new ThrottledRequestQueue(TimeSpan.FromSeconds(5), 30, 10, "data"), new ThrottledRequestQueue(TimeSpan.FromSeconds(3), 1, 3, "trading"));
 
-            var ctx = new CIAPI.Rpc.Client(new Uri(TestConfig.RpcUrl), requestController);
+            var ctx = new CIAPI.Rpc.Client(new Uri(TestConfig.RpcUrl), "mockApiKey", requestController);
             factory.CreateTestRequest(expectedJson);
             return ctx;
         }

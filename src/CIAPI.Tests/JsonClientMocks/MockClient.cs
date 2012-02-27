@@ -7,8 +7,6 @@ using Client = CIAPI.Rpc.Client;
 
 namespace CIAPI.Testing
 {
-
-
     public class MockClient
     {
         private Client _client;
@@ -22,7 +20,7 @@ namespace CIAPI.Testing
             var authenticatedClient = new MockClient
             {
                 _client =
-                    new Client(new Uri("https://mock.server.com/TradingAPI"),
+                    new Client(new Uri("https://mock.server.com/TradingAPI"), "mockAPIKEY",
                                requestController)
                     {
                         UserName = "MOCKUSERNAME",

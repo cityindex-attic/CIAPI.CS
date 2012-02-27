@@ -158,7 +158,7 @@
 
                 serviceText = serviceText.concat("\n" + "        " + visibility + " virtual " + returnType + " " + key + "(" + paramList + ")");
                 serviceText = serviceText.concat("\n" + "        {");
-                serviceText = serviceText.concat("\n" + "            string uriTemplate = _client.AppendApiKey(\"" + uriTemplate + "\");");
+                serviceText = serviceText.concat("\n" + "            string uriTemplate = \"" + uriTemplate + "\";");
 
                 serviceText = serviceText.concat("\n" + "            return _client.Request<" + returnType + ">(\"" + target + "\", uriTemplate , \"" + transport + "\",");
                 serviceText = serviceText.concat("\n" + "            new Dictionary<string, object>");
@@ -182,7 +182,7 @@
                 serviceText = serviceText.concat("\n" + "        /// <param name=\"state\"></param>");
                 serviceText = serviceText.concat("\n" + "        " + visibility + " virtual void Begin" + key + "(" + paramList + (paramList ? "," : "") + " ApiAsyncCallback<" + returnType + "> callback, object state)");
                 serviceText = serviceText.concat("\n" + "        {");
-                serviceText = serviceText.concat("\n" + "            string uriTemplate = _client.AppendApiKey(\"" + uriTemplate + "\");");
+                serviceText = serviceText.concat("\n" + "            string uriTemplate = \"" + uriTemplate + "\";");
 
                 serviceText = serviceText.concat("\n" + "            _client.BeginRequest(callback, state, \"" + target + "\", uriTemplate , \"" + transport + "\",");
 
@@ -228,8 +228,9 @@
 
             // to support smd methods that do not have a 'section' in meta or patch
             self.writeLine("private Client _client;");
+            self.writeLine("public string AppKey { get; set; }");
 
-            self.writeLine("        public Client(Uri uri)");
+            self.writeLine("        public Client(Uri uri, string appKey)");
             self.writeLine("            : base(uri, new RequestController(TimeSpan.FromSeconds(0), 2, new RequestFactory(), new ErrorResponseDTOJsonExceptionFactory(), new ThrottledRequestQueue(TimeSpan.FromSeconds(5), 30, 10, \"data\"), new ThrottledRequestQueue(TimeSpan.FromSeconds(5), 30, 10, \"trading\"),new ThrottledRequestQueue(TimeSpan.FromSeconds(5), 30, 10, \"default\")) )");
             self.writeLine("        {");
             self.writeLine('	#if SILVERLIGHT');
@@ -241,12 +242,13 @@
             self.writeLine('	#else');
             self.writeLine('	        UserAgent = "CIAPI.CS." + GetVersionNumber();');
             self.writeLine('	#endif');
+            self.writeLine("        AppKey=appKey;");
             self.writeLine("        _client=this;");
             self.writeLine(subClassInitializer);
             self.writeLine('        Log.Debug("Rpc.Client created for " + uri.AbsoluteUri);');
             
             self.writeLine("        }");
-            self.writeLine("        public Client(Uri uri, IRequestController requestController)");
+            self.writeLine("        public Client(Uri uri, string appKey, IRequestController requestController)");
             self.writeLine("            : base(uri, requestController)");
             self.writeLine("        {");
             self.writeLine('	#if SILVERLIGHT');
@@ -258,6 +260,7 @@
             self.writeLine('	#else');
             self.writeLine('	        UserAgent = "CIAPI.CS." + GetVersionNumber();');
             self.writeLine('	#endif');
+            self.writeLine("        AppKey=appKey;");
             self.writeLine("        _client=this;");
             self.writeLine(subClassInitializer);
             self.writeLine('        Log.Debug("Rpc.Client created for " + uri.AbsoluteUri);');

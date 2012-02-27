@@ -19,6 +19,7 @@ namespace WinFormsSpike
     public partial class Form1 : Form
     {
         CIAPI.Rpc.Client _ctx;
+        private const string AppKey = "testkey-for-WinFormsSpike";
 
         public Form1()
         {
@@ -42,7 +43,7 @@ namespace WinFormsSpike
         private void LoginButtonClick(object sender, EventArgs e)
         {
             DisableUi();
-            _ctx = new CIAPI.Rpc.Client(new Uri(ApiEndpointTextBox.Text));
+            _ctx = new CIAPI.Rpc.Client(new Uri(ApiEndpointTextBox.Text), AppKey);
             _ctx.BeginLogIn(UidTextBox.Text, PwdTextBox.Text, result =>
                 {
                     try

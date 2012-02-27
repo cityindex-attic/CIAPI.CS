@@ -23,24 +23,7 @@ namespace CIAPI.Rpc
             return _versionNumber;
         }
 
-        private string AppendApiKey(string uriTemplate)
-        {
-            uriTemplate += "";
-
-            if (ApiKey != null)
-            {
-                if (uriTemplate == "/")
-                {
-                    uriTemplate = "";
-                }
-                uriTemplate += (uriTemplate.Contains("?") ? "&" : "?");
-                uriTemplate += "api_key=" + ApiKey;
-            }
-            return uriTemplate;
-        }
-
-
-        public string ApiKey { get; set; }
+        
 
         private MagicNumberResolver _magicNumberResolver;
         public MagicNumberResolver MagicNumberResolver
@@ -85,7 +68,7 @@ namespace CIAPI.Rpc
             }
         }
 
-        #region AUthentication Wrapper
+        #region Authentication Wrapper
 
         /// <summary>
         /// Log In
@@ -98,12 +81,14 @@ namespace CIAPI.Rpc
             UserName = userName;
             Session = null;
 
-            var response = Request<ApiLogOnResponseDTO>("session", AppendApiKey("/"), "POST", new Dictionary<string, object>
+            var response = Request<ApiLogOnResponseDTO>("session", "/", "POST", new Dictionary<string, object>
                                                                                          {
                                                                                              {"apiLogOnRequest", new ApiLogOnRequestDTO()
                                                                                                                {
                                                                                                                    UserName=userName,
-                                                                                                                   Password = password
+                                                                                                                   Password = password,
+                                                                                                                   AppKey = AppKey,
+                                                                                                                   AppVersion = UserAgent
                                                                                                                }}
                                                                                          }, TimeSpan.FromMilliseconds(0),
                                                              "data");
@@ -125,7 +110,7 @@ namespace CIAPI.Rpc
             UserName = userName;
             Session = null;
 
-            BeginRequest(callback, state, "session", AppendApiKey("/"), "POST", new Dictionary<string, object>
+            BeginRequest(callback, state, "session", "/", "POST", new Dictionary<string, object>
                                                                       {
                                                                        {"apiLogOnRequest", new ApiLogOnRequestDTO()
                                                                         {
@@ -166,7 +151,7 @@ namespace CIAPI.Rpc
         public bool LogOut()
         {
             var response = Request<ApiLogOffResponseDTO>("session",
-                                                              AppendApiKey("/deleteSession?userName={userName}&session={session}"),
+                                                              "/deleteSession?userName={userName}&session={session}",
                                                                "POST", new Dictionary<string, object>
                                                                            {
                                                                                {"userName", UserName},
@@ -188,7 +173,7 @@ namespace CIAPI.Rpc
         /// <returns></returns>
         public void BeginLogOut(ApiAsyncCallback<ApiLogOffResponseDTO> callback, object state)
         {
-            BeginRequest(callback, state, "session", AppendApiKey("/deleteSession?userName={userName}&session={session}"), "POST",
+            BeginRequest(callback, state, "session", "/deleteSession?userName={userName}&session={session}", "POST",
                          new Dictionary<string, object>
                              {
                                  {"userName", UserName},

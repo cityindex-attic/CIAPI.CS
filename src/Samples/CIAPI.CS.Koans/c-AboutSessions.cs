@@ -12,6 +12,7 @@ namespace CIAPI.CS.Koans
         private Client _rpcClient;
         private string USERNAME;
         private string PASSWORD;
+        private const string AppKey = "testkey-for-Koans";
 
         [Koan(Order = 1)]
         public void CreatingASession()
@@ -20,7 +21,7 @@ namespace CIAPI.CS.Koans
             //that holds details about your connection.
             
             //You need to initialise the client with a valid endpoint
-            _rpcClient = new Rpc.Client(new Uri("https://ciapipreprod.cityindextest9.co.uk/TradingApi"));
+            _rpcClient = new Rpc.Client(new Uri("https://ciapipreprod.cityindextest9.co.uk/TradingApi"), AppKey);
             
             //And then create a session by creating a username & password
             //You can get test credentials by requesting them at https://ciapipreprod.cityindextest9.co.uk/CIAPI.docs/#content.test-credentials

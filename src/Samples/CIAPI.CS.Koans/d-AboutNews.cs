@@ -13,11 +13,12 @@ namespace CIAPI.CS.Koans
     {
         private string USERNAME = "xx189949";
         private string PASSWORD = "password";
+        private const string AppKey = "testkey-for-Koans";
 
         [Koan(Order = 0)]
         public void UsingNewsRequiresAValidSession()
         {
-            _rpcClient = new Rpc.Client(new Uri("https://ciapipreprod.cityindextest9.co.uk/TradingApi"));
+            _rpcClient = new Rpc.Client(new Uri("https://ciapipreprod.cityindextest9.co.uk/TradingApi"), AppKey);
 
             _rpcClient.LogIn(USERNAME, PASSWORD);
 

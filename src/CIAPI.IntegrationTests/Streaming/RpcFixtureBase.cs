@@ -10,6 +10,7 @@ namespace CIAPI.IntegrationTests.Streaming
 {
     public class RpcFixtureBase
     {
+        protected const string AppKey = "testkey-for-CIAPI.IntegrationTests";
         static RpcFixtureBase()
         {
             LogManager.CreateInnerLogger = (logName, logLevel, showLevel, showDateTime, showLogName, dateTimeFormat)
@@ -17,12 +18,9 @@ namespace CIAPI.IntegrationTests.Streaming
 
         }
 
-        public Client BuildRpcClient(string apiKey = null)
+        public Client BuildRpcClient()
         {
-            var rpcClient = new Client(Settings.RpcUri)
-                                {
-                                    ApiKey = apiKey
-                                };
+            var rpcClient = new Client(Settings.RpcUri, AppKey);
             rpcClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);
             return rpcClient;
         }
@@ -30,7 +28,7 @@ namespace CIAPI.IntegrationTests.Streaming
 
         public IStreamingClient BuildStreamingClient()
         {
-            var authenticatedClient = new CIAPI.Rpc.Client(Settings.RpcUri);
+            var authenticatedClient = new CIAPI.Rpc.Client(Settings.RpcUri, AppKey);
             authenticatedClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);
             return StreamingClientFactory.CreateStreamingClient(Settings.StreamingUri, Settings.RpcUserName, authenticatedClient.Session);
         }

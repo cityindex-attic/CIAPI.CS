@@ -13,6 +13,8 @@ namespace WindowsPhoneTestApplication
         const string streamingUrl = "https://pushpreprod.cityindextest9.co.uk/";
         const string userName = "0x160";
         const string password = "password";
+        private const string AppKey = "testkey-for-WindowsPhoneTestApplication";
+
         private Client client;
         private IStreamingClient streamingService;
         string[] popularMarketIds = new[]
@@ -32,7 +34,7 @@ namespace WindowsPhoneTestApplication
             // creating a single rpc client for an application is a better
             // approximation of the intended usage.
 
-            client = new Client(new Uri(apiUrl));
+            client = new Client(new Uri(apiUrl), AppKey);
             listBox1.Items.Add("Trying to connect..");
 
 

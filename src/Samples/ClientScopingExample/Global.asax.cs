@@ -10,6 +10,7 @@ namespace ClientScopingExample
     public class Global : HttpApplication
     {
         private static string _rpcStatus;
+        private const string AppKey = "testkey-for-ClientScopingExample";
 
         /// <summary>
         /// Use the GlobalRpcClient to perform requests on behalf of ALL users taking advantage of the cache and throttle.
@@ -34,7 +35,7 @@ namespace ClientScopingExample
                     };
             try
             {
-                GlobalRpcClient = new Client(new Uri("https://ciapipreprod.cityindextest9.co.uk/TradingApi"));
+                GlobalRpcClient = new Client(new Uri("https://ciapipreprod.cityindextest9.co.uk/TradingApi"), AppKey);
                 ApiLogOnResponseDTO response = GlobalRpcClient.LogIn("XX070608", "password");
                 if (response.PasswordChangeRequired)
                 {

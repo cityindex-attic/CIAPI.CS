@@ -20,6 +20,7 @@ namespace EfficientStreamManagement
         //Use FlexITP at : https://trade.loginandtrade.com/tp/fx/
         private const string USERNAME = "XX055187"; 
         private const string PASSWORD = "password";
+        private const string AppKey = "testkey-for-EfficientStreamManagement";
         private const int ACCOUNTOPERATORID = 3321;  //IFX Markets (test)
         private int[] PRICEMARKETIDS = new[]{ 400481136, 400481137, 400481138, 400481139, 400481140, 400481141, 400481142 }; //GBP/AUD, GBP/CAD, GBP/CHF, GBP/JPY, GBP/NZD, GBP/SGD, GBP/USD
         private static readonly Uri RPC_URI = new Uri("https://ciapi.cityindex.com/tradingapi");
@@ -49,7 +50,7 @@ namespace EfficientStreamManagement
         private void BuildClients()
         {
             Dispatcher.BeginInvoke(() => statusUpdatesListBox.Items.Add("creating rpc client"));
-            RpcClient = new Client(RPC_URI);
+            RpcClient = new Client(RPC_URI, AppKey);
             RpcClient.BeginLogIn(USERNAME, PASSWORD, InitializeStreamingClient, null);
         }
 

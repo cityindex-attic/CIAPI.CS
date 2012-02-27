@@ -21,6 +21,7 @@ namespace Phone7Ticker
         private const string RpcServerHost = "https://ciapi.cityindex.com/tradingapi/";
         private const string UserName = "DM715257";
         private const string Password = "password";
+        private const string AppKey = "testkey-for-Phone7Ticker";
         IStreamingClient _streamingClient;
         IStreamingListener<PriceDTO> _listener;
         private IStreamingListener<PriceDTO> _listener2;
@@ -39,7 +40,7 @@ namespace Phone7Ticker
 
 
             // build an rpc client and log it in.
-            rpcClient = new Client(new Uri(RpcServerHost));
+            rpcClient = new Client(new Uri(RpcServerHost), AppKey);
 
             // get a session from the rpc client
             rpcClient.BeginLogIn(UserName, Password, ar =>

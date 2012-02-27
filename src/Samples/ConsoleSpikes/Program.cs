@@ -15,6 +15,7 @@ namespace ConsoleSpikes
     class Program
     {
 
+        private const string AppKey = "testkey-for-ConsoleSpikes";
 
         static void Main(string[] args)
         {
@@ -37,7 +38,7 @@ namespace ConsoleSpikes
 
         private static void GetNewsAsynchronously()
         {
-            _ctx = new CIAPI.Rpc.Client(new Uri(TestConfig.RpcUrl));
+            _ctx = new CIAPI.Rpc.Client(new Uri(TestConfig.RpcUrl), AppKey);
 
             _gate = new ManualResetEvent(false);
             BeginLogIn(TestConfig.ApiUsername, TestConfig.ApiPassword);
@@ -107,7 +108,7 @@ namespace ConsoleSpikes
         {
             try
             {
-                var ctx = new CIAPI.Rpc.Client(new Uri(TestConfig.RpcUrl));
+                var ctx = new CIAPI.Rpc.Client(new Uri(TestConfig.RpcUrl), AppKey);
 
                 ctx.LogIn(TestConfig.ApiUsername, TestConfig.ApiPassword);
 

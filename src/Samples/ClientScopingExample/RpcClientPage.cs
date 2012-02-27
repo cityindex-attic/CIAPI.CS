@@ -7,6 +7,7 @@ namespace ClientScopingExample
     public abstract class RpcClientPage : Page
     {
         private string _rpcStatus;
+        private const string AppKey = "testkey-for-ClientScopingExample";
 
         protected bool LoggedIn
         {
@@ -30,7 +31,7 @@ namespace ClientScopingExample
                 var sessionClient = (Client) Session["client"];
                 if (sessionClient == null)
                 {
-                    sessionClient = new Client(new Uri("https://ciapipreprod.cityindextest9.co.uk/TradingApi"));
+                    sessionClient = new Client(new Uri("https://ciapipreprod.cityindextest9.co.uk/TradingApi"), AppKey);
                     Session["client"] = sessionClient;
                 }
 

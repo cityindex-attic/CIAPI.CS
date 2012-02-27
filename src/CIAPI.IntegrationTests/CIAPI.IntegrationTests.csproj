@@ -70,7 +70,7 @@
   <ItemGroup>
     <Compile Include="LoggingFixture.cs" />
     <Compile Include="Rpc\AccountInformationFixture.cs" />
-    <Compile Include="Rpc\ApiKeyFixture.cs" />
+    <Compile Include="Rpc\AppKeyFixture.cs" />
     <Compile Include="Rpc\CfdMarketsFixture.cs" />
     <Compile Include="Rpc\Example.FetchNews.cs" />
     <Compile Include="Rpc\FaqIssueResolutionFixture.cs" />

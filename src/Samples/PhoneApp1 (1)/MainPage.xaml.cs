@@ -19,6 +19,7 @@ namespace PhoneApp1
         public static Client RpcClient;
 
         private static readonly Uri RPC_URI = new Uri("https://ciapipreprod.cityindextest9.co.uk/TradingApi");
+        private const string AppKey = "testkey-for-PhoneApp1";
 
         // Constructor
         public MainPage()
@@ -36,7 +37,7 @@ namespace PhoneApp1
             LogManager.CreateInnerLogger = (logName, logLevel, showLevel, showDateTime, showLogName, dateTimeFormat)
                                             => new SimpleDebugAppender(logName, logLevel, showLevel, showDateTime, showLogName, dateTimeFormat);
 
-            RpcClient = new Client(RPC_URI);
+            RpcClient = new Client(RPC_URI, AppKey);
             RpcClient.BeginLogIn(USERNAME, PASSWORD, ar =>
             {
                 RpcClient.EndLogIn(ar);
