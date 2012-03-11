@@ -55,15 +55,15 @@
     <Reference Include="Microsoft.Phone.Controls, Version=7.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone.Controls.Toolkit, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b772ad94eb9ca604, processorArchitecture=MSIL" />
     <Reference Include="Newtonsoft.Json, Version=4.0.8.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Salient.JsonClient.3.1.3\lib\sl3-wp\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\packages\Salient.JsonClient.3.1.5\lib\sl3-wp\Newtonsoft.Json.dll\Release\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Salient.JsonClient.Phone7, Version=3.1.3.10, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Salient.JsonClient.Phone7, Version=3.1.5.12, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Salient.JsonClient.3.1.3\lib\sl3-wp\Salient.JsonClient.Phone7.dll</HintPath>
+      <HintPath>..\..\packages\Salient.JsonClient.3.1.5\lib\sl3-wp\Salient.JsonClient.Phone7.dll\Release\Salient.JsonClient.Phone7.dll</HintPath>
     </Reference>
-    <Reference Include="Salient.ReflectiveLoggingAdapter.Phone7, Version=3.0.4.8, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Salient.ReflectiveLoggingAdapter.Phone7, Version=3.0.8.17, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Salient.JsonClient.3.1.3\lib\sl3-wp\Salient.ReflectiveLoggingAdapter.Phone7.dll</HintPath>
+      <HintPath>..\..\packages\Salient.JsonClient.3.1.5\lib\sl3-wp\Salient.ReflectiveLoggingAdapter.Phone7.dll\Release\Salient.ReflectiveLoggingAdapter.Phone7.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows" />
     <Reference Include="system" />
