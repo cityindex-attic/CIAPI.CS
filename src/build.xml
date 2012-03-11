@@ -14,7 +14,7 @@
   <Import Project="$(MSBuildProjectDirectory)\..\tools\msbuild\Versioning.targets.xml" />
   <Import Project="$(MSBuildProjectDirectory)\..\tools\msbuild\TestsAndMetrics.targets.xml" />
   <Import Project="$(MSBuildProjectDirectory)\..\tools\msbuild\DropsAndPackaging.targets.xml" />
-
+ 
   <PropertyGroup>
     <Configuration>Release</Configuration>
     <Configuration Condition="'$(PreRelease)'!=''">Debug</Configuration>
