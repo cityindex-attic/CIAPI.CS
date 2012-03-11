@@ -22,11 +22,10 @@ Thumbs.db
 *.ilk
 *.log
 [Bb]in
-[Dd]ebug*/
+[Oo]bj
 *.lib
 *.sbr
 obj/
-[Rr]elease*/
 _ReSharper*/
 [Tt]est[Rr]esult*
 .VisualState.xml
