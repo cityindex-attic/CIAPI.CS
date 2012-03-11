@@ -10,7 +10,7 @@
     <NuGet_apiKey Condition="'$(NuGet_apiKey)'==''">You must call with /p:NuGet_apiKey={yourkey} to publish to nuget</NuGet_apiKey>
   </PropertyGroup>
 
-  <Target Name="Package" DependsOnTargets="CreateDropDirectories;CopyMSBuildOutputToDropDirectory;CopyLicenseToAllDirectories;CopyReportsToDropFolder">
+  <Target Name="Package" DependsOnTargets="CreateDropDirectories;CopyMSBuildOutputToDropDirectory;CopySourceToDropDirectory;DeleteBinFilesFromSource;CopyLicenseToAllDirectories;CopyReportsToDropFolder">
     <Message Text="Packaging with NuGet" />
     <Copy SourceFiles="$(RootDirectory)\src\CIAPI.nuspec" DestinationFolder="$(DropDirectory)"/>
     <Exec Command='"$(NuGetEXE)" pack $(DropDirectory)\CIAPI.nuspec' ContinueOnError='false' WorkingDirectory='$(DropDirectory)'/>
@@ -19,7 +19,21 @@
   <Target Name="PublishToNugetOrg" DependsOnTargets="Package">
 	    <Exec Command='"$(NuGetEXE)" push $(DropDirectory)\CIAPI.CS.$(Major).$(Minor).$(Patch)$(PreRelease).nupkg $(NuGet_apiKey)' ContinueOnError='false' WorkingDirectory='$(DropDirectory)'/>
   </Target>
-  
+  <Target Name="CopySourceToDropDirectory">
+    <ItemGroup>
+      <MSBuildOutputItems Include="$(SrcDirectory)\**\*.cs" />
+    </ItemGroup>
+    <Message Text="Copying source files to output to $(DropLibDirectory)" />
+    <Copy ContinueOnError="false" SourceFiles="@(MSBuildOutputItems)" DestinationFiles="@(MSBuildOutputItems ->'$(DropLibDirectory)\src\%(RecursiveDir)%(Filename)%(Extension)')" />
+  </Target>
+
+  <Target Name="DeleteBinFilesFromSource">
+    <ItemGroup>
+      <DeleteFiles Include="$(DropLibDirectory)\src\**\bin\**\*.*" />
+    </ItemGroup>
+    <Message Text="Deleting $(Configuration) dlls from src" />
+    <Delete Files="@(DeleteFiles)" />
+  </Target>
   <Target Name="CreateDropDirectories">
     <Message Text="Making the drop directories at '$(DropDirectory)'." />
     <RemoveDir Directories="$(DropDirectory)" Condition="Exists('$(DropDirectory)')" ContinueOnError="True" />
