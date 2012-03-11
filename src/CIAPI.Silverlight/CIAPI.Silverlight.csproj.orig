@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B26AA333-051A-4C11-B6CD-CECA8FD656E0}</ProjectGuid>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CIAPI</RootNamespace>
+    <AssemblyName>CIAPI.Silverlight</AssemblyName>
+    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <SilverlightApplication>false</SilverlightApplication>
+    <ValidateXaml>true</ValidateXaml>
+    <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\CIAPI\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <!-- This property group is only here to support building this project using the 
+       MSBuild 3.5 toolset. In order to work correctly with this older toolset, it needs 
+       to set the TargetFrameworkVersion to v3.5 -->
+  <PropertyGroup Condition="'$(MSBuildToolsVersion)' == '3.5'">
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>Bin\Release\CIAPI.Silverlight.XML</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib" />
+<<<<<<< HEAD
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.4.0.8\lib\sl4\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Salient.JsonClient.Silverlight, Version=3.2.0.31, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Salient.JsonClient.3.2.0\lib\sl40\Release\Salient.JsonClient.Silverlight.dll</HintPath>
+    </Reference>
+    <Reference Include="Salient.ReflectiveLoggingAdapter.Silverlight, Version=3.1.0.21, Culture=neutral, PublicKeyToken=f53a41098b9ed911, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Salient.ReflectiveLoggingAdapter.3.1.0\lib\sl4\Release\Salient.ReflectiveLoggingAdapter.Silverlight.dll</HintPath>
+=======
+    <Reference Include="Newtonsoft.Json, Version=4.0.8.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Salient.JsonClient.3.1.5\lib\sl40\Newtonsoft.Json.dll\Release\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Salient.JsonClient.Silverlight, Version=3.1.5.12, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Salient.JsonClient.3.1.5\lib\sl40\Salient.JsonClient.Silverlight.dll\Release\Salient.JsonClient.Silverlight.dll</HintPath>
+    </Reference>
+    <Reference Include="Salient.ReflectiveLoggingAdapter.Silverlight, Version=3.0.8.17, Culture=neutral, PublicKeyToken=f53a41098b9ed911, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Salient.JsonClient.3.1.5\lib\sl40\Salient.ReflectiveLoggingAdapter.Silverlight.dll\Release\Salient.ReflectiveLoggingAdapter.Silverlight.dll</HintPath>
+>>>>>>> 77a8338481a7ef69b3e4fadc170525e925071cb1
+    </Reference>
+    <Reference Include="System.Windows" />
+    <Reference Include="system" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Windows.Browser" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\CIAPI\DTOExtensions.cs">
+      <Link>DTOExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\Generated\DTO.cs">
+      <Link>Generated\DTO.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\Generated\LightstreamerClient.cs">
+      <Link>Generated\LightstreamerClient.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\Generated\Routes.cs">
+      <Link>Generated\Routes.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\MagicNumberKeys.cs">
+      <Link>MagicNumberKeys.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\MagicNumberResolver.cs">
+      <Link>MagicNumberResolver.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\NullType.cs">
+      <Link>NullType.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\ResolvableDTO.cs">
+      <Link>ResolvableDTO.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\Rpc\ApiClient.cs">
+      <Link>Rpc\ApiClient.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\PrettyPrinterExtensions.cs">
+      <Link>PrettyPrinterExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\Rpc\ErrorResponseDTOJsonExceptionFactory.cs">
+      <Link>Rpc\ErrorResponseDTOJsonExceptionFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\Rpc\ServerConnectionException.cs">
+      <Link>Rpc\ServerConnectionException.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\Streaming\IStreamingClient.cs">
+      <Link>Streaming\IStreamingClient.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\Streaming\Lightstreamer\LightStreamerClient.cs">
+      <Link>Streaming\Lightstreamer\LightStreamerClient.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\Streaming\StreamingClientFactory.cs">
+      <Link>Streaming\StreamingClientFactory.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Serializable.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\StreamingClient.Silverlight\StreamingClient.Silverlight.csproj">
+      <Project>{C552DD3D-3738-4194-95F3-5A988E7D4647}</Project>
+      <Name>StreamingClient.Silverlight</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
+        <SilverlightProjectProperties />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

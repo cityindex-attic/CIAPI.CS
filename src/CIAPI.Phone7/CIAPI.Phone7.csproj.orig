@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.20506</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{9E560BF5-A08C-4942-A01B-77C7DF9DB933}</ProjectGuid>
+    <ProjectTypeGuids>{C089C8C0-30E0-4E22-80C0-CE093F111A43};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CIAPI</RootNamespace>
+    <AssemblyName>CIAPI.Phone7</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <TargetFrameworkProfile>WindowsPhone71</TargetFrameworkProfile>
+    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
+    <SilverlightApplication>false</SilverlightApplication>
+    <ValidateXaml>true</ValidateXaml>
+    <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\CIAPI\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>Bin\Release\CIAPI.Phone7.XML</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+<<<<<<< HEAD
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.4.0.8\lib\sl4-windowsphone71\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Salient.JsonClient.Phone7, Version=3.2.0.31, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Salient.JsonClient.3.2.0\lib\sl3-wp\Release\Salient.JsonClient.Phone7.dll</HintPath>
+    </Reference>
+    <Reference Include="Salient.ReflectiveLoggingAdapter.Phone7, Version=3.1.0.21, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Salient.ReflectiveLoggingAdapter.3.1.0\lib\sl3-wp\Release\Salient.ReflectiveLoggingAdapter.Phone7.dll</HintPath>
+=======
+    <Reference Include="Newtonsoft.Json, Version=4.0.8.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Salient.JsonClient.3.1.5\lib\sl3-wp\Newtonsoft.Json.dll\Release\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Salient.JsonClient.Phone7, Version=3.1.5.12, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Salient.JsonClient.3.1.5\lib\sl3-wp\Salient.JsonClient.Phone7.dll\Release\Salient.JsonClient.Phone7.dll</HintPath>
+    </Reference>
+    <Reference Include="Salient.ReflectiveLoggingAdapter.Phone7, Version=3.0.8.17, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Salient.JsonClient.3.1.5\lib\sl3-wp\Salient.ReflectiveLoggingAdapter.Phone7.dll\Release\Salient.ReflectiveLoggingAdapter.Phone7.dll</HintPath>
+>>>>>>> 77a8338481a7ef69b3e4fadc170525e925071cb1
+    </Reference>
+    <Reference Include="System.Windows" />
+    <Reference Include="system" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Net" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\CIAPI.Silverlight\Serializable.cs">
+      <Link>Serializable.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\DTOExtensions.cs">
+      <Link>DTOExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\Generated\DTO.cs">
+      <Link>Generated\DTO.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\Generated\LightstreamerClient.cs">
+      <Link>Generated\LightstreamerClient.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\Generated\Routes.cs">
+      <Link>Generated\Routes.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\MagicNumberKeys.cs">
+      <Link>MagicNumberKeys.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\MagicNumberResolver.cs">
+      <Link>MagicNumberResolver.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\NullType.cs">
+      <Link>NullType.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\PrettyPrinterExtensions.cs">
+      <Link>PrettyPrinterExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\ResolvableDTO.cs">
+      <Link>ResolvableDTO.cs</Link>
+    </Compile>
+    <Compile Include="..\ciapi\rpc\ApiClient.cs">
+      <Link>Rpc\ApiClient.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\Rpc\ErrorResponseDTOJsonExceptionFactory.cs">
+      <Link>Rpc\ErrorResponseDTOJsonExceptionFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\Rpc\ServerConnectionException.cs">
+      <Link>Rpc\ServerConnectionException.cs</Link>
+    </Compile>
+    <Compile Include="..\ciapi\streaming\IStreamingClient.cs">
+      <Link>Streaming\IStreamingClient.cs</Link>
+    </Compile>
+    <Compile Include="..\ciapi\streaming\lightstreamer\LightStreamerClient.cs">
+      <Link>Streaming\Lightstreamer\LightStreamerClient.cs</Link>
+    </Compile>
+    <Compile Include="..\ciapi\streaming\StreamingClientFactory.cs">
+      <Link>Streaming\StreamingClientFactory.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\StreamingClient.Phone7\StreamingClient.Phone7.csproj">
+      <Project>{43781FA6-57B5-4EF1-A4C4-4900613BDE77}</Project>
+      <Name>StreamingClient.Phone7</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="README_FIRST.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
+  <ProjectExtensions />
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

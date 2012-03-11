@@ -14,6 +14,8 @@
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\CIAPI\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,14 +33,38 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\CIAPI.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\common\ciapi.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Common.Logging">
-      <HintPath>..\packages\Common.Logging-2.0.0\2.0\release\Common.Logging.dll</HintPath>
+<<<<<<< HEAD
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.4.0.8\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+    <Reference Include="Salient.JsonClient.35, Version=3.2.0.31, Culture=neutral, PublicKeyToken=b412daeaa648e3eb, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.3.5.8\lib\35\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Salient.JsonClient.3.2.0\lib\net35\Release\Salient.JsonClient.35.dll</HintPath>
+    </Reference>
+    <Reference Include="Salient.ReflectiveLoggingAdapter.35, Version=3.1.0.21, Culture=neutral, PublicKeyToken=b9b5972b9f69332b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Salient.ReflectiveLoggingAdapter.3.1.0\lib\net35\Release\Salient.ReflectiveLoggingAdapter.35.dll</HintPath>
+=======
+    <Reference Include="Newtonsoft.Json, Version=4.0.8.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Salient.JsonClient.3.1.5\lib\net35\Newtonsoft.Json.dll\Release\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Salient.JsonClient.35, Version=3.1.5.12, Culture=neutral, PublicKeyToken=b412daeaa648e3eb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Salient.JsonClient.3.1.5\lib\net35\Salient.JsonClient.35.dll\Release\Salient.JsonClient.35.dll</HintPath>
+    </Reference>
+    <Reference Include="Salient.ReflectiveLoggingAdapter.35, Version=3.0.8.17, Culture=neutral, PublicKeyToken=b9b5972b9f69332b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Salient.JsonClient.3.1.5\lib\net35\Salient.ReflectiveLoggingAdapter.35.dll\Release\Salient.ReflectiveLoggingAdapter.35.dll</HintPath>
+>>>>>>> 77a8338481a7ef69b3e4fadc170525e925071cb1
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -49,40 +75,40 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\CIAPI.CodeGeneration\DTO.cs">
-      <Link>DTO.cs</Link>
+    <Compile Include="DTOExtensions.cs" />
+    <Compile Include="Generated\DTO.cs">
+      <SubType>Code</SubType>
     </Compile>
-    <Compile Include="..\CIAPI.CodeGeneration\ROUTES.cs">
-      <Link>ROUTES.cs</Link>
-    </Compile>
-<<<<<<< HEAD
-    <Compile Include="Rpc\ApiClient.cs" />
-    <Compile Include="PriceDTO.cs" />
-=======
-    <Compile Include="ApiClient.cs" />
+    <Compile Include="Generated\LightstreamerClient.cs" />
+    <Compile Include="Generated\Routes.cs" />
     <Compile Include="PrettyPrinterExtensions.cs" />
->>>>>>> e2af88ed7303a99c1944fdf44b88ed9a1b87e06e
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Streaming\LightStreamerClient.cs" />
-    <Compile Include="Streaming\LightstreamerDtoConverter.cs" />
-    <Compile Include="Streaming\LightStreamerListener.cs" />
+    <Compile Include="Rpc\ApiClient.cs" />
+    <Compile Include="Rpc\ErrorResponseDTOJsonExceptionFactory.cs" />
+    <Compile Include="NullType.cs" />
+    <Compile Include="MagicNumberKeys.cs" />
+    <Compile Include="MagicNumberResolver.cs" />
+    <Compile Include="Rpc\ServerConnectionException.cs" />
+    <Compile Include="Streaming\IStreamingClient.cs" />
+    <Compile Include="Streaming\Lightstreamer\LightStreamerClient.cs" />
+    <Compile Include="Streaming\StreamingClientFactory.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\JsonClient\JsonClient.csproj">
-      <Project>{D80E56C8-8DD6-4911-9A99-F534C9497D6A}</Project>
-      <Name>JsonClient %28JsonClient\JsonClient%29</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\StreamingClient.Lightstreamer\StreamingClient.Lightstreamer.csproj">
-      <Project>{572A308B-634F-48CF-926D-CFEFB8D00C46}</Project>
-      <Name>StreamingClient.Lightstreamer</Name>
-    </ProjectReference>
     <ProjectReference Include="..\StreamingClient\StreamingClient.csproj">
       <Project>{EE5023DC-A20F-4358-9DF1-7D69BB1C322E}</Project>
       <Name>StreamingClient</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="Streaming\StreamingClientClasses.cd" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

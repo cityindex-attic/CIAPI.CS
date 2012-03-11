@@ -5,7 +5,7 @@
 	<PropertyGroup>
 	<Major>4</Major>          <!-- Major = breaking changes (consumers will need to change existing calls) -->
 	<Minor>0</Minor>          <!-- Minor = New features added but still backwards compatible -->
-    <Patch>1</Patch>          <!-- Patch = Bug fixes only (still backwards compatible) -->
+    <Patch>2</Patch>          <!-- Patch = Bug fixes only (still backwards compatible) -->
     <PreRelease>bleeding</PreRelease> <!-- empty for stable build, (text} for bleedingedge build. -->
   </PropertyGroup>
   

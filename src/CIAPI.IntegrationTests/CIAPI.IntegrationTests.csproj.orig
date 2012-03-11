@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{DF519AB4-10A8-4E8E-9CA9-0A119A8168DC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CIAPI.IntegrationTests</RootNamespace>
+    <AssemblyName>CIAPI.IntegrationTests</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\CIAPI\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="log4net">
+      <HintPath>..\packages\log4net.2.0.0\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
+<<<<<<< HEAD
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.4.0.8\lib\net40\Newtonsoft.Json.dll</HintPath>
+=======
+    <Reference Include="Newtonsoft.Json, Version=4.0.8.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Salient.JsonClient.3.1.5\lib\net35\Newtonsoft.Json.dll\Release\Newtonsoft.Json.dll</HintPath>
+>>>>>>> 77a8338481a7ef69b3e4fadc170525e925071cb1
+    </Reference>
+    <Reference Include="nunit.framework, Version=2.6.0.12051, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NUnit.2.6.0.12054\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.mocks, Version=2.5.10.11092, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NUnit.2.5.10.11092\lib\nunit.mocks.dll</HintPath>
+    </Reference>
+<<<<<<< HEAD
+    <Reference Include="Salient.JsonClient.35, Version=3.2.0.31, Culture=neutral, PublicKeyToken=b412daeaa648e3eb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Salient.JsonClient.3.2.0\lib\net35\Release\Salient.JsonClient.35.dll</HintPath>
+    </Reference>
+    <Reference Include="Salient.ReflectiveLoggingAdapter.35, Version=3.1.0.21, Culture=neutral, PublicKeyToken=b9b5972b9f69332b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Salient.ReflectiveLoggingAdapter.3.1.0\lib\net35\Release\Salient.ReflectiveLoggingAdapter.35.dll</HintPath>
+=======
+    <Reference Include="pnunit.framework">
+      <HintPath>..\packages\NUnit.2.5.10.11092\lib\pnunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Salient.JsonClient.35, Version=3.1.5.12, Culture=neutral, PublicKeyToken=b412daeaa648e3eb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Salient.JsonClient.3.1.5\lib\net35\Salient.JsonClient.35.dll\Release\Salient.JsonClient.35.dll</HintPath>
+    </Reference>
+    <Reference Include="Salient.ReflectiveLoggingAdapter.35, Version=3.0.8.17, Culture=neutral, PublicKeyToken=b9b5972b9f69332b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Salient.JsonClient.3.1.5\lib\net35\Salient.ReflectiveLoggingAdapter.35.dll\Release\Salient.ReflectiveLoggingAdapter.35.dll</HintPath>
+>>>>>>> 77a8338481a7ef69b3e4fadc170525e925071cb1
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="LoggingFixture.cs" />
+    <Compile Include="Rpc\AccountInformationFixture.cs" />
+    <Compile Include="Rpc\AppKeyFixture.cs" />
+    <Compile Include="Rpc\Async\AccountInformationFixture.cs" />
+    <Compile Include="Rpc\CfdMarketsFixture.cs" />
+    <Compile Include="Rpc\Example.FetchNews.cs" />
+    <Compile Include="Rpc\FaqIssueResolutionFixture.cs" />
+    <Compile Include="Rpc\ErrorHandlingFixture.cs" />
+    <Compile Include="Rpc\MarketFixture.cs" />
+    <Compile Include="Rpc\MessagingFixture.cs" />
+    <Compile Include="Rpc\NewsFixture.cs" />
+    <Compile Include="Rpc\PriceHistoryFixture.cs" />
+    <Compile Include="Rpc\SpreadMarketsFixture.cs" />
+    <Compile Include="Rpc\TradesAndOrdersFixture.cs" />
+    <Compile Include="Rpc\WatchListFixture.cs" />
+    <Compile Include="Settings.cs" />
+    <Compile Include="Streaming\ClientAccountFixture.cs" />
+    <Compile Include="Streaming\DefaultPricesFixture.cs" />
+    <Compile Include="Streaming\MultipleStreamsFixture.cs" />
+    <Compile Include="Streaming\PriceFixture.cs" />
+    <Compile Include="Streaming\NewsFixture.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Streaming\RpcFixtureBase.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CIAPI\CIAPI.csproj">
+      <Project>{B40E6F1C-453E-44A2-BA9D-1692378B355C}</Project>
+      <Name>CIAPI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\StreamingClient\StreamingClient.csproj">
+      <Project>{EE5023DC-A20F-4358-9DF1-7D69BB1C322E}</Project>
+      <Name>StreamingClient</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

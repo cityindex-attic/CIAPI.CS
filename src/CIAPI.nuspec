@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
   <metadata>
-    <version>3.0.2-bleeding-0</version>
+    <version>4.0.1-bleeding-0</version>
     <authors>CityIndex Ltd,Sky Sanders,David Laing</authors>
     <owners>CityIndex Ltd,Sky Sanders,David Laing</owners>
     <licenseUrl>https://github.com/cityindex/CIAPI.CS/raw/master/LICENSE.txt</licenseUrl>
@@ -18,17 +18,66 @@
   </metadata>
   <files>
     <file src="..\src\samples\ConsoleSpikes\Example.FetchNews.cs" target="content"/>
-    <file src="..\dist\lib\ciapi-3.5\bin\**\*.dll" target="lib\net35\CIAPI.dll" />
-    <file src="..\dist\lib\ciapi-3.5\bin\**\*.pdb" target="lib\net35\CIAPI.pdb" />
-    <file src="..\dist\lib\ciapi-3.5\bin\**\*.XML" target="lib\net35\CIAPI.XML" />
-    <file src="..\dist\lib\ciapi\bin\**\*.dll" target="lib\net40\CIAPI.dll" />
-    <file src="..\dist\lib\ciapi\bin\**\*.pdb" target="lib\net40\CIAPI.pdb" />
-    <file src="..\dist\lib\ciapi\bin\**\*.XML" target="lib\net40\CIAPI.XML" />
-    <file src="..\dist\lib\ciapi.phone7\bin\**\*.dll" target="lib\sl3-wp\CIAPI.Phone7.dll" />
-    <file src="..\dist\lib\ciapi.phone7\bin\**\*.pdb" target="lib\sl3-wp\CIAPI.Phone7.pdb" />
-    <file src="..\dist\lib\ciapi.phone7\bin\**\*.XML" target="lib\sl3-wp\CIAPI.Phone7.XML" />
-    <file src="..\dist\lib\ciapi.silverlight\bin\**\*.dll" target="lib\sl4\CIAPI.Silverlight.dll" />
-    <file src="..\dist\lib\ciapi.silverlight\bin\**\*.pdb" target="lib\sl4\CIAPI.Silverlight.pdb" />
-    <file src="..\dist\lib\ciapi.silverlight\bin\**\*.XML" target="lib\sl4\CIAPI.Silverlight.XML" />
+    
+
+    <file src="..\dist\lib\ciapi-3.5\bin\**\DotNetClient_N2.dll" target="lib\net35" />
+    <file src="..\dist\lib\ciapi-3.5\bin\**\DotNetClient_N2.pdb" target="lib\net35" />
+    
+
+    <file src="..\dist\lib\ciapi-3.5\bin\**\CIAPI.dll" target="lib\net35" />
+    <file src="..\dist\lib\ciapi-3.5\bin\**\CIAPI.pdb" target="lib\net35" />
+    <file src="..\dist\lib\ciapi-3.5\bin\**\CIAPI.XML" target="lib\net35" />
+    
+    <file src="..\dist\lib\ciapi-3.5\bin\**\StreamingClient.dll" target="lib\net35" />
+    <file src="..\dist\lib\ciapi-3.5\bin\**\StreamingClient.pdb" target="lib\net35" />
+    <file src="..\dist\lib\ciapi-3.5\bin\**\StreamingClient.XML" target="lib\net35" />
+
+
+
+    <file src="..\dist\lib\ciapi\bin\**\DotNetClient_N2.dll" target="lib\net40" />
+    <file src="..\dist\lib\ciapi\bin\**\DotNetClient_N2.pdb" target="lib\net40" />
+
+
+    <file src="..\dist\lib\ciapi\bin\**\CIAPI.dll" target="lib\net40" />
+    <file src="..\dist\lib\ciapi\bin\**\CIAPI.pdb" target="lib\net40" />
+    <file src="..\dist\lib\ciapi\bin\**\CIAPI.XML" target="lib\net40" />
+
+    <file src="..\dist\lib\ciapi\bin\**\StreamingClient.dll" target="lib\net40" />
+    <file src="..\dist\lib\ciapi\bin\**\StreamingClient.pdb" target="lib\net40" />
+    <file src="..\dist\lib\ciapi\bin\**\StreamingClient.XML" target="lib\net40" />
+
+
+
+
+    <file src="..\dist\lib\ciapi.phone7\bin\**\WindowsPhoneClient.dll" target="lib\sl3-wp" />
+    <file src="..\dist\lib\ciapi.phone7\bin\**\WindowsPhoneClient.pdb" target="lib\sl3-wp" />
+
+
+    <file src="..\dist\lib\ciapi.phone7\bin\**\CIAPI.Phone7.dll" target="lib\sl3-wp" />
+    <file src="..\dist\lib\ciapi.phone7\bin\**\CIAPI.Phone7.pdb" target="lib\sl3-wp" />
+    <file src="..\dist\lib\ciapi.phone7\bin\**\CIAPI.Phone7.XML" target="lib\sl3-wp" />
+
+    <file src="..\dist\lib\ciapi.phone7\bin\**\StreamingClient.Phone7.dll" target="lib\sl3-wp" />
+    <file src="..\dist\lib\ciapi.phone7\bin\**\StreamingClient.Phone7.pdb" target="lib\sl3-wp" />
+    <file src="..\dist\lib\ciapi.phone7\bin\**\StreamingClient.Phone7.XML" target="lib\sl3-wp" />
+
+
+
+    <file src="..\dist\lib\ciapi.silverlight\bin\**\WindowsPhoneClient.dll" target="lib\sl4" />
+    <file src="..\dist\lib\ciapi.silverlight\bin\**\WindowsPhoneClient.pdb" target="lib\sl4" />
+
+
+    <file src="..\dist\lib\ciapi.silverlight\bin\**\CIAPI.Phone7.dll" target="lib\sl4" />
+    <file src="..\dist\lib\ciapi.silverlight\bin\**\CIAPI.Phone7.pdb" target="lib\sl4" />
+    <file src="..\dist\lib\ciapi.silverlight\bin\**\CIAPI.Phone7.XML" target="lib\sl4" />
+
+    <file src="..\dist\lib\ciapi.silverlight\bin\**\StreamingClient.Phone7.dll" target="lib\sl4" />
+    <file src="..\dist\lib\ciapi.silverlight\bin\**\StreamingClient.Phone7.pdb" target="lib\sl4" />
+    <file src="..\dist\lib\ciapi.silverlight\bin\**\StreamingClient.Phone7.XML" target="lib\sl4" />
+    
+    
+ 
+
+    <file src="lib\src\**\*.cs" target="src" />
   </files>
 </package>
