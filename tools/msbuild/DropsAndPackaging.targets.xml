@@ -17,7 +17,7 @@
   </Target>
 
   <Target Name="PublishToNugetOrg" DependsOnTargets="Package">
-	    <Exec Command='"$(NuGetEXE)" push $(DropDirectory)\CIAPI.CS.$(Major).$(Minor).$(Patch)$(PreRelease).nupkg $(NuGet_apiKey)' ContinueOnError='false' WorkingDirectory='$(DropDirectory)'/>
+	    <Exec Command='"$(NuGetEXE)" push $(DropDirectory)\CIAPI.$(Major).$(Minor).$(Patch)$(PreRelease).nupkg $(NuGet_apiKey)' ContinueOnError='false' WorkingDirectory='$(DropDirectory)'/>
   </Target>
   <Target Name="CopySourceToDropDirectory">
     <ItemGroup>
