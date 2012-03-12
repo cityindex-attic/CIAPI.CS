@@ -10,8 +10,8 @@
       <dependency id="Salient.ReflectiveLoggingAdapter" />
       <dependency id="Salient.JsonClient" />
     </dependencies>
-    <id>CIAPI.CS</id>
-    <title>CIAPI.CS</title>
+    <id>CIAPI</id>
+    <title>CIAPI</title>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>.NET client library for CityIndex Trading API</description>
     <language>en-GB</language>
