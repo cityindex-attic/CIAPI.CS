@@ -1,7 +1,7 @@
 exports.smd =
 {
   "SMDVersion": "2.6",
-  "version": "0.991.1.0",
+  "version": "0.1022.0.0",
   "description": "CIAPI SMD",
   "services": {
     "rpc": {
@@ -426,6 +426,71 @@ exports.smd =
             }
           ]
         },
+        "ListMarketSearch": {
+          "description": "<p>Returns market information for the markets that meet the search criteria.</p> The search can be performed by market code and/or market name, and can include CFDs and Spread Bet markets.",
+          "target": "market",
+          "uriTemplate": "/search?SearchByMarketCode={searchByMarketCode}&SearchByMarketName={searchByMarketName}&SpreadProductType={spreadProductType}&CfdProductType={cfdProductType}&BinaryProductType={binaryProductType}&Query={query}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}",
+          "contentType": "application/json",
+          "responseContentType": "application/json",
+          "transport": "GET",
+          "envelope": "URL",
+          "returns": {
+            "$ref": "#.ListMarketSearchResponseDTO"
+          },
+          "group": "Market",
+          "cacheDuration": 0,
+          "throttleScope": "data",
+          "parameters": [
+            {
+              "type": "boolean",
+              "name": "searchByMarketCode",
+              "description": "Sets the search to use market code.",
+              "demoValue": true
+            },
+            {
+              "type": "boolean",
+              "name": "searchByMarketName",
+              "description": "Sets the search to use market Name.",
+              "demoValue": true
+            },
+            {
+              "type": "boolean",
+              "name": "spreadProductType",
+              "description": "Sets the search to include spread bet markets.",
+              "demoValue": true
+            },
+            {
+              "type": "boolean",
+              "name": "cfdProductType",
+              "description": "Sets the search to include CFD markets.",
+              "demoValue": true
+            },
+            {
+              "type": "boolean",
+              "name": "binaryProductType",
+              "description": "Sets the search to include binary markets.",
+              "demoValue": true
+            },
+            {
+              "type": "string",
+              "name": "query",
+              "description": "The text to search for. Matches part of market name / code from the start.",
+              "demoValue": "UK 100"
+            },
+            {
+              "type": "integer",
+              "name": "maxResults",
+              "description": "The maximum number of results to return.",
+              "demoValue": 50
+            },
+            {
+              "type": "boolean",
+              "name": "useMobileShortName",
+              "description": "True if the market name should be in short form.  Helpful when displaying data on a small screen.",
+              "default": false
+            }
+          ]
+        },
         "SearchWithTags": {
           "description": "Get market information and tags for the markets that meet the search criteria.",
           "target": "market",
@@ -524,6 +589,87 @@ exports.smd =
               "$ref": "#.SaveMarketInformationRequestDTO",
               "name": "listMarketInformationRequestSaveDTO",
               "description": "Save Market Information for the specified list of markets."
+            }
+          ]
+        },
+        "Save": {
+          "description": "Save client preferences.",
+          "target": "clientpreference",
+          "uriTemplate": "/save",
+          "contentType": "application/json",
+          "responseContentType": "application/json",
+          "transport": "POST",
+          "envelope": "JSON",
+          "returns": {
+            "$ref": "#.UpdateDeleteClientPreferenceResponseDTO"
+          },
+          "group": "Preference",
+          "cacheDuration": 0,
+          "throttleScope": "data",
+          "parameters": [
+            {
+              "$ref": "#.SaveClientPreferenceRequestDTO",
+              "name": "saveClientPreferenceRequestDTO",
+              "description": "Save client preferences."
+            }
+          ]
+        },
+        "Get": {
+          "description": "get client preferences.",
+          "target": "clientpreference/save",
+          "uriTemplate": "/get",
+          "contentType": "application/json",
+          "responseContentType": "application/json",
+          "transport": "POST",
+          "envelope": "JSON",
+          "returns": {
+            "$ref": "#.GetClientPreferenceResponseDTO"
+          },
+          "group": "Preference",
+          "cacheDuration": 0,
+          "throttleScope": "data",
+          "parameters": [
+            {
+              "$ref": "#.ClientPreferenceRequestDTO",
+              "name": "clientPreferenceRequestDto",
+              "description": "get client preferences."
+            }
+          ]
+        },
+        "GetKeyList": {
+          "description": "get list of client preferences keys.",
+          "target": "clientpreference/save",
+          "uriTemplate": "/getkeylist",
+          "contentType": "application/json",
+          "responseContentType": "application/json",
+          "transport": "GET",
+          "envelope": "URL",
+          "returns": {
+            "$ref": "#.GetKeyListClientPreferenceResponseDTO"
+          },
+          "group": "Preference",
+          "cacheDuration": 0,
+          "parameters": []
+        },
+        "Delete": {
+          "description": "delete client preference key.",
+          "target": "clientpreference/save",
+          "uriTemplate": "/delete",
+          "contentType": "application/json",
+          "responseContentType": "application/json",
+          "transport": "POST",
+          "envelope": "JSON",
+          "returns": {
+            "$ref": "#.UpdateDeleteClientPreferenceResponseDTO"
+          },
+          "group": "Preference",
+          "cacheDuration": 0,
+          "throttleScope": "data",
+          "parameters": [
+            {
+              "$ref": "#.ClientPreferenceRequestDTO",
+              "name": "clientPreferenceKey",
+              "description": "delete client preference key."
             }
           ]
         },
@@ -886,6 +1032,27 @@ exports.smd =
             }
           ]
         },
+        "GetClientApplicationMessageTranslationWithInterestingItems": {
+          "description": "Use the message translation service to get client specific translated textual strings for specific keys.",
+          "target": "message",
+          "uriTemplate": "/translationWithInterestingItems",
+          "contentType": "application/json",
+          "responseContentType": "application/json",
+          "transport": "POST",
+          "envelope": "JSON",
+          "returns": {
+            "$ref": "#.ApiClientApplicationMessageTranslationResponseDTO"
+          },
+          "group": "Messages",
+          "cacheDuration": 0,
+          "parameters": [
+            {
+              "$ref": "#.ApiClientApplicationMessageTranslationRequestDTO",
+              "name": "apiClientApplicationMessageTranslationRequestDto",
+              "description": "Dto of the required data for translation lookup for user."
+            }
+          ]
+        },
         "GetWatchlists": {
           "description": "Gets all watchlists for the user account. There are no parameters for this call.",
           "target": "watchlists",
@@ -948,8 +1115,8 @@ exports.smd =
         },
         "GetVersionInformation": {
           "description": "Gets version information for a specific client application and (optionally) account operator.",
-          "target": "clientapplication/versioninformation",
-          "uriTemplate": "?AppKey={appKey}&AccountOperatorId={accountOperatorId}",
+          "target": "clientapplication",
+          "uriTemplate": "/versioninformation?AppKey={appKey}&AccountOperatorId={accountOperatorId}",
           "contentType": "application/json",
           "responseContentType": "application/json",
           "transport": "GET",
