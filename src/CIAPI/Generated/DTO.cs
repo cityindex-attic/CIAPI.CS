@@ -112,7 +112,7 @@ namespace CIAPI.DTO
         /// </summary>
         public ApiIfDoneDTO[] IfDone { get; set; }
         /// <summary>
-        /// Corresponding Oco Order (One Cancels the Other).
+        /// Corresponding OCO Order (One Cancels the Other).
         /// </summary>
         public ApiStopLimitOrderDTO OcoOrder { get; set; }
     }
@@ -123,6 +123,10 @@ namespace CIAPI.DTO
     [Serializable]
     public partial class ApiStopLimitOrderDTO : ApiOrderDTO
     {
+        /// <summary>
+        /// Flag to determine whether an order is guaranteed to trigger and fill at the associated trigger price.
+        /// </summary>
+        public bool Guaranteed { get; set; }
         /// <summary>
         /// Price at which the order should be triggered.
         /// </summary>
@@ -137,15 +141,18 @@ namespace CIAPI.DTO
         public string Applicability { get; set; }
     }
 
+    /// <summary>
+    /// Message translation entity with client specific translated textual strings.
+    /// </summary>
     [Serializable]
     public partial class ApiClientApplicationMessageTranslationDTO
     {
         /// <summary>
-        /// Translation key
+        /// Translation key.
         /// </summary>
         public string Key { get; set; }
         /// <summary>
-        /// Translation value
+        /// Translation value.
         /// </summary>
         public string Value { get; set; }
     }
@@ -209,19 +216,19 @@ namespace CIAPI.DTO
         /// </summary>
         public int Status { get; set; }
         /// <summary>
-        /// The if done stop order.
+        /// The if / done stop order.
         /// </summary>
         public ApiBasicStopLimitOrderDTO StopOrder { get; set; }
         /// <summary>
-        /// The if done limit order
+        /// The if / done limit order.
         /// </summary>
         public ApiBasicStopLimitOrderDTO LimitOrder { get; set; }
         /// <summary>
-        /// The order on the other side of a one Cancels the other relationship.
+        /// The order on the other side of a One Cancels the Other relationship.
         /// </summary>
         public ApiBasicStopLimitOrderDTO OcoOrder { get; set; }
         /// <summary>
-        /// The last time that the order changed. Note - Does not include things such as the current market price.
+        /// The last time that the order changed. Note - does not include things such as the current market price.
         /// </summary>
         public DateTime LastChangedDateTimeUTC { get; set; }
         /// <summary>
@@ -283,13 +290,13 @@ namespace CIAPI.DTO
     }
 
     /// <summary>
-    /// Lookup data specific to a Culture
+    /// Lookup data specific to a Culture.
     /// </summary>
     [Serializable]
     public partial class ApiCultureLookupDTO : ApiLookupDTO
     {
         /// <summary>
-        /// 2 letter ISO 639 culture code followed by a 2 letter uppercase ISO 3166 culture code
+        /// Two letter ISO 639 culture code followed by a two letter uppercase ISO 3166 culture code.
         /// </summary>
         public string Code { get; set; }
     }
@@ -509,7 +516,7 @@ namespace CIAPI.DTO
         /// </summary>
         public decimal OTEConverted { get; set; }
         /// <summary>
-        /// The currency ID of the OTE for this order.
+        /// The currency ID of the OTE for this order. See the "Currency ID" section of the CIAPI User Guide for a listing of the currency IDs.
         /// </summary>
         public int OTEConvertedCurrencyId { get; set; }
         /// <summary>
@@ -584,6 +591,22 @@ namespace CIAPI.DTO
         /// The timestamp the quote was requested. Always expressed in UTC.
         /// </summary>
         public DateTime RequestDateTime { get; set; }
+    }
+
+    /// <summary>
+    /// Client preference key and value.
+    /// </summary>
+    [Serializable]
+    public partial class ClientPreferenceKeyDTO
+    {
+        /// <summary>
+        /// A unique client preference key identifier.
+        /// </summary>
+        public string Key { get; set; }
+        /// <summary>
+        /// A value associated for the client preference key.
+        /// </summary>
+        public string Value { get; set; }
     }
 
     /// <summary>
@@ -703,7 +726,7 @@ namespace CIAPI.DTO
     }
 
     /// <summary>
-    /// Market tag information extended to include a list o child tags.
+    /// Market tag information extended to include a list of child tags.
     /// </summary>
     [Serializable]
     public partial class ApiPrimaryMarketTagDTO : ApiMarketTagDTO
@@ -712,6 +735,26 @@ namespace CIAPI.DTO
         /// The list of child tags associated with this market tag.
         /// </summary>
         public ApiMarketTagDTO[] Children { get; set; }
+    }
+
+    /// <summary>
+    /// Contains market spread value at specific time points.
+    /// </summary>
+    [Serializable]
+    public partial class ApiMarketSpreadDTO
+    {
+        /// <summary>
+        /// The time and date in for the spread value in UTC, interchangable to local time using localtime offset.
+        /// </summary>
+        public DateTimeOffset? SpreadTimeUtc { get; set; }
+        /// <summary>
+        /// The market spread value.
+        /// </summary>
+        public decimal Spread { get; set; }
+        /// <summary>
+        /// The market spread value's unit type.
+        /// </summary>
+        public int SpreadUnits { get; set; }
     }
 
     /// <summary>
@@ -805,19 +848,19 @@ namespace CIAPI.DTO
         /// </summary>
         public string Currency { get; set; }
         /// <summary>
-        /// The realised profit and loss.
+        /// The realised profit and loss (P&L).
         /// </summary>
         public decimal? RealisedPnl { get; set; }
         /// <summary>
-        /// The realised Pnl currency.
+        /// The realised P&L currency.
         /// </summary>
         public string RealisedPnlCurrency { get; set; }
         /// <summary>
-        /// The last time that the order changed. Note - Does not include things such as the current market price.
+        /// The last time that the order changed. Note - does not include things such as the current market price.
         /// </summary>
         public DateTime LastChangedDateTimeUtc { get; set; }
         /// <summary>
-        /// The time the order was executed.
+        /// The time that the order was executed.
         /// </summary>
         public DateTime ExecutedDateTimeUtc { get; set; }
     }
@@ -873,7 +916,7 @@ namespace CIAPI.DTO
         /// </summary>
         public decimal? MaxMarginFactor { get; set; }
         /// <summary>
-        /// The margin factor units.
+        /// Controls if the margin factor is displayed as a percentage or in points. 26 == Percentage, and 27 == Points.
         /// </summary>
         public int MarginFactorUnits { get; set; }
         /// <summary>
@@ -933,17 +976,97 @@ namespace CIAPI.DTO
         /// </summary>
         public int ConvertPriceToPipsMultiplier { get; set; }
         /// <summary>
-        /// The Id of the type of the market setting, ie Spread, CFD.
+        /// The ID type of the market setting, i.e. Spread, CFD.
         /// </summary>
         public int MarketSettingsTypeId { get; set; }
         /// <summary>
-        /// The type of the market setting, ie Spread, CFD.
+        /// The type of the market setting, i.e. Spread, CFD.
         /// </summary>
         public string MarketSettingsType { get; set; }
         /// <summary>
         /// A short summary of the market name used when presenting the market name on mobile clients.
         /// </summary>
         public string MobileShortName { get; set; }
+        /// <summary>
+        /// The method used for central clearing, i.e. "No" or "LCH".
+        /// </summary>
+        public string CentralClearingType { get; set; }
+        /// <summary>
+        /// The description of the method used for central clearing, i.e. "None" or "London Clearing House".
+        /// </summary>
+        public string CentralClearingTypeDescription { get; set; }
+        /// <summary>
+        /// The currency of the market being traded.
+        /// </summary>
+        public int MarketCurrencyId { get; set; }
+        /// <summary>
+        /// The minimum quantity that can be traded over the Phone.
+        /// </summary>
+        public decimal? PhoneMinSize { get; set; }
+        /// <summary>
+        /// Daily financing amount to be applied at specified time in UTC.
+        /// </summary>
+        public DateTime? DailyFinancingAppliedAtUtc { get; set; }
+        /// <summary>
+        /// Next Date and Time at which the End of Day (EOD) capture will run in UTC.
+        /// </summary>
+        public DateTime? NextMarketEodTimeUtc { get; set; }
+        /// <summary>
+        /// Market Trading start time on each trading day represented in UTC and local time.
+        /// </summary>
+        public DateTimeOffset? TradingStartTimeUtc { get; set; }
+        /// <summary>
+        /// Market Trading end time on each trading day represented in UTC and local time.
+        /// </summary>
+        public DateTimeOffset? TradingEndTimeUtc { get; set; }
+        /// <summary>
+        /// Market Pricing times on given set of working days.
+        /// </summary>
+        public ApiTradingDayTimesDTO[] MarketPricingTimes { get; set; }
+        /// <summary>
+        /// Breaks throughout each trading day (Day is specified as 'DayOfWeek').
+        /// </summary>
+        public ApiTradingDayTimesDTO[] MarketBreakTimes { get; set; }
+        /// <summary>
+        /// Market spreads during each trading day.
+        /// </summary>
+        public ApiMarketSpreadDTO[] MarketSpreads { get; set; }
+        /// <summary>
+        /// The premium paid for a guaranteed order.
+        /// </summary>
+        public decimal? GuaranteedOrderPremium { get; set; }
+        /// <summary>
+        /// The unit type being used for the guaranteed order premium. This can be (MultipleOfQuantity=1, PercentOfConsideration=2).
+        /// </summary>
+        public int? GuaranteedOrderPremiumUnits { get; set; }
+        /// <summary>
+        /// The minimum distance from current market price at which a guaranteed order can be placed.
+        /// </summary>
+        public decimal? GuaranteedOrderMinDistance { get; set; }
+        /// <summary>
+        /// Guaranteed order minimum distance unit type. This can be: (Percentage=26, Points=27).
+        /// </summary>
+        public int? GuaranteedOrderMinDistanceUnits { get; set; }
+    }
+
+    /// <summary>
+    /// Contains start and end time information for market specific events such as trading and pricing.
+    /// </summary>
+    [Serializable]
+    public partial class ApiTradingDayTimesDTO
+    {
+        /// <summary>
+        /// Day of the week at which the times are valid.
+        /// </summary>
+        public int DayOfWeek { get; set; }
+        /// <summary>
+        /// Start of the market time in both UTC and local time (using Offset property).
+        /// </summary>
+        public DateTimeOffset? StartTimeUtc { get; set; }
+        /// <summary>
+        /// End of the market time in both UTC and local time (using Offset property).
+        /// </summary>
+        public DateTimeOffset? EndTimeUtc { get; set; }
     }
 
     /// <summary>
@@ -992,6 +1115,10 @@ namespace CIAPI.DTO
         /// A unique ID for this price. Treat as a unique, but random string.
         /// </summary>
         public string AuditId { get; set; }
+        /// <summary>
+        /// The current status summary for this price. Values are: 0 = Normal 1 = Indicative 2 = PhoneOnly 3 = Suspended 4 = Closed
+        /// </summary>
+        public int StatusSummary { get; set; }
     }
 
     /// <summary>
@@ -1027,7 +1154,7 @@ namespace CIAPI.DTO
     }
 
     /// <summary>
-    /// A Trade, or order that is currently open.
+    /// A trade, or order that is currently open.
     /// </summary>
     [Serializable]
     public partial class ApiOpenPositionDTO
@@ -1037,7 +1164,7 @@ namespace CIAPI.DTO
         /// </summary>
         public int OrderId { get; set; }
         /// <summary>
-        /// The markets unique identifier.
+        /// The market's unique identifier.
         /// </summary>
         public int MarketId { get; set; }
         /// <summary>
@@ -1057,7 +1184,7 @@ namespace CIAPI.DTO
         /// </summary>
         public decimal Price { get; set; }
         /// <summary>
-        /// The trading account that the order is on.
+        /// The ID of the trading account that the order is on.
         /// </summary>
         public int TradingAccountId { get; set; }
         /// <summary>
@@ -1077,7 +1204,7 @@ namespace CIAPI.DTO
         /// </summary>
         public ApiBasicStopLimitOrderDTO LimitOrder { get; set; }
         /// <summary>
-        /// The last time that the order changed. Note - Does not include things such as the current market price.
+        /// The last time that the order changed. Note - does not include things such as the current market price.
         /// </summary>
         public DateTime LastChangedDateTimeUTC { get; set; }
         /// <summary>
@@ -1123,15 +1250,47 @@ namespace CIAPI.DTO
     }
 
     /// <summary>
-    /// Gives a list of client application specific message translations
+    /// A bool result to signify status of completed operation.
+    /// </summary>
+    [Serializable]
+    public partial class UpdateDeleteClientPreferenceResponseDTO
+    {
+        /// <summary>
+        /// Status of save
+        /// </summary>
+        public bool Successful { get; set; }
+    }
+
+    /// <summary>
+    /// Gives a list of client application specific message translations.
     /// </summary>
     [Serializable]
     public partial class ApiClientApplicationMessageTranslationResponseDTO
     {
         /// <summary>
-        /// List of message translations (key/value pairs)
+        /// List of message translations (key/value pairs).
         /// </summary>
         public ApiClientApplicationMessageTranslationDTO[] TranslationKeyValuePairs { get; set; }
+    }
+
+    /// <summary>
+    /// The response containing version information and upgrade url of the client application.
+    /// </summary>
+    [Serializable]
+    public partial class GetVersionInformationResponseDTO
+    {
+        /// <summary>
+        /// The minimum version of the client application that can be used. If the installed version is less than this it shouldn't be used.
+        /// </summary>
+        public string MinimumRequiredVersion { get; set; }
+        /// <summary>
+        /// The latest version of the client application that can be used.
+        /// </summary>
+        public string LatestVersion { get; set; }
+        /// <summary>
+        /// The url of the upgrade.
+        /// </summary>
+        public string UpgradeUrl { get; set; }
     }
 
     /// <summary>
@@ -1152,6 +1311,18 @@ namespace CIAPI.DTO
     [Serializable]
     public partial class ApiSaveMarketInformationResponseDTO
     {
+    }
+
+    /// <summary>
+    /// Response from a market search request.
+    /// </summary>
+    [Serializable]
+    public partial class ListMarketSearchResponseDTO
+    {
+        /// <summary>
+        /// The requested list of markets.
+        /// </summary>
+        public ApiMarketDTO[] Markets { get; set; }
     }
 
     /// <summary>
@@ -1185,7 +1356,7 @@ namespace CIAPI.DTO
         /// </summary>
         public string PersonalEmailAddress { get; set; }
         /// <summary>
-        /// Does the user have more than one email address configured?
+        /// Flag indicating whether the user has more than one email address configured.
         /// </summary>
         public bool HasMultipleEmailAddresses { get; set; }
     }
@@ -1212,6 +1383,18 @@ namespace CIAPI.DTO
         /// The active stop limit order. If it is null then the active stop limit order does not exist.
         /// </summary>
         public ApiActiveStopLimitOrderDTO ActiveStopLimitOrder { get; set; }
+    }
+
+    /// <summary>
+    /// List of results of client preference get.
+    /// </summary>
+    [Serializable]
+    public partial class GetListClientPreferenceResponseDTO
+    {
+        /// <summary>
+        /// The requested client preference key value pair.
+        /// </summary>
+        public ClientPreferenceKeyDTO[] ClientPreferences { get; set; }
     }
 
     /// <summary>
@@ -1257,7 +1440,7 @@ namespace CIAPI.DTO
         /// </summary>
         public string AuditId { get; set; }
         /// <summary>
-        /// The ID of the TradingAccount associated with the trade/order request.
+        /// The ID of the trading account associated with the trade/order request.
         /// </summary>
         public int TradingAccountId { get; set; }
         /// <summary>
@@ -1273,7 +1456,7 @@ namespace CIAPI.DTO
         /// </summary>
         public string Applicability { get; set; }
         /// <summary>
-        /// The associated expiry DateTime for a pair of GoodTillDate IfDone orders.
+        /// The associated expiry DateTime for a pair of GoodTillDate If/Done orders.
         /// </summary>
         public DateTime? ExpiryDateTimeUTC { get; set; }
         /// <summary>
@@ -1306,6 +1489,9 @@ namespace CIAPI.DTO
         public string StatusMessage { get; set; }
     }
 
+    /// <summary>
+    /// An (empty) response to indicate that the save account information operation has completed.
+    /// </summary>
     [Serializable]
     public partial class ApiSaveAccountInformationResponseDTO
     {
@@ -1330,9 +1516,21 @@ namespace CIAPI.DTO
         /// </summary>
         public int Status { get; set; }
         /// <summary>
+        /// Order type ID.
+        /// </summary>
+        public int OrderTypeId { get; set; }
+        /// <summary>
         /// Order fill price.
         /// </summary>
         public decimal Price { get; set; }
+        /// <summary>
+        /// Order quantity
+        /// </summary>
+        public decimal Quantity { get; set; }
+        /// <summary>
+        /// Trigger price, if applicable
+        /// </summary>
+        public decimal TriggerPrice { get; set; }
         /// <summary>
         /// Commission charge.
         /// </summary>
@@ -1360,7 +1558,7 @@ namespace CIAPI.DTO
     }
 
     /// <summary>
-    /// The response from the stop limit order request
+    /// The response from the stop limit order request.
     /// </summary>
     [Serializable]
     public partial class ApiStopLimitResponseDTO : ApiOrderResponseDTO
@@ -1438,6 +1636,10 @@ namespace CIAPI.DTO
         /// </summary>
         public ApiQuoteResponseDTO Quote { get; set; }
         /// <summary>
+        /// List of order actions with their associated response.
+        /// </summary>
+        public ApiOrderActionResponseDTO[] Actions { get; set; }
+        /// <summary>
         /// Plain text StatusReason
         /// </summary>
         public string StatusReason_Resolved { get; set; }
@@ -1490,7 +1692,7 @@ namespace CIAPI.DTO
         /// </summary>
         public string AuditId { get; set; }
         /// <summary>
-        /// The ID of the TradingAccount associated with the trade/order request.
+        /// The ID of the trading account associated with the trade/order request.
         /// </summary>
         public int TradingAccountId { get; set; }
         /// <summary>
@@ -1553,6 +1755,18 @@ namespace CIAPI.DTO
         /// Session identifier (session token) to delete (log off).
         /// </summary>
         public string Session { get; set; }
+    }
+
+    /// <summary>
+    /// Get client preferences.
+    /// </summary>
+    [Serializable]
+    public partial class ClientPreferenceRequestDTO
+    {
+        /// <summary>
+        /// The client preference key to get.
+        /// </summary>
+        public string Key { get; set; }
     }
 
     /// <summary>
@@ -1626,31 +1840,31 @@ namespace CIAPI.DTO
         /// </summary>
         public string Password { get; set; }
         /// <summary>
-        /// A unique key use to identify the client application.
+        /// A unique key to identify the client application.
         /// </summary>
         public string AppKey { get; set; }
         /// <summary>
-        /// The version of he client application.
+        /// The version of the client application.
         /// </summary>
         public string AppVersion { get; set; }
         /// <summary>
-        /// Any comments the client applications what to associate with this session. Optional.
+        /// Any client application comments on what to associate with this session. (Optional).
         /// </summary>
         public string AppComments { get; set; }
     }
 
     /// <summary>
-    /// Delete watchlist item
+    /// Delete watchlist item.
     /// </summary>
     [Serializable]
     public partial class DeleteWatchlistItemRequestDTO
     {
         /// <summary>
-        /// The watchlist display order id to delete the item from
+        /// The watchlist display order ID to delete the item from.
         /// </summary>
         public int ParentWatchlistDisplayOrderId { get; set; }
         /// <summary>
-        /// The market item to delete
+        /// The market item to delete.
         /// </summary>
         public int MarketId { get; set; }
     }
@@ -1668,7 +1882,7 @@ namespace CIAPI.DTO
     }
 
     /// <summary>
-    /// Response from a market search with tags request.
+    /// Response from a market information search with tags request.
     /// </summary>
     [Serializable]
     public partial class MarketInformationSearchWithTagsResponseDTO
@@ -1712,26 +1926,6 @@ namespace CIAPI.DTO
     }
 
     /// <summary>
-    /// The response containing version information and upgrade url of the client application.
-    /// </summary>
-    [Serializable]
-    public partial class GetVersionInformationResponseDTO
-    {
-        /// <summary>
-        /// The minimum version of the client application that can be used. If the installed version is less than this it shouldn't be used.
-        /// </summary>
-        public string MinimumRequiredVersion { get; set; }
-        /// <summary>
-        /// The latest version of the client application that can be used.
-        /// </summary>
-        public string LatestVersion { get; set; }
-        /// <summary>
-        /// The url of the upgrade.
-        /// </summary>
-        public string UpgradeUrl { get; set; }
-    }
-
-    /// <summary>
     /// Request to change account information.
     /// </summary>
     [Serializable]
@@ -1757,6 +1951,22 @@ namespace CIAPI.DTO
         /// A list of historical trades.
         /// </summary>
         public ApiTradeHistoryDTO[] TradeHistory { get; set; }
+        /// <summary>
+        /// A list of trades which are referenced as OpenOrderId's in the trade history list - but do not actually exist in that list.
+        /// </summary>
+        public ApiTradeHistoryDTO[] SupplementalOpenOrders { get; set; }
+    }
+
+    /// <summary>
+    /// Results of client preference get.
+    /// </summary>
+    [Serializable]
+    public partial class GetClientPreferenceResponseDTO
+    {
+        /// <summary>
+        /// The requested client preference key value pair.
+        /// </summary>
+        public ClientPreferenceKeyDTO ClientPreference { get; set; }
     }
 
     /// <summary>
@@ -1824,6 +2034,18 @@ namespace CIAPI.DTO
     }
 
     /// <summary>
+    /// Results of client preference get.
+    /// </summary>
+    [Serializable]
+    public partial class GetKeyListClientPreferenceResponseDTO
+    {
+        /// <summary>
+        /// The list of client preference keys.
+        /// </summary>
+        public string[] ClientPreferenceKeys { get; set; }
+    }
+
+    /// <summary>
     /// Quote response.
     /// </summary>
     [Serializable]
@@ -1874,7 +2096,7 @@ namespace CIAPI.DTO
         /// </summary>
         public ApiLookupDTO[] ApiLookupDTOList { get; set; }
         /// <summary>
-        /// TODO: document me!
+        /// List of entities each containing data specific to a culture.
         /// </summary>
         public ApiCultureLookupDTO[] ApiCultureLookupDTOList { get; set; }
     }
@@ -1893,6 +2115,18 @@ namespace CIAPI.DTO
         /// The Limit order response.
         /// </summary>
         public ApiOrderResponseDTO Limit { get; set; }
+    }
+
+    /// <summary>
+    /// Save client preferences.
+    /// </summary>
+    [Serializable]
+    public partial class SaveClientPreferenceRequestDTO
+    {
+        /// <summary>
+        /// The list of client preferences key value pairs to be saved.
+        /// </summary>
+        public ClientPreferenceKeyDTO ClientPreference { get; set; }
     }
 
     /// <summary>
@@ -1924,7 +2158,7 @@ namespace CIAPI.DTO
     }
 
     /// <summary>
-    /// Response to a CreateSessionRequest (Log On).
+    /// Response to a LogOn call.
     /// </summary>
     [Serializable]
     public partial class ApiLogOnResponseDTO
@@ -1934,11 +2168,11 @@ namespace CIAPI.DTO
         /// </summary>
         public string Session { get; set; }
         /// <summary>
-        /// Flag used it indicate if a password change is needed.
+        /// Flag used to indicate whether a password change is needed.
         /// </summary>
         public bool PasswordChangeRequired { get; set; }
         /// <summary>
-        /// Flag used it indicate if the account operator to which this use is associated is allowed to access the application.
+        /// Flag used to indicate whether the account operator associated with this user is allowed to access the application.
         /// </summary>
         public bool AllowedAccountOperator { get; set; }
     }
@@ -1990,7 +2224,7 @@ namespace CIAPI.DTO
     public partial class ApiChangePasswordResponseDTO
     {
         /// <summary>
-        /// Was the password change request successful?
+        /// Flag indicating whether the password change request was successful.
         /// </summary>
         public bool IsPasswordChanged { get; set; }
     }
@@ -2040,7 +2274,7 @@ namespace CIAPI.DTO
     }
 
     /// <summary>
-    /// Response from a market search with tags request.
+    /// Response from a search request of market information tags.
     /// </summary>
     [Serializable]
     public partial class MarketInformationTagLookupResponseDTO
@@ -2049,6 +2283,38 @@ namespace CIAPI.DTO
         /// The requested list of market tags.
         /// </summary>
         public ApiPrimaryMarketTagDTO[] Tags { get; set; }
+    }
+
+    /// <summary>
+    /// Response to an order request.
+    /// </summary>
+    [Serializable]
+    public partial class ApiOrderActionResponseDTO
+    {
+        /// <summary>
+        /// Actioned Order ID.
+        /// </summary>
+        public int ActionedOrderId { get; set; }
+        /// <summary>
+        /// Actioning Order ID.
+        /// </summary>
+        public int ActioningOrderId { get; set; }
+        /// <summary>
+        /// Quantity.
+        /// </summary>
+        public decimal Quantity { get; set; }
+        /// <summary>
+        /// Profit or Loss.
+        /// </summary>
+        public decimal ProfitAndLoss { get; set; }
+        /// <summary>
+        /// Profit or Loss Currency.
+        /// </summary>
+        public string ProfitAndLossCurrency { get; set; }
+        /// <summary>
+        /// Order Action Type.
+        /// </summary>
+        public int OrderActionTypeId { get; set; }
     }
 
     /// <summary>
@@ -2072,19 +2338,43 @@ namespace CIAPI.DTO
     }
 
     /// <summary>
-    /// Simulated order response
+    /// Simulated order response.
     /// </summary>
     [Serializable]
     public partial class ApiSimulateOrderResponseDTO
     {
         /// <summary>
-        /// Simulated order status reason id.
+        /// Simulated order status reason ID.
         /// </summary>
         public int StatusReason { get; set; }
         /// <summary>
-        /// Simulated order status id.
+        /// Simulated order status ID.
         /// </summary>
         public int Status { get; set; }
+    }
+
+    /// <summary>
+    /// A request to update a stop/limit order.
+    /// </summary>
+    [Serializable]
+    public partial class ApiClientApplicationMessageTranslationRequestDTO
+    {
+        /// <summary>
+        /// Client Id of requesting user.
+        /// </summary>
+        public int ClientApplicationId { get; set; }
+        /// <summary>
+        /// Culture Id of requesting user.
+        /// </summary>
+        public int CultureId { get; set; }
+        /// <summary>
+        /// Account Operatior Id of requesting user
+        /// </summary>
+        public int AccountOperatorId { get; set; }
+        /// <summary>
+        /// A list of interesting keys to get translations for
+        /// </summary>
+        public string[] InterestedTranslationKeys { get; set; }
     }
 
     /// <summary>

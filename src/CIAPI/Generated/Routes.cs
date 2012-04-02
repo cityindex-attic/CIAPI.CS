@@ -78,6 +78,284 @@ public string AppKey { get; set; }
         }            
 
         // ***********************************
+        // ListMarketSearch
+        // ***********************************
+
+
+        /// <summary>
+        /// <p>Returns market information for the markets that meet the search criteria.</p> The search can be performed by market code and/or market name, and can include CFDs and Spread Bet markets.
+        /// </summary>
+        /// <param name="searchByMarketCode">Sets the search to use market code.</param>
+        /// <param name="searchByMarketName">Sets the search to use market Name.</param>
+        /// <param name="spreadProductType">Sets the search to include spread bet markets.</param>
+        /// <param name="cfdProductType">Sets the search to include CFD markets.</param>
+        /// <param name="binaryProductType">Sets the search to include binary markets.</param>
+        /// <param name="query">The text to search for. Matches part of market name / code from the start.</param>
+        /// <param name="maxResults">The maximum number of results to return.</param>
+        /// <param name="useMobileShortName">True if the market name should be in short form.  Helpful when displaying data on a small screen.</param>
+        public virtual ListMarketSearchResponseDTO ListMarketSearch(bool searchByMarketCode, bool searchByMarketName, bool spreadProductType, bool cfdProductType, bool binaryProductType, string query, int maxResults, bool useMobileShortName)
+        {
+            string uriTemplate = "/search?SearchByMarketCode={searchByMarketCode}&SearchByMarketName={searchByMarketName}&SpreadProductType={spreadProductType}&CfdProductType={cfdProductType}&BinaryProductType={binaryProductType}&Query={query}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}";
+            return _client.Request<ListMarketSearchResponseDTO>("market", uriTemplate , "GET",
+            new Dictionary<string, object>
+            {
+                { "searchByMarketCode", searchByMarketCode}, 
+                { "searchByMarketName", searchByMarketName}, 
+                { "spreadProductType", spreadProductType}, 
+                { "cfdProductType", cfdProductType}, 
+                { "binaryProductType", binaryProductType}, 
+                { "query", query}, 
+                { "maxResults", maxResults}, 
+                { "useMobileShortName", useMobileShortName}
+            }, TimeSpan.FromMilliseconds(0), "data");
+        }
+
+
+        /// <summary>
+        /// <p>Returns market information for the markets that meet the search criteria.</p> The search can be performed by market code and/or market name, and can include CFDs and Spread Bet markets.
+        /// </summary>
+        /// <param name="searchByMarketCode">Sets the search to use market code.</param>
+        /// <param name="searchByMarketName">Sets the search to use market Name.</param>
+        /// <param name="spreadProductType">Sets the search to include spread bet markets.</param>
+        /// <param name="cfdProductType">Sets the search to include CFD markets.</param>
+        /// <param name="binaryProductType">Sets the search to include binary markets.</param>
+        /// <param name="query">The text to search for. Matches part of market name / code from the start.</param>
+        /// <param name="maxResults">The maximum number of results to return.</param>
+        /// <param name="useMobileShortName">True if the market name should be in short form.  Helpful when displaying data on a small screen.</param>
+        /// <param name="callback"></param>
+        /// <param name="state"></param>
+        public virtual void BeginListMarketSearch(bool searchByMarketCode, bool searchByMarketName, bool spreadProductType, bool cfdProductType, bool binaryProductType, string query, int maxResults, bool useMobileShortName, ApiAsyncCallback<ListMarketSearchResponseDTO> callback, object state)
+        {
+            string uriTemplate = "/search?SearchByMarketCode={searchByMarketCode}&SearchByMarketName={searchByMarketName}&SpreadProductType={spreadProductType}&CfdProductType={cfdProductType}&BinaryProductType={binaryProductType}&Query={query}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}";
+            _client.BeginRequest(callback, state, "market", uriTemplate , "GET",
+            new Dictionary<string, object>
+            {
+                { "searchByMarketCode", searchByMarketCode}, 
+                { "searchByMarketName", searchByMarketName}, 
+                { "spreadProductType", spreadProductType}, 
+                { "cfdProductType", cfdProductType}, 
+                { "binaryProductType", binaryProductType}, 
+                { "query", query}, 
+                { "maxResults", maxResults}, 
+                { "useMobileShortName", useMobileShortName}
+            }, TimeSpan.FromMilliseconds(0), "data");
+        }
+
+        public ListMarketSearchResponseDTO EndListMarketSearch(ApiAsyncResult<ListMarketSearchResponseDTO> asyncResult)
+        {
+            return _client.EndRequest(asyncResult);
+        }
+
+
+        // ***********************************
+        // Save
+        // ***********************************
+
+
+        /// <summary>
+        /// Save client preferences.
+        /// </summary>
+        /// <param name="saveClientPreferenceRequestDTO">Save client preferences.</param>
+        public virtual UpdateDeleteClientPreferenceResponseDTO Save(SaveClientPreferenceRequestDTO saveClientPreferenceRequestDTO)
+        {
+            string uriTemplate = "/save";
+            return _client.Request<UpdateDeleteClientPreferenceResponseDTO>("clientpreference", uriTemplate , "POST",
+            new Dictionary<string, object>
+            {
+                { "saveClientPreferenceRequestDTO", saveClientPreferenceRequestDTO}
+            }, TimeSpan.FromMilliseconds(0), "data");
+        }
+
+
+        /// <summary>
+        /// Save client preferences.
+        /// </summary>
+        /// <param name="saveClientPreferenceRequestDTO">Save client preferences.</param>
+        /// <param name="callback"></param>
+        /// <param name="state"></param>
+        public virtual void BeginSave(SaveClientPreferenceRequestDTO saveClientPreferenceRequestDTO, ApiAsyncCallback<UpdateDeleteClientPreferenceResponseDTO> callback, object state)
+        {
+            string uriTemplate = "/save";
+            _client.BeginRequest(callback, state, "clientpreference", uriTemplate , "POST",
+            new Dictionary<string, object>
+            {
+                { "saveClientPreferenceRequestDTO", saveClientPreferenceRequestDTO}
+            }, TimeSpan.FromMilliseconds(0), "data");
+        }
+
+        public UpdateDeleteClientPreferenceResponseDTO EndSave(ApiAsyncResult<UpdateDeleteClientPreferenceResponseDTO> asyncResult)
+        {
+            return _client.EndRequest(asyncResult);
+        }
+
+
+        // ***********************************
+        // Get
+        // ***********************************
+
+
+        /// <summary>
+        /// get client preferences.
+        /// </summary>
+        /// <param name="clientPreferenceRequestDto">get client preferences.</param>
+        public virtual GetClientPreferenceResponseDTO Get(ClientPreferenceRequestDTO clientPreferenceRequestDto)
+        {
+            string uriTemplate = "/get";
+            return _client.Request<GetClientPreferenceResponseDTO>("clientpreference/save", uriTemplate , "POST",
+            new Dictionary<string, object>
+            {
+                { "clientPreferenceRequestDto", clientPreferenceRequestDto}
+            }, TimeSpan.FromMilliseconds(0), "data");
+        }
+
+
+        /// <summary>
+        /// get client preferences.
+        /// </summary>
+        /// <param name="clientPreferenceRequestDto">get client preferences.</param>
+        /// <param name="callback"></param>
+        /// <param name="state"></param>
+        public virtual void BeginGet(ClientPreferenceRequestDTO clientPreferenceRequestDto, ApiAsyncCallback<GetClientPreferenceResponseDTO> callback, object state)
+        {
+            string uriTemplate = "/get";
+            _client.BeginRequest(callback, state, "clientpreference/save", uriTemplate , "POST",
+            new Dictionary<string, object>
+            {
+                { "clientPreferenceRequestDto", clientPreferenceRequestDto}
+            }, TimeSpan.FromMilliseconds(0), "data");
+        }
+
+        public GetClientPreferenceResponseDTO EndGet(ApiAsyncResult<GetClientPreferenceResponseDTO> asyncResult)
+        {
+            return _client.EndRequest(asyncResult);
+        }
+
+
+        // ***********************************
+        // GetKeyList
+        // ***********************************
+
+
+        /// <summary>
+        /// get list of client preferences keys.
+        /// </summary>
+        public virtual GetKeyListClientPreferenceResponseDTO GetKeyList()
+        {
+            string uriTemplate = "/getkeylist";
+            return _client.Request<GetKeyListClientPreferenceResponseDTO>("clientpreference/save", uriTemplate , "GET",
+            new Dictionary<string, object>
+            {
+
+            }, TimeSpan.FromMilliseconds(0), "default");
+        }
+
+
+        /// <summary>
+        /// get list of client preferences keys.
+        /// </summary>
+        /// <param name="callback"></param>
+        /// <param name="state"></param>
+        public virtual void BeginGetKeyList( ApiAsyncCallback<GetKeyListClientPreferenceResponseDTO> callback, object state)
+        {
+            string uriTemplate = "/getkeylist";
+            _client.BeginRequest(callback, state, "clientpreference/save", uriTemplate , "GET",
+            new Dictionary<string, object>
+            {
+
+            }, TimeSpan.FromMilliseconds(0), "default");
+        }
+
+        public GetKeyListClientPreferenceResponseDTO EndGetKeyList(ApiAsyncResult<GetKeyListClientPreferenceResponseDTO> asyncResult)
+        {
+            return _client.EndRequest(asyncResult);
+        }
+
+
+        // ***********************************
+        // Delete
+        // ***********************************
+
+
+        /// <summary>
+        /// delete client preference key.
+        /// </summary>
+        /// <param name="clientPreferenceKey">delete client preference key.</param>
+        public virtual UpdateDeleteClientPreferenceResponseDTO Delete(ClientPreferenceRequestDTO clientPreferenceKey)
+        {
+            string uriTemplate = "/delete";
+            return _client.Request<UpdateDeleteClientPreferenceResponseDTO>("clientpreference/save", uriTemplate , "POST",
+            new Dictionary<string, object>
+            {
+                { "clientPreferenceKey", clientPreferenceKey}
+            }, TimeSpan.FromMilliseconds(0), "data");
+        }
+
+
+        /// <summary>
+        /// delete client preference key.
+        /// </summary>
+        /// <param name="clientPreferenceKey">delete client preference key.</param>
+        /// <param name="callback"></param>
+        /// <param name="state"></param>
+        public virtual void BeginDelete(ClientPreferenceRequestDTO clientPreferenceKey, ApiAsyncCallback<UpdateDeleteClientPreferenceResponseDTO> callback, object state)
+        {
+            string uriTemplate = "/delete";
+            _client.BeginRequest(callback, state, "clientpreference/save", uriTemplate , "POST",
+            new Dictionary<string, object>
+            {
+                { "clientPreferenceKey", clientPreferenceKey}
+            }, TimeSpan.FromMilliseconds(0), "data");
+        }
+
+        public UpdateDeleteClientPreferenceResponseDTO EndDelete(ApiAsyncResult<UpdateDeleteClientPreferenceResponseDTO> asyncResult)
+        {
+            return _client.EndRequest(asyncResult);
+        }
+
+
+        // ***********************************
+        // GetClientApplicationMessageTranslationWithInterestingItems
+        // ***********************************
+
+
+        /// <summary>
+        /// Use the message translation service to get client specific translated textual strings for specific keys.
+        /// </summary>
+        /// <param name="apiClientApplicationMessageTranslationRequestDto">Dto of the required data for translation lookup for user.</param>
+        public virtual ApiClientApplicationMessageTranslationResponseDTO GetClientApplicationMessageTranslationWithInterestingItems(ApiClientApplicationMessageTranslationRequestDTO apiClientApplicationMessageTranslationRequestDto)
+        {
+            string uriTemplate = "/translationWithInterestingItems";
+            return _client.Request<ApiClientApplicationMessageTranslationResponseDTO>("message", uriTemplate , "POST",
+            new Dictionary<string, object>
+            {
+                { "apiClientApplicationMessageTranslationRequestDto", apiClientApplicationMessageTranslationRequestDto}
+            }, TimeSpan.FromMilliseconds(0), "default");
+        }
+
+
+        /// <summary>
+        /// Use the message translation service to get client specific translated textual strings for specific keys.
+        /// </summary>
+        /// <param name="apiClientApplicationMessageTranslationRequestDto">Dto of the required data for translation lookup for user.</param>
+        /// <param name="callback"></param>
+        /// <param name="state"></param>
+        public virtual void BeginGetClientApplicationMessageTranslationWithInterestingItems(ApiClientApplicationMessageTranslationRequestDTO apiClientApplicationMessageTranslationRequestDto, ApiAsyncCallback<ApiClientApplicationMessageTranslationResponseDTO> callback, object state)
+        {
+            string uriTemplate = "/translationWithInterestingItems";
+            _client.BeginRequest(callback, state, "message", uriTemplate , "POST",
+            new Dictionary<string, object>
+            {
+                { "apiClientApplicationMessageTranslationRequestDto", apiClientApplicationMessageTranslationRequestDto}
+            }, TimeSpan.FromMilliseconds(0), "default");
+        }
+
+        public ApiClientApplicationMessageTranslationResponseDTO EndGetClientApplicationMessageTranslationWithInterestingItems(ApiAsyncResult<ApiClientApplicationMessageTranslationResponseDTO> asyncResult)
+        {
+            return _client.EndRequest(asyncResult);
+        }
+
+
+        // ***********************************
         // GetVersionInformation
         // ***********************************
 
@@ -89,8 +367,8 @@ public string AppKey { get; set; }
         /// <param name="accountOperatorId">an optional parameter to identify the account operator string to uniquely identify the application.</param>
         public virtual GetVersionInformationResponseDTO GetVersionInformation(string appKey, int accountOperatorId)
         {
-            string uriTemplate = "?AppKey={appKey}&AccountOperatorId={accountOperatorId}";
-            return _client.Request<GetVersionInformationResponseDTO>("clientapplication/versioninformation", uriTemplate , "GET",
+            string uriTemplate = "/versioninformation?AppKey={appKey}&AccountOperatorId={accountOperatorId}";
+            return _client.Request<GetVersionInformationResponseDTO>("clientapplication", uriTemplate , "GET",
             new Dictionary<string, object>
             {
                 { "appKey", appKey}, 
@@ -108,8 +386,8 @@ public string AppKey { get; set; }
         /// <param name="state"></param>
         public virtual void BeginGetVersionInformation(string appKey, int accountOperatorId, ApiAsyncCallback<GetVersionInformationResponseDTO> callback, object state)
         {
-            string uriTemplate = "?AppKey={appKey}&AccountOperatorId={accountOperatorId}";
-            _client.BeginRequest(callback, state, "clientapplication/versioninformation", uriTemplate , "GET",
+            string uriTemplate = "/versioninformation?AppKey={appKey}&AccountOperatorId={accountOperatorId}";
+            _client.BeginRequest(callback, state, "clientapplication", uriTemplate , "GET",
             new Dictionary<string, object>
             {
                 { "appKey", appKey}, 
