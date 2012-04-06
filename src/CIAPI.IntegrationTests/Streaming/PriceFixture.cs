@@ -5,7 +5,7 @@ using CIAPI.DTO;
 using CIAPI.Streaming;
 using Salient.ReflectiveLoggingAdapter;
 using NUnit.Framework;
-using IStreamingClient = CIAPI.Streaming.IStreamingClient;
+
 
 namespace CIAPI.IntegrationTests.Streaming
 {

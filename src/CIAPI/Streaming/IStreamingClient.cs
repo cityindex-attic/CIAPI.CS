@@ -4,10 +4,11 @@ using StreamingClient;
 
 namespace CIAPI.Streaming
 {
-    public interface IStreamingClient : StreamingClient.IStreamingClient,IDisposable 
+    public interface IStreamingClient : IDisposable 
     {
 
-        
+        event EventHandler<MessageEventArgs<object>> MessageReceived;
+        event EventHandler<StatusEventArgs> StatusChanged;
         IStreamingListener<PriceDTO> BuildPricesListener(params int[] marketIds);
         IStreamingListener<NewsDTO> BuildNewsHeadlinesListener(string category);
         IStreamingListener<QuoteDTO> BuildQuotesListener();

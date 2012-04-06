@@ -51,15 +51,11 @@
     <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\packages\Newtonsoft.Json.4.0.8\lib\net40\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="Salient.JsonClient.35, Version=3.2.0.31, Culture=neutral, PublicKeyToken=b412daeaa648e3eb, processorArchitecture=MSIL">
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Salient.JsonClient.3.2.0\lib\net35\Release\Salient.JsonClient.35.dll</HintPath>
+      <HintPath>..\..\packages\Newtonsoft.Json.4.5.1\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Salient.ReflectiveLoggingAdapter.35, Version=3.1.0.21, Culture=neutral, PublicKeyToken=b9b5972b9f69332b, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Salient.ReflectiveLoggingAdapter.3.1.0\lib\net35\Release\Salient.ReflectiveLoggingAdapter.35.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -72,8 +68,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\common\TestConfig.cs">
-      <Link>TestConfig.cs</Link>
+    <Compile Include="..\..\common\StaticTestConfig.cs">
+      <Link>StaticTestConfig.cs</Link>
     </Compile>
     <Compile Include="Example.FetchNews.cs" />
     <Compile Include="Program.cs" />
@@ -82,9 +78,6 @@
     <Compile Include="SyncVsAsync.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\common\App.config">
-      <Link>App.config</Link>
-    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -92,21 +85,13 @@
       <Project>{B40E6F1C-453E-44A2-BA9D-1692378B355C}</Project>
       <Name>CIAPI</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\StreamingClient.Lightstreamer\StreamingClient.Lightstreamer.csproj">
-      <Project>{572A308B-634F-48CF-926D-CFEFB8D00C46}</Project>
-      <Name>StreamingClient.Lightstreamer</Name>
+    <ProjectReference Include="..\..\ReliableHttpClient\Salient.ReliableHttpClient.Serializer.Newtonsoft\Salient.ReliableHttpClient.Serializer.Newtonsoft.csproj">
+      <Project>{B2F31D08-C115-451D-BAD2-F56F2148143B}</Project>
+      <Name>Salient.ReliableHttpClient.Serializer.Newtonsoft</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\StreamingClient\StreamingClient.csproj">
-      <Project>{EE5023DC-A20F-4358-9DF1-7D69BB1C322E}</Project>
-      <Name>StreamingClient</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\StreamingClient.Lightstreamer\StreamingClient.Lightstreamer.csproj">
-      <Project>{572A308B-634F-48CF-926D-CFEFB8D00C46}</Project>
-      <Name>StreamingClient.Lightstreamer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\StreamingClient\StreamingClient.csproj">
-      <Project>{EE5023DC-A20F-4358-9DF1-7D69BB1C322E}</Project>
-      <Name>StreamingClient</Name>
+    <ProjectReference Include="..\..\ReliableHttpClient\Salient.ReliableHttpClient\Salient.ReliableHttpClient.csproj">
+      <Project>{528B283F-41C8-489D-A031-C9A4058BB283}</Project>
+      <Name>Salient.ReliableHttpClient</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -16,7 +16,8 @@ namespace CIAPI.IntegrationTests.Streaming
         [Test]
         public void CanConsumeDefaultPricesStream()
         {
-            var streamingClient = StreamingClientFactory.CreateStreamingClient(Settings.StreamingUri, "", "");
+            var rpcClient = this.BuildRpcClient();
+            var streamingClient = rpcClient.CreateStreamingClient();
 
             var priceListener = streamingClient.BuildDefaultPricesListener(IFX_POLAND_ACCOUNT_OPERATOR_ID);
 

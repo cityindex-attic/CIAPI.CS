@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Web;
 using CIAPI.DTO;
-using Salient.JsonClient;
+
 using Salient.ReflectiveLoggingAdapter;
 using Client = CIAPI.Rpc.Client;
 

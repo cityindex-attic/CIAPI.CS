@@ -10,8 +10,10 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using CIAPI.Testing;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using Salient.ReflectiveLoggingAdapter;
 
 
 namespace Phone7Ticker
@@ -36,6 +38,11 @@ namespace Phone7Ticker
             // Show graphics profiling information while debugging.
             if (System.Diagnostics.Debugger.IsAttached)
             {
+                LogManager.CreateInnerLogger = (logName, logLevel, showLevel, showDateTime, showLogName, dateTimeFormat)
+                       =>
+                       new SimpleDebugAppender(logName, logLevel, showLevel, showDateTime,
+                                               showLogName, dateTimeFormat);
+
                 // Display the current frame rate counters.
                 Application.Current.Host.Settings.EnableFrameRateCounter = true;
 

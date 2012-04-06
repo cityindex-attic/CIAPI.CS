@@ -3,13 +3,44 @@ using System.Collections.Generic;
 using System.Net;
 using System.Reflection;
 using CIAPI.DTO;
-using Salient.JsonClient;
+using CIAPI.Streaming;
 using Salient.ReflectiveLoggingAdapter;
+using Salient.ReliableHttpClient;
 
 namespace CIAPI.Rpc
 {
-    public partial class Client : Salient.JsonClient.Client
+    // #TODO: reintegrate exception factory into ReliableHttpClient
+    public partial class Client : ClientBase
     {
+        public override Guid BeginRequest(RequestMethod method, string target, string uriTemplate, Dictionary<string, object> parameters, ContentType requestContentType, ContentType responseContentType, TimeSpan cacheDuration, int timeout, int retryCount, ApiAsyncCallback callback, object state)
+        {
+            target = _rootUri.AbsoluteUri + "/" + target;
+            return base.BeginRequest(method, target, uriTemplate, parameters, requestContentType, responseContentType, cacheDuration, timeout, retryCount, callback, state);
+        }
+        public ReliableHttpException GetJsonException(ReliableHttpException ex)
+        {
+            if (!string.IsNullOrEmpty(ex.ResponseText))
+            {
+                try
+                {
+
+                    var err = Serializer.DeserializeObject<ApiErrorResponseDTO>(ex.ResponseText);
+                    var ex2 = ReliableHttpException.Create(err.ErrorMessage, ex);
+                    ex2.ErrorCode = err.ErrorCode;
+                    ex2.HttpStatus = err.HttpStatus;
+                    return ex2;
+                }
+                catch
+                {
+                    // swallow
+                }
+            }
+
+            return null;
+        }
+
+        private Uri _streamingUri;
+        private Uri _rootUri;
         private static readonly ILog Log = LogManager.GetLogger(typeof(Client));
         private static string _versionNumber;
         private static string GetVersionNumber()
@@ -23,7 +54,7 @@ namespace CIAPI.Rpc
             return _versionNumber;
         }
 
-        
+
 
         private MagicNumberResolver _magicNumberResolver;
         public MagicNumberResolver MagicNumberResolver
@@ -42,31 +73,60 @@ namespace CIAPI.Rpc
         public string UserName { get; set; }
         public string Session { get; set; }
 
-        /// <summary>
-        /// Authenticates the request with the API using request headers.
-        /// </summary>
-        /// <param name="request"></param>
-        /// <param name="url"></param>
-        /// <param name="target"></param>
-        /// <param name="uriTemplate"></param>
-        /// <param name="method"></param>
-        /// <param name="parameters"></param>
-        /// <param name="cacheDuration"></param>
-        /// <param name="throttleScope"></param>
-        protected override void BeforeIssueRequest(WebRequest request, string url, string target, string uriTemplate,
-                                                   string method, Dictionary<string, object> parameters,
-                                                   TimeSpan cacheDuration, string throttleScope)
+        ///// <summary>
+        ///// Authenticates the request with the API using request headers.
+        ///// </summary>
+        ///// <param name="request"></param>
+        ///// <param name="url"></param>
+        ///// <param name="target"></param>
+        ///// <param name="uriTemplate"></param>
+        ///// <param name="method"></param>
+        ///// <param name="parameters"></param>
+        ///// <param name="cacheDuration"></param>
+        ///// <param name="throttleScope"></param>
+        protected override void BeforeIssueRequest(Uri uri, RequestMethod method, string body, Dictionary<string, object> headers, ContentType requestContentType, ContentType responseContentType, TimeSpan cacheDuration, int timeout, string target, string uriTemplate, int retryCount, Dictionary<string, object> parameters)
         {
-            if (url.IndexOf("/session", StringComparison.OrdinalIgnoreCase) == -1)
+            if (uri.AbsoluteUri.IndexOf("/session", StringComparison.OrdinalIgnoreCase) == -1)
             {
-                request.Headers["UserName"] = UserName;
+                headers["UserName"] = UserName;
                 if (Session == null)
                 {
-                    throw new ApiException("Session is null. Have you created a session? (logged on)");
+                    throw new ReliableHttpException("Session is null. Have you created a session? (logged on)");
                 }
-                request.Headers["Session"] = Session;
+                headers["Session"] = Session;
             }
         }
+
+
+        public override string EndRequest(ReliableAsyncResult result)
+        {
+            try
+            {
+                return base.EndRequest(result);
+            }
+            catch (ReliableHttpException ex)
+            {
+                ReliableHttpException ex2 = GetJsonException(ex);
+                if (ex2 != null)
+                {
+                    throw ex2;
+                }
+
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new DefectException("expected ReliableHttpException. see inner", ex);
+            }
+        }
+
+        public IStreamingClient CreateStreamingClient()
+        {
+
+            return new LightstreamerClient(_streamingUri, UserName, Session, Serializer);
+
+        }
+ 
 
         #region Authentication Wrapper
 
@@ -81,7 +141,7 @@ namespace CIAPI.Rpc
             UserName = userName;
             Session = null;
 
-            var response = Request<ApiLogOnResponseDTO>("session", "/", "POST", new Dictionary<string, object>
+            var response = Request<ApiLogOnResponseDTO>(RequestMethod.POST, "session", "/", new Dictionary<string, object>
                                                                                          {
                                                                                              {"apiLogOnRequest", new ApiLogOnRequestDTO()
                                                                                                                {
@@ -90,8 +150,7 @@ namespace CIAPI.Rpc
                                                                                                                    AppKey = AppKey,
                                                                                                                    AppVersion = UserAgent
                                                                                                                }}
-                                                                                         }, TimeSpan.FromMilliseconds(0),
-                                                             "data");
+                                                                                         }, ContentType.JSON, ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000, 2);
             Session = response.Session;
             return response;
         }
@@ -104,13 +163,12 @@ namespace CIAPI.Rpc
         /// <param name="userName">Username is case sensitive</param>
         /// <param name="password">Password is case sensitive</param>
         /// <returns></returns>
-        public void BeginLogIn(String userName, String password, ApiAsyncCallback<ApiLogOnResponseDTO> callback,
+        public void BeginLogIn(String userName, String password, ApiAsyncCallback callback,
                                object state)
         {
             UserName = userName;
             Session = null;
-
-            BeginRequest(callback, state, "session", "/", "POST", new Dictionary<string, object>
+            BeginRequest(RequestMethod.POST, "session", "/", new Dictionary<string, object>
                                                                       {
                                                                        {"apiLogOnRequest", new ApiLogOnRequestDTO()
                                                                         {
@@ -118,28 +176,13 @@ namespace CIAPI.Rpc
                                                                             Password = password
                                                                             }
                                                                          }
-                                                                      }, TimeSpan.FromMilliseconds(0), "data");
-        }
-
-        public override TDTO EndRequest<TDTO>(ApiAsyncResult<TDTO> asyncResult)
-        {
-            try
-            {
-                TDTO response = base.EndRequest(asyncResult);
-                return response;
-            }
-            catch (ApiSerializationException ex)
-            {
-                throw new ServerConnectionException(
-                    "Invalid response received.  Are you connecting to the correct server Url?  See ResponseText property for further details of response received.",
-                    ex.ResponseText);
-            }
+                                                                      }, ContentType.JSON, ContentType.JSON, TimeSpan.Zero, 30000, 2, callback, state);
         }
 
 
-        public ApiLogOnResponseDTO EndLogIn(ApiAsyncResult<ApiLogOnResponseDTO> asyncResult)
+        public ApiLogOnResponseDTO EndLogIn(ReliableAsyncResult asyncResult)
         {
-            ApiLogOnResponseDTO response = EndRequest(asyncResult);
+            ApiLogOnResponseDTO response = EndRequest<ApiLogOnResponseDTO>(asyncResult);
             Session = response.Session;
             return response;
         }
@@ -150,13 +193,13 @@ namespace CIAPI.Rpc
         /// <returns></returns>
         public bool LogOut()
         {
-            var response = Request<ApiLogOffResponseDTO>("session",
+            var response = Request<ApiLogOffResponseDTO>(RequestMethod.POST, "session",
                                                               "/deleteSession?userName={userName}&session={session}",
-                                                               "POST", new Dictionary<string, object>
+                                                               new Dictionary<string, object>
                                                                            {
                                                                                {"userName", UserName},
                                                                                {"session", Session},
-                                                                           }, TimeSpan.FromMilliseconds(0), "data");
+                                                                           }, ContentType.JSON, ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000, 2);
             if (response.LoggedOut)
             {
                 Session = null;
@@ -171,19 +214,19 @@ namespace CIAPI.Rpc
         /// <param name="callback"></param>
         /// <param name="state"></param>
         /// <returns></returns>
-        public void BeginLogOut(ApiAsyncCallback<ApiLogOffResponseDTO> callback, object state)
+        public void BeginLogOut(ApiAsyncCallback callback, object state)
         {
-            BeginRequest(callback, state, "session", "/deleteSession?userName={userName}&session={session}", "POST",
+            BeginRequest(RequestMethod.POST, "session", "/deleteSession?userName={userName}&session={session}",
                          new Dictionary<string, object>
                              {
                                  {"userName", UserName},
                                  {"session", Session},
-                             }, TimeSpan.FromMilliseconds(0), "data");
+                             }, ContentType.JSON, ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000, 2, callback, state);
         }
 
-        public bool EndLogOut(ApiAsyncResult<ApiLogOffResponseDTO> asyncResult)
+        public bool EndLogOut(ReliableAsyncResult asyncResult)
         {
-            ApiLogOffResponseDTO response = EndRequest(asyncResult);
+            ApiLogOffResponseDTO response = EndRequest<ApiLogOffResponseDTO>(asyncResult);
 
             if (response.LoggedOut)
             {

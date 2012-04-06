@@ -5,7 +5,10 @@ using System.Windows;
 using CIAPI.DTO;
 using CIAPI.Rpc;
 using CIAPI.Streaming;
+using CIAPI.Tests;
 using Microsoft.Phone.Controls;
+using Salient.ReflectiveLoggingAdapter;
+using Salient.ReliableHttpClient.Serialization.Newtonsoft;
 using StreamingClient;
 using IStreamingClient = CIAPI.Streaming.IStreamingClient;
 
@@ -13,15 +16,6 @@ namespace Phone7Ticker
 {
     public partial class MainPage : PhoneApplicationPage
     {
-        //private const string PushServerHost = "https://pushpreprod.cityindextest9.co.uk/";
-        //private const string RpcServerHost = "https://ciapipreprod.cityindextest9.co.uk/TradingApi/";
-        //private const string UserName = "xx189949";
-        //private const string Password = "password";
-        private const string PushServerHost = "https://push.cityindex.com/";
-        private const string RpcServerHost = "https://ciapi.cityindex.com/tradingapi/";
-        private const string UserName = "DM715257";
-        private const string Password = "password";
-        private const string AppKey = "testkey-for-Phone7Ticker";
         IStreamingClient _streamingClient;
         IStreamingListener<PriceDTO> _listener;
         private IStreamingListener<PriceDTO> _listener2;
@@ -30,6 +24,8 @@ namespace Phone7Ticker
         private bool _backgroundRpcStop = false;
         public MainPage()
         {
+
+
             InitializeComponent();
 
             Dispatcher.BeginInvoke(() =>
@@ -39,18 +35,21 @@ namespace Phone7Ticker
             });
 
 
+            // need to set up the serializer to be used by stream listeners
+            StreamingClientFactory.SetSerializer(new Serializer());
+
             // build an rpc client and log it in.
-            rpcClient = new Client(new Uri(RpcServerHost), AppKey);
+            rpcClient = new Client(new Uri(StaticTestConfig.RpcUrl), new Uri(StaticTestConfig.StreamingUrl), StaticTestConfig.AppKey);
 
             // get a session from the rpc client
-            rpcClient.BeginLogIn(UserName, Password, ar =>
+            rpcClient.BeginLogIn(StaticTestConfig.ApiUsername, StaticTestConfig.ApiPassword, ar =>
                 {
                     rpcClient.EndLogIn(ar);
 
                     Debug.WriteLine("creating client");
 
                     // build a streaming client.
-                    _streamingClient = StreamingClientFactory.CreateStreamingClient(new Uri(PushServerHost), UserName, rpcClient.Session);
+                    _streamingClient = StreamingClientFactory.CreateStreamingClient(new Uri(StaticTestConfig.StreamingUrl), StaticTestConfig.ApiUsername, rpcClient.Session);
 
                     Debug.WriteLine("connecting client");
 

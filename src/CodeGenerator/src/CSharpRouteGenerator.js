@@ -160,12 +160,12 @@
                 serviceText = serviceText.concat("\n" + "        {");
                 serviceText = serviceText.concat("\n" + "            string uriTemplate = \"" + uriTemplate + "\";");
 
-                serviceText = serviceText.concat("\n" + "            return _client.Request<" + returnType + ">(\"" + target + "\", uriTemplate , \"" + transport + "\",");
+                serviceText = serviceText.concat("\n" + "            return _client.Request<" + returnType + ">(RequestMethod." + transport + ",\"" + target + "\", uriTemplate ,");
                 serviceText = serviceText.concat("\n" + "            new Dictionary<string, object>");
                 serviceText = serviceText.concat("\n" + "            {");
                 serviceText = serviceText.concat("\n" + requestParamList);
 
-                serviceText = serviceText.concat("\n" + "            }, TimeSpan.FromMilliseconds(" + cacheDuration + "), \"" + throttleScope + "\");");
+                serviceText = serviceText.concat("\n" + "            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(" + cacheDuration + "),30000,0 );");
 
 
                 serviceText = serviceText.concat("\n" + "        }");
@@ -180,25 +180,25 @@
                 });
                 serviceText = serviceText.concat("\n" + "        /// <param name=\"callback\"></param>");
                 serviceText = serviceText.concat("\n" + "        /// <param name=\"state\"></param>");
-                serviceText = serviceText.concat("\n" + "        " + visibility + " virtual void Begin" + key + "(" + paramList + (paramList ? "," : "") + " ApiAsyncCallback<" + returnType + "> callback, object state)");
+                serviceText = serviceText.concat("\n" + "        " + visibility + " virtual void Begin" + key + "(" + paramList + (paramList ? "," : "") + " ApiAsyncCallback callback, object state)");
                 serviceText = serviceText.concat("\n" + "        {");
                 serviceText = serviceText.concat("\n" + "            string uriTemplate = \"" + uriTemplate + "\";");
 
-                serviceText = serviceText.concat("\n" + "            _client.BeginRequest(callback, state, \"" + target + "\", uriTemplate , \"" + transport + "\",");
+                serviceText = serviceText.concat("\n" + "            _client.BeginRequest(RequestMethod." + transport + ", \"" + target + "\", uriTemplate , ");
 
                 serviceText = serviceText.concat("\n" + "            new Dictionary<string, object>");
                 serviceText = serviceText.concat("\n" + "            {");
                 serviceText = serviceText.concat("\n" + requestParamList);
 
-                serviceText = serviceText.concat("\n" + "            }, TimeSpan.FromMilliseconds(" + cacheDuration + "), \"" + throttleScope + "\");");
+                serviceText = serviceText.concat("\n" + "            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(" + cacheDuration + "), 30000,2 ,callback, state);");
 
                 serviceText = serviceText.concat("\n" + "        }");
                 serviceText = serviceText.concat("\n" + "");
 
-                serviceText = serviceText.concat("\n" + "        " + visibility + " " + returnType + " End" + key + "(ApiAsyncResult<" + returnType + "> asyncResult)");
+                serviceText = serviceText.concat("\n" + "        " + visibility + " " + returnType + " End" + key + "(ReliableAsyncResult asyncResult)");
 
                 serviceText = serviceText.concat("\n" + "        {");
-                serviceText = serviceText.concat("\n" + "            return _client.EndRequest(asyncResult);");
+                serviceText = serviceText.concat("\n" + "            return _client.EndRequest<" + returnType + ">(asyncResult);");
                 serviceText = serviceText.concat("\n" + "        }");
                 serviceText = serviceText.concat("\n" + "");
 
@@ -230,8 +230,8 @@
             self.writeLine("private Client _client;");
             self.writeLine("public string AppKey { get; set; }");
 
-            self.writeLine("        public Client(Uri uri, string appKey)");
-            self.writeLine("            : base(uri, new RequestController(TimeSpan.FromSeconds(0), 2, new RequestFactory(), new ErrorResponseDTOJsonExceptionFactory(), new ThrottledRequestQueue(TimeSpan.FromSeconds(5), 30, 10, \"data\"), new ThrottledRequestQueue(TimeSpan.FromSeconds(5), 30, 10, \"trading\"),new ThrottledRequestQueue(TimeSpan.FromSeconds(5), 30, 10, \"default\")) )");
+            self.writeLine("        public Client(Uri rpcUri, Uri streamingUri, string appKey)");
+            self.writeLine("            : base(new Serializer())");
             self.writeLine("        {");
             self.writeLine('	#if SILVERLIGHT');
             self.writeLine('	#if WINDOWS_PHONE');
@@ -244,27 +244,14 @@
             self.writeLine('	#endif');
             self.writeLine("        AppKey=appKey;");
             self.writeLine("        _client=this;");
+            self.writeLine("        _rootUri = rpcUri;");
+            self.writeLine("        _streamingUri = streamingUri;");
+            
             self.writeLine(subClassInitializer);
-            self.writeLine('        Log.Debug("Rpc.Client created for " + uri.AbsoluteUri);');
+            self.writeLine('        Log.Debug("Rpc.Client created for " + _rootUri.AbsoluteUri);');
             
             self.writeLine("        }");
-            self.writeLine("        public Client(Uri uri, string appKey, IRequestController requestController)");
-            self.writeLine("            : base(uri, requestController)");
-            self.writeLine("        {");
-            self.writeLine('	#if SILVERLIGHT');
-            self.writeLine('	#if WINDOWS_PHONE');
-            self.writeLine('	        UserAgent = "CIAPI.PHONE7."+ GetVersionNumber();');
-            self.writeLine('	#else');
-            self.writeLine('	        UserAgent = "CIAPI.SILVERLIGHT."+ GetVersionNumber();');
-            self.writeLine('	#endif');
-            self.writeLine('	#else');
-            self.writeLine('	        UserAgent = "CIAPI.CS." + GetVersionNumber();');
-            self.writeLine('	#endif');
-            self.writeLine("        AppKey=appKey;");
-            self.writeLine("        _client=this;");
-            self.writeLine(subClassInitializer);
-            self.writeLine('        Log.Debug("Rpc.Client created for " + uri.AbsoluteUri);');
-            self.writeLine("        }            ");
+ 
 
 
             each(subClasses, function (subClass, key) {

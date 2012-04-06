@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Windows;
+using CIAPI.Tests;
 using Salient.ReflectiveLoggingAdapter;
 using Client = CIAPI.Rpc.Client;
 
@@ -8,8 +9,6 @@ namespace PhoneApp1
 {
     public partial class MainPage
     {
-        private const string USERNAME = "XX070608";
-        private const string PASSWORD = "password";
         private const string MarketId = "400481121";
         private const string Period = "MINUTE";
         private const int Interval = 1;
@@ -18,7 +17,7 @@ namespace PhoneApp1
         private DateTime _start;
         public static Client RpcClient;
 
-        private static readonly Uri RPC_URI = new Uri("https://ciapipreprod.cityindextest9.co.uk/TradingApi");
+     
         private const string AppKey = "testkey-for-PhoneApp1";
 
         // Constructor
@@ -37,8 +36,8 @@ namespace PhoneApp1
             LogManager.CreateInnerLogger = (logName, logLevel, showLevel, showDateTime, showLogName, dateTimeFormat)
                                             => new SimpleDebugAppender(logName, logLevel, showLevel, showDateTime, showLogName, dateTimeFormat);
 
-            RpcClient = new Client(RPC_URI, AppKey);
-            RpcClient.BeginLogIn(USERNAME, PASSWORD, ar =>
+            RpcClient = new Client(new Uri(StaticTestConfig.RpcUrl), new Uri(StaticTestConfig.StreamingUrl),AppKey);
+            RpcClient.BeginLogIn(StaticTestConfig.ApiUsername, StaticTestConfig.ApiPassword, ar =>
             {
                 RpcClient.EndLogIn(ar);
                 Dispatcher.BeginInvoke(() => button1.IsEnabled = true);

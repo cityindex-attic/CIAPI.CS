@@ -35,23 +35,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.4.0.8\lib\net35\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.4.5.1\lib\net35\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework, Version=2.6.0.12051, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\NUnit.2.6.0.12054\lib\nunit.framework.dll</HintPath>
     </Reference>
-    <Reference Include="nunit.mocks, Version=2.5.10.11092, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NUnit.2.5.10.11092\lib\nunit.mocks.dll</HintPath>
-    </Reference>
-    <Reference Include="Salient.JsonClient.35, Version=3.2.0.31, Culture=neutral, PublicKeyToken=b412daeaa648e3eb, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Salient.JsonClient.3.2.0\lib\net35\Release\Salient.JsonClient.35.dll</HintPath>
-    </Reference>
     <Reference Include="Salient.ReflectiveLoggingAdapter.35, Version=3.1.0.21, Culture=neutral, PublicKeyToken=b9b5972b9f69332b, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Salient.ReflectiveLoggingAdapter.3.1.0\lib\net35\Release\Salient.ReflectiveLoggingAdapter.35.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -68,11 +59,6 @@
       <Link>TestConfig.cs</Link>
     </Compile>
     <Compile Include="DTOTestFixture.cs" />
-    <Compile Include="JsonClientMocks\MockClient.cs" />
-    <Compile Include="JsonClientMocks\TestRequestFactory.cs" />
-    <Compile Include="JsonClientMocks\TestRequestInfo.cs" />
-    <Compile Include="JsonClientMocks\TestWebReponse.cs" />
-    <Compile Include="JsonClientMocks\TestWebRequest.cs" />
     <Compile Include="PrettyPrinterExtensionsFixture.cs" />
     <Compile Include="Rpc\ApiContextTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -86,13 +72,17 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CIAPI-3.5\CIAPI-3.5.csproj">
-      <Project>{95565B7D-B3E4-4BFF-AEA2-20CCABD9CD31}</Project>
-      <Name>CIAPI-3.5</Name>
+    <ProjectReference Include="..\..\..\..\Salient\Salient.ReliableHttpClient\src\Salient.ReliableHttpClient.Serializer.Newtonsoft\Salient.ReliableHttpClient.Serializer.Newtonsoft.csproj">
+      <Project>{B2F31D08-C115-451D-BAD2-F56F2148143B}</Project>
+      <Name>Salient.ReliableHttpClient.Serializer.Newtonsoft</Name>
     </ProjectReference>
-    <ProjectReference Include="..\StreamingClient-3.5\StreamingClient-3.5.csproj">
-      <Project>{2BF0E626-BC3B-4E21-95BB-C429B91E7418}</Project>
-      <Name>StreamingClient-3.5</Name>
+    <ProjectReference Include="..\..\..\..\Salient\Salient.ReliableHttpClient\src\Salient.ReliableHttpClient\Salient.ReliableHttpClient.csproj">
+      <Project>{528B283F-41C8-489D-A031-C9A4058BB283}</Project>
+      <Name>Salient.ReliableHttpClient</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CIAPI\CIAPI.csproj">
+      <Project>{B40E6F1C-453E-44A2-BA9D-1692378B355C}</Project>
+      <Name>CIAPI</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

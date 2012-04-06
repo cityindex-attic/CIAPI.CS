@@ -23,6 +23,11 @@ Covers the complete API, and is actively being developed and supported
     var priceBars = rpcClient.PriceHistory.GetPriceBars({marketId}, "MINUTE", 10, "10");
     
     //Setup a connection to the streaming endpoint
+
+	// Need to set up the serializer to be used by stream listeners
+
+    StreamingClientFactory.SetSerializer(new Serializer());
+
     var streamingClient = StreamingClientFactory
           .CreateStreamingClient(new Uri("https://{streaming api url}"), "{username}", rpcClient.Session);
     //Subscribe to a stream

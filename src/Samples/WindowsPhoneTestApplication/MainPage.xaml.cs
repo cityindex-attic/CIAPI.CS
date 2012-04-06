@@ -1,22 +1,18 @@
 ﻿using System;
 using System.Windows;
 using CIAPI.Streaming;
-using Salient.JsonClient;
+using CIAPI.Tests;
 using Microsoft.Phone.Controls;
+using Salient.ReliableHttpClient;
 using Client = CIAPI.Rpc.Client;
 
 namespace WindowsPhoneTestApplication
 {
     public partial class MainPage : PhoneApplicationPage
     {
-        const string apiUrl = "https://ciapipreprod.cityindextest9.co.uk/TradingApi/";
-        const string streamingUrl = "https://pushpreprod.cityindextest9.co.uk/";
-        const string userName = "0x160";
-        const string password = "password";
-        private const string AppKey = "testkey-for-WindowsPhoneTestApplication";
+ 
 
         private Client client;
-        private IStreamingClient streamingService;
         string[] popularMarketIds = new[]
                                        {
                                            "400481134"
@@ -34,11 +30,11 @@ namespace WindowsPhoneTestApplication
             // creating a single rpc client for an application is a better
             // approximation of the intended usage.
 
-            client = new Client(new Uri(apiUrl), AppKey);
+            client = new Client(new Uri(StaticTestConfig.RpcUrl), new Uri(StaticTestConfig.StreamingUrl), StaticTestConfig.AppKey);
             listBox1.Items.Add("Trying to connect..");
 
 
-            client.BeginLogIn(userName, password,
+            client.BeginLogIn(StaticTestConfig.ApiUsername, StaticTestConfig.ApiPassword,
                               response => Dispatcher.BeginInvoke(new Action(() =>
                               {
                                   client.EndLogIn(response);
@@ -72,14 +68,12 @@ namespace WindowsPhoneTestApplication
                                     Dispatcher.BeginInvoke(() => listBox1.Items.Add(message));
 
                                 }
-                                catch (ApiException ex)
+                                catch (ReliableHttpException ex)
                                 {
                                     Dispatcher.BeginInvoke(() => listBox1.Items.Add(string.Format("ApiException: {0}", ex.ResponseText)));
                                 }
                             }, null);
                         });
-
- 
             }
         }
 

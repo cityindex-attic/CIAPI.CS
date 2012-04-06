@@ -10,7 +10,7 @@ using System.Threading;
 using System.Windows.Forms;
 using CIAPI;
 using CIAPI.Tests;
-using Salient.JsonClient;
+
 using CIAPI.DTO;
 
 
@@ -29,9 +29,9 @@ namespace WinFormsSpike
 
         private void Form1Load(object sender, EventArgs e)
         {
-            ApiEndpointTextBox.Text = TestConfig.RpcUrl;
-            UidTextBox.Text = TestConfig.ApiUsername;
-            PwdTextBox.Text = TestConfig.ApiPassword;
+            ApiEndpointTextBox.Text = StaticTestConfig.RpcUrl;
+            UidTextBox.Text = StaticTestConfig.ApiUsername;
+            PwdTextBox.Text = StaticTestConfig.ApiPassword;
             NewsHeadlinesGridView.SelectionChanged += NewsHeadlinesGridViewSelectionChanged;
             MainTabControl.Enabled = false;
             LogOutButton.Enabled = false;
@@ -43,7 +43,7 @@ namespace WinFormsSpike
         private void LoginButtonClick(object sender, EventArgs e)
         {
             DisableUi();
-            _ctx = new CIAPI.Rpc.Client(new Uri(ApiEndpointTextBox.Text), AppKey);
+            _ctx = new CIAPI.Rpc.Client(new Uri(ApiEndpointTextBox.Text),new Uri("http://nostreaminginthisapp.com"),  AppKey);
             _ctx.BeginLogIn(UidTextBox.Text, PwdTextBox.Text, result =>
                 {
                     try

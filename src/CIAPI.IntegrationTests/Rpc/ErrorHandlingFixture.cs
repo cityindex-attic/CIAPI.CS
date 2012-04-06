@@ -5,8 +5,9 @@ using System.Text;
 using System.Threading;
 using CIAPI.IntegrationTests.Streaming;
 using CIAPI.Rpc;
-using Salient.JsonClient;
+
 using NUnit.Framework;
+using Salient.ReliableHttpClient;
 using Client = CIAPI.Rpc.Client;
 
 namespace CIAPI.IntegrationTests.Rpc
@@ -19,7 +20,7 @@ namespace CIAPI.IntegrationTests.Rpc
         {
             try
             {
-                var rpcClient = new Client(new Uri("http://invalidservername.asiuhd8h38hsh.wam/TradingApi"), AppKey);
+                var rpcClient = new Client(new Uri("http://invalidservername.asiuhd8h38hsh.wam/TradingApi"),new Uri("http://foo.bar.com"), AppKey);
                 rpcClient.LogIn("username", "password");
             }
             catch (Exception ex)
@@ -43,7 +44,7 @@ namespace CIAPI.IntegrationTests.Rpc
                 rpcClient.News.ListNewsHeadlinesWithSource("dj", "AUS", 4);
                 Assert.Fail("the previous line should have thrown an 'Session is null. Have you created a session? (logged in)' exception");
             }
-            catch (ApiException e)
+            catch (ReliableHttpException e)
             {
                 Assert.That(e.Message, Is.StringContaining("Session is null. Have you created a session? (logged on)"), "The client should have rejected the request");
             }
@@ -72,9 +73,9 @@ namespace CIAPI.IntegrationTests.Rpc
                 const int moreThanMaxHeadlines = 1000;
                 rpcClient.News.ListNewsHeadlinesWithSource(source:"dj",category: "UK", maxResults: moreThanMaxHeadlines);
             }
-            catch (ApiException ex)
+            catch (ReliableHttpException ex)
             {
-                errorMessage = "Message: " + ex.Message + "\nResponseText: " + ex.ResponseText;
+                errorMessage = "Message: " + ex.Message ;
             }
             return errorMessage;
         }

@@ -1,7 +1,8 @@
 ﻿using System;
 using CIAPI.CS.Koans.KoanRunner;
-using Salient.JsonClient;
+using CIAPI.Tests;
 using NUnit.Framework;
+using Salient.ReliableHttpClient;
 using Client = CIAPI.Rpc.Client;
 
 namespace CIAPI.CS.Koans
@@ -10,9 +11,9 @@ namespace CIAPI.CS.Koans
     public class AboutSessions
     {
         private Client _rpcClient;
-        private string USERNAME;
-        private string PASSWORD;
-        private const string AppKey = "testkey-for-Koans";
+        private string USERNAME = StaticTestConfig.ApiUsername;
+        private string PASSWORD = StaticTestConfig.ApiPassword;
+        private string AppKey = StaticTestConfig.AppKey;
 
         [Koan(Order = 1)]
         public void CreatingASession()
@@ -21,18 +22,17 @@ namespace CIAPI.CS.Koans
             //that holds details about your connection.
             
             //You need to initialise the client with a valid endpoint
-            _rpcClient = new Rpc.Client(new Uri("https://ciapipreprod.cityindextest9.co.uk/TradingApi"), AppKey);
+            _rpcClient = new Rpc.Client(new Uri(StaticTestConfig.RpcUrl), new Uri(StaticTestConfig.StreamingUrl), AppKey);
             
             //And then create a session by creating a username & password
             //You can get test credentials by requesting them at https://ciapipreprod.cityindextest9.co.uk/CIAPI.docs/#content.test-credentials
-            USERNAME = "xx189949";
-            PASSWORD = "password";
+  
 
             try
             {
                 _rpcClient.LogIn(USERNAME, PASSWORD);
             }
-            catch (ApiException apiException)
+            catch (ReliableHttpException apiException)
             {
                 KoanAssert.Fail(string.Format("cannot login because {0}", apiException.Message));
             }
@@ -57,9 +57,9 @@ namespace CIAPI.CS.Koans
                 var headlines2 = _rpcClient.News.ListNewsHeadlinesWithSource("dj", "AUS", 10);
                 KoanAssert.That(false, "the previous line should have thrown an (401) Unauthorized exception");
             }
-            catch (ApiException e)
+            catch (ReliableHttpException e)
             {
-                KoanAssert.That(e.Message, Is.StringContaining("(401) Unauthorized"), "The error message should contain something about (401) Unauthorized");
+                KoanAssert.That(e.Message, Is.StringContaining("Session is not valid"), "The error message should contain something about 'Session is not valid'");
             }
         }
 
@@ -81,9 +81,9 @@ namespace CIAPI.CS.Koans
                 var headlines2 = _rpcClient.News.ListNewsHeadlinesWithSource("dj", "AUS", 4);
                 KoanAssert.Fail("the previous line should have thrown an (401) Unauthorized exception");
             }
-            catch (ApiException e)
+            catch (ReliableHttpException e)
             {
-                KoanAssert.That(e.Message, Is.StringContaining("(401) Unauthorized"), "The error message should contain something about (401) Unauthorized");
+                KoanAssert.That(e.Message, Is.StringContaining("Session is not valid"), "The error message should contain something about 'Session is not valid'");
             }
         }
 

@@ -4,6 +4,7 @@ using System.Threading;
 using CIAPI.CS.Koans.KoanRunner;
 using CIAPI.DTO;
 using CIAPI.Streaming;
+using CIAPI.Tests;
 using StreamingClient;
 using NUnit.Framework;
 using Client = CIAPI.Rpc.Client;
@@ -11,28 +12,24 @@ using IStreamingClient = CIAPI.Streaming.IStreamingClient;
 
 namespace CIAPI.CS.Koans
 {
-    [KoanCategory(Order = 4)]
+    //[KoanCategory(Order = 4)]  streaming news is currently dead - waiting for resurrection
     public class AboutStreamingNews: IDisposable
     {
-        private string USERNAME = "xx189949";
-        private string PASSWORD = "password";
-        private const string AppKey = "testkey-for-Koans";
+        private string USERNAME = StaticTestConfig.ApiUsername;
+        private string PASSWORD = StaticTestConfig.ApiPassword;
+        private string AppKey = StaticTestConfig.AppKey;
 
         [Koan(Order = 1)]
         public void ConnectingToTheNewsStreamRequiresAValidSession()
         {
-            _rpcClient = new Rpc.Client(new Uri("https://ciapipreprod.cityindextest9.co.uk/TradingApi"), AppKey);
+            _rpcClient = new Rpc.Client(new Uri(StaticTestConfig.RpcUrl), new Uri(StaticTestConfig.StreamingUrl), AppKey);
             _rpcClient.LogIn(USERNAME, PASSWORD);
 
-            //Data is streamed over a specific HTTP endpoint
-            var STREAMING_URI = new Uri("https://pushpreprod.cityindextest9.co.uk");
+            
 
             //A single streaming client (connection) allows listening to many streams (channels)
             _streamingClient =
-                StreamingClientFactory.CreateStreamingClient(
-                    STREAMING_URI, 
-                    USERNAME,               /* Note how we use the same username */
-                    _rpcClient.Session);  /* and and shared sessionId to connect */
+                _rpcClient.CreateStreamingClient();  /* and and shared sessionId to connect */
 
             var gate = new ManualResetEvent(false);
             var isConnected = false;
@@ -50,7 +47,7 @@ namespace CIAPI.CS.Koans
  
         }
 
-        [Koan(Order = 2)]
+        //[Koan(Order = 2)]
         public void YouListenToAStreamsOverAConnection()
         {
             //Beginning with a connected streamingClient, you create a listener expected a specific message type on a certain channel/topic
@@ -77,7 +74,7 @@ namespace CIAPI.CS.Koans
             KoanAssert.That(ukNewsHeadlines.Count, Is.GreaterThan(3), "On the mock news headlines stream we should get 1 headline per second");
         }
 
-        [Koan(Order = 3)]
+        //[Koan(Order = 3)]
         public void YouCanListenToMultipleStreamsOverASingleConnection()
         {
             var ukNewsListener = _streamingClient.BuildNewsHeadlinesListener("UK");

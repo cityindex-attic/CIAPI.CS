@@ -4,7 +4,7 @@ using StreamingClient;
 using System.Linq;
 using System;
 
-namespace CIAPI.Streaming.Lightstreamer
+namespace CIAPI.Streaming
 {
     
     public partial class LightstreamerClient

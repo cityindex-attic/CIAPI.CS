@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
-using Salient.JsonClient;
+using Salient.ReliableHttpClient;
+using Salient.ReliableHttpClient.Serialization.Newtonsoft;
 using CIAPI.DTO;
 namespace CIAPI.Rpc
 {
@@ -20,8 +21,8 @@ namespace CIAPI.Rpc
       public _ExceptionHandling ExceptionHandling{get; private set;}
 private Client _client;
 public string AppKey { get; set; }
-        public Client(Uri uri, string appKey)
-            : base(uri, new RequestController(TimeSpan.FromSeconds(0), 2, new RequestFactory(), new ErrorResponseDTOJsonExceptionFactory(), new ThrottledRequestQueue(TimeSpan.FromSeconds(5), 30, 10, "data"), new ThrottledRequestQueue(TimeSpan.FromSeconds(5), 30, 10, "trading"),new ThrottledRequestQueue(TimeSpan.FromSeconds(5), 30, 10, "default")) )
+        public Client(Uri rpcUri, Uri streamingUri, string appKey)
+            : base(new Serializer())
         {
 	#if SILVERLIGHT
 	#if WINDOWS_PHONE
@@ -34,6 +35,8 @@ public string AppKey { get; set; }
 	#endif
         AppKey=appKey;
         _client=this;
+        _rootUri = rpcUri;
+        _streamingUri = streamingUri;
 
             this. Authentication = new _Authentication(this);
             this. PriceHistory = new _PriceHistory(this);
@@ -46,36 +49,8 @@ public string AppKey { get; set; }
             this. Messaging = new _Messaging(this);
             this. Watchlist = new _Watchlist(this);
             this. ExceptionHandling = new _ExceptionHandling(this);
-        Log.Debug("Rpc.Client created for " + uri.AbsoluteUri);
+        Log.Debug("Rpc.Client created for " + _rootUri.AbsoluteUri);
         }
-        public Client(Uri uri, string appKey, IRequestController requestController)
-            : base(uri, requestController)
-        {
-	#if SILVERLIGHT
-	#if WINDOWS_PHONE
-	        UserAgent = "CIAPI.PHONE7."+ GetVersionNumber();
-	#else
-	        UserAgent = "CIAPI.SILVERLIGHT."+ GetVersionNumber();
-	#endif
-	#else
-	        UserAgent = "CIAPI.CS." + GetVersionNumber();
-	#endif
-        AppKey=appKey;
-        _client=this;
-
-            this. Authentication = new _Authentication(this);
-            this. PriceHistory = new _PriceHistory(this);
-            this. News = new _News(this);
-            this. CFDMarkets = new _CFDMarkets(this);
-            this. SpreadMarkets = new _SpreadMarkets(this);
-            this. Market = new _Market(this);
-            this. TradesAndOrders = new _TradesAndOrders(this);
-            this. AccountInformation = new _AccountInformation(this);
-            this. Messaging = new _Messaging(this);
-            this. Watchlist = new _Watchlist(this);
-            this. ExceptionHandling = new _ExceptionHandling(this);
-        Log.Debug("Rpc.Client created for " + uri.AbsoluteUri);
-        }            
 
         // ***********************************
         // GetVersionInformation
@@ -90,12 +65,12 @@ public string AppKey { get; set; }
         public virtual GetVersionInformationResponseDTO GetVersionInformation(string appKey, int accountOperatorId)
         {
             string uriTemplate = "?AppKey={appKey}&AccountOperatorId={accountOperatorId}";
-            return _client.Request<GetVersionInformationResponseDTO>("clientapplication/versioninformation", uriTemplate , "GET",
+            return _client.Request<GetVersionInformationResponseDTO>(RequestMethod.GET,"clientapplication/versioninformation", uriTemplate ,
             new Dictionary<string, object>
             {
                 { "appKey", appKey}, 
                 { "accountOperatorId", accountOperatorId}
-            }, TimeSpan.FromMilliseconds(360000), "default");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(360000),30000,0 );
         }
 
 
@@ -106,20 +81,20 @@ public string AppKey { get; set; }
         /// <param name="accountOperatorId">an optional parameter to identify the account operator string to uniquely identify the application.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginGetVersionInformation(string appKey, int accountOperatorId, ApiAsyncCallback<GetVersionInformationResponseDTO> callback, object state)
+        public virtual void BeginGetVersionInformation(string appKey, int accountOperatorId, ApiAsyncCallback callback, object state)
         {
             string uriTemplate = "?AppKey={appKey}&AccountOperatorId={accountOperatorId}";
-            _client.BeginRequest(callback, state, "clientapplication/versioninformation", uriTemplate , "GET",
+            _client.BeginRequest(RequestMethod.GET, "clientapplication/versioninformation", uriTemplate , 
             new Dictionary<string, object>
             {
                 { "appKey", appKey}, 
                 { "accountOperatorId", accountOperatorId}
-            }, TimeSpan.FromMilliseconds(360000), "default");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(360000), 30000,2 ,callback, state);
         }
 
-        public GetVersionInformationResponseDTO EndGetVersionInformation(ApiAsyncResult<GetVersionInformationResponseDTO> asyncResult)
+        public GetVersionInformationResponseDTO EndGetVersionInformation(ReliableAsyncResult asyncResult)
         {
-            return _client.EndRequest(asyncResult);
+            return _client.EndRequest<GetVersionInformationResponseDTO>(asyncResult);
         }
 
 
@@ -140,11 +115,11 @@ public string AppKey { get; set; }
         internal virtual ApiLogOnResponseDTO LogOn(ApiLogOnRequestDTO apiLogOnRequest)
         {
             string uriTemplate = "/";
-            return _client.Request<ApiLogOnResponseDTO>("session", uriTemplate , "POST",
+            return _client.Request<ApiLogOnResponseDTO>(RequestMethod.POST,"session", uriTemplate ,
             new Dictionary<string, object>
             {
                 { "apiLogOnRequest", apiLogOnRequest}
-            }, TimeSpan.FromMilliseconds(0), "data");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,0 );
         }
 
 
@@ -154,19 +129,19 @@ public string AppKey { get; set; }
         /// <param name="apiLogOnRequest">The request to create a session (log on).</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        internal virtual void BeginLogOn(ApiLogOnRequestDTO apiLogOnRequest, ApiAsyncCallback<ApiLogOnResponseDTO> callback, object state)
+        internal virtual void BeginLogOn(ApiLogOnRequestDTO apiLogOnRequest, ApiAsyncCallback callback, object state)
         {
             string uriTemplate = "/";
-            _client.BeginRequest(callback, state, "session", uriTemplate , "POST",
+            _client.BeginRequest(RequestMethod.POST, "session", uriTemplate , 
             new Dictionary<string, object>
             {
                 { "apiLogOnRequest", apiLogOnRequest}
-            }, TimeSpan.FromMilliseconds(0), "data");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,2 ,callback, state);
         }
 
-        internal ApiLogOnResponseDTO EndLogOn(ApiAsyncResult<ApiLogOnResponseDTO> asyncResult)
+        internal ApiLogOnResponseDTO EndLogOn(ReliableAsyncResult asyncResult)
         {
-            return _client.EndRequest(asyncResult);
+            return _client.EndRequest<ApiLogOnResponseDTO>(asyncResult);
         }
 
 
@@ -183,12 +158,12 @@ public string AppKey { get; set; }
         internal virtual ApiLogOffResponseDTO DeleteSession(string userName, string session)
         {
             string uriTemplate = "/deleteSession?userName={userName}&session={session}";
-            return _client.Request<ApiLogOffResponseDTO>("session", uriTemplate , "POST",
+            return _client.Request<ApiLogOffResponseDTO>(RequestMethod.POST,"session", uriTemplate ,
             new Dictionary<string, object>
             {
                 { "userName", userName}, 
                 { "session", session}
-            }, TimeSpan.FromMilliseconds(0), "data");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,0 );
         }
 
 
@@ -199,20 +174,20 @@ public string AppKey { get; set; }
         /// <param name="session">The session token. May be set as a service parameter or as a request header.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        internal virtual void BeginDeleteSession(string userName, string session, ApiAsyncCallback<ApiLogOffResponseDTO> callback, object state)
+        internal virtual void BeginDeleteSession(string userName, string session, ApiAsyncCallback callback, object state)
         {
             string uriTemplate = "/deleteSession?userName={userName}&session={session}";
-            _client.BeginRequest(callback, state, "session", uriTemplate , "POST",
+            _client.BeginRequest(RequestMethod.POST, "session", uriTemplate , 
             new Dictionary<string, object>
             {
                 { "userName", userName}, 
                 { "session", session}
-            }, TimeSpan.FromMilliseconds(0), "data");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,2 ,callback, state);
         }
 
-        internal ApiLogOffResponseDTO EndDeleteSession(ApiAsyncResult<ApiLogOffResponseDTO> asyncResult)
+        internal ApiLogOffResponseDTO EndDeleteSession(ReliableAsyncResult asyncResult)
         {
-            return _client.EndRequest(asyncResult);
+            return _client.EndRequest<ApiLogOffResponseDTO>(asyncResult);
         }
 
 
@@ -228,11 +203,11 @@ public string AppKey { get; set; }
         public virtual ApiChangePasswordResponseDTO ChangePassword(ApiChangePasswordRequestDTO apiChangePasswordRequest)
         {
             string uriTemplate = "/changePassword";
-            return _client.Request<ApiChangePasswordResponseDTO>("session", uriTemplate , "POST",
+            return _client.Request<ApiChangePasswordResponseDTO>(RequestMethod.POST,"session", uriTemplate ,
             new Dictionary<string, object>
             {
                 { "apiChangePasswordRequest", apiChangePasswordRequest}
-            }, TimeSpan.FromMilliseconds(0), "data");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,0 );
         }
 
 
@@ -242,19 +217,19 @@ public string AppKey { get; set; }
         /// <param name="apiChangePasswordRequest">The change password request details.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginChangePassword(ApiChangePasswordRequestDTO apiChangePasswordRequest, ApiAsyncCallback<ApiChangePasswordResponseDTO> callback, object state)
+        public virtual void BeginChangePassword(ApiChangePasswordRequestDTO apiChangePasswordRequest, ApiAsyncCallback callback, object state)
         {
             string uriTemplate = "/changePassword";
-            _client.BeginRequest(callback, state, "session", uriTemplate , "POST",
+            _client.BeginRequest(RequestMethod.POST, "session", uriTemplate , 
             new Dictionary<string, object>
             {
                 { "apiChangePasswordRequest", apiChangePasswordRequest}
-            }, TimeSpan.FromMilliseconds(0), "data");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,2 ,callback, state);
         }
 
-        public ApiChangePasswordResponseDTO EndChangePassword(ApiAsyncResult<ApiChangePasswordResponseDTO> asyncResult)
+        public ApiChangePasswordResponseDTO EndChangePassword(ReliableAsyncResult asyncResult)
         {
-            return _client.EndRequest(asyncResult);
+            return _client.EndRequest<ApiChangePasswordResponseDTO>(asyncResult);
         }
 
 
@@ -279,14 +254,14 @@ public string AppKey { get; set; }
         public virtual GetPriceBarResponseDTO GetPriceBars(string marketId, string interval, int span, string priceBars)
         {
             string uriTemplate = "/{marketId}/barhistory?interval={interval}&span={span}&pricebars={priceBars}";
-            return _client.Request<GetPriceBarResponseDTO>("market", uriTemplate , "GET",
+            return _client.Request<GetPriceBarResponseDTO>(RequestMethod.GET,"market", uriTemplate ,
             new Dictionary<string, object>
             {
                 { "marketId", marketId}, 
                 { "interval", interval}, 
                 { "span", span}, 
                 { "priceBars", priceBars}
-            }, TimeSpan.FromMilliseconds(0), "data");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,0 );
         }
 
 
@@ -299,22 +274,22 @@ public string AppKey { get; set; }
         /// <param name="priceBars">The total number of pricebars to return.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginGetPriceBars(string marketId, string interval, int span, string priceBars, ApiAsyncCallback<GetPriceBarResponseDTO> callback, object state)
+        public virtual void BeginGetPriceBars(string marketId, string interval, int span, string priceBars, ApiAsyncCallback callback, object state)
         {
             string uriTemplate = "/{marketId}/barhistory?interval={interval}&span={span}&pricebars={priceBars}";
-            _client.BeginRequest(callback, state, "market", uriTemplate , "GET",
+            _client.BeginRequest(RequestMethod.GET, "market", uriTemplate , 
             new Dictionary<string, object>
             {
                 { "marketId", marketId}, 
                 { "interval", interval}, 
                 { "span", span}, 
                 { "priceBars", priceBars}
-            }, TimeSpan.FromMilliseconds(0), "data");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,2 ,callback, state);
         }
 
-        public GetPriceBarResponseDTO EndGetPriceBars(ApiAsyncResult<GetPriceBarResponseDTO> asyncResult)
+        public GetPriceBarResponseDTO EndGetPriceBars(ReliableAsyncResult asyncResult)
         {
-            return _client.EndRequest(asyncResult);
+            return _client.EndRequest<GetPriceBarResponseDTO>(asyncResult);
         }
 
 
@@ -331,12 +306,12 @@ public string AppKey { get; set; }
         public virtual GetPriceTickResponseDTO GetPriceTicks(string marketId, string priceTicks)
         {
             string uriTemplate = "/{marketId}/tickhistory?priceticks={priceTicks}";
-            return _client.Request<GetPriceTickResponseDTO>("market", uriTemplate , "GET",
+            return _client.Request<GetPriceTickResponseDTO>(RequestMethod.GET,"market", uriTemplate ,
             new Dictionary<string, object>
             {
                 { "marketId", marketId}, 
                 { "priceTicks", priceTicks}
-            }, TimeSpan.FromMilliseconds(0), "data");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,0 );
         }
 
 
@@ -347,20 +322,20 @@ public string AppKey { get; set; }
         /// <param name="priceTicks">The total number of price ticks to return.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginGetPriceTicks(string marketId, string priceTicks, ApiAsyncCallback<GetPriceTickResponseDTO> callback, object state)
+        public virtual void BeginGetPriceTicks(string marketId, string priceTicks, ApiAsyncCallback callback, object state)
         {
             string uriTemplate = "/{marketId}/tickhistory?priceticks={priceTicks}";
-            _client.BeginRequest(callback, state, "market", uriTemplate , "GET",
+            _client.BeginRequest(RequestMethod.GET, "market", uriTemplate , 
             new Dictionary<string, object>
             {
                 { "marketId", marketId}, 
                 { "priceTicks", priceTicks}
-            }, TimeSpan.FromMilliseconds(0), "data");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,2 ,callback, state);
         }
 
-        public GetPriceTickResponseDTO EndGetPriceTicks(ApiAsyncResult<GetPriceTickResponseDTO> asyncResult)
+        public GetPriceTickResponseDTO EndGetPriceTicks(ReliableAsyncResult asyncResult)
         {
-            return _client.EndRequest(asyncResult);
+            return _client.EndRequest<GetPriceTickResponseDTO>(asyncResult);
         }
 
 
@@ -384,13 +359,13 @@ public string AppKey { get; set; }
         public virtual ListNewsHeadlinesResponseDTO ListNewsHeadlinesWithSource(string source, string category, int maxResults)
         {
             string uriTemplate = "/{source}/{category}?MaxResults={maxResults}";
-            return _client.Request<ListNewsHeadlinesResponseDTO>("news", uriTemplate , "GET",
+            return _client.Request<ListNewsHeadlinesResponseDTO>(RequestMethod.GET,"news", uriTemplate ,
             new Dictionary<string, object>
             {
                 { "source", source}, 
                 { "category", category}, 
                 { "maxResults", maxResults}
-            }, TimeSpan.FromMilliseconds(10000), "data");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(10000),30000,0 );
         }
 
 
@@ -402,21 +377,21 @@ public string AppKey { get; set; }
         /// <param name="maxResults">Specify the maximum number of headlines returned.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginListNewsHeadlinesWithSource(string source, string category, int maxResults, ApiAsyncCallback<ListNewsHeadlinesResponseDTO> callback, object state)
+        public virtual void BeginListNewsHeadlinesWithSource(string source, string category, int maxResults, ApiAsyncCallback callback, object state)
         {
             string uriTemplate = "/{source}/{category}?MaxResults={maxResults}";
-            _client.BeginRequest(callback, state, "news", uriTemplate , "GET",
+            _client.BeginRequest(RequestMethod.GET, "news", uriTemplate , 
             new Dictionary<string, object>
             {
                 { "source", source}, 
                 { "category", category}, 
                 { "maxResults", maxResults}
-            }, TimeSpan.FromMilliseconds(10000), "data");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(10000), 30000,2 ,callback, state);
         }
 
-        public ListNewsHeadlinesResponseDTO EndListNewsHeadlinesWithSource(ApiAsyncResult<ListNewsHeadlinesResponseDTO> asyncResult)
+        public ListNewsHeadlinesResponseDTO EndListNewsHeadlinesWithSource(ReliableAsyncResult asyncResult)
         {
-            return _client.EndRequest(asyncResult);
+            return _client.EndRequest<ListNewsHeadlinesResponseDTO>(asyncResult);
         }
 
 
@@ -433,12 +408,12 @@ public string AppKey { get; set; }
         public virtual GetNewsDetailResponseDTO GetNewsDetail(string source, string storyId)
         {
             string uriTemplate = "/{source}/{storyId}";
-            return _client.Request<GetNewsDetailResponseDTO>("news", uriTemplate , "GET",
+            return _client.Request<GetNewsDetailResponseDTO>(RequestMethod.GET,"news", uriTemplate ,
             new Dictionary<string, object>
             {
                 { "source", source}, 
                 { "storyId", storyId}
-            }, TimeSpan.FromMilliseconds(10000), "data");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(10000),30000,0 );
         }
 
 
@@ -449,20 +424,20 @@ public string AppKey { get; set; }
         /// <param name="storyId">The news story ID.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginGetNewsDetail(string source, string storyId, ApiAsyncCallback<GetNewsDetailResponseDTO> callback, object state)
+        public virtual void BeginGetNewsDetail(string source, string storyId, ApiAsyncCallback callback, object state)
         {
             string uriTemplate = "/{source}/{storyId}";
-            _client.BeginRequest(callback, state, "news", uriTemplate , "GET",
+            _client.BeginRequest(RequestMethod.GET, "news", uriTemplate , 
             new Dictionary<string, object>
             {
                 { "source", source}, 
                 { "storyId", storyId}
-            }, TimeSpan.FromMilliseconds(10000), "data");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(10000), 30000,2 ,callback, state);
         }
 
-        public GetNewsDetailResponseDTO EndGetNewsDetail(ApiAsyncResult<GetNewsDetailResponseDTO> asyncResult)
+        public GetNewsDetailResponseDTO EndGetNewsDetail(ReliableAsyncResult asyncResult)
         {
-            return _client.EndRequest(asyncResult);
+            return _client.EndRequest<GetNewsDetailResponseDTO>(asyncResult);
         }
 
 
@@ -488,7 +463,7 @@ public string AppKey { get; set; }
         public virtual ListCfdMarketsResponseDTO ListCfdMarkets(string searchByMarketName, string searchByMarketCode, int clientAccountId, int maxResults, bool useMobileShortName)
         {
             string uriTemplate = "?MarketName={searchByMarketName}&MarketCode={searchByMarketCode}&ClientAccountId={clientAccountId}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}";
-            return _client.Request<ListCfdMarketsResponseDTO>("cfd/markets", uriTemplate , "GET",
+            return _client.Request<ListCfdMarketsResponseDTO>(RequestMethod.GET,"cfd/markets", uriTemplate ,
             new Dictionary<string, object>
             {
                 { "searchByMarketName", searchByMarketName}, 
@@ -496,7 +471,7 @@ public string AppKey { get; set; }
                 { "clientAccountId", clientAccountId}, 
                 { "maxResults", maxResults}, 
                 { "useMobileShortName", useMobileShortName}
-            }, TimeSpan.FromMilliseconds(0), "data");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,0 );
         }
 
 
@@ -510,10 +485,10 @@ public string AppKey { get; set; }
         /// <param name="useMobileShortName">True if the market name should be in short form. Helpful when displaying data on a small screen.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginListCfdMarkets(string searchByMarketName, string searchByMarketCode, int clientAccountId, int maxResults, bool useMobileShortName, ApiAsyncCallback<ListCfdMarketsResponseDTO> callback, object state)
+        public virtual void BeginListCfdMarkets(string searchByMarketName, string searchByMarketCode, int clientAccountId, int maxResults, bool useMobileShortName, ApiAsyncCallback callback, object state)
         {
             string uriTemplate = "?MarketName={searchByMarketName}&MarketCode={searchByMarketCode}&ClientAccountId={clientAccountId}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}";
-            _client.BeginRequest(callback, state, "cfd/markets", uriTemplate , "GET",
+            _client.BeginRequest(RequestMethod.GET, "cfd/markets", uriTemplate , 
             new Dictionary<string, object>
             {
                 { "searchByMarketName", searchByMarketName}, 
@@ -521,12 +496,12 @@ public string AppKey { get; set; }
                 { "clientAccountId", clientAccountId}, 
                 { "maxResults", maxResults}, 
                 { "useMobileShortName", useMobileShortName}
-            }, TimeSpan.FromMilliseconds(0), "data");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,2 ,callback, state);
         }
 
-        public ListCfdMarketsResponseDTO EndListCfdMarkets(ApiAsyncResult<ListCfdMarketsResponseDTO> asyncResult)
+        public ListCfdMarketsResponseDTO EndListCfdMarkets(ReliableAsyncResult asyncResult)
         {
-            return _client.EndRequest(asyncResult);
+            return _client.EndRequest<ListCfdMarketsResponseDTO>(asyncResult);
         }
 
 
@@ -552,7 +527,7 @@ public string AppKey { get; set; }
         public virtual ListSpreadMarketsResponseDTO ListSpreadMarkets(string searchByMarketName, string searchByMarketCode, int clientAccountId, int maxResults, bool useMobileShortName)
         {
             string uriTemplate = "?MarketName={searchByMarketName}&MarketCode={searchByMarketCode}&ClientAccountId={clientAccountId}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}";
-            return _client.Request<ListSpreadMarketsResponseDTO>("spread/markets", uriTemplate , "GET",
+            return _client.Request<ListSpreadMarketsResponseDTO>(RequestMethod.GET,"spread/markets", uriTemplate ,
             new Dictionary<string, object>
             {
                 { "searchByMarketName", searchByMarketName}, 
@@ -560,7 +535,7 @@ public string AppKey { get; set; }
                 { "clientAccountId", clientAccountId}, 
                 { "maxResults", maxResults}, 
                 { "useMobileShortName", useMobileShortName}
-            }, TimeSpan.FromMilliseconds(0), "data");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,0 );
         }
 
 
@@ -574,10 +549,10 @@ public string AppKey { get; set; }
         /// <param name="useMobileShortName">True if the market name should be in short form. Helpful when displaying data on a small screen.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginListSpreadMarkets(string searchByMarketName, string searchByMarketCode, int clientAccountId, int maxResults, bool useMobileShortName, ApiAsyncCallback<ListSpreadMarketsResponseDTO> callback, object state)
+        public virtual void BeginListSpreadMarkets(string searchByMarketName, string searchByMarketCode, int clientAccountId, int maxResults, bool useMobileShortName, ApiAsyncCallback callback, object state)
         {
             string uriTemplate = "?MarketName={searchByMarketName}&MarketCode={searchByMarketCode}&ClientAccountId={clientAccountId}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}";
-            _client.BeginRequest(callback, state, "spread/markets", uriTemplate , "GET",
+            _client.BeginRequest(RequestMethod.GET, "spread/markets", uriTemplate , 
             new Dictionary<string, object>
             {
                 { "searchByMarketName", searchByMarketName}, 
@@ -585,12 +560,12 @@ public string AppKey { get; set; }
                 { "clientAccountId", clientAccountId}, 
                 { "maxResults", maxResults}, 
                 { "useMobileShortName", useMobileShortName}
-            }, TimeSpan.FromMilliseconds(0), "data");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,2 ,callback, state);
         }
 
-        public ListSpreadMarketsResponseDTO EndListSpreadMarkets(ApiAsyncResult<ListSpreadMarketsResponseDTO> asyncResult)
+        public ListSpreadMarketsResponseDTO EndListSpreadMarkets(ReliableAsyncResult asyncResult)
         {
-            return _client.EndRequest(asyncResult);
+            return _client.EndRequest<ListSpreadMarketsResponseDTO>(asyncResult);
         }
 
 
@@ -612,11 +587,11 @@ public string AppKey { get; set; }
         public virtual GetMarketInformationResponseDTO GetMarketInformation(string marketId)
         {
             string uriTemplate = "/{marketId}/information";
-            return _client.Request<GetMarketInformationResponseDTO>("market", uriTemplate , "GET",
+            return _client.Request<GetMarketInformationResponseDTO>(RequestMethod.GET,"market", uriTemplate ,
             new Dictionary<string, object>
             {
                 { "marketId", marketId}
-            }, TimeSpan.FromMilliseconds(1000), "data");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(1000),30000,0 );
         }
 
 
@@ -626,19 +601,19 @@ public string AppKey { get; set; }
         /// <param name="marketId">The market ID.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginGetMarketInformation(string marketId, ApiAsyncCallback<GetMarketInformationResponseDTO> callback, object state)
+        public virtual void BeginGetMarketInformation(string marketId, ApiAsyncCallback callback, object state)
         {
             string uriTemplate = "/{marketId}/information";
-            _client.BeginRequest(callback, state, "market", uriTemplate , "GET",
+            _client.BeginRequest(RequestMethod.GET, "market", uriTemplate , 
             new Dictionary<string, object>
             {
                 { "marketId", marketId}
-            }, TimeSpan.FromMilliseconds(1000), "data");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(1000), 30000,2 ,callback, state);
         }
 
-        public GetMarketInformationResponseDTO EndGetMarketInformation(ApiAsyncResult<GetMarketInformationResponseDTO> asyncResult)
+        public GetMarketInformationResponseDTO EndGetMarketInformation(ReliableAsyncResult asyncResult)
         {
-            return _client.EndRequest(asyncResult);
+            return _client.EndRequest<GetMarketInformationResponseDTO>(asyncResult);
         }
 
 
@@ -661,7 +636,7 @@ public string AppKey { get; set; }
         public virtual ListMarketInformationSearchResponseDTO ListMarketInformationSearch(bool searchByMarketCode, bool searchByMarketName, bool spreadProductType, bool cfdProductType, bool binaryProductType, string query, int maxResults, bool useMobileShortName)
         {
             string uriTemplate = "/informationsearch?SearchByMarketCode={searchByMarketCode}&SearchByMarketName={searchByMarketName}&SpreadProductType={spreadProductType}&CfdProductType={cfdProductType}&BinaryProductType={binaryProductType}&Query={query}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}";
-            return _client.Request<ListMarketInformationSearchResponseDTO>("market", uriTemplate , "GET",
+            return _client.Request<ListMarketInformationSearchResponseDTO>(RequestMethod.GET,"market", uriTemplate ,
             new Dictionary<string, object>
             {
                 { "searchByMarketCode", searchByMarketCode}, 
@@ -672,7 +647,7 @@ public string AppKey { get; set; }
                 { "query", query}, 
                 { "maxResults", maxResults}, 
                 { "useMobileShortName", useMobileShortName}
-            }, TimeSpan.FromMilliseconds(0), "data");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,0 );
         }
 
 
@@ -689,10 +664,10 @@ public string AppKey { get; set; }
         /// <param name="useMobileShortName">True if the market name should be in short form.  Helpful when displaying data on a small screen.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginListMarketInformationSearch(bool searchByMarketCode, bool searchByMarketName, bool spreadProductType, bool cfdProductType, bool binaryProductType, string query, int maxResults, bool useMobileShortName, ApiAsyncCallback<ListMarketInformationSearchResponseDTO> callback, object state)
+        public virtual void BeginListMarketInformationSearch(bool searchByMarketCode, bool searchByMarketName, bool spreadProductType, bool cfdProductType, bool binaryProductType, string query, int maxResults, bool useMobileShortName, ApiAsyncCallback callback, object state)
         {
             string uriTemplate = "/informationsearch?SearchByMarketCode={searchByMarketCode}&SearchByMarketName={searchByMarketName}&SpreadProductType={spreadProductType}&CfdProductType={cfdProductType}&BinaryProductType={binaryProductType}&Query={query}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}";
-            _client.BeginRequest(callback, state, "market", uriTemplate , "GET",
+            _client.BeginRequest(RequestMethod.GET, "market", uriTemplate , 
             new Dictionary<string, object>
             {
                 { "searchByMarketCode", searchByMarketCode}, 
@@ -703,12 +678,12 @@ public string AppKey { get; set; }
                 { "query", query}, 
                 { "maxResults", maxResults}, 
                 { "useMobileShortName", useMobileShortName}
-            }, TimeSpan.FromMilliseconds(0), "data");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,2 ,callback, state);
         }
 
-        public ListMarketInformationSearchResponseDTO EndListMarketInformationSearch(ApiAsyncResult<ListMarketInformationSearchResponseDTO> asyncResult)
+        public ListMarketInformationSearchResponseDTO EndListMarketInformationSearch(ReliableAsyncResult asyncResult)
         {
-            return _client.EndRequest(asyncResult);
+            return _client.EndRequest<ListMarketInformationSearchResponseDTO>(asyncResult);
         }
 
 
@@ -727,14 +702,14 @@ public string AppKey { get; set; }
         public virtual MarketInformationSearchWithTagsResponseDTO SearchWithTags(string query, int tagId, int maxResults, bool useMobileShortName)
         {
             string uriTemplate = "/searchwithtags?Query={query}&TagId={tagId}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}";
-            return _client.Request<MarketInformationSearchWithTagsResponseDTO>("market", uriTemplate , "GET",
+            return _client.Request<MarketInformationSearchWithTagsResponseDTO>(RequestMethod.GET,"market", uriTemplate ,
             new Dictionary<string, object>
             {
                 { "query", query}, 
                 { "tagId", tagId}, 
                 { "maxResults", maxResults}, 
                 { "useMobileShortName", useMobileShortName}
-            }, TimeSpan.FromMilliseconds(0), "data");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,0 );
         }
 
 
@@ -747,22 +722,22 @@ public string AppKey { get; set; }
         /// <param name="useMobileShortName">True if the market name should be in short form. Helpful when displaying data on a small screen.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginSearchWithTags(string query, int tagId, int maxResults, bool useMobileShortName, ApiAsyncCallback<MarketInformationSearchWithTagsResponseDTO> callback, object state)
+        public virtual void BeginSearchWithTags(string query, int tagId, int maxResults, bool useMobileShortName, ApiAsyncCallback callback, object state)
         {
             string uriTemplate = "/searchwithtags?Query={query}&TagId={tagId}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}";
-            _client.BeginRequest(callback, state, "market", uriTemplate , "GET",
+            _client.BeginRequest(RequestMethod.GET, "market", uriTemplate , 
             new Dictionary<string, object>
             {
                 { "query", query}, 
                 { "tagId", tagId}, 
                 { "maxResults", maxResults}, 
                 { "useMobileShortName", useMobileShortName}
-            }, TimeSpan.FromMilliseconds(0), "data");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,2 ,callback, state);
         }
 
-        public MarketInformationSearchWithTagsResponseDTO EndSearchWithTags(ApiAsyncResult<MarketInformationSearchWithTagsResponseDTO> asyncResult)
+        public MarketInformationSearchWithTagsResponseDTO EndSearchWithTags(ReliableAsyncResult asyncResult)
         {
-            return _client.EndRequest(asyncResult);
+            return _client.EndRequest<MarketInformationSearchWithTagsResponseDTO>(asyncResult);
         }
 
 
@@ -777,11 +752,11 @@ public string AppKey { get; set; }
         public virtual MarketInformationTagLookupResponseDTO TagLookup()
         {
             string uriTemplate = "/taglookup";
-            return _client.Request<MarketInformationTagLookupResponseDTO>("market", uriTemplate , "GET",
+            return _client.Request<MarketInformationTagLookupResponseDTO>(RequestMethod.GET,"market", uriTemplate ,
             new Dictionary<string, object>
             {
 
-            }, TimeSpan.FromMilliseconds(0), "data");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,0 );
         }
 
 
@@ -790,19 +765,19 @@ public string AppKey { get; set; }
         /// </summary>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginTagLookup( ApiAsyncCallback<MarketInformationTagLookupResponseDTO> callback, object state)
+        public virtual void BeginTagLookup( ApiAsyncCallback callback, object state)
         {
             string uriTemplate = "/taglookup";
-            _client.BeginRequest(callback, state, "market", uriTemplate , "GET",
+            _client.BeginRequest(RequestMethod.GET, "market", uriTemplate , 
             new Dictionary<string, object>
             {
 
-            }, TimeSpan.FromMilliseconds(0), "data");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,2 ,callback, state);
         }
 
-        public MarketInformationTagLookupResponseDTO EndTagLookup(ApiAsyncResult<MarketInformationTagLookupResponseDTO> asyncResult)
+        public MarketInformationTagLookupResponseDTO EndTagLookup(ReliableAsyncResult asyncResult)
         {
-            return _client.EndRequest(asyncResult);
+            return _client.EndRequest<MarketInformationTagLookupResponseDTO>(asyncResult);
         }
 
 
@@ -818,11 +793,11 @@ public string AppKey { get; set; }
         public virtual ListMarketInformationResponseDTO ListMarketInformation(ListMarketInformationRequestDTO listMarketInformationRequestDTO)
         {
             string uriTemplate = "/information";
-            return _client.Request<ListMarketInformationResponseDTO>("market", uriTemplate , "POST",
+            return _client.Request<ListMarketInformationResponseDTO>(RequestMethod.POST,"market", uriTemplate ,
             new Dictionary<string, object>
             {
                 { "listMarketInformationRequestDTO", listMarketInformationRequestDTO}
-            }, TimeSpan.FromMilliseconds(1000), "data");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(1000),30000,0 );
         }
 
 
@@ -832,19 +807,19 @@ public string AppKey { get; set; }
         /// <param name="listMarketInformationRequestDTO">Get Market Information for the specified list of markets.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginListMarketInformation(ListMarketInformationRequestDTO listMarketInformationRequestDTO, ApiAsyncCallback<ListMarketInformationResponseDTO> callback, object state)
+        public virtual void BeginListMarketInformation(ListMarketInformationRequestDTO listMarketInformationRequestDTO, ApiAsyncCallback callback, object state)
         {
             string uriTemplate = "/information";
-            _client.BeginRequest(callback, state, "market", uriTemplate , "POST",
+            _client.BeginRequest(RequestMethod.POST, "market", uriTemplate , 
             new Dictionary<string, object>
             {
                 { "listMarketInformationRequestDTO", listMarketInformationRequestDTO}
-            }, TimeSpan.FromMilliseconds(1000), "data");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(1000), 30000,2 ,callback, state);
         }
 
-        public ListMarketInformationResponseDTO EndListMarketInformation(ApiAsyncResult<ListMarketInformationResponseDTO> asyncResult)
+        public ListMarketInformationResponseDTO EndListMarketInformation(ReliableAsyncResult asyncResult)
         {
-            return _client.EndRequest(asyncResult);
+            return _client.EndRequest<ListMarketInformationResponseDTO>(asyncResult);
         }
 
 
@@ -860,11 +835,11 @@ public string AppKey { get; set; }
         public virtual ApiSaveMarketInformationResponseDTO SaveMarketInformation(SaveMarketInformationRequestDTO listMarketInformationRequestSaveDTO)
         {
             string uriTemplate = "/information/save";
-            return _client.Request<ApiSaveMarketInformationResponseDTO>("market", uriTemplate , "POST",
+            return _client.Request<ApiSaveMarketInformationResponseDTO>(RequestMethod.POST,"market", uriTemplate ,
             new Dictionary<string, object>
             {
                 { "listMarketInformationRequestSaveDTO", listMarketInformationRequestSaveDTO}
-            }, TimeSpan.FromMilliseconds(0), "data");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,0 );
         }
 
 
@@ -874,19 +849,19 @@ public string AppKey { get; set; }
         /// <param name="listMarketInformationRequestSaveDTO">Save Market Information for the specified list of markets.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginSaveMarketInformation(SaveMarketInformationRequestDTO listMarketInformationRequestSaveDTO, ApiAsyncCallback<ApiSaveMarketInformationResponseDTO> callback, object state)
+        public virtual void BeginSaveMarketInformation(SaveMarketInformationRequestDTO listMarketInformationRequestSaveDTO, ApiAsyncCallback callback, object state)
         {
             string uriTemplate = "/information/save";
-            _client.BeginRequest(callback, state, "market", uriTemplate , "POST",
+            _client.BeginRequest(RequestMethod.POST, "market", uriTemplate , 
             new Dictionary<string, object>
             {
                 { "listMarketInformationRequestSaveDTO", listMarketInformationRequestSaveDTO}
-            }, TimeSpan.FromMilliseconds(0), "data");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,2 ,callback, state);
         }
 
-        public ApiSaveMarketInformationResponseDTO EndSaveMarketInformation(ApiAsyncResult<ApiSaveMarketInformationResponseDTO> asyncResult)
+        public ApiSaveMarketInformationResponseDTO EndSaveMarketInformation(ReliableAsyncResult asyncResult)
         {
-            return _client.EndRequest(asyncResult);
+            return _client.EndRequest<ApiSaveMarketInformationResponseDTO>(asyncResult);
         }
 
 
@@ -908,11 +883,11 @@ public string AppKey { get; set; }
         public virtual ApiTradeOrderResponseDTO Order(NewStopLimitOrderRequestDTO order)
         {
             string uriTemplate = "/newstoplimitorder";
-            return _client.Request<ApiTradeOrderResponseDTO>("order", uriTemplate , "POST",
+            return _client.Request<ApiTradeOrderResponseDTO>(RequestMethod.POST,"order", uriTemplate ,
             new Dictionary<string, object>
             {
                 { "order", order}
-            }, TimeSpan.FromMilliseconds(0), "trading");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,0 );
         }
 
 
@@ -922,19 +897,19 @@ public string AppKey { get; set; }
         /// <param name="order">The order request.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginOrder(NewStopLimitOrderRequestDTO order, ApiAsyncCallback<ApiTradeOrderResponseDTO> callback, object state)
+        public virtual void BeginOrder(NewStopLimitOrderRequestDTO order, ApiAsyncCallback callback, object state)
         {
             string uriTemplate = "/newstoplimitorder";
-            _client.BeginRequest(callback, state, "order", uriTemplate , "POST",
+            _client.BeginRequest(RequestMethod.POST, "order", uriTemplate , 
             new Dictionary<string, object>
             {
                 { "order", order}
-            }, TimeSpan.FromMilliseconds(0), "trading");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,2 ,callback, state);
         }
 
-        public ApiTradeOrderResponseDTO EndOrder(ApiAsyncResult<ApiTradeOrderResponseDTO> asyncResult)
+        public ApiTradeOrderResponseDTO EndOrder(ReliableAsyncResult asyncResult)
         {
-            return _client.EndRequest(asyncResult);
+            return _client.EndRequest<ApiTradeOrderResponseDTO>(asyncResult);
         }
 
 
@@ -950,11 +925,11 @@ public string AppKey { get; set; }
         public virtual ApiTradeOrderResponseDTO CancelOrder(CancelOrderRequestDTO cancelOrder)
         {
             string uriTemplate = "/cancel";
-            return _client.Request<ApiTradeOrderResponseDTO>("order", uriTemplate , "POST",
+            return _client.Request<ApiTradeOrderResponseDTO>(RequestMethod.POST,"order", uriTemplate ,
             new Dictionary<string, object>
             {
                 { "cancelOrder", cancelOrder}
-            }, TimeSpan.FromMilliseconds(0), "default");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,0 );
         }
 
 
@@ -964,19 +939,19 @@ public string AppKey { get; set; }
         /// <param name="cancelOrder">The cancel order request.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginCancelOrder(CancelOrderRequestDTO cancelOrder, ApiAsyncCallback<ApiTradeOrderResponseDTO> callback, object state)
+        public virtual void BeginCancelOrder(CancelOrderRequestDTO cancelOrder, ApiAsyncCallback callback, object state)
         {
             string uriTemplate = "/cancel";
-            _client.BeginRequest(callback, state, "order", uriTemplate , "POST",
+            _client.BeginRequest(RequestMethod.POST, "order", uriTemplate , 
             new Dictionary<string, object>
             {
                 { "cancelOrder", cancelOrder}
-            }, TimeSpan.FromMilliseconds(0), "default");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,2 ,callback, state);
         }
 
-        public ApiTradeOrderResponseDTO EndCancelOrder(ApiAsyncResult<ApiTradeOrderResponseDTO> asyncResult)
+        public ApiTradeOrderResponseDTO EndCancelOrder(ReliableAsyncResult asyncResult)
         {
-            return _client.EndRequest(asyncResult);
+            return _client.EndRequest<ApiTradeOrderResponseDTO>(asyncResult);
         }
 
 
@@ -992,11 +967,11 @@ public string AppKey { get; set; }
         public virtual ApiTradeOrderResponseDTO UpdateOrder(UpdateStopLimitOrderRequestDTO order)
         {
             string uriTemplate = "/updatestoplimitorder";
-            return _client.Request<ApiTradeOrderResponseDTO>("order", uriTemplate , "POST",
+            return _client.Request<ApiTradeOrderResponseDTO>(RequestMethod.POST,"order", uriTemplate ,
             new Dictionary<string, object>
             {
                 { "order", order}
-            }, TimeSpan.FromMilliseconds(0), "default");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,0 );
         }
 
 
@@ -1006,19 +981,19 @@ public string AppKey { get; set; }
         /// <param name="order">The update order request.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginUpdateOrder(UpdateStopLimitOrderRequestDTO order, ApiAsyncCallback<ApiTradeOrderResponseDTO> callback, object state)
+        public virtual void BeginUpdateOrder(UpdateStopLimitOrderRequestDTO order, ApiAsyncCallback callback, object state)
         {
             string uriTemplate = "/updatestoplimitorder";
-            _client.BeginRequest(callback, state, "order", uriTemplate , "POST",
+            _client.BeginRequest(RequestMethod.POST, "order", uriTemplate , 
             new Dictionary<string, object>
             {
                 { "order", order}
-            }, TimeSpan.FromMilliseconds(0), "default");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,2 ,callback, state);
         }
 
-        public ApiTradeOrderResponseDTO EndUpdateOrder(ApiAsyncResult<ApiTradeOrderResponseDTO> asyncResult)
+        public ApiTradeOrderResponseDTO EndUpdateOrder(ReliableAsyncResult asyncResult)
         {
-            return _client.EndRequest(asyncResult);
+            return _client.EndRequest<ApiTradeOrderResponseDTO>(asyncResult);
         }
 
 
@@ -1034,11 +1009,11 @@ public string AppKey { get; set; }
         public virtual ListOpenPositionsResponseDTO ListOpenPositions(int tradingAccountId)
         {
             string uriTemplate = "/openpositions?TradingAccountId={tradingAccountId}";
-            return _client.Request<ListOpenPositionsResponseDTO>("order", uriTemplate , "GET",
+            return _client.Request<ListOpenPositionsResponseDTO>(RequestMethod.GET,"order", uriTemplate ,
             new Dictionary<string, object>
             {
                 { "tradingAccountId", tradingAccountId}
-            }, TimeSpan.FromMilliseconds(0), "default");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,0 );
         }
 
 
@@ -1048,19 +1023,19 @@ public string AppKey { get; set; }
         /// <param name="tradingAccountId">The ID of the trading account to get orders for.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginListOpenPositions(int tradingAccountId, ApiAsyncCallback<ListOpenPositionsResponseDTO> callback, object state)
+        public virtual void BeginListOpenPositions(int tradingAccountId, ApiAsyncCallback callback, object state)
         {
             string uriTemplate = "/openpositions?TradingAccountId={tradingAccountId}";
-            _client.BeginRequest(callback, state, "order", uriTemplate , "GET",
+            _client.BeginRequest(RequestMethod.GET, "order", uriTemplate , 
             new Dictionary<string, object>
             {
                 { "tradingAccountId", tradingAccountId}
-            }, TimeSpan.FromMilliseconds(0), "default");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,2 ,callback, state);
         }
 
-        public ListOpenPositionsResponseDTO EndListOpenPositions(ApiAsyncResult<ListOpenPositionsResponseDTO> asyncResult)
+        public ListOpenPositionsResponseDTO EndListOpenPositions(ReliableAsyncResult asyncResult)
         {
-            return _client.EndRequest(asyncResult);
+            return _client.EndRequest<ListOpenPositionsResponseDTO>(asyncResult);
         }
 
 
@@ -1076,11 +1051,11 @@ public string AppKey { get; set; }
         public virtual ListActiveStopLimitOrderResponseDTO ListActiveStopLimitOrders(int tradingAccountId)
         {
             string uriTemplate = "/activestoplimitorders?TradingAccountId={tradingAccountId}";
-            return _client.Request<ListActiveStopLimitOrderResponseDTO>("order", uriTemplate , "GET",
+            return _client.Request<ListActiveStopLimitOrderResponseDTO>(RequestMethod.GET,"order", uriTemplate ,
             new Dictionary<string, object>
             {
                 { "tradingAccountId", tradingAccountId}
-            }, TimeSpan.FromMilliseconds(0), "default");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,0 );
         }
 
 
@@ -1090,19 +1065,19 @@ public string AppKey { get; set; }
         /// <param name="tradingAccountId">The ID of the trading account to get orders for.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginListActiveStopLimitOrders(int tradingAccountId, ApiAsyncCallback<ListActiveStopLimitOrderResponseDTO> callback, object state)
+        public virtual void BeginListActiveStopLimitOrders(int tradingAccountId, ApiAsyncCallback callback, object state)
         {
             string uriTemplate = "/activestoplimitorders?TradingAccountId={tradingAccountId}";
-            _client.BeginRequest(callback, state, "order", uriTemplate , "GET",
+            _client.BeginRequest(RequestMethod.GET, "order", uriTemplate , 
             new Dictionary<string, object>
             {
                 { "tradingAccountId", tradingAccountId}
-            }, TimeSpan.FromMilliseconds(0), "default");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,2 ,callback, state);
         }
 
-        public ListActiveStopLimitOrderResponseDTO EndListActiveStopLimitOrders(ApiAsyncResult<ListActiveStopLimitOrderResponseDTO> asyncResult)
+        public ListActiveStopLimitOrderResponseDTO EndListActiveStopLimitOrders(ReliableAsyncResult asyncResult)
         {
-            return _client.EndRequest(asyncResult);
+            return _client.EndRequest<ListActiveStopLimitOrderResponseDTO>(asyncResult);
         }
 
 
@@ -1118,11 +1093,11 @@ public string AppKey { get; set; }
         public virtual GetActiveStopLimitOrderResponseDTO GetActiveStopLimitOrder(string orderId)
         {
             string uriTemplate = "/{orderId}/activestoplimitorder";
-            return _client.Request<GetActiveStopLimitOrderResponseDTO>("order", uriTemplate , "GET",
+            return _client.Request<GetActiveStopLimitOrderResponseDTO>(RequestMethod.GET,"order", uriTemplate ,
             new Dictionary<string, object>
             {
                 { "orderId", orderId}
-            }, TimeSpan.FromMilliseconds(0), "default");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,0 );
         }
 
 
@@ -1132,19 +1107,19 @@ public string AppKey { get; set; }
         /// <param name="orderId">The requested order ID.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginGetActiveStopLimitOrder(string orderId, ApiAsyncCallback<GetActiveStopLimitOrderResponseDTO> callback, object state)
+        public virtual void BeginGetActiveStopLimitOrder(string orderId, ApiAsyncCallback callback, object state)
         {
             string uriTemplate = "/{orderId}/activestoplimitorder";
-            _client.BeginRequest(callback, state, "order", uriTemplate , "GET",
+            _client.BeginRequest(RequestMethod.GET, "order", uriTemplate , 
             new Dictionary<string, object>
             {
                 { "orderId", orderId}
-            }, TimeSpan.FromMilliseconds(0), "default");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,2 ,callback, state);
         }
 
-        public GetActiveStopLimitOrderResponseDTO EndGetActiveStopLimitOrder(ApiAsyncResult<GetActiveStopLimitOrderResponseDTO> asyncResult)
+        public GetActiveStopLimitOrderResponseDTO EndGetActiveStopLimitOrder(ReliableAsyncResult asyncResult)
         {
-            return _client.EndRequest(asyncResult);
+            return _client.EndRequest<GetActiveStopLimitOrderResponseDTO>(asyncResult);
         }
 
 
@@ -1160,11 +1135,11 @@ public string AppKey { get; set; }
         public virtual GetOpenPositionResponseDTO GetOpenPosition(string orderId)
         {
             string uriTemplate = "/{orderId}/openposition";
-            return _client.Request<GetOpenPositionResponseDTO>("order", uriTemplate , "GET",
+            return _client.Request<GetOpenPositionResponseDTO>(RequestMethod.GET,"order", uriTemplate ,
             new Dictionary<string, object>
             {
                 { "orderId", orderId}
-            }, TimeSpan.FromMilliseconds(0), "default");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,0 );
         }
 
 
@@ -1174,19 +1149,19 @@ public string AppKey { get; set; }
         /// <param name="orderId">The requested order ID.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginGetOpenPosition(string orderId, ApiAsyncCallback<GetOpenPositionResponseDTO> callback, object state)
+        public virtual void BeginGetOpenPosition(string orderId, ApiAsyncCallback callback, object state)
         {
             string uriTemplate = "/{orderId}/openposition";
-            _client.BeginRequest(callback, state, "order", uriTemplate , "GET",
+            _client.BeginRequest(RequestMethod.GET, "order", uriTemplate , 
             new Dictionary<string, object>
             {
                 { "orderId", orderId}
-            }, TimeSpan.FromMilliseconds(0), "default");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,2 ,callback, state);
         }
 
-        public GetOpenPositionResponseDTO EndGetOpenPosition(ApiAsyncResult<GetOpenPositionResponseDTO> asyncResult)
+        public GetOpenPositionResponseDTO EndGetOpenPosition(ReliableAsyncResult asyncResult)
         {
-            return _client.EndRequest(asyncResult);
+            return _client.EndRequest<GetOpenPositionResponseDTO>(asyncResult);
         }
 
 
@@ -1203,12 +1178,12 @@ public string AppKey { get; set; }
         public virtual ListTradeHistoryResponseDTO ListTradeHistory(int tradingAccountId, int maxResults)
         {
             string uriTemplate = "/tradehistory?TradingAccountId={tradingAccountId}&MaxResults={maxResults}";
-            return _client.Request<ListTradeHistoryResponseDTO>("order", uriTemplate , "GET",
+            return _client.Request<ListTradeHistoryResponseDTO>(RequestMethod.GET,"order", uriTemplate ,
             new Dictionary<string, object>
             {
                 { "tradingAccountId", tradingAccountId}, 
                 { "maxResults", maxResults}
-            }, TimeSpan.FromMilliseconds(0), "default");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,0 );
         }
 
 
@@ -1219,20 +1194,20 @@ public string AppKey { get; set; }
         /// <param name="maxResults">The maximum number of results to return.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginListTradeHistory(int tradingAccountId, int maxResults, ApiAsyncCallback<ListTradeHistoryResponseDTO> callback, object state)
+        public virtual void BeginListTradeHistory(int tradingAccountId, int maxResults, ApiAsyncCallback callback, object state)
         {
             string uriTemplate = "/tradehistory?TradingAccountId={tradingAccountId}&MaxResults={maxResults}";
-            _client.BeginRequest(callback, state, "order", uriTemplate , "GET",
+            _client.BeginRequest(RequestMethod.GET, "order", uriTemplate , 
             new Dictionary<string, object>
             {
                 { "tradingAccountId", tradingAccountId}, 
                 { "maxResults", maxResults}
-            }, TimeSpan.FromMilliseconds(0), "default");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,2 ,callback, state);
         }
 
-        public ListTradeHistoryResponseDTO EndListTradeHistory(ApiAsyncResult<ListTradeHistoryResponseDTO> asyncResult)
+        public ListTradeHistoryResponseDTO EndListTradeHistory(ReliableAsyncResult asyncResult)
         {
-            return _client.EndRequest(asyncResult);
+            return _client.EndRequest<ListTradeHistoryResponseDTO>(asyncResult);
         }
 
 
@@ -1249,12 +1224,12 @@ public string AppKey { get; set; }
         public virtual ListStopLimitOrderHistoryResponseDTO ListStopLimitOrderHistory(int tradingAccountId, int maxResults)
         {
             string uriTemplate = "/stoplimitorderhistory?TradingAccountId={tradingAccountId}&MaxResults={maxResults}";
-            return _client.Request<ListStopLimitOrderHistoryResponseDTO>("order", uriTemplate , "GET",
+            return _client.Request<ListStopLimitOrderHistoryResponseDTO>(RequestMethod.GET,"order", uriTemplate ,
             new Dictionary<string, object>
             {
                 { "tradingAccountId", tradingAccountId}, 
                 { "maxResults", maxResults}
-            }, TimeSpan.FromMilliseconds(0), "default");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,0 );
         }
 
 
@@ -1265,20 +1240,20 @@ public string AppKey { get; set; }
         /// <param name="maxResults">The maximum number of results to return.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginListStopLimitOrderHistory(int tradingAccountId, int maxResults, ApiAsyncCallback<ListStopLimitOrderHistoryResponseDTO> callback, object state)
+        public virtual void BeginListStopLimitOrderHistory(int tradingAccountId, int maxResults, ApiAsyncCallback callback, object state)
         {
             string uriTemplate = "/stoplimitorderhistory?TradingAccountId={tradingAccountId}&MaxResults={maxResults}";
-            _client.BeginRequest(callback, state, "order", uriTemplate , "GET",
+            _client.BeginRequest(RequestMethod.GET, "order", uriTemplate , 
             new Dictionary<string, object>
             {
                 { "tradingAccountId", tradingAccountId}, 
                 { "maxResults", maxResults}
-            }, TimeSpan.FromMilliseconds(0), "default");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,2 ,callback, state);
         }
 
-        public ListStopLimitOrderHistoryResponseDTO EndListStopLimitOrderHistory(ApiAsyncResult<ListStopLimitOrderHistoryResponseDTO> asyncResult)
+        public ListStopLimitOrderHistoryResponseDTO EndListStopLimitOrderHistory(ReliableAsyncResult asyncResult)
         {
-            return _client.EndRequest(asyncResult);
+            return _client.EndRequest<ListStopLimitOrderHistoryResponseDTO>(asyncResult);
         }
 
 
@@ -1294,11 +1269,11 @@ public string AppKey { get; set; }
         public virtual GetOrderResponseDTO GetOrder(string orderId)
         {
             string uriTemplate = "/{orderId}";
-            return _client.Request<GetOrderResponseDTO>("order", uriTemplate , "GET",
+            return _client.Request<GetOrderResponseDTO>(RequestMethod.GET,"order", uriTemplate ,
             new Dictionary<string, object>
             {
                 { "orderId", orderId}
-            }, TimeSpan.FromMilliseconds(0), "default");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,0 );
         }
 
 
@@ -1308,19 +1283,19 @@ public string AppKey { get; set; }
         /// <param name="orderId">The requested order ID.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginGetOrder(string orderId, ApiAsyncCallback<GetOrderResponseDTO> callback, object state)
+        public virtual void BeginGetOrder(string orderId, ApiAsyncCallback callback, object state)
         {
             string uriTemplate = "/{orderId}";
-            _client.BeginRequest(callback, state, "order", uriTemplate , "GET",
+            _client.BeginRequest(RequestMethod.GET, "order", uriTemplate , 
             new Dictionary<string, object>
             {
                 { "orderId", orderId}
-            }, TimeSpan.FromMilliseconds(0), "default");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,2 ,callback, state);
         }
 
-        public GetOrderResponseDTO EndGetOrder(ApiAsyncResult<GetOrderResponseDTO> asyncResult)
+        public GetOrderResponseDTO EndGetOrder(ReliableAsyncResult asyncResult)
         {
-            return _client.EndRequest(asyncResult);
+            return _client.EndRequest<GetOrderResponseDTO>(asyncResult);
         }
 
 
@@ -1336,11 +1311,11 @@ public string AppKey { get; set; }
         public virtual ApiTradeOrderResponseDTO Trade(NewTradeOrderRequestDTO trade)
         {
             string uriTemplate = "/newtradeorder";
-            return _client.Request<ApiTradeOrderResponseDTO>("order", uriTemplate , "POST",
+            return _client.Request<ApiTradeOrderResponseDTO>(RequestMethod.POST,"order", uriTemplate ,
             new Dictionary<string, object>
             {
                 { "trade", trade}
-            }, TimeSpan.FromMilliseconds(0), "trading");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,0 );
         }
 
 
@@ -1350,19 +1325,19 @@ public string AppKey { get; set; }
         /// <param name="trade">The trade request.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginTrade(NewTradeOrderRequestDTO trade, ApiAsyncCallback<ApiTradeOrderResponseDTO> callback, object state)
+        public virtual void BeginTrade(NewTradeOrderRequestDTO trade, ApiAsyncCallback callback, object state)
         {
             string uriTemplate = "/newtradeorder";
-            _client.BeginRequest(callback, state, "order", uriTemplate , "POST",
+            _client.BeginRequest(RequestMethod.POST, "order", uriTemplate , 
             new Dictionary<string, object>
             {
                 { "trade", trade}
-            }, TimeSpan.FromMilliseconds(0), "trading");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,2 ,callback, state);
         }
 
-        public ApiTradeOrderResponseDTO EndTrade(ApiAsyncResult<ApiTradeOrderResponseDTO> asyncResult)
+        public ApiTradeOrderResponseDTO EndTrade(ReliableAsyncResult asyncResult)
         {
-            return _client.EndRequest(asyncResult);
+            return _client.EndRequest<ApiTradeOrderResponseDTO>(asyncResult);
         }
 
 
@@ -1378,11 +1353,11 @@ public string AppKey { get; set; }
         public virtual ApiTradeOrderResponseDTO UpdateTrade(UpdateTradeOrderRequestDTO update)
         {
             string uriTemplate = "/updatetradeorder";
-            return _client.Request<ApiTradeOrderResponseDTO>("order", uriTemplate , "POST",
+            return _client.Request<ApiTradeOrderResponseDTO>(RequestMethod.POST,"order", uriTemplate ,
             new Dictionary<string, object>
             {
                 { "update", update}
-            }, TimeSpan.FromMilliseconds(0), "trading");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,0 );
         }
 
 
@@ -1392,19 +1367,19 @@ public string AppKey { get; set; }
         /// <param name="update">The update trade request.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginUpdateTrade(UpdateTradeOrderRequestDTO update, ApiAsyncCallback<ApiTradeOrderResponseDTO> callback, object state)
+        public virtual void BeginUpdateTrade(UpdateTradeOrderRequestDTO update, ApiAsyncCallback callback, object state)
         {
             string uriTemplate = "/updatetradeorder";
-            _client.BeginRequest(callback, state, "order", uriTemplate , "POST",
+            _client.BeginRequest(RequestMethod.POST, "order", uriTemplate , 
             new Dictionary<string, object>
             {
                 { "update", update}
-            }, TimeSpan.FromMilliseconds(0), "trading");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,2 ,callback, state);
         }
 
-        public ApiTradeOrderResponseDTO EndUpdateTrade(ApiAsyncResult<ApiTradeOrderResponseDTO> asyncResult)
+        public ApiTradeOrderResponseDTO EndUpdateTrade(ReliableAsyncResult asyncResult)
         {
-            return _client.EndRequest(asyncResult);
+            return _client.EndRequest<ApiTradeOrderResponseDTO>(asyncResult);
         }
 
 
@@ -1425,11 +1400,11 @@ public string AppKey { get; set; }
         public virtual AccountInformationResponseDTO GetClientAndTradingAccount()
         {
             string uriTemplate = "/ClientAndTradingAccount";
-            return _client.Request<AccountInformationResponseDTO>("useraccount", uriTemplate , "GET",
+            return _client.Request<AccountInformationResponseDTO>(RequestMethod.GET,"useraccount", uriTemplate ,
             new Dictionary<string, object>
             {
 
-            }, TimeSpan.FromMilliseconds(0), "data");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,0 );
         }
 
 
@@ -1438,19 +1413,19 @@ public string AppKey { get; set; }
         /// </summary>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginGetClientAndTradingAccount( ApiAsyncCallback<AccountInformationResponseDTO> callback, object state)
+        public virtual void BeginGetClientAndTradingAccount( ApiAsyncCallback callback, object state)
         {
             string uriTemplate = "/ClientAndTradingAccount";
-            _client.BeginRequest(callback, state, "useraccount", uriTemplate , "GET",
+            _client.BeginRequest(RequestMethod.GET, "useraccount", uriTemplate , 
             new Dictionary<string, object>
             {
 
-            }, TimeSpan.FromMilliseconds(0), "data");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,2 ,callback, state);
         }
 
-        public AccountInformationResponseDTO EndGetClientAndTradingAccount(ApiAsyncResult<AccountInformationResponseDTO> asyncResult)
+        public AccountInformationResponseDTO EndGetClientAndTradingAccount(ReliableAsyncResult asyncResult)
         {
-            return _client.EndRequest(asyncResult);
+            return _client.EndRequest<AccountInformationResponseDTO>(asyncResult);
         }
 
 
@@ -1466,11 +1441,11 @@ public string AppKey { get; set; }
         public virtual ApiSaveAccountInformationResponseDTO SaveAccountInformation(ApiSaveAccountInformationRequestDTO saveAccountInformationRequest)
         {
             string uriTemplate = "/Save";
-            return _client.Request<ApiSaveAccountInformationResponseDTO>("useraccount", uriTemplate , "POST",
+            return _client.Request<ApiSaveAccountInformationResponseDTO>(RequestMethod.POST,"useraccount", uriTemplate ,
             new Dictionary<string, object>
             {
                 { "saveAccountInformationRequest", saveAccountInformationRequest}
-            }, TimeSpan.FromMilliseconds(0), "data");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,0 );
         }
 
 
@@ -1480,19 +1455,19 @@ public string AppKey { get; set; }
         /// <param name="saveAccountInformationRequest">Saves the users account information.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginSaveAccountInformation(ApiSaveAccountInformationRequestDTO saveAccountInformationRequest, ApiAsyncCallback<ApiSaveAccountInformationResponseDTO> callback, object state)
+        public virtual void BeginSaveAccountInformation(ApiSaveAccountInformationRequestDTO saveAccountInformationRequest, ApiAsyncCallback callback, object state)
         {
             string uriTemplate = "/Save";
-            _client.BeginRequest(callback, state, "useraccount", uriTemplate , "POST",
+            _client.BeginRequest(RequestMethod.POST, "useraccount", uriTemplate , 
             new Dictionary<string, object>
             {
                 { "saveAccountInformationRequest", saveAccountInformationRequest}
-            }, TimeSpan.FromMilliseconds(0), "data");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,2 ,callback, state);
         }
 
-        public ApiSaveAccountInformationResponseDTO EndSaveAccountInformation(ApiAsyncResult<ApiSaveAccountInformationResponseDTO> asyncResult)
+        public ApiSaveAccountInformationResponseDTO EndSaveAccountInformation(ReliableAsyncResult asyncResult)
         {
-            return _client.EndRequest(asyncResult);
+            return _client.EndRequest<ApiSaveAccountInformationResponseDTO>(asyncResult);
         }
 
 
@@ -1515,12 +1490,12 @@ public string AppKey { get; set; }
         public virtual ApiLookupResponseDTO GetSystemLookup(string lookupEntityName, int cultureId)
         {
             string uriTemplate = "/lookup?lookupEntityName={lookupEntityName}&cultureId={cultureId}";
-            return _client.Request<ApiLookupResponseDTO>("message", uriTemplate , "GET",
+            return _client.Request<ApiLookupResponseDTO>(RequestMethod.GET,"message", uriTemplate ,
             new Dictionary<string, object>
             {
                 { "lookupEntityName", lookupEntityName}, 
                 { "cultureId", cultureId}
-            }, TimeSpan.FromMilliseconds(3600000), "default");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(3600000),30000,0 );
         }
 
 
@@ -1531,20 +1506,20 @@ public string AppKey { get; set; }
         /// <param name="cultureId">The cultureId used to override the translated text description. (Optional)</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginGetSystemLookup(string lookupEntityName, int cultureId, ApiAsyncCallback<ApiLookupResponseDTO> callback, object state)
+        public virtual void BeginGetSystemLookup(string lookupEntityName, int cultureId, ApiAsyncCallback callback, object state)
         {
             string uriTemplate = "/lookup?lookupEntityName={lookupEntityName}&cultureId={cultureId}";
-            _client.BeginRequest(callback, state, "message", uriTemplate , "GET",
+            _client.BeginRequest(RequestMethod.GET, "message", uriTemplate , 
             new Dictionary<string, object>
             {
                 { "lookupEntityName", lookupEntityName}, 
                 { "cultureId", cultureId}
-            }, TimeSpan.FromMilliseconds(3600000), "default");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(3600000), 30000,2 ,callback, state);
         }
 
-        public ApiLookupResponseDTO EndGetSystemLookup(ApiAsyncResult<ApiLookupResponseDTO> asyncResult)
+        public ApiLookupResponseDTO EndGetSystemLookup(ReliableAsyncResult asyncResult)
         {
-            return _client.EndRequest(asyncResult);
+            return _client.EndRequest<ApiLookupResponseDTO>(asyncResult);
         }
 
 
@@ -1562,13 +1537,13 @@ public string AppKey { get; set; }
         public virtual ApiClientApplicationMessageTranslationResponseDTO GetClientApplicationMessageTranslation(int clientApplicationId, int cultureId, int accountOperatorId)
         {
             string uriTemplate = "/translation?clientApplicationId={clientApplicationId}&cultureId={cultureId}&accountOperatorId={accountOperatorId}";
-            return _client.Request<ApiClientApplicationMessageTranslationResponseDTO>("message", uriTemplate , "GET",
+            return _client.Request<ApiClientApplicationMessageTranslationResponseDTO>(RequestMethod.GET,"message", uriTemplate ,
             new Dictionary<string, object>
             {
                 { "clientApplicationId", clientApplicationId}, 
                 { "cultureId", cultureId}, 
                 { "accountOperatorId", accountOperatorId}
-            }, TimeSpan.FromMilliseconds(3600000), "default");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(3600000),30000,0 );
         }
 
 
@@ -1580,21 +1555,21 @@ public string AppKey { get; set; }
         /// <param name="accountOperatorId">Account operator identifier. (Optional)</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginGetClientApplicationMessageTranslation(int clientApplicationId, int cultureId, int accountOperatorId, ApiAsyncCallback<ApiClientApplicationMessageTranslationResponseDTO> callback, object state)
+        public virtual void BeginGetClientApplicationMessageTranslation(int clientApplicationId, int cultureId, int accountOperatorId, ApiAsyncCallback callback, object state)
         {
             string uriTemplate = "/translation?clientApplicationId={clientApplicationId}&cultureId={cultureId}&accountOperatorId={accountOperatorId}";
-            _client.BeginRequest(callback, state, "message", uriTemplate , "GET",
+            _client.BeginRequest(RequestMethod.GET, "message", uriTemplate , 
             new Dictionary<string, object>
             {
                 { "clientApplicationId", clientApplicationId}, 
                 { "cultureId", cultureId}, 
                 { "accountOperatorId", accountOperatorId}
-            }, TimeSpan.FromMilliseconds(3600000), "default");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(3600000), 30000,2 ,callback, state);
         }
 
-        public ApiClientApplicationMessageTranslationResponseDTO EndGetClientApplicationMessageTranslation(ApiAsyncResult<ApiClientApplicationMessageTranslationResponseDTO> asyncResult)
+        public ApiClientApplicationMessageTranslationResponseDTO EndGetClientApplicationMessageTranslation(ReliableAsyncResult asyncResult)
         {
-            return _client.EndRequest(asyncResult);
+            return _client.EndRequest<ApiClientApplicationMessageTranslationResponseDTO>(asyncResult);
         }
 
 
@@ -1615,11 +1590,11 @@ public string AppKey { get; set; }
         public virtual ListWatchlistResponseDTO GetWatchlists()
         {
             string uriTemplate = "/";
-            return _client.Request<ListWatchlistResponseDTO>("watchlists", uriTemplate , "GET",
+            return _client.Request<ListWatchlistResponseDTO>(RequestMethod.GET,"watchlists", uriTemplate ,
             new Dictionary<string, object>
             {
 
-            }, TimeSpan.FromMilliseconds(0), "data");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,0 );
         }
 
 
@@ -1628,19 +1603,19 @@ public string AppKey { get; set; }
         /// </summary>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginGetWatchlists( ApiAsyncCallback<ListWatchlistResponseDTO> callback, object state)
+        public virtual void BeginGetWatchlists( ApiAsyncCallback callback, object state)
         {
             string uriTemplate = "/";
-            _client.BeginRequest(callback, state, "watchlists", uriTemplate , "GET",
+            _client.BeginRequest(RequestMethod.GET, "watchlists", uriTemplate , 
             new Dictionary<string, object>
             {
 
-            }, TimeSpan.FromMilliseconds(0), "data");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,2 ,callback, state);
         }
 
-        public ListWatchlistResponseDTO EndGetWatchlists(ApiAsyncResult<ListWatchlistResponseDTO> asyncResult)
+        public ListWatchlistResponseDTO EndGetWatchlists(ReliableAsyncResult asyncResult)
         {
-            return _client.EndRequest(asyncResult);
+            return _client.EndRequest<ListWatchlistResponseDTO>(asyncResult);
         }
 
 
@@ -1656,11 +1631,11 @@ public string AppKey { get; set; }
         public virtual ApiSaveWatchlistResponseDTO SaveWatchlist(ApiSaveWatchlistRequestDTO apiSaveWatchlistRequestDto)
         {
             string uriTemplate = "/Save";
-            return _client.Request<ApiSaveWatchlistResponseDTO>("watchlist", uriTemplate , "POST",
+            return _client.Request<ApiSaveWatchlistResponseDTO>(RequestMethod.POST,"watchlist", uriTemplate ,
             new Dictionary<string, object>
             {
                 { "apiSaveWatchlistRequestDto", apiSaveWatchlistRequestDto}
-            }, TimeSpan.FromMilliseconds(0), "data");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,0 );
         }
 
 
@@ -1670,19 +1645,19 @@ public string AppKey { get; set; }
         /// <param name="apiSaveWatchlistRequestDto">The watchlist to save.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginSaveWatchlist(ApiSaveWatchlistRequestDTO apiSaveWatchlistRequestDto, ApiAsyncCallback<ApiSaveWatchlistResponseDTO> callback, object state)
+        public virtual void BeginSaveWatchlist(ApiSaveWatchlistRequestDTO apiSaveWatchlistRequestDto, ApiAsyncCallback callback, object state)
         {
             string uriTemplate = "/Save";
-            _client.BeginRequest(callback, state, "watchlist", uriTemplate , "POST",
+            _client.BeginRequest(RequestMethod.POST, "watchlist", uriTemplate , 
             new Dictionary<string, object>
             {
                 { "apiSaveWatchlistRequestDto", apiSaveWatchlistRequestDto}
-            }, TimeSpan.FromMilliseconds(0), "data");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,2 ,callback, state);
         }
 
-        public ApiSaveWatchlistResponseDTO EndSaveWatchlist(ApiAsyncResult<ApiSaveWatchlistResponseDTO> asyncResult)
+        public ApiSaveWatchlistResponseDTO EndSaveWatchlist(ReliableAsyncResult asyncResult)
         {
-            return _client.EndRequest(asyncResult);
+            return _client.EndRequest<ApiSaveWatchlistResponseDTO>(asyncResult);
         }
 
 
@@ -1698,11 +1673,11 @@ public string AppKey { get; set; }
         public virtual ApiDeleteWatchlistResponseDTO DeleteWatchlist(ApiDeleteWatchlistRequestDTO deleteWatchlistRequestDto)
         {
             string uriTemplate = "/delete";
-            return _client.Request<ApiDeleteWatchlistResponseDTO>("watchlist", uriTemplate , "POST",
+            return _client.Request<ApiDeleteWatchlistResponseDTO>(RequestMethod.POST,"watchlist", uriTemplate ,
             new Dictionary<string, object>
             {
                 { "deleteWatchlistRequestDto", deleteWatchlistRequestDto}
-            }, TimeSpan.FromMilliseconds(0), "data");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,0 );
         }
 
 
@@ -1712,19 +1687,19 @@ public string AppKey { get; set; }
         /// <param name="deleteWatchlistRequestDto">The watchlist to delete.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginDeleteWatchlist(ApiDeleteWatchlistRequestDTO deleteWatchlistRequestDto, ApiAsyncCallback<ApiDeleteWatchlistResponseDTO> callback, object state)
+        public virtual void BeginDeleteWatchlist(ApiDeleteWatchlistRequestDTO deleteWatchlistRequestDto, ApiAsyncCallback callback, object state)
         {
             string uriTemplate = "/delete";
-            _client.BeginRequest(callback, state, "watchlist", uriTemplate , "POST",
+            _client.BeginRequest(RequestMethod.POST, "watchlist", uriTemplate , 
             new Dictionary<string, object>
             {
                 { "deleteWatchlistRequestDto", deleteWatchlistRequestDto}
-            }, TimeSpan.FromMilliseconds(0), "data");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,2 ,callback, state);
         }
 
-        public ApiDeleteWatchlistResponseDTO EndDeleteWatchlist(ApiAsyncResult<ApiDeleteWatchlistResponseDTO> asyncResult)
+        public ApiDeleteWatchlistResponseDTO EndDeleteWatchlist(ReliableAsyncResult asyncResult)
         {
-            return _client.EndRequest(asyncResult);
+            return _client.EndRequest<ApiDeleteWatchlistResponseDTO>(asyncResult);
         }
 
 
@@ -1746,11 +1721,11 @@ public string AppKey { get; set; }
         public virtual ApiErrorResponseDTO GenerateException(int errorCode)
         {
             string uriTemplate = "?errorCode={errorCode}";
-            return _client.Request<ApiErrorResponseDTO>("errors", uriTemplate , "GET",
+            return _client.Request<ApiErrorResponseDTO>(RequestMethod.GET,"errors", uriTemplate ,
             new Dictionary<string, object>
             {
                 { "errorCode", errorCode}
-            }, TimeSpan.FromMilliseconds(0), "data");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,0 );
         }
 
 
@@ -1760,19 +1735,19 @@ public string AppKey { get; set; }
         /// <param name="errorCode">The error code for the condition encountered.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginGenerateException(int errorCode, ApiAsyncCallback<ApiErrorResponseDTO> callback, object state)
+        public virtual void BeginGenerateException(int errorCode, ApiAsyncCallback callback, object state)
         {
             string uriTemplate = "?errorCode={errorCode}";
-            _client.BeginRequest(callback, state, "errors", uriTemplate , "GET",
+            _client.BeginRequest(RequestMethod.GET, "errors", uriTemplate , 
             new Dictionary<string, object>
             {
                 { "errorCode", errorCode}
-            }, TimeSpan.FromMilliseconds(0), "data");
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,2 ,callback, state);
         }
 
-        public ApiErrorResponseDTO EndGenerateException(ApiAsyncResult<ApiErrorResponseDTO> asyncResult)
+        public ApiErrorResponseDTO EndGenerateException(ReliableAsyncResult asyncResult)
         {
-            return _client.EndRequest(asyncResult);
+            return _client.EndRequest<ApiErrorResponseDTO>(asyncResult);
         }
 
 

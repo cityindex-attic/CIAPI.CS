@@ -6,14 +6,14 @@ using CIAPI.Rpc;
 using CIAPI.Streaming;
 using NUnit.Framework;
 using StreamingClient;
-using IStreamingClient = CIAPI.Streaming.IStreamingClient;
+
 
 namespace CIAPI.IntegrationTests.Rpc
 {
     [TestFixture]
     public class TradesAndOrdersFixture : RpcFixtureBase
     {
-        private IStreamingClient _streamingClient;
+        private CIAPI.Streaming.IStreamingClient _streamingClient;
         private int _CFDmarketId;
         private Client _rpcClient;
         private AccountInformationResponseDTO _accounts;
@@ -22,7 +22,7 @@ namespace CIAPI.IntegrationTests.Rpc
         public void SetupFixture()
         {
             _rpcClient = BuildRpcClient();
-            _streamingClient = StreamingClientFactory.CreateStreamingClient(Settings.StreamingUri, Settings.RpcUserName, _rpcClient.Session);
+            _streamingClient = _rpcClient.CreateStreamingClient();
             _CFDmarketId = GetAvailableCFDMarkets(_rpcClient)[0].MarketId;
             _accounts = _rpcClient.AccountInformation.GetClientAndTradingAccount();
         }

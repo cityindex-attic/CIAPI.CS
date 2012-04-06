@@ -5,8 +5,9 @@ using System.Threading;
 using CIAPI.DTO;
 using CIAPI.IntegrationTests.Streaming;
 using CIAPI.Streaming;
-using Salient.JsonClient;
+
 using NUnit.Framework;
+using Salient.ReliableHttpClient;
 using Client = CIAPI.Rpc.Client;
 
 namespace CIAPI.IntegrationTests.Rpc
@@ -31,7 +32,7 @@ namespace CIAPI.IntegrationTests.Rpc
         public void CanChangePassword()
         {
             const string NEWPASSWORD = "bingo72652";
-            var rpcClient = new Client(Settings.RpcUri, AppKey);
+            var rpcClient = new Client(Settings.RpcUri,Settings.StreamingUri, AppKey);
             
             //Login with existing credentials
             rpcClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);
@@ -48,7 +49,7 @@ namespace CIAPI.IntegrationTests.Rpc
             rpcClient.LogOut();
 
             //Make sure that login existing password fails 
-            Assert.Throws<ApiException>(() => rpcClient.LogIn(Settings.RpcUserName, Settings.RpcUserName));
+            Assert.Throws<ReliableHttpException>(() => rpcClient.LogIn(Settings.RpcUserName, Settings.RpcUserName));
 
             //Login with changed password and change back
             rpcClient.LogIn(Settings.RpcUserName, NEWPASSWORD);

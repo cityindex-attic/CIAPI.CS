@@ -1,5 +1,5 @@
 ﻿using CIAPI.IntegrationTests.Streaming;
-using Salient.JsonClient;
+
 using Salient.ReflectiveLoggingAdapter;
 using NUnit.Framework;
 

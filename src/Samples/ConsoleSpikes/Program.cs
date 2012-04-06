@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading;
 using CIAPI;
 using CIAPI.Tests;
-using Salient.JsonClient;
+using Salient.ReliableHttpClient;
 using CIAPI.DTO;
 
 
@@ -21,9 +21,9 @@ namespace ConsoleSpikes
         {
      
 
-            RawJsonClient.SimpleRequest();
+            //RawJsonClient.SimpleRequest();
 
-            RawJsonClient.ParameterizedRequest();
+            //RawJsonClient.ParameterizedRequest();
 
             GetNewsSynchronously();
 
@@ -38,10 +38,10 @@ namespace ConsoleSpikes
 
         private static void GetNewsAsynchronously()
         {
-            _ctx = new CIAPI.Rpc.Client(new Uri(TestConfig.RpcUrl), AppKey);
+            _ctx = new CIAPI.Rpc.Client(new Uri(StaticTestConfig.RpcUrl), new Uri(StaticTestConfig.StreamingUrl), AppKey);
 
             _gate = new ManualResetEvent(false);
-            BeginLogIn(TestConfig.ApiUsername, TestConfig.ApiPassword);
+            BeginLogIn(StaticTestConfig.ApiUsername, StaticTestConfig.ApiPassword);
 
             _gate.WaitOne();
 
@@ -56,7 +56,7 @@ namespace ConsoleSpikes
             _ctx.BeginLogIn(userName, password, EndLoggedIn, null);
         }
 
-        static void EndLoggedIn(ApiAsyncResult<ApiLogOnResponseDTO> result)
+        static void EndLoggedIn(ReliableAsyncResult result)
         {
             _ctx.EndLogIn(result);
             Console.WriteLine("\r\nLogged in.\r\n");
@@ -69,7 +69,7 @@ namespace ConsoleSpikes
             _ctx.News.BeginListNewsHeadlinesWithSource("dj", category, maxResults, EndListNewsHeadlines, null);
         }
 
-        static void EndListNewsHeadlines(ApiAsyncResult<ListNewsHeadlinesResponseDTO> result)
+        static void EndListNewsHeadlines(ReliableAsyncResult result)
         {
             var response = _ctx.News.EndListNewsHeadlinesWithSource(result);
 
@@ -87,7 +87,7 @@ namespace ConsoleSpikes
             _ctx.BeginLogOut(EndLoggedOut, null);
         }
 
-        static void EndLoggedOut(ApiAsyncResult<ApiLogOffResponseDTO> result)
+        static void EndLoggedOut(ReliableAsyncResult result)
         {
             _ctx.EndLogOut(result);
             Console.WriteLine("\r\nLogged out.\r\n");
@@ -108,9 +108,9 @@ namespace ConsoleSpikes
         {
             try
             {
-                var ctx = new CIAPI.Rpc.Client(new Uri(TestConfig.RpcUrl), AppKey);
+                var ctx = new CIAPI.Rpc.Client(new Uri(StaticTestConfig.RpcUrl), new Uri(StaticTestConfig.StreamingUrl), AppKey);
 
-                ctx.LogIn(TestConfig.ApiUsername, TestConfig.ApiPassword);
+                ctx.LogIn(StaticTestConfig.ApiUsername, StaticTestConfig.ApiPassword);
 
                 var headlinesResponse = ctx.News.ListNewsHeadlinesWithSource("dj","UK", 10);
 

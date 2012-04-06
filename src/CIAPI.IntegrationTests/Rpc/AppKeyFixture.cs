@@ -13,7 +13,7 @@ namespace CIAPI.IntegrationTests.Rpc
         {
             // look at the log to verify - need to expose interals and provide a means to examine the cache to verify programmatically
 
-            var rpcClient = new Client(Settings.RpcUri, "my-test-appkey");
+            var rpcClient = new Client(Settings.RpcUri,Settings.StreamingUri, "my-test-appkey");
             rpcClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);
 
             rpcClient.LogOut();

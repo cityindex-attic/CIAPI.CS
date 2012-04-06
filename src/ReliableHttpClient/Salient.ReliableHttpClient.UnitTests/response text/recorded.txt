@@ -1,0 +1,26 @@
+﻿[{
+    "UriTemplate": "uriTemplate",
+    "Target": "target",
+    "AllowedRetries": 0,
+    "RequestBody": "foo=bar",
+    "Method": 4,
+    "Timeout": 3000,
+    "CacheDuration": "00:00:00",
+    "RequestContentType": 1,
+    "ResponseContentType": 3,
+    "UserAgent": "salient.ReliableHttpClient",
+    "Uri": "http://posttestserver.com/post.php?dump",
+    "CacheExpiration": "\/Date(1332139644387+0000)\/",
+    "Id": "312284aa-8170-47e8-b999-9aa4c7d6d94d",
+    "AttemptedRetries": 0,
+    "Issued": "\/Date(1332139642708+0000)\/",
+    "Completed": "\/Date(1332139644362+0000)\/",
+    "Index": 1,
+    "State": 5,
+    "ResponseText": "\n\nTime: Sun, 18 Mar 12 23:47:23 -0700\nSource ip: 68.2.44.139\n\nHeaders (Some may be inserted by server)\nUNIQUE_ID = T2bWe63sqvkAAMwtIbsAAAAE\nCONTENT_TYPE = application/x-www-form-urlencoded\nHTTP_ACCEPT = text/plain\nHTTP_USER_AGENT = salient.ReliableHttpClient\nHTTP_TEST_HEADER = VALUE\nHTTP_HOST = posttestserver.com\nCONTENT_LENGTH = 7\nHTTP_EXPECT = 100-continue\nHTTP_ACCEPT_ENCODING = gzip, deflate\nHTTP_CONNECTION = close\nREMOTE_ADDR = 68.2.44.139\nREMOTE_PORT = 3228\nGATEWAY_INTERFACE = CGI/1.1\nREQUEST_METHOD = POST\nQUERY_STRING = dump\nREQUEST_URI = /post.php?dump\nREQUEST_TIME = 1332139643\n\nPost Params:\nkey: 'foo' value: 'bar'\nEmpty post body.\n",
+    "Headers": {
+        "TEST_HEADER": "VALUE"
+    },
+    "Parameters": {},
+    "Exception": null
+}]

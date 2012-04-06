@@ -7,8 +7,8 @@ using CIAPI.Rpc;
 using CIAPI.Streaming;
 using CIAPI.Tests;
 using NUnit.Framework;
-using Salient.JsonClient;
-using Salient.JsonClient.Tests;
+
+
 using Salient.ReflectiveLoggingAdapter;
 
 namespace LoggingTests
@@ -104,12 +104,12 @@ namespace LoggingTests
             // maybe just a bad uri?
 
 
-            var RequestFactoryLogger = loggers["Salient.JsonClient.RequestFactory"];
-            var ThrottledRequestQueueLogger = loggers["Salient.JsonClient.ThrottledRequestQueue"];
-            var RequestControllerLogger = loggers["Salient.JsonClient.RequestController"];
-            var RequestCacheLogger = loggers["Salient.JsonClient.RequestCache"];
+            var RequestFactoryLogger = loggers[".RequestFactory"];
+            var ThrottledRequestQueueLogger = loggers[".ThrottledRequestQueue"];
+            var RequestControllerLogger = loggers[".RequestController"];
+            var RequestCacheLogger = loggers[".RequestCache"];
             var ClientLogger = loggers["CIAPI.Rpc.Client"];
-            var JsonClientLogger = loggers["Salient.JsonClient.Client"];
+            var JsonClientLogger = loggers[".Client"];
 
 
 

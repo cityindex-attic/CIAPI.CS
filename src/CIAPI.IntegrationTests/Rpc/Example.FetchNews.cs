@@ -3,6 +3,7 @@ using System.Threading;
 using CIAPI;
 using CIAPI.DTO;
 using CIAPI.Streaming;
+using Salient.ReliableHttpClient.Serialization.Newtonsoft;
 
 namespace ConsoleSpikes
 {
@@ -14,9 +15,11 @@ namespace ConsoleSpikes
         private const string PASSWORD = "password";
         private const string AppKey = "testkey-for-ConsoleSpikes";
 
+        
+
         public void FetchNews_sync()
         {
-            var ctx = new CIAPI.Rpc.Client(RPC_URI, AppKey);
+            var ctx = new CIAPI.Rpc.Client(RPC_URI, STREAMING_URI,AppKey);
             ctx.LogIn(USERNAME, PASSWORD);
 
             ListNewsHeadlinesResponseDTO news = ctx.News.ListNewsHeadlinesWithSource("dj", "UK", 10);
@@ -28,7 +31,7 @@ namespace ConsoleSpikes
 
         public void FetchNews_async()
         {
-            var ctx = new CIAPI.Rpc.Client(RPC_URI, AppKey);
+            var ctx = new CIAPI.Rpc.Client(RPC_URI,STREAMING_URI, AppKey);
             var gate = new AutoResetEvent(false);
             ctx.BeginLogIn(USERNAME, PASSWORD, a =>
             {
@@ -55,12 +58,12 @@ namespace ConsoleSpikes
         public void SubscribeToNewsHeadlineStream()
         {
             //First we need a valid session, obtained from the Rpc client
-            var ctx = new CIAPI.Rpc.Client(RPC_URI, AppKey);
+            var ctx = new CIAPI.Rpc.Client(RPC_URI, STREAMING_URI,AppKey);
             ctx.LogIn(USERNAME, PASSWORD);
 
             //Next we create a connection to the streaming api, using the authenticated session
             //You application should only ever have one of these
-            var streamingClient = StreamingClientFactory.CreateStreamingClient(STREAMING_URI, USERNAME, ctx.Session);
+            var streamingClient = ctx.CreateStreamingClient();
             
 
             //And instantiate a listener for news headlines on the appropriate topic

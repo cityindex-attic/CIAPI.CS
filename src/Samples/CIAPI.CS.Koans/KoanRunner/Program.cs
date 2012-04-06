@@ -2,7 +2,10 @@
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using CIAPI.Streaming;
+using CIAPI.Testing;
 using Salient.ReflectiveLoggingAdapter;
+using Salient.ReliableHttpClient.Serialization.Newtonsoft;
 
 namespace CIAPI.CS.Koans.KoanRunner
 {
@@ -11,6 +14,11 @@ namespace CIAPI.CS.Koans.KoanRunner
         private static readonly ILog _logger = LogManager.GetLogger(typeof(Program));
         static void Main(string[] args)
         {
+            LogManager.CreateInnerLogger = (logName, logLevel, showLevel, showDateTime, showLogName, dateTimeFormat)
+                => new SimpleDebugAppender(logName, logLevel, showLevel, showDateTime, showLogName, dateTimeFormat);
+
+            
+
             PrepareConsole();
             object koanCategory = null;
             try

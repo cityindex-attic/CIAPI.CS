@@ -5,10 +5,13 @@ using System.Windows;
 using CIAPI;
 using CIAPI.DTO;
 using CIAPI.Streaming;
-using Salient.JsonClient;
+using CIAPI.Testing;
+using CIAPI.Tests;
 using Microsoft.Phone.Controls;
-using Salient.ReflectiveLoggingAdapter;
+using Salient.ReliableHttpClient;
+using Salient.ReliableHttpClient.Serialization.Newtonsoft;
 using StreamingClient;
+using Salient.ReflectiveLoggingAdapter;
 using Client = CIAPI.Rpc.Client;
 using IStreamingClient = CIAPI.Streaming.IStreamingClient;
 
@@ -16,15 +19,15 @@ namespace EfficientStreamManagement
 {
     public partial class MainPage : PhoneApplicationPage
     {
-        //This is an IFX Markets Test account on live
-        //Use FlexITP at : https://trade.loginandtrade.com/tp/fx/
-        private const string USERNAME = "XX055187"; 
-        private const string PASSWORD = "password";
+        // disregard until further notice: This is an IFX Markets Test account (XX055187) on live
+        // disregard until further notice: Use FlexITP at : https://trade.loginandtrade.com/tp/fx/
+        private string USERNAME = StaticTestConfig.ApiUsername;
+        private string PASSWORD = StaticTestConfig.ApiPassword;
         private const string AppKey = "testkey-for-EfficientStreamManagement";
         private const int ACCOUNTOPERATORID = 3321;  //IFX Markets (test)
         private int[] PRICEMARKETIDS = new[]{ 400481136, 400481137, 400481138, 400481139, 400481140, 400481141, 400481142 }; //GBP/AUD, GBP/CAD, GBP/CHF, GBP/JPY, GBP/NZD, GBP/SGD, GBP/USD
-        private static readonly Uri RPC_URI = new Uri("https://ciapi.cityindex.com/tradingapi");
-        private static readonly Uri STREAMING_URI = new Uri("https://push.cityindex.com");
+        private static readonly Uri RPC_URI = new Uri(StaticTestConfig.RpcUrl);
+        private static readonly Uri STREAMING_URI = new Uri(StaticTestConfig.StreamingUrl);
 
         public static Client RpcClient;
         public static IStreamingClient StreamingClient;
@@ -50,13 +53,16 @@ namespace EfficientStreamManagement
         private void BuildClients()
         {
             Dispatcher.BeginInvoke(() => statusUpdatesListBox.Items.Add("creating rpc client"));
-            RpcClient = new Client(RPC_URI, AppKey);
+            RpcClient = new Client(RPC_URI,STREAMING_URI, AppKey);
             RpcClient.BeginLogIn(USERNAME, PASSWORD, InitializeStreamingClient, null);
         }
 
-        public void InitializeStreamingClient(ApiAsyncResult<ApiLogOnResponseDTO> ar)
+        public void InitializeStreamingClient(ReliableAsyncResult ar)
         {
             RpcClient.EndLogIn(ar);
+            // need to set up the serializer to be used by stream listeners
+            StreamingClientFactory.SetSerializer(new Serializer());
+
             StreamingClient = StreamingClientFactory.CreateStreamingClient(STREAMING_URI, RpcClient.UserName,
                                                                            RpcClient.Session);
             LogToScreen("rpc client logged in");
@@ -248,8 +254,8 @@ namespace EfficientStreamManagement
                                            }
                                        });
         }
-        
-        private void OnGetMarketInfoResponse(ApiAsyncResult<GetMarketInformationResponseDTO> asyncresult)
+
+        private void OnGetMarketInfoResponse(ReliableAsyncResult asyncresult)
         {
             var result = RpcClient.Market.EndGetMarketInformation(asyncresult);
             LogToScreen(string.Format("{0}->{1}", result.MarketInformation.MarketId, result.MarketInformation.Name));

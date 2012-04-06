@@ -33,7 +33,7 @@ using System;
 using System.IO;
 using System.Text;
 
-namespace Salient.JsonClient
+namespace StreamingClient.Lightstreamer
 {
 	public sealed class HttpUtility
 	{

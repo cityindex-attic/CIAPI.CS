@@ -5,7 +5,7 @@ using CIAPI.Rpc;
 using CIAPI.Streaming;
 using NUnit.Framework;
 using StreamingClient;
-using IStreamingClient = CIAPI.Streaming.IStreamingClient;
+
 
 namespace CIAPI.IntegrationTests.Streaming
 {
@@ -14,14 +14,14 @@ namespace CIAPI.IntegrationTests.Streaming
     {
 
         private Client _authenticatedClient;
-        private IStreamingClient _streamingClient;
+        private CIAPI.Streaming.IStreamingClient _streamingClient;
 
         [TestFixtureSetUp]
         public void SetupFixture()
         {
-            _authenticatedClient = new Client(Settings.RpcUri, AppKey);
+            _authenticatedClient = new Client(Settings.RpcUri, Settings.StreamingUri, AppKey);
             _authenticatedClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);
-            _streamingClient = StreamingClientFactory.CreateStreamingClient(Settings.StreamingUri, Settings.RpcUserName, _authenticatedClient.Session);
+            _streamingClient = _authenticatedClient.CreateStreamingClient();
         }
 
         [TestFixtureTearDown]

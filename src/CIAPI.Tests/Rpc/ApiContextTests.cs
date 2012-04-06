@@ -5,37 +5,39 @@ using System.Net;
 using System.Threading;
 using CIAPI.DTO;
 using CIAPI.Rpc;
-using Salient.JsonClient;
-using Salient.JsonClient.Tests;
+
+
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Salient.ReflectiveLoggingAdapter;
+using Salient.ReliableHttpClient;
+using Salient.ReliableHttpClient.Testing;
 using Client = CIAPI.Rpc.Client;
 
 namespace CIAPI.Tests.Rpc
 {
 
 
-    [TestFixture]
-    public class ExceptionHandling
-    {
-        [Test, Ignore, ExpectedException(typeof(ApiTimeoutException))]
-        public void ReproAbortedRequest()
-        {
-            TestRequestFactory factory = new TestRequestFactory();
-            var requestController = new RequestController(TimeSpan.FromSeconds(0), 2, factory, new ErrorResponseDTOJsonExceptionFactory(), new ThrottledRequestQueue(TimeSpan.FromSeconds(5), 30, 10, "data"), new ThrottledRequestQueue(TimeSpan.FromSeconds(3), 1, 3, "trading"));
+    //[TestFixture]
+    //public class ExceptionHandling
+    //{
+    //    //[Test, Ignore, ExpectedException(typeof(ApiTimeoutException))]
+    //    public void ReproAbortedRequest()
+    //    {
+    //        TestRequestFactory factory = new TestRequestFactory();
+    //        var requestController = new RequestController(TimeSpan.FromSeconds(0), 2, factory, new ErrorResponseDTOJsonExceptionFactory(), new ThrottledRequestQueue(TimeSpan.FromSeconds(5), 30, 10, "data"), new ThrottledRequestQueue(TimeSpan.FromSeconds(3), 1, 3, "trading"));
 
-            var ctx = new CIAPI.Rpc.Client(new Uri(TestConfig.RpcUrl), "mockAppKey", requestController);
-            ctx.UserName = TestConfig.ApiUsername;
-            ctx.Session = TestConfig.ApiTestSessionId;
+    //        var ctx = new CIAPI.Rpc.Client(new Uri(TestConfig.RpcUrl), "mockAppKey", requestController);
+    //        ctx.UserName = TestConfig.ApiUsername;
+    //        ctx.Session = TestConfig.ApiTestSessionId;
 
-            factory.CreateTestRequest("{}", TimeSpan.FromMinutes(1));
+    //        factory.CreateTestRequest("{}", TimeSpan.FromMinutes(1));
 
-            ctx.Market.GetMarketInformation("FOO");
+    //        ctx.Market.GetMarketInformation("FOO");
 
-        }
+    //    }
 
-    }
+    //}
     [TestFixture]
     public class ApiContextTests
     {
@@ -66,7 +68,7 @@ namespace CIAPI.Tests.Rpc
 
 
 
-        [Test, ExpectedException(typeof(ApiException), ExpectedMessage = "InvalidCredentials")]
+        [Test, ExpectedException(typeof(ReliableHttpException), ExpectedMessage = "InvalidCredentials")]
         public void CanRecognize200JsonException()
         {
 
@@ -101,7 +103,7 @@ namespace CIAPI.Tests.Rpc
                 ctx.LogIn("foo", "bar");
                 Assert.Fail("Expected exception");
             }
-            catch (ApiException ex)
+            catch (ReliableHttpException ex)
             {
                 Assert.AreEqual("InvalidCredentials", ex.Message, "FIXME: the API is just setting 401. it needs to send ErrorResponseDTO json as well.");
                 Assert.AreEqual("{\"HttpStatus\":0,\"ErrorMessage\":\"InvalidCredentials\",\"ErrorCode\":4010}", ex.ResponseText);
@@ -236,7 +238,7 @@ namespace CIAPI.Tests.Rpc
 
             ((TestRequestFactory)ctx.RequestController.RequestFactory).CreateTestRequest(LoggedIn, TimeSpan.FromSeconds(300));
 
-            Assert.Throws<ApiTimeoutException>(() => ctx.LogIn("foo", "bar"));
+            Assert.Throws<ReliableHttpException>(() => ctx.LogIn("foo", "bar"));
 
 
 
@@ -251,7 +253,7 @@ namespace CIAPI.Tests.Rpc
             var ctx = BuildClientAndSetupResponse("");
             ((TestRequestFactory)ctx.RequestController.RequestFactory).CreateTestRequest("", TimeSpan.FromMilliseconds(300), null, null, new WebException("(401) Unauthorized"));
 
-            Assert.Throws<ApiException>(() => ctx.LogIn("foo", "bar"));
+            Assert.Throws<ReliableHttpException>(() => ctx.LogIn("foo", "bar"));
         }
 
         #region Plumbing

@@ -1,0 +1,4 @@
+Sample app to display that saving several watchlists at once does not work. In
+general, it looks like the CIAPI.CS caches requests using the URI, but
+different POST requests with no parameter in the URL are treated as the same,
+so further requests to the same URL are lost.
