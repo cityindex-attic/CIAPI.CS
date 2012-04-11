@@ -27,7 +27,7 @@
   </ItemGroup>
 
  
-  <Target Name="Go" DependsOnTargets="UpdateVersion;Build;RunTests;Package">
+  <Target Name="Go" DependsOnTargets="UpdateVersion;Build;Package">
                                       
     <!-- CalculateMetrics  calculation of metrics disabled until replacement for Reflector can be integrated -->
   </Target>
