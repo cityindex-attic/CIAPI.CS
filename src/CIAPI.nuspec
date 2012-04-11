@@ -8,7 +8,6 @@
     <dependencies>
       <dependency id="Newtonsoft.Json" />
       <dependency id="Salient.ReflectiveLoggingAdapter" />
-      <dependency id="Salient.ReliableHttpClient" />
     </dependencies>
     <id>CIAPI</id>
     <title>CIAPI</title>
