@@ -23,7 +23,7 @@
 
   <ItemGroup>
     <Assemblies     Include="$(SrcDirectory)\CIAPI\bin\$(Configuration)\CIAPI.dll"/>
-    <TestAssemblies Include="$(SrcDirectory)\CIAPI.Tests\bin\$(Configuration)\CIAPI.Tests.dll"/>
+    <!--<TestAssemblies Include="$(SrcDirectory)\CIAPI.Tests\bin\$(Configuration)\CIAPI.Tests.dll"/>-->
   </ItemGroup>
 
  

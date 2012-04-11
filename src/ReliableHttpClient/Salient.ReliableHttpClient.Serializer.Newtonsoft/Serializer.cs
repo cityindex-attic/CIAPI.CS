@@ -25,7 +25,7 @@ namespace Salient.ReliableHttpClient.Serialization.Newtonsoft
             try
             {
                 string pattern = "{\\s*\"DateTime\":\\s*\"\\\\/Date\\((?<dt>\\d+)\\)\\\\/\",\\s*\"OffsetMinutes\":\\s*(?<offset>-?\\d+)\\s*}";
-                json = Regex.Replace(json, pattern, "\"\\/Date($1+0100)\\/\"");
+                json = Regex.Replace(json, pattern, "\"\\/Date($1+0000)\\/\"");
 
 
             }

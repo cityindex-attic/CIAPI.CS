@@ -10,6 +10,7 @@ namespace CIAPI.Tests
             get
             {
                 //https://ciapipreprod.cityindextest9.co.uk/TradingApi
+                // https://ciapiqat.cityindextest9.co.uk/TradingApi
                 return "https://ciapi.cityindex.com/tradingapi";
             }
         }
