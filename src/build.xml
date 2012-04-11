@@ -32,7 +32,7 @@
     <!-- CalculateMetrics  calculation of metrics disabled until replacement for Reflector can be integrated -->
   </Target>
   
-  <!-- Used to build the Dev branch - everything except packaging RunTests -->
+  <!-- Used to build the Dev branch - everything except packaging RunTests reports/*NUnitResults.xml -->
   
   <Target Name="GoDev" DependsOnTargets="UpdateVersion;Build">
   </Target>
