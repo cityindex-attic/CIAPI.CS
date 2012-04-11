@@ -1,7 +1,7 @@
 exports.schema =
 {
     "namespace": "CIAPI.DTO",
-    "version": "0.991.1.0",
+    "version": "0.1022.0.0",
     "properties": {
         "ApiStopLimitOrderHistoryDTO": {
             "id": "ApiStopLimitOrderHistoryDTO",
@@ -166,7 +166,7 @@ exports.schema =
                     "type": {
                         "$ref": "#.ApiStopLimitOrderDTO"
                     },
-                    "description": "Corresponding Oco Order (One Cancels the Other)."
+                    "description": "Corresponding OCO Order (One Cancels the Other)."
                 }
             },
             "description": "Represents an order."
@@ -176,6 +176,10 @@ exports.schema =
             "type": "object",
             "extends": "#.ApiOrderDTO",
             "properties": {
+                "Guaranteed": {
+                    "type": "boolean",
+                    "description": "Flag to determine whether an order is guaranteed to trigger and fill at the associated trigger price."
+                },
                 "TriggerPrice": {
                     "type": "number",
                     "format": "decimal",
@@ -204,14 +208,14 @@ exports.schema =
             "properties": {
                 "Key": {
                     "type": "string",
-                    "description": "Translation key"
+                    "description": "Translation key."
                 },
                 "Value": {
                     "type": "string",
-                    "description": "Translation value"
+                    "description": "Translation value."
                 }
             },
-            "description": ""
+            "description": "Message translation entity with client specific translated textual strings."
         },
         "ApiActiveStopLimitOrderDTO": {
             "id": "ApiActiveStopLimitOrderDTO",
@@ -301,24 +305,24 @@ exports.schema =
                     "type": {
                         "$ref": "#.ApiBasicStopLimitOrderDTO"
                     },
-                    "description": "The if done stop order."
+                    "description": "The if / done stop order."
                 },
                 "LimitOrder": {
                     "type": {
                         "$ref": "#.ApiBasicStopLimitOrderDTO"
                     },
-                    "description": "The if done limit order"
+                    "description": "The if / done limit order."
                 },
                 "OcoOrder": {
                     "type": {
                         "$ref": "#.ApiBasicStopLimitOrderDTO"
                     },
-                    "description": "The order on the other side of a one Cancels the other relationship."
+                    "description": "The order on the other side of a One Cancels the Other relationship."
                 },
                 "LastChangedDateTimeUTC": {
                     "type": "string",
                     "format": "wcf-date",
-                    "description": "The last time that the order changed. Note - Does not include things such as the current market price."
+                    "description": "The last time that the order changed. Note - does not include things such as the current market price."
                 }
             },
             "description": "A stop or limit order that is currently active."
@@ -394,10 +398,10 @@ exports.schema =
             "properties": {
                 "Code": {
                     "type": "string",
-                    "description": "2 letter ISO 639 culture code followed by a 2 letter uppercase ISO 3166 culture code"
+                    "description": "Two letter ISO 639 culture code followed by a two letter uppercase ISO 3166 culture code."
                 }
             },
-            "description": "Lookup data specific to a Culture"
+            "description": "Lookup data specific to a Culture."
         },
         "ApiBasicStopLimitOrderDTO": {
             "id": "ApiBasicStopLimitOrderDTO",
@@ -646,7 +650,7 @@ exports.schema =
                     "type": "integer",
                     "minValue": -2147483648,
                     "maxValue": 2147483647,
-          "description": "The currency ID of the margin requirement for this order. See the \"Currency ID\" section of the CIAPI User Guide for a listing of the currency IDs."
+                    "description": "The currency ID of the margin requirement for this order. See the \"Currency ID\" section of the CIAPI User Guide for a listing of the currency IDs."
                 },
                 "MarginRequirementConvertedCurrencyISOCode": {
                     "type": "string",
@@ -688,7 +692,7 @@ exports.schema =
                     "type": "integer",
                     "minValue": -2147483648,
                     "maxValue": 2147483647,
-                    "description": "The currency ID of the OTE for this order."
+                    "description": "The currency ID of the OTE for this order. See the \"Currency ID\" section of the CIAPI User Guide for a listing of the currency IDs."
                 },
                 "OTEConvertedCurrencyISOCode": {
                     "type": "string",
@@ -800,6 +804,21 @@ exports.schema =
                 }
             },
             "description": "A quote for a specific order request."
+        },
+        "ClientPreferenceKeyDTO": {
+            "id": "ClientPreferenceKeyDTO",
+            "type": "object",
+            "properties": {
+                "Key": {
+                    "type": "string",
+                    "description": "A unique client preference key identifier."
+                },
+                "Value": {
+                    "type": "string",
+                    "description": "A value associated for the client preference key."
+                }
+            },
+            "description": "Client preference key and value."
         },
         "ApiTradeOrderDTO": {
             "id": "ApiTradeOrderDTO",
@@ -972,7 +991,36 @@ exports.schema =
                     "description": "The list of child tags associated with this market tag."
                 }
             },
-            "description": "Market tag information extended to include a list o child tags."
+            "description": "Market tag information extended to include a list of child tags."
+        },
+        "ApiMarketSpreadDTO": {
+            "id": "ApiMarketSpreadDTO",
+            "type": "object",
+            "properties": {
+                "SpreadTimeUtc": {
+                    "type": [
+            "null",
+            {
+                "$ref": "#.DateTimeOffset"
+            }
+          ],
+                    "description": "The time and date in for the spread value in UTC, interchangable to local time using localtime offset."
+                },
+                "Spread": {
+                    "type": "number",
+                    "format": "decimal",
+                    "minValue": -7.9228162514264338E+28,
+                    "maxValue": 7.9228162514264338E+28,
+                    "description": "The market spread value."
+                },
+                "SpreadUnits": {
+                    "type": "integer",
+                    "minValue": -2147483648,
+                    "maxValue": 2147483647,
+                    "description": "The market spread value's unit type."
+                }
+            },
+            "description": "Contains market spread value at specific time points."
         },
         "ApiMarketInformationSaveDTO": {
             "id": "ApiMarketInformationSaveDTO",
@@ -1106,21 +1154,21 @@ exports.schema =
                     "format": "decimal",
                     "minValue": -7.9228162514264338E+28,
                     "maxValue": 7.9228162514264338E+28,
-                    "description": "The realised profit and loss."
+                    "description": "The realised profit and loss (P&L)."
                 },
                 "RealisedPnlCurrency": {
                     "type": "string",
-                    "description": "The realised Pnl currency."
+                    "description": "The realised P&L currency."
                 },
                 "LastChangedDateTimeUtc": {
                     "type": "string",
                     "format": "wcf-date",
-                    "description": "The last time that the order changed. Note - Does not include things such as the current market price."
+                    "description": "The last time that the order changed. Note - does not include things such as the current market price."
                 },
                 "ExecutedDateTimeUtc": {
                     "type": "string",
                     "format": "wcf-date",
-                    "description": "The time the order was executed."
+                    "description": "The time that the order was executed."
                 }
             },
             "description": "A Trade from a historical perspective."
@@ -1205,7 +1253,7 @@ exports.schema =
                     "type": "integer",
                     "minValue": -2147483648,
                     "maxValue": 2147483647,
-                    "description": "The margin factor units."
+                    "description": "Controls if the margin factor is displayed as a percentage or in points. 26 == Percentage, and 27 == Points."
                 },
                 "MinDistance": {
                     "type": [
@@ -1308,18 +1356,172 @@ exports.schema =
                     "type": "integer",
                     "minValue": -2147483648,
                     "maxValue": 2147483647,
-                    "description": "The Id of the type of the market setting, ie Spread, CFD."
+                    "description": "The ID type of the market setting, i.e. Spread, CFD."
                 },
                 "MarketSettingsType": {
                     "type": "string",
-                    "description": "The type of the market setting, ie Spread, CFD."
-        },
-        "MobileShortName": {
-          "type": "string",
-          "description": "A short summary of the market name used when presenting the market name on mobile clients."
-        }
+                    "description": "The type of the market setting, i.e. Spread, CFD."
+                },
+                "MobileShortName": {
+                    "type": "string",
+                    "description": "A short summary of the market name used when presenting the market name on mobile clients."
+                },
+                "CentralClearingType": {
+                    "type": "string",
+                    "description": "The method used for central clearing, i.e. \"No\" or \"LCH\"."
+                },
+                "CentralClearingTypeDescription": {
+                    "type": "string",
+                    "description": "The description of the method used for central clearing, i.e. \"None\" or \"London Clearing House\"."
+                },
+                "MarketCurrencyId": {
+                    "type": "integer",
+                    "minValue": -2147483648,
+                    "maxValue": 2147483647,
+                    "description": "The currency of the market being traded."
+                },
+                "PhoneMinSize": {
+                    "type": [
+            "null",
+            "number"
+          ],
+                    "format": "decimal",
+                    "minValue": -7.9228162514264338E+28,
+                    "maxValue": 7.9228162514264338E+28,
+                    "description": "The minimum quantity that can be traded over the Phone."
+                },
+                "DailyFinancingAppliedAtUtc": {
+                    "type": [
+            "null",
+            "string"
+          ],
+                    "format": "wcf-date",
+                    "description": "Daily financing amount to be applied at specified time in UTC."
+                },
+                "NextMarketEodTimeUtc": {
+                    "type": [
+            "null",
+            "string"
+          ],
+                    "format": "wcf-date",
+                    "description": "Next Date and Time at which the End of Day (EOD) capture will run in UTC."
+                },
+                "TradingStartTimeUtc": {
+                    "type": [
+            "null",
+            {
+                "$ref": "#.DateTimeOffset"
+            }
+          ],
+                    "description": "Market Trading start time on each trading day represented in UTC and local time."
+                },
+                "TradingEndTimeUtc": {
+                    "type": [
+            "null",
+            {
+                "$ref": "#.DateTimeOffset"
+            }
+          ],
+                    "description": "Market Trading end time on each trading day represented in UTC and local time."
+                },
+                "MarketPricingTimes": {
+                    "type": "array",
+                    "items": [
+            {
+                "$ref": "#.ApiTradingDayTimesDTO"
+            }
+          ],
+                    "description": "Market Pricing times on given set of working days."
+                },
+                "MarketBreakTimes": {
+                    "type": "array",
+                    "items": [
+            {
+                "$ref": "#.ApiTradingDayTimesDTO"
+            }
+          ],
+                    "description": "Breaks throughout each trading day (Day is specified as 'DayOfWeek')."
+                },
+                "MarketSpreads": {
+                    "type": "array",
+                    "items": [
+            {
+                "$ref": "#.ApiMarketSpreadDTO"
+            }
+          ],
+                    "description": "Market spreads during each trading day."
+                },
+                "GuaranteedOrderPremium": {
+                    "type": [
+            "null",
+            "number"
+          ],
+                    "format": "decimal",
+                    "minValue": -7.9228162514264338E+28,
+                    "maxValue": 7.9228162514264338E+28,
+                    "description": "The premium paid for a guaranteed order."
+                },
+                "GuaranteedOrderPremiumUnits": {
+                    "type": [
+            "null",
+            "integer"
+          ],
+                    "minValue": -2147483648,
+                    "maxValue": 2147483647,
+                    "description": "The unit type being used for the guaranteed order premium. This can be (MultipleOfQuantity=1, PercentOfConsideration=2)."
+                },
+                "GuaranteedOrderMinDistance": {
+                    "type": [
+            "null",
+            "number"
+          ],
+                    "format": "decimal",
+                    "minValue": -7.9228162514264338E+28,
+                    "maxValue": 7.9228162514264338E+28,
+                    "description": "The minimum distance from current market price at which a guaranteed order can be placed."
+                },
+                "GuaranteedOrderMinDistanceUnits": {
+                    "type": [
+            "null",
+            "integer"
+          ],
+                    "minValue": -2147483648,
+                    "maxValue": 2147483647,
+                    "description": "Guaranteed order minimum distance unit type. This can be: (Percentage=26, Points=27)."
+                }
             },
             "description": "Contains market information."
+        },
+        "ApiTradingDayTimesDTO": {
+            "id": "ApiTradingDayTimesDTO",
+            "type": "object",
+            "properties": {
+                "DayOfWeek": {
+                    "type": "integer",
+                    "minValue": -2147483648,
+                    "maxValue": 2147483647,
+                    "description": "Day of the week at which the times are valid."
+                },
+                "StartTimeUtc": {
+                    "type": [
+            "null",
+            {
+                "$ref": "#.DateTimeOffset"
+            }
+          ],
+                    "description": "Start of the market time in both UTC and local time (using Offset property)."
+                },
+                "EndTimeUtc": {
+                    "type": [
+            "null",
+            {
+                "$ref": "#.DateTimeOffset"
+            }
+          ],
+                    "description": "End of the market time in both UTC and local time (using Offset property)."
+                }
+            },
+            "description": "Contains start and end time information for market specific events such as trading and pricing."
         },
         "PriceDTO": {
             "id": "PriceDTO",
@@ -1387,6 +1589,12 @@ exports.schema =
                 "AuditId": {
                     "type": "string",
                     "description": "A unique ID for this price. Treat as a unique, but random string."
+                },
+                "StatusSummary": {
+                    "type": "integer",
+                    "minValue": -2147483648,
+                    "maxValue": 2147483647,
+                    "description": "The current status summary for this price. Values are: 0 = Normal 1 = Indicative 2 = PhoneOnly 3 = Suspended 4 = Closed"
                 }
             },
             "description": "A Price for a specific Market."
@@ -1443,7 +1651,7 @@ exports.schema =
                     "type": "integer",
                     "minValue": -2147483648,
                     "maxValue": 2147483647,
-                    "description": "The markets unique identifier."
+                    "description": "The market's unique identifier."
                 },
                 "MarketName": {
                     "type": "string",
@@ -1471,7 +1679,7 @@ exports.schema =
                     "type": "integer",
                     "minValue": -2147483648,
                     "maxValue": 2147483647,
-                    "description": "The trading account that the order is on."
+                    "description": "The ID of the trading account that the order is on."
                 },
                 "Currency": {
                     "type": "string",
@@ -1498,10 +1706,10 @@ exports.schema =
                 "LastChangedDateTimeUTC": {
                     "type": "string",
                     "format": "wcf-date",
-                    "description": "The last time that the order changed. Note - Does not include things such as the current market price."
+                    "description": "The last time that the order changed. Note - does not include things such as the current market price."
                 }
             },
-            "description": "A Trade, or order that is currently open."
+            "description": "A trade, or order that is currently open."
         },
         "GetNewsDetailResponseDTO": {
             "id": "GetNewsDetailResponseDTO",
@@ -1548,6 +1756,17 @@ exports.schema =
             },
             "description": "Response from a market information request."
         },
+        "UpdateDeleteClientPreferenceResponseDTO": {
+            "id": "UpdateDeleteClientPreferenceResponseDTO",
+            "type": "object",
+            "properties": {
+                "Successful": {
+                    "type": "boolean",
+                    "description": "Status of save"
+                }
+            },
+            "description": "A bool result to signify status of completed operation."
+        },
         "ApiClientApplicationMessageTranslationResponseDTO": {
             "id": "ApiClientApplicationMessageTranslationResponseDTO",
             "type": "object",
@@ -1559,10 +1778,29 @@ exports.schema =
                 "$ref": "#.ApiClientApplicationMessageTranslationDTO"
             }
           ],
-                    "description": "List of message translations (key/value pairs)"
+                    "description": "List of message translations (key/value pairs)."
                 }
             },
-            "description": "Gives a list of client application specific message translations"
+            "description": "Gives a list of client application specific message translations."
+        },
+        "GetVersionInformationResponseDTO": {
+            "id": "GetVersionInformationResponseDTO",
+            "type": "object",
+            "properties": {
+                "MinimumRequiredVersion": {
+                    "type": "string",
+                    "description": "The minimum version of the client application that can be used. If the installed version is less than this it shouldn't be used."
+                },
+                "LatestVersion": {
+                    "type": "string",
+                    "description": "The latest version of the client application that can be used."
+                },
+                "UpgradeUrl": {
+                    "type": "string",
+                    "description": "The url of the upgrade."
+                }
+            },
+            "description": "The response containing version information and upgrade url of the client application."
         },
         "ListActiveStopLimitOrderResponseDTO": {
             "id": "ListActiveStopLimitOrderResponseDTO",
@@ -1585,6 +1823,22 @@ exports.schema =
             "type": "object",
             "properties": {},
             "description": "An (empty) response to indicate that the save market information operation has completed."
+        },
+        "ListMarketSearchResponseDTO": {
+            "id": "ListMarketSearchResponseDTO",
+            "type": "object",
+            "properties": {
+                "Markets": {
+                    "type": "array",
+                    "items": [
+            {
+                "$ref": "#.ApiMarketDTO"
+            }
+          ],
+                    "description": "The requested list of markets."
+                }
+            },
+            "description": "Response from a market search request."
         },
         "AccountInformationResponseDTO": {
             "id": "AccountInformationResponseDTO",
@@ -1625,7 +1879,7 @@ exports.schema =
                 },
                 "HasMultipleEmailAddresses": {
                     "type": "boolean",
-                    "description": "Does the user have more than one email address configured?"
+                    "description": "Flag indicating whether the user has more than one email address configured."
                 }
             },
             "description": "Response from an account information query."
@@ -1658,6 +1912,22 @@ exports.schema =
                 }
             },
             "description": "Response containing the active stop limit order."
+        },
+        "GetListClientPreferenceResponseDTO": {
+            "id": "GetListClientPreferenceResponseDTO",
+            "type": "object",
+            "properties": {
+                "ClientPreferences": {
+                    "type": "array",
+                    "items": [
+            {
+                "$ref": "#.ClientPreferenceKeyDTO"
+            }
+          ],
+                    "description": "The requested client preference key value pair."
+                }
+            },
+            "description": "List of results of client preference get."
         },
         "NewStopLimitOrderRequestDTO": {
             "id": "NewStopLimitOrderRequestDTO",
@@ -1716,7 +1986,7 @@ exports.schema =
                     "type": "integer",
                     "minValue": -2147483648,
                     "maxValue": 2147483647,
-                    "description": "The ID of the TradingAccount associated with the trade/order request."
+                    "description": "The ID of the trading account associated with the trade/order request."
                 },
                 "IfDone": {
                     "type": "array",
@@ -1743,7 +2013,7 @@ exports.schema =
             "string"
           ],
                     "format": "wcf-date",
-                    "description": "The associated expiry DateTime for a pair of GoodTillDate IfDone orders."
+                    "description": "The associated expiry DateTime for a pair of GoodTillDate If/Done orders."
                 },
                 "Guaranteed": {
                     "type": "boolean",
@@ -1781,7 +2051,7 @@ exports.schema =
             "id": "ApiSaveAccountInformationResponseDTO",
             "type": "object",
             "properties": {},
-            "description": ""
+            "description": "An (empty) response to indicate that the save account information operation has completed."
         },
         "ApiOrderResponseDTO": {
             "id": "ApiOrderResponseDTO",
@@ -1805,12 +2075,32 @@ exports.schema =
                     "maxValue": 2147483647,
                     "description": "Order status ID."
                 },
+                "OrderTypeId": {
+                    "type": "integer",
+                    "minValue": -2147483648,
+                    "maxValue": 2147483647,
+                    "description": "Order type ID."
+                },
                 "Price": {
                     "type": "number",
                     "format": "decimal",
                     "minValue": -7.9228162514264338E+28,
                     "maxValue": 7.9228162514264338E+28,
                     "description": "Order fill price."
+                },
+                "Quantity": {
+                    "type": "number",
+                    "format": "decimal",
+                    "minValue": -7.9228162514264338E+28,
+                    "maxValue": 7.9228162514264338E+28,
+                    "description": "Order quantity"
+                },
+                "TriggerPrice": {
+                    "type": "number",
+                    "format": "decimal",
+                    "minValue": -7.9228162514264338E+28,
+                    "maxValue": 7.9228162514264338E+28,
+                    "description": "Trigger price, if applicable"
                 },
                 "CommissionCharge": {
                     "type": "number",
@@ -1849,7 +2139,7 @@ exports.schema =
             "type": "object",
             "extends": "#.ApiOrderResponseDTO",
             "properties": {},
-            "description": "The response from the stop limit order request"
+            "description": "The response from the stop limit order request."
         },
         "ListCfdMarketsResponseDTO": {
             "id": "ListCfdMarketsResponseDTO",
@@ -1944,6 +2234,15 @@ exports.schema =
                         "$ref": "#.ApiQuoteResponseDTO"
                     },
                     "description": "Quote response."
+                },
+                "Actions": {
+                    "type": "array",
+                    "items": [
+            {
+                "$ref": "#.ApiOrderActionResponseDTO"
+            }
+          ],
+                    "description": "List of order actions with their associated response."
                 }
             },
             "description": "The response from the trade request."
@@ -2008,7 +2307,7 @@ exports.schema =
                     "type": "integer",
                     "minValue": -2147483648,
                     "maxValue": 2147483647,
-                    "description": "The ID of the TradingAccount associated with the trade/order request."
+                    "description": "The ID of the trading account associated with the trade/order request."
                 },
                 "IfDone": {
                     "type": "array",
@@ -2088,6 +2387,17 @@ exports.schema =
                 }
             },
             "description": "Request to delete a session (log off)."
+        },
+        "ClientPreferenceRequestDTO": {
+            "id": "ClientPreferenceRequestDTO",
+            "type": "object",
+            "properties": {
+                "Key": {
+                    "type": "string",
+                    "description": "The client preference key to get."
+                }
+            },
+            "description": "Get client preferences."
         },
         "ErrorCode": {
             "id": "ErrorCode",
@@ -2186,19 +2496,19 @@ exports.schema =
                     "minLength": 6,
                     "maxLength": 20,
                     "description": "Password is case sensitive."
-        },
-        "AppKey": {
-          "type": "string",
-          "description": "A unique key use to identify the client application."
-        },
-        "AppVersion": {
-          "type": "string",
-          "description": "The version of he client application."
-        },
-        "AppComments": {
-          "type": "string",
-          "description": "Any comments the client applications what to associate with this session. Optional."
-        }
+                },
+                "AppKey": {
+                    "type": "string",
+                    "description": "A unique key to identify the client application."
+                },
+                "AppVersion": {
+                    "type": "string",
+                    "description": "The version of the client application."
+                },
+                "AppComments": {
+                    "type": "string",
+                    "description": "Any client application comments on what to associate with this session. (Optional)."
+                }
             },
             "description": "Request to create a session (log on)."
         },
@@ -2210,16 +2520,16 @@ exports.schema =
                     "type": "integer",
                     "minValue": -2147483648,
                     "maxValue": 2147483647,
-                    "description": "The watchlist display order id to delete the item from"
+                    "description": "The watchlist display order ID to delete the item from."
                 },
                 "MarketId": {
                     "type": "integer",
                     "minValue": -2147483648,
                     "maxValue": 2147483647,
-                    "description": "The market item to delete"
+                    "description": "The market item to delete."
                 }
             },
-            "description": "Delete watchlist item"
+            "description": "Delete watchlist item."
         },
         "ApiLogOffResponseDTO": {
             "id": "ApiLogOffResponseDTO",
@@ -2255,7 +2565,7 @@ exports.schema =
                     "description": "The requested list of market tags."
                 }
             },
-            "description": "Response from a market search with tags request."
+            "description": "Response from a market information search with tags request."
         },
         "SystemStatusRequestDTO": {
             "id": "SystemStatusRequestDTO",
@@ -2287,25 +2597,6 @@ exports.schema =
             },
             "description": "Response containing the order. Only one of the two fields will be populated depending upon the type of order (Trade or Stop / Limit)."
         },
-    "GetVersionInformationResponseDTO": {
-      "id": "GetVersionInformationResponseDTO",
-      "type": "object",
-      "properties": {
-        "MinimumRequiredVersion": {
-          "type": "string",
-          "description": "The minimum version of the client application that can be used. If the installed version is less than this it shouldn't be used."
-        },
-        "LatestVersion": {
-          "type": "string",
-          "description": "The latest version of the client application that can be used."
-        },
-        "UpgradeUrl": {
-          "type": "string",
-          "description": "The url of the upgrade."
-        }
-      },
-      "description": "The response containing version information and upgrade url of the client application."
-    },
         "ApiSaveAccountInformationRequestDTO": {
             "id": "ApiSaveAccountInformationRequestDTO",
             "type": "object",
@@ -2333,9 +2624,31 @@ exports.schema =
             }
           ],
                     "description": "A list of historical trades."
+                },
+                "SupplementalOpenOrders": {
+                    "type": "array",
+                    "items": [
+            {
+                "$ref": "#.ApiTradeHistoryDTO"
+            }
+          ],
+                    "description": "A list of trades which are referenced as OpenOrderId's in the trade history list - but do not actually exist in that list."
                 }
             },
             "description": "Contains the result of a ListTradeHistory query."
+        },
+        "GetClientPreferenceResponseDTO": {
+            "id": "GetClientPreferenceResponseDTO",
+            "type": "object",
+            "properties": {
+                "ClientPreference": {
+                    "type": {
+                        "$ref": "#.ClientPreferenceKeyDTO"
+                    },
+                    "description": "The requested client preference key value pair."
+                }
+            },
+            "description": "Results of client preference get."
         },
         "ApiSaveWatchlistResponseDTO": {
             "id": "ApiSaveWatchlistResponseDTO",
@@ -2411,6 +2724,20 @@ exports.schema =
             },
             "description": "Request to change a user's password."
         },
+        "GetKeyListClientPreferenceResponseDTO": {
+            "id": "GetKeyListClientPreferenceResponseDTO",
+            "type": "object",
+            "properties": {
+                "ClientPreferenceKeys": {
+                    "type": "array",
+                    "items": [
+            "string"
+          ],
+                    "description": "The list of client preference keys."
+                }
+            },
+            "description": "Results of client preference get."
+        },
         "ApiQuoteResponseDTO": {
             "id": "ApiQuoteResponseDTO",
             "type": "object",
@@ -2482,7 +2809,7 @@ exports.schema =
                 "$ref": "#.ApiCultureLookupDTO"
             }
           ],
-                    "description": "TODO: document me!"
+                    "description": "List of entities each containing data specific to a culture."
                 }
             },
             "description": "Gets the lookup entities from trading database given the lookup name and culture ID."
@@ -2505,6 +2832,19 @@ exports.schema =
                 }
             },
             "description": "Response to an If/Done order request."
+        },
+        "SaveClientPreferenceRequestDTO": {
+            "id": "SaveClientPreferenceRequestDTO",
+            "type": "object",
+            "properties": {
+                "ClientPreference": {
+                    "type": {
+                        "$ref": "#.ClientPreferenceKeyDTO"
+                    },
+                    "description": "The list of client preferences key value pairs to be saved."
+                }
+            },
+            "description": "Save client preferences."
         },
         "ApiDeleteWatchlistRequestDTO": {
             "id": "ApiDeleteWatchlistRequestDTO",
@@ -2543,17 +2883,17 @@ exports.schema =
                     "minLength": 36,
                     "maxLength": 100,
                     "description": "Your session token (treat as a random string). <BR /> Session tokens are valid for a set period from the time of their creation. <BR /> The period is subject to change, and may vary depending on who you logon as."
-        },
-        "PasswordChangeRequired": {
-          "type": "boolean",
-          "description": "Flag used it indicate if a password change is needed."
-        },
-        "AllowedAccountOperator": {
-          "type": "boolean",
-          "description": "Flag used it indicate if the account operator to which this use is associated is allowed to access the application."
-        }
+                },
+                "PasswordChangeRequired": {
+                    "type": "boolean",
+                    "description": "Flag used to indicate whether a password change is needed."
+                },
+                "AllowedAccountOperator": {
+                    "type": "boolean",
+                    "description": "Flag used to indicate whether the account operator associated with this user is allowed to access the application."
+                }
             },
-            "description": "Response to a CreateSessionRequest (Log On)."
+            "description": "Response to a LogOn call."
         },
         "ListOpenPositionsResponseDTO": {
             "id": "ListOpenPositionsResponseDTO",
@@ -2612,7 +2952,7 @@ exports.schema =
             "properties": {
                 "IsPasswordChanged": {
                     "type": "boolean",
-                    "description": "Was the password change request successful?"
+                    "description": "Flag indicating whether the password change request was successful."
                 }
             },
             "description": "Response to a change password request."
@@ -2688,7 +3028,50 @@ exports.schema =
                     "description": "The requested list of market tags."
                 }
             },
-            "description": "Response from a market search with tags request."
+            "description": "Response from a search request of market information tags."
+        },
+        "ApiOrderActionResponseDTO": {
+            "id": "ApiOrderActionResponseDTO",
+            "type": "object",
+            "properties": {
+                "ActionedOrderId": {
+                    "type": "integer",
+                    "minValue": -2147483648,
+                    "maxValue": 2147483647,
+                    "description": "Actioned Order ID."
+                },
+                "ActioningOrderId": {
+                    "type": "integer",
+                    "minValue": -2147483648,
+                    "maxValue": 2147483647,
+                    "description": "Actioning Order ID."
+                },
+                "Quantity": {
+                    "type": "number",
+                    "format": "decimal",
+                    "minValue": -7.9228162514264338E+28,
+                    "maxValue": 7.9228162514264338E+28,
+                    "description": "Quantity."
+                },
+                "ProfitAndLoss": {
+                    "type": "number",
+                    "format": "decimal",
+                    "minValue": -7.9228162514264338E+28,
+                    "maxValue": 7.9228162514264338E+28,
+                    "description": "Profit or Loss."
+                },
+                "ProfitAndLossCurrency": {
+                    "type": "string",
+                    "description": "Profit or Loss Currency."
+                },
+                "OrderActionTypeId": {
+                    "type": "integer",
+                    "minValue": -2147483648,
+                    "maxValue": 2147483647,
+                    "description": "Order Action Type."
+                }
+            },
+            "description": "Response to an order request."
         },
         "ApiErrorResponseDTO": {
             "id": "ApiErrorResponseDTO",
@@ -2721,16 +3104,48 @@ exports.schema =
                     "type": "integer",
                     "minValue": -2147483648,
                     "maxValue": 2147483647,
-                    "description": "Simulated order status reason id."
+                    "description": "Simulated order status reason ID."
                 },
                 "Status": {
                     "type": "integer",
                     "minValue": -2147483648,
                     "maxValue": 2147483647,
-                    "description": "Simulated order status id."
+                    "description": "Simulated order status ID."
                 }
             },
-            "description": "Simulated order response"
+            "description": "Simulated order response."
+        },
+        "ApiClientApplicationMessageTranslationRequestDTO": {
+            "id": "ApiClientApplicationMessageTranslationRequestDTO",
+            "type": "object",
+            "properties": {
+                "ClientApplicationId": {
+                    "type": "integer",
+                    "minValue": -2147483648,
+                    "maxValue": 2147483647,
+                    "description": "Client Id of requesting user."
+                },
+                "CultureId": {
+                    "type": "integer",
+                    "minValue": -2147483648,
+                    "maxValue": 2147483647,
+                    "description": "Culture Id of requesting user."
+                },
+                "AccountOperatorId": {
+                    "type": "integer",
+                    "minValue": -2147483648,
+                    "maxValue": 2147483647,
+                    "description": "Account Operatior Id of requesting user"
+                },
+                "InterestedTranslationKeys": {
+                    "type": "array",
+                    "items": [
+            "string"
+          ],
+                    "description": "A list of interesting keys to get translations for"
+                }
+            },
+            "description": "A request to update a stop/limit order."
         },
         "ApiSaveWatchlistRequestDTO": {
             "id": "ApiSaveWatchlistRequestDTO",

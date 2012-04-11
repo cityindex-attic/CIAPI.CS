@@ -18,8 +18,20 @@ for (patchTypeName in schemaPatch.properties) {
         var patchType = schemaPatch.properties[patchTypeName];
         var targetType = schema.properties[patchTypeName];
         for (patchPropertyName in patchType.properties) {
+
+
             if (patchType.properties.hasOwnProperty(patchPropertyName)) {
-                targetType.properties[patchPropertyName] = patchType.properties[patchPropertyName];
+                if (patchPropertyName == "$DELETE$") {
+                    for (toDelete in patchType.properties["$DELETE$"]) {
+                        var toDeletePropName = patchType.properties["$DELETE$"][toDelete];
+                        delete targetType.properties[toDeletePropName];
+                    }
+
+                }
+                else {
+                    targetType.properties[patchPropertyName] = patchType.properties[patchPropertyName];
+                }
+
             }
         }
     }
@@ -34,7 +46,7 @@ provider.schema = schema;
 // FIXME: instigator should not take parameters
 provider.visit("root", schema, "schema");
 var output = visitor.toString();
-var rpcGenerator = new CSharpRouteGenerator(smd.services.rpc, schema, "CIAPI.Rpc", "Client", ["System", "System.Collections.Generic", "Salient.ReliableHttpClient","Salient.ReliableHttpClient.Serialization.Newtonsoft", "CIAPI.DTO"], routesPatch);
+var rpcGenerator = new CSharpRouteGenerator(smd.services.rpc, schema, "CIAPI.Rpc", "Client", ["System", "System.Collections.Generic", "Salient.ReliableHttpClient", "Salient.ReliableHttpClient.Serialization.Newtonsoft", "CIAPI.DTO"], routesPatch);
 var rpcRoutes = rpcGenerator.generate();
 //var channelGenerator = new LSChannelGenerator();
 //var channels = channelGenerator.generateChannels(smd.services.streaming);

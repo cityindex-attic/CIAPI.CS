@@ -12,7 +12,7 @@
     <script type="text/javascript">
         console.addLoadEvent(function () {
 
-            
+
             var schema = exports.schema;
             var smd = exports.smd;
             var schemaPatch = exports.schemaPatch;
@@ -23,8 +23,20 @@
                     var patchType = schemaPatch.properties[patchTypeName];
                     var targetType = schema.properties[patchTypeName];
                     for (patchPropertyName in patchType.properties) {
+
+
                         if (patchType.properties.hasOwnProperty(patchPropertyName)) {
-                            targetType.properties[patchPropertyName] = patchType.properties[patchPropertyName];
+                            if (patchPropertyName == "$DELETE$") {
+                                for (toDelete in patchType.properties["$DELETE$"]) {
+                                    var toDeletePropName = patchType.properties["$DELETE$"][toDelete];
+                                    delete targetType.properties[toDeletePropName];
+                                }
+
+                            }
+                            else {
+                                targetType.properties[patchPropertyName] = patchType.properties[patchPropertyName];
+                            }
+
                         }
                     }
                 }
@@ -52,7 +64,7 @@
 
 
 
-            var rpcGenerator = new CSharpRouteGenerator(smd.services.rpc, schema, "CIAPI.Rpc", "Client", ["System", "System.Collections.Generic",  "CIAPI.DTO"], routesPatch);
+            var rpcGenerator = new CSharpRouteGenerator(smd.services.rpc, schema, "CIAPI.Rpc", "Client", ["System", "System.Collections.Generic", "CIAPI.DTO"], routesPatch);
             var rpcRoutes = rpcGenerator.generate();
             document.getElementById("routes").value = rpcRoutes;
 

@@ -19,24 +19,31 @@ namespace Salient.ReliableHttpClient
             get { return !Controller.Recorder.Paused; }
         }
 
-        protected string UserAgent { get; set; }
-
-
-
+        private string _userAgent;
+        protected string UserAgent
+        {
+            get { return _userAgent; }
+            set
+            {
+                _userAgent = value;
+                Controller.UserAgent = value;
+            }
+        }
 
 
         public ClientBase(IJsonSerializer serializer)
         {
-
+            Controller = new RequestController(serializer);
             UserAgent = "Salient.ReliableHttpClient";
             Serializer = serializer;
-            Controller = new RequestController(serializer) { UserAgent = UserAgent };
+            
         }
 
         protected ClientBase(IJsonSerializer serializer, IRequestFactory factory)
             : this(serializer)
         {
-            Controller = new RequestController(serializer, factory) { UserAgent = UserAgent };
+            Controller = new RequestController(serializer, factory);
+            UserAgent = "Salient.ReliableHttpClient";
         }
 
 
@@ -296,7 +303,7 @@ namespace Salient.ReliableHttpClient
             catch (Exception ex)
             {
 
-                throw ReliableHttpException.Create("Invalid response received.  Are you connecting to the correct server Url?", ex);
+                throw ReliableHttpException.Create(ex);
             }
         }
 

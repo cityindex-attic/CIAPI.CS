@@ -70,6 +70,7 @@
     <Compile Include="NullType.cs" />
     <Compile Include="MagicNumberKeys.cs" />
     <Compile Include="MagicNumberResolver.cs" />
+    <Compile Include="Rpc\AppMetricsPlugin.cs" />
     <Compile Include="ServerConnectionException.cs" />
     <Compile Include="Streaming\IMessageConverter.cs" />
     <Compile Include="Streaming\InvalidTopicException.cs" />
