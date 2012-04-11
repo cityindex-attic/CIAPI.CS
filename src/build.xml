@@ -32,8 +32,9 @@
     <!-- CalculateMetrics  calculation of metrics disabled until replacement for Reflector can be integrated -->
   </Target>
   
-  <!-- Used to build the Dev branch - everything except packaging -->
-  <Target Name="GoDev" DependsOnTargets="UpdateVersion;Build;RunTests">
+  <!-- Used to build the Dev branch - everything except packaging RunTests -->
+  
+  <Target Name="GoDev" DependsOnTargets="UpdateVersion;Build">
   </Target>
 
   <Target Name="Build">
