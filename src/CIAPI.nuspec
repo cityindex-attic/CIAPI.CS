@@ -27,8 +27,8 @@
     <file src="..\dist\lib\ciapi\bin\**\CIAPI.XML" target="lib\net35" />
 
     <file src="..\dist\lib\ciapi.phone7\bin\**\WindowsPhoneClient.dll" target="lib\sl3-wp" />
-    <file src="..\dist\lib\ciapi\bin\**\Salient.ReliableHttpClient.Phone7.dll" target="lib\sl3-wp" />
-    <file src="..\dist\lib\ciapi\bin\**\Salient.ReliableHttpClient.Serializer.Newtonsoft.Phone7.dll" target="lib\sl3-wp" />
+    <file src="..\dist\lib\ciapi.phone7\bin\**\Salient.ReliableHttpClient.Phone7.dll" target="lib\sl3-wp" />
+    <file src="..\dist\lib\ciapi.phone7\bin\**\Salient.ReliableHttpClient.Serializer.Newtonsoft.Phone7.dll" target="lib\sl3-wp" />
     
     <file src="..\dist\lib\ciapi.phone7\bin\**\CIAPI.Phone7.dll" target="lib\sl3-wp" />
     <file src="..\dist\lib\ciapi.phone7\bin\**\CIAPI.Phone7.pdb" target="lib\sl3-wp" />
