@@ -1,7 +1,7 @@
 exports.smd =
 {
     "SMDVersion": "2.6",
-    "version": "0.1022.0.0",
+    "version": "0.1036.0.0",
     "description": "CIAPI SMD",
     "services": {
         "rpc": {

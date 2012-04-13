@@ -1,7 +1,7 @@
 exports.schema =
 {
     "namespace": "CIAPI.DTO",
-    "version": "0.1022.0.0",
+    "version": "0.1036.0.0",
     "properties": {
         "ApiStopLimitOrderHistoryDTO": {
             "id": "ApiStopLimitOrderHistoryDTO",
@@ -797,10 +797,37 @@ exports.schema =
                     "maxValue": 2147483647,
                     "description": "The quote type ID."
                 },
-                "RequestDateTime": {
+        "RequestDateTimeUTC": {
                     "type": "string",
                     "format": "wcf-date",
                     "description": "The timestamp the quote was requested. Always expressed in UTC."
+        },
+        "ApprovalDateTimeUTC": {
+          "type": "string",
+          "format": "wcf-date",
+          "description": "The timestamp the quote was approved. Always expressed in UTC."
+        },
+        "BreathTimeSecs": {
+          "type": "integer",
+          "minValue": -2147483648,
+          "maxValue": 2147483647,
+          "description": "Amount of time in seconds the quote is valid for."
+        },
+        "IsOversize": {
+          "type": "boolean",
+          "description": "Is the quote oversize."
+        },
+        "ReasonId": {
+          "type": "integer",
+          "minValue": -2147483648,
+          "maxValue": 2147483647,
+          "description": "The reason for generating the quote."
+        },
+        "TradingAccountId": {
+          "type": "integer",
+          "minValue": -2147483648,
+          "maxValue": 2147483647,
+          "description": "The trading account identifier that generated the quote."
                 }
             },
             "description": "A quote for a specific order request."
@@ -1767,6 +1794,17 @@ exports.schema =
             },
             "description": "A bool result to signify status of completed operation."
         },
+    "GetITFinanceSessionServiceResponseDTO": {
+      "id": "GetITFinanceSessionServiceResponseDTO",
+      "type": "object",
+      "properties": {
+        "ITFinanceSessionKey": {
+          "type": "string",
+          "description": "The requested IT Finance session key."
+        }
+      },
+      "description": "Result of IT Finance session key request."
+    },
         "ApiClientApplicationMessageTranslationResponseDTO": {
             "id": "ApiClientApplicationMessageTranslationResponseDTO",
             "type": "object",

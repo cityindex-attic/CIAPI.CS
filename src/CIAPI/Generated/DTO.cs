@@ -705,7 +705,32 @@ namespace CIAPI.DTO
         /// The timestamp the quote was requested. Always expressed in UTC.
         /// </summary>
         [DataMember]
-        public DateTime RequestDateTime { get; set; }
+        public DateTime RequestDateTimeUTC { get; set; }
+        /// <summary>
+        /// The timestamp the quote was approved. Always expressed in UTC.
+        /// </summary>
+        [DataMember]
+        public DateTime ApprovalDateTimeUTC { get; set; }
+        /// <summary>
+        /// Amount of time in seconds the quote is valid for.
+        /// </summary>
+        [DataMember]
+        public int BreathTimeSecs { get; set; }
+        /// <summary>
+        /// Is the quote oversize.
+        /// </summary>
+        [DataMember]
+        public bool IsOversize { get; set; }
+        /// <summary>
+        /// The reason for generating the quote.
+        /// </summary>
+        [DataMember]
+        public int ReasonId { get; set; }
+        /// <summary>
+        /// The trading account identifier that generated the quote.
+        /// </summary>
+        [DataMember]
+        public int TradingAccountId { get; set; }
     }
 
     /// <summary>
@@ -1501,6 +1526,19 @@ namespace CIAPI.DTO
         /// </summary>
         [DataMember]
         public bool Successful { get; set; }
+    }
+
+    /// <summary>
+    /// Result of IT Finance session key request.
+    /// </summary>
+    [DataContract]
+    public partial class GetITFinanceSessionServiceResponseDTO
+    {
+        /// <summary>
+        /// The requested IT Finance session key.
+        /// </summary>
+        [DataMember]
+        public string ITFinanceSessionKey { get; set; }
     }
 
     /// <summary>
