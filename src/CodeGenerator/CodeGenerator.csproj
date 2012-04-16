@@ -102,13 +102,6 @@
     <Content Include="node-0.4.7-cygwin\bin\tar.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="src\dto-generator.js" />
-    <Content Include="src\generate-routes.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="src\generate-dto.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="src\CSharpLightStreamerChannelGenerator.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

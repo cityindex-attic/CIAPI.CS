@@ -136,7 +136,6 @@
             switch (this.provider.stack.length) {
                 case 1:
                     this.writeLine("using System;");
-                    this.writeLine("using System.Runtime.Serialization;");
                     
                     var namespace = this.provider.schema.namespace || "DefaultNamespace";
                     this.writeLine("namespace " + namespace);
@@ -168,7 +167,6 @@
                         self.writeLine("    /// " + current.value.description);
                         self.writeLine("    /// </summary>");
                     };
-                    self.writeLine("    [DataContract]");
                     this.writeLine("    public " + (typeName!="enum"?"partial ":"") + typeName + " " + current.key + (current.value["extends"] ? (" : " + this.normalizeKey(current.value["extends"])) : ""));
                     this.writeLine("    {");
                     if (typeName == "enum") {
@@ -181,7 +179,6 @@
                                 self.writeLine("        /// " + obj.description);
                                 self.writeLine("        /// </summary>");
                             };
-                            self.writeLine("        [DataMember]");
                             self.writeLine("        " + obj.label + " = " + obj.value + ",");
 
                         });
@@ -194,7 +191,6 @@
                         this.writeLine("        /// " + current.value.description);
                         this.writeLine("        /// </summary>");
                     };
-                    this.writeLine("        [DataMember]");
                     this.writeLine("        public " + propertyType + " " + current.key + " { get; set; }");
                     break;
             }
