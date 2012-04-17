@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading;
 using NUnit.Framework;
@@ -10,9 +11,14 @@ using Salient.ReliableHttpClient.Testing;
 
 namespace Salient.ReliableHttpClient.UnitTests
 {
+    
+
     [TestFixture]
     public class TestRequestFactoryFixture
     {
+
+        // need to create a request processor that can perform common tasks such as locating a matching request keying off as many
+        // properties as necessary, including request stream for posts...
         [Test]
         public void Test()
         {
@@ -25,6 +31,7 @@ namespace Salient.ReliableHttpClient.UnitTests
                                                      r.ResponseStream.Seek(0, SeekOrigin.Begin);
                                                  };
             var client = new SampleClient("http://foo.com", requestFactory);
+
             var gate = new AutoResetEvent(false);
             TestClass response = null;
             client.BeginGetTestClass(ar =>
