@@ -21,7 +21,7 @@ namespace Salient.ReliableHttpClient
             Id = Guid.NewGuid();
 
             Parameters = new Dictionary<string, object>();
-            Headers = new Dictionary<string, object>();
+            _headers = new Dictionary<string, object>();
         }
 
         public string UriTemplate { get; set; }
@@ -47,7 +47,15 @@ namespace Salient.ReliableHttpClient
         public RequestItemState State { get; set; }
         public string ResponseText { get; set; }
 
-        public Dictionary<string, object> Headers { get; set; }
+        public Dictionary<string, object> GetHeaders()
+        {
+            lock (_headers)
+            {
+                return new Dictionary<string, object>(_headers);
+            }
+        }
+        internal Dictionary<string, object> _headers;
+
         public Dictionary<string, object> Parameters { get; set; }
         public ReliableHttpException Exception { get; set; }
 
@@ -72,9 +80,9 @@ namespace Salient.ReliableHttpClient
                     case ContentType.TEXT:
                         Request.ContentType = "text/plain";
                         break;
-                }    
+                }
             }
-            
+
 
 
             if (Request is HttpWebRequest)
@@ -98,15 +106,12 @@ namespace Salient.ReliableHttpClient
                 }
 
                 request.UserAgent = info.UserAgent;
-                if (info.Headers != null)
+                var headers = info.GetHeaders();
+                if (headers != null)
                 {
-                    foreach (var header in info.Headers)
+                    foreach (var header in headers)
                     {
-#if !WINDOWS_PHONE
-                        request.Headers.Add(header.Key, header.Value.ToString());
-#else
                         request.Headers[header.Key] = header.Value.ToString();
-#endif
 
                     }
                 }
@@ -118,7 +123,7 @@ namespace Salient.ReliableHttpClient
                 if (string.IsNullOrEmpty(info.RequestBody))
                 {
 #if !WINDOWS_PHONE
-                Request.ContentLength = 0;
+                    Request.ContentLength = 0;
 #endif
                 }
                 else
@@ -176,14 +181,14 @@ namespace Salient.ReliableHttpClient
             sb.AppendLine(string.Format("State: {0}", State));
 
             sb.AppendLine("Headers:");
-
-            if (Headers == null || Headers.Count == 0)
+            var headers = GetHeaders();
+            if (headers == null || headers.Count == 0)
             {
                 sb.AppendLine("\tNONE");
             }
             else
             {
-                foreach (var item in Headers)
+                foreach (var item in headers)
                 {
                     sb.AppendLine(string.Format("\t{0} = {1}", item.Key, item.Value));
                 }
@@ -261,16 +266,12 @@ namespace Salient.ReliableHttpClient
                 result.Exception = ReliableHttpException.Create(this.Exception);
             }
 
-            if (Headers != null)
+            var headers = GetHeaders();
+            if (headers != null)
             {
-                result.Headers = new Dictionary<string, object>(this.Headers);
+                result._headers = headers;
             }
-
-
             return result;
-
-
-
         }
     }
 }

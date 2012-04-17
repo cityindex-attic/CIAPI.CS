@@ -135,7 +135,9 @@ namespace CIAPI.IntegrationTests.Rpc
                                                   throw new Exception("no matching request found");
                                               }
 
+                                              // now set up the response...
 
+                                              request.GetResponse();
                                               Debugger.Break();
 
                                           };

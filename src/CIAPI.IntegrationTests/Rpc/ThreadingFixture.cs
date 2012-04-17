@@ -27,7 +27,7 @@ namespace CIAPI.IntegrationTests.Rpc
             var gate = new ManualResetEvent(false);
             var successfulResponses = 0;
 
-            var totalRequestsToMake = 10;
+            var totalRequestsToMake = 20;
             for (var i = 0; i < totalRequestsToMake; i++)
             {
                 
