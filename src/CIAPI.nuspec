@@ -16,7 +16,6 @@
     <language>en-GB</language>
   </metadata>
   <files>
-    <file src="..\src\samples\ConsoleSpikes\Example.FetchNews.cs" target="content"/>
 
     <file src="..\dist\lib\ciapi\bin\**\DotNetClient_N2.dll" target="lib\net35" />
     <file src="..\dist\lib\ciapi\bin\**\Salient.ReliableHttpClient.dll" target="lib\net35" />

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading;
 #if !SILVERLIGHT
-using System.Web;
 #else
 #if !WINDOWS_PHONE
 #else
@@ -10,7 +9,19 @@ using System.Web;
 
 namespace Salient.ReliableHttpClient
 {
-    
+    public enum RequestNotificationStatus
+    {
+        ///<summary>
+        ///</summary>
+        Continue,
+        ///<summary>
+        ///</summary>
+        Pending,
+        ///<summary>
+        ///</summary>
+        FinishRequest
+    }
+
     public class ReliableAsyncResult : IAsyncResult
     {
         // Fields
