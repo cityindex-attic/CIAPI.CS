@@ -27,7 +27,7 @@ namespace CIAPI.IntegrationTests.Rpc
             var gate = new ManualResetEvent(false);
             var successfulResponses = 0;
 
-            var totalRequestsToMake = 10;
+            var totalRequestsToMake = 500;
             for (var i = 0; i < totalRequestsToMake; i++)
             {
                 
@@ -56,7 +56,7 @@ namespace CIAPI.IntegrationTests.Rpc
                                });
             }
 
-            gate.WaitOne(TimeSpan.FromSeconds(totalRequestsToMake));
+            gate.WaitOne(TimeSpan.FromSeconds(totalRequestsToMake*2));
 
             Assert.AreEqual(totalRequestsToMake, successfulResponses,"One of the requests failed");
 
