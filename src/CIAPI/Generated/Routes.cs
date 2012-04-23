@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Salient.ReliableHttpClient;
+using Salient.ReliableHttpClient.Serialization;
 using Salient.ReliableHttpClient.Serialization.Newtonsoft;
 using CIAPI.DTO;
 namespace CIAPI.Rpc
@@ -23,6 +24,36 @@ private Client _client;
 public string AppKey { get; set; }
         public Client(Uri rpcUri, Uri streamingUri, string appKey)
             : base(new Serializer())
+        {
+	#if SILVERLIGHT
+	#if WINDOWS_PHONE
+	        UserAgent = "CIAPI.PHONE7."+ GetVersionNumber();
+	#else
+	        UserAgent = "CIAPI.SILVERLIGHT."+ GetVersionNumber();
+	#endif
+	#else
+	        UserAgent = "CIAPI.CS." + GetVersionNumber();
+	#endif
+        AppKey=appKey;
+        _client=this;
+        _rootUri = rpcUri;
+        _streamingUri = streamingUri;
+
+            this. Authentication = new _Authentication(this);
+            this. PriceHistory = new _PriceHistory(this);
+            this. News = new _News(this);
+            this. CFDMarkets = new _CFDMarkets(this);
+            this. SpreadMarkets = new _SpreadMarkets(this);
+            this. Market = new _Market(this);
+            this. TradesAndOrders = new _TradesAndOrders(this);
+            this. AccountInformation = new _AccountInformation(this);
+            this. Messaging = new _Messaging(this);
+            this. Watchlist = new _Watchlist(this);
+            this. ExceptionHandling = new _ExceptionHandling(this);
+        Log.Debug("Rpc.Client created for " + _rootUri.AbsoluteUri);
+        }
+        public Client(Uri rpcUri, Uri streamingUri, string appKey,IJsonSerializer serializer, IRequestFactory factory)
+            : base(serializer, factory)
         {
 	#if SILVERLIGHT
 	#if WINDOWS_PHONE

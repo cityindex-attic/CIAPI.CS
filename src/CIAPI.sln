@@ -75,6 +75,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Salient.ReliableHttpClient.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Salient.ReliableHttpClient.Serializer.Newtonsoft.Phone7", "ReliableHttpClient\Salient.ReliableHttpClient.Serializer.Newtonsoft.Phone7\Salient.ReliableHttpClient.Serializer.Newtonsoft.Phone7.csproj", "{611F6E81-638A-4734-83B6-9F22167870BE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Salient.ReliableHttpClient.UnitTests", "ReliableHttpClient\Salient.ReliableHttpClient.UnitTests\Salient.ReliableHttpClient.UnitTests.csproj", "{91B276EB-D5E6-40AF-9FA0-DF956489AF87}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Salient.ReliableHttpClient.ReferenceImplementation", "ReliableHttpClient\Salient.ReliableHttpClient.ReferenceImplementation\Salient.ReliableHttpClient.ReferenceImplementation.csproj", "{AEDA66F4-E83F-4971-95B3-154F32132A87}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -279,6 +283,26 @@ Global
 		{611F6E81-638A-4734-83B6-9F22167870BE}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{611F6E81-638A-4734-83B6-9F22167870BE}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{611F6E81-638A-4734-83B6-9F22167870BE}.Release|x86.ActiveCfg = Release|Any CPU
+		{91B276EB-D5E6-40AF-9FA0-DF956489AF87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91B276EB-D5E6-40AF-9FA0-DF956489AF87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91B276EB-D5E6-40AF-9FA0-DF956489AF87}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{91B276EB-D5E6-40AF-9FA0-DF956489AF87}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{91B276EB-D5E6-40AF-9FA0-DF956489AF87}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{91B276EB-D5E6-40AF-9FA0-DF956489AF87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91B276EB-D5E6-40AF-9FA0-DF956489AF87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91B276EB-D5E6-40AF-9FA0-DF956489AF87}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{91B276EB-D5E6-40AF-9FA0-DF956489AF87}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{91B276EB-D5E6-40AF-9FA0-DF956489AF87}.Release|x86.ActiveCfg = Release|Any CPU
+		{AEDA66F4-E83F-4971-95B3-154F32132A87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AEDA66F4-E83F-4971-95B3-154F32132A87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AEDA66F4-E83F-4971-95B3-154F32132A87}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{AEDA66F4-E83F-4971-95B3-154F32132A87}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{AEDA66F4-E83F-4971-95B3-154F32132A87}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{AEDA66F4-E83F-4971-95B3-154F32132A87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AEDA66F4-E83F-4971-95B3-154F32132A87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AEDA66F4-E83F-4971-95B3-154F32132A87}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{AEDA66F4-E83F-4971-95B3-154F32132A87}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{AEDA66F4-E83F-4971-95B3-154F32132A87}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -299,5 +323,7 @@ Global
 		{334EDC51-9E5F-4B3C-A987-AC721C55FF0C} = {B5A5E490-D2BD-4449-8A42-7D218C493F02}
 		{B2F31D08-C115-451D-BAD2-F56F2148143B} = {B5A5E490-D2BD-4449-8A42-7D218C493F02}
 		{611F6E81-638A-4734-83B6-9F22167870BE} = {B5A5E490-D2BD-4449-8A42-7D218C493F02}
+		{91B276EB-D5E6-40AF-9FA0-DF956489AF87} = {B5A5E490-D2BD-4449-8A42-7D218C493F02}
+		{AEDA66F4-E83F-4971-95B3-154F32132A87} = {B5A5E490-D2BD-4449-8A42-7D218C493F02}
 	EndGlobalSection
 EndGlobal

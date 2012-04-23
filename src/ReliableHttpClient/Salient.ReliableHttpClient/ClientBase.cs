@@ -39,7 +39,7 @@ namespace Salient.ReliableHttpClient
             
         }
 
-        protected ClientBase(IJsonSerializer serializer, IRequestFactory factory)
+        public ClientBase(IJsonSerializer serializer, IRequestFactory factory)
             : this(serializer)
         {
             Controller = new RequestController(serializer, factory);

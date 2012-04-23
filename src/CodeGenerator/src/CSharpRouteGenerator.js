@@ -251,7 +251,30 @@
             self.writeLine('        Log.Debug("Rpc.Client created for " + _rootUri.AbsoluteUri);');
             
             self.writeLine("        }");
- 
+
+            self.writeLine("        public Client(Uri rpcUri, Uri streamingUri, string appKey,IJsonSerializer serializer, IRequestFactory factory)");
+            self.writeLine("            : base(serializer, factory)");
+            self.writeLine("        {");
+            self.writeLine('	#if SILVERLIGHT');
+            self.writeLine('	#if WINDOWS_PHONE');
+            self.writeLine('	        UserAgent = "CIAPI.PHONE7."+ GetVersionNumber();');
+            self.writeLine('	#else');
+            self.writeLine('	        UserAgent = "CIAPI.SILVERLIGHT."+ GetVersionNumber();');
+            self.writeLine('	#endif');
+            self.writeLine('	#else');
+            self.writeLine('	        UserAgent = "CIAPI.CS." + GetVersionNumber();');
+            self.writeLine('	#endif');
+            self.writeLine("        AppKey=appKey;");
+            self.writeLine("        _client=this;");
+            self.writeLine("        _rootUri = rpcUri;");
+            self.writeLine("        _streamingUri = streamingUri;");
+
+            self.writeLine(subClassInitializer);
+            self.writeLine('        Log.Debug("Rpc.Client created for " + _rootUri.AbsoluteUri);');
+
+            self.writeLine("        }");
+
+            //
 
 
             each(subClasses, function (subClass, key) {

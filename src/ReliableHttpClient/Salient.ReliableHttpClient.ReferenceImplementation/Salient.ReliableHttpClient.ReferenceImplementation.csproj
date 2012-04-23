@@ -34,7 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Salient.ReflectiveLoggingAdapter.35">
-      <HintPath>..\packages\Salient.ReflectiveLoggingAdapter.3.1.0\lib\net35\Release\Salient.ReflectiveLoggingAdapter.35.dll</HintPath>
+      <HintPath>..\..\packages\Salient.ReflectiveLoggingAdapter.3.1.0\lib\net35\Release\Salient.ReflectiveLoggingAdapter.35.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -51,6 +51,11 @@
     <Compile Include="TestClass.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Salient.ReliableHttpClient.Serializer.Newtonsoft\Salient.ReliableHttpClient.Serializer.Newtonsoft.csproj">
       <Project>{B2F31D08-C115-451D-BAD2-F56F2148143B}</Project>
       <Name>Salient.ReliableHttpClient.Serializer.Newtonsoft</Name>
@@ -59,9 +64,6 @@
       <Project>{528B283F-41C8-489D-A031-C9A4058BB283}</Project>
       <Name>Salient.ReliableHttpClient</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />

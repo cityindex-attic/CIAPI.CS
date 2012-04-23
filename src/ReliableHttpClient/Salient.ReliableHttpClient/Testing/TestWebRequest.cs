@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -7,6 +8,90 @@ using System.Threading;
 
 namespace Salient.ReliableHttpClient.Testing
 {
+    public class TestWebStream : System.IO.Stream
+    {
+        public TestWebStream()
+        {
+
+        }
+        public TestWebStream(Byte[] value)
+        {
+            _internal = new MemoryStream(value);
+        }
+        private readonly System.IO.MemoryStream _internal = new System.IO.MemoryStream();
+        public override void Flush()
+        {
+            _internal.Flush();
+        }
+
+        public override long Seek(long offset, System.IO.SeekOrigin origin)
+        {
+            return _internal.Seek(offset, origin);
+        }
+
+        public override void SetLength(long value)
+        {
+            _internal.SetLength(value);
+        }
+
+        public override int Read(byte[] buffer, int offset, int count)
+        {
+            return _internal.Read(buffer, offset, count);
+        }
+
+        public override void Write(byte[] buffer, int offset, int count)
+        {
+            _internal.Write(buffer, offset, count);
+        }
+
+        public override bool CanRead
+        {
+            get { return _internal.CanRead; }
+        }
+
+        public override bool CanSeek
+        {
+            get { return _internal.CanSeek; }
+        }
+
+        public override bool CanWrite
+        {
+            get { return _internal.CanSeek; }
+        }
+
+        public override long Length
+        {
+            get { return _internal.Length; }
+        }
+
+        public override long Position
+        {
+            get { return _internal.Position; }
+            set { _internal.Position = value; }
+        }
+        public override void Close()
+        {
+            _content = _internal.ToArray();
+            base.Close();
+        }
+
+        private Byte[] _content;
+        public Byte[] Content
+        {
+            get
+            {
+
+                if (CanRead)
+                {
+                    return _internal.ToArray();
+                }
+                else
+                {
+                    return _content;
+                }
+            }
+        }
+    }
     public delegate void TestWebRequestPrepare(TestWebRequest request);
 
     public class TestWebRequest : WebRequest
@@ -19,9 +104,9 @@ namespace Salient.ReliableHttpClient.Testing
         private readonly Exception _responseStreamException;
         private readonly Exception _endGetResponseException;
 
-        private readonly MemoryStream _requestStream = new MemoryStream();
-        private readonly MemoryStream _responseStream = new MemoryStream();
-        public MemoryStream ResponseStream
+        private TestWebStream _requestStream = new TestWebStream();
+        private readonly TestWebStream _responseStream = new TestWebStream();
+        public TestWebStream ResponseStream
         {
             get
             {
@@ -60,10 +145,13 @@ namespace Salient.ReliableHttpClient.Testing
             _uri = uri;
         }
 
-    
 
+        
         public override IAsyncResult BeginGetResponse(AsyncCallback callback, object state)
         {
+
+            
+
             PrepareResponse(this);
 
             if (_responseStreamException != null)
@@ -89,6 +177,9 @@ namespace Salient.ReliableHttpClient.Testing
         /// <summary>See <see cref="WebRequest.GetResponse"/>.</summary>
         public override WebResponse GetResponse()
         {
+
+            PrepareResponse(this);
+
             using (var wait = new AutoResetEvent(false))
             {
                 wait.WaitOne(_latency);
@@ -111,14 +202,14 @@ namespace Salient.ReliableHttpClient.Testing
             return new TestAsyncResult(callback, state); //we don't want any latency for the request
         }
 
-        public override Stream EndGetRequestStream(IAsyncResult asyncResult)
+        public override System.IO.Stream EndGetRequestStream(IAsyncResult asyncResult)
         {
-            return new MemoryStream();
+            return _requestStream;
         }
 
 #if !SILVERLIGHT
         /// <summary>See <see cref="WebRequest.GetRequestStream"/>.</summary>
-        public override Stream GetRequestStream()
+        public override System.IO.Stream GetRequestStream()
         {
             if (_requestStreamException != null)
             {
@@ -135,12 +226,22 @@ namespace Salient.ReliableHttpClient.Testing
             _webResponseAsyncResult.Abort();
         }
 
-        /// <summary>Returns the request contents as a string.</summary>
-        public string ContentAsString()
+        private string _requestBody;
+        public string RequestBody
         {
-            byte[] response = ReadFully(_requestStream);
-            return Encoding.UTF8.GetString(response, 0, response.Length);
+            get
+            {
+                if (_requestStream != null)
+                {
+                    byte[] requestStreamContent = _requestStream.Content;
+                    return Encoding.UTF8.GetString(requestStreamContent, 0, requestStreamContent.Length);
+
+                }
+                return null;
+            }
+            set { _requestStream = new TestWebStream(Encoding.UTF8.GetBytes(value)); }
         }
+
 
         private void ThrowIfAborted()
         {
@@ -151,7 +252,7 @@ namespace Salient.ReliableHttpClient.Testing
             }
         }
 
-        private static byte[] ReadFully(Stream stream)
+        public static byte[] ReadFully(Stream stream)
         {
             var buffer = new byte[32768];
             using (var ms = new MemoryStream())
@@ -164,6 +265,41 @@ namespace Salient.ReliableHttpClient.Testing
                     ms.Write(buffer, 0, read);
                 }
             }
+        }
+
+
+
+    }
+    public class TestWebRequestFinder
+    {
+        private List<RequestInfoBase> _reference;
+        public List<RequestInfoBase> Reference
+        {
+            get { return _reference; }
+            set { _reference = value; }
+        }
+
+        public RequestInfoBase FindMatchExact(TestWebRequest webRequest)
+        {
+            // compare method, content type, accept, url and request body
+            foreach (RequestInfoBase r in _reference)
+            {
+                if (r.Uri.AbsoluteUri != webRequest.RequestUri.AbsoluteUri)
+                {
+                    continue;
+                }
+
+
+                if (r.RequestBody != webRequest.RequestBody)
+                {
+                    continue;
+                }
+
+                return r;
+
+
+            }
+            return null;
         }
     }
 }
