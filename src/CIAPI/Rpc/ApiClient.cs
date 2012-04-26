@@ -84,16 +84,16 @@ namespace CIAPI.Rpc
         ///// <param name="parameters"></param>
         ///// <param name="cacheDuration"></param>
         ///// <param name="throttleScope"></param>
-        protected override void BeforeIssueRequest(Uri uri, RequestMethod method, string body, Dictionary<string, object> headers, ContentType requestContentType, ContentType responseContentType, TimeSpan cacheDuration, int timeout, string target, string uriTemplate, int retryCount, Dictionary<string, object> parameters)
+        protected override void BeforeIssueRequest(Uri uri, RequestMethod method, string body, ContentType requestContentType, ContentType responseContentType, TimeSpan cacheDuration, int timeout, string target, string uriTemplate, int retryCount, Dictionary<string, object> parameters)
         {
             if (uri.AbsoluteUri.IndexOf("/session", StringComparison.OrdinalIgnoreCase) == -1)
             {
-                headers["UserName"] = UserName;
+                SetHeader("UserName", UserName);
                 if (Session == null)
                 {
                     throw new ReliableHttpException("Session is null. Have you created a session? (logged on)");
                 }
-                headers["Session"] = Session;
+                SetHeader("Session", Session);
             }
         }
 
