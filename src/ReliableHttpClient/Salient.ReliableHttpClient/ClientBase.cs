@@ -11,7 +11,7 @@ namespace Salient.ReliableHttpClient
     public class ClientBase : IDisposable
     {
         protected RequestController Controller;
-        protected Dictionary<string, object> Headers = new Dictionary<string, object>();
+        private readonly Dictionary<string, object> _headers = new Dictionary<string, object>();
         public IJsonSerializer Serializer { get; set; }
         
         public bool IsRecording
@@ -52,7 +52,7 @@ namespace Salient.ReliableHttpClient
 
 
         protected virtual void BeforeIssueRequest(Uri uri, RequestMethod method, string body,
-                                                  Dictionary<string, object> headers, ContentType requestContentType,
+                                                  ContentType requestContentType,
                                                   ContentType responseContentType, TimeSpan cacheDuration, int timeout,
                                                   string target, string uriTemplate, int retryCount,
                                                   Dictionary<string, object> parameters)
@@ -63,17 +63,22 @@ namespace Salient.ReliableHttpClient
 
         protected void SetHeader(string key, object value)
         {
-            Headers[key] = value;
+            lock (_headers)
+            {
+                _headers[key] = value;
+            }
         }
 
         protected void RemoveHeader(string key)
         {
-            if (Headers.ContainsKey(key))
+            lock (_headers)
             {
-                Headers.Remove(key);
+                if (_headers.ContainsKey(key))
+                {
+                    _headers.Remove(key);
+                }
             }
         }
-
 
 
         /// <summary>
@@ -257,10 +262,10 @@ namespace Salient.ReliableHttpClient
 
             Uri uri = BuildUrl(target, uriTemplate);
 
-            BeforeIssueRequest(uri, method, body, Headers, requestContentType, responseContentType, cacheDuration,
+            BeforeIssueRequest(uri, method, body, requestContentType, responseContentType, cacheDuration,
                                timeout, target, uriTemplate, retryCount, parameters);
 
-            Guid id = Controller.BeginRequest(uri, method, body, Headers, requestContentType, responseContentType,
+            Guid id = Controller.BeginRequest(uri, method, body, _headers, requestContentType, responseContentType,
                                               cacheDuration, timeout, target, uriTemplate, retryCount, parameters,
                                               callback, state);
             return id;
