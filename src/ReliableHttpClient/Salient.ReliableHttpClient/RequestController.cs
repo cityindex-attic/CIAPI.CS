@@ -333,9 +333,13 @@ namespace Salient.ReliableHttpClient
                                           int retryCount, Dictionary<string, object> parameters,
                                           ApiAsyncCallback callback, object state)
         {
-            RequestInfo info = RequestInfo.Create(method, target, uriTemplate, parameters, UserAgent, headers,
-                                                  requestContentType, responseContentType, cacheDuration, timeout,
-                                                  retryCount, uri, body, _requestFactory);
+            RequestInfo info;
+            lock (headers)
+            {
+                info = RequestInfo.Create(method, target, uriTemplate, parameters, UserAgent, headers,
+                                                      requestContentType, responseContentType, cacheDuration, timeout,
+                                                      retryCount, uri, body, _requestFactory);
+            }
             info.BuildRequest(_requestFactory);
             info.ProcessingComplete += RequestCompleted;
             if (callback != null)
