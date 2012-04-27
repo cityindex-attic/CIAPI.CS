@@ -177,7 +177,7 @@ namespace Salient.ReliableHttpClient
             // #TODO: obfuscate anything that looks like a password in Uri and parameters
 
             sb.AppendLine(string.Format("Item: #{0} {3} {2} [{1}]", Index, Id, Uri, Method));
-            sb.AppendLine(string.Format("Target/UriTemplate: {0} {1}", Target, UriTemplate));
+            sb.AppendLine(string.Format("Target/UriTemplate: {0}{1}", Target, UriTemplate));
             sb.AppendLine(string.Format("State: {0}", State));
 
             sb.AppendLine("Headers:");

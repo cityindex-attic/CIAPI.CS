@@ -175,7 +175,8 @@ namespace Salient.ReliableHttpClient
                                 catch (Exception ex){
                                     // the only time an exception will come out of CompleteRequest is if the request wants to be retried
                                     request.AttemptedRetries++;
-                                    Log.Warn(string.Format("retrying request {3} {0}: attempt #{1} : error:{2}",request.Id,request.AttemptedRetries,ex.Message,request.Index));
+                                    Log.Warn(string.Format("retrying request {3} {0}: attempt #{1} : error:{2} \r\nrequest:\r\n{4}",
+                                        request.Id, request.AttemptedRetries, ex.Message, request.Index, request.ToString()));
                                     // create a new httprequest for this guy
                                     request.BuildRequest(_requestFactory);
                                     //put it back in the queue. if it belongs in the cache it is already there.
@@ -190,8 +191,8 @@ namespace Salient.ReliableHttpClient
                     }
                     catch (Exception ex)
                     {
-                        string message = string.Format("Error dispatching #{0} : {1} \r\n{2}", request.Index,
-                                                       request.Uri, ex.Message);
+                        string message = string.Format("Error dispatching #{0} : {1} \r\n{2} \r\n{3}", request.Index,
+                                                       request.Uri, ex.Message, request.ToString());
                         Log.Error(message);
                         ReliableHttpException ex2 = ReliableHttpException.Create(message, ex);
                         throw ex2;
