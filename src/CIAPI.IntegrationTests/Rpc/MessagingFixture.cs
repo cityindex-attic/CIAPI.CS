@@ -24,6 +24,19 @@ namespace CIAPI.IntegrationTests.Rpc
         }
 
         [Test]
+        public void CanGetListOfCulturesLookup()
+        {
+            var rpcClient = BuildRpcClient();
+
+            const string lookupEntityName = "culture";
+            var language = rpcClient.Messaging.GetSystemLookup(lookupEntityName, 0); //A bit wierd, but you need to specify a dummy culture when asking for a list of cultures returned in...
+
+            Assert.IsTrue(language.ApiCultureLookupDTOList.Length > 0, "no lookup values returned for " + lookupEntityName);
+
+            rpcClient.LogOut();
+        }
+
+        [Test]
         public void CanResolveMagicNumber()
         {
 
@@ -38,6 +51,7 @@ namespace CIAPI.IntegrationTests.Rpc
 
             rpcClient.LogOut();
         }
+        
         [Test]
         public void CanResolveDTO()
         {
@@ -78,6 +92,7 @@ namespace CIAPI.IntegrationTests.Rpc
 
             rpcClient.LogOut();
         }
+
         [Test]
         public void LookupIsCached()
         {
@@ -101,5 +116,7 @@ namespace CIAPI.IntegrationTests.Rpc
 
             Assert.IsTrue(sw.ElapsedMilliseconds < 10000, "took too long - not caching");
         }
+
+
     }
 }
