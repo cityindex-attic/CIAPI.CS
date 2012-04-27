@@ -1,0 +1,3 @@
+Sample app to test the creation of entry orders with applicability type "good
+until date". This behaviour worked in previous versions of the CIAPI, but the
+5.0 branch no longer works.
