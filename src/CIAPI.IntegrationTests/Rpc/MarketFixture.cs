@@ -16,8 +16,6 @@ namespace CIAPI.IntegrationTests.Rpc
     [TestFixture]
     public class MarketFixture : RpcFixtureBase
     {
-  
-
         [Test, Ignore("need to add tags to account")]
         public void CanGetMarketTags()
         {
@@ -112,6 +110,7 @@ namespace CIAPI.IntegrationTests.Rpc
 
             rpcClient.LogOut();
         }
+
         [Test]
         public void ListMarketInformationSearchQueryIsValidated()
         {
@@ -153,12 +152,33 @@ namespace CIAPI.IntegrationTests.Rpc
         {
             var rpcClient = BuildRpcClient();
             var marketList = GetAvailableCFDMarkets(rpcClient);
+            
+            var response = rpcClient.Market.GetMarketInformation(marketList[0].MarketId.ToString());
+            string stringWithValues = response.MarketInformation.ToStringWithValues();
+            Console.WriteLine(stringWithValues);
 
-            foreach (var market in marketList)
-            {
-                var response = rpcClient.Market.GetMarketInformation(market.MarketId.ToString());
-                Assert.IsTrue(response.MarketInformation.MarketId == market.MarketId);
-            }
+            /* Returns data like the following (2012/04/27)
+            ApiMarketInformationDTO: 
+                MarketId=154291    Name=GBP/AUD (per 0.0001) CFD    MarginFactor=1.00000000    MinMarginFactor=NULL    
+                MaxMarginFactor=NULL    MarginFactorUnits=26    MinDistance=0.00    WebMinSize=1.00000000    
+                MaxSize=2200.00000000    Market24H=True    PriceDecimalPlaces=5    DefaultQuoteLength=180    TradeOnWeb=True    
+                LimitUp=False    LimitDown=False    LongPositionOnly=False    CloseOnly=False    MarketEod=    
+                PriceTolerance=10.00000000    ConvertPriceToPipsMultiplier=10000    MarketSettingsTypeId=2    
+                MarketSettingsType=CFD    MobileShortName=GBP/AUD    CentralClearingType=No    
+                CentralClearingTypeDescription=None    MarketCurrencyId=1    PhoneMinSize=5.00000000    
+                DailyFinancingAppliedAtUtc=26/04/2012 21:00:00    NextMarketEodTimeUtc=26/04/2012 21:00:00    
+                TradingStartTimeUtc=NULL    TradingEndTimeUtc=NULL    
+                MarketPricingTimes=ApiTradingDayTimesDTO: 
+                    DayOfWeek=1    StartTimeUtc=26/04/2012 11:00:00 +00:00    EndTimeUtc=NULL
+            ApiTradingDayTimesDTO: 
+                DayOfWeek=5    StartTimeUtc=NULL    EndTimeUtc=28/04/2012 00:15:00 +00:00
+                MarketBreakTimes=    
+                MarketSpreads=ApiMarketSpreadDTO: 
+                    SpreadTimeUtc=NULL    Spread=0.00067000    SpreadUnits=27
+                    GuaranteedOrderPremium=8.00    GuaranteedOrderPremiumUnits=1    GuaranteedOrderMinDistance=75.00    GuaranteedOrderMinDistanceUnits=27
+            */
+            
+            Assert.That(response.MarketInformation.Name.Length, Is.GreaterThan(1));
 
             rpcClient.LogOut();
         }

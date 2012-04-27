@@ -19,10 +19,12 @@ namespace CIAPI
             var sb = new StringBuilder();
             foreach (PropertyInfo propertyInfo in dto.GetType().GetProperties())
             {
-                string formattedValue = "";
+                var formattedValue = "";
+                var value = propertyInfo.GetValue(dto, null) ?? "NULL";
+                
                 if (typeof(Array).IsAssignableFrom(propertyInfo.PropertyType))
                 {
-                    foreach (var item in (Array)propertyInfo.GetValue(dto, null))
+                    foreach (var item in (Array)value)
                     {
                         formattedValue += item.ToStringWithValues();
                     }
@@ -33,10 +35,10 @@ namespace CIAPI
                     switch (propertyInfo.PropertyType.Name)
                     {
                         case "DateTime":
-                            formattedValue = ((DateTime)propertyInfo.GetValue(dto, null)).ToString("u");
+                            formattedValue = ((DateTime)value).ToString("u");
                             break;
                         default:
-                            formattedValue = propertyInfo.GetValue(dto, null).ToString();
+                            formattedValue = value.ToString();
                             break;
                     }
                 }
