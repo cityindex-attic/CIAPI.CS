@@ -1,0 +1,4 @@
+Sample app to test the approval of trades performed by clients on the dealer
+watchlist. In this case, a trade is attempted but it cannot be completed
+because currently at least one of the fields of the OrdersDTO (the data
+element for the Orders stream) is not correctly mapped.

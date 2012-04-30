@@ -77,6 +77,7 @@
     <Compile Include="Rpc\WatchListFixture.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Streaming\ClientAccountFixture.cs" />
+    <Compile Include="Streaming\OrdersFixture.cs" />
     <Compile Include="Streaming\DefaultPricesFixture.cs" />
     <Compile Include="Streaming\MultipleStreamsFixture.cs" />
     <Compile Include="Streaming\PriceFixture.cs" />

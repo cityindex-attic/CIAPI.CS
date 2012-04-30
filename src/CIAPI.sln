@@ -81,6 +81,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Salient.ReliableHttpClient.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "josemuniz -cannot-save-orders-with-applicability-type--good-until-date-", "Samples\josemuniz-CIAPI.CS-cannot-save-orders-with-applicability-type--good-until-date--68700b3\josemuniz -cannot-save-orders-with-applicability-type--good-until-date-.csproj", "{5D7665AB-79E1-4BCE-AC7D-DB7186811D27}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "josemuniz-CIAPI.CS-orders-stream-problem-fcf46ed", "Samples\josemuniz-CIAPI.CS-orders-stream-problem-fcf46ed\josemuniz-CIAPI.CS-orders-stream-problem-fcf46ed.csproj", "{D4C755E5-9981-47EA-A1D3-010350AA4E01}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -319,6 +321,20 @@ Global
 		{5D7665AB-79E1-4BCE-AC7D-DB7186811D27}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{5D7665AB-79E1-4BCE-AC7D-DB7186811D27}.Release|Mixed Platforms.Deploy.0 = Release|Any CPU
 		{5D7665AB-79E1-4BCE-AC7D-DB7186811D27}.Release|x86.ActiveCfg = Release|Any CPU
+		{D4C755E5-9981-47EA-A1D3-010350AA4E01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4C755E5-9981-47EA-A1D3-010350AA4E01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4C755E5-9981-47EA-A1D3-010350AA4E01}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{D4C755E5-9981-47EA-A1D3-010350AA4E01}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{D4C755E5-9981-47EA-A1D3-010350AA4E01}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{D4C755E5-9981-47EA-A1D3-010350AA4E01}.Debug|Mixed Platforms.Deploy.0 = Debug|Any CPU
+		{D4C755E5-9981-47EA-A1D3-010350AA4E01}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D4C755E5-9981-47EA-A1D3-010350AA4E01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4C755E5-9981-47EA-A1D3-010350AA4E01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4C755E5-9981-47EA-A1D3-010350AA4E01}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{D4C755E5-9981-47EA-A1D3-010350AA4E01}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{D4C755E5-9981-47EA-A1D3-010350AA4E01}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{D4C755E5-9981-47EA-A1D3-010350AA4E01}.Release|Mixed Platforms.Deploy.0 = Release|Any CPU
+		{D4C755E5-9981-47EA-A1D3-010350AA4E01}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -334,6 +350,7 @@ Global
 		{A9347E3A-E64D-4D1F-96A4-561291C862AF} = {62DA09C0-6061-4B9E-ADDE-173D1058628A}
 		{1CDC4AFB-7B3B-4077-80AD-D4DFDD597740} = {62DA09C0-6061-4B9E-ADDE-173D1058628A}
 		{5D7665AB-79E1-4BCE-AC7D-DB7186811D27} = {62DA09C0-6061-4B9E-ADDE-173D1058628A}
+		{D4C755E5-9981-47EA-A1D3-010350AA4E01} = {62DA09C0-6061-4B9E-ADDE-173D1058628A}
 		{F28FF467-20A6-4014-A0EC-3E0E4533F98A} = {97F879F5-F3A3-4990-ABAC-8BB7FE0B3F6E}
 		{1AF6DE5B-007F-4630-AB9A-B8E2AE1D2EB5} = {97F879F5-F3A3-4990-ABAC-8BB7FE0B3F6E}
 		{528B283F-41C8-489D-A031-C9A4058BB283} = {B5A5E490-D2BD-4449-8A42-7D218C493F02}
