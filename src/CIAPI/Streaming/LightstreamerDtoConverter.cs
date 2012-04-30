@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using CIAPI.Streaming;
 using Lightstreamer.DotNet.Client;
+using Salient.ReflectiveLoggingAdapter;
 using Salient.ReliableHttpClient.Serialization;
 
 
@@ -12,6 +14,7 @@ namespace StreamingClient.Lightstreamer
     public class LightstreamerDtoConverter<TDto> : IMessageConverter<TDto> where TDto : new()
     {
         private IJsonSerializer _serializer;
+        private static readonly ILog Log = LogManager.GetLogger(typeof(LightstreamerDtoConverter<TDto>));
         public LightstreamerDtoConverter(IJsonSerializer serializer)
         {
             _serializer = serializer;
@@ -153,7 +156,7 @@ namespace StreamingClient.Lightstreamer
                     case TypeCode.UInt16:
                     case TypeCode.UInt32:
                     case TypeCode.UInt64:
-
+                        
                         if (string.IsNullOrEmpty(value))
                         {
                             // get a default value
@@ -161,9 +164,17 @@ namespace StreamingClient.Lightstreamer
                         }
                         else
                         {
-                            convertedValue = System.Convert.ChangeType(value, propertyType, CultureInfo.InvariantCulture);
+                            try
+                            {
+                                convertedValue = System.Convert.ChangeType(value, propertyType, CultureInfo.InvariantCulture);
+                            }
+                            catch (FormatException formatException)
+                            {
+                                Log.Error(formatException);
+                                // get a default value
+                                convertedValue = Activator.CreateInstance(propertyType);
+                            }
                         }
-
                         break;
 
                     case TypeCode.Empty:
