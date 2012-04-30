@@ -104,7 +104,7 @@ namespace CIAPI.Rpc
         public string UserName { get; set; }
         public string Session { get; set; }
 
-      
+
 
 
         public override string EndRequest(ReliableAsyncResult result)
@@ -182,7 +182,9 @@ namespace CIAPI.Rpc
                                                                        {"apiLogOnRequest", new ApiLogOnRequestDTO()
                                                                         {
                                                                             UserName=userName,
-                                                                            Password = password
+                                                                            Password = password,
+                                                                            AppKey = AppKey,
+                                                                            AppVersion = UserAgent
                                                                             }
                                                                          }
                                                                       }, ContentType.JSON, ContentType.JSON, TimeSpan.Zero, 30000, 2, callback, state);

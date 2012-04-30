@@ -13,6 +13,7 @@ namespace PhoneApp3
 {
     public partial class MainPage
     {
+        private ILog _logger = LogManager.GetLogger(typeof (MainPage));
         private const string USERNAME = "DM813766";
         private const string PASSWORD = "password";
         private const int MarketId = 154297;
@@ -26,8 +27,10 @@ namespace PhoneApp3
         private bool _ordered;
         private bool _listening;
 
-        private static readonly Uri RPC_URI = new Uri("https://ciapipreprod.cityindextest9.co.uk/TradingApi");
-        private static readonly Uri STREAM_URI = new Uri("https://pushpreprod.cityindextest9.co.uk/");
+        private static readonly Uri RPC_URI = new Uri("http://ciapipreprod.cityindextest9.co.uk/tradingapi");
+        private static readonly Uri STREAM_URI = new Uri("http://pushpreprod.cityindextest9.co.uk/");
+        //private static readonly Uri RPC_URI = new Uri("https://ciapi.cityindex.com/tradingapi");
+        //private static readonly Uri STREAM_URI = new Uri("https://push.cityindex.com");
 
         // Constructor
         public MainPage()
@@ -54,6 +57,7 @@ namespace PhoneApp3
             RpcClient = new Client(RPC_URI, STREAM_URI, "CI-WP7");
             RpcClient.BeginLogIn(USERNAME, PASSWORD, ar =>
             {
+                _logger .Info("ending login");
                 var session = RpcClient.EndLogIn(ar);
 
                 ThreadPool.QueueUserWorkItem(_ =>

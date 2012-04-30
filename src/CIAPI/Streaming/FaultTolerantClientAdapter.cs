@@ -63,6 +63,7 @@ namespace StreamingClient
             _sessionId = sessionId;
             _userName = userName;
             Client = new LSClient();
+            
         }
 
 

@@ -14,7 +14,55 @@ namespace CIAPI.IntegrationTests.Streaming
     {
         private ILog _logger = LogManager.GetLogger(typeof(PriceFixture));
 
- 
+        [Test]
+        public void JoseMunizIssue131()
+        {
+
+
+            var gate = new ManualResetEvent(false);
+
+            var streamingClient = BuildStreamingClient();
+
+
+            // odd - 80905 returns null values for the first update and then subsequently returns values - indicative of a spin-up process?
+            // 71442
+            var priceListener = streamingClient.BuildPricesListener(71442);
+
+
+            PriceDTO actual = null;
+
+            //Trap the Price given by the update event for checking
+
+
+            priceListener.MessageReceived += (s, e) =>
+            {
+                actual = e.Data;
+                gate.Set();
+            };
+
+
+            bool gotPriceInTime = true;
+            if (!gate.WaitOne(TimeSpan.FromSeconds(15)))
+            {
+                gotPriceInTime = false;
+                // don't want to throw while client is listening, hangs test
+            }
+
+
+            streamingClient.TearDownListener(priceListener);
+
+            streamingClient.Dispose();
+
+
+            Assert.IsTrue(gotPriceInTime, "A price update wasn't received in time");
+            Assert.IsNotNull(actual);
+            // i think the demo price stream may be delayed?
+            // anyway, this assertion is arbitrary and irrelevant to the test. 
+            // Assert.Greater(actual.TickDate, DateTime.UtcNow.AddMinutes(-10), "We're expecting a recent price");
+
+
+
+        }
 
         [Test]
         public void CanConsumePriceStream()
