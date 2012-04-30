@@ -59,7 +59,7 @@ namespace CIAPI.IntegrationTests.Streaming
 
                         var response = rpcClient.TradesAndOrders.Trade(order);
                         rpcClient.MagicNumberResolver.ResolveMagicNumbers(response);
-                        Assert.AreEqual("Accepted", response.Status_Resolved);
+                        Assert.AreEqual("Accepted", response.Status_Resolved, string.Format("Error placing order: \r\n{0}", response.ToStringWithValues()));
                     };
 
 
@@ -70,6 +70,7 @@ namespace CIAPI.IntegrationTests.Streaming
             finally
             {
                 streamingClient.TearDownListener(priceListener);
+                streamingClient.TearDownListener(ordersListener);
                 streamingClient.Dispose();
             }
         }

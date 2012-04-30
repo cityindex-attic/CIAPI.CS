@@ -140,11 +140,63 @@ namespace CIAPI.IntegrationTests.Rpc
         [Test]
         public void CanOrder()
         {
-            var order = new NewStopLimitOrderRequestDTO()
-                                                    {
+            var gate = new AutoResetEvent(false);
+            PriceDTO currentPrice = null;
+            OrderDTO newOrder = null;
+            var orderHasBeenPlacedFlag = false;
 
-                                                    };
-            var response = _rpcClient.TradesAndOrders.Order(order);
+            var marketInformation = _rpcClient.Market.GetMarketInformation(_CFDmarketId.ToString());
+            var pricesListener = _streamingClient.BuildPricesListener(_CFDmarketId);
+            var ordersListener = _streamingClient.BuildOrdersListener();
+
+            try
+            {
+                ordersListener.MessageReceived += (s, e) =>
+                {
+                    newOrder = e.Data;
+                    Console.WriteLine(
+                        string.Format(
+                            "New order has been recieved on Orders stream\r\n {0}",
+                            e.Data.ToStringWithValues()));
+                    gate.Set();
+                };
+
+                pricesListener.MessageReceived += (o, s) =>
+                {
+                    if (orderHasBeenPlacedFlag) return;
+
+                    currentPrice = s.Data;
+                    var order = new NewStopLimitOrderRequestDTO
+                    {
+                        MarketId = currentPrice.MarketId,
+                        BidPrice = currentPrice.Bid + 1,
+                        OfferPrice = currentPrice.Offer + 1,
+                        AuditId = currentPrice.AuditId,
+                        Quantity = marketInformation.MarketInformation.WebMinSize.GetValueOrDefault() + 1,
+                        TradingAccountId = _accounts.TradingAccounts[0].TradingAccountId,
+                        Direction = "buy",
+                        Applicability = "GTD",
+                        ExpiryDateTimeUTC = DateTime.UtcNow + TimeSpan.FromDays(1)
+                    };
+
+                    var response = _rpcClient.TradesAndOrders.Order(order);
+                    orderHasBeenPlacedFlag = true;
+                    _rpcClient.MagicNumberResolver.ResolveMagicNumbers(response);
+                    Assert.AreEqual("Accepted", response.Status_Resolved, string.Format("Error placing order: \r\n{0}", response.ToStringWithValues()));
+                };
+
+                if (!gate.WaitOne(TimeSpan.FromSeconds(15)))
+                {
+                    throw new Exception("timed out waiting for order notification");
+                }
+
+                Assert.IsNotNull(newOrder);
+            }
+            finally
+            {
+                _streamingClient.TearDownListener(pricesListener);
+                _streamingClient.TearDownListener(ordersListener);
+            }
         }
 
         [Test]

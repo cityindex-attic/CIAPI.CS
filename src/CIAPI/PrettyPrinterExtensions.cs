@@ -24,11 +24,17 @@ namespace CIAPI
                 
                 if (typeof(Array).IsAssignableFrom(propertyInfo.PropertyType))
                 {
-                    foreach (var item in (Array)value)
+                    try
                     {
-                        formattedValue += item.ToStringWithValues();
+                        foreach (var item in (Array)value)
+                        {
+                            formattedValue += item.ToStringWithValues();
+                        }
                     }
-                    
+                    catch (Exception e)
+                    {
+                        formattedValue += e.Message;
+                    }
                 }
                 else
                 {
