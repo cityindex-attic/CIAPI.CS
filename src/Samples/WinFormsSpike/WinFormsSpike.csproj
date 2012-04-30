@@ -110,6 +110,10 @@
     <Folder Include="Properties\DataSources\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\CIAPI.Serializer\CIAPI.Serializer.csproj">
+      <Project>{B6CE30C2-5A52-4A4C-884B-64504902F833}</Project>
+      <Name>CIAPI.Serializer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\CIAPI\CIAPI.csproj">
       <Project>{B40E6F1C-453E-44A2-BA9D-1692378B355C}</Project>
       <Name>CIAPI</Name>

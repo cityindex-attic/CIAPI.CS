@@ -81,13 +81,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\CIAPI.Serializer\CIAPI.Serializer.csproj">
+      <Project>{B6CE30C2-5A52-4A4C-884B-64504902F833}</Project>
+      <Name>CIAPI.Serializer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\CIAPI\CIAPI.csproj">
       <Project>{B40E6F1C-453E-44A2-BA9D-1692378B355C}</Project>
       <Name>CIAPI</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\ReliableHttpClient\Salient.ReliableHttpClient.Serializer.Newtonsoft\Salient.ReliableHttpClient.Serializer.Newtonsoft.csproj">
-      <Project>{B2F31D08-C115-451D-BAD2-F56F2148143B}</Project>
-      <Name>Salient.ReliableHttpClient.Serializer.Newtonsoft</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\ReliableHttpClient\Salient.ReliableHttpClient\Salient.ReliableHttpClient.csproj">
       <Project>{528B283F-41C8-489D-A031-C9A4058BB283}</Project>

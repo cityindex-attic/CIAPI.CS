@@ -83,6 +83,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "josemuniz -cannot-save-orde
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "josemuniz-CIAPI.CS-orders-stream-problem-fcf46ed", "Samples\josemuniz-CIAPI.CS-orders-stream-problem-fcf46ed\josemuniz-CIAPI.CS-orders-stream-problem-fcf46ed.csproj", "{D4C755E5-9981-47EA-A1D3-010350AA4E01}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CIAPI.Serializer", "CIAPI.Serializer\CIAPI.Serializer.csproj", "{B6CE30C2-5A52-4A4C-884B-64504902F833}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CIAPI.Serializer.Phone7", "CIAPI.Serializer.Phone7\CIAPI.Serializer.Phone7.csproj", "{706B893E-A562-429D-ADC3-DD2640C40236}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -335,6 +339,26 @@ Global
 		{D4C755E5-9981-47EA-A1D3-010350AA4E01}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{D4C755E5-9981-47EA-A1D3-010350AA4E01}.Release|Mixed Platforms.Deploy.0 = Release|Any CPU
 		{D4C755E5-9981-47EA-A1D3-010350AA4E01}.Release|x86.ActiveCfg = Release|Any CPU
+		{B6CE30C2-5A52-4A4C-884B-64504902F833}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6CE30C2-5A52-4A4C-884B-64504902F833}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6CE30C2-5A52-4A4C-884B-64504902F833}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{B6CE30C2-5A52-4A4C-884B-64504902F833}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{B6CE30C2-5A52-4A4C-884B-64504902F833}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B6CE30C2-5A52-4A4C-884B-64504902F833}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6CE30C2-5A52-4A4C-884B-64504902F833}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6CE30C2-5A52-4A4C-884B-64504902F833}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{B6CE30C2-5A52-4A4C-884B-64504902F833}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{B6CE30C2-5A52-4A4C-884B-64504902F833}.Release|x86.ActiveCfg = Release|Any CPU
+		{706B893E-A562-429D-ADC3-DD2640C40236}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{706B893E-A562-429D-ADC3-DD2640C40236}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{706B893E-A562-429D-ADC3-DD2640C40236}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{706B893E-A562-429D-ADC3-DD2640C40236}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{706B893E-A562-429D-ADC3-DD2640C40236}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{706B893E-A562-429D-ADC3-DD2640C40236}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{706B893E-A562-429D-ADC3-DD2640C40236}.Release|Any CPU.Build.0 = Release|Any CPU
+		{706B893E-A562-429D-ADC3-DD2640C40236}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{706B893E-A562-429D-ADC3-DD2640C40236}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{706B893E-A562-429D-ADC3-DD2640C40236}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

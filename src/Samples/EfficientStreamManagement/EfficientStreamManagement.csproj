@@ -109,13 +109,13 @@
       <Project>{F28FF467-20A6-4014-A0EC-3E0E4533F98A}</Project>
       <Name>CIAPI.Phone7</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\CIAPI.Serializer.Phone7\CIAPI.Serializer.Phone7.csproj">
+      <Project>{706B893E-A562-429D-ADC3-DD2640C40236}</Project>
+      <Name>CIAPI.Serializer.Phone7</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\ReliableHttpClient\Salient.ReliableHttpClient.Phone7\Salient.ReliableHttpClient.Phone7.csproj">
       <Project>{334EDC51-9E5F-4B3C-A987-AC721C55FF0C}</Project>
       <Name>Salient.ReliableHttpClient.Phone7</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\ReliableHttpClient\Salient.ReliableHttpClient.Serializer.Newtonsoft.Phone7\Salient.ReliableHttpClient.Serializer.Newtonsoft.Phone7.csproj">
-      <Project>{611F6E81-638A-4734-83B6-9F22167870BE}</Project>
-      <Name>Salient.ReliableHttpClient.Serializer.Newtonsoft.Phone7</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
