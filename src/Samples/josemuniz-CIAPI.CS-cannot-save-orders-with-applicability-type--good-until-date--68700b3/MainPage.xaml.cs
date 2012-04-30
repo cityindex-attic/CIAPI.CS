@@ -117,13 +117,14 @@ namespace PhoneApp5
                     var result = RpcClient.TradesAndOrders.EndTrade(ar);
 
                     Dispatcher.BeginInvoke(() =>
-                    {
-                        listBox1.Items.Add(String.Format("trading complete, status = {0}, status reason = {1}", result.Status, result.StatusReason));
-                        if (result.OrderId > 0)
-                        {
-                            listBox1.Items.Add(String.Format("created order {0}", result.OrderId));
-                        }
-                    });
+                                               {
+
+                                                   listBox1.Items.Add(String.Format("trading complete, status = {0}, status reason = {1}", result.Status, result.StatusReason));
+                                                   if (result.OrderId > 0)
+                                                   {
+                                                       listBox1.Items.Add(String.Format("created order {0}", result.OrderId));
+                                                   }
+                                               });
                 }
                 catch (Exception ex)
                 {
