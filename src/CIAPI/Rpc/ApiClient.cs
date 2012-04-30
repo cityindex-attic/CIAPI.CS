@@ -12,11 +12,42 @@ namespace CIAPI.Rpc
     // #TODO: reintegrate exception factory into ReliableHttpClient
     public partial class Client : ClientBase
     {
-        public override Guid BeginRequest(RequestMethod method, string target, string uriTemplate, Dictionary<string, object> parameters, ContentType requestContentType, ContentType responseContentType, TimeSpan cacheDuration, int timeout, int retryCount, ApiAsyncCallback callback, object state)
+        private Dictionary<string, object> GetHeaders(string target)
+        {
+            var headers = new Dictionary<string, object>();
+            if (target.IndexOf("/session", StringComparison.OrdinalIgnoreCase) == -1)
+            {
+                headers["UserName"] = UserName;
+                if (Session == null)
+                {
+                    throw new ReliableHttpException("Session is null. Have you created a session? (logged on)");
+                }
+                headers["Session"] = Session;
+            }
+            return headers;
+        }
+        public Guid BeginRequest(RequestMethod method, string target, string uriTemplate, Dictionary<string, object> parameters, ContentType requestContentType, ContentType responseContentType, TimeSpan cacheDuration, int timeout, int retryCount, ApiAsyncCallback callback, object state)
         {
             target = _rootUri.AbsoluteUri + "/" + target;
-            return base.BeginRequest(method, target, uriTemplate, parameters, requestContentType, responseContentType, cacheDuration, timeout, retryCount, callback, state);
+            Dictionary<string, object> headers = GetHeaders(target);
+            return base.BeginRequest(method, target, uriTemplate, headers, parameters, requestContentType, responseContentType, cacheDuration, timeout, retryCount, callback, state);
         }
+
+        public T Request<T>(RequestMethod method, string target, string uriTemplate, Dictionary<string, object> parameters, ContentType requestContentType, ContentType responseContentType, TimeSpan cacheDuration, int timeout, int retryCount)
+        {
+            target = _rootUri.AbsoluteUri + "/" + target;
+            Dictionary<string, object> headers = GetHeaders(target);
+
+            return base.Request<T>(method, target, uriTemplate, headers, parameters, requestContentType, responseContentType, cacheDuration, timeout, retryCount);
+        }
+        public string Request(RequestMethod method, string target, string uriTemplate, Dictionary<string, object> parameters, ContentType requestContentType, ContentType responseContentType, TimeSpan cacheDuration, int timeout, int retryCount)
+        {
+            target = _rootUri.AbsoluteUri + "/" + target;
+            Dictionary<string, object> headers = GetHeaders(target);
+            return base.Request(method, target, uriTemplate, headers, parameters, requestContentType, responseContentType, cacheDuration, timeout, retryCount);
+        }
+
+
         public ReliableHttpException GetJsonException(ReliableHttpException ex)
         {
             if (!string.IsNullOrEmpty(ex.ResponseText))
@@ -73,29 +104,7 @@ namespace CIAPI.Rpc
         public string UserName { get; set; }
         public string Session { get; set; }
 
-        ///// <summary>
-        ///// Authenticates the request with the API using request headers.
-        ///// </summary>
-        ///// <param name="request"></param>
-        ///// <param name="url"></param>
-        ///// <param name="target"></param>
-        ///// <param name="uriTemplate"></param>
-        ///// <param name="method"></param>
-        ///// <param name="parameters"></param>
-        ///// <param name="cacheDuration"></param>
-        ///// <param name="throttleScope"></param>
-        protected override void BeforeIssueRequest(Uri uri, RequestMethod method, string body, ContentType requestContentType, ContentType responseContentType, TimeSpan cacheDuration, int timeout, string target, string uriTemplate, int retryCount, Dictionary<string, object> parameters)
-        {
-            if (uri.AbsoluteUri.IndexOf("/session", StringComparison.OrdinalIgnoreCase) == -1)
-            {
-                SetHeader("UserName", UserName);
-                if (Session == null)
-                {
-                    throw new ReliableHttpException("Session is null. Have you created a session? (logged on)");
-                }
-                SetHeader("Session", Session);
-            }
-        }
+      
 
 
         public override string EndRequest(ReliableAsyncResult result)
@@ -126,7 +135,7 @@ namespace CIAPI.Rpc
             return new LightstreamerClient(_streamingUri, UserName, Session, Serializer);
 
         }
- 
+
 
         #region Authentication Wrapper
 

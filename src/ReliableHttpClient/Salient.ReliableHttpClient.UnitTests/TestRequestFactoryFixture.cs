@@ -19,7 +19,7 @@ namespace Salient.ReliableHttpClient.UnitTests
 
         // need to create a request processor that can perform common tasks such as locating a matching request keying off as many
         // properties as necessary, including request stream for posts...
-        [Test]
+        [Test,Ignore]
         public void Test()
         {
             var requestFactory = new TestRequestFactory();

@@ -4,11 +4,10 @@ using System.Text;
 using System.Threading;
 using CIAPI.DTO;
 using CIAPI.IntegrationTests.Streaming;
-using CIAPI.Streaming;
-
+using CIAPI.Rpc;
 using NUnit.Framework;
 using Salient.ReliableHttpClient;
-using Client = CIAPI.Rpc.Client;
+
 
 namespace CIAPI.IntegrationTests.Rpc
 {

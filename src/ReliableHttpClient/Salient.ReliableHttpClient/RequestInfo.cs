@@ -11,7 +11,7 @@ namespace Salient.ReliableHttpClient
 {
     public class RequestInfo : RequestInfoBase
     {
-        
+      
 
         private static readonly ILog Log = LogManager.GetLogger(typeof(RequestInfo));
 
@@ -49,9 +49,9 @@ namespace Salient.ReliableHttpClient
                                  Uri = uri,
                                  Method = method,
                                  UserAgent = userAgent,
-                                 _headers = new Dictionary<string, object>(headers),
+                                 _headers = new Dictionary<string, object>(headers ?? new Dictionary<string, object>()),
                                  RequestBody = requestBody,
-                                 Parameters = new Dictionary<string, object>(parameters),
+                                 Parameters = new Dictionary<string, object>(parameters ?? new Dictionary<string, object>()),
                                  CacheDuration = cacheDuration,
                                  RequestContentType = requestContentType,
                                  ResponseContentType = responseContentType,
@@ -92,7 +92,7 @@ namespace Salient.ReliableHttpClient
             //{
 
 
-                
+
             //    if (ex.Response != null)
             //    {
             //        if (ex.Response.ContentLength > 0)
@@ -133,8 +133,8 @@ namespace Salient.ReliableHttpClient
             }
             if (Exception != null)
             {
-                Log.Error(string.Format("request failed {0}: attempts {1} : error:{2}", Id, AttemptedRetries,
-                                        Exception.Message));
+                Log.Error(string.Format("request failed {0}: attempts {1} : error:{2}\r\n{3}", Id, AttemptedRetries,
+                                        Exception.Message, this.ToString()));
             }
             while (Callbacks.Count > 0)
             {

@@ -47,6 +47,7 @@ namespace Salient.ReliableHttpClient
         public RequestItemState State { get; set; }
         public string ResponseText { get; set; }
 
+
         public Dictionary<string, object> GetHeaders()
         {
             lock (_headers)

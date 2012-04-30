@@ -70,6 +70,7 @@
     <Compile Include="Rpc\MessagingFixture.cs" />
     <Compile Include="Rpc\NewsFixture.cs" />
     <Compile Include="Rpc\PriceHistoryFixture.cs" />
+    <Compile Include="Rpc\RecordingFixture.cs" />
     <Compile Include="Rpc\SpreadMarketsFixture.cs" />
     <Compile Include="Rpc\ThreadingFixture.cs" />
     <Compile Include="Rpc\TradesAndOrdersFixture.cs" />

@@ -79,7 +79,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Salient.ReliableHttpClient.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Salient.ReliableHttpClient.ReferenceImplementation", "ReliableHttpClient\Salient.ReliableHttpClient.ReferenceImplementation\Salient.ReliableHttpClient.ReferenceImplementation.csproj", "{AEDA66F4-E83F-4971-95B3-154F32132A87}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Phone7-josemuniz -cannot-save-orders-with-applicability-type--good-until-date-", "Samples\josemuniz-CIAPI.CS-cannot-save-orders-with-applicability-type--good-until-date--68700b3\Phone7-josemuniz -cannot-save-orders-with-applicability-type--good-until-date-.csproj", "{5D7665AB-79E1-4BCE-AC7D-DB7186811D27}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "josemuniz -cannot-save-orders-with-applicability-type--good-until-date-", "Samples\josemuniz-CIAPI.CS-cannot-save-orders-with-applicability-type--good-until-date--68700b3\josemuniz -cannot-save-orders-with-applicability-type--good-until-date-.csproj", "{5D7665AB-79E1-4BCE-AC7D-DB7186811D27}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

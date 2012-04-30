@@ -11,9 +11,9 @@ namespace Salient.ReliableHttpClient
     public class ClientBase : IDisposable
     {
         protected RequestController Controller;
-        private readonly Dictionary<string, object> _headers = new Dictionary<string, object>();
-        public IJsonSerializer Serializer { get; set; }
         
+        public IJsonSerializer Serializer { get; set; }
+
         public bool IsRecording
         {
             get { return !Controller.Recorder.Paused; }
@@ -34,15 +34,17 @@ namespace Salient.ReliableHttpClient
         public ClientBase(IJsonSerializer serializer)
         {
             Controller = new RequestController(serializer);
+            
             UserAgent = "Salient.ReliableHttpClient";
             Serializer = serializer;
-            
+
         }
 
         public ClientBase(IJsonSerializer serializer, IRequestFactory factory)
             : this(serializer)
         {
             Controller = new RequestController(serializer, factory);
+ 
             UserAgent = "Salient.ReliableHttpClient";
         }
 
@@ -51,35 +53,10 @@ namespace Salient.ReliableHttpClient
 
 
 
-        protected virtual void BeforeIssueRequest(Uri uri, RequestMethod method, string body,
-                                                  ContentType requestContentType,
-                                                  ContentType responseContentType, TimeSpan cacheDuration, int timeout,
-                                                  string target, string uriTemplate, int retryCount,
-                                                  Dictionary<string, object> parameters)
-        {
-            // client implements
-        }
+ 
 
 
-        protected void SetHeader(string key, object value)
-        {
-            lock (_headers)
-            {
-                _headers[key] = value;
-            }
-        }
-
-        protected void RemoveHeader(string key)
-        {
-            lock (_headers)
-            {
-                if (_headers.ContainsKey(key))
-                {
-                    _headers.Remove(key);
-                }
-            }
-        }
-
+        
 
         /// <summary>
         /// Composes the url for a request from components
@@ -149,7 +126,7 @@ namespace Salient.ReliableHttpClient
         }
 
 
-        public virtual string Request(RequestMethod method, string target, string uriTemplate,
+        public virtual string Request(RequestMethod method, string target, string uriTemplate, Dictionary<string, object> headers,
                                       Dictionary<string, object> parameters, ContentType requestContentType,
                                       ContentType responseContentType, TimeSpan cacheDuration, int timeout,
                                       int retryCount)
@@ -168,7 +145,7 @@ namespace Salient.ReliableHttpClient
             Exception exception = null;
             var gate = new ManualResetEvent(false);
 
-            BeginRequest(method, target, uriTemplate, parameters, requestContentType, responseContentType, cacheDuration,
+            BeginRequest(method, target, uriTemplate,headers, parameters, requestContentType, responseContentType, cacheDuration,
                          timeout, retryCount, ar =>
                                                   {
                                                       try
@@ -201,7 +178,7 @@ namespace Salient.ReliableHttpClient
 
 
         public virtual Guid BeginRequest(
-            RequestMethod method, string target, string uriTemplate, Dictionary<string, object> parameters,
+            RequestMethod method, string target, string uriTemplate, Dictionary<string, object> headers, Dictionary<string, object> parameters,
             ContentType requestContentType,
             ContentType responseContentType, TimeSpan cacheDuration, int timeout, int retryCount,
             ApiAsyncCallback callback,
@@ -262,10 +239,9 @@ namespace Salient.ReliableHttpClient
 
             Uri uri = BuildUrl(target, uriTemplate);
 
-            BeforeIssueRequest(uri, method, body, requestContentType, responseContentType, cacheDuration,
-                               timeout, target, uriTemplate, retryCount, parameters);
 
-            Guid id = Controller.BeginRequest(uri, method, body, _headers, requestContentType, responseContentType,
+
+            Guid id = Controller.BeginRequest(uri, method, body, headers, requestContentType, responseContentType,
                                               cacheDuration, timeout, target, uriTemplate, retryCount, parameters,
                                               callback, state);
             return id;
@@ -293,11 +269,11 @@ namespace Salient.ReliableHttpClient
 
         #region Serialization
 
-        public virtual T Request<T>(RequestMethod method, string target, string uriTemplate,
+        public virtual T Request<T>(RequestMethod method, string target, string uriTemplate, Dictionary<string, object> headers,
                                     Dictionary<string, object> parameters, ContentType requestContentType,
                                     ContentType responseContentType, TimeSpan cacheDuration, int timeout, int retryCount)
         {
-            string response = Request(method, target, uriTemplate, parameters, requestContentType, responseContentType,
+            string response = Request(method, target, uriTemplate, headers, parameters, requestContentType, responseContentType,
                                       cacheDuration, timeout, retryCount);
             // #TODO: reinstate injected json exception factory and use it here.
             // "Invalid response received.  Are you connecting to the correct server Url?"
@@ -322,7 +298,7 @@ namespace Salient.ReliableHttpClient
             }
             catch (Exception ex)
             {
-                
+
                 throw ReliableHttpException.Create("Invalid response received.  Are you connecting to the correct server Url?", ex);
             }
         }

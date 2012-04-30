@@ -8,6 +8,7 @@ using Salient.ReliableHttpClient.Serialization;
 
 namespace Salient.ReliableHttpClient
 {
+ 
     /// <summary>
     /// RequestController will encapsulate threadsafe caching and throttling
     /// items with a cacheduration of 0 will not be cached
@@ -15,6 +16,7 @@ namespace Salient.ReliableHttpClient
     /// </summary>
     public class RequestController : IDisposable
     {
+ 
         private const int BackgroundInterval = 50;
         private static readonly ILog Log = LogManager.GetLogger(typeof(RequestController));
         private readonly Thread _backgroundThread;
@@ -374,7 +376,7 @@ namespace Salient.ReliableHttpClient
                     info = CreateRequest(uri, method, body, headers, requestContentType, responseContentType,
                                          cacheDuration, timeout, target, uriTemplate, retryCount, parameters, callback,
                                          state);
-
+                    
                     info.State = RequestItemState.Ready;
                     _requestQueue.Enqueue(info);
                 }
@@ -394,6 +396,7 @@ namespace Salient.ReliableHttpClient
                         info = CreateRequest(uri, method, body, headers, requestContentType, responseContentType,
                                              cacheDuration, timeout, target, uriTemplate, retryCount, parameters,
                                              callback, state);
+                        
                         info.State = RequestItemState.Ready;
                         _requestCache.Add(info);
                         _requestQueue.Enqueue(info);
