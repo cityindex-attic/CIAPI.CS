@@ -1,6 +1,47 @@
 ﻿
 exports.routesPatch = {
 
+    "GetVersionInformation": {
+        "section": "ClientApplication"
+    },
+    "GetClientApplicationMessageTranslationWithInterestingItems": {
+        "section": "Messaging"
+    },
+    "Delete": {
+        "section": "Preference"
+    },
+    "GetKeyList": {
+        "section": "Preference"
+    },
+    "Get": {
+        "section": "Preference"
+    },
+    "Save": {
+        "section": "Preference"
+    },
+    "ListMarketSearch": {
+        "section": "Market"
+    },
+
+    "GetMessage": {
+        "section": "Messaging"
+    },
+    "GetMessagePopup": {
+        "section": "Messaging"
+    },
+    "AcceptOrRejectMessagePopupResponse": {
+        "section": "Messaging"
+    },
+    "GetSystemLookup": {
+        "section": "Messaging"
+    },
+    "GetSystemLookup": {
+        "section": "Messaging"
+    },
+    "GetClientApplicationMessageTranslation": {
+        "section": "Messaging"
+    },
+
     "DeleteWatchlist": {
         "section": "Watchlist"
     },
@@ -10,9 +51,7 @@ exports.routesPatch = {
     "GetWatchlists": {
         "section": "Watchlist"
     },
-    "GetClientApplicationMessageTranslation": {
-        "section": "Messaging"
-    },
+    
     "SaveAccountInformation": {
         "section": "AccountInformation"
     },
@@ -39,21 +78,6 @@ exports.routesPatch = {
     "section": "Market"
 },
 
-    "GetMessage": {
-        "section": "Messaging"
-    },
-    "GetMessagePopup": {
-        "section": "Messaging"
-    },
-    "AcceptOrRejectMessagePopupResponse": {
-        "section": "Messaging"
-    },
-    "GetSystemLookup": {
-        "section": "Messaging"
-    },
-    "GetSystemLookup": {
-        "section": "Messaging"
-    },
     "LogOn": {
         "section": "Authentication",
         "visibility": "internal"

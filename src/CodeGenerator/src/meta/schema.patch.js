@@ -1,25 +1,7 @@
 ﻿
 exports.schemaPatch = {
     "properties": {
-//        "ApiTradingDayTimesDTO": {
-//            "properties": {
-//                "$DELETE$": ["StartTimeUtc", "EndTimeUtc"
-//                ]
-
-//            }
-//        },
-//        "ApiMarketSpreadDTO": {
-//            "properties": {
-//                "$DELETE$": ["SpreadTimeUtc"]
-
-//            }
-//        },
-//        "ApiMarketInformationDTO": {
-//            "properties": {
-//                "$DELETE$": ["TradingStartTimeUtc", "TradingEndTimeUtc", ]
-
-//            }
-//        },
+ 
         "ApiOrderResponseDTO": {
             "properties": {
                 "StatusReason_Resolved": {
