@@ -172,12 +172,16 @@ namespace Salient.ReliableHttpClient
             return Request;
         }
 
-        private string Sanitize(string value)
+        private string Sanitize(object value)
         {
             // get rid of password=foo
             // get rid of {"UserName":"DM715257","Password":"password","AppKey":"testkey-for-CIAPI.IntegrationTests","AppVersion":"CIAPI.CS.4.0.2.0","AppComments":null}
-            value = Regex.Replace(value, "\"Password\":\"password\"", "\"Password\":\"XXXXXX\"");
-            return value;
+            if(value==null)
+            {
+                value = "NULL";
+            }
+            string result = Regex.Replace(value.ToString(), "\"Password\":\"password\"", "\"Password\":\"XXXXXX\"");
+            return result;
         }
         public override string ToString()
         {
@@ -199,7 +203,7 @@ namespace Salient.ReliableHttpClient
             {
                 foreach (var item in headers)
                 {
-                    sb.AppendLine(string.Format("\t{0} = {1}", item.Key, Sanitize(item.Value.ToString())));
+                    sb.AppendLine(string.Format("\t{0} = {1}", item.Key, Sanitize(item.Value)));
                 }
             }
 
@@ -214,7 +218,7 @@ namespace Salient.ReliableHttpClient
             {
                 foreach (var item in Parameters)
                 {
-                    sb.AppendLine(string.Format("\t{0} = {1}", item.Key, Sanitize(item.Value.ToString())));
+                    sb.AppendLine(string.Format("\t{0} = {1}", item.Key, Sanitize(item.Value)));
                 }
             }
 

@@ -3,7 +3,7 @@ using System.Threading;
 using CIAPI;
 using CIAPI.DTO;
 using CIAPI.Streaming;
-using Salient.ReliableHttpClient.Serialization.Newtonsoft;
+
 
 namespace ConsoleSpikes
 {

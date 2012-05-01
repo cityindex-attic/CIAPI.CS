@@ -1,6 +1,6 @@
 ﻿using System;
+using CIAPI.Serialization;
 using Salient.ReliableHttpClient.Serialization;
-using Salient.ReliableHttpClient.Serialization.Newtonsoft;
 using StreamingClient;
 
 

@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 
-namespace Salient.ReliableHttpClient.Serialization.Newtonsoft
+namespace CIAPI.Serialization
 {
     public class Serializer : Salient.ReliableHttpClient.Serialization.IJsonSerializer
     {

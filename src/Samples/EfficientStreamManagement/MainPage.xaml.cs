@@ -4,12 +4,13 @@ using System.Threading;
 using System.Windows;
 using CIAPI;
 using CIAPI.DTO;
+using CIAPI.Serialization;
 using CIAPI.Streaming;
 using CIAPI.Testing;
 using CIAPI.Tests;
 using Microsoft.Phone.Controls;
 using Salient.ReliableHttpClient;
-using Salient.ReliableHttpClient.Serialization.Newtonsoft;
+
 using StreamingClient;
 using Salient.ReflectiveLoggingAdapter;
 using Client = CIAPI.Rpc.Client;

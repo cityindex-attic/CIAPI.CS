@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 using CIAPI.Streaming;
 using CIAPI.Testing;
 using Salient.ReflectiveLoggingAdapter;
-using Salient.ReliableHttpClient.Serialization.Newtonsoft;
+
 
 namespace CIAPI.CS.Koans.KoanRunner
 {

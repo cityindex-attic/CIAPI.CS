@@ -6,9 +6,10 @@ using System.Threading;
 using CIAPI.DTO;
 using CIAPI.IntegrationTests.Streaming;
 using CIAPI.Rpc;
+using CIAPI.Serialization;
 using NUnit.Framework;
 using Salient.ReliableHttpClient;
-using Salient.ReliableHttpClient.Serialization.Newtonsoft;
+
 using Salient.ReliableHttpClient.Testing;
 
 namespace CIAPI.IntegrationTests.Rpc

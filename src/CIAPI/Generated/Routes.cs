@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Salient.ReliableHttpClient;
 using Salient.ReliableHttpClient.Serialization;
-using Salient.ReliableHttpClient.Serialization.Newtonsoft;
+using CIAPI.Serialization;
 using CIAPI.DTO;
 namespace CIAPI.Rpc
 {

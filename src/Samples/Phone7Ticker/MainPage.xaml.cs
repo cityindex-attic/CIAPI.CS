@@ -4,11 +4,11 @@ using System.Threading;
 using System.Windows;
 using CIAPI.DTO;
 using CIAPI.Rpc;
+using CIAPI.Serialization;
 using CIAPI.Streaming;
 using CIAPI.Tests;
 using Microsoft.Phone.Controls;
-using Salient.ReflectiveLoggingAdapter;
-using Salient.ReliableHttpClient.Serialization.Newtonsoft;
+
 using StreamingClient;
 using IStreamingClient = CIAPI.Streaming.IStreamingClient;
 

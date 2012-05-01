@@ -8,7 +8,7 @@
     <ProjectGuid>{B6CE30C2-5A52-4A4C-884B-64504902F833}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CIAPI.Serializer</RootNamespace>
+    <RootNamespace>CIAPI.Serialization</RootNamespace>
     <AssemblyName>CIAPI.Serializer</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

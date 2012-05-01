@@ -3,14 +3,13 @@ using System.Text;
 using CIAPI.DTO;
 using CIAPI.Phone7.IntegrationTests;
 using CIAPI.Rpc;
+using CIAPI.Serialization;
 using CIAPI.Streaming;
 using CIAPI.Testing;
 using Microsoft.Silverlight.Testing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Salient.ReflectiveLoggingAdapter;
-using CIAPI.Streaming;
-using Salient.ReliableHttpClient.Serialization.Newtonsoft;
 
 namespace CIAPI.IntegrationTests.Streaming
 {

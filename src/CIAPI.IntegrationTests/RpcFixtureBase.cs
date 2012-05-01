@@ -5,7 +5,7 @@ using CIAPI.Rpc;
 using CIAPI.Streaming;
 using NUnit.Framework;
 using Salient.ReflectiveLoggingAdapter;
-using Salient.ReliableHttpClient.Serialization.Newtonsoft;
+
 
 
 namespace CIAPI.IntegrationTests.Streaming

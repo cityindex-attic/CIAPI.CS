@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("CIAPI.Serializer")]
+[assembly: AssemblyTitle("CIAPI.Serialization")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("City Index")]
-[assembly: AssemblyProduct("CIAPI.Serializer")]
+[assembly: AssemblyProduct("CIAPI.Serialization")]
 [assembly: AssemblyCopyright("Copyright © City Index 2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
