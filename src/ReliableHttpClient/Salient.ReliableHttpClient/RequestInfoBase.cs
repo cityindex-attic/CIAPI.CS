@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 
 namespace Salient.ReliableHttpClient
@@ -171,13 +172,20 @@ namespace Salient.ReliableHttpClient
             return Request;
         }
 
+        private string Sanitize(string value)
+        {
+            // get rid of password=foo
+            // get rid of {"UserName":"DM715257","Password":"password","AppKey":"testkey-for-CIAPI.IntegrationTests","AppVersion":"CIAPI.CS.4.0.2.0","AppComments":null}
+            value = Regex.Replace(value, "\"Password\":\"password\"", "\"Password\":\"XXXXXX\"");
+            return value;
+        }
         public override string ToString()
         {
             var sb = new StringBuilder();
 
             // #TODO: obfuscate anything that looks like a password in Uri and parameters
 
-            sb.AppendLine(string.Format("Item: #{0} {3} {2} [{1}]", Index, Id, Uri, Method));
+            sb.AppendLine(string.Format("Item: #{0} {3} {2} [{1}]", Index, Id, Sanitize(Uri.AbsoluteUri), Method));
             sb.AppendLine(string.Format("Target/UriTemplate: {0}{1}", Target, UriTemplate));
             sb.AppendLine(string.Format("State: {0}", State));
 
@@ -191,7 +199,7 @@ namespace Salient.ReliableHttpClient
             {
                 foreach (var item in headers)
                 {
-                    sb.AppendLine(string.Format("\t{0} = {1}", item.Key, item.Value));
+                    sb.AppendLine(string.Format("\t{0} = {1}", item.Key, Sanitize(item.Value.ToString())));
                 }
             }
 
@@ -206,13 +214,13 @@ namespace Salient.ReliableHttpClient
             {
                 foreach (var item in Parameters)
                 {
-                    sb.AppendLine(string.Format("\t{0} = {1}", item.Key, item.Value));
+                    sb.AppendLine(string.Format("\t{0} = {1}", item.Key, Sanitize(item.Value.ToString())));
                 }
             }
 
             sb.AppendLine(string.Format("Content Type: request - {0}, response - {1}", RequestContentType,
                                         ResponseContentType));
-            sb.AppendLine(string.Format("Body: {0}", RequestBody));
+            sb.AppendLine(string.Format("Body: {0}", Sanitize(RequestBody)));
             sb.AppendLine(string.Format("Timeout: {0}", Timeout));
             sb.AppendLine(string.Format("UserAgent: {0}", UserAgent));
             sb.AppendLine(string.Format("ResponseText: {0}", ResponseText));
