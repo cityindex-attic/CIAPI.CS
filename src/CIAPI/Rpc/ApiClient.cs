@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Reflection;
+using System.Text;
+using System.Threading;
 using CIAPI.DTO;
 using CIAPI.Streaming;
 using Salient.ReflectiveLoggingAdapter;
@@ -12,6 +14,8 @@ namespace CIAPI.Rpc
     // #TODO: reintegrate exception factory into ReliableHttpClient
     public partial class Client : ClientBase
     {
+
+
         private Dictionary<string, object> GetHeaders(string target)
         {
             var headers = new Dictionary<string, object>();
@@ -147,6 +151,8 @@ namespace CIAPI.Rpc
         /// <returns></returns>
         public ApiLogOnResponseDTO LogIn(String userName, String password)
         {
+            
+
             UserName = userName;
             Session = null;
 
@@ -248,6 +254,89 @@ namespace CIAPI.Rpc
         }
 
         #endregion
+
+        private Timer _metricsTimer;
+
+        private void DisposeMetricsTimer()
+        {
+
+            try
+            {
+                if (_metricsTimer != null)
+                {
+                    _metricsTimer.Dispose();
+                    _metricsTimer = null;
+                }
+            }
+            catch
+            {
+
+                //swallow
+            }
+
+        }
+        public void StartMetrics()
+        {
+            DisposeMetricsTimer();
+            StartRecording();
+            _metricsTimer = new Timer(ignored => PostMetrics(), null, 1000, 10000);
+        }
+        public void StopMetrics()
+        {
+            StopRecording();
+            DisposeMetricsTimer();
+        }
+
+        private void PostMetrics()
+        {
+            string appmetricsUrl = "http://metrics.labs.cityindex.com/LogEvent.ashx";
+
+            if (!IsRecording)
+            {
+                return;
+            }
+
+            var records = GetRecording();
+            ClearRecording();
+            if (records.Count == 0)
+            {
+                return;
+            }
+
+            var sb = new StringBuilder();
+            foreach (var item in records)
+            {
+                try
+                {
+                    if (item.Uri.AbsoluteUri != appmetricsUrl)
+                    {
+                        sb.AppendLine(string.Format("{0}\t{1}\t{2}\r\n", DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss.fffffff"), item.Uri, item.Completed.Subtract(item.Issued).TotalMilliseconds));
+                    }
+                    
+                }
+                catch
+                {
+
+                    //swallow
+                }
+            }
+
+
+
+
+            base.BeginRequest(RequestMethod.POST,
+                appmetricsUrl,
+                "",
+                new Dictionary<string, object>(),
+                new Dictionary<string, object> { { "MessageAppKey", AppKey ?? "null" }, { "MessageSession", Session ?? "null" }, { "MessagesList", sb.ToString() } },
+                ContentType.FORM,
+                ContentType.TEXT,
+                TimeSpan.FromMilliseconds(0),
+                30000,
+                0, ar => { }, null);
+
+
+        }
     }
 
 
