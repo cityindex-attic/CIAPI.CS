@@ -55,6 +55,7 @@ namespace PhoneApp3
 
             Dispatcher.BeginInvoke(() => listBox1.Items.Add("creating rpc client"));
             RpcClient = new Client(RPC_URI, STREAM_URI, "CI-WP7");
+           
             RpcClient.BeginLogIn(USERNAME, PASSWORD, ar =>
             {
                 _logger .Info("ending login");

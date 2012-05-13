@@ -40,7 +40,7 @@ namespace Phone7Ticker
 
             // build an rpc client and log it in.
             rpcClient = new Client(new Uri(StaticTestConfig.RpcUrl), new Uri(StaticTestConfig.StreamingUrl), StaticTestConfig.AppKey);
-
+            rpcClient.StartMetrics();
             // get a session from the rpc client
             rpcClient.BeginLogIn(StaticTestConfig.ApiUsername, StaticTestConfig.ApiPassword, ar =>
                 {

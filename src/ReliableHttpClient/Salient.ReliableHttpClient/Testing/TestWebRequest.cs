@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -105,12 +106,16 @@ namespace Salient.ReliableHttpClient.Testing
         private readonly Exception _endGetResponseException;
 
         private TestWebStream _requestStream = new TestWebStream();
-        private readonly TestWebStream _responseStream = new TestWebStream();
+        private TestWebStream _responseStream = new TestWebStream();
         public TestWebStream ResponseStream
         {
             get
             {
                 return _responseStream;
+            }
+            set
+            {
+                _responseStream = value;
             }
         }
         private WebHeaderCollection _headers = new WebHeaderCollection();
@@ -146,11 +151,11 @@ namespace Salient.ReliableHttpClient.Testing
         }
 
 
-        
+
         public override IAsyncResult BeginGetResponse(AsyncCallback callback, object state)
         {
 
-            
+
 
             PrepareResponse(this);
 
@@ -226,7 +231,7 @@ namespace Salient.ReliableHttpClient.Testing
             _webResponseAsyncResult.Abort();
         }
 
-        private string _requestBody;
+
         public string RequestBody
         {
             get
@@ -237,7 +242,7 @@ namespace Salient.ReliableHttpClient.Testing
                     return Encoding.UTF8.GetString(requestStreamContent, 0, requestStreamContent.Length);
 
                 }
-                return null;
+                return "";
             }
             set { _requestStream = new TestWebStream(Encoding.UTF8.GetBytes(value)); }
         }
@@ -279,20 +284,51 @@ namespace Salient.ReliableHttpClient.Testing
             set { _reference = value; }
         }
 
-        public RequestInfoBase FindMatchExact(TestWebRequest webRequest)
+        public RequestInfoBase FindMatchBySingleHeader(TestWebRequest webRequest, string headerKey)
         {
-            // compare method, content type, accept, url and request body
+            string headerValue = webRequest.Headers[headerKey];
             foreach (RequestInfoBase r in _reference)
             {
+                if (r.Headers.ContainsKey(headerKey))
+                {
+                    if ((string)r.Headers[headerKey] == headerValue)
+                    {
+                        return r;
+                    }                    
+                }
+            }
+            return null;
+        }
+        public RequestInfoBase FindMatchExact(TestWebRequest webRequest)
+        {
+
+            foreach (RequestInfoBase r in _reference)
+            {
+                if (string.Compare(r.Method.ToString(), webRequest.Method, StringComparison.OrdinalIgnoreCase) != 0)
+                {
+                    continue;
+                }
+
                 if (r.Uri.AbsoluteUri != webRequest.RequestUri.AbsoluteUri)
                 {
                     continue;
                 }
 
-
-                if (r.RequestBody != webRequest.RequestBody)
+                // #hack - RequestInfoBase requestbody is getting set null while TestWebRequest.RequestBody is returning empty string
+                // have to decide which is approppriate and standardize
+                if ((r.RequestBody ?? "") != webRequest.RequestBody)
                 {
                     continue;
+                }
+
+                if (r.Headers != null)
+                {
+                    if (webRequest.Headers == null)
+                    {
+                        continue;
+                    }
+
+                    //#TODO: compare headers
                 }
 
                 return r;

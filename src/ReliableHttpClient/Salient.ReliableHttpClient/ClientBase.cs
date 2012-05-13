@@ -11,9 +11,13 @@ namespace Salient.ReliableHttpClient
     public class ClientBase : IDisposable
     {
         protected RequestController Controller;
-        
-        public IJsonSerializer Serializer { get; set; }
 
+        public IJsonSerializer Serializer { get; set; }
+        public bool IncludeIndexInHeaders
+        {
+            get { return Controller.IncludeIndexInHeaders; }
+            set { Controller.IncludeIndexInHeaders = value; }
+        }
         public bool IsRecording
         {
             get { return !Controller.Recorder.Paused; }
@@ -34,7 +38,7 @@ namespace Salient.ReliableHttpClient
         public ClientBase(IJsonSerializer serializer)
         {
             Controller = new RequestController(serializer);
-            
+
             UserAgent = "Salient.ReliableHttpClient";
             Serializer = serializer;
 
@@ -44,7 +48,7 @@ namespace Salient.ReliableHttpClient
             : this(serializer)
         {
             Controller = new RequestController(serializer, factory);
- 
+
             UserAgent = "Salient.ReliableHttpClient";
         }
 
@@ -53,10 +57,10 @@ namespace Salient.ReliableHttpClient
 
 
 
- 
 
 
-        
+
+
 
         /// <summary>
         /// Composes the url for a request from components
@@ -145,7 +149,7 @@ namespace Salient.ReliableHttpClient
             Exception exception = null;
             var gate = new ManualResetEvent(false);
 
-            BeginRequest(method, target, uriTemplate,headers, parameters, requestContentType, responseContentType, cacheDuration,
+            BeginRequest(method, target, uriTemplate, headers, parameters, requestContentType, responseContentType, cacheDuration,
                          timeout, retryCount, ar =>
                                                   {
                                                       try

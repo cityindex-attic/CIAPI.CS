@@ -20,7 +20,7 @@ namespace Salient.ReliableHttpClient
             CacheDuration = TimeSpan.Zero;
             CacheExpiration = DateTimeOffset.MinValue;
             Id = Guid.NewGuid();
-
+            RequestBody = "";
             Parameters = new Dictionary<string, object>();
             _headers = new Dictionary<string, object>();
         }
@@ -49,11 +49,12 @@ namespace Salient.ReliableHttpClient
         public string ResponseText { get; set; }
 
 
-        public Dictionary<string, object> GetHeaders()
+        public Dictionary<string, object> Headers
         {
-            lock (_headers)
+            get { return _headers; }
+            set
             {
-                return new Dictionary<string, object>(_headers);
+                _headers = value;
             }
         }
         internal Dictionary<string, object> _headers;
@@ -68,21 +69,7 @@ namespace Salient.ReliableHttpClient
             Request.Method = info.Method.ToString();
             if ((info.Method == RequestMethod.POST || info.Method == RequestMethod.PUT))
             {
-                switch (info.RequestContentType)
-                {
-                    case ContentType.JSON:
-                        Request.ContentType = "application/json";
-                        break;
-                    case ContentType.FORM:
-                        Request.ContentType = "application/x-www-form-urlencoded";
-                        break;
-                    case ContentType.XML:
-                        Request.ContentType = "application/xml";
-                        break;
-                    case ContentType.TEXT:
-                        Request.ContentType = "text/plain";
-                        break;
-                }
+                Request.ContentType = info.RequestContentType.ToHeaderValue();
             }
 
 
@@ -108,7 +95,7 @@ namespace Salient.ReliableHttpClient
                 }
 
                 request.UserAgent = info.UserAgent;
-                var headers = info.GetHeaders();
+                var headers = info.Headers;
                 if (headers != null)
                 {
                     foreach (var header in headers)
@@ -176,7 +163,7 @@ namespace Salient.ReliableHttpClient
         {
             // get rid of password=foo
             // get rid of {"UserName":"DM715257","Password":"password","AppKey":"testkey-for-CIAPI.IntegrationTests","AppVersion":"CIAPI.CS.4.0.2.0","AppComments":null}
-            if(value==null)
+            if (value == null)
             {
                 value = "NULL";
             }
@@ -194,7 +181,7 @@ namespace Salient.ReliableHttpClient
             sb.AppendLine(string.Format("State: {0}", State));
 
             sb.AppendLine("Headers:");
-            var headers = GetHeaders();
+            var headers = Headers;
             if (headers == null || headers.Count == 0)
             {
                 sb.AppendLine("\tNONE");
@@ -279,7 +266,7 @@ namespace Salient.ReliableHttpClient
                 result.Exception = ReliableHttpException.Create(this.Exception);
             }
 
-            var headers = GetHeaders();
+            var headers = Headers;
             if (headers != null)
             {
                 result._headers = headers;

@@ -6,13 +6,16 @@ namespace Salient.ReliableHttpClient.Testing
 {
     public class TestWebReponse : WebResponse
     {
-        Stream responseStream;
+        TestWebStream responseStream;
 
         /// <summary>Initializes a new instance of <see cref="TestWebReponse"/>
         /// with the response stream to return.</summary>
-        public TestWebReponse(Stream responseStream)
+        public TestWebReponse(TestWebStream responseStream)
         {
             this.responseStream = responseStream;
+            _contentLength = responseStream.Length;
+            
+
         }
 
         /// <summary>See <see cref="WebResponse.GetResponseStream"/>.</summary>
@@ -26,19 +29,24 @@ namespace Salient.ReliableHttpClient.Testing
             // noop
         }
 
+        private long _contentLength;
         public override long ContentLength
         {
-            get { throw new NotImplementedException(); }
+            get{return _contentLength;}
+            
         }
 
+        private string _contentType;
         public override string ContentType
         {
-            get { throw new NotImplementedException(); }
+            get{return _contentType;}
+            
         }
 
+        private readonly Uri _responseUri;
         public override Uri ResponseUri
         {
-            get { throw new NotImplementedException(); }
+            get{return _responseUri;}
         }
     }
 }

@@ -8,7 +8,7 @@ using Salient.ReliableHttpClient.Serialization;
 
 namespace Salient.ReliableHttpClient
 {
- 
+
     /// <summary>
     /// RequestController will encapsulate threadsafe caching and throttling
     /// items with a cacheduration of 0 will not be cached
@@ -16,12 +16,12 @@ namespace Salient.ReliableHttpClient
     /// </summary>
     public class RequestController : IDisposable
     {
- 
+        public bool IncludeIndexInHeaders { get; set; }
         private const int BackgroundInterval = 50;
         private static readonly ILog Log = LogManager.GetLogger(typeof(RequestController));
         private readonly Thread _backgroundThread;
 
-        
+
         private readonly object _lockTarget = new object();
 
         private readonly int _maxPendingRequests = 10;
@@ -44,7 +44,7 @@ namespace Salient.ReliableHttpClient
         private bool _processingQueue;
         private IJsonSerializer _serializer;
 
-        public RequestController(IJsonSerializer serializer, 
+        public RequestController(IJsonSerializer serializer,
                                  IRequestFactory requestFactory)
             : this(serializer)
         {
@@ -55,7 +55,7 @@ namespace Salient.ReliableHttpClient
             : this()
         {
             _serializer = serializer;
-            
+
         }
 
         private RequestController()
@@ -160,13 +160,17 @@ namespace Salient.ReliableHttpClient
                     _dispatchedCount += 1;
 
                     request.Index = _dispatchedCount;
-
+                    if (IncludeIndexInHeaders)
+                    {
+                        request._headers["x-request-index"] = request.Index.ToString();
+                        request.Request.Headers["x-request-index"] = request.Index.ToString();
+                    }
                     try
                     {
                         request.Issued = DateTimeOffset.UtcNow;
                         IAsyncResult webRequestAsyncResult = request.Request.BeginGetResponse(ar =>
                             {
-                                Log.Info(string.Format("Received #{0} : {1} ",request.Index,request.Uri));
+                                Log.Info(string.Format("Received #{0} : {1} ", request.Index, request.Uri));
 
                                 // let's try to complete the request
                                 _outstandingRequests--;
@@ -174,7 +178,8 @@ namespace Salient.ReliableHttpClient
                                 {
                                     request.CompleteRequest(ar);
                                 }
-                                catch (Exception ex){
+                                catch (Exception ex)
+                                {
                                     // the only time an exception will come out of CompleteRequest is if the request wants to be retried
                                     request.AttemptedRetries++;
                                     Log.Warn(string.Format("retrying request {3} {0}: attempt #{1} : error:{2} \r\nrequest:\r\n{4}",
@@ -187,7 +192,7 @@ namespace Salient.ReliableHttpClient
                             }, null);
 
 
-                        EnsureRequestWillAbortAfterTimeout(request, webRequestAsyncResult);
+                        //EnsureRequestWillAbortAfterTimeout(request, webRequestAsyncResult);
 
                         Log.Info(string.Format("Dispatched #{0} : {1} ", request.Index, request.Uri));
                     }
@@ -376,7 +381,7 @@ namespace Salient.ReliableHttpClient
                     info = CreateRequest(uri, method, body, headers, requestContentType, responseContentType,
                                          cacheDuration, timeout, target, uriTemplate, retryCount, parameters, callback,
                                          state);
-                    
+
                     info.State = RequestItemState.Ready;
                     _requestQueue.Enqueue(info);
                 }
@@ -396,7 +401,7 @@ namespace Salient.ReliableHttpClient
                         info = CreateRequest(uri, method, body, headers, requestContentType, responseContentType,
                                              cacheDuration, timeout, target, uriTemplate, retryCount, parameters,
                                              callback, state);
-                        
+
                         info.State = RequestItemState.Ready;
                         _requestCache.Add(info);
                         _requestQueue.Enqueue(info);

@@ -343,6 +343,20 @@ namespace CIAPI.Rpc
 
 
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            try
+            {
+                DisposeMetricsTimer();
+            }
+            catch(Exception ex)
+            {
+                //swallow
+                Log.Error("Error disposing metrics timer: /r/n" + ex.ToString());
+            }
+            base.Dispose(disposing);
+        }
     }
 
 
