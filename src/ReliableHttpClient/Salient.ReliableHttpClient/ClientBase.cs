@@ -185,7 +185,7 @@ namespace Salient.ReliableHttpClient
             RequestMethod method, string target, string uriTemplate, Dictionary<string, object> headers, Dictionary<string, object> parameters,
             ContentType requestContentType,
             ContentType responseContentType, TimeSpan cacheDuration, int timeout, int retryCount,
-            ApiAsyncCallback callback,
+            ReliableAsyncCallback callback,
             object state)
         {
             string body = null;

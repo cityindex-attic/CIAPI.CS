@@ -24,7 +24,7 @@ namespace Salient.ReliableHttpClient.ReferenceImplementation
 
         }
 
-        public void BeginGetTestClassWithException(ApiAsyncCallback callback, object state)
+        public void BeginGetTestClassWithException(ReliableAsyncCallback callback, object state)
         {
             BeginRequest(
                 RequestMethod.GET,
@@ -56,7 +56,7 @@ namespace Salient.ReliableHttpClient.ReferenceImplementation
             return DeserializeJson<TestClass>(result);
         }
 
-        public void BeginGetTestClass(ApiAsyncCallback callback, object state)
+        public void BeginGetTestClass(ReliableAsyncCallback callback, object state)
         {
             BeginRequest(RequestMethod.GET, _target, "/SampleClientHandler.ashx", null, null, ContentType.TEXT, ContentType.JSON, TimeSpan.FromSeconds(1), 3000, 0, callback, state);
         }
@@ -68,7 +68,7 @@ namespace Salient.ReliableHttpClient.ReferenceImplementation
 
 
 
-        public void BeginGetService1(int id, ApiAsyncCallback callback, object state)
+        public void BeginGetService1(int id, ReliableAsyncCallback callback, object state)
         {
             BeginRequest(RequestMethod.GET, _target, "/Service1/{id}", null, new Dictionary<string, object> { { "id", id } }, ContentType.JSON, ContentType.JSON, TimeSpan.Zero, 3000, 3, callback, state);
         }
@@ -79,7 +79,7 @@ namespace Salient.ReliableHttpClient.ReferenceImplementation
         }
 
 
-        public void BeginListService1(ApiAsyncCallback callback, object state)
+        public void BeginListService1(ReliableAsyncCallback callback, object state)
         {
             BeginRequest(RequestMethod.GET, _target, "/Service1", null, null, ContentType.JSON, ContentType.JSON, TimeSpan.FromSeconds(1), 3000, 0, callback, state);
         }
@@ -89,7 +89,7 @@ namespace Salient.ReliableHttpClient.ReferenceImplementation
             return EndRequest<List<SampleItem>>(result);
         }
 
-        public void BeginCreateService1(SampleItem instance, ApiAsyncCallback callback, object state)
+        public void BeginCreateService1(SampleItem instance, ReliableAsyncCallback callback, object state)
         {
             BeginRequest(RequestMethod.POST, _target, "/Service1", null, new Dictionary<string, object> { { "instance", instance } }, ContentType.JSON, ContentType.JSON, TimeSpan.Zero, 3000, 0, callback, state);
         }

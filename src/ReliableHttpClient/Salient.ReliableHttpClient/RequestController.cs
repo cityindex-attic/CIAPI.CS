@@ -339,7 +339,7 @@ namespace Salient.ReliableHttpClient
                                           ContentType requestContentType, ContentType responseContentType,
                                           TimeSpan cacheDuration, int timeout, string target, string uriTemplate,
                                           int retryCount, Dictionary<string, object> parameters,
-                                          ApiAsyncCallback callback, object state)
+                                          ReliableAsyncCallback callback, object state)
         {
             RequestInfo info;
             lock (headers)
@@ -369,7 +369,7 @@ namespace Salient.ReliableHttpClient
         public Guid BeginRequest(Uri uri, RequestMethod method, string body, Dictionary<string, object> headers,
                                  ContentType requestContentType, ContentType responseContentType, TimeSpan cacheDuration,
                                  int timeout, string target, string uriTemplate, int retryCount,
-                                 Dictionary<string, object> parameters, ApiAsyncCallback callback, object state)
+                                 Dictionary<string, object> parameters, ReliableAsyncCallback callback, object state)
         {
             lock (_lockTarget)
             {

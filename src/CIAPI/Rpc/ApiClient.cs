@@ -30,7 +30,7 @@ namespace CIAPI.Rpc
             }
             return headers;
         }
-        public Guid BeginRequest(RequestMethod method, string target, string uriTemplate, Dictionary<string, object> parameters, ContentType requestContentType, ContentType responseContentType, TimeSpan cacheDuration, int timeout, int retryCount, ApiAsyncCallback callback, object state)
+        public Guid BeginRequest(RequestMethod method, string target, string uriTemplate, Dictionary<string, object> parameters, ContentType requestContentType, ContentType responseContentType, TimeSpan cacheDuration, int timeout, int retryCount, ReliableAsyncCallback callback, object state)
         {
             target = _rootUri.AbsoluteUri + "/" + target;
             Dictionary<string, object> headers = GetHeaders(target);
@@ -178,7 +178,7 @@ namespace CIAPI.Rpc
         /// <param name="userName">Username is case sensitive</param>
         /// <param name="password">Password is case sensitive</param>
         /// <returns></returns>
-        public void BeginLogIn(String userName, String password, ApiAsyncCallback callback,
+        public void BeginLogIn(String userName, String password, ReliableAsyncCallback callback,
                                object state)
         {
             UserName = userName;
@@ -231,7 +231,7 @@ namespace CIAPI.Rpc
         /// <param name="callback"></param>
         /// <param name="state"></param>
         /// <returns></returns>
-        public void BeginLogOut(ApiAsyncCallback callback, object state)
+        public void BeginLogOut(ReliableAsyncCallback callback, object state)
         {
             BeginRequest(RequestMethod.POST, "session", "/deleteSession?userName={userName}&session={session}",
                          new Dictionary<string, object>

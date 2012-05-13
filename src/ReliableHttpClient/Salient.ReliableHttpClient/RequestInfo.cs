@@ -182,7 +182,7 @@ namespace Salient.ReliableHttpClient
             }
         }
 
-        public void AddCallback(ApiAsyncCallback callback, object state)
+        public void AddCallback(ReliableAsyncCallback callback, object state)
         {
             lock (Callbacks)
             {

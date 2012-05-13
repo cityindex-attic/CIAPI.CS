@@ -26,7 +26,7 @@ namespace Salient.ReliableHttpClient
     {
         // Fields
         private readonly object _asyncState;
-        private readonly ApiAsyncCallback _callback;
+        private readonly ReliableAsyncCallback _callback;
         private readonly Guid _id;
         private bool _completed;
         private bool _completedSynchronously;
@@ -36,7 +36,7 @@ namespace Salient.ReliableHttpClient
 
 
 
-        public ReliableAsyncResult(ApiAsyncCallback cb, object state, bool completed, string responseText, ReliableHttpException error)
+        public ReliableAsyncResult(ReliableAsyncCallback cb, object state, bool completed, string responseText, ReliableHttpException error)
         {
 
             _id = Guid.NewGuid();

@@ -180,7 +180,7 @@
                 });
                 serviceText = serviceText.concat("\n" + "        /// <param name=\"callback\"></param>");
                 serviceText = serviceText.concat("\n" + "        /// <param name=\"state\"></param>");
-                serviceText = serviceText.concat("\n" + "        " + visibility + " virtual void Begin" + key + "(" + paramList + (paramList ? "," : "") + " ApiAsyncCallback callback, object state)");
+                serviceText = serviceText.concat("\n" + "        " + visibility + " virtual void Begin" + key + "(" + paramList + (paramList ? "," : "") + " ReliableAsyncCallback callback, object state)");
                 serviceText = serviceText.concat("\n" + "        {");
                 serviceText = serviceText.concat("\n" + "            string uriTemplate = \"" + uriTemplate + "\";");
 

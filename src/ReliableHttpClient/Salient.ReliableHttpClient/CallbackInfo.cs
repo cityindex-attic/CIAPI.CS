@@ -2,7 +2,7 @@
 {
     public class CallbackInfo
     {
-        public ApiAsyncCallback Callback;
+        public ReliableAsyncCallback Callback;
         public object State;
     }
 }

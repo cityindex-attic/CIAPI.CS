@@ -120,7 +120,7 @@ public string AppKey { get; set; }
         /// <param name="apiLogOnRequest">The request to create a session (log on).</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        internal virtual void BeginLogOn(ApiLogOnRequestDTO apiLogOnRequest, ApiAsyncCallback callback, object state)
+        internal virtual void BeginLogOn(ApiLogOnRequestDTO apiLogOnRequest, ReliableAsyncCallback callback, object state)
         {
             string uriTemplate = "/";
             _client.BeginRequest(RequestMethod.POST, "session", uriTemplate , 
@@ -165,7 +165,7 @@ public string AppKey { get; set; }
         /// <param name="session">The session token. May be set as a service parameter or as a request header.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        internal virtual void BeginDeleteSession(string userName, string session, ApiAsyncCallback callback, object state)
+        internal virtual void BeginDeleteSession(string userName, string session, ReliableAsyncCallback callback, object state)
         {
             string uriTemplate = "/deleteSession?userName={userName}&session={session}";
             _client.BeginRequest(RequestMethod.POST, "session", uriTemplate , 
@@ -208,7 +208,7 @@ public string AppKey { get; set; }
         /// <param name="apiChangePasswordRequest">The change password request details.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginChangePassword(ApiChangePasswordRequestDTO apiChangePasswordRequest, ApiAsyncCallback callback, object state)
+        public virtual void BeginChangePassword(ApiChangePasswordRequestDTO apiChangePasswordRequest, ReliableAsyncCallback callback, object state)
         {
             string uriTemplate = "/changePassword";
             _client.BeginRequest(RequestMethod.POST, "session", uriTemplate , 
@@ -265,7 +265,7 @@ public string AppKey { get; set; }
         /// <param name="priceBars">The total number of pricebars to return.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginGetPriceBars(string marketId, string interval, int span, string priceBars, ApiAsyncCallback callback, object state)
+        public virtual void BeginGetPriceBars(string marketId, string interval, int span, string priceBars, ReliableAsyncCallback callback, object state)
         {
             string uriTemplate = "/{marketId}/barhistory?interval={interval}&span={span}&pricebars={priceBars}";
             _client.BeginRequest(RequestMethod.GET, "market", uriTemplate , 
@@ -313,7 +313,7 @@ public string AppKey { get; set; }
         /// <param name="priceTicks">The total number of price ticks to return.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginGetPriceTicks(string marketId, string priceTicks, ApiAsyncCallback callback, object state)
+        public virtual void BeginGetPriceTicks(string marketId, string priceTicks, ReliableAsyncCallback callback, object state)
         {
             string uriTemplate = "/{marketId}/tickhistory?priceticks={priceTicks}";
             _client.BeginRequest(RequestMethod.GET, "market", uriTemplate , 
@@ -368,7 +368,7 @@ public string AppKey { get; set; }
         /// <param name="maxResults">Specify the maximum number of headlines returned.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginListNewsHeadlinesWithSource(string source, string category, int maxResults, ApiAsyncCallback callback, object state)
+        public virtual void BeginListNewsHeadlinesWithSource(string source, string category, int maxResults, ReliableAsyncCallback callback, object state)
         {
             string uriTemplate = "/{source}/{category}?MaxResults={maxResults}";
             _client.BeginRequest(RequestMethod.GET, "news", uriTemplate , 
@@ -415,7 +415,7 @@ public string AppKey { get; set; }
         /// <param name="storyId">The news story ID.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginGetNewsDetail(string source, string storyId, ApiAsyncCallback callback, object state)
+        public virtual void BeginGetNewsDetail(string source, string storyId, ReliableAsyncCallback callback, object state)
         {
             string uriTemplate = "/{source}/{storyId}";
             _client.BeginRequest(RequestMethod.GET, "news", uriTemplate , 
@@ -476,7 +476,7 @@ public string AppKey { get; set; }
         /// <param name="useMobileShortName">True if the market name should be in short form. Helpful when displaying data on a small screen.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginListCfdMarkets(string searchByMarketName, string searchByMarketCode, int clientAccountId, int maxResults, bool useMobileShortName, ApiAsyncCallback callback, object state)
+        public virtual void BeginListCfdMarkets(string searchByMarketName, string searchByMarketCode, int clientAccountId, int maxResults, bool useMobileShortName, ReliableAsyncCallback callback, object state)
         {
             string uriTemplate = "?MarketName={searchByMarketName}&MarketCode={searchByMarketCode}&ClientAccountId={clientAccountId}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}";
             _client.BeginRequest(RequestMethod.GET, "cfd/markets", uriTemplate , 
@@ -540,7 +540,7 @@ public string AppKey { get; set; }
         /// <param name="useMobileShortName">True if the market name should be in short form. Helpful when displaying data on a small screen.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginListSpreadMarkets(string searchByMarketName, string searchByMarketCode, int clientAccountId, int maxResults, bool useMobileShortName, ApiAsyncCallback callback, object state)
+        public virtual void BeginListSpreadMarkets(string searchByMarketName, string searchByMarketCode, int clientAccountId, int maxResults, bool useMobileShortName, ReliableAsyncCallback callback, object state)
         {
             string uriTemplate = "?MarketName={searchByMarketName}&MarketCode={searchByMarketCode}&ClientAccountId={clientAccountId}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}";
             _client.BeginRequest(RequestMethod.GET, "spread/markets", uriTemplate , 
@@ -592,7 +592,7 @@ public string AppKey { get; set; }
         /// <param name="marketId">The market ID.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginGetMarketInformation(string marketId, ApiAsyncCallback callback, object state)
+        public virtual void BeginGetMarketInformation(string marketId, ReliableAsyncCallback callback, object state)
         {
             string uriTemplate = "/{marketId}/information";
             _client.BeginRequest(RequestMethod.GET, "market", uriTemplate , 
@@ -655,7 +655,7 @@ public string AppKey { get; set; }
         /// <param name="useMobileShortName">True if the market name should be in short form.  Helpful when displaying data on a small screen.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginListMarketInformationSearch(bool searchByMarketCode, bool searchByMarketName, bool spreadProductType, bool cfdProductType, bool binaryProductType, string query, int maxResults, bool useMobileShortName, ApiAsyncCallback callback, object state)
+        public virtual void BeginListMarketInformationSearch(bool searchByMarketCode, bool searchByMarketName, bool spreadProductType, bool cfdProductType, bool binaryProductType, string query, int maxResults, bool useMobileShortName, ReliableAsyncCallback callback, object state)
         {
             string uriTemplate = "/informationsearch?SearchByMarketCode={searchByMarketCode}&SearchByMarketName={searchByMarketName}&SpreadProductType={spreadProductType}&CfdProductType={cfdProductType}&BinaryProductType={binaryProductType}&Query={query}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}";
             _client.BeginRequest(RequestMethod.GET, "market", uriTemplate , 
@@ -725,7 +725,7 @@ public string AppKey { get; set; }
         /// <param name="useMobileShortName">True if the market name should be in short form.  Helpful when displaying data on a small screen.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginListMarketSearch(bool searchByMarketCode, bool searchByMarketName, bool spreadProductType, bool cfdProductType, bool binaryProductType, string query, int maxResults, bool useMobileShortName, ApiAsyncCallback callback, object state)
+        public virtual void BeginListMarketSearch(bool searchByMarketCode, bool searchByMarketName, bool spreadProductType, bool cfdProductType, bool binaryProductType, string query, int maxResults, bool useMobileShortName, ReliableAsyncCallback callback, object state)
         {
             string uriTemplate = "/search?SearchByMarketCode={searchByMarketCode}&SearchByMarketName={searchByMarketName}&SpreadProductType={spreadProductType}&CfdProductType={cfdProductType}&BinaryProductType={binaryProductType}&Query={query}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}";
             _client.BeginRequest(RequestMethod.GET, "market", uriTemplate , 
@@ -783,7 +783,7 @@ public string AppKey { get; set; }
         /// <param name="useMobileShortName">True if the market name should be in short form. Helpful when displaying data on a small screen.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginSearchWithTags(string query, int tagId, int maxResults, bool useMobileShortName, ApiAsyncCallback callback, object state)
+        public virtual void BeginSearchWithTags(string query, int tagId, int maxResults, bool useMobileShortName, ReliableAsyncCallback callback, object state)
         {
             string uriTemplate = "/searchwithtags?Query={query}&TagId={tagId}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}";
             _client.BeginRequest(RequestMethod.GET, "market", uriTemplate , 
@@ -826,7 +826,7 @@ public string AppKey { get; set; }
         /// </summary>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginTagLookup( ApiAsyncCallback callback, object state)
+        public virtual void BeginTagLookup( ReliableAsyncCallback callback, object state)
         {
             string uriTemplate = "/taglookup";
             _client.BeginRequest(RequestMethod.GET, "market", uriTemplate , 
@@ -868,7 +868,7 @@ public string AppKey { get; set; }
         /// <param name="listMarketInformationRequestDTO">Get Market Information for the specified list of markets.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginListMarketInformation(ListMarketInformationRequestDTO listMarketInformationRequestDTO, ApiAsyncCallback callback, object state)
+        public virtual void BeginListMarketInformation(ListMarketInformationRequestDTO listMarketInformationRequestDTO, ReliableAsyncCallback callback, object state)
         {
             string uriTemplate = "/information";
             _client.BeginRequest(RequestMethod.POST, "market", uriTemplate , 
@@ -910,7 +910,7 @@ public string AppKey { get; set; }
         /// <param name="listMarketInformationRequestSaveDTO">Save Market Information for the specified list of markets.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginSaveMarketInformation(SaveMarketInformationRequestDTO listMarketInformationRequestSaveDTO, ApiAsyncCallback callback, object state)
+        public virtual void BeginSaveMarketInformation(SaveMarketInformationRequestDTO listMarketInformationRequestSaveDTO, ReliableAsyncCallback callback, object state)
         {
             string uriTemplate = "/information/save";
             _client.BeginRequest(RequestMethod.POST, "market", uriTemplate , 
@@ -958,7 +958,7 @@ public string AppKey { get; set; }
         /// <param name="saveClientPreferenceRequestDTO">Save client preferences.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginSave(SaveClientPreferenceRequestDTO saveClientPreferenceRequestDTO, ApiAsyncCallback callback, object state)
+        public virtual void BeginSave(SaveClientPreferenceRequestDTO saveClientPreferenceRequestDTO, ReliableAsyncCallback callback, object state)
         {
             string uriTemplate = "/save";
             _client.BeginRequest(RequestMethod.POST, "clientpreference", uriTemplate , 
@@ -1000,7 +1000,7 @@ public string AppKey { get; set; }
         /// <param name="clientPreferenceRequestDto">get client preferences.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginGet(ClientPreferenceRequestDTO clientPreferenceRequestDto, ApiAsyncCallback callback, object state)
+        public virtual void BeginGet(ClientPreferenceRequestDTO clientPreferenceRequestDto, ReliableAsyncCallback callback, object state)
         {
             string uriTemplate = "/get";
             _client.BeginRequest(RequestMethod.POST, "clientpreference/save", uriTemplate , 
@@ -1040,7 +1040,7 @@ public string AppKey { get; set; }
         /// </summary>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginGetKeyList( ApiAsyncCallback callback, object state)
+        public virtual void BeginGetKeyList( ReliableAsyncCallback callback, object state)
         {
             string uriTemplate = "/getkeylist";
             _client.BeginRequest(RequestMethod.GET, "clientpreference/save", uriTemplate , 
@@ -1082,7 +1082,7 @@ public string AppKey { get; set; }
         /// <param name="clientPreferenceKey">delete client preference key.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginDelete(ClientPreferenceRequestDTO clientPreferenceKey, ApiAsyncCallback callback, object state)
+        public virtual void BeginDelete(ClientPreferenceRequestDTO clientPreferenceKey, ReliableAsyncCallback callback, object state)
         {
             string uriTemplate = "/delete";
             _client.BeginRequest(RequestMethod.POST, "clientpreference/save", uriTemplate , 
@@ -1130,7 +1130,7 @@ public string AppKey { get; set; }
         /// <param name="order">The order request.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginOrder(NewStopLimitOrderRequestDTO order, ApiAsyncCallback callback, object state)
+        public virtual void BeginOrder(NewStopLimitOrderRequestDTO order, ReliableAsyncCallback callback, object state)
         {
             string uriTemplate = "/newstoplimitorder";
             _client.BeginRequest(RequestMethod.POST, "order", uriTemplate , 
@@ -1172,7 +1172,7 @@ public string AppKey { get; set; }
         /// <param name="cancelOrder">The cancel order request.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginCancelOrder(CancelOrderRequestDTO cancelOrder, ApiAsyncCallback callback, object state)
+        public virtual void BeginCancelOrder(CancelOrderRequestDTO cancelOrder, ReliableAsyncCallback callback, object state)
         {
             string uriTemplate = "/cancel";
             _client.BeginRequest(RequestMethod.POST, "order", uriTemplate , 
@@ -1214,7 +1214,7 @@ public string AppKey { get; set; }
         /// <param name="order">The update order request.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginUpdateOrder(UpdateStopLimitOrderRequestDTO order, ApiAsyncCallback callback, object state)
+        public virtual void BeginUpdateOrder(UpdateStopLimitOrderRequestDTO order, ReliableAsyncCallback callback, object state)
         {
             string uriTemplate = "/updatestoplimitorder";
             _client.BeginRequest(RequestMethod.POST, "order", uriTemplate , 
@@ -1256,7 +1256,7 @@ public string AppKey { get; set; }
         /// <param name="tradingAccountId">The ID of the trading account to get orders for.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginListOpenPositions(int tradingAccountId, ApiAsyncCallback callback, object state)
+        public virtual void BeginListOpenPositions(int tradingAccountId, ReliableAsyncCallback callback, object state)
         {
             string uriTemplate = "/openpositions?TradingAccountId={tradingAccountId}";
             _client.BeginRequest(RequestMethod.GET, "order", uriTemplate , 
@@ -1298,7 +1298,7 @@ public string AppKey { get; set; }
         /// <param name="tradingAccountId">The ID of the trading account to get orders for.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginListActiveStopLimitOrders(int tradingAccountId, ApiAsyncCallback callback, object state)
+        public virtual void BeginListActiveStopLimitOrders(int tradingAccountId, ReliableAsyncCallback callback, object state)
         {
             string uriTemplate = "/activestoplimitorders?TradingAccountId={tradingAccountId}";
             _client.BeginRequest(RequestMethod.GET, "order", uriTemplate , 
@@ -1340,7 +1340,7 @@ public string AppKey { get; set; }
         /// <param name="orderId">The requested order ID.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginGetActiveStopLimitOrder(string orderId, ApiAsyncCallback callback, object state)
+        public virtual void BeginGetActiveStopLimitOrder(string orderId, ReliableAsyncCallback callback, object state)
         {
             string uriTemplate = "/{orderId}/activestoplimitorder";
             _client.BeginRequest(RequestMethod.GET, "order", uriTemplate , 
@@ -1382,7 +1382,7 @@ public string AppKey { get; set; }
         /// <param name="orderId">The requested order ID.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginGetOpenPosition(string orderId, ApiAsyncCallback callback, object state)
+        public virtual void BeginGetOpenPosition(string orderId, ReliableAsyncCallback callback, object state)
         {
             string uriTemplate = "/{orderId}/openposition";
             _client.BeginRequest(RequestMethod.GET, "order", uriTemplate , 
@@ -1427,7 +1427,7 @@ public string AppKey { get; set; }
         /// <param name="maxResults">The maximum number of results to return.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginListTradeHistory(int tradingAccountId, int maxResults, ApiAsyncCallback callback, object state)
+        public virtual void BeginListTradeHistory(int tradingAccountId, int maxResults, ReliableAsyncCallback callback, object state)
         {
             string uriTemplate = "/tradehistory?TradingAccountId={tradingAccountId}&MaxResults={maxResults}";
             _client.BeginRequest(RequestMethod.GET, "order", uriTemplate , 
@@ -1473,7 +1473,7 @@ public string AppKey { get; set; }
         /// <param name="maxResults">The maximum number of results to return.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginListStopLimitOrderHistory(int tradingAccountId, int maxResults, ApiAsyncCallback callback, object state)
+        public virtual void BeginListStopLimitOrderHistory(int tradingAccountId, int maxResults, ReliableAsyncCallback callback, object state)
         {
             string uriTemplate = "/stoplimitorderhistory?TradingAccountId={tradingAccountId}&MaxResults={maxResults}";
             _client.BeginRequest(RequestMethod.GET, "order", uriTemplate , 
@@ -1516,7 +1516,7 @@ public string AppKey { get; set; }
         /// <param name="orderId">The requested order ID.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginGetOrder(string orderId, ApiAsyncCallback callback, object state)
+        public virtual void BeginGetOrder(string orderId, ReliableAsyncCallback callback, object state)
         {
             string uriTemplate = "/{orderId}";
             _client.BeginRequest(RequestMethod.GET, "order", uriTemplate , 
@@ -1558,7 +1558,7 @@ public string AppKey { get; set; }
         /// <param name="trade">The trade request.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginTrade(NewTradeOrderRequestDTO trade, ApiAsyncCallback callback, object state)
+        public virtual void BeginTrade(NewTradeOrderRequestDTO trade, ReliableAsyncCallback callback, object state)
         {
             string uriTemplate = "/newtradeorder";
             _client.BeginRequest(RequestMethod.POST, "order", uriTemplate , 
@@ -1600,7 +1600,7 @@ public string AppKey { get; set; }
         /// <param name="update">The update trade request.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginUpdateTrade(UpdateTradeOrderRequestDTO update, ApiAsyncCallback callback, object state)
+        public virtual void BeginUpdateTrade(UpdateTradeOrderRequestDTO update, ReliableAsyncCallback callback, object state)
         {
             string uriTemplate = "/updatetradeorder";
             _client.BeginRequest(RequestMethod.POST, "order", uriTemplate , 
@@ -1646,7 +1646,7 @@ public string AppKey { get; set; }
         /// </summary>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginGetClientAndTradingAccount( ApiAsyncCallback callback, object state)
+        public virtual void BeginGetClientAndTradingAccount( ReliableAsyncCallback callback, object state)
         {
             string uriTemplate = "/ClientAndTradingAccount";
             _client.BeginRequest(RequestMethod.GET, "useraccount", uriTemplate , 
@@ -1688,7 +1688,7 @@ public string AppKey { get; set; }
         /// <param name="saveAccountInformationRequest">Saves the users account information.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginSaveAccountInformation(ApiSaveAccountInformationRequestDTO saveAccountInformationRequest, ApiAsyncCallback callback, object state)
+        public virtual void BeginSaveAccountInformation(ApiSaveAccountInformationRequestDTO saveAccountInformationRequest, ReliableAsyncCallback callback, object state)
         {
             string uriTemplate = "/Save";
             _client.BeginRequest(RequestMethod.POST, "useraccount", uriTemplate , 
@@ -1739,7 +1739,7 @@ public string AppKey { get; set; }
         /// <param name="cultureId">The cultureId used to override the translated text description. (Optional)</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginGetSystemLookup(string lookupEntityName, int cultureId, ApiAsyncCallback callback, object state)
+        public virtual void BeginGetSystemLookup(string lookupEntityName, int cultureId, ReliableAsyncCallback callback, object state)
         {
             string uriTemplate = "/lookup?lookupEntityName={lookupEntityName}&cultureId={cultureId}";
             _client.BeginRequest(RequestMethod.GET, "message", uriTemplate , 
@@ -1788,7 +1788,7 @@ public string AppKey { get; set; }
         /// <param name="accountOperatorId">Account operator identifier. (Optional)</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginGetClientApplicationMessageTranslation(int clientApplicationId, int cultureId, int accountOperatorId, ApiAsyncCallback callback, object state)
+        public virtual void BeginGetClientApplicationMessageTranslation(int clientApplicationId, int cultureId, int accountOperatorId, ReliableAsyncCallback callback, object state)
         {
             string uriTemplate = "/translation?clientApplicationId={clientApplicationId}&cultureId={cultureId}&accountOperatorId={accountOperatorId}";
             _client.BeginRequest(RequestMethod.GET, "message", uriTemplate , 
@@ -1832,7 +1832,7 @@ public string AppKey { get; set; }
         /// <param name="apiClientApplicationMessageTranslationRequestDto">Dto of the required data for translation lookup for user.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginGetClientApplicationMessageTranslationWithInterestingItems(ApiClientApplicationMessageTranslationRequestDTO apiClientApplicationMessageTranslationRequestDto, ApiAsyncCallback callback, object state)
+        public virtual void BeginGetClientApplicationMessageTranslationWithInterestingItems(ApiClientApplicationMessageTranslationRequestDTO apiClientApplicationMessageTranslationRequestDto, ReliableAsyncCallback callback, object state)
         {
             string uriTemplate = "/translationWithInterestingItems";
             _client.BeginRequest(RequestMethod.POST, "message", uriTemplate , 
@@ -1878,7 +1878,7 @@ public string AppKey { get; set; }
         /// </summary>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginGetWatchlists( ApiAsyncCallback callback, object state)
+        public virtual void BeginGetWatchlists( ReliableAsyncCallback callback, object state)
         {
             string uriTemplate = "/";
             _client.BeginRequest(RequestMethod.GET, "watchlists", uriTemplate , 
@@ -1920,7 +1920,7 @@ public string AppKey { get; set; }
         /// <param name="apiSaveWatchlistRequestDto">The watchlist to save.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginSaveWatchlist(ApiSaveWatchlistRequestDTO apiSaveWatchlistRequestDto, ApiAsyncCallback callback, object state)
+        public virtual void BeginSaveWatchlist(ApiSaveWatchlistRequestDTO apiSaveWatchlistRequestDto, ReliableAsyncCallback callback, object state)
         {
             string uriTemplate = "/Save";
             _client.BeginRequest(RequestMethod.POST, "watchlist", uriTemplate , 
@@ -1962,7 +1962,7 @@ public string AppKey { get; set; }
         /// <param name="deleteWatchlistRequestDto">The watchlist to delete.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginDeleteWatchlist(ApiDeleteWatchlistRequestDTO deleteWatchlistRequestDto, ApiAsyncCallback callback, object state)
+        public virtual void BeginDeleteWatchlist(ApiDeleteWatchlistRequestDTO deleteWatchlistRequestDto, ReliableAsyncCallback callback, object state)
         {
             string uriTemplate = "/delete";
             _client.BeginRequest(RequestMethod.POST, "watchlist", uriTemplate , 
@@ -2013,7 +2013,7 @@ public string AppKey { get; set; }
         /// <param name="accountOperatorId">an optional parameter to identify the account operator string to uniquely identify the application.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginGetVersionInformation(string appKey, int accountOperatorId, ApiAsyncCallback callback, object state)
+        public virtual void BeginGetVersionInformation(string appKey, int accountOperatorId, ReliableAsyncCallback callback, object state)
         {
             string uriTemplate = "/versioninformation?AppKey={appKey}&AccountOperatorId={accountOperatorId}";
             _client.BeginRequest(RequestMethod.GET, "clientapplication", uriTemplate , 
@@ -2062,7 +2062,7 @@ public string AppKey { get; set; }
         /// <param name="errorCode">The error code for the condition encountered.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginGenerateException(int errorCode, ApiAsyncCallback callback, object state)
+        public virtual void BeginGenerateException(int errorCode, ReliableAsyncCallback callback, object state)
         {
             string uriTemplate = "?errorCode={errorCode}";
             _client.BeginRequest(RequestMethod.GET, "errors", uriTemplate , 

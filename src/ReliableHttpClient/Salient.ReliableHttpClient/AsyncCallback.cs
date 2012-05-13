@@ -2,5 +2,5 @@
 
 namespace Salient.ReliableHttpClient
 {
-    public delegate void ApiAsyncCallback(ReliableAsyncResult result);
+    public delegate void ReliableAsyncCallback(ReliableAsyncResult result);
 }
