@@ -36,7 +36,7 @@ namespace Salient.ReliableHttpClient
 
         public static RequestInfo Create(
             RequestMethod method, string target, string uriTemplate, Dictionary<string, object> parameters,
-            string userAgent, Dictionary<string, object> headers, ContentType requestContentType,
+            string userAgent, Dictionary<string, string> headers, ContentType requestContentType,
             ContentType responseContentType, TimeSpan cacheDuration,
             int timeout, int retryCount,
             Uri uri, string requestBody, IRequestFactory requestFactory)
@@ -49,7 +49,7 @@ namespace Salient.ReliableHttpClient
                                  Uri = uri,
                                  Method = method,
                                  UserAgent = userAgent,
-                                 _headers = new Dictionary<string, object>(headers ?? new Dictionary<string, object>()),
+                                 _headers = new Dictionary<string, string>(headers ?? new Dictionary<string, string>()),
                                  RequestBody = requestBody,
                                  Parameters = new Dictionary<string, object>(parameters ?? new Dictionary<string, object>()),
                                  CacheDuration = cacheDuration,
@@ -61,6 +61,7 @@ namespace Salient.ReliableHttpClient
             return result;
         }
 
+        public ResponseInfo ResponseInfo { get; set; }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         internal void CompleteRequest(IAsyncResult result)
@@ -72,20 +73,38 @@ namespace Salient.ReliableHttpClient
 
             WebResponse response = null;
 
-
+            // #TODO: need to expose response details in the 'holder'
             try
             {
                 using (response = Request.EndGetResponse(result))
-                using (Stream stream = response.GetResponseStream())
-                // ReSharper disable AssignNullToNotNullAttribute
-                using (var reader = new StreamReader(stream))
-                // ReSharper restore AssignNullToNotNullAttribute
                 {
-                    string json = reader.ReadToEnd();
-                    Completed = DateTimeOffset.UtcNow;
-                    ResponseText = json;
-                    Log.Debug(string.Format("request completed: latency {1}\r\nITEM\r\n{0}", this,
-                                            Completed.Subtract(Issued).Duration()));
+                    var headers = new Dictionary<string, string>();
+                    foreach (var h in response.Headers.AllKeys)
+                    {
+                        headers[h] = response.Headers[h];
+                    }
+                    ResponseInfo = new ResponseInfo()
+                                       {
+                                           ContentLength = response.ContentLength,
+                                           ContentType = response.ContentType,
+                                           ResponseUri = response.ResponseUri ,
+                                           Headers = headers
+
+                                       };
+                    using (Stream stream = response.GetResponseStream())
+                    {
+                        // ReSharper disable AssignNullToNotNullAttribute
+                        using (var reader = new StreamReader(stream))
+                        // ReSharper restore AssignNullToNotNullAttribute
+                        {
+                            string json = reader.ReadToEnd();
+                            ResponseInfo.ResponseText = json;
+                            Completed = DateTimeOffset.UtcNow;
+                            ResponseText = json;
+                            Log.Debug(string.Format("request completed: latency {1}\r\nITEM\r\n{0}", this,
+                                                    Completed.Subtract(Issued).Duration()));
+                        }
+                    }
                 }
             }
             //catch (WebException ex)

@@ -22,7 +22,7 @@ namespace Salient.ReliableHttpClient
             Id = Guid.NewGuid();
             RequestBody = "";
             Parameters = new Dictionary<string, object>();
-            _headers = new Dictionary<string, object>();
+            _headers = new Dictionary<string, string>();
         }
 
         public string UriTemplate { get; set; }
@@ -49,15 +49,12 @@ namespace Salient.ReliableHttpClient
         public string ResponseText { get; set; }
 
 
-        public Dictionary<string, object> Headers
+        public Dictionary<string, string> Headers
         {
             get { return _headers; }
-            set
-            {
-                _headers = value;
-            }
+            set { _headers = value; }
         }
-        internal Dictionary<string, object> _headers;
+        internal Dictionary<string, string> _headers;
 
         public Dictionary<string, object> Parameters { get; set; }
         public ReliableHttpException Exception { get; set; }
@@ -273,5 +270,14 @@ namespace Salient.ReliableHttpClient
             }
             return result;
         }
+    }
+
+    public class ResponseInfo
+    {
+        public Uri ResponseUri { get; set; }
+        public Dictionary<string,string> Headers { get; set; }
+        public string ContentType { get; set; }
+        public long ContentLength { get; set; }
+        public string ResponseText { get; set; }
     }
 }

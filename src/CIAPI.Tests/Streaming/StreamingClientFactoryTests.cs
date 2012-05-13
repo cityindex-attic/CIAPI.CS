@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using CIAPI.Rpc;
 using CIAPI.Streaming;
 using NUnit.Framework;
 using Salient.ReflectiveLoggingAdapter;
@@ -15,7 +16,7 @@ namespace CIAPI.Tests.Streaming
         static Dictionary<string, CapturingAppender> loggers;
         static StreamingClientFactoryTests()
         {
-            
+
             loggers = new Dictionary<string, CapturingAppender>();
             LogManager.CreateInnerLogger = (logName, logLevel, showLevel, showDateTime, showLogName, dateTimeFormat) =>
             {
@@ -30,8 +31,8 @@ namespace CIAPI.Tests.Streaming
         [Test]
         public void ReturnsAnIStreamingClient()
         {
-            Assert.IsInstanceOf(typeof(IStreamingClient), 
-                StreamingClientFactory.CreateStreamingClient(new Uri("http://a.server.com/"), "username", "sessionId"));
+            var rpcClient = new Client(new Uri("http://foo.com"), new Uri("http://foo.com"), "nullAndVoid");
+            Assert.IsInstanceOf(typeof(IStreamingClient), rpcClient.CreateStreamingClient());
         }
 
 

@@ -335,19 +335,19 @@ namespace Salient.ReliableHttpClient
         }
 
 
-        private RequestInfo CreateRequest(Uri uri, RequestMethod method, string body, Dictionary<string, object> headers,
+        private RequestInfo CreateRequest(Uri uri, RequestMethod method, string body, Dictionary<string, string> headers,
                                           ContentType requestContentType, ContentType responseContentType,
                                           TimeSpan cacheDuration, int timeout, string target, string uriTemplate,
                                           int retryCount, Dictionary<string, object> parameters,
                                           ReliableAsyncCallback callback, object state)
         {
             RequestInfo info;
-            lock (headers)
-            {
-                info = RequestInfo.Create(method, target, uriTemplate, parameters, UserAgent, headers,
-                                                      requestContentType, responseContentType, cacheDuration, timeout,
-                                                      retryCount, uri, body, _requestFactory);
-            }
+
+
+            info = RequestInfo.Create(method, target, uriTemplate, parameters, UserAgent, headers,
+                                                  requestContentType, responseContentType, cacheDuration, timeout,
+                                                  retryCount, uri, body, _requestFactory);
+
             info.BuildRequest(_requestFactory);
             info.ProcessingComplete += RequestCompleted;
             if (callback != null)
@@ -366,7 +366,7 @@ namespace Salient.ReliableHttpClient
         }
 
 
-        public Guid BeginRequest(Uri uri, RequestMethod method, string body, Dictionary<string, object> headers,
+        public Guid BeginRequest(Uri uri, RequestMethod method, string body, Dictionary<string, string> headers,
                                  ContentType requestContentType, ContentType responseContentType, TimeSpan cacheDuration,
                                  int timeout, string target, string uriTemplate, int retryCount,
                                  Dictionary<string, object> parameters, ReliableAsyncCallback callback, object state)

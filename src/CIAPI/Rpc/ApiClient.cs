@@ -16,9 +16,9 @@ namespace CIAPI.Rpc
     {
 
 
-        private Dictionary<string, object> GetHeaders(string target)
+        private Dictionary<string, string> GetHeaders(string target)
         {
-            var headers = new Dictionary<string, object>();
+            var headers = new Dictionary<string, string>();
             if (target.IndexOf("/session", StringComparison.OrdinalIgnoreCase) == -1)
             {
                 headers["UserName"] = UserName;
@@ -33,21 +33,21 @@ namespace CIAPI.Rpc
         public Guid BeginRequest(RequestMethod method, string target, string uriTemplate, Dictionary<string, object> parameters, ContentType requestContentType, ContentType responseContentType, TimeSpan cacheDuration, int timeout, int retryCount, ReliableAsyncCallback callback, object state)
         {
             target = _rootUri.AbsoluteUri + "/" + target;
-            Dictionary<string, object> headers = GetHeaders(target);
+            Dictionary<string, string> headers = GetHeaders(target);
             return base.BeginRequest(method, target, uriTemplate, headers, parameters, requestContentType, responseContentType, cacheDuration, timeout, retryCount, callback, state);
         }
 
         public T Request<T>(RequestMethod method, string target, string uriTemplate, Dictionary<string, object> parameters, ContentType requestContentType, ContentType responseContentType, TimeSpan cacheDuration, int timeout, int retryCount)
         {
             target = _rootUri.AbsoluteUri + "/" + target;
-            Dictionary<string, object> headers = GetHeaders(target);
+            Dictionary<string, string> headers = GetHeaders(target);
 
             return base.Request<T>(method, target, uriTemplate, headers, parameters, requestContentType, responseContentType, cacheDuration, timeout, retryCount);
         }
         public string Request(RequestMethod method, string target, string uriTemplate, Dictionary<string, object> parameters, ContentType requestContentType, ContentType responseContentType, TimeSpan cacheDuration, int timeout, int retryCount)
         {
             target = _rootUri.AbsoluteUri + "/" + target;
-            Dictionary<string, object> headers = GetHeaders(target);
+            Dictionary<string, string> headers = GetHeaders(target);
             return base.Request(method, target, uriTemplate, headers, parameters, requestContentType, responseContentType, cacheDuration, timeout, retryCount);
         }
 
@@ -328,7 +328,7 @@ namespace CIAPI.Rpc
             base.BeginRequest(RequestMethod.POST,
                 appmetricsUrl,
                 "",
-                new Dictionary<string, object>(),
+                new Dictionary<string, string>(),
                 new Dictionary<string, object> { { "MessageAppKey", AppKey ?? "null" }, { "MessageSession", Session ?? "null" }, { "MessagesList", latencyData } },
                 ContentType.FORM,
                 ContentType.TEXT,

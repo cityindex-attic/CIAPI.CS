@@ -4,6 +4,8 @@ using System.Net;
 
 namespace Salient.ReliableHttpClient.Testing
 {
+    
+
     public class TestWebReponse : WebResponse
     {
         TestWebStream responseStream;
@@ -14,10 +16,18 @@ namespace Salient.ReliableHttpClient.Testing
         {
             this.responseStream = responseStream;
             _contentLength = responseStream.Length;
-            
 
+            _headers = new WebHeaderCollection();
         }
 
+        private WebHeaderCollection _headers;
+        public override WebHeaderCollection Headers
+        {
+            get
+            {
+                return _headers;
+            }
+        }
         /// <summary>See <see cref="WebResponse.GetResponseStream"/>.</summary>
         public override Stream GetResponseStream()
         {
@@ -32,21 +42,21 @@ namespace Salient.ReliableHttpClient.Testing
         private long _contentLength;
         public override long ContentLength
         {
-            get{return _contentLength;}
-            
+            get { return _contentLength; }
+
         }
 
         private string _contentType;
         public override string ContentType
         {
-            get{return _contentType;}
-            
+            get { return _contentType; }
+
         }
 
         private readonly Uri _responseUri;
         public override Uri ResponseUri
         {
-            get{return _responseUri;}
+            get { return _responseUri; }
         }
     }
 }

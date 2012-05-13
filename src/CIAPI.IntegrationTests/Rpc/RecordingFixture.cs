@@ -87,12 +87,7 @@ namespace CIAPI.IntegrationTests.Rpc
                     {
                         throw new Exception("no matching request found");
                     }
-
-
-                    // set the content type and response of the test request to the recorded values
-                    testRequest.ContentType = match.RequestContentType.ToHeaderValue();
-                    testRequest.ResponseStream = new TestWebStream(Encoding.UTF8.GetBytes(match.ResponseText));
-
+                    finder.PopulateRequest(testRequest,match);
                 };
 
             // now that our request stack is set up, we can make the same calls with repeatable results
@@ -143,9 +138,7 @@ namespace CIAPI.IntegrationTests.Rpc
                 }
 
 
-                // set the content type and response of the test request to the recorded values
-                testRequest.ContentType = match.RequestContentType.ToHeaderValue();
-                testRequest.ResponseStream = new TestWebStream(Encoding.UTF8.GetBytes(match.ResponseText));
+                finder.PopulateRequest(testRequest, match);
 
             };
 
@@ -200,7 +193,8 @@ namespace CIAPI.IntegrationTests.Rpc
                 {
                     throw new Exception("no matching request found");
                 }
-                testRequest.ResponseStream = new TestWebStream(Encoding.UTF8.GetBytes(match.ResponseText));
+
+                finder.PopulateRequest(testRequest, match);
             };
 
             // now that our request stack is set up, we can make the same calls with repeatable results

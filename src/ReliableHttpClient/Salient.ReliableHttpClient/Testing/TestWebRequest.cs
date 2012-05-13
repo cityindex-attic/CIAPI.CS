@@ -277,6 +277,20 @@ namespace Salient.ReliableHttpClient.Testing
     }
     public class TestWebRequestFinder
     {
+
+        public void PopulateRequest(TestWebRequest target, RequestInfoBase source)
+        {
+            
+            target.ResponseStream = new TestWebStream(Encoding.UTF8.GetBytes(source.ResponseText));
+            target.ContentType = source.RequestContentType.ToHeaderValue();
+            foreach (var h in source.Headers)
+            {
+                target.Headers[h.Key] = h.Value.ToString();
+            }
+
+        }
+
+
         private List<RequestInfoBase> _reference;
         public List<RequestInfoBase> Reference
         {
@@ -294,7 +308,7 @@ namespace Salient.ReliableHttpClient.Testing
                     if ((string)r.Headers[headerKey] == headerValue)
                     {
                         return r;
-                    }                    
+                    }
                 }
             }
             return null;

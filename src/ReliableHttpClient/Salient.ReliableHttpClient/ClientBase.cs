@@ -130,7 +130,7 @@ namespace Salient.ReliableHttpClient
         }
 
 
-        public virtual string Request(RequestMethod method, string target, string uriTemplate, Dictionary<string, object> headers,
+        public virtual string Request(RequestMethod method, string target, string uriTemplate, Dictionary<string, string> headers,
                                       Dictionary<string, object> parameters, ContentType requestContentType,
                                       ContentType responseContentType, TimeSpan cacheDuration, int timeout,
                                       int retryCount)
@@ -182,7 +182,7 @@ namespace Salient.ReliableHttpClient
 
 
         public virtual Guid BeginRequest(
-            RequestMethod method, string target, string uriTemplate, Dictionary<string, object> headers, Dictionary<string, object> parameters,
+            RequestMethod method, string target, string uriTemplate, Dictionary<string, string> headers, Dictionary<string, object> parameters,
             ContentType requestContentType,
             ContentType responseContentType, TimeSpan cacheDuration, int timeout, int retryCount,
             ReliableAsyncCallback callback,
@@ -273,7 +273,7 @@ namespace Salient.ReliableHttpClient
 
         #region Serialization
 
-        public virtual T Request<T>(RequestMethod method, string target, string uriTemplate, Dictionary<string, object> headers,
+        public virtual T Request<T>(RequestMethod method, string target, string uriTemplate, Dictionary<string, string> headers,
                                     Dictionary<string, object> parameters, ContentType requestContentType,
                                     ContentType responseContentType, TimeSpan cacheDuration, int timeout, int retryCount)
         {
