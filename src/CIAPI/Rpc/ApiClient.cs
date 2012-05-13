@@ -310,7 +310,7 @@ namespace CIAPI.Rpc
                 {
                     if (item.Uri.AbsoluteUri != appmetricsUrl)
                     {
-                        sb.AppendLine(string.Format("{0}\t{1}\t{2}\r\n", DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss.fffffff"), item.Uri, item.Completed.Subtract(item.Issued).TotalMilliseconds));
+                        sb.AppendLine(string.Format("{0}\tLatency {1}\t{2}", DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss.fffffff"), item.Uri, item.Completed.Subtract(item.Issued).TotalSeconds));
                     }
                     
                 }
@@ -322,18 +322,24 @@ namespace CIAPI.Rpc
             }
 
 
-
+            var latencyData = sb.ToString();
+            Log.Debug("LATENCY:/n" + latencyData);
 
             base.BeginRequest(RequestMethod.POST,
                 appmetricsUrl,
                 "",
                 new Dictionary<string, object>(),
-                new Dictionary<string, object> { { "MessageAppKey", AppKey ?? "null" }, { "MessageSession", Session ?? "null" }, { "MessagesList", sb.ToString() } },
+                new Dictionary<string, object> { { "MessageAppKey", AppKey ?? "null" }, { "MessageSession", Session ?? "null" }, { "MessagesList", latencyData } },
                 ContentType.FORM,
                 ContentType.TEXT,
                 TimeSpan.FromMilliseconds(0),
                 30000,
-                0, ar => { }, null);
+                0, ar =>
+                       {
+                           EndRequest(ar);
+                           Log.Debug("Latency message complete.");
+
+                       }, null);
 
 
         }
