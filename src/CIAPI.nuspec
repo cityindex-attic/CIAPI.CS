@@ -35,9 +35,9 @@
 
 
 
-    <file src="..\dist\lib\ciapi.phone7\bin\**\SilverlightClient.dll" target="lib\sl4" />
-    <file src="..\dist\lib\ciapi.phone7\bin\**\Salient.ReliableHttpClient.silverlight.dll" target="lib\sl4" />
-    <file src="..\dist\lib\ciapi.phone7\bin\**\CIAPI.Serializer.silverlight.dll" target="lib\sl4" />
+    <file src="..\dist\lib\ciapi.silverlight\bin\**\SilverlightClient.dll" target="lib\sl4" />
+    <file src="..\dist\lib\ciapi.silverlight\bin\**\Salient.ReliableHttpClient.silverlight.dll" target="lib\sl4" />
+    <file src="..\dist\lib\ciapi.silverlight\bin\**\CIAPI.Serializer.silverlight.dll" target="lib\sl4" />
 
     <file src="..\dist\lib\ciapi.silverlight\bin\**\CIAPI.silverlight.dll" target="lib\sl4" />
     <file src="..\dist\lib\ciapi.silverlight\bin\**\CIAPI.silverlight.pdb" target="lib\sl4" />
