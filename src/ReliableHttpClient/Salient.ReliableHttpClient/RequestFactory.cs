@@ -45,7 +45,7 @@ namespace Salient.ReliableHttpClient
         public WebRequest Create(string uri)
         {
             var request = (HttpWebRequest)WebRequest.Create(uri);
-            
+
 #if !SILVERLIGHT
             request.ReadWriteTimeout = Convert.ToInt32(RequestTimeout.TotalMilliseconds);
 #else

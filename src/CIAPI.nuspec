@@ -33,6 +33,16 @@
     <file src="..\dist\lib\ciapi.phone7\bin\**\CIAPI.Phone7.pdb" target="lib\sl3-wp" />
     <file src="..\dist\lib\ciapi.phone7\bin\**\CIAPI.Phone7.XML" target="lib\sl3-wp" />
 
+
+
+    <file src="..\dist\lib\ciapi.phone7\bin\**\SilverlightClient.dll" target="lib\sl4" />
+    <file src="..\dist\lib\ciapi.phone7\bin\**\Salient.ReliableHttpClient.silverlight.dll" target="lib\sl4" />
+    <file src="..\dist\lib\ciapi.phone7\bin\**\CIAPI.Serializer.silverlight.dll" target="lib\sl4" />
+
+    <file src="..\dist\lib\ciapi.silverlight\bin\**\CIAPI.silverlight.dll" target="lib\sl4" />
+    <file src="..\dist\lib\ciapi.silverlight\bin\**\CIAPI.silverlight.pdb" target="lib\sl4" />
+    <file src="..\dist\lib\ciapi.silverlight\bin\**\CIAPI.silverlight.XML" target="lib\sl4" />
+
     <file src="lib\src\**\*.cs" target="src" />
   </files>
 </package>
