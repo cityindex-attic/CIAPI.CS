@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -341,10 +342,13 @@ namespace Salient.ReliableHttpClient
 
         #region Recording
 
-        public void StartRecording()
+        
+        public void StartRecording(TextWriter writer)
         {
+            Controller.Recorder.Writer = writer;
             Controller.Recorder.Paused = false;
         }
+        
 
         public void StopRecording()
         {

@@ -50,17 +50,12 @@ namespace Salient.ReliableHttpClient
         {
             _requestFactory = requestFactory;
         }
+        
 
         public RequestController(IJsonSerializer serializer)
-            : this()
         {
             _serializer = serializer;
-
-        }
-
-        private RequestController()
-        {
-            Recorder = new Recorder { Paused = true };
+            Recorder = new Recorder(_serializer) { Paused = true };
             Id = Guid.NewGuid();
             Log.Debug("creating RequestController: " + Id);
             _requestFactory = new RequestFactory();

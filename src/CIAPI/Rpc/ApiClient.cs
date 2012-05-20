@@ -278,7 +278,7 @@ namespace CIAPI.Rpc
         public void StartMetrics()
         {
             DisposeMetricsTimer();
-            StartRecording();
+            StartRecording(null);
             _metricsTimer = new Timer(ignored => PostMetrics(), null, 1000, 10000);
         }
         public void StopMetrics()

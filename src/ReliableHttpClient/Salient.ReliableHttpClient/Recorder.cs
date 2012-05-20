@@ -1,18 +1,25 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Threading;
+using Salient.ReliableHttpClient.Serialization;
 
 namespace Salient.ReliableHttpClient
 {
 
     public class Recorder
     {
+        public const string Separator = "+=_____________________________________________________________________________=+";
+        public TextWriter Writer { get; set; }
+        public IJsonSerializer Serializer { get; set; }
         public bool Paused { get; set; }
         private List<RequestInfoBase> Requests { get; set; }
 
-        public Recorder()
+        public Recorder(IJsonSerializer serializer)
         {
+            Serializer = serializer;
             Requests = new List<RequestInfoBase>();
         }
+
 
         /// <summary>
         /// allows async processingcomplete handlers a chance to add to the recorder.
@@ -29,8 +36,10 @@ namespace Salient.ReliableHttpClient
             {
                 Requests.Clear();
             }
-            
+
         }
+
+
         public List<RequestInfoBase> GetRequests()
         {
             Wait(500);
@@ -40,7 +49,7 @@ namespace Salient.ReliableHttpClient
                 Requests.ForEach(r => result.Add(r.Copy()));
                 return result;
             }
-            
+
         }
         public void AddRequest(RequestInfoBase info)
         {
@@ -50,6 +59,12 @@ namespace Salient.ReliableHttpClient
             }
             lock (Requests)
             {
+                if (Writer != null)
+                {
+                    var json = Serializer.SerializeObject(info);
+                    Writer.WriteLine(Separator);
+                    Writer.WriteLine(json);
+                }
                 Requests.Add(info.Copy());
             }
 

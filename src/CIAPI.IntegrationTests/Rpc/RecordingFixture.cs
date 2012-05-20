@@ -19,13 +19,52 @@ namespace CIAPI.IntegrationTests.Rpc
     public class RecordingFixture : RpcFixtureBase
     {
         [Test]
+        public void HowToUseRecorderWithStream()
+        {
+            var rpcClient = new Client(Settings.RpcUri, Settings.StreamingUri, AppKey);
+
+            // start recording requests
+            var sb = new StringBuilder();
+            rpcClient.StartRecording(new StringWriter(sb));
+
+            rpcClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);
+
+
+
+
+
+            // get some headlines
+            var headlines = rpcClient.News.ListNewsHeadlinesWithSource("dj", "UK", 100);
+
+            // get a story id from one of the headlines
+            var storyId = headlines.Headlines[0].StoryId;
+
+            // get the body of the story
+            // the api team has yet again broken an established and published interface with yet another
+            // half baked change. if you are going to require a key to retrieve detail you need to provide
+            // the key on the master. again, the client is required to maintain corellation information (i.e. market type)
+            // not impressed.
+            var storyDetail = rpcClient.News.GetNewsDetail("dj", storyId.ToString());
+
+            Assert.IsNotNullOrEmpty(storyDetail.NewsDetail.Story, "story was empty?");
+
+
+            rpcClient.LogOut();
+            rpcClient.StopRecording();
+
+            var output = sb.ToString();
+            // NOTE: data written to stream is not parsable JSON. it is composed of discrete json fragments separated by "+=_______=+"
+            Assert.IsTrue(output.Contains("\"Target\": \"https://ciapi.cityindex.com/tradingapi/session\""));
+        }
+
+        [Test]
         public void HowToUseRecorder()
         {
             var rpcClient = new Client(Settings.RpcUri, Settings.StreamingUri, AppKey);
 
             // start recording requests
 
-            rpcClient.StartRecording();
+            rpcClient.StartRecording(null);
         
             rpcClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);
 

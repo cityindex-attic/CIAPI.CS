@@ -164,7 +164,7 @@ namespace Salient.ReliableHttpClient
             {
                 value = "NULL";
             }
-            string result = Regex.Replace(value.ToString(), "\"Password\":\"password\"", "\"Password\":\"XXXXXX\"");
+            string result = Regex.Replace(value.ToString(), "\"Password\":\\s?\"password\"", "\"Password\": \"XXXXXX\"");
             return result;
         }
         public override string ToString()
