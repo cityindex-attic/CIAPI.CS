@@ -22,20 +22,7 @@ namespace CIAPI.Serialization
 
         public T DeserializeObject<T>(string json)
         {
-            try
-            {
-                string pattern = "{\\s*\"DateTime\":\\s*\"\\\\/Date\\((?<dt>\\d+)\\)\\\\/\",\\s*\"OffsetMinutes\":\\s*(?<offset>-?\\d+)\\s*}";
-                json = Regex.Replace(json, pattern, "\"\\/Date($1+0000)\\/\"");
-
-
-            }
-            catch
-            {
-
-                //swallow for now
-            }
-
-            return JsonConvert.DeserializeObject<T>(json);
+             return JsonConvert.DeserializeObject<T>(json);
         }
     }
 }

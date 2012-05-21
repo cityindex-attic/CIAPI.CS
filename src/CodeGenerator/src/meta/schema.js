@@ -1024,15 +1024,7 @@ exports.schema =
             "id": "ApiMarketSpreadDTO",
             "type": "object",
             "properties": {
-                "SpreadTimeUtc": {
-                    "type": [
-            "null",
-            {
-                "$ref": "#.DateTimeOffset"
-            }
-          ],
-                    "description": "The time and date in for the spread value in UTC, interchangable to local time using localtime offset."
-                },
+                
                 "Spread": {
                     "type": "number",
                     "format": "decimal",
@@ -1433,24 +1425,6 @@ exports.schema =
                     "format": "wcf-date",
                     "description": "Next Date and Time at which the End of Day (EOD) capture will run in UTC."
                 },
-                "TradingStartTimeUtc": {
-                    "type": [
-            "null",
-            {
-                "$ref": "#.DateTimeOffset"
-            }
-          ],
-                    "description": "Market Trading start time on each trading day represented in UTC and local time."
-                },
-                "TradingEndTimeUtc": {
-                    "type": [
-            "null",
-            {
-                "$ref": "#.DateTimeOffset"
-            }
-          ],
-                    "description": "Market Trading end time on each trading day represented in UTC and local time."
-                },
                 "MarketPricingTimes": {
                     "type": "array",
                     "items": [
@@ -1528,24 +1502,6 @@ exports.schema =
                     "minValue": -2147483648,
                     "maxValue": 2147483647,
                     "description": "Day of the week at which the times are valid."
-                },
-                "StartTimeUtc": {
-                    "type": [
-            "null",
-            {
-                "$ref": "#.DateTimeOffset"
-            }
-          ],
-                    "description": "Start of the market time in both UTC and local time (using Offset property)."
-                },
-                "EndTimeUtc": {
-                    "type": [
-            "null",
-            {
-                "$ref": "#.DateTimeOffset"
-            }
-          ],
-                    "description": "End of the market time in both UTC and local time (using Offset property)."
                 }
             },
             "description": "Contains start and end time information for market specific events such as trading and pricing."
