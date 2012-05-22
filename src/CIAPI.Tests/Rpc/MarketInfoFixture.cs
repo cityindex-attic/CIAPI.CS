@@ -48,6 +48,9 @@ namespace CIAPI.Tests.Rpc
             var marketInfo = rpcClient.Market.GetMarketInformation("400494178");
 
             Assert.IsNotNullOrEmpty(marketInfo.MarketInformation.Name, "Market should have a name");
+            Assert.That(marketInfo.MarketInformation.MarketPricingTimes[1].EndTimeUtc.UtcDateTime,
+                        Is.EqualTo(DateTime.Parse("2012-05-18 20:15:00")));
+
 
             rpcClient.Dispose();
         }
