@@ -49,6 +49,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.4.5.5\lib\sl4\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Salient.ReflectiveLoggingAdapter.Silverlight">
+      <HintPath>..\packages\Salient.ReflectiveLoggingAdapter.3.1.0\lib\sl4\Release\Salient.ReflectiveLoggingAdapter.Silverlight.dll</HintPath>
+    </Reference>
+    <Reference Include="SilverlightClient">
+      <HintPath>..\packages\Lightstreamer 4.2 Client\sdk_client_silverlight\lib\StrongName\SilverlightClient.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows" />
     <Reference Include="system" />
     <Reference Include="System.Core" />
@@ -57,8 +66,113 @@
     <Reference Include="System.Windows.Browser" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="..\CIAPI\DTOExtensions.cs">
+      <Link>DTOExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\Generated\DTO.cs">
+      <Link>Generated\DTO.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\Generated\LightstreamerClient.cs">
+      <Link>Generated\LightstreamerClient.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\Generated\Routes.cs">
+      <Link>Generated\Routes.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\MagicNumberKeys.cs">
+      <Link>MagicNumberKeys.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\MagicNumberResolver.cs">
+      <Link>MagicNumberResolver.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\NullType.cs">
+      <Link>NullType.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\PrettyPrinterExtensions.cs">
+      <Link>PrettyPrinterExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\Rpc\ApiClient.cs">
+      <Link>Rpc\ApiClient.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\Rpc\AppMetricsPlugin.cs">
+      <Link>Rpc\AppMetricsPlugin.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\ServerConnectionException.cs">
+      <Link>ServerConnectionException.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\Streaming\ConnectionStatus.cs">
+      <Link>Streaming\ConnectionStatus.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\Streaming\ConnectionStatusEventArgs.cs">
+      <Link>Streaming\ConnectionStatusEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\Streaming\FaultTolerantClientAdapter.cs">
+      <Link>Streaming\FaultTolerantClientAdapter.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\Streaming\HttpUtility.cs">
+      <Link>Streaming\HttpUtility.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\Streaming\IMessageConverter.cs">
+      <Link>Streaming\IMessageConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\Streaming\InvalidTopicException.cs">
+      <Link>Streaming\InvalidTopicException.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\Streaming\IStreamingClient.cs">
+      <Link>Streaming\IStreamingClient.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\Streaming\IStreamingListener.cs">
+      <Link>Streaming\IStreamingListener.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\Streaming\LightstreamerClient.cs">
+      <Link>Streaming\LightstreamerClient.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\Streaming\LightstreamerDefaults.cs">
+      <Link>Streaming\LightstreamerDefaults.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\Streaming\LightstreamerDtoConverter.cs">
+      <Link>Streaming\LightstreamerDtoConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\Streaming\ListenerAdapter.cs">
+      <Link>Streaming\ListenerAdapter.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\Streaming\LSLogger.cs">
+      <Link>Streaming\LSLogger.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\Streaming\LSLoggerProvider.cs">
+      <Link>Streaming\LSLoggerProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\Streaming\MessageEventArgs.cs">
+      <Link>Streaming\MessageEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\Streaming\StatusEventArgs.cs">
+      <Link>Streaming\StatusEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\Streaming\StreamingClientFactory.cs">
+      <Link>Streaming\StreamingClientFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\Streaming\TableListener.cs">
+      <Link>Streaming\TableListener.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\CIAPI\Streaming\StreamingClientClasses.cd">
+      <Link>Streaming\StreamingClientClasses.cd</Link>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Streaming\Testing\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CIAPI.Serializer.Silverlight\CIAPI.Serializer.Silverlight.csproj">
+      <Project>{523FB37B-0E87-4F82-A72D-5AF58BDE2509}</Project>
+      <Name>CIAPI.Serializer.Silverlight</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ReliableHttpClient\Salient.ReliableHttpClient.Silverlight\Salient.ReliableHttpClient.Silverlight.csproj">
+      <Project>{5532B9EE-BDE5-446C-883E-EF210BA1865F}</Project>
+      <Name>Salient.ReliableHttpClient.Silverlight</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>

@@ -741,10 +741,6 @@ namespace CIAPI.DTO
     public partial class ApiMarketSpreadDTO
     {
         /// <summary>
-        /// The time and date in for the spread value in UTC, interchangable to local time using localtime offset.
-        /// </summary>
-        public DateTimeOffset? SpreadTimeUtc { get; set; }
-        /// <summary>
         /// The market spread value.
         /// </summary>
         public decimal Spread { get; set; }
@@ -1004,14 +1000,6 @@ namespace CIAPI.DTO
         /// </summary>
         public DateTime? NextMarketEodTimeUtc { get; set; }
         /// <summary>
-        /// Market Trading start time on each trading day represented in UTC and local time.
-        /// </summary>
-        public DateTimeOffset? TradingStartTimeUtc { get; set; }
-        /// <summary>
-        /// Market Trading end time on each trading day represented in UTC and local time.
-        /// </summary>
-        public DateTimeOffset? TradingEndTimeUtc { get; set; }
-        /// <summary>
         /// Market Pricing times on given set of working days.
         /// </summary>
         public ApiTradingDayTimesDTO[] MarketPricingTimes { get; set; }
@@ -1050,14 +1038,6 @@ namespace CIAPI.DTO
         /// Day of the week at which the times are valid.
         /// </summary>
         public int DayOfWeek { get; set; }
-        /// <summary>
-        /// Start of the market time in both UTC and local time (using Offset property).
-        /// </summary>
-        public DateTimeOffset? StartTimeUtc { get; set; }
-        /// <summary>
-        /// End of the market time in both UTC and local time (using Offset property).
-        /// </summary>
-        public DateTimeOffset? EndTimeUtc { get; set; }
     }
 
     /// <summary>
