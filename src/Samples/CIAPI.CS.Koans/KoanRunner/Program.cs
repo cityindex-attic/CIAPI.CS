@@ -3,7 +3,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using CIAPI.Streaming;
-using CIAPI.Testing;
+
 using Salient.ReflectiveLoggingAdapter;
 
 
@@ -15,7 +15,7 @@ namespace CIAPI.CS.Koans.KoanRunner
         static void Main(string[] args)
         {
             LogManager.CreateInnerLogger = (logName, logLevel, showLevel, showDateTime, showLogName, dateTimeFormat)
-                => new SimpleDebugAppender(logName, logLevel, showLevel, showDateTime, showLogName, dateTimeFormat);
+                => new SimpleTraceAppender(logName, logLevel, showLevel, showDateTime, showLogName, dateTimeFormat);
 
             
 

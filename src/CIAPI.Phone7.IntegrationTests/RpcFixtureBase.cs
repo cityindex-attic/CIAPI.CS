@@ -5,7 +5,7 @@ using CIAPI.Phone7.IntegrationTests;
 using CIAPI.Rpc;
 using CIAPI.Serialization;
 using CIAPI.Streaming;
-using CIAPI.Testing;
+using Salient.ReflectiveLoggingAdapter;
 using Microsoft.Silverlight.Testing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

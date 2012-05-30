@@ -14,22 +14,30 @@ namespace Salient.ReliableHttpClient
         protected RequestController Controller;
         private string _userAgent;
         public IJsonSerializer Serializer { get; set; }
-        
-        
+
+        public event EventHandler<RequestCompletedEventArgs> RequestCompleted;
+
+        void OnRequestCompleted(object sender, RequestCompletedEventArgs e)
+        {
+            EventHandler<RequestCompletedEventArgs> handler = RequestCompleted;
+            if (handler != null) handler(this, e);
+        }
 
         public ClientBase(IJsonSerializer serializer)
         {
             Controller = new RequestController(serializer);
-
+            Controller.RequestCompleted += OnRequestCompleted;
             UserAgent = "Salient.ReliableHttpClient";
             Serializer = serializer;
         }
+
+        
 
         public ClientBase(IJsonSerializer serializer, IRequestFactory factory)
             : this(serializer)
         {
             Controller = new RequestController(serializer, factory);
-
+            Controller.RequestCompleted += OnRequestCompleted;
             UserAgent = "Salient.ReliableHttpClient";
         }
 
@@ -41,11 +49,7 @@ namespace Salient.ReliableHttpClient
             set { Controller.IncludeIndexInHeaders = value; }
         }
 
-        public bool IsRecording
-        {
-            get { return !Controller.Recorder.Paused; }
-        }
-
+        
         protected string UserAgent
         {
             get { return _userAgent; }
@@ -66,35 +70,7 @@ namespace Salient.ReliableHttpClient
 
         #endregion
 
-        #region Recording
-
-        public void StartRecording(Stream stream)
-        {
-            Controller.Recorder.Start(stream);
-        }
-
-        public void StartRecording()
-        {
-            Controller.Recorder.Start();
-        }
-
-        public void StopRecording()
-        {
-            Controller.Recorder.Stop();
-        }
-
-        public void ClearRecording()
-        {
-            Controller.Recorder.Clear();
-        }
-
-        public List<RequestInfoBase> GetRecording()
-        {
-            List<RequestInfoBase> requests = Controller.Recorder.GetRequests();
-            return requests;
-        }
-
-        #endregion
+   
 
         /// <summary>
         /// Composes the url for a request from components

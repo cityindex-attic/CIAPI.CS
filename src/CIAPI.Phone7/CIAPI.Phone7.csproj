@@ -43,8 +43,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Salient.ReflectiveLoggingAdapter.Phone7">
-      <HintPath>..\packages\Salient.ReflectiveLoggingAdapter.3.1.0\lib\sl3-wp\Release\Salient.ReflectiveLoggingAdapter.Phone7.dll</HintPath>
+    <Reference Include="Salient.ReflectiveLoggingAdapter.Phone7, Version=3.2.0.22, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Salient.ReflectiveLoggingAdapter.3.2.0\lib\sl3-wp\Release\Salient.ReflectiveLoggingAdapter.Phone7.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows" />
     <Reference Include="system" />
@@ -82,6 +83,9 @@
     </Compile>
     <Compile Include="..\CIAPI\Rpc\ApiClient.cs">
       <Link>Rpc\ApiClient.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\Rpc\MetricsRecorder.cs">
+      <Link>Rpc\MetricsRecorder.cs</Link>
     </Compile>
     <Compile Include="..\CIAPI\ServerConnectionException.cs">
       <Link>ServerConnectionException.cs</Link>

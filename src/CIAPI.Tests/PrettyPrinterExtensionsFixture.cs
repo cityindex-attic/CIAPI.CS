@@ -28,7 +28,7 @@ namespace CIAPI.Tests
             public string AString { get; set; }
             public DateTime ADate { get; set; }
             public bool ABool { get; set; }
-            private int _secret = 42;
+            
         }
     }
 }

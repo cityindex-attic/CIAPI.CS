@@ -14,16 +14,16 @@ namespace Salient.ReliableHttpClient
     {
 
 
-        public static ReliableHttpException Create(string message,Exception exception)
+        public static ReliableHttpException Create(string message, Exception exception)
         {
 
 
-            ReliableHttpException ex = new ReliableHttpException(message,exception);
+            ReliableHttpException ex = new ReliableHttpException(message, exception);
 
             return ex;
         }
 
-        
+
         public static ReliableHttpException Create(Exception exception)
         {
 
@@ -64,20 +64,15 @@ namespace Salient.ReliableHttpClient
                 var wex = (WebException)ex;
                 if (wex.Response != null)
                 {
-                    
-                    if (wex.Response.ContentLength > 0)
+                    using (Stream stream = wex.Response.GetResponseStream())
                     {
-                        using (Stream stream = wex.Response.GetResponseStream())
+                        using (StreamReader reader = new StreamReader(stream))
                         {
-                            using (StreamReader reader = new StreamReader(stream))
-                            {
-                                string response = reader.ReadToEnd().Trim();
-                                ResponseText = response;
-                            }
+                            string response = reader.ReadToEnd().Trim();
+                            ResponseText = response;
                         }
                     }
                 }
-
             }
         }
         public ReliableHttpException(Exception ex)

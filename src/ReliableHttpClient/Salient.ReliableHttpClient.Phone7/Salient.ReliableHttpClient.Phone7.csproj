@@ -43,8 +43,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Salient.ReflectiveLoggingAdapter.Phone7">
-      <HintPath>..\packages\Salient.ReflectiveLoggingAdapter.3.1.0\lib\sl3-wp\Release\Salient.ReflectiveLoggingAdapter.Phone7.dll</HintPath>
+    <Reference Include="Salient.ReflectiveLoggingAdapter.Phone7, Version=3.2.0.22, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Salient.ReflectiveLoggingAdapter.3.2.0\lib\sl3-wp\Release\Salient.ReflectiveLoggingAdapter.Phone7.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows" />
     <Reference Include="system" />
@@ -77,6 +78,9 @@
     <Compile Include="..\Salient.ReliableHttpClient\Recorder.cs">
       <Link>Recorder.cs</Link>
     </Compile>
+    <Compile Include="..\Salient.ReliableHttpClient\RecorderBase.cs">
+      <Link>RecorderBase.cs</Link>
+    </Compile>
     <Compile Include="..\Salient.ReliableHttpClient\ReliableAsyncResult.cs">
       <Link>ReliableAsyncResult.cs</Link>
     </Compile>
@@ -107,6 +111,9 @@
     <Compile Include="..\Salient.ReliableHttpClient\Serialization\IJsonSerializer.cs">
       <Link>Serialization\IJsonSerializer.cs</Link>
     </Compile>
+    <Compile Include="..\Salient.ReliableHttpClient\StreamRecorder.cs">
+      <Link>StreamRecorder.cs</Link>
+    </Compile>
     <Compile Include="..\Salient.ReliableHttpClient\Testing\TestAsyncResult.cs">
       <Link>Testing\TestAsyncResult.cs</Link>
     </Compile>
@@ -121,7 +128,6 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>

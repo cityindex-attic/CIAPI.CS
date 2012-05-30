@@ -25,9 +25,9 @@ namespace CIAPI.IntegrationTests.Rpc
 
             // start recording requests
             var stream = new MemoryStream();
-
+            var streamRecorder = new StreamRecorder(rpcClient, stream);
             // open an array on the stream
-            rpcClient.StartRecording(stream);
+            streamRecorder.Start();
 
             rpcClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);
 
@@ -54,7 +54,7 @@ namespace CIAPI.IntegrationTests.Rpc
             rpcClient.LogOut();
 
             // close the array in the stream
-            rpcClient.StopRecording();
+            streamRecorder.Stop();
             stream.Position = 0;
 
             var output = Encoding.UTF8.GetString(stream.ToArray());
@@ -69,8 +69,8 @@ namespace CIAPI.IntegrationTests.Rpc
             var rpcClient = new Client(Settings.RpcUri, Settings.StreamingUri, AppKey);
 
             // start recording requests
-
-            rpcClient.StartRecording();
+            var recorder = new Recorder(rpcClient);
+            recorder.Start();
 
             rpcClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);
 
@@ -95,9 +95,9 @@ namespace CIAPI.IntegrationTests.Rpc
 
 
             rpcClient.LogOut();
-            rpcClient.StopRecording();
+            recorder.Stop();
 
-            List<RequestInfoBase> requests = rpcClient.GetRecording();
+            List<RequestInfoBase> requests = recorder.GetRequests();
             // let's serialize the recorded requests to simulate typical usage because you typically would use pre-canned data
             // to run unit tests agains.
             var requestsSerialized = rpcClient.Serializer.SerializeObject(requests);

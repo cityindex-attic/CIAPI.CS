@@ -1,4 +1,8 @@
-﻿using System.Threading;
+﻿using System;
+using System.Diagnostics;
+using System.IO;
+using System.Text;
+using System.Threading;
 using CIAPI.DTO;
 using CIAPI.IntegrationTests.Streaming;
 using CIAPI.Rpc;
@@ -25,10 +29,16 @@ namespace CIAPI.IntegrationTests.Rpc
         [Test]
         public void CanSendMetrics()
         {
-            // look at the log to verify - need to expose interals and provide a means to examine the cache to verify programmatically
+
+            // set up a listener
+            var log = new StringBuilder();
+            var writer = new StringWriter(log);
+            var listener = new TextWriterTraceListener(writer);
+            Trace.Listeners.Add(listener);
 
             var rpcClient = new Client(Settings.RpcUri, Settings.StreamingUri, "my-test-appkey");
-            rpcClient.StartMetrics();
+            var metricsRecorder = new MetricsRecorder(rpcClient, new Uri("http://metrics.labs.cityindex.com/LogEvent.ashx"));
+            metricsRecorder.Start();
 
             rpcClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);
 
@@ -43,9 +53,14 @@ namespace CIAPI.IntegrationTests.Rpc
 
             rpcClient.LogOut();
 
-
-
+            metricsRecorder.Stop();
             rpcClient.Dispose();
+
+            Trace.Listeners.Remove(listener);
+
+            var logText = log.ToString();
+
+            Assert.IsTrue(logText.Contains("Latency message complete"), "did not find evidence of metrics being posted");
         }
     }
 }

@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Reflection;
-using System.Text;
-using System.Threading;
 using CIAPI.DTO;
 using CIAPI.Streaming;
 using Salient.ReflectiveLoggingAdapter;
@@ -11,10 +9,19 @@ using Salient.ReliableHttpClient;
 
 namespace CIAPI.Rpc
 {
+
+
     // #TODO: reintegrate exception factory into ReliableHttpClient
     public partial class Client : ClientBase
     {
 
+        /// <summary>
+        /// used as a null target for json deserialization test
+        /// </summary>
+        private class NullObject
+        {
+
+        }
 
         private Dictionary<string, string> GetHeaders(string target)
         {
@@ -90,27 +97,65 @@ namespace CIAPI.Rpc
 
 
 
-        public ReliableHttpException GetJsonException(ReliableHttpException ex)
+
+        private ReliableHttpException CreateApiException(string responseText)
         {
-            if (!string.IsNullOrEmpty(ex.ResponseText))
+            ReliableHttpException ex2 = null;
+            try
             {
-                try
+                var err = Serializer.DeserializeObject<ApiErrorResponseDTO>(responseText);
+                switch (err.ErrorCode)
                 {
+                    case (int)ErrorCode.Forbidden:
+                        ex2 = new ForbiddenException(err.ErrorMessage);
+                        break;
+                    case (int)ErrorCode.InternalServerError:
+                        ex2 = new InternalServerErrorException(err.ErrorMessage);
+                        break;
+                    case (int)ErrorCode.InvalidCredentials:
+                        ex2 = new InvalidCredentialsException(err.ErrorMessage);
+                        break;
+                    case (int)ErrorCode.InvalidJsonRequest:
+                        ex2 = new InvalidJsonRequestException(err.ErrorMessage);
+                        break;
+                    case (int)ErrorCode.InvalidJsonRequestCaseFormat:
+                        ex2 = new InvalidJsonRequestCaseFormatException(err.ErrorMessage);
+                        break;
+                    case (int)ErrorCode.InvalidParameterType:
+                        ex2 = new InvalidParameterTypeException(err.ErrorMessage);
+                        break;
+                    case (int)ErrorCode.InvalidParameterValue:
+                        ex2 = new InvalidParameterValueException(err.ErrorMessage);
+                        break;
+                    case (int)ErrorCode.InvalidSession:
+                        ex2 = new InvalidSessionException(err.ErrorMessage);
+                        break;
+                    case (int)ErrorCode.NoDataAvailable:
+                        ex2 = new NoDataAvailableException(err.ErrorMessage);
+                        break;
+                    case (int)ErrorCode.ParameterMissing:
+                        ex2 = new ParameterMissingException(err.ErrorMessage);
+                        break;
+                    case (int)ErrorCode.Throttling:
+                        ex2 = new ThrottlingException(err.ErrorMessage);
+                        break;
+                    default:
+                        ex2 = new ReliableHttpException(err.ErrorMessage);
+                        break;
 
-                    string exResponseText = ex.ResponseText;
-                    var err = Serializer.DeserializeObject<ApiErrorResponseDTO>(exResponseText);
-                    var ex2 = ReliableHttpException.Create(err.ErrorMessage, ex);
-                    ex2.ErrorCode = err.ErrorCode;
-                    ex2.HttpStatus = err.HttpStatus;
-                    return ex2;
                 }
-                catch
-                {
-                    // swallow
-                }
+
+                ex2.ResponseText = responseText;
+                ex2.ErrorCode = err.ErrorCode;
+                ex2.HttpStatus = err.HttpStatus;
             }
-
-            return null;
+            // ReSharper disable EmptyGeneralCatchClause
+            catch
+            // ReSharper restore EmptyGeneralCatchClause
+            {
+                //swallow
+            }
+            return ex2;
         }
         public override string EndRequest(ReliableAsyncResult result)
         {
@@ -121,7 +166,20 @@ namespace CIAPI.Rpc
             }
             catch (ReliableHttpException ex)
             {
-                ReliableHttpException ex2 = GetJsonException(ex);
+                ReliableHttpException ex2 = null;
+
+                if (!string.IsNullOrEmpty(ex.ResponseText))
+                {
+                    try
+                    {
+                        ex2 = CreateApiException(ex.ResponseText);
+                    }
+                    catch
+                    {
+                        // swallow
+                    }
+                }
+
                 if (ex2 != null)
                 {
                     throw ex2;
@@ -131,29 +189,13 @@ namespace CIAPI.Rpc
             }
             catch (Exception ex)
             {
-                throw new DefectException("expected ReliableHttpException. see inner", ex);
+                throw ReliableHttpException.Create(ex);
             }
 
             if (responseText.Contains("\"HttpStatus\"") && responseText.Contains("\"ErrorMessage\"") && responseText.Contains("\"ErrorCode\""))
             {
 
-                ReliableHttpException ex2 = null;
-                try
-                {
-                    var err = Serializer.DeserializeObject<ApiErrorResponseDTO>(responseText);
-                    ex2 = new ReliableHttpException(err.ErrorMessage)
-                              {
-                                  ResponseText = responseText,
-                                  ErrorCode = err.ErrorCode,
-                                  HttpStatus = err.HttpStatus
-                              };
-                }
-                catch
-                {
-
-                    //swallow
-                }
-
+                ReliableHttpException ex2 = CreateApiException(responseText);
                 if (ex2 != null)
                 {
                     throw ex2;
@@ -174,10 +216,8 @@ namespace CIAPI.Rpc
 
             return responseText;
         }
-        private class NullObject
-        {
 
-        }
+
         public IStreamingClient CreateStreamingClient()
         {
 
@@ -300,109 +340,6 @@ namespace CIAPI.Rpc
 
         #endregion
 
-        private Timer _metricsTimer;
 
-        private void DisposeMetricsTimer()
-        {
-
-            try
-            {
-                if (_metricsTimer != null)
-                {
-                    _metricsTimer.Dispose();
-                    _metricsTimer = null;
-                }
-            }
-            catch
-            {
-
-                //swallow
-            }
-
-        }
-        public void StartMetrics()
-        {
-            DisposeMetricsTimer();
-            StartRecording(null);
-            _metricsTimer = new Timer(ignored => PostMetrics(), null, 1000, 10000);
-        }
-        public void StopMetrics()
-        {
-            StopRecording();
-            DisposeMetricsTimer();
-        }
-
-        private void PostMetrics()
-        {
-            string appmetricsUrl = "http://metrics.labs.cityindex.com/LogEvent.ashx";
-
-            if (!IsRecording)
-            {
-                return;
-            }
-
-            var records = GetRecording();
-            ClearRecording();
-            if (records.Count == 0)
-            {
-                return;
-            }
-
-            var sb = new StringBuilder();
-            foreach (var item in records)
-            {
-                try
-                {
-                    if (item.Uri.AbsoluteUri != appmetricsUrl)
-                    {
-                        sb.AppendLine(string.Format("{0}\tLatency {1}\t{2}", DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss.fffffff"), item.Uri, item.Completed.Subtract(item.Issued).TotalSeconds));
-                    }
-
-                }
-                catch
-                {
-
-                    //swallow
-                }
-            }
-
-
-            var latencyData = sb.ToString();
-            Log.Debug("LATENCY:/n" + latencyData);
-
-            base.BeginRequest(RequestMethod.POST,
-                appmetricsUrl,
-                "",
-                new Dictionary<string, string>(),
-                new Dictionary<string, object> { { "MessageAppKey", AppKey ?? "null" }, { "MessageSession", Session ?? "null" }, { "MessagesList", latencyData } },
-                ContentType.FORM,
-                ContentType.TEXT,
-                TimeSpan.FromMilliseconds(0),
-                30000,
-                0, ar =>
-                       {
-                           EndRequest(ar);
-                           Log.Debug("Latency message complete.");
-
-                       }, null);
-
-
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            try
-            {
-                DisposeMetricsTimer();
-            }
-            catch (Exception ex)
-            {
-                //swallow
-                Log.Error("Error disposing metrics timer: /r/n" + ex.ToString());
-            }
-            base.Dispose(disposing);
-        }
     }
-
-
 }

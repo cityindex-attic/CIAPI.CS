@@ -50,7 +50,6 @@ namespace Salient.ReliableHttpClient.Testing
         public override string ContentType
         {
             get { return _contentType; }
-
         }
 
         private readonly Uri _responseUri;

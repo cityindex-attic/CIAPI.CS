@@ -9,6 +9,17 @@ using Salient.ReliableHttpClient.Serialization;
 namespace Salient.ReliableHttpClient
 {
 
+    public class RequestCompletedEventArgs : EventArgs
+    {
+        public RequestCompletedEventArgs(RequestInfoBase info)
+        {
+            Info = info;
+        }
+        public RequestInfoBase Info { get; set; }
+    }
+
+
+
     /// <summary>
     /// RequestController will encapsulate threadsafe caching and throttling
     /// items with a cacheduration of 0 will not be cached
@@ -16,6 +27,26 @@ namespace Salient.ReliableHttpClient
     /// </summary>
     public class RequestController : IDisposable
     {
+        public event EventHandler<RequestCompletedEventArgs> RequestCompleted;
+
+        public virtual void OnRequestCompleted(RequestInfoBase info)
+        {
+            var e = new RequestCompletedEventArgs(info);
+            EventHandler<RequestCompletedEventArgs> handler = RequestCompleted;
+            if (handler != null)
+            {
+                try
+                {
+                    handler(this, e);
+                }
+                catch
+                {
+
+                    Log.Error("Error in request completion handler\r\n" + e.Info);
+                }
+            }
+        }
+
         public bool IncludeIndexInHeaders { get; set; }
         private const int BackgroundInterval = 50;
         private static readonly ILog Log = LogManager.GetLogger(typeof(RequestController));
@@ -50,12 +81,12 @@ namespace Salient.ReliableHttpClient
         {
             _requestFactory = requestFactory;
         }
-        
+
 
         public RequestController(IJsonSerializer serializer)
         {
             _serializer = serializer;
-            Recorder = new Recorder(_serializer);
+            //Recorder = new Recorder(_serializer);
             Id = Guid.NewGuid();
             Log.Debug("creating RequestController: " + Id);
             _requestFactory = new RequestFactory();
@@ -67,7 +98,7 @@ namespace Salient.ReliableHttpClient
             Log.Debug("created RequestController: " + Id);
         }
 
-        public Recorder Recorder { get; set; }
+        //public Recorder Recorder { get; set; }
         public string UserAgent { get; set; }
         public Guid Id { get; private set; }
 
@@ -153,7 +184,7 @@ namespace Salient.ReliableHttpClient
 
                     _requestTimes.Enqueue(DateTimeOffset.UtcNow);
                     _dispatchedCount += 1;
- 
+
                     request.Index = _dispatchedCount;
                     if (IncludeIndexInHeaders)
                     {
@@ -234,33 +265,33 @@ namespace Salient.ReliableHttpClient
             return false;
         }
 
-        private static void EnsureRequestWillAbortAfterTimeout(RequestInfo request, IAsyncResult result)
-        {
-            //TODO: How can we timeout a request for Silverlight, when calls to AsyncWaitHandle throw the following:
-            //   Specified method is not supported. at System.Net.Browser.OHWRAsyncResult.get_AsyncWaitHandle() 
+        //        private static void EnsureRequestWillAbortAfterTimeout(RequestInfo request, IAsyncResult result)
+        //        {
+        //            //TODO: How can we timeout a request for Silverlight, when calls to AsyncWaitHandle throw the following:
+        //            //   Specified method is not supported. at System.Net.Browser.OHWRAsyncResult.get_AsyncWaitHandle() 
 
-            // DAVID: i don't think that the async methods have a timeout parameter. we will need to build one into 
-            // it. will not be terribly clean as it will prolly have to span both the throttle and the cache. I will look into it
+        //            // DAVID: i don't think that the async methods have a timeout parameter. we will need to build one into 
+        //            // it. will not be terribly clean as it will prolly have to span both the throttle and the cache. I will look into it
 
 
-#if !SILVERLIGHT
-            ThreadPool.RegisterWaitForSingleObject(
-                waitObject: result.AsyncWaitHandle,
-                callBack: (state, isTimedOut) =>
-                              {
-                                  if (!isTimedOut) return;
-                                  if (state.GetType() != typeof(RequestInfo)) return;
+        //#if !SILVERLIGHT
+        //            ThreadPool.RegisterWaitForSingleObject(
+        //                waitObject: result.AsyncWaitHandle,
+        //                callBack: (state, isTimedOut) =>
+        //                              {
+        //                                  if (!isTimedOut) return;
+        //                                  if (state.GetType() != typeof(RequestInfo)) return;
 
-                                  var rh = (RequestInfo)state;
-                                  Log.Error(string.Format("Aborting #{0} : {1} because it has exceeded timeout {2}",
-                                                          rh.Index, rh.Request.RequestUri, rh.Request.Timeout));
-                                  rh.Request.Abort();
-                              },
-                state: request,
-                timeout: TimeSpan.FromMilliseconds(request.Request.Timeout),
-                executeOnlyOnce: true);
-#endif
-        }
+        //                                  var rh = (RequestInfo)state;
+        //                                  Log.Error(string.Format("Aborting #{0} : {1} because it has exceeded timeout {2}",
+        //                                                          rh.Index, rh.Request.RequestUri, rh.Request.Timeout));
+        //                                  rh.Request.Abort();
+        //                              },
+        //                state: request,
+        //                timeout: TimeSpan.FromMilliseconds(request.Request.Timeout),
+        //                executeOnlyOnce: true);
+        //#endif
+        //        }
 
         private void PurgeExpiredItems()
         {
@@ -344,7 +375,16 @@ namespace Salient.ReliableHttpClient
                                                   retryCount, uri, body, _requestFactory);
 
             info.BuildRequest(_requestFactory);
-            info.ProcessingComplete += RequestCompleted;
+            info.AddCallback(ar =>
+            {
+
+                var info2 = (RequestInfo)ar.AsyncState;
+                RequestInfoBase copy = info2.Copy();
+                OnRequestCompleted(copy);
+            }, info);
+
+
+            info.ProcessingComplete += CompleteRequest;
             if (callback != null)
             {
                 info.AddCallback(callback, state);
@@ -352,12 +392,12 @@ namespace Salient.ReliableHttpClient
             return info;
         }
 
-        private void RequestCompleted(object sender, EventArgs e)
+        private void CompleteRequest(object sender, EventArgs e)
         {
             var info = (RequestInfo)sender;
-            info.ProcessingComplete -= RequestCompleted;
-            RequestInfoBase copy = info.Copy();
-            Recorder.AddRequest(copy);
+            info.ProcessingComplete -= CompleteRequest;
+            //RequestInfoBase copy = info.Copy();
+            //Recorder.AddRequest(copy);
         }
 
 

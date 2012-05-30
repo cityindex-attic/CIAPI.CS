@@ -52,8 +52,9 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.4.5.5\lib\sl4\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Salient.ReflectiveLoggingAdapter.Silverlight">
-      <HintPath>..\packages\Salient.ReflectiveLoggingAdapter.3.1.0\lib\sl4\Release\Salient.ReflectiveLoggingAdapter.Silverlight.dll</HintPath>
+    <Reference Include="Salient.ReflectiveLoggingAdapter.Silverlight, Version=3.2.0.22, Culture=neutral, PublicKeyToken=f53a41098b9ed911, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Salient.ReflectiveLoggingAdapter.3.2.0\lib\sl4\Release\Salient.ReflectiveLoggingAdapter.Silverlight.dll</HintPath>
     </Reference>
     <Reference Include="SilverlightClient">
       <HintPath>..\packages\Lightstreamer 4.2 Client\sdk_client_silverlight\lib\StrongName\SilverlightClient.dll</HintPath>
@@ -93,8 +94,8 @@
     <Compile Include="..\CIAPI\Rpc\ApiClient.cs">
       <Link>Rpc\ApiClient.cs</Link>
     </Compile>
-    <Compile Include="..\CIAPI\Rpc\AppMetricsPlugin.cs">
-      <Link>Rpc\AppMetricsPlugin.cs</Link>
+    <Compile Include="..\CIAPI\Rpc\MetricsRecorder.cs">
+      <Link>Rpc\MetricsRecorder.cs</Link>
     </Compile>
     <Compile Include="..\CIAPI\ServerConnectionException.cs">
       <Link>ServerConnectionException.cs</Link>

@@ -23,7 +23,7 @@ namespace CIAPI.IntegrationTests
             //Check your debug console - you will see some messages about the HTTP traffic that has happened
         }
 
-        [Test]
+        [Test,Ignore("this skews other tests that are monitored via logging. needs to be in a separate test assembly")]
         public void RouteLoggingToLog4Net()
         {
             //Make Log4Net to configure itself from the App.Config

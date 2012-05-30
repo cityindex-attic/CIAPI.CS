@@ -30,7 +30,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "common", "{91A1C0
 	ProjectSection(SolutionItems) = preProject
 		common\App.config = common\App.config
 		common\ciapi.snk = common\ciapi.snk
-		common\SimpleDebugAppender.cs = common\SimpleDebugAppender.cs
 		common\StaticTestConfig.cs = common\StaticTestConfig.cs
 		common\TestConfig.cs = common\TestConfig.cs
 	EndProjectSection

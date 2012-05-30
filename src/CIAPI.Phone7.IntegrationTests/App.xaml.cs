@@ -11,7 +11,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using CIAPI.IntegrationTests.Streaming;
-using CIAPI.Testing;
+
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Salient.ReflectiveLoggingAdapter;
