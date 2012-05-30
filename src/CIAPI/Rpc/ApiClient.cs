@@ -52,27 +52,7 @@ namespace CIAPI.Rpc
         }
 
 
-        public ReliableHttpException GetJsonException(ReliableHttpException ex)
-        {
-            if (!string.IsNullOrEmpty(ex.ResponseText))
-            {
-                try
-                {
 
-                    var err = Serializer.DeserializeObject<ApiErrorResponseDTO>(ex.ResponseText);
-                    var ex2 = ReliableHttpException.Create(err.ErrorMessage, ex);
-                    ex2.ErrorCode = err.ErrorCode;
-                    ex2.HttpStatus = err.HttpStatus;
-                    return ex2;
-                }
-                catch
-                {
-                    // swallow
-                }
-            }
-
-            return null;
-        }
 
         private Uri _streamingUri;
         private Uri _rootUri;
@@ -110,12 +90,34 @@ namespace CIAPI.Rpc
 
 
 
+        public ReliableHttpException GetJsonException(ReliableHttpException ex)
+        {
+            if (!string.IsNullOrEmpty(ex.ResponseText))
+            {
+                try
+                {
 
+                    string exResponseText = ex.ResponseText;
+                    var err = Serializer.DeserializeObject<ApiErrorResponseDTO>(exResponseText);
+                    var ex2 = ReliableHttpException.Create(err.ErrorMessage, ex);
+                    ex2.ErrorCode = err.ErrorCode;
+                    ex2.HttpStatus = err.HttpStatus;
+                    return ex2;
+                }
+                catch
+                {
+                    // swallow
+                }
+            }
+
+            return null;
+        }
         public override string EndRequest(ReliableAsyncResult result)
         {
+            string responseText;
             try
             {
-                return base.EndRequest(result);
+                responseText = base.EndRequest(result);
             }
             catch (ReliableHttpException ex)
             {
@@ -131,8 +133,51 @@ namespace CIAPI.Rpc
             {
                 throw new DefectException("expected ReliableHttpException. see inner", ex);
             }
-        }
 
+            if (responseText.Contains("\"HttpStatus\"") && responseText.Contains("\"ErrorMessage\"") && responseText.Contains("\"ErrorCode\""))
+            {
+
+                ReliableHttpException ex2 = null;
+                try
+                {
+                    var err = Serializer.DeserializeObject<ApiErrorResponseDTO>(responseText);
+                    ex2 = new ReliableHttpException(err.ErrorMessage)
+                              {
+                                  ResponseText = responseText,
+                                  ErrorCode = err.ErrorCode,
+                                  HttpStatus = err.HttpStatus
+                              };
+                }
+                catch
+                {
+
+                    //swallow
+                }
+
+                if (ex2 != null)
+                {
+                    throw ex2;
+                }
+            }
+
+            // at this point, if we don't have json then it is an error
+
+            try
+            {
+                Serializer.DeserializeObject<NullObject>(responseText);
+            }
+            catch
+            {
+
+                throw new ServerConnectionException("Invalid response received.  Are you connecting to the correct server Url?", responseText);
+            }
+
+            return responseText;
+        }
+        private class NullObject
+        {
+
+        }
         public IStreamingClient CreateStreamingClient()
         {
 
@@ -151,7 +196,7 @@ namespace CIAPI.Rpc
         /// <returns></returns>
         public ApiLogOnResponseDTO LogIn(String userName, String password)
         {
-            
+
 
             UserName = userName;
             Session = null;
@@ -312,7 +357,7 @@ namespace CIAPI.Rpc
                     {
                         sb.AppendLine(string.Format("{0}\tLatency {1}\t{2}", DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss.fffffff"), item.Uri, item.Completed.Subtract(item.Issued).TotalSeconds));
                     }
-                    
+
                 }
                 catch
                 {
@@ -350,7 +395,7 @@ namespace CIAPI.Rpc
             {
                 DisposeMetricsTimer();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 //swallow
                 Log.Error("Error disposing metrics timer: /r/n" + ex.ToString());

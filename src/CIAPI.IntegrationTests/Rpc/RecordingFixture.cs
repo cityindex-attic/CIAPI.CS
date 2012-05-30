@@ -24,8 +24,10 @@ namespace CIAPI.IntegrationTests.Rpc
             var rpcClient = new Client(Settings.RpcUri, Settings.StreamingUri, AppKey);
 
             // start recording requests
-            var sb = new StringBuilder();
-            rpcClient.StartRecording(new StringWriter(sb));
+            var stream = new MemoryStream();
+
+            // open an array on the stream
+            rpcClient.StartRecording(stream);
 
             rpcClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);
 
@@ -50,10 +52,14 @@ namespace CIAPI.IntegrationTests.Rpc
 
 
             rpcClient.LogOut();
-            rpcClient.StopRecording();
 
-            var output = sb.ToString();
-            // NOTE: data written to stream is not parsable JSON. it is composed of discrete json fragments separated by "+=_______=+"
+            // close the array in the stream
+            rpcClient.StopRecording();
+            stream.Position = 0;
+
+            var output = Encoding.UTF8.GetString(stream.ToArray());
+
+            List<RequestInfoBase> requests = rpcClient.Serializer.DeserializeObject<List<RequestInfoBase>>(output);
             Assert.IsTrue(output.Contains("\"Target\": \"https://ciapi.cityindex.com/tradingapi/session\""));
         }
 
@@ -64,8 +70,8 @@ namespace CIAPI.IntegrationTests.Rpc
 
             // start recording requests
 
-            rpcClient.StartRecording(null);
-        
+            rpcClient.StartRecording();
+
             rpcClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);
 
 
@@ -126,12 +132,12 @@ namespace CIAPI.IntegrationTests.Rpc
                     {
                         throw new Exception("no matching request found");
                     }
-                    finder.PopulateRequest(testRequest,match);
+                    finder.PopulateRequest(testRequest, match);
                 };
 
             // now that our request stack is set up, we can make the same calls with repeatable results
 
-            
+
             rpcClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);
 
             // get some headlines
@@ -185,7 +191,7 @@ namespace CIAPI.IntegrationTests.Rpc
 
 
             rpcClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);
-            Assert.AreEqual("99be8650-d9a3-47cc-a506-044e87db457d", rpcClient.Session);
+            Assert.AreEqual("5f28983b-0e0a-4a57-92af-0d07c6fdbc38", rpcClient.Session);
 
             // get some headlines
             var headlines = rpcClient.News.ListNewsHeadlinesWithSource("dj", "UK", 100);
@@ -193,14 +199,14 @@ namespace CIAPI.IntegrationTests.Rpc
 
             // get a story id from one of the headlines
             var storyId = headlines.Headlines[0].StoryId;
-            Assert.AreEqual(1409880,storyId);
+            Assert.AreEqual(1416482, storyId);
 
             var storyDetail = rpcClient.News.GetNewsDetail("dj", storyId.ToString());
 
-            Assert.IsTrue(storyDetail.NewsDetail.Story.Contains("The latest official U.K. data release Thursday"));
-            
+            Assert.IsTrue(storyDetail.NewsDetail.Story.Contains("By Anita Greil "));
+
             rpcClient.LogOut();
-            
+
 
             rpcClient.Dispose();
         }
@@ -226,7 +232,7 @@ namespace CIAPI.IntegrationTests.Rpc
             {
 
                 // look for a matching request in our recording using the uri and request body
-                var match = finder.FindMatchBySingleHeader(testRequest,"x-request-index");
+                var match = finder.FindMatchBySingleHeader(testRequest, "x-request-index");
 
                 if (match == null)
                 {

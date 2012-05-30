@@ -51,7 +51,8 @@ namespace PhoneApp5
                 try
                 {
                     RpcClient.EndLogIn(ar);
-
+                    //RpcClient.MagicNumberResolver.PreloadMagicNumbersAsync();
+                    RpcClient.MagicNumberResolver.PreloadMagicNumbers();
                     ThreadPool.QueueUserWorkItem(_ =>
                     {
                         Dispatcher.BeginInvoke(() => listBox1.Items.Add("creating listeners"));
@@ -119,7 +120,8 @@ namespace PhoneApp5
                     Dispatcher.BeginInvoke(() =>
                                                {
 
-                                                   listBox1.Items.Add(String.Format("trading complete, status = {0}, status reason = {1}", result.Status, result.StatusReason));
+                                                   RpcClient.MagicNumberResolver.ResolveMagicNumbers(result);
+                                                   listBox1.Items.Add(String.Format("trading complete\n\tstatus = {0} {2}\n\tstatus reason = {1} {3}", result.Status, result.StatusReason, result.Status_Resolved, result.StatusReason_Resolved));
                                                    if (result.OrderId > 0)
                                                    {
                                                        listBox1.Items.Add(String.Format("created order {0}", result.OrderId));

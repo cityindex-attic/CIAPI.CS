@@ -23,7 +23,7 @@ namespace Salient.ReliableHttpClient
             return ex;
         }
 
-
+        
         public static ReliableHttpException Create(Exception exception)
         {
 

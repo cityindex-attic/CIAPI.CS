@@ -23,18 +23,18 @@
 
   <ItemGroup>
     <Assemblies     Include="$(SrcDirectory)\CIAPI\bin\$(Configuration)\CIAPI.dll"/>
-    <!--<TestAssemblies Include="$(SrcDirectory)\CIAPI.Tests\bin\$(Configuration)\CIAPI.Tests.dll"/>-->
+    <TestAssemblies Include="$(SrcDirectory)\CIAPI.Tests\bin\$(Configuration)\CIAPI.Tests.dll"/>
   </ItemGroup>
 
  
-  <Target Name="Go" DependsOnTargets="UpdateVersion;Build;Package">
+  <Target Name="Go" DependsOnTargets="UpdateVersion;Build;RunTests;Package">
                                       
     <!-- CalculateMetrics  calculation of metrics disabled until replacement for Reflector can be integrated -->
   </Target>
   
   <!-- Used to build the Dev branch - everything except packaging RunTests reports/*NUnitResults.xml -->
   
-  <Target Name="GoDev" DependsOnTargets="UpdateVersion;Build">
+  <Target Name="GoDev" DependsOnTargets="UpdateVersion;Build;RunTests">
   </Target>
 
   <Target Name="Build">

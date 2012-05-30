@@ -11,7 +11,7 @@ namespace Salient.ReliableHttpClient
 {
     public class RequestInfo : RequestInfoBase
     {
-      
+
 
         private static readonly ILog Log = LogManager.GetLogger(typeof(RequestInfo));
 
@@ -87,7 +87,7 @@ namespace Salient.ReliableHttpClient
                                        {
                                            ContentLength = response.ContentLength,
                                            ContentType = response.ContentType,
-                                           ResponseUri = response.ResponseUri ,
+                                           ResponseUri = response.ResponseUri,
                                            Headers = headers
 
                                        };
@@ -142,7 +142,8 @@ namespace Salient.ReliableHttpClient
             //}
             catch (Exception ex)
             {
-                Exception = ReliableHttpException.Create(ex);
+                string errorMessage = string.Format("{1} - failed {0} times", AttemptedRetries + 1, ex.Message);
+                Exception = ReliableHttpException.Create(errorMessage, ex);
                 // if we have allowed retries, log the error and throw it so the controller can retry for us
                 if (AttemptedRetries < AllowedRetries)
                 {
@@ -150,10 +151,11 @@ namespace Salient.ReliableHttpClient
                 }
                 // otherwise just compelte the callbacks with the error
             }
+
             if (Exception != null)
             {
-                Log.Error(string.Format("request failed {0}: attempts {1} : error:{2}\r\n{3}", Id, AttemptedRetries,
-                                        Exception.Message, this.ToString()));
+                string errorMessage = string.Format("request failed {0}\r\nattempts {1}\r\nerror:{2}\r\n{3}", Id, AttemptedRetries, Exception.Message, this.ToString());
+                Log.Error(errorMessage);
             }
             while (Callbacks.Count > 0)
             {

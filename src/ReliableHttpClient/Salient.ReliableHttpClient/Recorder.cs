@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using System.Threading;
 using Salient.ReliableHttpClient.Serialization;
 
@@ -9,9 +10,16 @@ namespace Salient.ReliableHttpClient
     public class Recorder
     {
         public const string Separator = "+=_____________________________________________________________________________=+";
-        public TextWriter Writer { get; set; }
+        private Stream _stream { get; set; }
         public IJsonSerializer Serializer { get; set; }
-        public bool Paused { get; set; }
+        private bool _paused;
+        public bool Paused
+        {
+            get
+            {
+                return _paused;
+            }
+        }
         private List<RequestInfoBase> Requests { get; set; }
 
         public Recorder(IJsonSerializer serializer)
@@ -20,7 +28,29 @@ namespace Salient.ReliableHttpClient
             Requests = new List<RequestInfoBase>();
         }
 
+        private void Write(string value)
+        {
+            var bytes = Encoding.UTF8.GetBytes(value);
+            _stream.Write(bytes, 0, bytes.Length);
+        }
+        public void Start(Stream stream)
+        {
+            _stream = stream;
+            Write("[");
+            Start();
+        }
+        public void Start()
+        {
+            _paused = false;
+        }
 
+        public void Stop()
+        {
+            if (_stream != null)
+            {
+                Write("]");
+            }
+        }
         /// <summary>
         /// allows async processingcomplete handlers a chance to add to the recorder.
         /// </summary>
@@ -53,21 +83,19 @@ namespace Salient.ReliableHttpClient
         }
         public void AddRequest(RequestInfoBase info)
         {
-            if (Paused)
+            if (_paused)
             {
                 return;
             }
             lock (Requests)
             {
-                if (Writer != null)
+                if (_stream != null)
                 {
                     var json = Serializer.SerializeObject(info);
-                    Writer.WriteLine(Separator);
-                    Writer.WriteLine(json);
+                    Write(json + "\n,\n");
                 }
                 Requests.Add(info.Copy());
             }
-
         }
 
     }

@@ -55,7 +55,7 @@ namespace Salient.ReliableHttpClient
         public RequestController(IJsonSerializer serializer)
         {
             _serializer = serializer;
-            Recorder = new Recorder(_serializer) { Paused = true };
+            Recorder = new Recorder(_serializer);
             Id = Guid.NewGuid();
             Log.Debug("creating RequestController: " + Id);
             _requestFactory = new RequestFactory();
@@ -153,7 +153,7 @@ namespace Salient.ReliableHttpClient
 
                     _requestTimes.Enqueue(DateTimeOffset.UtcNow);
                     _dispatchedCount += 1;
-
+ 
                     request.Index = _dispatchedCount;
                     if (IncludeIndexInHeaders)
                     {
@@ -177,7 +177,7 @@ namespace Salient.ReliableHttpClient
                                 {
                                     // the only time an exception will come out of CompleteRequest is if the request wants to be retried
                                     request.AttemptedRetries++;
-                                    Log.Warn(string.Format("retrying request {3} {0}: attempt #{1} : error:{2} \r\nrequest:\r\n{4}",
+                                    Log.Warn(string.Format("retrying request {3} {0}\r\nattempt #{1}\r\nerror:{2} \r\nrequest:\r\n{4}",
                                         request.Id, request.AttemptedRetries, ex.Message, request.Index, request.ToString()));
                                     // create a new httprequest for this guy
                                     request.BuildRequest(_requestFactory);

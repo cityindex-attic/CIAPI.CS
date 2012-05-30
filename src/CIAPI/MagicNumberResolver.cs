@@ -1,13 +1,19 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using CIAPI.DTO;
 using CIAPI.Rpc;
+using Salient.ReflectiveLoggingAdapter;
+using Salient.ReliableHttpClient;
 
 namespace CIAPI
 {
 
     public class MagicNumberResolver
     {
+        private bool _preloaded;
+        private static ILog _logger = LogManager.GetLogger(typeof (MagicNumberResolver));
 
         public void ResolveMagicNumbers(ListOpenPositionsResponseDTO value)
         {
@@ -104,6 +110,13 @@ namespace CIAPI
 
                 if (!MagicNumbers.TryGetValue(type, out lookup))
                 {
+#if SILVERLIGHT
+                    if(!_preloaded )
+                    {
+                        throw new Exception("Messages must be preloaded in silverlight/phone");
+                    }
+#endif
+
                     lookup = _client.Messaging.GetSystemLookup(type, 69);
                     MagicNumbers[type] = lookup;
                 }
@@ -120,6 +133,140 @@ namespace CIAPI
             }
         }
 
+        public void PreloadMagicNumbersAsync()
+        {
+            var gates = new AutoResetEvent[6];
+            var g1 = new AutoResetEvent(false);
+            gates[0] = g1;
+            _client.Messaging.BeginGetSystemLookup(MagicNumberKeys.ApiOrderResponseDTO_StatusReason, 69, a =>
+                {
+
+                    try
+                    {
+                        MagicNumbers[MagicNumberKeys.ApiOrderResponseDTO_StatusReason] = _client.EndRequest<ApiLookupResponseDTO>(a);
+                    }
+                    catch (Exception ex)
+                    {
+                        
+                        throw;
+                    }
+                    finally
+                    {
+                        g1.Set();    
+                    }
+                    
+                }, null);
+
+            var g2 = new AutoResetEvent(false);
+            gates[1] = g2;
+            _client.Messaging.BeginGetSystemLookup(MagicNumberKeys.ApiOrderResponseDTO_Status, 69, a =>
+                {
+                    try
+                    {
+                        MagicNumbers[MagicNumberKeys.ApiOrderResponseDTO_Status] = _client.EndRequest<ApiLookupResponseDTO>(a);
+                    }
+                    catch (Exception ex)
+                    {
+                        
+                        throw;
+                    }
+                    finally
+                    {
+                        g2.Set();
+                    }
+                }, null);
+
+            var g3 = new AutoResetEvent(false);
+            gates[2] = g3;
+            _client.Messaging.BeginGetSystemLookup(MagicNumberKeys.ApiTradeOrderResponseDTO_StatusReason, 69, a =>
+                {
+                    try
+                    {
+                        MagicNumbers[MagicNumberKeys.ApiTradeOrderResponseDTO_StatusReason] = _client.EndRequest<ApiLookupResponseDTO>(a);
+
+                    }
+                    catch (Exception ex)
+                    {
+                        
+                        throw;
+                    }
+                    finally
+                    {
+                        g3.Set();
+                    }
+                }, null);
+
+            var g4 = new AutoResetEvent(false);
+            gates[3] = g4;
+            _client.Messaging.BeginGetSystemLookup(MagicNumberKeys.ApiTradeOrderResponseDTO_Status, 69, a =>
+                {
+                    try
+                    {
+                        MagicNumbers[MagicNumberKeys.ApiTradeOrderResponseDTO_Status] = _client.EndRequest<ApiLookupResponseDTO>(a);
+                    }
+                    catch (Exception ex)
+                    {
+                        
+                        throw;
+                    }
+                    finally
+                    {
+                        g4.Set();
+                    }
+                }, null);
+
+            var g5 = new AutoResetEvent(false);
+            gates[4] = g5;
+            _client.Messaging.BeginGetSystemLookup(MagicNumberKeys.ApiActiveStopLimitOrderDTO_Applicability, 69, a =>
+                {
+                    try
+                    {
+                        MagicNumbers[MagicNumberKeys.ApiActiveStopLimitOrderDTO_Applicability] = _client.EndRequest<ApiLookupResponseDTO>(a);
+                    }
+                    catch (Exception ex)
+                    {
+                        
+                        throw;
+                    }
+                    finally
+                    {
+                        g5.Set();
+                    }
+                }, null);
+
+            var g6 = new AutoResetEvent(false);
+            gates[5] = g6;
+
+
+            _client.Messaging.BeginGetSystemLookup(MagicNumberKeys.ApiOpenPositionDTO_Status, 69, a =>
+                {
+                    try
+                    {
+                        MagicNumbers[MagicNumberKeys.ApiOpenPositionDTO_Status] = _client.EndRequest<ApiLookupResponseDTO>(a);
+                    }
+                    catch (Exception ex)
+                    {
+                        
+                        throw;
+                    }
+                    finally
+                    {
+                        g6.Set();
+                    }
+                }, null);
+
+            // System.Threading.WaitHandle.WaitAll API is not supported is silverlight/phone
+            // WaitHandle.WaitAll(gates);
+
+            g1.WaitOne();
+            g2.WaitOne();
+            g3.WaitOne();
+            g4.WaitOne();
+            g5.WaitOne();
+            g6.WaitOne();
+            _preloaded = true;
+            _logger.Debug("PreloadMagicNumbersAsync complete");
+        }
         public void PreloadMagicNumbers()
         {
             MagicNumbers[MagicNumberKeys.ApiOrderResponseDTO_StatusReason] = _client.Messaging.GetSystemLookup(MagicNumberKeys.ApiOrderResponseDTO_StatusReason, 69);
@@ -128,6 +275,8 @@ namespace CIAPI
             MagicNumbers[MagicNumberKeys.ApiTradeOrderResponseDTO_Status] = _client.Messaging.GetSystemLookup(MagicNumberKeys.ApiTradeOrderResponseDTO_Status, 69);
             MagicNumbers[MagicNumberKeys.ApiActiveStopLimitOrderDTO_Applicability] = _client.Messaging.GetSystemLookup(MagicNumberKeys.ApiActiveStopLimitOrderDTO_Applicability, 69);
             MagicNumbers[MagicNumberKeys.ApiOpenPositionDTO_Status] = _client.Messaging.GetSystemLookup(MagicNumberKeys.ApiOpenPositionDTO_Status, 69);
+            _preloaded = true;
+            _logger.Debug("PreloadMagicNumbersAsync complete");
         }
     }
 }

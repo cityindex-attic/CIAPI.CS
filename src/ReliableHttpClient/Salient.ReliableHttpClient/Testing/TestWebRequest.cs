@@ -100,11 +100,12 @@ namespace Salient.ReliableHttpClient.Testing
 
         internal TestWebRequestPrepare PrepareResponse;
         internal TestRequestFactory Factory;
-        private readonly TimeSpan _latency;
-        private readonly Exception _requestStreamException;
-        private readonly Exception _responseStreamException;
-        private readonly Exception _endGetResponseException;
+        public TimeSpan Latency { get; set; }
+        private Exception _requestStreamException;
+        public Exception ResponseStreamException { get; set; }
 
+        public Exception EndGetResponseException { get; set; }
+        
         private TestWebStream _requestStream = new TestWebStream();
         private TestWebStream _responseStream = new TestWebStream();
         public TestWebStream ResponseStream
@@ -159,11 +160,11 @@ namespace Salient.ReliableHttpClient.Testing
 
             PrepareResponse(this);
 
-            if (_responseStreamException != null)
+            if (ResponseStreamException != null)
             {
-                throw _responseStreamException;
+                throw ResponseStreamException;
             }
-            _webResponseAsyncResult = new TestAsyncResult(callback, state, _latency);
+            _webResponseAsyncResult = new TestAsyncResult(callback, state, Latency);
             //we want to introduce latency on getting the response
             return _webResponseAsyncResult;
         }
@@ -171,9 +172,9 @@ namespace Salient.ReliableHttpClient.Testing
         public override WebResponse EndGetResponse(IAsyncResult asyncResult)
         {
             ThrowIfAborted();
-            if (_endGetResponseException != null)
+            if (EndGetResponseException != null)
             {
-                throw _endGetResponseException;
+                throw EndGetResponseException;
             }
             return new TestWebReponse(_responseStream);
         }
@@ -187,12 +188,12 @@ namespace Salient.ReliableHttpClient.Testing
 
             using (var wait = new AutoResetEvent(false))
             {
-                wait.WaitOne(_latency);
+                wait.WaitOne(Latency);
             }
             ThrowIfAborted();
-            if (_responseStreamException != null)
+            if (ResponseStreamException != null)
             {
-                throw _responseStreamException;
+                throw ResponseStreamException;
             }
             return new TestWebReponse(_responseStream);
         }

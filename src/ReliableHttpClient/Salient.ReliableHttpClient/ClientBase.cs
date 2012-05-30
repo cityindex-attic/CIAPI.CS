@@ -12,29 +12,10 @@ namespace Salient.ReliableHttpClient
     public class ClientBase : IDisposable
     {
         protected RequestController Controller;
-
-        public IJsonSerializer Serializer { get; set; }
-        public bool IncludeIndexInHeaders
-        {
-            get { return Controller.IncludeIndexInHeaders; }
-            set { Controller.IncludeIndexInHeaders = value; }
-        }
-        public bool IsRecording
-        {
-            get { return !Controller.Recorder.Paused; }
-        }
-
         private string _userAgent;
-        protected string UserAgent
-        {
-            get { return _userAgent; }
-            set
-            {
-                _userAgent = value;
-                Controller.UserAgent = value;
-            }
-        }
-
+        public IJsonSerializer Serializer { get; set; }
+        
+        
 
         public ClientBase(IJsonSerializer serializer)
         {
@@ -42,7 +23,6 @@ namespace Salient.ReliableHttpClient
 
             UserAgent = "Salient.ReliableHttpClient";
             Serializer = serializer;
-
         }
 
         public ClientBase(IJsonSerializer serializer, IRequestFactory factory)
@@ -55,13 +35,66 @@ namespace Salient.ReliableHttpClient
 
 
 
+        public bool IncludeIndexInHeaders
+        {
+            get { return Controller.IncludeIndexInHeaders; }
+            set { Controller.IncludeIndexInHeaders = value; }
+        }
 
+        public bool IsRecording
+        {
+            get { return !Controller.Recorder.Paused; }
+        }
 
+        protected string UserAgent
+        {
+            get { return _userAgent; }
+            set
+            {
+                _userAgent = value;
+                Controller.UserAgent = value;
+            }
+        }
 
+        #region IDisposable Members
 
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
 
+        #endregion
 
+        #region Recording
 
+        public void StartRecording(Stream stream)
+        {
+            Controller.Recorder.Start(stream);
+        }
+
+        public void StartRecording()
+        {
+            Controller.Recorder.Start();
+        }
+
+        public void StopRecording()
+        {
+            Controller.Recorder.Stop();
+        }
+
+        public void ClearRecording()
+        {
+            Controller.Recorder.Clear();
+        }
+
+        public List<RequestInfoBase> GetRecording()
+        {
+            List<RequestInfoBase> requests = Controller.Recorder.GetRequests();
+            return requests;
+        }
+
+        #endregion
 
         /// <summary>
         /// Composes the url for a request from components
@@ -131,7 +164,8 @@ namespace Salient.ReliableHttpClient
         }
 
 
-        public virtual string Request(RequestMethod method, string target, string uriTemplate, Dictionary<string, string> headers,
+        public virtual string Request(RequestMethod method, string target, string uriTemplate,
+                                      Dictionary<string, string> headers,
                                       Dictionary<string, object> parameters, ContentType requestContentType,
                                       ContentType responseContentType, TimeSpan cacheDuration, int timeout,
                                       int retryCount)
@@ -150,7 +184,8 @@ namespace Salient.ReliableHttpClient
             Exception exception = null;
             var gate = new ManualResetEvent(false);
 
-            BeginRequest(method, target, uriTemplate, headers, parameters, requestContentType, responseContentType, cacheDuration,
+            BeginRequest(method, target, uriTemplate, headers, parameters, requestContentType, responseContentType,
+                         cacheDuration,
                          timeout, retryCount, ar =>
                                                   {
                                                       try
@@ -183,7 +218,8 @@ namespace Salient.ReliableHttpClient
 
 
         public virtual Guid BeginRequest(
-            RequestMethod method, string target, string uriTemplate, Dictionary<string, string> headers, Dictionary<string, object> parameters,
+            RequestMethod method, string target, string uriTemplate, Dictionary<string, string> headers,
+            Dictionary<string, object> parameters,
             ContentType requestContentType,
             ContentType responseContentType, TimeSpan cacheDuration, int timeout, int retryCount,
             ReliableAsyncCallback callback,
@@ -245,13 +281,11 @@ namespace Salient.ReliableHttpClient
             Uri uri = BuildUrl(target, uriTemplate);
 
 
-
             Guid id = Controller.BeginRequest(uri, method, body, headers, requestContentType, responseContentType,
                                               cacheDuration, timeout, target, uriTemplate, retryCount, parameters,
                                               callback, state);
             return id;
         }
-
 
 
         public virtual string EndRequest(ReliableAsyncResult result)
@@ -269,16 +303,29 @@ namespace Salient.ReliableHttpClient
             {
                 throw new DefectException("expecting only ReliableHttpException here. See inner for details", ex);
             }
+        }
 
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (Controller != null)
+                {
+                    Controller.Dispose();
+                    Controller = null;
+                }
+            }
         }
 
         #region Serialization
 
-        public virtual T Request<T>(RequestMethod method, string target, string uriTemplate, Dictionary<string, string> headers,
+        public virtual T Request<T>(RequestMethod method, string target, string uriTemplate,
+                                    Dictionary<string, string> headers,
                                     Dictionary<string, object> parameters, ContentType requestContentType,
                                     ContentType responseContentType, TimeSpan cacheDuration, int timeout, int retryCount)
         {
-            string response = Request(method, target, uriTemplate, headers, parameters, requestContentType, responseContentType,
+            string response = Request(method, target, uriTemplate, headers, parameters, requestContentType,
+                                      responseContentType,
                                       cacheDuration, timeout, retryCount);
             // #TODO: reinstate injected json exception factory and use it here.
             // "Invalid response received.  Are you connecting to the correct server Url?"
@@ -288,7 +335,6 @@ namespace Salient.ReliableHttpClient
             }
             catch (Exception ex)
             {
-
                 throw ReliableHttpException.Create(ex);
             }
         }
@@ -303,8 +349,8 @@ namespace Salient.ReliableHttpClient
             }
             catch (Exception ex)
             {
-
-                throw ReliableHttpException.Create("Invalid response received.  Are you connecting to the correct server Url?", ex);
+                throw ReliableHttpException.Create(
+                    "Invalid response received.  Are you connecting to the correct server Url?", ex);
             }
         }
 
@@ -316,58 +362,6 @@ namespace Salient.ReliableHttpClient
         }
 
         #endregion
-
-        #region IDisposable Members
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                if (Controller != null)
-                {
-                    Controller.Dispose();
-                    Controller = null;
-                }
-            }
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        #endregion
-
-
-        #region Recording
-
-        
-        public void StartRecording(TextWriter writer)
-        {
-            Controller.Recorder.Writer = writer;
-            Controller.Recorder.Paused = false;
-        }
-        
-
-        public void StopRecording()
-        {
-            Controller.Recorder.Paused = true;
-        }
-
-        public void ClearRecording()
-        {
-            Controller.Recorder.Clear();
-        }
-
-        public List<RequestInfoBase> GetRecording()
-        {
-            List<RequestInfoBase> requests = Controller.Recorder.GetRequests();
-            return requests;
-        }
-
-        #endregion
-
 
         ///// <summary>
         ///// Serializes post entity
