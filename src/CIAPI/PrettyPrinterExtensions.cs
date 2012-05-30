@@ -44,7 +44,14 @@ namespace CIAPI
                             formattedValue = ((DateTime)value).ToString("u");
                             break;
                         default:
-                            formattedValue = value.ToString();
+                            if (propertyInfo.PropertyType.FullName.StartsWith("CIAPI.DTO"))
+                            {
+                                formattedValue = value.ToStringWithValues();  
+                            }
+                            else
+                            {
+                                formattedValue = value.ToString();
+                            }
                             break;
                     }
                 }
