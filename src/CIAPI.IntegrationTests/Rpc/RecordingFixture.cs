@@ -42,10 +42,7 @@ namespace CIAPI.IntegrationTests.Rpc
             var storyId = headlines.Headlines[0].StoryId;
 
             // get the body of the story
-            // the api team has yet again broken an established and published interface with yet another
-            // half baked change. if you are going to require a key to retrieve detail you need to provide
-            // the key on the master. again, the client is required to maintain corellation information (i.e. market type)
-            // not impressed.
+   
             var storyDetail = rpcClient.News.GetNewsDetail("dj", storyId.ToString());
 
             Assert.IsNotNullOrEmpty(storyDetail.NewsDetail.Story, "story was empty?");
@@ -85,10 +82,7 @@ namespace CIAPI.IntegrationTests.Rpc
             var storyId = headlines.Headlines[0].StoryId;
 
             // get the body of the story
-            // the api team has yet again broken an established and published interface with yet another
-            // half baked change. if you are going to require a key to retrieve detail you need to provide
-            // the key on the master. again, the client is required to maintain corellation information (i.e. market type)
-            // not impressed.
+ 
             var storyDetail = rpcClient.News.GetNewsDetail("dj", storyId.ToString());
 
             Assert.IsNotNullOrEmpty(storyDetail.NewsDetail.Story, "story was empty?");
