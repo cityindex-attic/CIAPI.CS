@@ -64,13 +64,13 @@
 
             if (this.visitor["visit_" + type]) {
                 this.visitor["visit_" + type]();
-            };
+            }
 
             this["visit_" + type]();
 
             if (this.visitor["visit_" + type + "_end"]) {
                 this.visitor["visit_" + type + "_end"]();
-            };
+            }
 
             this.pop();
             if (depth != this.stack.length) {
@@ -88,7 +88,7 @@
                 // todo: explosion of ambiguity here with 'value' - clarify
                 if (isDefined(current.value[value])) {
                     self.visit(value, current.value[value], value);
-                };
+                }
             });
         },
         "visit_properties": function () {
@@ -112,7 +112,7 @@
                 // todo: explosion of ambiguity here with 'value' - clarify
                 if (isDefined(current.value[value])) {
                     self.visit(value, current.value[value], value);
-                };
+                }
             });
         },
 
@@ -167,11 +167,11 @@
 
     function isArray(obj) {
         return (obj && obj.prototype == Array);
-    };
+    }
 
     function isDefined(obj) {
         return obj && (typeof (obj) != 'undefined');
-    };
+    }
 
     function each(obj, action) {
         var self = this;
@@ -184,13 +184,13 @@
             for (var name in obj) {
                 if (obj.hasOwnProperty(name)) {
                     action.call(self, obj[name], name, obj);
-                };
-            };
+                }
+            }
         }
         else {
             throw new Error("cannot iterate supplied obj");
-        };
-    };
+        }
+    }
 })();
 
 
