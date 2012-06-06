@@ -5,14 +5,14 @@
         this._lines = [];
     };
     exports.ActionScriptVisitor.prototype = {
-        provider:          {},
-        normalizeKey:      function (key) {
+        provider:{},
+        normalizeKey:function (key) {
             if (key && (key.indexOf("#.") > -1 || key.indexOf("#/") > -1)) {
                 key = key.substring(2);
             }
             return key;
         },
-        resolveType:       function (property) {
+        resolveType:function (property) {
             var propertyType;
             var nullable = false;
             var propIsArray = false;
@@ -26,6 +26,18 @@
                     throw new Error("only homogenous arrays supported");
                 }
                 var itemType = this.normalizeKey(property.items[0].$ref);
+                if (!itemType) {
+                    switch (property.items[0]) {
+                        case 'string':
+                            itemType = 'String';
+                            break;
+                        case 'integer':
+                            itemType = 'Number';
+                            break;
+                        default:
+                            break;
+                    }
+                }
                 propertyType = "Vector.<" + itemType + "> = new Vector.<" + itemType + ">()";
             }
             else if (isArray(property.type)) {
@@ -56,9 +68,9 @@
             } else {
                 propertyType = this.applyFormat(propertyType, property);
             }
-            return propertyType + (nullable ? "?" : "") + (propIsArray ? "[]" : "");
+            return propertyType;
         },
-        applyFormat:       function (propertyType, property) {
+        applyFormat:function (propertyType, property) {
             switch (propertyType) {
                 case "string":
                     // new formats "wcf-date"
@@ -88,37 +100,34 @@
             }
             return propertyType;
         },
-        writeLine:         function (value) {
+        writeLine:function (value) {
             this._lines.push(value);
             outputString += value + "\n";
         },
-        toString:          function () {
+        toString:function () {
             return this._lines.join("\n");
         },
-        visit_property:    function () {
+        visit_property:function () {
             var current = this.provider.peek();
             switch (this.provider.stack.length) {
                 case 3: // type definition
-                    console.log("ActionScriptVisitor processing type: " + current.key);
                     outputString = "";
                     this.writeLine("package uk.co.cityindex.dto");
                     this.writeLine("{");
                     this.writeLine("");
                     var typeName = "class";
-                    if (current.value["enum"]) {
-                        typeName = "enum";
-                    }
                     if (current.value.description) {
                         this.writeLine("    /**");
                         this.writeLine("     * " + current.value.description);
+                        this.writeLine("     * ");
+                        this.writeLine("     * DO NOT EDIT -- code is generated from API metadata. Changes will be overwritten.");
+                        this.writeLine("     * ");
                         this.writeLine("     */");
                     }
-                    this.writeLine("    public " + typeName + " " + current.key + (current.value["extends"] ? (" : " + this.normalizeKey(current.value["extends"])) : ""));
+                    this.writeLine("    public " + typeName + " " + current.key + (current.value["extends"] ? (" extends " + this.normalizeKey(current.value["extends"])) : ""));
                     this.writeLine("    {");
-                    if (typeName == "enum") {
-                        console.log("enum not yet handled");
-                    }
                     break;
+
                 case 5: // type property
                     var propertyType = this.resolveType(current.value);
                     if (current.value.description) {
@@ -134,32 +143,41 @@
             switch (this.provider.stack.length) {
                 case 3:
                     var current = this.provider.peek();
-                    // parameterised constructor for pass through initialisation post JSON deserialisation
-                    this.writeLine("");
-                    this.writeLine("        /**");
-                    this.writeLine("         * Parameterised constructor allows for instantiation via Trading API response.");
-                    this.writeLine("         * @param data deserialised JSON from TradingAPI response");
-                    this.writeLine("         */");
-                    this.writeLine("        public function " + current.key + "(data:Object = null)");
-                    this.writeLine("        {");
-                    this.writeLine("            if(data)");
-                    this.writeLine("            {");
-                    this.writeLine("                //TODO");
-                    this.writeLine("            }");
-                    this.writeLine("        }");
-                    this.writeLine("");
+                    if (current.value["enum"]) {
+                        // no constructor for an enum, but we do need constants to represent the enum values
+                        for (i = 0; i < current.value.options.length; i++){
+                            var option = current.value.options[i];
+                            if (option.description) {
+                                this.writeLine("        /**");
+                                this.writeLine("         * " + option.description);
+                                this.writeLine("         */");
+                            }
+                            this.writeLine("        public static const " + option.label.toUpperCase() + ":Number = "+option.value+";");
+                        }
+                    } else {
+                        // parameterised constructor for pass through initialisation post JSON deserialisation
+                        this.writeLine("");
+                        this.writeLine("        /**");
+                        this.writeLine("         * Parameterised constructor allows for instantiation via Trading API response.");
+                        this.writeLine("         * @param data deserialised JSON from TradingAPI response");
+                        this.writeLine("         */");
+                        this.writeLine("        public function " + current.key + "(data:Object = null)");
+                        this.writeLine("        {");
+                        this.writeLine("            if(data)");
+                        this.writeLine("            {");
+                        this.writeLine("                //TODO");
+                        this.writeLine("            }");
+                        this.writeLine("        }");
+                        this.writeLine("");
+                    }
                     this.writeLine("    }");
                     this.writeLine("");
                     this.writeLine("}");
                     this.writeLine("");
                     var myOutput = outputString;
-
-                    // dump the file content to console for debugging
-                    console.log(current.key + "\n" + myOutput);
-
                     var fs = require('fs');
                     //TODO need a way to pass the output directory
-                    fs.open('C:\Users\\adrian.parker\\Desktop\\DTO\\' + current.key + '.as', 'w', 666, function (e, id) {
+                    fs.open('C:\Users\\adrian.parker\\Desktop\\DTO\\uk\\co\\cityindex\\dto\\' + current.key + '.as', 'w', 666, function (e, id) {
                         fs.write(id, myOutput, 0, myOutput.length, 0, function (id) {
                             fs.close(id);
                         });
