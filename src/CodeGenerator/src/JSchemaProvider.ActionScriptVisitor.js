@@ -143,6 +143,7 @@
             switch (this.provider.stack.length) {
                 case 3:
                     var current = this.provider.peek();
+                    var arrayCount = 97; // ascii char code for 'a'
                     if (current.value["enum"]) {
                         // no constructor for an enum, but we do need constants to represent the enum values
                         for (i = 0; i < current.value.options.length; i++){
@@ -165,7 +166,26 @@
                         this.writeLine("        {");
                         this.writeLine("            if(data)");
                         this.writeLine("            {");
-                        this.writeLine("                //TODO");
+
+                        var dto = current.value;
+                        var props = dto.properties;
+                        for(var key in props){
+                            var prop = props[key];
+                            if(prop && prop.type && prop.type=='array'){
+                                var iterVar = String.fromCharCode(arrayCount);
+                                this.writeLine("                for(var "+iterVar+":int = 0; "+iterVar+" < data."+key+".length; "+iterVar+"++)");
+                                this.writeLine("                {");
+                                this.writeLine("                    "+nameLowerCaseLead(key)+".push(new "+this.normalizeKey(prop.items[0].$ref)+"(data."+key+"["+iterVar+"]));");
+                                this.writeLine("                }");
+                                arrayCount++;
+                                if(arrayCount>122){
+                                    throw new Error("More than 26 child arrays!  "+current.key);
+                                }
+                            } else {
+                                this.writeLine("                "+nameLowerCaseLead(key)+" = data."+key+";");
+                            }
+                        }
+
                         this.writeLine("            }");
                         this.writeLine("        }");
                         this.writeLine("");
