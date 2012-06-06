@@ -1,8 +1,7 @@
 ﻿
 console.log("generating code....");
 
-//var schema = require("./meta/schema.js").schema;
-var schema = require("./meta/schema2.js").schema;
+var schema = require("./meta/schema.js").schema;
 var schemaPatch = require("./meta/schema.patch.js").schemaPatch;
 
 var JSchemaProvider = require("./JSchemaProvider.js").JSchemaProvider;

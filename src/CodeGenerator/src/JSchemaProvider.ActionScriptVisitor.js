@@ -7,7 +7,7 @@
     exports.ActionScriptVisitor.prototype = {
         provider:          {},
         normalizeKey:      function (key) {
-            if (key.indexOf("#.") > -1 || key.indexOf("#/") > -1) {
+            if (key && (key.indexOf("#.") > -1 || key.indexOf("#/") > -1)) {
                 key = key.substring(2);
             }
             return key;
@@ -159,7 +159,7 @@
 
                     var fs = require('fs');
                     //TODO need a way to pass the output directory
-                    fs.open('C:\Users\\adrian.parker\\Desktop\\' + current.key + '.as', 'w', 666, function (e, id) {
+                    fs.open('C:\Users\\adrian.parker\\Desktop\\DTO\\' + current.key + '.as', 'w', 666, function (e, id) {
                         fs.write(id, myOutput, 0, myOutput.length, 0, function (id) {
                             fs.close(id);
                         });
