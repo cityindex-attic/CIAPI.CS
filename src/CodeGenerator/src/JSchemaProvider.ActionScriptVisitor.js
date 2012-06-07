@@ -15,9 +15,7 @@
         resolveType:function (property) {
             var propertyType;
             var nullable = false;
-            var propIsArray = false;
             if (property.type == "array") {
-                propIsArray = true;
                 if (!isDefined(property.items)) {
                     throw new Error("items not specified for array type");
                 }
@@ -146,14 +144,16 @@
                     var arrayCount = 97; // ascii char code for 'a'
                     if (current.value["enum"]) {
                         // no constructor for an enum, but we do need constants to represent the enum values
-                        for (i = 0; i < current.value.options.length; i++){
-                            var option = current.value.options[i];
-                            if (option.description) {
-                                this.writeLine("        /**");
-                                this.writeLine("         * " + option.description);
-                                this.writeLine("         */");
+                        if(current.value.hasOwnProperty("options")){
+                            for (var i = 0; i < current.value.options.length; i++){
+                                var option = current.value.options[i];
+                                if (option.description) {
+                                    this.writeLine("        /**");
+                                    this.writeLine("         * " + option.description);
+                                    this.writeLine("         */");
+                                }
+                                this.writeLine("        public static const " + option.label.toUpperCase() + ":Number = "+option.value+";");
                             }
-                            this.writeLine("        public static const " + option.label.toUpperCase() + ":Number = "+option.value+";");
                         }
                     } else {
                         // parameterised constructor for pass through initialisation post JSON deserialisation
@@ -168,21 +168,26 @@
                         this.writeLine("            {");
 
                         var dto = current.value;
-                        var props = dto.properties;
-                        for(var key in props){
-                            var prop = props[key];
-                            if(prop && prop.type && prop.type=='array'){
-                                var iterVar = String.fromCharCode(arrayCount);
-                                this.writeLine("                for(var "+iterVar+":int = 0; "+iterVar+" < data."+key+".length; "+iterVar+"++)");
-                                this.writeLine("                {");
-                                this.writeLine("                    "+nameLowerCaseLead(key)+".push(new "+this.normalizeKey(prop.items[0].$ref)+"(data."+key+"["+iterVar+"]));");
-                                this.writeLine("                }");
-                                arrayCount++;
-                                if(arrayCount>122){
-                                    throw new Error("More than 26 child arrays!  "+current.key);
+                        if(dto.hasOwnProperty("properties")){
+                            var props = dto["properties"];
+                            for(var key in props){
+                                if(props.hasOwnProperty(key)){
+                                    var prop = props[key];
+                                    if(prop && prop.type && prop.type=='array'){
+                                        var iterVar = String.fromCharCode(arrayCount);
+                                        this.writeLine("                for(var "+iterVar+":int = 0; "+iterVar+" < data."+key+".length; "+iterVar+"++)");
+                                        this.writeLine("                {");
+                                        this.writeLine("                    "+nameLowerCaseLead(key)+".push(new "+this.normalizeKey(prop.items[0].$ref)+"(data."+key+"["+iterVar+"]));");
+                                        this.writeLine("                }");
+                                        arrayCount++;
+                                        if(arrayCount>122){
+                                            // we've used a...z, smells like error, or we have an API dev gone rogue
+                                            throw new Error("More than 26 child arrays!  "+current.key);
+                                        }
+                                    } else {
+                                        this.writeLine("                "+nameLowerCaseLead(key)+" = data."+key+";");
+                                    }
                                 }
-                            } else {
-                                this.writeLine("                "+nameLowerCaseLead(key)+" = data."+key+";");
                             }
                         }
 
