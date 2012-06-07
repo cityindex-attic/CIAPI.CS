@@ -3,6 +3,7 @@
     var outputString = "";
     exports.ActionScriptVisitor = function () {
         this._lines = [];
+        this.outputDir = "";
     };
     exports.ActionScriptVisitor.prototype = {
         provider:{},
@@ -201,8 +202,7 @@
                     this.writeLine("");
                     var myOutput = outputString;
                     var fs = require('fs');
-                    //TODO need a way to pass the output directory
-                    fs.open('C:\Users\\adrian.parker\\Desktop\\DTO\\uk\\co\\cityindex\\dto\\' + current.key + '.as', 'w', 666, function (e, id) {
+                    fs.open(this.outputDir + current.key + '.as', 'w', 666, function (e, id) {
                         fs.write(id, myOutput, 0, myOutput.length, 0, function (id) {
                             fs.close(id);
                         });

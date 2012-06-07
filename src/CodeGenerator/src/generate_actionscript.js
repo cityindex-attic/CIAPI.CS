@@ -1,6 +1,21 @@
 ﻿
-console.log("generating code....");
+console.log("Initialising program....");
 
+// get the target output directory, make sure it has a trailing path separator
+var outDir = process.argv[2];
+var path = require('path');
+if(!outDir || outDir=='undefined'){
+    throw new Error("Please supply absolute output directory path as first command line argument.")
+}else{
+    var pathSeparator = (process.platform === 'win32' ? '\\' : '/');
+    if(outDir.substr(outDir.length-1)!=pathSeparator){
+        outDir += pathSeparator;
+    }
+    outDir = path.normalize(outDir);
+}
+console.log("Writing to "+outDir);
+
+// load required resources
 var schema = require("./meta/schema.js").schema;
 var schemaPatch = require("./meta/schema.patch.js").schemaPatch;
 var JSchemaProvider = require("./JSchemaProvider.js").JSchemaProvider;
@@ -39,11 +54,13 @@ if(schemaPatch.hasOwnProperty("properties")){
     }
 }
 
+// parse the schema into ActionScript DTO
 console.log("visiting code....");
 
 var visitor = new ActionScriptVisitor();
+visitor.outputDir = outDir;
 var provider = new JSchemaProvider(visitor);
 provider.schema = schema;
 provider.visit("root", schema, "schema");
 
-console.log("Completed.");
+console.log("Fiat voluntas tua.");
