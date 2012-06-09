@@ -37,27 +37,71 @@ namespace CIAPI.Rpc
             }
             return headers;
         }
+
+        public bool Http200ErrorsOnly { get; set; }
+
+
+        #region Request Dispatch
+        
+        private static string AppendQueryParameter(string uriTemplate,string paramName)
+        {
+            if (uriTemplate.Contains("?"))
+            {
+
+                uriTemplate = uriTemplate + "&";
+            }
+            else
+            {
+                uriTemplate = uriTemplate + "?";
+            }
+            string paramPair = paramName + "={" + paramName + "}";
+            uriTemplate = uriTemplate + paramPair;
+            return uriTemplate;
+        }
         public Guid BeginRequest(RequestMethod method, string target, string uriTemplate, Dictionary<string, object> parameters, ContentType requestContentType, ContentType responseContentType, TimeSpan cacheDuration, int timeout, int retryCount, ReliableAsyncCallback callback, object state)
         {
             target = _rootUri.AbsoluteUri + "/" + target;
+            var param = new Dictionary<string, object>(parameters ?? new Dictionary<string, object>() );
+            if (Http200ErrorsOnly)
+            {
+                uriTemplate = AppendQueryParameter(uriTemplate, "only200");
+                param.Add("only200", "true");
+            }
             Dictionary<string, string> headers = GetHeaders(target);
-            return base.BeginRequest(method, target, uriTemplate, headers, parameters, requestContentType, responseContentType, cacheDuration, timeout, retryCount, callback, state);
+            return base.BeginRequest(method, target, uriTemplate, headers, param, requestContentType, responseContentType, cacheDuration, timeout, retryCount, callback, state);
         }
+
+
 
         public T Request<T>(RequestMethod method, string target, string uriTemplate, Dictionary<string, object> parameters, ContentType requestContentType, ContentType responseContentType, TimeSpan cacheDuration, int timeout, int retryCount)
         {
+
             target = _rootUri.AbsoluteUri + "/" + target;
+            var param = new Dictionary<string, object>(parameters ?? new Dictionary<string, object>());
+            if (Http200ErrorsOnly)
+            {
+                uriTemplate = AppendQueryParameter(uriTemplate, "only200");
+                param.Add("only200", "true");
+            }
             Dictionary<string, string> headers = GetHeaders(target);
 
-            return base.Request<T>(method, target, uriTemplate, headers, parameters, requestContentType, responseContentType, cacheDuration, timeout, retryCount);
+            return base.Request<T>(method, target, uriTemplate, headers, param, requestContentType, responseContentType, cacheDuration, timeout, retryCount);
         }
+
         public string Request(RequestMethod method, string target, string uriTemplate, Dictionary<string, object> parameters, ContentType requestContentType, ContentType responseContentType, TimeSpan cacheDuration, int timeout, int retryCount)
         {
             target = _rootUri.AbsoluteUri + "/" + target;
+            var param = new Dictionary<string, object>(parameters ?? new Dictionary<string, object>());
+            if (Http200ErrorsOnly)
+            {
+                uriTemplate = AppendQueryParameter(uriTemplate, "only200");
+                param.Add("only200", "true");
+            }
             Dictionary<string, string> headers = GetHeaders(target);
-            return base.Request(method, target, uriTemplate, headers, parameters, requestContentType, responseContentType, cacheDuration, timeout, retryCount);
+            return base.Request(method, target, uriTemplate, headers, param, requestContentType, responseContentType, cacheDuration, timeout, retryCount);
         }
 
+        #endregion
 
 
 

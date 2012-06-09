@@ -22,10 +22,28 @@ namespace CIAPI.IntegrationTests.Rpc
             {
                 var rpcClient = new Client(new Uri("http://invalidservername.asiuhd8h38hsh.wam/TradingApi"),new Uri("http://foo.bar.com"), AppKey);
                 rpcClient.LogIn("username", "password");
+                Assert.Fail("Expected exception");
             }
             catch (Exception ex)
             {
                 Assert.That(ex.Message, Is.StringContaining("Invalid response received.  Are you connecting to the correct server Url?"), "Expecting some info explaining that the server Url is invalid");                
+            }
+        }
+
+        [Test]
+        public void Http200ErrorsShouldThrow()
+        {
+            try
+            {
+                var rpcClient = BuildRpcClient();
+                rpcClient.Http200ErrorsOnly = true;
+                
+                const int moreThanMaxHeadlines = 1000;
+                rpcClient.News.ListNewsHeadlinesWithSource(source: "dj", category: "UK", maxResults: moreThanMaxHeadlines);
+            }
+            catch (Exception ex)
+            {
+                Assert.That(ex.Message, Is.StringContaining("You cannot request more than 500 news headlines"), "Expecting some info explaining that the server Url is invalid");
             }
         }
 
