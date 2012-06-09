@@ -145,6 +145,8 @@ namespace CIAPI.CS.Koans
         private Client _rpcClient;
         private ListNewsHeadlinesResponseDTO _ukHeadlines;
         private ListNewsHeadlinesResponseDTO _ausHeadlines;
+
+
         private string FILL_ME_IN = "replace FILL_ME_IN with the correct value";
         private DateTime FILL_ME_IN_DATE = DateTime.UtcNow;
     }

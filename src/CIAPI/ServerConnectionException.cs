@@ -1,10 +1,60 @@
 ﻿
 
 using System;
+using System.Collections.Generic;
+using System.Text;
 using Salient.ReliableHttpClient;
 
 namespace CIAPI.Rpc
 {
+    [Serializable]
+    public class AggregateException:ReliableHttpException
+    {
+        private List<Exception> _exceptions = new List<Exception>();
+        public List<Exception> Exceptions
+        {
+            get { return _exceptions; }
+            set { _exceptions = value; }
+        }
+
+        public AggregateException(string message) : base(message)
+        {
+        }
+
+        public AggregateException(string message, Exception ex) : base(message, ex)
+        {
+            _exceptions.Add(ex);
+        }
+
+        public AggregateException(Exception ex) : base(ex)
+        {
+            _exceptions.Add(ex);
+        }
+
+        public AggregateException(string message, ReliableHttpException ex)
+            : base(message, ex)
+        {
+            _exceptions.Add(ex);
+        }
+
+        public AggregateException(ReliableHttpException ex)
+            : base(ex)
+        {
+            _exceptions.Add(ex);
+        }
+        public override string ToString()
+        {
+            StringBuilder sb= new StringBuilder();
+            foreach (var ex in _exceptions)
+            {
+                sb.AppendLine(ex.Message);
+
+            }
+            sb.AppendLine(base.ToString());
+            return sb.ToString();
+        }
+    }
+    [Serializable]
     public class ThrottlingException:ReliableHttpException
     {
         public ThrottlingException(string message) : base(message)
@@ -27,6 +77,7 @@ namespace CIAPI.Rpc
         {
         }
     }
+    [Serializable]
     public class NoDataAvailableException:ReliableHttpException
     {
         public NoDataAvailableException(string message) : base(message)
@@ -49,6 +100,7 @@ namespace CIAPI.Rpc
         {
         }
     }
+    [Serializable]
     public class InvalidSessionException:ReliableHttpException
     {
         public InvalidSessionException(string message) : base(message)
@@ -71,6 +123,7 @@ namespace CIAPI.Rpc
         {
         }
     }
+    [Serializable]
     public class InvalidCredentialsException:ReliableHttpException
     {
         public InvalidCredentialsException(string message) : base(message)
@@ -93,6 +146,7 @@ namespace CIAPI.Rpc
         {
         }
     }
+    [Serializable]
     public class InvalidJsonRequestCaseFormatException:ReliableHttpException
     {
         public InvalidJsonRequestCaseFormatException(string message) : base(message)
@@ -115,6 +169,7 @@ namespace CIAPI.Rpc
         {
         }
     }
+    [Serializable]
     public class InvalidJsonRequestException:ReliableHttpException
     {
         public InvalidJsonRequestException(string message) : base(message)
@@ -137,6 +192,7 @@ namespace CIAPI.Rpc
         {
         }
     }
+    [Serializable]
     public class InvalidParameterValueException:ReliableHttpException
     {
         public InvalidParameterValueException(string message) : base(message)
@@ -159,6 +215,7 @@ namespace CIAPI.Rpc
         {
         }
     }
+    [Serializable]
     public class ParameterMissingException:ReliableHttpException
     {
         
@@ -182,6 +239,7 @@ namespace CIAPI.Rpc
         {
         }
     }
+    [Serializable]
     public class InvalidParameterTypeException:ReliableHttpException
     {
         public InvalidParameterTypeException(string message) : base(message)
@@ -204,6 +262,7 @@ namespace CIAPI.Rpc
         {
         }
     }
+    [Serializable]
     public class InternalServerErrorException:ReliableHttpException
     {
         public InternalServerErrorException(string message) : base(message)
@@ -226,6 +285,7 @@ namespace CIAPI.Rpc
         {
         }
     }
+    [Serializable]
     public class ForbiddenException:ReliableHttpException
     {
         public ForbiddenException(string message) : base(message)
@@ -248,7 +308,7 @@ namespace CIAPI.Rpc
         {
         }
     }
-
+    [Serializable]
     public class ServerConnectionException : ReliableHttpException
     {
         public ServerConnectionException(string message, string responseText)

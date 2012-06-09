@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using Salient.ReliableHttpClient.Serialization;
 
@@ -27,7 +28,16 @@ namespace Salient.ReliableHttpClient
         /// <param name="duration"></param>
         private static void Wait(int duration)
         {
-            new AutoResetEvent(false).WaitOne(duration);
+            var gate = new AutoResetEvent(false);
+            try
+            {
+                gate.WaitOne(duration);
+            }
+            finally
+            {
+                ((IDisposable)gate).Dispose();
+            }
+            
         }
         public void Clear()
         {

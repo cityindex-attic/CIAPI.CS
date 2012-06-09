@@ -14,7 +14,7 @@ namespace StreamingClient
     /// for listener events even when the internal listener is reinstantiated due
     /// to fault tolerance events
     /// </summary>
-    public class ListenerAdapter<TDto> : IStreamingListener<TDto> where TDto : class, new()
+    public sealed class ListenerAdapter<TDto> : IStreamingListener<TDto> where TDto : class, new()
     {
         private static readonly ILog Logger = LogManager.GetLogger(typeof (ListenerAdapter<TDto>));
 

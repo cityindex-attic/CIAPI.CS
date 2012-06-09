@@ -10,6 +10,7 @@ namespace Salient.ReliableHttpClient
     /// NOTE: this class must be kept serializable by not populating inner exception and keeping all
     /// properties serializable
     /// </summary>
+    [Serializable]
     public class ReliableHttpException : Exception
     {
 
@@ -66,11 +67,15 @@ namespace Salient.ReliableHttpClient
                 {
                     using (Stream stream = wex.Response.GetResponseStream())
                     {
-                        using (StreamReader reader = new StreamReader(stream))
+                        if (stream != null)
                         {
-                            string response = reader.ReadToEnd().Trim();
-                            ResponseText = response;
+                            using (var reader = new StreamReader(stream))
+                            {
+                                string response = reader.ReadToEnd().Trim();
+                                ResponseText = response;
+                            }    
                         }
+                        
                     }
                 }
             }

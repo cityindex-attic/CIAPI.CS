@@ -3,9 +3,9 @@ using System.Threading;
 
 namespace Salient.ReliableHttpClient.Testing
 {
-    public class TestAsyncResult : IAsyncResult
+    public class TestAsyncResult : IAsyncResult,IDisposable
     {
-        private const int DEFAULT_LATENCY_IN_MS = 100;
+        private const int DefaultLatencyInMs = 100;
         private readonly AsyncCallback _callback;
         private readonly object _state;
         private readonly ManualResetEvent _waitHandle;
@@ -28,7 +28,7 @@ namespace Salient.ReliableHttpClient.Testing
         }
 
         public TestAsyncResult(AsyncCallback callback, object state)
-            : this(callback, state, TimeSpan.FromMilliseconds(DEFAULT_LATENCY_IN_MS))
+            : this(callback, state, TimeSpan.FromMilliseconds(DefaultLatencyInMs))
         {
         }
 
@@ -53,6 +53,30 @@ namespace Salient.ReliableHttpClient.Testing
             _waitHandle.Set();
             if (_callback != null)
                 _callback(this);
+        }
+
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+ 
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (_waitHandle != null)
+                {
+                    ((IDisposable)_waitHandle).Dispose();
+                }
+                if (_timer != null)
+                {
+                    _timer.Dispose();
+                }
+            }
+
         }
     }
 }

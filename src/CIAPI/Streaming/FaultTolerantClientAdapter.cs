@@ -11,7 +11,7 @@ using StreamingClient.Lightstreamer;
 namespace StreamingClient
 {
 
-    public class FaultTolerantLsClientAdapter : IDisposable, IConnectionListener
+    public sealed class FaultTolerantLsClientAdapter : IDisposable, IConnectionListener
     {
         private readonly IJsonSerializer _serializer;
 
@@ -436,7 +436,7 @@ namespace StreamingClient
             GC.SuppressFinalize(this);
         }
 
-        protected virtual void Dispose(bool disposing)
+        void Dispose(bool disposing)
         {
             if (disposing)
             {

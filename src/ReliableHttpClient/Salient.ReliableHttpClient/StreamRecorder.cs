@@ -6,7 +6,7 @@ namespace Salient.ReliableHttpClient
     public class StreamRecorder:RecorderBase
     {
         private readonly Stream _stream;
-
+        private object _lockTarget = new object();
         public StreamRecorder(ClientBase client,Stream stream) : base(client)
         {
             _stream = stream;
@@ -14,7 +14,7 @@ namespace Salient.ReliableHttpClient
 
         public override void Start()
         {
-            lock (_stream)
+            lock (_lockTarget)
             {
                 Paused = false;
                 Write("[");
@@ -23,7 +23,7 @@ namespace Salient.ReliableHttpClient
 
         public override void Stop()
         {
-            lock (_stream)
+            lock (_lockTarget)
             {
                 Paused = true;
                 Write("]");
@@ -38,7 +38,7 @@ namespace Salient.ReliableHttpClient
                 return;
             }
 
-            lock (_stream)
+            lock (_lockTarget)
             {
 
                 var json = Client.Serializer.SerializeObject(info);

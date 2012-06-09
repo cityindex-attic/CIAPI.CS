@@ -11,7 +11,6 @@ namespace Salient.ReliableHttpClient.Serialization.Newtonsoft
     /// <remarks>
     ///   swiped from lfoust and fixed for latest json.net with some tweaks for handling out-of-range dates
     /// </remarks>
-    [CLSCompliant(false)]
     public class UnixDateTimeConverter : DateTimeConverterBase
     {
         //public override object ReadJson(JsonReader reader, Type objectType, JsonSerializer serializer)
@@ -69,7 +68,6 @@ namespace Salient.ReliableHttpClient.Serialization.Newtonsoft
     /// <remarks>
     ///   swiped from lfoust and fixed for latest json.net with some tweaks for handling out-of-range dates
     /// </remarks>
-    [CLSCompliant(false)]
     public class UnixDateTimeOffsetConverter : DateTimeConverterBase
     {
         /// <summary>

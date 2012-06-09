@@ -156,7 +156,7 @@ namespace StreamingClient.Lightstreamer
                     case TypeCode.UInt16:
                     case TypeCode.UInt32:
                     case TypeCode.UInt64:
-                        
+
                         if (string.IsNullOrEmpty(value))
                         {
                             // get a default value
@@ -183,7 +183,7 @@ namespace StreamingClient.Lightstreamer
                     default:
                         throw new NotImplementedException(string.Format("Cannot populate fields of type {0} such as {1} on type {2}",
                                                             propertyType.FullName, propertyName, typeof(TDto).FullName));
-                   
+
                 }
 
 
@@ -203,7 +203,8 @@ namespace StreamingClient.Lightstreamer
             catch (Exception ex)
             {
 
-                throw;
+                var ex2 = new Exception(string.Format("Error populating property {0} with {1}", propertyName, value), ex);
+                throw ex2;
             }
         }
     }

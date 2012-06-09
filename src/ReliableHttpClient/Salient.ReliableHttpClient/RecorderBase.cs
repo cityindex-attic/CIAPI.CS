@@ -17,9 +17,21 @@ namespace Salient.ReliableHttpClient
         }
         protected ClientBase Client { get; private set; }
 
-        public virtual void Dispose()
+
+        public void Dispose()
         {
-            Client.RequestCompleted-=OnRequestCompleted;
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                Client.RequestCompleted -= OnRequestCompleted;
+            }
+            
         }
 
         public bool Paused { get; protected set; }

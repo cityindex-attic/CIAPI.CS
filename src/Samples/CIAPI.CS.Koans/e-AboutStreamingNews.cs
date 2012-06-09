@@ -32,13 +32,12 @@ namespace CIAPI.CS.Koans
                 _rpcClient.CreateStreamingClient();  /* and and shared sessionId to connect */
 
             var gate = new ManualResetEvent(false);
-            var isConnected = false;
+            
             //The streaming client raises events when things happen
             _streamingClient.StatusChanged += (object sender, StatusEventArgs e) =>
                                                   {
                                                       if (e.Status.Contains("Connection established"))
                                                       {
-                                                          isConnected = true;
                                                           gate.Set();
                                                       }
                                                   };
@@ -112,7 +111,10 @@ namespace CIAPI.CS.Koans
 
         private Client _rpcClient;
         private IStreamingClient _streamingClient;
+
+
         private int FILL_IN_THE_CORRECT_VALUE = 999;
         private object FILL_ME_IN = false;
+
     }
 }

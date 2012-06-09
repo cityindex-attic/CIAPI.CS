@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AsyncCallback.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="RecorderBase.cs" />
     <Compile Include="ReliableAsyncResult.cs" />
     <Compile Include="CallbackInfo.cs" />
@@ -78,6 +79,8 @@
     <Compile Include="Testing\TestRequestFactory.cs" />
     <Compile Include="Testing\TestWebReponse.cs" />
     <Compile Include="Testing\TestWebRequest.cs" />
+    <Compile Include="Testing\TestWebRequestFinder.cs" />
+    <Compile Include="Testing\TestWebStream.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DevKey.snk" />

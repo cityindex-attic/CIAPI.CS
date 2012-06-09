@@ -6,6 +6,7 @@ namespace Salient.ReliableHttpClient
     /// throw this exception when something has obviously gone wrong with the
     /// program logic.
     /// </summary>
+    [Serializable]
     public class DefectException : Exception
     {
         public DefectException(string message)

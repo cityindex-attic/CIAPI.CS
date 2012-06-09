@@ -126,7 +126,15 @@
     <Compile Include="..\Salient.ReliableHttpClient\Testing\TestWebRequest.cs">
       <Link>Testing\TestWebRequest.cs</Link>
     </Compile>
+    <Compile Include="..\Salient.ReliableHttpClient\Testing\TestWebRequestFinder.cs">
+      <Link>Testing\TestWebRequestFinder.cs</Link>
+    </Compile>
+    <Compile Include="..\Salient.ReliableHttpClient\Testing\TestWebStream.cs">
+      <Link>Testing\TestWebStream.cs</Link>
+    </Compile>
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SerializableAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

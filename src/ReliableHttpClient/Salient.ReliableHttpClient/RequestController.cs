@@ -65,7 +65,7 @@ namespace Salient.ReliableHttpClient
 
         private readonly AutoResetEvent _waitHandle;
         private int _dispatchedCount;
-        private bool _disposed;
+
         private volatile bool _disposing;
 
 
@@ -470,19 +470,21 @@ namespace Salient.ReliableHttpClient
         }
         protected virtual void Dispose(bool disposing)
         {
-            if (!_disposed)
+            if (disposing)
             {
-                if (disposing)
+                _disposing = true;
+                while (_backgroundThread.IsAlive)
                 {
-                    _disposing = true;
-                    while (_backgroundThread.IsAlive)
-                    {
-                        Thread.Sleep(100);
-                    }
+                    Thread.Sleep(100);
                 }
-
-                _disposed = true;
+                if(_waitHandle!=null)
+                {
+                    ((IDisposable)_waitHandle).Dispose();
+                }
             }
+
+
+
         }
         #endregion
 

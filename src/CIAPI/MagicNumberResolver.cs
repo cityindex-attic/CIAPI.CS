@@ -12,7 +12,9 @@ namespace CIAPI
 
     public class MagicNumberResolver
     {
+#if SILVERLIGHT
         private bool _preloaded;
+#endif
         private static ILog _logger = LogManager.GetLogger(typeof (MagicNumberResolver));
 
         public void ResolveMagicNumbers(ListOpenPositionsResponseDTO value)
@@ -133,10 +135,11 @@ namespace CIAPI
             }
         }
 
-        public void PreloadMagicNumbersAsync()
+        public void PreloadMagicNumbers()
         {
             var gates = new AutoResetEvent[6];
             var g1 = new AutoResetEvent(false);
+            var agex = new AggregateException("Exceptions occured resolving magic numbers");
             gates[0] = g1;
             _client.Messaging.BeginGetSystemLookup(MagicNumberKeys.ApiOrderResponseDTO_StatusReason, 69, a =>
                 {
@@ -148,7 +151,7 @@ namespace CIAPI
                     catch (Exception ex)
                     {
                         
-                        throw;
+                        agex.Exceptions.Add(ex);
                     }
                     finally
                     {
@@ -167,8 +170,8 @@ namespace CIAPI
                     }
                     catch (Exception ex)
                     {
-                        
-                        throw;
+
+                        agex.Exceptions.Add(ex);
                     }
                     finally
                     {
@@ -187,8 +190,8 @@ namespace CIAPI
                     }
                     catch (Exception ex)
                     {
-                        
-                        throw;
+
+                        agex.Exceptions.Add(ex);
                     }
                     finally
                     {
@@ -206,8 +209,8 @@ namespace CIAPI
                     }
                     catch (Exception ex)
                     {
-                        
-                        throw;
+
+                        agex.Exceptions.Add(ex);
                     }
                     finally
                     {
@@ -225,8 +228,8 @@ namespace CIAPI
                     }
                     catch (Exception ex)
                     {
-                        
-                        throw;
+
+                        agex.Exceptions.Add(ex);
                     }
                     finally
                     {
@@ -246,8 +249,8 @@ namespace CIAPI
                     }
                     catch (Exception ex)
                     {
-                        
-                        throw;
+
+                        agex.Exceptions.Add(ex);
                     }
                     finally
                     {
@@ -264,19 +267,17 @@ namespace CIAPI
             g4.WaitOne();
             g5.WaitOne();
             g6.WaitOne();
+
+            
+            if (agex.Exceptions.Count!=0)
+            {
+                throw agex;
+            }
+#if SILVERLIGHT
             _preloaded = true;
+#endif
             _logger.Debug("PreloadMagicNumbersAsync complete");
         }
-        public void PreloadMagicNumbers()
-        {
-            MagicNumbers[MagicNumberKeys.ApiOrderResponseDTO_StatusReason] = _client.Messaging.GetSystemLookup(MagicNumberKeys.ApiOrderResponseDTO_StatusReason, 69);
-            MagicNumbers[MagicNumberKeys.ApiOrderResponseDTO_Status] = _client.Messaging.GetSystemLookup(MagicNumberKeys.ApiOrderResponseDTO_Status, 69);
-            MagicNumbers[MagicNumberKeys.ApiTradeOrderResponseDTO_StatusReason] = _client.Messaging.GetSystemLookup(MagicNumberKeys.ApiTradeOrderResponseDTO_StatusReason, 69);
-            MagicNumbers[MagicNumberKeys.ApiTradeOrderResponseDTO_Status] = _client.Messaging.GetSystemLookup(MagicNumberKeys.ApiTradeOrderResponseDTO_Status, 69);
-            MagicNumbers[MagicNumberKeys.ApiActiveStopLimitOrderDTO_Applicability] = _client.Messaging.GetSystemLookup(MagicNumberKeys.ApiActiveStopLimitOrderDTO_Applicability, 69);
-            MagicNumbers[MagicNumberKeys.ApiOpenPositionDTO_Status] = _client.Messaging.GetSystemLookup(MagicNumberKeys.ApiOpenPositionDTO_Status, 69);
-            _preloaded = true;
-            _logger.Debug("PreloadMagicNumbersAsync complete");
-        }
+    
     }
 }

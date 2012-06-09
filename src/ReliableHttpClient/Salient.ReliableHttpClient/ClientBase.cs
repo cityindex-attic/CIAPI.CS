@@ -216,7 +216,6 @@ namespace Salient.ReliableHttpClient
                         case RequestMethod.HEAD:
                         case RequestMethod.DELETE:
                             throw new ArgumentException("unrecognized parameters");
-                            break;
                         case RequestMethod.PUT:
                         case RequestMethod.POST:
                             switch (requestContentType)
@@ -243,10 +242,8 @@ namespace Salient.ReliableHttpClient
                                     break;
                                 case ContentType.XML:
                                     throw new NotImplementedException();
-                                    break;
                                 case ContentType.TEXT:
                                     throw new NotImplementedException();
-                                    break;
                             }
                             break;
                     }
@@ -271,8 +268,11 @@ namespace Salient.ReliableHttpClient
                 result.End();
                 return result.ResponseText;
             }
+#pragma warning disable 168
             catch (ReliableHttpException ex)
+#pragma warning restore 168
             {
+                // this throw is simply to isolate defects in request implementations
                 throw;
             }
             catch (Exception ex)

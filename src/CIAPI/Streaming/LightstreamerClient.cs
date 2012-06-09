@@ -17,6 +17,24 @@ namespace CIAPI.Streaming
 
 
         public event EventHandler<MessageEventArgs<object>> MessageReceived;
+
+        protected virtual void OnStatusChanged(object sender, StatusEventArgs e)
+        {
+            EventHandler<StatusEventArgs> handler = StatusChanged;
+            if (handler != null)
+            {
+                handler(sender, e);
+            }
+        }
+        protected virtual void OnMessageReceived(MessageEventArgs<object> e)
+        {
+            EventHandler<MessageEventArgs<object>> handler = MessageReceived;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
+
         public event EventHandler<StatusEventArgs> StatusChanged;
 
         private readonly string _sessionId;
@@ -74,6 +92,8 @@ namespace CIAPI.Streaming
             }
             
         }
+
+
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IStreamingListener<TDto> BuildListener<TDto>(string dataAdapter, string topic)
                 where TDto : class, new()
@@ -88,10 +108,23 @@ namespace CIAPI.Streaming
                         throw new Exception("Max concurrent lightstreamer adapters for WP7.1 is 5");
                     }
 #endif
-                    var adp = new FaultTolerantLsClientAdapter(_streamingUri, _userName, _sessionId, dataAdapter,_serializer);
-                    adp.StatusUpdate += OnStatusUpdate;
-                    _adapters.Add(dataAdapter, adp);
-                    adp.Start();
+                    FaultTolerantLsClientAdapter adp=null;
+                    try
+                    {
+                        adp = new FaultTolerantLsClientAdapter(_streamingUri, _userName, _sessionId, dataAdapter, _serializer);
+                        adp.StatusUpdate += OnStatusUpdate;
+                        _adapters.Add(dataAdapter, adp);
+                        adp.Start();
+                    }
+                    catch
+                    {
+                        if (adp != null)
+                        {
+                            adp.Dispose();
+                        }
+
+                        throw;
+                    }
                 }
                 var adapter = _adapters[dataAdapter];
                 IStreamingListener<TDto> listener = adapter.BuildListener<TDto>(topic);

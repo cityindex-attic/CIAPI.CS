@@ -5,7 +5,7 @@ using System.Net;
 namespace Salient.ReliableHttpClient.Testing
 {
     
-
+    [Serializable]
     public class TestWebReponse : WebResponse
     {
         TestWebStream responseStream;
@@ -43,19 +43,38 @@ namespace Salient.ReliableHttpClient.Testing
         public override long ContentLength
         {
             get { return _contentLength; }
-
+            
         }
+        public void SetContentLength(long contentLength)
+        {
+            _contentLength = contentLength;
+        }
+
+        private Uri _responseUri;
 
         private string _contentType;
+        public void SetContentType(string contentType)
+        {
+            _contentType = contentType;
+        }
         public override string ContentType
         {
-            get { return _contentType; }
+            get
+            {
+                return _contentType;
+            }
+            
         }
 
-        private readonly Uri _responseUri;
+
         public override Uri ResponseUri
         {
             get { return _responseUri; }
+            
+        }
+        public void SetResponseUri(Uri uri)
+        {
+            _responseUri = uri;
         }
     }
 }

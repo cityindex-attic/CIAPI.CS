@@ -75,28 +75,12 @@ namespace CIAPI.IntegrationTests.Rpc
         [Test]
         public void CanPreloadMessages()
         {
-
             var rpcClient = BuildRpcClient();
-
             rpcClient .MagicNumberResolver.PreloadMagicNumbers();
-
-
             rpcClient.LogOut();
-
-            Assert.Inconclusive("no test");
         }
-        [Test]
-        public void CanPreloadMessagesAsync()
-        {
+        
 
-            var rpcClient = BuildRpcClient();
-
-            rpcClient.MagicNumberResolver.PreloadMagicNumbersAsync();
-
-
-            rpcClient.LogOut();
-            Assert.Inconclusive("no test");
-        }
         [Test]
         public void CanResolveDTOVersion2()
         {

@@ -90,22 +90,17 @@ namespace CIAPI.Rpc
                 Log.Error("Latency message failed to be issued.", ex2);
             }
         }
-        public void Dispose()
+        protected override void Dispose(bool disposing)
         {
-            try
+            if (disposing)
             {
                 if (_metricsTimer != null)
                 {
                     _metricsTimer.Dispose();
-                    _metricsTimer = null;
                 }
             }
-            catch
-            {
 
-                //swallow
-            }
-
+            base.Dispose(disposing);
         }
     }
 }

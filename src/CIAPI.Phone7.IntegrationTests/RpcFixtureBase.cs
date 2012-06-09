@@ -9,7 +9,7 @@ using Salient.ReflectiveLoggingAdapter;
 using Microsoft.Silverlight.Testing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using Salient.ReflectiveLoggingAdapter;
+
 
 namespace CIAPI.IntegrationTests.Streaming
 {

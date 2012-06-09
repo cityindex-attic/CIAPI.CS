@@ -1,124 +1,34 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading;
 
 namespace Salient.ReliableHttpClient.Testing
 {
-    public class TestWebStream : System.IO.Stream
-    {
-        public TestWebStream()
-        {
-
-        }
-        public TestWebStream(Byte[] value)
-        {
-            _internal = new MemoryStream(value);
-        }
-        private readonly System.IO.MemoryStream _internal = new System.IO.MemoryStream();
-        public override void Flush()
-        {
-            _internal.Flush();
-        }
-
-        public override long Seek(long offset, System.IO.SeekOrigin origin)
-        {
-            return _internal.Seek(offset, origin);
-        }
-
-        public override void SetLength(long value)
-        {
-            _internal.SetLength(value);
-        }
-
-        public override int Read(byte[] buffer, int offset, int count)
-        {
-            return _internal.Read(buffer, offset, count);
-        }
-
-        public override void Write(byte[] buffer, int offset, int count)
-        {
-            _internal.Write(buffer, offset, count);
-        }
-
-        public override bool CanRead
-        {
-            get { return _internal.CanRead; }
-        }
-
-        public override bool CanSeek
-        {
-            get { return _internal.CanSeek; }
-        }
-
-        public override bool CanWrite
-        {
-            get { return _internal.CanSeek; }
-        }
-
-        public override long Length
-        {
-            get { return _internal.Length; }
-        }
-
-        public override long Position
-        {
-            get { return _internal.Position; }
-            set { _internal.Position = value; }
-        }
-        public override void Close()
-        {
-            _content = _internal.ToArray();
-            base.Close();
-        }
-
-        private Byte[] _content;
-        public Byte[] Content
-        {
-            get
-            {
-
-                if (CanRead)
-                {
-                    return _internal.ToArray();
-                }
-                else
-                {
-                    return _content;
-                }
-            }
-        }
-    }
     public delegate void TestWebRequestPrepare(TestWebRequest request);
 
-    public class TestWebRequest : WebRequest
+    [Serializable]
+    public class TestWebRequest : WebRequest, IDisposable
     {
-
+        private TestAsyncResult _requestStreamAsyncResult;
         internal TestWebRequestPrepare PrepareResponse;
-        internal TestRequestFactory Factory;
         public TimeSpan Latency { get; set; }
-        private Exception _requestStreamException;
-        public Exception ResponseStreamException { get; set; }
 
+        public Exception ResponseStreamException { get; set; }
+        public Exception RequestStreamException { get; set; }
         public Exception EndGetResponseException { get; set; }
-        
+
         private TestWebStream _requestStream = new TestWebStream();
         private TestWebStream _responseStream = new TestWebStream();
+
+
         public TestWebStream ResponseStream
         {
-            get
-            {
-                return _responseStream;
-            }
-            set
-            {
-                _responseStream = value;
-            }
+            get { return _responseStream; }
+            set { _responseStream = value; }
         }
+
         private WebHeaderCollection _headers = new WebHeaderCollection();
         private TestAsyncResult _webResponseAsyncResult;
         private bool _isAborted;
@@ -138,6 +48,7 @@ namespace Salient.ReliableHttpClient.Testing
         //public Regex RequestUriRegex { get; set; }
 
         private readonly Uri _uri;
+
         public override Uri RequestUri
         {
             get { return _uri; }
@@ -152,12 +63,8 @@ namespace Salient.ReliableHttpClient.Testing
         }
 
 
-
         public override IAsyncResult BeginGetResponse(AsyncCallback callback, object state)
         {
-
-
-
             PrepareResponse(this);
 
             if (ResponseStreamException != null)
@@ -183,7 +90,6 @@ namespace Salient.ReliableHttpClient.Testing
         /// <summary>See <see cref="WebRequest.GetResponse"/>.</summary>
         public override WebResponse GetResponse()
         {
-
             PrepareResponse(this);
 
             using (var wait = new AutoResetEvent(false))
@@ -199,27 +105,29 @@ namespace Salient.ReliableHttpClient.Testing
         }
 #endif
 
+
         public override IAsyncResult BeginGetRequestStream(AsyncCallback callback, object state)
         {
-            if (_requestStreamException != null)
+            if (RequestStreamException != null)
             {
-                throw _requestStreamException;
+                throw RequestStreamException;
             }
-            return new TestAsyncResult(callback, state); //we don't want any latency for the request
+            _requestStreamAsyncResult = new TestAsyncResult(callback, state);
+            return _requestStreamAsyncResult; //we don't want any latency for the request
         }
 
-        public override System.IO.Stream EndGetRequestStream(IAsyncResult asyncResult)
+        public override Stream EndGetRequestStream(IAsyncResult asyncResult)
         {
             return _requestStream;
         }
 
 #if !SILVERLIGHT
         /// <summary>See <see cref="WebRequest.GetRequestStream"/>.</summary>
-        public override System.IO.Stream GetRequestStream()
+        public override Stream GetRequestStream()
         {
-            if (_requestStreamException != null)
+            if (RequestStreamException != null)
             {
-                throw _requestStreamException;
+                throw RequestStreamException;
             }
 
             return _requestStream;
@@ -241,7 +149,6 @@ namespace Salient.ReliableHttpClient.Testing
                 {
                     byte[] requestStreamContent = _requestStream.Content;
                     return Encoding.UTF8.GetString(requestStreamContent, 0, requestStreamContent.Length);
-
                 }
                 return "";
             }
@@ -274,83 +181,36 @@ namespace Salient.ReliableHttpClient.Testing
         }
 
 
-
-    }
-    public class TestWebRequestFinder
-    {
-
-        public void PopulateRequest(TestWebRequest target, RequestInfoBase source)
+        public void Dispose()
         {
-            
-            target.ResponseStream = new TestWebStream(Encoding.UTF8.GetBytes(source.ResponseText));
-            target.ContentType = source.RequestContentType.ToHeaderValue();
-            foreach (var h in source.Headers)
-            {
-                target.Headers[h.Key] = h.Value.ToString();
-            }
-
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
 
-        private List<RequestInfoBase> _reference;
-        public List<RequestInfoBase> Reference
+        protected virtual void Dispose(bool disposing)
         {
-            get { return _reference; }
-            set { _reference = value; }
-        }
-
-        public RequestInfoBase FindMatchBySingleHeader(TestWebRequest webRequest, string headerKey)
-        {
-            string headerValue = webRequest.Headers[headerKey];
-            foreach (RequestInfoBase r in _reference)
+            if (disposing)
             {
-                if (r.Headers.ContainsKey(headerKey))
+                //Warning	18	CA1001 : Microsoft.Design : Implement IDisposable on 'TestWebRequest' because it creates members of the following IDisposable types: 
+                // 'TestWebStream', 'TestAsyncResult'. 
+                if (_requestStream != null)
                 {
-                    if ((string)r.Headers[headerKey] == headerValue)
-                    {
-                        return r;
-                    }
+                    _requestStream.Dispose();
+                }
+                if (_responseStream != null)
+                {
+                    _responseStream.Dispose();
+                }
+                if (_webResponseAsyncResult != null)
+                {
+                    _webResponseAsyncResult.Dispose();
+                }
+                if (_requestStreamAsyncResult != null)
+                {
+                    _requestStreamAsyncResult.Dispose();
                 }
             }
-            return null;
-        }
-        public RequestInfoBase FindMatchExact(TestWebRequest webRequest)
-        {
-
-            foreach (RequestInfoBase r in _reference)
-            {
-                if (string.Compare(r.Method.ToString(), webRequest.Method, StringComparison.OrdinalIgnoreCase) != 0)
-                {
-                    continue;
-                }
-
-                if (r.Uri.AbsoluteUri != webRequest.RequestUri.AbsoluteUri)
-                {
-                    continue;
-                }
-
-                // #hack - RequestInfoBase requestbody is getting set null while TestWebRequest.RequestBody is returning empty string
-                // have to decide which is approppriate and standardize
-                if ((r.RequestBody ?? "") != webRequest.RequestBody)
-                {
-                    continue;
-                }
-
-                if (r.Headers != null)
-                {
-                    if (webRequest.Headers == null)
-                    {
-                        continue;
-                    }
-
-                    //#TODO: compare headers
-                }
-
-                return r;
-
-
-            }
-            return null;
         }
     }
 }

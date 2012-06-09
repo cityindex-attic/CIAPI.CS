@@ -40,12 +40,6 @@ namespace CIAPI.Phone7.IntegrationTests
                                    rpcClient.LogOut();
                                    rpcClient.Dispose();
                                }
-                               catch (Exception ex)
-                               {
-
-                                   throw;
-                               }
-
                                finally
                                {
                                    gate.Set();

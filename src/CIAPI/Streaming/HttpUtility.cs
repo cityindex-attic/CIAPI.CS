@@ -106,12 +106,14 @@ namespace StreamingClient.Lightstreamer
                 if (count < 0 || count > blen - offset)
                     throw new ArgumentOutOfRangeException("count");
 
-                MemoryStream result = new MemoryStream(count);
-                int end = offset + count;
-                for (int i = offset; i < end; i++)
-                    UrlEncodeChar((char)bytes[i], result, false);
+                using (var result = new MemoryStream(count))
+                {
+                    int end = offset + count;
+                    for (int i = offset; i < end; i++)
+                        UrlEncodeChar((char)bytes[i], result, false);
 
-                return result.ToArray();
+                    return result.ToArray();
+                }
             }
 
             internal static bool NotEncoded(char c)

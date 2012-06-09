@@ -101,12 +101,19 @@ namespace Salient.ReliableHttpClient
                 if (count < 0 || count > blen - offset)
                     throw new ArgumentOutOfRangeException("count");
 
-                MemoryStream result = new MemoryStream(count);
-                int end = offset + count;
-                for (int i = offset; i < end; i++)
-                    UrlEncodeChar((char)bytes[i], result, false);
+                byte[] returnValue;
+                using (var result = new MemoryStream(count))
+                {
+                    int end = offset + count;
+                    for (int i = offset; i < end; i++)
+                    {
+                        UrlEncodeChar((char)bytes[i], result, false);
+                    }
 
-                return result.ToArray();
+                    returnValue = result.ToArray();
+                }
+
+                return returnValue;
             }
 
             internal static bool NotEncoded(char c)

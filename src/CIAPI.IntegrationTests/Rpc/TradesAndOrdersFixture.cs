@@ -57,7 +57,7 @@ namespace CIAPI.IntegrationTests.Rpc
             var response = _rpcClient.TradesAndOrders.Trade(trade);
             _rpcClient.MagicNumberResolver.ResolveMagicNumbers(response);
 
-            Assert.AreEqual(response.Status_Resolved, "Accepted");
+            Assert.AreEqual("Accepted", response.Status_Resolved);
 
             //And then SELL again
             marketInfo = GetMarketInfo(_CFDmarketId);
@@ -82,7 +82,7 @@ namespace CIAPI.IntegrationTests.Rpc
             response = _rpcClient.TradesAndOrders.Trade(trade);
             _rpcClient.MagicNumberResolver.ResolveMagicNumbers(response);
 
-            Assert.AreEqual(response.Status_Resolved, "Accepted");
+            Assert.AreEqual("Accepted", response.Status_Resolved);
 
         }
 
@@ -199,30 +199,30 @@ namespace CIAPI.IntegrationTests.Rpc
             }
         }
 
-        [Test]
+        [Test,Ignore("not set up")]
         public void CanCancelOrder()
         {
             var order = new CancelOrderRequestDTO();
             var response = _rpcClient.TradesAndOrders.CancelOrder(order);
         }
 
-        [Test]
+        [Test, Ignore("not set up")]
         public void CanGetOrder()
         {
-            string order = "";
+            string order = "foobar";
             var response = _rpcClient.TradesAndOrders.GetOrder(order);
         }
 
-        [Test]
+        [Test, Ignore("not set up")]
         public void CanGetOpenPosition()
         {
-            string orderId = "";
+            string orderId = "foobar";
             var response = _rpcClient.TradesAndOrders.GetOpenPosition(orderId);
         }
-        [Test]
+        [Test, Ignore("not set up")]
         public void CanGetActiveStopLimitOrder()
         {
-            string orderId = "";
+            string orderId = "foobar";
             var response = _rpcClient.TradesAndOrders.GetActiveStopLimitOrder(orderId);
         }
 
@@ -291,7 +291,7 @@ namespace CIAPI.IntegrationTests.Rpc
             var order = rpcClient.TradesAndOrders.Trade(trade);
             rpcClient.MagicNumberResolver.ResolveMagicNumbers(order);
 
-            Assert.AreEqual(order.Status_Resolved, "Accepted");
+            Assert.AreEqual("Accepted", order.Status_Resolved);
 
             var update = new UpdateTradeOrderRequestDTO
                              {

@@ -12,10 +12,14 @@ namespace Salient.ReliableHttpClient.Serialization.Newtonsoft
     {
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            var s = new StringWriter();
-            var w = new JsonTextWriter(s);
-            base.WriteJson(w, value, serializer);
-            writer.WriteValue(s.ToString().ToLower().Trim('"'));
+            using (var s = new StringWriter())
+            {
+                using (var w = new JsonTextWriter(s))
+                {
+                    base.WriteJson(w, value, serializer);
+                }
+                writer.WriteValue(s.ToString().ToLower().Trim('"'));
+            }
         }
     }
 }

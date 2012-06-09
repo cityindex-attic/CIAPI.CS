@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Serializer.cs" />
     <Compile Include="Converters\ApiEnumConverter.cs" />
     <Compile Include="Converters\UnixDateTimeConverter.cs" />
