@@ -20,13 +20,13 @@ namespace CIAPI.IntegrationTests.Rpc
         {
             try
             {
-                var rpcClient = new Client(new Uri("http://invalidservername.asiuhd8h38hsh.wam/TradingApi"),new Uri("http://foo.bar.com"), AppKey);
+                var rpcClient = new Client(new Uri("http://invalidservername.asiuhd8h38hsh.wam/TradingApi"), new Uri("http://foo.bar.com"), AppKey);
                 rpcClient.LogIn("username", "password");
                 Assert.Fail("Expected exception");
             }
             catch (Exception ex)
             {
-                Assert.That(ex.Message, Is.StringContaining("Invalid response received.  Are you connecting to the correct server Url?"), "Expecting some info explaining that the server Url is invalid");                
+                Assert.That(ex.Message, Is.StringContaining("Invalid response received.  Are you connecting to the correct server Url?"), "Expecting some info explaining that the server Url is invalid");
             }
         }
 
@@ -37,7 +37,7 @@ namespace CIAPI.IntegrationTests.Rpc
             {
                 var rpcClient = BuildRpcClient();
                 rpcClient.Http200ErrorsOnly = true;
-                
+
                 const int moreThanMaxHeadlines = 1000;
                 rpcClient.News.ListNewsHeadlinesWithSource(source: "dj", category: "UK", maxResults: moreThanMaxHeadlines);
             }
@@ -67,7 +67,7 @@ namespace CIAPI.IntegrationTests.Rpc
                 Assert.That(e.Message, Is.StringContaining("Session is null. Have you created a session? (logged on)"), "The client should have rejected the request");
             }
         }
- 
+
 
         [Test]
         public void TheSameErrorShouldhaveTheSameErrorMessage()
@@ -89,11 +89,11 @@ namespace CIAPI.IntegrationTests.Rpc
             try
             {
                 const int moreThanMaxHeadlines = 1000;
-                rpcClient.News.ListNewsHeadlinesWithSource(source:"dj",category: "UK", maxResults: moreThanMaxHeadlines);
+                rpcClient.News.ListNewsHeadlinesWithSource(source: "dj", category: "UK", maxResults: moreThanMaxHeadlines);
             }
             catch (ReliableHttpException ex)
             {
-                errorMessage = "Message: " + ex.Message ;
+                errorMessage = "Message: " + ex.Message;
             }
             return errorMessage;
         }
@@ -109,6 +109,21 @@ namespace CIAPI.IntegrationTests.Rpc
         }
 
 
-        
+        [Test]
+        public void Issue166ExceptionEndpointShouldThrowCorrectException()
+        {
+            var rpcClient = BuildRpcClient();
+
+            try
+            {
+                var response = rpcClient.ExceptionHandling.GenerateException(4003);
+            }
+            catch (ReliableHttpException ex)
+            {
+
+                Assert.AreEqual(4003, ex.ErrorCode, "expecting a 4003");
+            }
+        }
+
     }
 }

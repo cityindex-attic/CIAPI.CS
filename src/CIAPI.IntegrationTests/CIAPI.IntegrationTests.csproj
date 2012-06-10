@@ -68,6 +68,7 @@
     <Compile Include="Rpc\ErrorHandlingFixture.cs" />
     <Compile Include="Rpc\MarketFixture.cs" />
     <Compile Include="Rpc\MessagingFixture.cs" />
+    <Compile Include="Rpc\MetricsFixture.cs" />
     <Compile Include="Rpc\NewsFixture.cs" />
     <Compile Include="Rpc\PriceHistoryFixture.cs" />
     <Compile Include="Rpc\RecordingFixture.cs" />
