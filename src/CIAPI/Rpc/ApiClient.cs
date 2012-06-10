@@ -18,9 +18,12 @@ namespace CIAPI.Rpc
         /// <summary>
         /// used as a null target for json deserialization test
         /// </summary>
-        private class NullObject
+        public class NullObject
         {
-
+            public NullObject()
+            {
+                
+            }
         }
 
         private Dictionary<string, string> GetHeaders(string target)
@@ -252,7 +255,7 @@ namespace CIAPI.Rpc
             {
                 Serializer.DeserializeObject<NullObject>(responseText);
             }
-            catch
+            catch(Exception ex)
             {
 
                 throw new ServerConnectionException("Invalid response received.  Are you connecting to the correct server Url?", responseText);

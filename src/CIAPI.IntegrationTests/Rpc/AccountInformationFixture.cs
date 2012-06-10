@@ -30,17 +30,19 @@ namespace CIAPI.IntegrationTests.Rpc
         [Test,Ignore("if this test breaks the account is in unexpected state. test manually")]
         public void CanChangePassword()
         {
-            const string NEWPASSWORD = "bingo72652";
+            const string NEWPASSWORD = "password";
+            const string OLDPASSWORD = "newpassword";
+            const string USERNAME = "DM813766";
             var rpcClient = new Client(Settings.RpcUri,Settings.StreamingUri, AppKey);
             
             //Login with existing credentials
-            rpcClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);
+            rpcClient.LogIn(USERNAME, OLDPASSWORD);
 
             //And change password
             var changePasswordResponse = rpcClient.Authentication.ChangePassword(new ApiChangePasswordRequestDTO()
                                                                                          {
-                                                                                             UserName = Settings.RpcUserName,
-                                                                                             Password = Settings.RpcPassword,
+                                                                                             UserName = USERNAME,
+                                                                                             Password = OLDPASSWORD,
                                                                                              NewPassword = NEWPASSWORD
                                                                                          });
 
@@ -48,15 +50,15 @@ namespace CIAPI.IntegrationTests.Rpc
             rpcClient.LogOut();
 
             //Make sure that login existing password fails 
-            Assert.Throws<ReliableHttpException>(() => rpcClient.LogIn(Settings.RpcUserName, Settings.RpcUserName));
+            Assert.Throws<ReliableHttpException>(() => rpcClient.LogIn(USERNAME, OLDPASSWORD));
 
             //Login with changed password and change back
             rpcClient.LogIn(Settings.RpcUserName, NEWPASSWORD);
             changePasswordResponse = rpcClient.Authentication.ChangePassword(new ApiChangePasswordRequestDTO()
                                                                                          {
-                                                                                             UserName = Settings.RpcUserName,
+                                                                                             UserName = USERNAME,
                                                                                              Password = NEWPASSWORD,
-                                                                                             NewPassword = Settings.RpcPassword
+                                                                                             NewPassword = OLDPASSWORD
                                                                                          });
 
             Assert.IsTrue(changePasswordResponse.IsPasswordChanged);
