@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace StreamingClient
+namespace CIAPI.StreamingClient
 {
 
  
     
-    public interface IStreamingListener
+    public interface IStreamingListener :IDisposable
     {
         // TODO: these need to be hidden
         void Start(int phase);
@@ -13,8 +13,8 @@ namespace StreamingClient
 
 
         string Topic { get; }
-        string Channel { get; }
-        string AdapterSet { get; }
+        string Adapter { get; }
+        
         
     }
 

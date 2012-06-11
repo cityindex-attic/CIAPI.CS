@@ -1,7 +1,7 @@
 ﻿using System;
 using CIAPI.Serialization;
 using Salient.ReliableHttpClient.Serialization;
-using StreamingClient;
+using CIAPI.StreamingClient;
 
 
 namespace CIAPI.Streaming

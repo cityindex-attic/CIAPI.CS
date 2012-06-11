@@ -6,13 +6,49 @@ using System.Net.NetworkInformation;
 using System.Threading;
 using Lightstreamer.DotNet.Client;
 using Salient.ReliableHttpClient.Serialization;
-using StreamingClient.Lightstreamer;
+using CIAPI.StreamingClient.Lightstreamer;
 
-namespace StreamingClient
+namespace CIAPI.StreamingClient
 {
-
-    public sealed class FaultTolerantLsClientAdapter : IDisposable, IConnectionListener
+    public interface IFaultTolerantLsClientAdapter : IDisposable
     {
+        string AdapterSet { get; }
+        bool Connected { get; }
+        Boolean CheckPhase(int ph);
+        ///<summary>
+        ///</summary>
+        int ListenerCount { get; }
+
+        event EventHandler<ConnectionStatusEventArgs> StatusUpdate;
+
+        /// <summary>
+        /// Allows consumer to stop and remove a listener from this client.
+        /// </summary>
+        void TearDownListener(IStreamingListener listener);
+
+        IStreamingListener<TDto> BuildListener<TDto>(string topic) where TDto : class, new();
+
+        SubscribedTableKey SubscribeTable<TDto>(SimpleTableInfo simpleTableInfo, ITableListener<TDto> listener, bool b) where TDto : class, new();
+        void UnsubscribeTable(SubscribedTableKey subscribedTableKey);
+        void OpenConnection(int phase);
+        void CloseConnection(int phase);
+    }
+
+    public sealed class FaultTolerantLsClientAdapter : IConnectionListener, IFaultTolerantLsClientAdapter
+    {
+        public SubscribedTableKey SubscribeTable<TDto>(SimpleTableInfo simpleTableInfo, ITableListener<TDto> listener, bool b) where TDto : class, new()
+        {
+            
+           SubscribedTableKey key =  _client.SubscribeTable(simpleTableInfo, listener, b);
+            return key;
+        }
+
+        public void UnsubscribeTable(SubscribedTableKey subscribedTableKey)
+        {
+            _client.UnsubscribeTable(subscribedTableKey);
+        }
+
+
         private readonly IJsonSerializer _serializer;
 
         private static readonly Object ConnLock = new Object();
@@ -38,7 +74,7 @@ namespace StreamingClient
         private int _phase;
         private int _lastDelay = 1;
 
-        internal readonly LSClient Client;
+        private readonly LSClient _client;
         private readonly Dictionary<string, IStreamingListener> _currentListeners = new Dictionary<string, IStreamingListener>();
         ///<summary>
         ///</summary>
@@ -62,7 +98,7 @@ namespace StreamingClient
             _streamingUri = streamingUri;
             _sessionId = sessionId;
             _userName = userName;
-            Client = new LSClient();
+            _client = new LSClient();
             
         }
 
@@ -240,6 +276,7 @@ namespace StreamingClient
             return (IStreamingListener<TDto>)_currentListeners[topic];
         }
 
+
         private void OnStatusUpdate(int ph, ConnectionStatus status, string message)
         {
             if (!CheckPhase(ph))
@@ -309,7 +346,7 @@ namespace StreamingClient
         /// </summary>
         /// <param name="ph"></param>
         /// <returns></returns>
-        internal Boolean CheckPhase(int ph)
+        public Boolean CheckPhase(int ph)
         {
             lock (ConnLock)
             {
@@ -320,7 +357,7 @@ namespace StreamingClient
 
         #region Methods accessed only by ClientStartStop
 
-        private void OpenConnection(int ph)
+        void IFaultTolerantLsClientAdapter.OpenConnection(int ph)
         {
 
             if (!NetworkInterface.GetIsNetworkAvailable())
@@ -351,7 +388,7 @@ namespace StreamingClient
                 try
                 {
                     Debug.WriteLine("connecting streaming client to adapter " + _adapterSet);
-                    Client.OpenConnection(connection, this);
+                    _client.OpenConnection(connection, this);
                     Debug.WriteLine("connected streaming client to adapter " + _adapterSet);
                     Connected = true;
 
@@ -390,14 +427,14 @@ namespace StreamingClient
         }
 
 
-        private void CloseConnection(int ph)
+        void IFaultTolerantLsClientAdapter.CloseConnection(int ph)
         {
             if (!CheckPhase(ph))
             {
                 return;
             }
 
-            Client.CloseConnection();
+            _client.CloseConnection();
             Connected = false;
             OnStatusUpdate(ph, ConnectionStatus.Disconnected, "Disconnected");
             Debug.WriteLine("Lightstreamer Client Stopped");
@@ -410,10 +447,10 @@ namespace StreamingClient
         /// </summary>
         private class ClientStartStop
         {
-            private readonly FaultTolerantLsClientAdapter _adapter;
+            private readonly IFaultTolerantLsClientAdapter _adapter;
             private readonly int _phase;
 
-            public ClientStartStop(int ph, FaultTolerantLsClientAdapter adapter)
+            public ClientStartStop(int ph, IFaultTolerantLsClientAdapter adapter)
             {
                 _adapter = adapter;
                 _phase = ph;

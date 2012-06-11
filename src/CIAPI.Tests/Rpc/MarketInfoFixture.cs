@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using CIAPI.Rpc;
 using CIAPI.Serialization;
+using CIAPI.Streaming.Testing;
 using NUnit.Framework;
 using Salient.ReliableHttpClient;
 using Salient.ReliableHttpClient.Testing;
@@ -16,9 +17,10 @@ namespace CIAPI.Tests.Rpc
         [Test]
         public void ShouldWorkWithNewGetMarketInformationResponseDTO()
         {
-            var factory = new TestRequestFactory();
+            var requestFactory = new TestRequestFactory();
+            var streamingFactory = new TestStreamingClientFactory();
 
-            var rpcClient = new Client(new Uri("https://test.com/tradingapi"), new Uri("https://test.com"), "test", new Serializer(), factory);
+            var rpcClient = new Client(new Uri("https://test.com/tradingapi"), new Uri("https://test.com"), "test", new Serializer(), requestFactory, streamingFactory);
 
             var requests = new List<RequestInfoBase>
                                {
@@ -37,7 +39,7 @@ namespace CIAPI.Tests.Rpc
                                };
             var finder = new TestWebRequestFinder { Reference = requests };
             var requestCounter = 0;
-            factory.PrepareResponse = testRequest =>
+            requestFactory.PrepareResponse = testRequest =>
             {
                 finder.PopulateRequest(testRequest, requests[requestCounter]);
                 requestCounter++;

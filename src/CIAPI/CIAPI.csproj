@@ -75,8 +75,10 @@
     <Compile Include="Streaming\InvalidTopicException.cs" />
     <Compile Include="Streaming\IStreamingClient.cs" />
     <Compile Include="Streaming\HttpUtility.cs" />
+    <Compile Include="Streaming\IStreamingClientFactory.cs" />
     <Compile Include="Streaming\LightstreamerDefaults.cs" />
     <Compile Include="Streaming\LightstreamerDtoConverter.cs" />
+    <Compile Include="Streaming\LightStreamerStreamingClientFactory.cs" />
     <Compile Include="Streaming\LSLogger.cs" />
     <Compile Include="Streaming\LSLoggerProvider.cs" />
     <Compile Include="Streaming\ConnectionStatus.cs" />
@@ -86,8 +88,13 @@
     <Compile Include="Streaming\LightstreamerClient.cs" />
     <Compile Include="Streaming\ListenerAdapter.cs" />
     <Compile Include="Streaming\MessageEventArgs.cs" />
+    <Compile Include="Streaming\StreamingRecorder.cs" />
     <Compile Include="Streaming\TableListener.cs" />
     <Compile Include="Streaming\StatusEventArgs.cs" />
+    <Compile Include="Streaming\Testing\SequentialSerializedPriceDTOMessageGenerator.cs" />
+    <Compile Include="Streaming\Testing\TestStreamingClient.cs" />
+    <Compile Include="Streaming\Testing\TestStreamingClientFactory.cs" />
+    <Compile Include="Streaming\Testing\TestStreamingListener.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -103,9 +110,7 @@
       <Name>Salient.ReliableHttpClient</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Streaming\Testing\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>

@@ -3,7 +3,7 @@
 using Salient.ReliableHttpClient;
 #endif
 
-namespace StreamingClient
+namespace CIAPI.StreamingClient
 {
     [Serializable]
     public class InvalidTopicException : Exception

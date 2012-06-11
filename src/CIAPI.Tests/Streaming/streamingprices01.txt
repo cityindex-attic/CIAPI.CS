@@ -1,0 +1,2540 @@
+﻿[
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494226,
+      "TickDate": "\/Date(1339397256528-0700)\/",
+      "Bid": 1.26410,
+      "Offer": 1.26425,
+      "Price": 1.26417,
+      "High": 1.26686,
+      "Low": 1.26312,
+      "Change": 0.00005,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX32518100",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494234,
+      "TickDate": "\/Date(1339397259028-0700)\/",
+      "Bid": 1.55341,
+      "Offer": 1.55369,
+      "Price": 1.55355,
+      "High": 1.55487,
+      "Low": 1.55025,
+      "Change": 0.00243,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX35536125",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494246,
+      "TickDate": "\/Date(1339397258866-0700)\/",
+      "Bid": 79.478,
+      "Offer": 79.498,
+      "Price": 79.488,
+      "High": 79.708,
+      "Low": 79.396,
+      "Change": -0.135,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX35536121",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494249,
+      "TickDate": "\/Date(1339397256058-0700)\/",
+      "Bid": 3.37910,
+      "Offer": 3.38750,
+      "Price": 3.38330,
+      "High": 3.39455,
+      "Low": 3.37460,
+      "Change": -0.00425,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX32059123",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494241,
+      "TickDate": "\/Date(1339397256530-0700)\/",
+      "Bid": 0.95003,
+      "Offer": 0.95033,
+      "Price": 0.95018,
+      "High": 0.95175,
+      "Low": 0.94798,
+      "Change": -0.00036,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX24956314",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494215,
+      "TickDate": "\/Date(1339397234553-0700)\/",
+      "Bid": 1.20090,
+      "Offer": 1.20135,
+      "Price": 1.20112,
+      "High": 1.20182,
+      "Low": 1.20096,
+      "Change": 0.00009,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX30430911",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494220,
+      "TickDate": "\/Date(1339397256350-0700)\/",
+      "Bid": 100.465,
+      "Offer": 100.492,
+      "Price": 100.479,
+      "High": 100.918,
+      "Low": 100.346,
+      "Change": -0.171,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX32518114",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494179,
+      "TickDate": "\/Date(1339397257684-0700)\/",
+      "Bid": 0.99742,
+      "Offer": 0.99768,
+      "Price": 0.99755,
+      "High": 1.00090,
+      "Low": 0.99666,
+      "Change": -0.00115,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX30433191",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494234,
+      "TickDate": "\/Date(1339397260329-0700)\/",
+      "Bid": 1.55340,
+      "Offer": 1.55370,
+      "Price": 1.55355,
+      "High": 1.55487,
+      "Low": 1.55025,
+      "Change": 0.00243,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX35536180",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494226,
+      "TickDate": "\/Date(1339397260391-0700)\/",
+      "Bid": 1.26408,
+      "Offer": 1.26426,
+      "Price": 1.26417,
+      "High": 1.26686,
+      "Low": 1.26312,
+      "Change": 0.00005,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX32518503",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494220,
+      "TickDate": "\/Date(1339397260391-0700)\/",
+      "Bid": 100.467,
+      "Offer": 100.492,
+      "Price": 100.479,
+      "High": 100.918,
+      "Low": 100.346,
+      "Change": -0.170,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX32518508",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494234,
+      "TickDate": "\/Date(1339397260416-0700)\/",
+      "Bid": 1.55341,
+      "Offer": 1.55371,
+      "Price": 1.55356,
+      "High": 1.55487,
+      "Low": 1.55025,
+      "Change": 0.00244,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX35536202",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494220,
+      "TickDate": "\/Date(1339397260575-0700)\/",
+      "Bid": 100.469,
+      "Offer": 100.490,
+      "Price": 100.480,
+      "High": 100.918,
+      "Low": 100.346,
+      "Change": -0.169,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX32518528",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494215,
+      "TickDate": "\/Date(1339397260775-0700)\/",
+      "Bid": 1.20092,
+      "Offer": 1.20133,
+      "Price": 1.20112,
+      "High": 1.20182,
+      "Low": 1.20096,
+      "Change": 0.00009,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX30433410",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494220,
+      "TickDate": "\/Date(1339397260790-0700)\/",
+      "Bid": 100.471,
+      "Offer": 100.490,
+      "Price": 100.481,
+      "High": 100.918,
+      "Low": 100.346,
+      "Change": -0.168,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX32518567",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494234,
+      "TickDate": "\/Date(1339397261026-0700)\/",
+      "Bid": 1.55345,
+      "Offer": 1.55369,
+      "Price": 1.55358,
+      "High": 1.55487,
+      "Low": 1.55025,
+      "Change": 0.00245,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX35536245",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494249,
+      "TickDate": "\/Date(1339397261058-0700)\/",
+      "Bid": 3.37500,
+      "Offer": 3.39020,
+      "Price": 3.38260,
+      "High": 3.39455,
+      "Low": 3.37460,
+      "Change": -0.00495,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX32059647",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494215,
+      "TickDate": "\/Date(1339397261493-0700)\/",
+      "Bid": 1.20102,
+      "Offer": 1.20129,
+      "Price": 1.20116,
+      "High": 1.20182,
+      "Low": 1.20096,
+      "Change": 0.00013,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX30433490",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494241,
+      "TickDate": "\/Date(1339397261488-0700)\/",
+      "Bid": 0.95004,
+      "Offer": 0.95030,
+      "Price": 0.95017,
+      "High": 0.95175,
+      "Low": 0.94798,
+      "Change": -0.00037,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX24956722",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494234,
+      "TickDate": "\/Date(1339397261528-0700)\/",
+      "Bid": 1.55346,
+      "Offer": 1.55366,
+      "Price": 1.55357,
+      "High": 1.55487,
+      "Low": 1.55025,
+      "Change": 0.00244,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX35536285",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494220,
+      "TickDate": "\/Date(1339397261628-0700)\/",
+      "Bid": 100.473,
+      "Offer": 100.490,
+      "Price": 100.481,
+      "High": 100.918,
+      "Low": 100.346,
+      "Change": -0.168,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX32518652",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494249,
+      "TickDate": "\/Date(1339397261652-0700)\/",
+      "Bid": 3.37900,
+      "Offer": 3.38740,
+      "Price": 3.38320,
+      "High": 3.39455,
+      "Low": 3.37460,
+      "Change": -0.00435,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX32059694",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494226,
+      "TickDate": "\/Date(1339397261670-0700)\/",
+      "Bid": 1.26412,
+      "Offer": 1.26425,
+      "Price": 1.26418,
+      "High": 1.26686,
+      "Low": 1.26312,
+      "Change": 0.00006,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX32518694",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494241,
+      "TickDate": "\/Date(1339397261606-0700)\/",
+      "Bid": 0.95003,
+      "Offer": 0.95031,
+      "Price": 0.95017,
+      "High": 0.95175,
+      "Low": 0.94798,
+      "Change": -0.00037,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX24956772",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494234,
+      "TickDate": "\/Date(1339397261700-0700)\/",
+      "Bid": 1.55345,
+      "Offer": 1.55371,
+      "Price": 1.55358,
+      "High": 1.55487,
+      "Low": 1.55025,
+      "Change": 0.00246,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX35536336",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494215,
+      "TickDate": "\/Date(1339397261607-0700)\/",
+      "Bid": 1.20104,
+      "Offer": 1.20129,
+      "Price": 1.20116,
+      "High": 1.20182,
+      "Low": 1.20096,
+      "Change": 0.00013,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX30433545",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494220,
+      "TickDate": "\/Date(1339397261730-0700)\/",
+      "Bid": 100.476,
+      "Offer": 100.489,
+      "Price": 100.482,
+      "High": 100.918,
+      "Low": 100.346,
+      "Change": -0.167,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX32518696",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494226,
+      "TickDate": "\/Date(1339397261875-0700)\/",
+      "Bid": 1.26415,
+      "Offer": 1.26423,
+      "Price": 1.26419,
+      "High": 1.26686,
+      "Low": 1.26312,
+      "Change": 0.00007,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX32518738",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494241,
+      "TickDate": "\/Date(1339397261875-0700)\/",
+      "Bid": 0.95002,
+      "Offer": 0.95030,
+      "Price": 0.95016,
+      "High": 0.95175,
+      "Low": 0.94798,
+      "Change": -0.00038,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX24956821",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494234,
+      "TickDate": "\/Date(1339397262044-0700)\/",
+      "Bid": 1.55348,
+      "Offer": 1.55370,
+      "Price": 1.55359,
+      "High": 1.55487,
+      "Low": 1.55025,
+      "Change": 0.00247,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX35536391",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494249,
+      "TickDate": "\/Date(1339397262075-0700)\/",
+      "Bid": 3.37890,
+      "Offer": 3.38730,
+      "Price": 3.38310,
+      "High": 3.39455,
+      "Low": 3.37460,
+      "Change": -0.00445,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX32059797",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494220,
+      "TickDate": "\/Date(1339397262059-0700)\/",
+      "Bid": 100.474,
+      "Offer": 100.499,
+      "Price": 100.486,
+      "High": 100.918,
+      "Low": 100.346,
+      "Change": -0.163,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX32518782",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494179,
+      "TickDate": "\/Date(1339397262166-0700)\/",
+      "Bid": 0.99745,
+      "Offer": 0.99767,
+      "Price": 0.99756,
+      "High": 1.00090,
+      "Low": 0.99666,
+      "Change": -0.00114,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX30433646",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494226,
+      "TickDate": "\/Date(1339397262148-0700)\/",
+      "Bid": 1.26417,
+      "Offer": 1.26428,
+      "Price": 1.26423,
+      "High": 1.26686,
+      "Low": 1.26312,
+      "Change": 0.00010,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX32518807",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494241,
+      "TickDate": "\/Date(1339397262275-0700)\/",
+      "Bid": 0.95000,
+      "Offer": 0.95024,
+      "Price": 0.95012,
+      "High": 0.95175,
+      "Low": 0.94798,
+      "Change": -0.00042,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX24956886",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494220,
+      "TickDate": "\/Date(1339397262275-0700)\/",
+      "Bid": 100.478,
+      "Offer": 100.497,
+      "Price": 100.488,
+      "High": 100.918,
+      "Low": 100.346,
+      "Change": -0.161,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX32518861",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494179,
+      "TickDate": "\/Date(1339397262291-0700)\/",
+      "Bid": 0.99744,
+      "Offer": 0.99768,
+      "Price": 0.99756,
+      "High": 1.00090,
+      "Low": 0.99666,
+      "Change": -0.00114,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX30433728",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494215,
+      "TickDate": "\/Date(1339397262507-0700)\/",
+      "Bid": 1.20100,
+      "Offer": 1.20129,
+      "Price": 1.20115,
+      "High": 1.20182,
+      "Low": 1.20096,
+      "Change": 0.00012,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX30433748",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494234,
+      "TickDate": "\/Date(1339397262527-0700)\/",
+      "Bid": 1.55348,
+      "Offer": 1.55372,
+      "Price": 1.55360,
+      "High": 1.55487,
+      "Low": 1.55025,
+      "Change": 0.00248,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX35536528",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494226,
+      "TickDate": "\/Date(1339397262379-0700)\/",
+      "Bid": 1.26416,
+      "Offer": 1.26426,
+      "Price": 1.26422,
+      "High": 1.26686,
+      "Low": 1.26312,
+      "Change": 0.00009,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX32518877",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494241,
+      "TickDate": "\/Date(1339397262527-0700)\/",
+      "Bid": 0.94996,
+      "Offer": 0.95022,
+      "Price": 0.95009,
+      "High": 0.95175,
+      "Low": 0.94798,
+      "Change": -0.00045,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX24956947",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494220,
+      "TickDate": "\/Date(1339397262528-0700)\/",
+      "Bid": 100.473,
+      "Offer": 100.504,
+      "Price": 100.488,
+      "High": 100.918,
+      "Low": 100.346,
+      "Change": -0.161,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX32518938",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494226,
+      "TickDate": "\/Date(1339397262552-0700)\/",
+      "Bid": 1.26415,
+      "Offer": 1.26428,
+      "Price": 1.26422,
+      "High": 1.26686,
+      "Low": 1.26312,
+      "Change": 0.00010,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX32518959",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494215,
+      "TickDate": "\/Date(1339397262576-0700)\/",
+      "Bid": 1.20099,
+      "Offer": 1.20130,
+      "Price": 1.20114,
+      "High": 1.20182,
+      "Low": 1.20096,
+      "Change": 0.00012,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX30433800",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494241,
+      "TickDate": "\/Date(1339397262756-0700)\/",
+      "Bid": 0.94996,
+      "Offer": 0.95024,
+      "Price": 0.95010,
+      "High": 0.95175,
+      "Low": 0.94798,
+      "Change": -0.00044,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX24956990",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494179,
+      "TickDate": "\/Date(1339397262944-0700)\/",
+      "Bid": 0.99745,
+      "Offer": 0.99767,
+      "Price": 0.99756,
+      "High": 1.00090,
+      "Low": 0.99666,
+      "Change": -0.00114,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX30433845",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494246,
+      "TickDate": "\/Date(1339397263048-0700)\/",
+      "Bid": 79.477,
+      "Offer": 79.499,
+      "Price": 79.488,
+      "High": 79.708,
+      "Low": 79.396,
+      "Change": -0.135,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX35536627",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494234,
+      "TickDate": "\/Date(1339397263075-0700)\/",
+      "Bid": 1.55348,
+      "Offer": 1.55370,
+      "Price": 1.55359,
+      "High": 1.55487,
+      "Low": 1.55025,
+      "Change": 0.00247,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX35536637",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494241,
+      "TickDate": "\/Date(1339397263076-0700)\/",
+      "Bid": 0.94995,
+      "Offer": 0.95025,
+      "Price": 0.95010,
+      "High": 0.95175,
+      "Low": 0.94798,
+      "Change": -0.00044,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX24957055",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494220,
+      "TickDate": "\/Date(1339397263055-0700)\/",
+      "Bid": 100.476,
+      "Offer": 100.503,
+      "Price": 100.489,
+      "High": 100.918,
+      "Low": 100.346,
+      "Change": -0.160,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX32519056",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494226,
+      "TickDate": "\/Date(1339397263250-0700)\/",
+      "Bid": 1.26417,
+      "Offer": 1.26425,
+      "Price": 1.26421,
+      "High": 1.26686,
+      "Low": 1.26312,
+      "Change": 0.00009,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX32519067",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494246,
+      "TickDate": "\/Date(1339397263056-0700)\/",
+      "Bid": 79.476,
+      "Offer": 79.500,
+      "Price": 79.488,
+      "High": 79.708,
+      "Low": 79.396,
+      "Change": -0.136,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX35536672",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494241,
+      "TickDate": "\/Date(1339397263414-0700)\/",
+      "Bid": 0.94993,
+      "Offer": 0.95025,
+      "Price": 0.95009,
+      "High": 0.95175,
+      "Low": 0.94798,
+      "Change": -0.00045,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX24957103",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494220,
+      "TickDate": "\/Date(1339397263518-0700)\/",
+      "Bid": 100.473,
+      "Offer": 100.504,
+      "Price": 100.488,
+      "High": 100.918,
+      "Low": 100.346,
+      "Change": -0.161,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX32519098",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494234,
+      "TickDate": "\/Date(1339397263526-0700)\/",
+      "Bid": 1.55345,
+      "Offer": 1.55371,
+      "Price": 1.55358,
+      "High": 1.55487,
+      "Low": 1.55025,
+      "Change": 0.00246,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX35536709",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494241,
+      "TickDate": "\/Date(1339397263557-0700)\/",
+      "Bid": 0.94995,
+      "Offer": 0.95025,
+      "Price": 0.95010,
+      "High": 0.95175,
+      "Low": 0.94798,
+      "Change": -0.00044,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX24957119",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494234,
+      "TickDate": "\/Date(1339397264029-0700)\/",
+      "Bid": 1.55348,
+      "Offer": 1.55370,
+      "Price": 1.55359,
+      "High": 1.55487,
+      "Low": 1.55025,
+      "Change": 0.00247,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX35536738",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494241,
+      "TickDate": "\/Date(1339397264244-0700)\/",
+      "Bid": 0.94993,
+      "Offer": 0.95025,
+      "Price": 0.95009,
+      "High": 0.95175,
+      "Low": 0.94798,
+      "Change": -0.00045,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX24957146",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494234,
+      "TickDate": "\/Date(1339397264228-0700)\/",
+      "Bid": 1.55354,
+      "Offer": 1.55368,
+      "Price": 1.55361,
+      "High": 1.55487,
+      "Low": 1.55025,
+      "Change": 0.00249,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX35536745",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494234,
+      "TickDate": "\/Date(1339397264518-0700)\/",
+      "Bid": 1.55347,
+      "Offer": 1.55375,
+      "Price": 1.55361,
+      "High": 1.55487,
+      "Low": 1.55025,
+      "Change": 0.00249,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX35536789",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494179,
+      "TickDate": "\/Date(1339397264891-0700)\/",
+      "Bid": 0.99744,
+      "Offer": 0.99768,
+      "Price": 0.99756,
+      "High": 1.00090,
+      "Low": 0.99666,
+      "Change": -0.00114,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX30434072",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494179,
+      "TickDate": "\/Date(1339397265144-0700)\/",
+      "Bid": 0.99745,
+      "Offer": 0.99767,
+      "Price": 0.99756,
+      "High": 1.00090,
+      "Low": 0.99666,
+      "Change": -0.00114,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX30434087",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494246,
+      "TickDate": "\/Date(1339397265144-0700)\/",
+      "Bid": 79.477,
+      "Offer": 79.501,
+      "Price": 79.489,
+      "High": 79.708,
+      "Low": 79.396,
+      "Change": -0.135,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX35536829",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494220,
+      "TickDate": "\/Date(1339397265176-0700)\/",
+      "Bid": 100.476,
+      "Offer": 100.503,
+      "Price": 100.489,
+      "High": 100.918,
+      "Low": 100.346,
+      "Change": -0.160,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX32519254",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494241,
+      "TickDate": "\/Date(1339397265191-0700)\/",
+      "Bid": 0.94995,
+      "Offer": 0.95025,
+      "Price": 0.95010,
+      "High": 0.95175,
+      "Low": 0.94798,
+      "Change": -0.00044,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX24957240",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494215,
+      "TickDate": "\/Date(1339397265296-0700)\/",
+      "Bid": 1.20104,
+      "Offer": 1.20129,
+      "Price": 1.20116,
+      "High": 1.20182,
+      "Low": 1.20096,
+      "Change": 0.00013,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX30434117",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494226,
+      "TickDate": "\/Date(1339397265350-0700)\/",
+      "Bid": 1.26414,
+      "Offer": 1.26427,
+      "Price": 1.26421,
+      "High": 1.26686,
+      "Low": 1.26312,
+      "Change": 0.00009,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX32519280",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494246,
+      "TickDate": "\/Date(1339397265176-0700)\/",
+      "Bid": 79.483,
+      "Offer": 79.497,
+      "Price": 79.490,
+      "High": 79.708,
+      "Low": 79.396,
+      "Change": -0.133,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX35536845",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494220,
+      "TickDate": "\/Date(1339397265355-0700)\/",
+      "Bid": 100.483,
+      "Offer": 100.500,
+      "Price": 100.492,
+      "High": 100.918,
+      "Low": 100.346,
+      "Change": -0.157,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX32519282",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494241,
+      "TickDate": "\/Date(1339397265378-0700)\/",
+      "Bid": 0.94993,
+      "Offer": 0.95025,
+      "Price": 0.95009,
+      "High": 0.95175,
+      "Low": 0.94798,
+      "Change": -0.00045,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX24957270",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494215,
+      "TickDate": "\/Date(1339397265399-0700)\/",
+      "Bid": 1.20099,
+      "Offer": 1.20130,
+      "Price": 1.20114,
+      "High": 1.20182,
+      "Low": 1.20096,
+      "Change": 0.00012,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX30434145",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494179,
+      "TickDate": "\/Date(1339397265653-0700)\/",
+      "Bid": 0.99744,
+      "Offer": 0.99768,
+      "Price": 0.99756,
+      "High": 1.00090,
+      "Low": 0.99666,
+      "Change": -0.00114,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX30434156",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494246,
+      "TickDate": "\/Date(1339397265351-0700)\/",
+      "Bid": 79.482,
+      "Offer": 79.498,
+      "Price": 79.491,
+      "High": 79.708,
+      "Low": 79.396,
+      "Change": -0.133,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX35536879",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494220,
+      "TickDate": "\/Date(1339397265538-0700)\/",
+      "Bid": 100.481,
+      "Offer": 100.508,
+      "Price": 100.495,
+      "High": 100.918,
+      "Low": 100.346,
+      "Change": -0.154,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX32519307",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494241,
+      "TickDate": "\/Date(1339397265600-0700)\/",
+      "Bid": 0.94995,
+      "Offer": 0.95025,
+      "Price": 0.95010,
+      "High": 0.95175,
+      "Low": 0.94798,
+      "Change": -0.00044,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX24957301",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494246,
+      "TickDate": "\/Date(1339397265652-0700)\/",
+      "Bid": 79.481,
+      "Offer": 79.499,
+      "Price": 79.490,
+      "High": 79.708,
+      "Low": 79.396,
+      "Change": -0.133,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX35536908",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494220,
+      "TickDate": "\/Date(1339397265755-0700)\/",
+      "Bid": 100.474,
+      "Offer": 100.511,
+      "Price": 100.492,
+      "High": 100.918,
+      "Low": 100.346,
+      "Change": -0.157,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX32519329",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494220,
+      "TickDate": "\/Date(1339397266068-0700)\/",
+      "Bid": 100.474,
+      "Offer": 100.509,
+      "Price": 100.492,
+      "High": 100.918,
+      "Low": 100.346,
+      "Change": -0.157,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX32519371",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494246,
+      "TickDate": "\/Date(1339397266508-0700)\/",
+      "Bid": 79.477,
+      "Offer": 79.501,
+      "Price": 79.489,
+      "High": 79.708,
+      "Low": 79.396,
+      "Change": -0.134,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX35537006",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494249,
+      "TickDate": "\/Date(1339397267075-0700)\/",
+      "Bid": 3.37420,
+      "Offer": 3.39060,
+      "Price": 3.38240,
+      "High": 3.39455,
+      "Low": 3.37460,
+      "Change": -0.00515,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX32060373",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494226,
+      "TickDate": "\/Date(1339397267148-0700)\/",
+      "Bid": 1.26416,
+      "Offer": 1.26426,
+      "Price": 1.26422,
+      "High": 1.26686,
+      "Low": 1.26312,
+      "Change": 0.00009,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX32519496",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494179,
+      "TickDate": "\/Date(1339397267259-0700)\/",
+      "Bid": 0.99747,
+      "Offer": 0.99767,
+      "Price": 0.99757,
+      "High": 1.00090,
+      "Low": 0.99666,
+      "Change": -0.00113,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX30434312",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494241,
+      "TickDate": "\/Date(1339397267259-0700)\/",
+      "Bid": 0.94993,
+      "Offer": 0.95025,
+      "Price": 0.95009,
+      "High": 0.95175,
+      "Low": 0.94798,
+      "Change": -0.00045,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX24957416",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494234,
+      "TickDate": "\/Date(1339397267322-0700)\/",
+      "Bid": 1.55347,
+      "Offer": 1.55373,
+      "Price": 1.55360,
+      "High": 1.55487,
+      "Low": 1.55025,
+      "Change": 0.00248,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX35537053",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494249,
+      "TickDate": "\/Date(1339397267152-0700)\/",
+      "Bid": 3.37890,
+      "Offer": 3.38730,
+      "Price": 3.38310,
+      "High": 3.39455,
+      "Low": 3.37460,
+      "Change": -0.00445,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX32060410",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494226,
+      "TickDate": "\/Date(1339397267150-0700)\/",
+      "Bid": 1.26417,
+      "Offer": 1.26425,
+      "Price": 1.26421,
+      "High": 1.26686,
+      "Low": 1.26312,
+      "Change": 0.00009,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX32519501",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494179,
+      "TickDate": "\/Date(1339397267435-0700)\/",
+      "Bid": 0.99745,
+      "Offer": 0.99767,
+      "Price": 0.99756,
+      "High": 1.00090,
+      "Low": 0.99666,
+      "Change": -0.00114,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX30434386",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494226,
+      "TickDate": "\/Date(1339397267575-0700)\/",
+      "Bid": 1.26418,
+      "Offer": 1.26426,
+      "Price": 1.26422,
+      "High": 1.26686,
+      "Low": 1.26312,
+      "Change": 0.00010,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX32519570",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494220,
+      "TickDate": "\/Date(1339397267669-0700)\/",
+      "Bid": 100.474,
+      "Offer": 100.511,
+      "Price": 100.492,
+      "High": 100.918,
+      "Low": 100.346,
+      "Change": -0.157,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX32519584",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494179,
+      "TickDate": "\/Date(1339397267560-0700)\/",
+      "Bid": 0.99744,
+      "Offer": 0.99768,
+      "Price": 0.99756,
+      "High": 1.00090,
+      "Low": 0.99666,
+      "Change": -0.00114,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX30434429",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494234,
+      "TickDate": "\/Date(1339397267892-0700)\/",
+      "Bid": 1.55351,
+      "Offer": 1.55363,
+      "Price": 1.55357,
+      "High": 1.55487,
+      "Low": 1.55025,
+      "Change": 0.00244,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX35537177",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494226,
+      "TickDate": "\/Date(1339397267875-0700)\/",
+      "Bid": 1.26414,
+      "Offer": 1.26427,
+      "Price": 1.26421,
+      "High": 1.26686,
+      "Low": 1.26312,
+      "Change": 0.00009,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX32519622",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494246,
+      "TickDate": "\/Date(1339397267673-0700)\/",
+      "Bid": 79.476,
+      "Offer": 79.502,
+      "Price": 79.489,
+      "High": 79.708,
+      "Low": 79.396,
+      "Change": -0.134,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX35537196",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494234,
+      "TickDate": "\/Date(1339397268128-0700)\/",
+      "Bid": 1.55346,
+      "Offer": 1.55368,
+      "Price": 1.55357,
+      "High": 1.55487,
+      "Low": 1.55025,
+      "Change": 0.00245,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX35537273",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494226,
+      "TickDate": "\/Date(1339397268026-0700)\/",
+      "Bid": 1.26416,
+      "Offer": 1.26426,
+      "Price": 1.26422,
+      "High": 1.26686,
+      "Low": 1.26312,
+      "Change": 0.00009,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX32519725",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494220,
+      "TickDate": "\/Date(1339397268063-0700)\/",
+      "Bid": 100.476,
+      "Offer": 100.509,
+      "Price": 100.493,
+      "High": 100.918,
+      "Low": 100.346,
+      "Change": -0.156,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX32519767",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494234,
+      "TickDate": "\/Date(1339397268440-0700)\/",
+      "Bid": 1.55343,
+      "Offer": 1.55369,
+      "Price": 1.55356,
+      "High": 1.55487,
+      "Low": 1.55025,
+      "Change": 0.00244,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX35537297",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494234,
+      "TickDate": "\/Date(1339397269016-0700)\/",
+      "Bid": 1.55344,
+      "Offer": 1.55368,
+      "Price": 1.55356,
+      "High": 1.55487,
+      "Low": 1.55025,
+      "Change": 0.00243,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX35537323",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494234,
+      "TickDate": "\/Date(1339397269477-0700)\/",
+      "Bid": 1.55341,
+      "Offer": 1.55369,
+      "Price": 1.55355,
+      "High": 1.55487,
+      "Low": 1.55025,
+      "Change": 0.00243,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX35537386",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494241,
+      "TickDate": "\/Date(1339397269555-0700)\/",
+      "Bid": 0.94992,
+      "Offer": 0.95026,
+      "Price": 0.95009,
+      "High": 0.95175,
+      "Low": 0.94798,
+      "Change": -0.00045,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX24957722",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494220,
+      "TickDate": "\/Date(1339397269652-0700)\/",
+      "Bid": 100.477,
+      "Offer": 100.508,
+      "Price": 100.493,
+      "High": 100.918,
+      "Low": 100.346,
+      "Change": -0.156,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX32519896",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494226,
+      "TickDate": "\/Date(1339397269652-0700)\/",
+      "Bid": 1.26417,
+      "Offer": 1.26425,
+      "Price": 1.26421,
+      "High": 1.26686,
+      "Low": 1.26312,
+      "Change": 0.00009,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX32519904",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494220,
+      "TickDate": "\/Date(1339397269836-0700)\/",
+      "Bid": 100.476,
+      "Offer": 100.509,
+      "Price": 100.493,
+      "High": 100.918,
+      "Low": 100.346,
+      "Change": -0.156,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX32519976",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494226,
+      "TickDate": "\/Date(1339397269851-0700)\/",
+      "Bid": 1.26416,
+      "Offer": 1.26426,
+      "Price": 1.26422,
+      "High": 1.26686,
+      "Low": 1.26312,
+      "Change": 0.00009,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX32519984",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494241,
+      "TickDate": "\/Date(1339397270018-0700)\/",
+      "Bid": 0.94991,
+      "Offer": 0.95027,
+      "Price": 0.95009,
+      "High": 0.95175,
+      "Low": 0.94798,
+      "Change": -0.00045,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX24957857",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494246,
+      "TickDate": "\/Date(1339397269836-0700)\/",
+      "Bid": 79.477,
+      "Offer": 79.501,
+      "Price": 79.489,
+      "High": 79.708,
+      "Low": 79.396,
+      "Change": -0.134,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX35537583",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494220,
+      "TickDate": "\/Date(1339397270144-0700)\/",
+      "Bid": 100.486,
+      "Offer": 100.507,
+      "Price": 100.496,
+      "High": 100.918,
+      "Low": 100.346,
+      "Change": -0.153,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX32520018",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494215,
+      "TickDate": "\/Date(1339397270399-0700)\/",
+      "Bid": 1.20091,
+      "Offer": 1.20134,
+      "Price": 1.20113,
+      "High": 1.20182,
+      "Low": 1.20096,
+      "Change": 0.00010,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX30434857",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494226,
+      "TickDate": "\/Date(1339397270575-0700)\/",
+      "Bid": 1.26415,
+      "Offer": 1.26431,
+      "Price": 1.26423,
+      "High": 1.26686,
+      "Low": 1.26312,
+      "Change": 0.00011,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX32520063",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494220,
+      "TickDate": "\/Date(1339397270650-0700)\/",
+      "Bid": 100.483,
+      "Offer": 100.508,
+      "Price": 100.495,
+      "High": 100.918,
+      "Low": 100.346,
+      "Change": -0.154,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX32520075",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494249,
+      "TickDate": "\/Date(1339397270756-0700)\/",
+      "Bid": 3.37880,
+      "Offer": 3.38720,
+      "Price": 3.38300,
+      "High": 3.39455,
+      "Low": 3.37460,
+      "Change": -0.00455,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX32061013",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494226,
+      "TickDate": "\/Date(1339397270770-0700)\/",
+      "Bid": 1.26417,
+      "Offer": 1.26432,
+      "Price": 1.26424,
+      "High": 1.26686,
+      "Low": 1.26312,
+      "Change": 0.00012,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX32520109",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494220,
+      "TickDate": "\/Date(1339397270837-0700)\/",
+      "Bid": 100.486,
+      "Offer": 100.507,
+      "Price": 100.496,
+      "High": 100.918,
+      "Low": 100.346,
+      "Change": -0.153,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX32520138",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494246,
+      "TickDate": "\/Date(1339397271004-0700)\/",
+      "Bid": 79.482,
+      "Offer": 79.506,
+      "Price": 79.494,
+      "High": 79.708,
+      "Low": 79.396,
+      "Change": -0.130,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX35537722",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494241,
+      "TickDate": "\/Date(1339397271067-0700)\/",
+      "Bid": 0.94989,
+      "Offer": 0.95027,
+      "Price": 0.95008,
+      "High": 0.95175,
+      "Low": 0.94798,
+      "Change": -0.00046,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX24958012",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494220,
+      "TickDate": "\/Date(1339397271100-0700)\/",
+      "Bid": 100.485,
+      "Offer": 100.514,
+      "Price": 100.500,
+      "High": 100.918,
+      "Low": 100.346,
+      "Change": -0.149,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX32520185",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494226,
+      "TickDate": "\/Date(1339397271308-0700)\/",
+      "Bid": 1.26415,
+      "Offer": 1.26433,
+      "Price": 1.26424,
+      "High": 1.26686,
+      "Low": 1.26312,
+      "Change": 0.00012,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX32520201",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494179,
+      "TickDate": "\/Date(1339397271506-0700)\/",
+      "Bid": 0.99745,
+      "Offer": 0.99767,
+      "Price": 0.99756,
+      "High": 1.00090,
+      "Low": 0.99666,
+      "Change": -0.00114,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX30435023",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494246,
+      "TickDate": "\/Date(1339397271506-0700)\/",
+      "Bid": 79.483,
+      "Offer": 79.505,
+      "Price": 79.494,
+      "High": 79.708,
+      "Low": 79.396,
+      "Change": -0.129,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX35537784",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494246,
+      "TickDate": "\/Date(1339397271572-0700)\/",
+      "Bid": 79.484,
+      "Offer": 79.504,
+      "Price": 79.494,
+      "High": 79.708,
+      "Low": 79.396,
+      "Change": -0.129,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX35537809",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494246,
+      "TickDate": "\/Date(1339397271930-0700)\/",
+      "Bid": 79.483,
+      "Offer": 79.507,
+      "Price": 79.496,
+      "High": 79.708,
+      "Low": 79.396,
+      "Change": -0.128,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX35537827",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494246,
+      "TickDate": "\/Date(1339397272247-0700)\/",
+      "Bid": 79.484,
+      "Offer": 79.506,
+      "Price": 79.495,
+      "High": 79.708,
+      "Low": 79.396,
+      "Change": -0.128,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX35537843",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494246,
+      "TickDate": "\/Date(1339397272406-0700)\/",
+      "Bid": 79.487,
+      "Offer": 79.505,
+      "Price": 79.496,
+      "High": 79.708,
+      "Low": 79.396,
+      "Change": -0.127,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX35537863",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494220,
+      "TickDate": "\/Date(1339397272584-0700)\/",
+      "Bid": 100.489,
+      "Offer": 100.514,
+      "Price": 100.501,
+      "High": 100.918,
+      "Low": 100.346,
+      "Change": -0.148,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX32520313",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494246,
+      "TickDate": "\/Date(1339397273175-0700)\/",
+      "Bid": 79.486,
+      "Offer": 79.508,
+      "Price": 79.497,
+      "High": 79.708,
+      "Low": 79.396,
+      "Change": -0.126,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX35537885",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494226,
+      "TickDate": "\/Date(1339397273268-0700)\/",
+      "Bid": 1.26413,
+      "Offer": 1.26436,
+      "Price": 1.26425,
+      "High": 1.26686,
+      "Low": 1.26312,
+      "Change": 0.00013,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX32520360",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494241,
+      "TickDate": "\/Date(1339397273356-0700)\/",
+      "Bid": 0.94988,
+      "Offer": 0.95028,
+      "Price": 0.95008,
+      "High": 0.95175,
+      "Low": 0.94798,
+      "Change": -0.00046,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX24958202",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494220,
+      "TickDate": "\/Date(1339397273347-0700)\/",
+      "Bid": 100.500,
+      "Offer": 100.513,
+      "Price": 100.506,
+      "High": 100.918,
+      "Low": 100.346,
+      "Change": -0.143,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX32520368",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494246,
+      "TickDate": "\/Date(1339397273351-0700)\/",
+      "Bid": 79.489,
+      "Offer": 79.507,
+      "Price": 79.498,
+      "High": 79.708,
+      "Low": 79.396,
+      "Change": -0.125,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX35537927",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494226,
+      "TickDate": "\/Date(1339397273453-0700)\/",
+      "Bid": 1.26417,
+      "Offer": 1.26435,
+      "Price": 1.26426,
+      "High": 1.26686,
+      "Low": 1.26312,
+      "Change": 0.00014,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX32520412",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494241,
+      "TickDate": "\/Date(1339397273675-0700)\/",
+      "Bid": 0.94988,
+      "Offer": 0.95026,
+      "Price": 0.95007,
+      "High": 0.95175,
+      "Low": 0.94798,
+      "Change": -0.00047,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX24958236",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494179,
+      "TickDate": "\/Date(1339397273677-0700)\/",
+      "Bid": 0.99747,
+      "Offer": 0.99767,
+      "Price": 0.99757,
+      "High": 1.00090,
+      "Low": 0.99666,
+      "Change": -0.00113,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX30435194",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494220,
+      "TickDate": "\/Date(1339397273551-0700)\/",
+      "Bid": 100.491,
+      "Offer": 100.520,
+      "Price": 100.506,
+      "High": 100.918,
+      "Low": 100.346,
+      "Change": -0.143,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX32520415",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494246,
+      "TickDate": "\/Date(1339397273685-0700)\/",
+      "Bid": 79.490,
+      "Offer": 79.508,
+      "Price": 79.499,
+      "High": 79.708,
+      "Low": 79.396,
+      "Change": -0.124,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX35537980",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494234,
+      "TickDate": "\/Date(1339397273700-0700)\/",
+      "Bid": 1.55340,
+      "Offer": 1.55372,
+      "Price": 1.55356,
+      "High": 1.55487,
+      "Low": 1.55025,
+      "Change": 0.00243,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX35537982",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494226,
+      "TickDate": "\/Date(1339397273677-0700)\/",
+      "Bid": 1.26419,
+      "Offer": 1.26434,
+      "Price": 1.26427,
+      "High": 1.26686,
+      "Low": 1.26312,
+      "Change": 0.00014,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX32520465",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494241,
+      "TickDate": "\/Date(1339397273775-0700)\/",
+      "Bid": 0.94989,
+      "Offer": 0.95023,
+      "Price": 0.95006,
+      "High": 0.95175,
+      "Low": 0.94798,
+      "Change": -0.00048,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX24958314",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494179,
+      "TickDate": "\/Date(1339397273891-0700)\/",
+      "Bid": 0.99748,
+      "Offer": 0.99766,
+      "Price": 0.99757,
+      "High": 1.00090,
+      "Low": 0.99666,
+      "Change": -0.00113,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX30435267",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494220,
+      "TickDate": "\/Date(1339397273907-0700)\/",
+      "Bid": 100.489,
+      "Offer": 100.526,
+      "Price": 100.507,
+      "High": 100.918,
+      "Low": 100.346,
+      "Change": -0.142,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX32520492",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494246,
+      "TickDate": "\/Date(1339397273907-0700)\/",
+      "Bid": 79.491,
+      "Offer": 79.507,
+      "Price": 79.500,
+      "High": 79.708,
+      "Low": 79.396,
+      "Change": -0.124,
+      "Direction": 1,
+      "AuditId": "sbRDBProdFX35538052",
+      "StatusSummary": 0
+    }
+  },
+  {
+    "DataAdapter": "CITYINDEXSTREAMINGDEFAULTPRICES",
+    "Phase": 1,
+    "Topic": "PRICES.AC2347",
+    "Data": {
+      "MarketId": 400494234,
+      "TickDate": "\/Date(1339397273787-0700)\/",
+      "Bid": 1.55340,
+      "Offer": 1.55370,
+      "Price": 1.55355,
+      "High": 1.55487,
+      "Low": 1.55025,
+      "Change": 0.00243,
+      "Direction": 0,
+      "AuditId": "sbRDBProdFX35538054",
+      "StatusSummary": 0
+    }
+  }
+]

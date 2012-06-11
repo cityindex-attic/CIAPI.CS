@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace StreamingClient
+namespace CIAPI.StreamingClient
 {
     public class ConnectionStatusEventArgs:EventArgs
     {

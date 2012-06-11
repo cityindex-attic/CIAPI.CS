@@ -8,6 +8,7 @@ using CIAPI.DTO;
 using CIAPI.IntegrationTests.Streaming;
 using CIAPI.Rpc;
 using CIAPI.Serialization;
+using CIAPI.Streaming.Testing;
 using NUnit.Framework;
 using Salient.ReliableHttpClient;
 
@@ -105,10 +106,11 @@ namespace CIAPI.IntegrationTests.Rpc
             // now we will use our recorded (and serialized) request data to run the same requests through the client 
             // without actually sending any requests over the wire.
 
+            
+            TestStreamingClientFactory streamingFactory = new TestStreamingClientFactory();
+            TestRequestFactory requestFactory = new TestRequestFactory();
 
-            TestRequestFactory factory = new TestRequestFactory();
-
-            rpcClient = new Client(Settings.RpcUri, Settings.StreamingUri, AppKey, new Serializer(), factory);
+            rpcClient = new Client(Settings.RpcUri, Settings.StreamingUri, AppKey, new Serializer(), requestFactory, streamingFactory);
             rpcClient.IncludeIndexInHeaders = true;
 
             requests = rpcClient.Serializer.DeserializeObject<List<RequestInfoBase>>(requestsSerialized);
@@ -116,7 +118,7 @@ namespace CIAPI.IntegrationTests.Rpc
 
             // setup a callback on the test request factory so that we can populate the response using the recorded data
 
-            factory.PrepareResponse = testRequest =>
+            requestFactory.PrepareResponse = testRequest =>
                 {
 
                     // look for a matching request in our recording using the uri and request body
@@ -154,10 +156,11 @@ namespace CIAPI.IntegrationTests.Rpc
         {
             var serialized = File.ReadAllText("RPC\\RecordedRequests01.txt");
 
+            TestStreamingClientFactory streamingFactory = new TestStreamingClientFactory();
+            TestRequestFactory requestFactory = new TestRequestFactory();
 
-            TestRequestFactory factory = new TestRequestFactory();
 
-            var rpcClient = new Client(Settings.RpcUri, Settings.StreamingUri, AppKey, new Serializer(), factory);
+            var rpcClient = new Client(Settings.RpcUri, Settings.StreamingUri, AppKey, new Serializer(), requestFactory, streamingFactory);
 
 
             var requests = rpcClient.Serializer.DeserializeObject<List<RequestInfoBase>>(serialized);
@@ -165,7 +168,7 @@ namespace CIAPI.IntegrationTests.Rpc
 
             // setup a callback on the test request factory so that we can populate the response using the recorded data
 
-            factory.PrepareResponse = testRequest =>
+            requestFactory.PrepareResponse = testRequest =>
             {
 
                 // look for a matching request in our recording using the uri and request body
@@ -210,10 +213,11 @@ namespace CIAPI.IntegrationTests.Rpc
         {
             var serialized = File.ReadAllText("RPC\\RecordedRequests02.txt");
 
+            TestStreamingClientFactory streamingFactory = new TestStreamingClientFactory();
+            TestRequestFactory requestFactory = new TestRequestFactory();
 
-            TestRequestFactory factory = new TestRequestFactory();
 
-            var rpcClient = new Client(Settings.RpcUri, Settings.StreamingUri, AppKey, new Serializer(), factory);
+            var rpcClient = new Client(Settings.RpcUri, Settings.StreamingUri, AppKey, new Serializer(), requestFactory, streamingFactory);
             // adds an 'x-request-index' header to each request
             rpcClient.IncludeIndexInHeaders = true;
 
@@ -222,7 +226,7 @@ namespace CIAPI.IntegrationTests.Rpc
 
             // setup a callback on the test request factory so that we can populate the response using the recorded data
 
-            factory.PrepareResponse = testRequest =>
+            requestFactory.PrepareResponse = testRequest =>
             {
 
                 // look for a matching request in our recording using the uri and request body

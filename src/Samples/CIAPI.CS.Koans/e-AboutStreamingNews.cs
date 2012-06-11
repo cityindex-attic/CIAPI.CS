@@ -5,7 +5,7 @@ using CIAPI.CS.Koans.KoanRunner;
 using CIAPI.DTO;
 using CIAPI.Streaming;
 using CIAPI.Tests;
-using StreamingClient;
+using CIAPI.StreamingClient;
 using NUnit.Framework;
 using Client = CIAPI.Rpc.Client;
 using IStreamingClient = CIAPI.Streaming.IStreamingClient;

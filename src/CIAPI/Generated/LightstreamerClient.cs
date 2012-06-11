@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 using CIAPI.DTO;
-using StreamingClient;
+using CIAPI.StreamingClient;
 using System.Linq;
 using System;
 

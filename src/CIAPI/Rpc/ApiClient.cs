@@ -14,7 +14,7 @@ namespace CIAPI.Rpc
     // #TODO: reintegrate exception factory into ReliableHttpClient
     public partial class Client : ClientBase
     {
-
+        private readonly IStreamingClientFactory _streamingFactory;
         /// <summary>
         /// used as a null target for json deserialization test
         /// </summary>
@@ -255,7 +255,7 @@ namespace CIAPI.Rpc
             {
                 Serializer.DeserializeObject<NullObject>(responseText);
             }
-            catch(Exception ex)
+            catch
             {
 
                 throw new ServerConnectionException("Invalid response received.  Are you connecting to the correct server Url?", responseText);
@@ -267,9 +267,7 @@ namespace CIAPI.Rpc
 
         public IStreamingClient CreateStreamingClient()
         {
-
-            return new LightstreamerClient(_streamingUri, UserName, Session, Serializer);
-
+            return _streamingFactory.Create(_streamingUri, UserName, Session, Serializer);
         }
 
 

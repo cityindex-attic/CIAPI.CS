@@ -1,13 +1,14 @@
 ﻿using System;
 using CIAPI.DTO;
-using StreamingClient;
+using CIAPI.StreamingClient;
 
 namespace CIAPI.Streaming
 {
     public interface IStreamingClient : IDisposable 
     {
+        //#TODO: need a shutdown method that closes all listeners on RPC client logoff/dispose
 
-        event EventHandler<MessageEventArgs<object>> MessageReceived;
+        //event EventHandler<MessageEventArgs<object>> MessageReceived;
         event EventHandler<StatusEventArgs> StatusChanged;
         IStreamingListener<PriceDTO> BuildPricesListener(params int[] marketIds);
         IStreamingListener<NewsDTO> BuildNewsHeadlinesListener(string category);

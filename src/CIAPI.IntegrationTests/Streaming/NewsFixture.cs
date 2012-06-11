@@ -3,7 +3,7 @@ using System.Threading;
 using CIAPI.DTO;
 using Newtonsoft.Json;
 using NUnit.Framework;
-using StreamingClient;
+using CIAPI.StreamingClient;
 
 namespace CIAPI.IntegrationTests.Streaming
 {

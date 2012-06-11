@@ -4,8 +4,8 @@ using System.Runtime.CompilerServices;
 using Lightstreamer.DotNet.Client;
 using Salient.ReflectiveLoggingAdapter;
 using Salient.ReliableHttpClient.Serialization;
-using StreamingClient;
-using StreamingClient.Lightstreamer;
+using CIAPI.StreamingClient;
+using CIAPI.StreamingClient.Lightstreamer;
 
 namespace CIAPI.Streaming
 {
@@ -16,8 +16,9 @@ namespace CIAPI.Streaming
         private static readonly ILog Log = LogManager.GetLogger(typeof(LightstreamerClient));
 
 
-        public event EventHandler<MessageEventArgs<object>> MessageReceived;
+        
 
+        public event EventHandler<StatusEventArgs> StatusChanged;
         protected virtual void OnStatusChanged(object sender, StatusEventArgs e)
         {
             EventHandler<StatusEventArgs> handler = StatusChanged;
@@ -26,21 +27,23 @@ namespace CIAPI.Streaming
                 handler(sender, e);
             }
         }
-        protected virtual void OnMessageReceived(MessageEventArgs<object> e)
-        {
-            EventHandler<MessageEventArgs<object>> handler = MessageReceived;
-            if (handler != null)
-            {
-                handler(this, e);
-            }
-        }
 
-        public event EventHandler<StatusEventArgs> StatusChanged;
+        //public event EventHandler<MessageEventArgs<object>> MessageReceived;
+        //protected virtual void OnMessageReceived(MessageEventArgs<object> e)
+        //{
+        //    EventHandler<MessageEventArgs<object>> handler = MessageReceived;
+        //    if (handler != null)
+        //    {
+        //        handler(this, e);
+        //    }
+        //}
+
+        
 
         private readonly string _sessionId;
         private readonly string _userName;
         private readonly string _streamingUri;
-        private readonly Dictionary<string, FaultTolerantLsClientAdapter> _adapters ;
+        private readonly Dictionary<string, IFaultTolerantLsClientAdapter> _adapters ;
         
         
         static LightstreamerClient()
@@ -54,7 +57,7 @@ namespace CIAPI.Streaming
             _serializer = serializer;
             Log.Debug("LightstreamerClient created for " + string.Format("{1} {2} {0}", streamingUri, userName, sessionId));
 
-            _adapters = new Dictionary<string, FaultTolerantLsClientAdapter>();
+            _adapters = new Dictionary<string, IFaultTolerantLsClientAdapter>();
             _streamingUri = streamingUri.ToString();
             _sessionId = sessionId;
             _userName = userName;
@@ -73,24 +76,18 @@ namespace CIAPI.Streaming
         /// Allows consumer to stop and remove a listener from this client.
         /// </summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void TearDownListener(IStreamingListener  listener) 
+        public void TearDownListener(IStreamingListener  listener)
         {
-            //lock (_adapters)
+            if (_adapters.ContainsKey(listener.Adapter))
             {
-                if (_adapters.ContainsKey(listener.AdapterSet))
+                var adapter = _adapters[listener.Adapter];
+                adapter.TearDownListener(listener);
+                if (adapter.ListenerCount == 0)
                 {
-                    var adapter = _adapters[listener.AdapterSet];
-                    adapter.TearDownListener(listener);
-                    if(adapter.ListenerCount==0)
-                    {
-                        _adapters.Remove(listener.AdapterSet);
-                        adapter.Dispose();
-
-                    }
-                    
+                    _adapters.Remove(listener.Adapter);
+                    adapter.Dispose();
                 }
             }
-            
         }
 
 
@@ -143,7 +140,7 @@ namespace CIAPI.Streaming
         {
             if (disposing)
             {
-                foreach (KeyValuePair<string, FaultTolerantLsClientAdapter> kvp in _adapters)
+                foreach (KeyValuePair<string, IFaultTolerantLsClientAdapter> kvp in _adapters)
                 {
                     kvp.Value.Dispose();
                 }

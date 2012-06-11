@@ -9,7 +9,7 @@ using Salient.ReflectiveLoggingAdapter;
 using Salient.ReliableHttpClient.Serialization;
 
 
-namespace StreamingClient.Lightstreamer
+namespace CIAPI.StreamingClient.Lightstreamer
 {
     public class LightstreamerDtoConverter<TDto> : IMessageConverter<TDto> where TDto : new()
     {

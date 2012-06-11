@@ -9,7 +9,7 @@ namespace Salient.ReliableHttpClient.Testing
 
         public void PopulateRequest(TestWebRequest target, RequestInfoBase source)
         {
-            
+
             target.ResponseStream = new TestWebStream(Encoding.UTF8.GetBytes(source.ResponseText));
             target.ContentType = source.RequestContentType.ToHeaderValue();
             foreach (var h in source.Headers)
@@ -47,7 +47,7 @@ namespace Salient.ReliableHttpClient.Testing
                     continue;
                 }
 
-                if (r.Uri.AbsoluteUri != webRequest.RequestUri.AbsoluteUri)
+                if (string.Compare(r.Uri.AbsoluteUri, webRequest.RequestUri.AbsoluteUri, StringComparison.InvariantCultureIgnoreCase) != 0)
                 {
                     continue;
                 }

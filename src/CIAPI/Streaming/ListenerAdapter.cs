@@ -5,9 +5,9 @@ using System.Threading;
 using Lightstreamer.DotNet.Client;
 using Salient.ReflectiveLoggingAdapter;
 using Salient.ReliableHttpClient.Serialization;
-using StreamingClient.Lightstreamer;
+using CIAPI.StreamingClient.Lightstreamer;
 
-namespace StreamingClient
+namespace CIAPI.StreamingClient
 {
     /// <summary>
     /// the purpose of this adapter is to allow consumer to maintain handlers
@@ -16,17 +16,17 @@ namespace StreamingClient
     /// </summary>
     public sealed class ListenerAdapter<TDto> : IStreamingListener<TDto> where TDto : class, new()
     {
-        private static readonly ILog Logger = LogManager.GetLogger(typeof (ListenerAdapter<TDto>));
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(ListenerAdapter<TDto>));
 
         private readonly IJsonSerializer _serializer;
         private readonly string _adapterSet;
         private readonly string _channel;
         private readonly string _groupOrItemName;
-        private readonly FaultTolerantLsClientAdapter _lsClient;
-        private readonly LightstreamerDtoConverter<TDto> _messageConverter ;
+        private readonly IFaultTolerantLsClientAdapter _lsClient;
+        private readonly LightstreamerDtoConverter<TDto> _messageConverter;
 
 
-        
+
         public string AdapterSet
         {
             get
@@ -34,17 +34,17 @@ namespace StreamingClient
                 return _adapterSet;
             }
         }
-        public string Channel
+        public string Adapter
         {
             get
             {
                 return _channel;
             }
         }
-        private TableListener<TDto> _listener;
+        private ITableListener<TDto> _listener;
         private SubscribedTableKey _subscribedTableKey;
 
-        public ListenerAdapter(string topic, FaultTolerantLsClientAdapter client, IJsonSerializer serializer)
+        public ListenerAdapter(string topic, IFaultTolerantLsClientAdapter client, IJsonSerializer serializer)
         {
             _serializer = serializer;
             _messageConverter = new LightstreamerDtoConverter<TDto>(_serializer);
@@ -64,29 +64,30 @@ namespace StreamingClient
             if (_listener != null)
             {
                 _listener.MessageReceived -= ListenerMessageReceived;
-                ((IStreamingListener) this).Stop();
+                ((IStreamingListener)this).Stop();
             }
-
-            _listener = new TableListener<TDto>(groupOrItemName, phase,_serializer);
-            _listener.MessageReceived += ListenerMessageReceived;
 
             string schema = _messageConverter.GetFieldList();
             string channel = _channel.ToUpper();
-            Logger.Debug(string.Format("Subscribing to group:{0}, schema {1}, dataAdapter {2}", groupOrItemName, schema,channel));
+
+            _listener = new TableListener<TDto>(_adapterSet.ToUpper(), channel, groupOrItemName, phase, _serializer);
+            _listener.MessageReceived += ListenerMessageReceived;
+
+
+            Logger.Debug(string.Format("Subscribing to group:{0}, schema {1}, dataAdapter {2}", groupOrItemName, schema, channel));
 
             var simpleTableInfo = new SimpleTableInfo(
                 groupOrItemName,
                 schema: schema,
-                mode: "MERGE", snap: true ) //To ensure the last message published prior to this subscription is recieved immediately, mode must be MERGE and snap = true
-                {DataAdapter = channel};
+                mode: "MERGE", snap: true) //To ensure the last message published prior to this subscription is recieved immediately, mode must be MERGE and snap = true
+                { DataAdapter = channel };
             var gate = new ManualResetEvent(false);
             Exception ex = null;
             new Thread(() =>
                            {
                                try
                                {
-                                   _subscribedTableKey = _lsClient.Client.SubscribeTable(simpleTableInfo, _listener,
-                                                                                         false);
+                                   _subscribedTableKey = _lsClient.SubscribeTable(simpleTableInfo, _listener, false);
                                    Logger.Debug(string.Format("Subscribed to table with key: {0}", _subscribedTableKey));
                                }
                                catch (Exception exInner)
@@ -119,13 +120,13 @@ namespace StreamingClient
                            {
                                try
                                {
-                                   _lsClient.Client.UnsubscribeTable(_subscribedTableKey);
+                                   _lsClient.UnsubscribeTable(_subscribedTableKey);
                                }
                                catch (Exception ex)
                                {
                                    Logger.Warn(ex);
                                }
-                           }) {Name = "Thread for " + message}.Start();
+                           }) { Name = "Thread for " + message }.Start();
         }
 
         public event EventHandler<MessageEventArgs<TDto>> MessageReceived;
@@ -144,8 +145,25 @@ namespace StreamingClient
             }
 
             EventHandler<MessageEventArgs<TDto>> handler = MessageReceived;
-            if (handler != null) handler(this, e);
+            if (handler != null)
+            {
+                handler(this, e);
+            }
         }
 
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                // noop placeholder
+            }
+        }
     }
 }

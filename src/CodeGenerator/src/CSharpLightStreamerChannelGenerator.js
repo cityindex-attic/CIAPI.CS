@@ -16,7 +16,7 @@
 
         appendLine("using System.Text.RegularExpressions;");
         appendLine("using CIAPI.DTO;");
-        appendLine("using StreamingClient;");
+        appendLine("using CIAPI.StreamingClient;");
         appendLine("using System.Linq;");
         appendLine("using System;");
 

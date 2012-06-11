@@ -4,6 +4,7 @@ using Salient.ReliableHttpClient;
 using Salient.ReliableHttpClient.Serialization;
 using CIAPI.Serialization;
 using CIAPI.DTO;
+using CIAPI.Streaming;
 namespace CIAPI.Rpc
 {
     public partial class Client
@@ -36,6 +37,7 @@ public string AppKey { get; set; }
 	#else
 	        UserAgent = "CIAPI.CS." + GetVersionNumber();
 	#endif
+        _streamingFactory=new LightStreamerStreamingClientFactory();
         AppKey=appKey;
         _client=this;
         _rootUri = rpcUri;
@@ -56,8 +58,8 @@ public string AppKey { get; set; }
             this. ExceptionHandling = new _ExceptionHandling(this);
         Log.Debug("Rpc.Client created for " + _rootUri.AbsoluteUri);
         }
-        public Client(Uri rpcUri, Uri streamingUri, string appKey,IJsonSerializer serializer, IRequestFactory factory)
-            : base(serializer, factory)
+        public Client(Uri rpcUri, Uri streamingUri, string appKey,IJsonSerializer serializer, IRequestFactory requestFactory, IStreamingClientFactory streamingFactory)
+            : base(serializer, requestFactory)
         {
 	#if SILVERLIGHT
 	#if WINDOWS_PHONE
@@ -68,6 +70,7 @@ public string AppKey { get; set; }
 	#else
 	        UserAgent = "CIAPI.CS." + GetVersionNumber();
 	#endif
+        _streamingFactory=streamingFactory;
         AppKey=appKey;
         _client=this;
         _rootUri = rpcUri;

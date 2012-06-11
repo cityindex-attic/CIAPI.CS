@@ -3,29 +3,37 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
- 
+
 using Lightstreamer.DotNet.Client;
 using Salient.ReflectiveLoggingAdapter;
 using Salient.ReliableHttpClient.Serialization;
-using StreamingClient.Lightstreamer;
+using CIAPI.StreamingClient.Lightstreamer;
 
-namespace StreamingClient
+namespace CIAPI.StreamingClient
 {
-    internal class TableListener<TDto> : IHandyTableListener where TDto : class,new()
+    public interface ITableListener<TDto> : IHandyTableListener where TDto : class, new()
+    {
+        event EventHandler<MessageEventArgs<TDto>> MessageReceived;
+    }
+
+    internal class TableListener<TDto> : ITableListener<TDto> where TDto : class,new()
     {
         private static readonly ILog Logger = LogManager.GetLogger(typeof(TableListener<TDto>));
         public event EventHandler<MessageEventArgs<TDto>> MessageReceived;
-        private readonly LightstreamerDtoConverter<TDto> _messageConverter ;
-        private readonly string _groupOrItemName;
+        private readonly LightstreamerDtoConverter<TDto> _messageConverter;
+        private readonly string _topic;
         private readonly int _phase;
-
+        private readonly string _channel;
         private readonly IJsonSerializer _serializer;
-        public TableListener(string groupOrItemName, int phase, IJsonSerializer serializer)
+        private string _adapter;
+        public TableListener(string adapter, string channel, string topic, int phase, IJsonSerializer serializer)
         {
+            _adapter = adapter;
+            _channel = channel;
             _serializer = serializer;
             _messageConverter = new LightstreamerDtoConverter<TDto>(_serializer);
             _phase = phase;
-            _groupOrItemName = groupOrItemName;
+            _topic = topic;
         }
 
         /// <summary>
@@ -64,7 +72,7 @@ namespace StreamingClient
                 if (MessageReceived == null) return;
 
                 TDto value = _messageConverter.Convert(update);
-                var args = new MessageEventArgs<TDto>(_groupOrItemName, value, _phase);
+                var args = new MessageEventArgs<TDto>(_adapter, _channel + "." + _topic, value, _phase);
                 MessageReceived(this, args);
             }
             catch (Exception ex)

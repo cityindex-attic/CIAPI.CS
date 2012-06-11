@@ -2,7 +2,7 @@
 using Lightstreamer.DotNet.Client.Log;
 using Salient.ReflectiveLoggingAdapter;
 
-namespace StreamingClient.Lightstreamer
+namespace CIAPI.StreamingClient.Lightstreamer
 {
     internal class LSLoggerProvider : ILoggerProvider
     {

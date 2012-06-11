@@ -242,6 +242,7 @@
             self.writeLine('	#else');
             self.writeLine('	        UserAgent = "CIAPI.CS." + GetVersionNumber();');
             self.writeLine('	#endif');
+            self.writeLine("        _streamingFactory=new LightStreamerStreamingClientFactory();");
             self.writeLine("        AppKey=appKey;");
             self.writeLine("        _client=this;");
             self.writeLine("        _rootUri = rpcUri;");
@@ -252,8 +253,8 @@
             
             self.writeLine("        }");
 
-            self.writeLine("        public Client(Uri rpcUri, Uri streamingUri, string appKey,IJsonSerializer serializer, IRequestFactory factory)");
-            self.writeLine("            : base(serializer, factory)");
+            self.writeLine("        public Client(Uri rpcUri, Uri streamingUri, string appKey,IJsonSerializer serializer, IRequestFactory requestFactory, IStreamingClientFactory streamingFactory)");
+            self.writeLine("            : base(serializer, requestFactory)");
             self.writeLine("        {");
             self.writeLine('	#if SILVERLIGHT');
             self.writeLine('	#if WINDOWS_PHONE');
@@ -264,6 +265,7 @@
             self.writeLine('	#else');
             self.writeLine('	        UserAgent = "CIAPI.CS." + GetVersionNumber();');
             self.writeLine('	#endif');
+            self.writeLine("        _streamingFactory=streamingFactory;");
             self.writeLine("        AppKey=appKey;");
             self.writeLine("        _client=this;");
             self.writeLine("        _rootUri = rpcUri;");

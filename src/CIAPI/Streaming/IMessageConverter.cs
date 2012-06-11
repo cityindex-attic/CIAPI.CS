@@ -1,4 +1,4 @@
-﻿namespace StreamingClient
+﻿namespace CIAPI.StreamingClient
 {
     public interface IMessageConverter<T>
     {

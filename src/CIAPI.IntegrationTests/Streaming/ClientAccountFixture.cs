@@ -4,7 +4,7 @@ using CIAPI.DTO;
 using CIAPI.Rpc;
 using CIAPI.Streaming;
 using NUnit.Framework;
-using StreamingClient;
+using CIAPI.StreamingClient;
 
 
 namespace CIAPI.IntegrationTests.Streaming

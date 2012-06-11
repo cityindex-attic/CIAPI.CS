@@ -1,4 +1,4 @@
-﻿namespace StreamingClient.Lightstreamer
+﻿namespace CIAPI.StreamingClient.Lightstreamer
 {
     public static class LightstreamerDefaults
     {

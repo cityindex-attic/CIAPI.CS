@@ -121,6 +121,9 @@
     <Compile Include="..\CIAPI\Streaming\IStreamingClient.cs">
       <Link>Streaming\IStreamingClient.cs</Link>
     </Compile>
+    <Compile Include="..\CIAPI\Streaming\IStreamingClientFactory.cs">
+      <Link>Streaming\IStreamingClientFactory.cs</Link>
+    </Compile>
     <Compile Include="..\CIAPI\Streaming\IStreamingListener.cs">
       <Link>Streaming\IStreamingListener.cs</Link>
     </Compile>
@@ -132,6 +135,9 @@
     </Compile>
     <Compile Include="..\CIAPI\Streaming\LightstreamerDtoConverter.cs">
       <Link>Streaming\LightstreamerDtoConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\Streaming\LightStreamerStreamingClientFactory.cs">
+      <Link>Streaming\LightStreamerStreamingClientFactory.cs</Link>
     </Compile>
     <Compile Include="..\CIAPI\Streaming\ListenerAdapter.cs">
       <Link>Streaming\ListenerAdapter.cs</Link>
@@ -151,8 +157,23 @@
     <Compile Include="..\CIAPI\Streaming\StreamingClientFactory.cs">
       <Link>Streaming\StreamingClientFactory.cs</Link>
     </Compile>
+    <Compile Include="..\CIAPI\Streaming\StreamingRecorder.cs">
+      <Link>Streaming\StreamingRecorder.cs</Link>
+    </Compile>
     <Compile Include="..\CIAPI\Streaming\TableListener.cs">
       <Link>Streaming\TableListener.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\Streaming\Testing\SequentialSerializedPriceDTOMessageGenerator.cs">
+      <Link>Streaming\Testing\SequentialSerializedPriceDTOMessageGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\Streaming\Testing\TestStreamingClient.cs">
+      <Link>Streaming\Testing\TestStreamingClient.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\Streaming\Testing\TestStreamingClientFactory.cs">
+      <Link>Streaming\Testing\TestStreamingClientFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\CIAPI\Streaming\Testing\TestStreamingListener.cs">
+      <Link>Streaming\Testing\TestStreamingListener.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -162,9 +183,7 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Streaming\Testing\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\CIAPI.Serializer.Silverlight\CIAPI.Serializer.Silverlight.csproj">
       <Project>{523FB37B-0E87-4F82-A72D-5AF58BDE2509}</Project>

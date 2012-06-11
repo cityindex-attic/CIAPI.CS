@@ -46,7 +46,7 @@ provider.schema = schema;
 // FIXME: instigator should not take parameters
 provider.visit("root", schema, "schema");
 var output = visitor.toString();
-var rpcGenerator = new CSharpRouteGenerator(smd.services.rpc, schema, "CIAPI.Rpc", "Client", ["System", "System.Collections.Generic", "Salient.ReliableHttpClient", "Salient.ReliableHttpClient.Serialization", "CIAPI.Serialization", "CIAPI.DTO"], routesPatch);
+var rpcGenerator = new CSharpRouteGenerator(smd.services.rpc, schema, "CIAPI.Rpc", "Client", ["System", "System.Collections.Generic", "Salient.ReliableHttpClient", "Salient.ReliableHttpClient.Serialization", "CIAPI.Serialization", "CIAPI.DTO","CIAPI.Streaming"], routesPatch);
 var rpcRoutes = rpcGenerator.generate();
 //var channelGenerator = new LSChannelGenerator();
 //var channels = channelGenerator.generateChannels(smd.services.streaming);

@@ -33,7 +33,7 @@ using System;
 using System.IO;
 using System.Text;
 
-namespace StreamingClient.Lightstreamer
+namespace CIAPI.StreamingClient.Lightstreamer
 {
     public sealed class HttpUtility
     {

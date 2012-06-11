@@ -77,8 +77,8 @@ namespace CIAPI.IntegrationTests.Streaming
             // odd - 80905 returns null values for the first update and then subsequently returns values - indicative of a spin-up process?
             // 71442
             var priceListener = streamingClient.BuildPricesListener(71442);
-           
-
+            var recorder = StreamingRecorder.Create(priceListener);
+            recorder .Start();
             PriceDTO actual = null;
 
             //Trap the Price given by the update event for checking
@@ -98,6 +98,7 @@ namespace CIAPI.IntegrationTests.Streaming
                 // don't want to throw while client is listening, hangs test
             }
 
+            recorder .Stop();
             
             streamingClient.TearDownListener(priceListener);
             
@@ -110,7 +111,8 @@ namespace CIAPI.IntegrationTests.Streaming
             // anyway, this assertion is arbitrary and irrelevant to the test. 
             // Assert.Greater(actual.TickDate, DateTime.UtcNow.AddMinutes(-10), "We're expecting a recent price");
 
-          
+            var messages = recorder.GetMessages();
+            recorder.Dispose();
 
         }
 

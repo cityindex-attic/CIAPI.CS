@@ -10,7 +10,7 @@ namespace Salient.ReliableHttpClient.Testing
 {
     public class TestRequestFactory : IRequestFactory
     {
-        private static readonly ILog Log = LogManager.GetLogger(typeof(RequestFactory));
+        private static readonly ILog Log = LogManager.GetLogger(typeof(TestRequestFactory));
 
         public TestWebRequestPrepare PrepareResponse;
         //WebRequest _nextRequest;
