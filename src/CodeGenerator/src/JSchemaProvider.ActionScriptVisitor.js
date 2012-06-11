@@ -123,6 +123,7 @@
                         this.writeLine("     * ");
                         this.writeLine("     */");
                     }
+                    this.writeLine("    [RemoteClass]");
                     this.writeLine("    public " + typeName + " " + current.key + (current.value["extends"] ? (" extends " + this.normalizeKey(current.value["extends"])) : ""));
                     this.writeLine("    {");
                     break;
