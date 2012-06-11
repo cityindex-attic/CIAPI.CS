@@ -1,0 +1,3 @@
+Sample app to test the anonymous streaming. The CIAPI swallows the
+exceptions, so it looks like nothing happens, but deep inside, the
+streaming client cannot start because the group name is not valid.
