@@ -115,7 +115,9 @@
                     this.writeLine("{");
                     this.writeLine("");
                     var typeName = "class";
-                    this.writeLine("    [RemoteClass]");
+                    if (!current.value["enum"]) {
+                        this.writeLine("    [RemoteClass]");
+                    }
                     if (current.value.description) {
                         this.writeLine("    /**");
                         this.writeLine("     * " + current.value.description);

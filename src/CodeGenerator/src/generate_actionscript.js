@@ -1,5 +1,4 @@
-﻿
-console.log("Initialising program....");
+﻿console.log("Initialising program....");
 
 if(!process.argv || process.argv.length<4){
     throw new Error("Please invoke with 2 command line arguments - absolute path to dto dir, absolute path to test dir");
@@ -71,7 +70,6 @@ testProvider.schema = schema;
 testProvider.visit("root", schema, "schema");
 
 console.log("Fiat voluntas tua.");
-
 
 
 

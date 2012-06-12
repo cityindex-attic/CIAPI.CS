@@ -108,98 +108,86 @@
         },
         visit_property:function () {
             var current = this.provider.peek();
-            switch (this.provider.stack.length) {
-                case 3: // type definition
-                    outputString = "";
-                    this.writeLine("package uk.co.cityindex.dto");
-                    this.writeLine("{");
-                    this.writeLine("import org.flexunit.asserts.assertEquals;");
-                    this.writeLine("import org.flexunit.asserts.assertNotNull;");
-                    this.writeLine("import org.flexunit.asserts.assertNull;");
-                    this.writeLine("import org.flexunit.asserts.assertTrue;");
-                    this.writeLine("");
-                    if (current.value.description) {
-                        this.writeLine("    /**");
-                        this.writeLine("     * Test for " + current.key+".");
-                        this.writeLine("     * ");
-                        this.writeLine("     * DO NOT EDIT -- test is generated from API metadata. Changes will be overwritten.");
-                        this.writeLine("     * ");
-                        this.writeLine("     */");
-                    }
-                    this.writeLine("    public class Test" + current.key);
-                    this.writeLine("    {");
-                    this.writeLine("        ");
-                    this.writeLine("        private var subject:"+current.key+";");
-                    this.writeLine("        ");
-                    this.writeLine("        [Before]");
-                    this.writeLine("        public function setUp():void");
-                    this.writeLine("        {");
-                    this.writeLine("            assertNull(\"Subject not null before test\", subject);");
-                    this.writeLine("            subject = new "+current.key+"();");
-                    this.writeLine("            assertNotNull(\"Subject null after instantiation\", subject);");
-                    this.writeLine("        }");
-                    this.writeLine("        ");
-                    this.writeLine("        [After]");
-                    this.writeLine("        public function tearDown():void");
-                    this.writeLine("        {");
-                    this.writeLine("            assertNotNull(\"Subject null after test\", subject);");
-                    this.writeLine("            subject = null;");
-                    this.writeLine("            assertNull(\"Subject not null after nullification\", subject);");
-                    this.writeLine("        }");
-                    this.writeLine("        ");
-                    break;
+            if (!current.value["enum"]){
+                switch (this.provider.stack.length) {
+                    case 3: // create Tests for types that are not enums.
+                        outputString = "";
+                        this.writeLine("package uk.co.cityindex.dto");
+                        this.writeLine("{");
+                        this.writeLine("import org.flexunit.asserts.assertEquals;");
+                        this.writeLine("import org.flexunit.asserts.assertNotNull;");
+                        this.writeLine("import org.flexunit.asserts.assertNull;");
+                        this.writeLine("import org.flexunit.asserts.assertTrue;");
+                        this.writeLine("");
+                        if (current.value.description) {
+                            this.writeLine("    /**");
+                            this.writeLine("     * Test for " + current.key+".");
+                            this.writeLine("     * ");
+                            this.writeLine("     * DO NOT EDIT -- test is generated from API metadata. Changes will be overwritten.");
+                            this.writeLine("     * ");
+                            this.writeLine("     */");
+                        }
+                        this.writeLine("    public class Test" + current.key);
+                        this.writeLine("    {");
+                        this.writeLine("        ");
+                        this.writeLine("        private var subject:"+current.key+";");
+                        this.writeLine("        ");
+                        this.writeLine("        [Before]");
+                        this.writeLine("        public function setUp():void");
+                        this.writeLine("        {");
+                        this.writeLine("            assertNull(\"Subject not null before test\", subject);");
+                        this.writeLine("            subject = new "+current.key+"();");
+                        this.writeLine("            assertNotNull(\"Subject null after instantiation\", subject);");
+                        this.writeLine("        }");
+                        this.writeLine("        ");
+                        this.writeLine("        [After]");
+                        this.writeLine("        public function tearDown():void");
+                        this.writeLine("        {");
+                        this.writeLine("            assertNotNull(\"Subject null after test\", subject);");
+                        this.writeLine("            subject = null;");
+                        this.writeLine("            assertNull(\"Subject not null after nullification\", subject);");
+                        this.writeLine("        }");
+                        this.writeLine("        ");
+                        break;
 
-                case 5: // type property
-                    var propertyType = this.resolveType(current.value);
-                    this.writeLine("        [Test]");
-                    if (current.value.description) {
-                        this.writeLine("        /**");
-                        this.writeLine("         * Test we can get and set " + current.value.description);
-                        this.writeLine("         */");
-                    }
-                    this.writeLine("        public function canGetSet" + current.key + "():void");
-                    this.writeLine("        {");
-                    switch (propertyType){
-                        case "Number":
-                            this.writeLine("            assertTrue(\"Subject does not have NaN "+nameLowerCaseLead(current.key)+"\", isNaN(subject."+nameLowerCaseLead(current.key)+"));");
-                            this.writeLine("            var test"+current.key+":Number = 1;");
-                            this.writeLine("            subject."+nameLowerCaseLead(current.key)+" = test"+current.key+";");
-                            this.writeLine("            assertEquals(\"Subject does not have expected "+nameLowerCaseLead(current.key)+"\", 1, subject."+nameLowerCaseLead(current.key)+");");
-                            break;
-                        case "String":
-                            this.writeLine("            assertNull(\"Subject does not have null "+nameLowerCaseLead(current.key)+"\", subject."+nameLowerCaseLead(current.key)+");");
-                            this.writeLine("            var test"+current.key+":String = \"test\";");
-                            this.writeLine("            subject."+nameLowerCaseLead(current.key)+" = test"+current.key+";");
-                            this.writeLine("            assertEquals(\"Subject does not have expected "+nameLowerCaseLead(current.key)+"\", \"test\", subject."+nameLowerCaseLead(current.key)+");");
-                            break;
-                        default:
-                            this.writeLine("            //TODO generation not yet implemented for "+propertyType);
-                            break;
-                    }
-                    this.writeLine("        }");
-                    this.writeLine("        ");
-                    break;
+                    case 5: // create basic getter setter tests for each type property.
+                        var propertyType = this.resolveType(current.value);
+                        this.writeLine("        [Test]");
+                        if (current.value.description) {
+                            this.writeLine("        /**");
+                            this.writeLine("         * Test we can get and set " + current.value.description);
+                            this.writeLine("         */");
+                        }
+                        this.writeLine("        public function canGetSet" + current.key + "():void");
+                        this.writeLine("        {");
+                        switch (propertyType){
+                            case "Number":
+                                this.writeLine("            assertTrue(\"Subject does not have NaN "+nameLowerCaseLead(current.key)+"\", isNaN(subject."+nameLowerCaseLead(current.key)+"));");
+                                this.writeLine("            var test"+current.key+":Number = 1;");
+                                this.writeLine("            subject."+nameLowerCaseLead(current.key)+" = test"+current.key+";");
+                                this.writeLine("            assertEquals(\"Subject does not have expected "+nameLowerCaseLead(current.key)+"\", 1, subject."+nameLowerCaseLead(current.key)+");");
+                                break;
+                            case "String":
+                                this.writeLine("            assertNull(\"Subject does not have null "+nameLowerCaseLead(current.key)+"\", subject."+nameLowerCaseLead(current.key)+");");
+                                this.writeLine("            var test"+current.key+":String = \"test\";");
+                                this.writeLine("            subject."+nameLowerCaseLead(current.key)+" = test"+current.key+";");
+                                this.writeLine("            assertEquals(\"Subject does not have expected "+nameLowerCaseLead(current.key)+"\", \"test\", subject."+nameLowerCaseLead(current.key)+");");
+                                break;
+                            default:
+                                this.writeLine("            //TODO generation not yet implemented for "+propertyType);
+                                break;
+                        }
+                        this.writeLine("        }");
+                        this.writeLine("        ");
+                        break;
+                }
             }
         },
         visit_property_end:function () {
             switch (this.provider.stack.length) {
                 case 3:
                     var current = this.provider.peek();
-//                    var arrayCount = 97; // ascii char code for 'a'
-                    if (current.value["enum"]) {
-                        // no constructor for an enum, but we do need constants to represent the enum values
-                        if(current.value.hasOwnProperty("options")){
-                            for (var i = 0; i < current.value.options.length; i++){
-                                var option = current.value.options[i];
-                                if (option.description) {
-                                    this.writeLine("        /**");
-                                    this.writeLine("         * " + option.description);
-                                    this.writeLine("         */");
-                                }
-                                this.writeLine("        public static const " + option.label.toUpperCase() + ":Number = "+option.value+";");
-                            }
-                        }
-                    } else {
+                    if (!current.value["enum"]) {
                         // parameterised constructor for pass through initialisation post JSON deserialisation
                         this.writeLine("");
                         this.writeLine("        [Test]");
@@ -208,52 +196,23 @@
                         this.writeLine("         */");
                         this.writeLine("        public function test" + current.key + "():void");
                         this.writeLine("        {");
-//                        this.writeLine("            if(data)");
-//                        this.writeLine("            {");
-//
-//                        var dto = current.value;
-//                        if(dto.hasOwnProperty("properties")){
-//                            var props = dto["properties"];
-//                            for(var key in props){
-//                                if(props.hasOwnProperty(key)){
-//                                    var prop = props[key];
-//                                    if(prop && prop.type && prop.type=='array'){
-//                                        var iterVar = String.fromCharCode(arrayCount);
-//                                        this.writeLine("                for(var "+iterVar+":int = 0; "+iterVar+" < data."+key+".length; "+iterVar+"++)");
-//                                        this.writeLine("                {");
-//                                        this.writeLine("                    "+nameLowerCaseLead(key)+".push(new "+this.normalizeKey(prop.items[0].$ref)+"(data."+key+"["+iterVar+"]));");
-//                                        this.writeLine("                }");
-//                                        arrayCount++;
-//                                        if(arrayCount>122){
-//                                            // we've used a...z, smells like error, or we have an API dev gone rogue
-//                                            throw new Error("More than 26 child arrays!  "+current.key);
-//                                        }
-//                                    } else {
-//                                        this.writeLine("                "+nameLowerCaseLead(key)+" = data."+key+";");
-//                                    }
-//                                }
-//                            }
-//                        }
-//
-//                        this.writeLine("            }");
                         this.writeLine("        }");
                         this.writeLine("");
-                    }
-                    this.writeLine("    }");
-                    this.writeLine("");
-                    this.writeLine("}");
-                    this.writeLine("");
-                    var myOutput = outputString;
-                    var fs = require('fs');
-                    fs.open(this.outputDir + 'Test'+current.key + '.as', 'w', 666, function (e, id) {
-                        fs.write(id, myOutput, 0, myOutput.length, 0, function (id) {
-                            fs.close(id);
+                        this.writeLine("    }");
+                        this.writeLine("");
+                        this.writeLine("}");
+                        this.writeLine("");
+                        var myOutput = outputString;
+                        var fs = require('fs');
+                        fs.open(this.outputDir + 'Test'+current.key + '.as', 'w', 666, function (e, id) {
+                            fs.write(id, myOutput, 0, myOutput.length, 0, function (id) {
+                                fs.close(id);
+                            });
                         });
-                    });
+                    }
                     break;
             }
         }
-
     };
     // private lib functions
     function nameLowerCaseLead(str) {
