@@ -147,6 +147,25 @@ namespace CIAPI.IntegrationTests.Rpc
             rpcClient.LogOut();
         }
 
+        /// <summary>
+        /// Test showing issue #167 - https://github.com/cityindex/CIAPI.CS/issues/167 -
+        /// has stopped occuring
+        /// </summary>
+        [Test, Ignore("Long running")]
+        public void MultipleRequestsToCanGetMarketInformationShouldNotThrowAnyExceptions()
+        {
+            var rpcClient = BuildRpcClient();
+
+            for (var i = 0; i < 100; i++ )
+            {
+                var response = rpcClient.Market.GetMarketInformation("154303");
+                Assert.That(response.MarketInformation.Name.Length, Is.GreaterThan(1));
+                Thread.Sleep(1100);
+            }
+
+            rpcClient.LogOut();
+        }
+
         [Test]
         public void CanGetMarketInformation()
         {
