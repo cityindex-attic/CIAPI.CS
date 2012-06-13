@@ -179,9 +179,12 @@
                                     var prop = props[key];
                                     if(prop && prop.type && prop.type=='array'){
                                         var iterVar = String.fromCharCode(arrayCount);
-                                        this.writeLine("                for(var "+iterVar+":int = 0; "+iterVar+" < data."+key+".length; "+iterVar+"++)");
+                                        this.writeLine("                if(data."+key+")");
                                         this.writeLine("                {");
-                                        this.writeLine("                    "+nameLowerCaseLead(key)+".push(new "+this.normalizeKey(prop.items[0].$ref)+"(data."+key+"["+iterVar+"]));");
+                                        this.writeLine("                    for(var "+iterVar+":int = 0; "+iterVar+" < data."+key+".length; "+iterVar+"++)");
+                                        this.writeLine("                    {");
+                                        this.writeLine("                        "+nameLowerCaseLead(key)+".push(new "+this.normalizeKey(prop.items[0].$ref)+"(data."+key+"["+iterVar+"]));");
+                                        this.writeLine("                    }");
                                         this.writeLine("                }");
                                         arrayCount++;
                                         if(arrayCount>122){

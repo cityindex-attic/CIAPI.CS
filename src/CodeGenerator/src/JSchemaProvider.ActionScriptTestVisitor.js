@@ -196,6 +196,75 @@
                         this.writeLine("         */");
                         this.writeLine("        public function test" + current.key + "():void");
                         this.writeLine("        {");
+                        this.writeLine("            var data:Object = new Object();");
+                        var dto = current.value;
+                        if(dto.hasOwnProperty("properties")){
+                            var props = dto["properties"];
+                            for(var key in props){
+                                if(props.hasOwnProperty(key)){
+                                    var prop = props[key];
+                                    if(prop && prop.type){
+                                        var resolvedType = this.resolveType(prop);
+                                        if(resolvedType.toString().indexOf('Vector')>-1){
+                                            //TODO need to create a Vector of childtype...
+                                            continue;
+                                        }
+                                        switch (resolvedType){
+                                            case 'Number':
+                                                this.writeLine("                data."+key+" = 1;");
+                                                break;
+                                            case 'String':
+                                                this.writeLine("                data."+key+" = \"test\";");
+                                                break;
+                                            case 'Boolean':
+                                                this.writeLine("                data."+key+" = true;");
+                                                break;
+                                            case 'Date':
+                                                this.writeLine("                data."+key+" = new Date();");
+                                                break;
+                                            default:
+                                                console.log('constructor instantiation test not handling resolved property type: '+resolvedType);
+                                                break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        this.writeLine("        var instance:"+current.key+" = new "+current.key+"(data);");
+                        this.writeLine("        assertNotNull(\"failed to instantiate with data argument\",instance);");
+
+                        if(dto.hasOwnProperty("properties")){
+                            var props2 = dto["properties"];
+                            for(var key2 in props2){
+                                if(props2.hasOwnProperty(key2)){
+                                    var prop2 = props2[key2];
+                                    if(prop2 && prop2.type){
+                                        var resolvedType2 = this.resolveType(prop2);
+                                        if(resolvedType2.toString().indexOf('Vector')>-1){
+                                            //TODO need to test for instantiation of Vector of childtype...
+                                            continue;
+                                        }
+                                        switch (resolvedType2){
+                                            case 'Number':
+                                                this.writeLine("                assertEquals(\"Property not set as per constructor argument\",1,instance."+nameLowerCaseLead(key2)+");");
+                                                break;
+                                            case 'String':
+                                                this.writeLine("                assertEquals(\"Property not set as per constructor argument\",\"test\",instance."+nameLowerCaseLead(key2)+");");
+                                                break;
+                                            case 'Boolean':
+                                                this.writeLine("                assertTrue(\"Property not set as per constructor argument\",instance."+nameLowerCaseLead(key2)+");");
+                                                break;
+                                            case 'Date':
+                                                this.writeLine("                assertNotNull(\"Property not set as per constructor argument\",instance."+nameLowerCaseLead(key2)+");");
+                                                break;
+                                            default:
+                                                // any misses will have been logged above
+                                                break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
                         this.writeLine("        }");
                         this.writeLine("");
                         this.writeLine("    }");
