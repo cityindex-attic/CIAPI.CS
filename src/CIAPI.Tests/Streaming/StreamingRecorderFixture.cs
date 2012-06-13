@@ -18,7 +18,7 @@ namespace CIAPI.Tests.Streaming
 
  
 
-
+        //#FIXME: something in here is causing ToStringWithValues to bleed into the other testes
         [Test]
         public void HowToUseSequentialMessageGenerator()
         {
@@ -29,9 +29,12 @@ namespace CIAPI.Tests.Streaming
 
 
             var serialized = File.ReadAllText("Streaming\\streamingprices01.txt");
+
             var messages = client.DeserializeJson<List<MessageEventArgs<PriceDTO>>>(serialized);
 
             var generator = new SequentialSerializedPriceDTOMessageGenerator(messages);
+
+
             var streamingClient = client.CreateStreamingClient();
             
 
@@ -45,14 +48,15 @@ namespace CIAPI.Tests.Streaming
                     e.Data.TickDate = DateTime.Now;
                 };
 
-            priceListener.MessageReceived += (s, e) => Console.WriteLine(string.Format("{0}.{1} {2}", e.DataAdapter, e.Topic, e.Data.ToStringWithValues()));
+            priceListener.MessageReceived += (s, e) => Console.WriteLine(string.Format("xxxxx{0}.{1} {2}", e.DataAdapter, e.Topic, e.Data.ToStringWithValues()));
 
             var gate = new AutoResetEvent(false);
             priceListener.Start(0);
 
             gate.WaitOne(10000);
 
-
+            priceListener.Stop();
+            priceListener.Dispose();
 
         }
 
@@ -61,7 +65,7 @@ namespace CIAPI.Tests.Streaming
         {
             
 
-            var listener = new TestStreamingListener<ApiLookupDTO>("foo", "foo");
+            var listener = new TestStreamingListener<ApiLookupDTO>("DATAADAPTER", "TOPIC");
 
             listener.CreateMessage += (s, e) =>
             {
@@ -100,12 +104,15 @@ namespace CIAPI.Tests.Streaming
 
             gate.WaitOne();
 
-
+            
             listener.Stop();
+            listener.Dispose();
             recorder.Stop();
 
-            recorder.Dispose();
             var messages = recorder.GetMessages();
+
+            recorder.Dispose();
+            
             listener.Dispose();
 
             if (exception != null)

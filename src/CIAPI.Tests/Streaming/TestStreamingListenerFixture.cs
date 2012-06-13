@@ -13,7 +13,8 @@ namespace CIAPI.Tests.Streaming
         public void Test()
         {
             
-            var listener = new TestStreamingListener<ApiLookupDTO>("foo", "foo");
+            var listener = new TestStreamingListener<ApiLookupDTO>("DATAADAPTER", "TOPIC");
+
             listener.CreateMessage += (sender, e) =>
             {
                 e.Data.Description = "FOO";
