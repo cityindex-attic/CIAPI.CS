@@ -113,6 +113,7 @@
                     outputString = "";
                     this.writeLine("package uk.co.cityindex.dto");
                     this.writeLine("{");
+                    this.writeLine("import uk.co.cityindex.utils.DateUtils;");
                     this.writeLine("");
                     var typeName = "class";
                     if (!current.value["enum"]) {
@@ -168,6 +169,9 @@
                         this.writeLine("         */");
                         this.writeLine("        public function " + current.key + "(data:Object = null)");
                         this.writeLine("        {");
+                        if(current.value["extends"]){
+                            this.writeLine("            super(data);");
+                        }
                         this.writeLine("            if(data)");
                         this.writeLine("            {");
 
@@ -192,7 +196,11 @@
                                             throw new Error("More than 26 child arrays!  "+current.key);
                                         }
                                     } else {
-                                        this.writeLine("                "+nameLowerCaseLead(key)+" = data."+key+";");
+                                        if(prop.format && prop.format=='wcf-date'){
+                                            this.writeLine("                "+nameLowerCaseLead(key)+" = DateUtils.dateFromJSONDateString(data."+key+");");
+                                        } else {
+                                            this.writeLine("                "+nameLowerCaseLead(key)+" = data."+key+";");
+                                        }
                                     }
                                 }
                             }
