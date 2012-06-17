@@ -109,7 +109,7 @@ namespace CIAPI.IntegrationTests.Rpc
         }
 
 
-        [Test]
+        [Test,Ignore("endpoint removed")]
         public void Issue166ExceptionEndpointShouldThrowCorrectException()
         {
             var rpcClient = BuildRpcClient();

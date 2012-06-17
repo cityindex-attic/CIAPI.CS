@@ -187,6 +187,10 @@ namespace Salient.ReliableHttpClient.Testing
             GC.SuppressFinalize(this);
         }
 
+        public void SetResponseStream(string responseText)
+        {
+            ResponseStream = new TestWebStream(Encoding.UTF8.GetBytes(responseText));
+        }
 
         protected virtual void Dispose(bool disposing)
         {

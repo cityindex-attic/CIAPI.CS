@@ -74,7 +74,7 @@ namespace CIAPI.Streaming.Testing
             adp.Add(topic, listener);
 
             // hookup listener events;
-
+            listener.Start(0);
             return listener;
         }
 

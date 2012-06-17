@@ -75,6 +75,7 @@ namespace CIAPI.Tests.Streaming
             var recorder = StreamingRecorder.Create(listener);
             recorder.Start();
 
+
             var gate = new AutoResetEvent(false);
             int counter = 0;
             Exception exception = null;

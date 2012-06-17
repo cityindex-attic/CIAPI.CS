@@ -10,7 +10,7 @@ namespace Salient.ReliableHttpClient.Testing
         public void PopulateRequest(TestWebRequest target, RequestInfoBase source)
         {
 
-            target.ResponseStream = new TestWebStream(Encoding.UTF8.GetBytes(source.ResponseText));
+            target.SetResponseStream(source.ResponseText);
             target.ContentType = source.RequestContentType.ToHeaderValue();
             foreach (var h in source.Headers)
             {
