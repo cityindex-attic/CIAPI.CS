@@ -22,7 +22,7 @@ namespace CIAPI.Rpc
         {
             public NullObject()
             {
-                
+
             }
         }
 
@@ -45,8 +45,8 @@ namespace CIAPI.Rpc
 
 
         #region Request Dispatch
-        
-        private static string AppendQueryParameter(string uriTemplate,string paramName)
+
+        private static string AppendQueryParameter(string uriTemplate, string paramName)
         {
             if (uriTemplate.Contains("?"))
             {
@@ -61,10 +61,18 @@ namespace CIAPI.Rpc
             uriTemplate = uriTemplate + paramPair;
             return uriTemplate;
         }
+
+        private static string PrepareUrl(string url, string target)
+        {
+            target = target ?? "";
+
+            return !url.EndsWith("/") && !target.StartsWith("/") ? url + "/" + target : url + target;
+        }
+
         public Guid BeginRequest(RequestMethod method, string target, string uriTemplate, Dictionary<string, object> parameters, ContentType requestContentType, ContentType responseContentType, TimeSpan cacheDuration, int timeout, int retryCount, ReliableAsyncCallback callback, object state)
         {
-            target = _rootUri.AbsoluteUri + "/" + target;
-            var param = new Dictionary<string, object>(parameters ?? new Dictionary<string, object>() );
+            target = PrepareUrl(_rootUri.AbsoluteUri ,target);
+            var param = new Dictionary<string, object>(parameters ?? new Dictionary<string, object>());
             if (Http200ErrorsOnly)
             {
                 uriTemplate = AppendQueryParameter(uriTemplate, "only200");
@@ -79,7 +87,7 @@ namespace CIAPI.Rpc
         public T Request<T>(RequestMethod method, string target, string uriTemplate, Dictionary<string, object> parameters, ContentType requestContentType, ContentType responseContentType, TimeSpan cacheDuration, int timeout, int retryCount)
         {
 
-            target = _rootUri.AbsoluteUri + "/" + target;
+            target = PrepareUrl(_rootUri.AbsoluteUri, target);
             var param = new Dictionary<string, object>(parameters ?? new Dictionary<string, object>());
             if (Http200ErrorsOnly)
             {
@@ -93,7 +101,7 @@ namespace CIAPI.Rpc
 
         public string Request(RequestMethod method, string target, string uriTemplate, Dictionary<string, object> parameters, ContentType requestContentType, ContentType responseContentType, TimeSpan cacheDuration, int timeout, int retryCount)
         {
-            target = _rootUri.AbsoluteUri + "/" + target;
+            target = PrepareUrl(_rootUri.AbsoluteUri, target);
             var param = new Dictionary<string, object>(parameters ?? new Dictionary<string, object>());
             if (Http200ErrorsOnly)
             {

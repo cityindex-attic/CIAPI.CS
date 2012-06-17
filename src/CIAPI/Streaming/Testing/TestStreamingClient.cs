@@ -17,8 +17,10 @@ namespace CIAPI.Streaming.Testing
         private Uri _streamingUri;
         private string _userName;
         private string _session;
-        public TestStreamingClient(Uri streamingUri, string userName, string session, IJsonSerializer serializer)
+        private TestStreamingClientFactory _testStreamingClientFactory;
+        public TestStreamingClient(Uri streamingUri, string userName, string session, IJsonSerializer serializer, TestStreamingClientFactory testStreamingClientFactory)
         {
+            _testStreamingClientFactory = testStreamingClientFactory;
             _session = session;
             _userName = userName;
             _streamingUri = streamingUri;
@@ -66,7 +68,7 @@ namespace CIAPI.Streaming.Testing
                 adp = _adapters[dataAdapter];
             }
 
-            var listener = new TestStreamingListener<TDto>(dataAdapter,topic);
+            var listener = new TestStreamingListener<TDto>(dataAdapter, topic);
 
             // #TODO: need to send 'connection established' status update
             adp.Add(topic, listener);
@@ -83,6 +85,9 @@ namespace CIAPI.Streaming.Testing
         public void TearDownListener(IStreamingListener listener)
         {
             listener.Stop();
+
+            ((TestStreamingListener) listener).TearMeDown();
+
             if (_adapters.ContainsKey(listener.Adapter))
             {
 
@@ -98,41 +103,66 @@ namespace CIAPI.Streaming.Testing
         public IStreamingListener<NewsDTO> BuildNewsHeadlinesListener(string category)
         {
             var topic = Regex.Replace("NEWS.HEADLINES.{category}", "{category}", category.ToString());
-            return BuildListener<NewsDTO>("CITYINDEXSTREAMING", topic);
+            IStreamingListener<NewsDTO> listener = BuildListener<NewsDTO>("CITYINDEXSTREAMING", topic);
+
+            // hook up the create message event to the factory and enclose the unhook for use later.
+            // this way we don't have to have 6 different unhook methods (one for each dto) on the factory
+
+            ((TestStreamingListener<NewsDTO>)listener).CreateMessage += _testStreamingClientFactory.OnCreateNewsMessage;
+
+            ((TestStreamingListener)listener).TearMeDown = () =>
+                {
+                    ((TestStreamingListener<NewsDTO>)listener).CreateMessage -= _testStreamingClientFactory.OnCreateNewsMessage;
+                };
+
+            return listener;
         }
 
         public IStreamingListener<PriceDTO> BuildPricesListener(int[] marketIds)
         {
             var topic = string.Join(" ", marketIds.Select(t => Regex.Replace("PRICES.PRICE.{marketIds}", "{marketIds}", t.ToString())).ToArray());
-            return BuildListener<PriceDTO>("CITYINDEXSTREAMING", topic);
+            IStreamingListener<PriceDTO> listener = BuildListener<PriceDTO>("CITYINDEXSTREAMING", topic);
+            ((TestStreamingListener<PriceDTO>)listener).CreateMessage += _testStreamingClientFactory.OnCreatePriceMessage;
+            return listener;
         }
 
         public IStreamingListener<QuoteDTO> BuildQuotesListener()
         {
             string topic = "QUOTES";
-            return BuildListener<QuoteDTO>("STREAMINGTRADINGACCOUNT", topic);
+            IStreamingListener<QuoteDTO> listener = BuildListener<QuoteDTO>("STREAMINGTRADINGACCOUNT", topic);
+            ((TestStreamingListener<QuoteDTO>)listener).CreateMessage += _testStreamingClientFactory.OnCreateQuoteMessage;
+            return listener;
         }
 
         public IStreamingListener<ClientAccountMarginDTO> BuildClientAccountMarginListener()
         {
             string topic = "CLIENTACCOUNTMARGIN";
-            return BuildListener<ClientAccountMarginDTO>("STREAMINGCLIENTACCOUNT", topic);
+            IStreamingListener<ClientAccountMarginDTO> listener = BuildListener<ClientAccountMarginDTO>("STREAMINGCLIENTACCOUNT", topic);
+            ((TestStreamingListener<ClientAccountMarginDTO>)listener).CreateMessage += _testStreamingClientFactory.OnCreateClientAccountMarginMessage;
+            return listener;
         }
 
         public IStreamingListener<OrderDTO> BuildOrdersListener()
         {
             string topic = "ORDERS";
-            return BuildListener<OrderDTO>("STREAMINGCLIENTACCOUNT", topic);
+            IStreamingListener<OrderDTO> listener = BuildListener<OrderDTO>("STREAMINGCLIENTACCOUNT", topic);
+            ((TestStreamingListener<OrderDTO>)listener).CreateMessage += _testStreamingClientFactory.OnCreateOrderMessage;
+            return listener;
         }
 
         public IStreamingListener<PriceDTO> BuildDefaultPricesListener(int accountOperatorId)
         {
-            return BuildListener<PriceDTO>("CITYINDEXSTREAMINGDEFAULTPRICES", "PRICES.AC" + accountOperatorId);
+            IStreamingListener<PriceDTO> listener = BuildListener<PriceDTO>("CITYINDEXSTREAMINGDEFAULTPRICES", "PRICES.AC" + accountOperatorId);
+            ((TestStreamingListener<PriceDTO>)listener).CreateMessage += _testStreamingClientFactory.OnCreatePriceMessage;
+            return listener;
         }
 
         public IStreamingListener<TradeMarginDTO> BuildTradeMarginListener()
         {
-            return BuildListener<TradeMarginDTO>("STREAMINGCLIENTACCOUNT", "TRADEMARGIN.ALL");
+            IStreamingListener<TradeMarginDTO> listener = BuildListener<TradeMarginDTO>("STREAMINGCLIENTACCOUNT", "TRADEMARGIN.ALL");
+            ((TestStreamingListener<TradeMarginDTO>)listener).CreateMessage += _testStreamingClientFactory.OnCreateTradeMarginMessage;
+
+            return listener;
         }
 
 

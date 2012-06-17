@@ -41,7 +41,7 @@ namespace CIAPI.Tests.Streaming
 
             var priceListener = (TestStreamingListener<PriceDTO>)streamingClient.BuildDefaultPricesListener(2347);
 
-            priceListener.CreateMessage += (s, e) =>
+            priceListener.CreateMessage += (e) =>
                 {
                     var match = generator.GetNextMessage(e.DataAdapter, e.Topic);
                     SequentialSerializedPriceDTOMessageGenerator.Populate(e.Data, match.Data);
@@ -67,7 +67,7 @@ namespace CIAPI.Tests.Streaming
 
             var listener = new TestStreamingListener<ApiLookupDTO>("DATAADAPTER", "TOPIC");
 
-            listener.CreateMessage += (s, e) =>
+            listener.CreateMessage += (e) =>
             {
                 e.Data.Description = "FOO";
             };
