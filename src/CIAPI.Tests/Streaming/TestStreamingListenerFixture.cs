@@ -63,28 +63,27 @@ namespace CIAPI.Tests.Streaming
 
 
             // setup a streaming factory to deliver the messages we want
-            var streamingFactory = new TestStreamingClientFactory
-                {
+            var streamingFactory = new TestStreamingClientFactory();
 
-                    CreatePriceMessage = args =>
-                        {
-                            Console.WriteLine(args.DataAdapter + "." + args.Topic);
-                            if (args.DataAdapter == "CITYINDEXSTREAMINGDEFAULTPRICES" && args.Topic == "PRICES.AC0")
-                            {
-                                args.Data.AuditId = "sbRDBProdFX35536125";
-                                args.Data.Bid = 1.55341m;
-                                args.Data.Change = 0.00243m;
-                                args.Data.Direction = 0;
-                                args.Data.High = 1.55487m;
-                                args.Data.Low = 1.55025m;
-                                args.Data.MarketId = 400494234;
-                                args.Data.Offer = 1.55369m;
-                                args.Data.Price = 1.55355m;
-                                args.Data.StatusSummary = 0;
-                                args.Data.TickDate = DateTime.UtcNow;
-                            }
-                        }
-                };
+            streamingFactory.CreatePriceMessage = args =>
+            {
+                
+
+                if (args.DataAdapter == "CITYINDEXSTREAMINGDEFAULTPRICES" && args.Topic == "PRICES.AC0")
+                {
+                    args.Data.AuditId = "sbRDBProdFX35536125";
+                    args.Data.Bid = 1.55341m;
+                    args.Data.Change = 0.00243m;
+                    args.Data.Direction = 0;
+                    args.Data.High = 1.55487m;
+                    args.Data.Low = 1.55025m;
+                    args.Data.MarketId = 400494234;
+                    args.Data.Offer = 1.55369m;
+                    args.Data.Price = 1.55355m;
+                    args.Data.StatusSummary = 0;
+                    args.Data.TickDate = DateTime.UtcNow;
+                }
+            };
 
             // now let us use the rpc client as usual
 
