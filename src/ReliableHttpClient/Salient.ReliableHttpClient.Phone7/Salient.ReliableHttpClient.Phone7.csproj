@@ -87,6 +87,9 @@
     <Compile Include="..\Salient.ReliableHttpClient\ReliableHttpException.cs">
       <Link>ReliableHttpException.cs</Link>
     </Compile>
+    <Compile Include="..\Salient.ReliableHttpClient\RequestCompletedEventArgs.cs">
+      <Link>RequestCompletedEventArgs.cs</Link>
+    </Compile>
     <Compile Include="..\Salient.ReliableHttpClient\RequestController.cs">
       <Link>RequestController.cs</Link>
     </Compile>

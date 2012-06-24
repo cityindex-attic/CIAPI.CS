@@ -45,8 +45,23 @@ namespace Salient.ReliableHttpClient
 
         public bool IncludeIndexInHeaders
         {
-            get { return Controller.IncludeIndexInHeaders; }
-            set { Controller.IncludeIndexInHeaders = value; }
+            get
+            {
+                if (_disposed)
+                {
+                    throw new ObjectDisposedException(GetType().FullName);
+                }
+                return Controller.IncludeIndexInHeaders;
+            }
+            set
+            {
+
+                if (_disposed)
+                {
+                    throw new ObjectDisposedException(GetType().FullName);
+                }
+                Controller.IncludeIndexInHeaders = value;
+            }
         }
 
         
@@ -55,6 +70,10 @@ namespace Salient.ReliableHttpClient
             get { return _userAgent; }
             set
             {
+                if (_disposed)
+                {
+                    throw new ObjectDisposedException(GetType().FullName);
+                }
                 _userAgent = value;
                 Controller.UserAgent = value;
             }
@@ -64,6 +83,7 @@ namespace Salient.ReliableHttpClient
 
         public void Dispose()
         {
+            _disposed = true;
             Dispose(true);
             GC.SuppressFinalize(this);
         }
@@ -147,6 +167,11 @@ namespace Salient.ReliableHttpClient
                                       ContentType responseContentType, TimeSpan cacheDuration, int timeout,
                                       int retryCount)
         {
+            if (_disposed)
+            {
+                throw new ObjectDisposedException(GetType().FullName);
+            }
+
 #if SILVERLIGHT
             if (System.Windows.Deployment.Current.Dispatcher.CheckAccess())
             {
@@ -202,6 +227,11 @@ namespace Salient.ReliableHttpClient
             ReliableAsyncCallback callback,
             object state)
         {
+            if (_disposed)
+            {
+                throw new ObjectDisposedException(GetType().FullName);
+            }
+
             string body = null;
 
             if (parameters != null)
@@ -264,8 +294,13 @@ namespace Salient.ReliableHttpClient
 
         public virtual string EndRequest(ReliableAsyncResult result)
         {
+            if (_disposed)
+            {
+                throw new ObjectDisposedException(GetType().FullName);
+            }
             try
             {
+                
                 result.End();
                 return result.ResponseText;
             }
@@ -282,6 +317,7 @@ namespace Salient.ReliableHttpClient
             }
         }
 
+        private bool _disposed;
         protected virtual void Dispose(bool disposing)
         {
             if (disposing)
@@ -291,6 +327,7 @@ namespace Salient.ReliableHttpClient
                     Controller.Dispose();
                     Controller = null;
                 }
+                _disposed = true;
             }
         }
 

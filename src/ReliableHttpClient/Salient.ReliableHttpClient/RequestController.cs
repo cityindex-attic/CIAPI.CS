@@ -8,18 +8,6 @@ using Salient.ReliableHttpClient.Serialization;
 
 namespace Salient.ReliableHttpClient
 {
-
-    public class RequestCompletedEventArgs : EventArgs
-    {
-        public RequestCompletedEventArgs(RequestInfoBase info)
-        {
-            Info = info;
-        }
-        public RequestInfoBase Info { get; set; }
-    }
-
-
-
     /// <summary>
     /// RequestController will encapsulate threadsafe caching and throttling
     /// items with a cacheduration of 0 will not be cached
@@ -27,10 +15,16 @@ namespace Salient.ReliableHttpClient
     /// </summary>
     public class RequestController : IDisposable
     {
+        private bool _disposed;
         public event EventHandler<RequestCompletedEventArgs> RequestCompleted;
 
         public virtual void OnRequestCompleted(RequestInfoBase info)
         {
+            if(_disposed)
+            {
+                throw new ObjectDisposedException(GetType().FullName);
+            }
+
             var e = new RequestCompletedEventArgs(info);
             EventHandler<RequestCompletedEventArgs> handler = RequestCompleted;
             if (handler != null)
@@ -136,7 +130,7 @@ namespace Salient.ReliableHttpClient
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void ProcessQueue()
+        protected void ProcessQueue()
         {
             lock (_lockTarget)
             {
@@ -401,7 +395,7 @@ namespace Salient.ReliableHttpClient
         }
 
 
-        public Guid BeginRequest(Uri uri, RequestMethod method, string body, Dictionary<string, string> headers,
+        internal Guid BeginRequest(Uri uri, RequestMethod method, string body, Dictionary<string, string> headers,
                                  ContentType requestContentType, ContentType responseContentType, TimeSpan cacheDuration,
                                  int timeout, string target, string uriTemplate, int retryCount,
                                  Dictionary<string, object> parameters, ReliableAsyncCallback callback, object state)
@@ -466,13 +460,16 @@ namespace Salient.ReliableHttpClient
 
         public void Dispose()
         {
+            _disposed = true;
             Dispose(true);
+            GC.SuppressFinalize(this);
         }
         protected virtual void Dispose(bool disposing)
         {
             if (disposing)
             {
                 _disposing = true;
+                
                 while (_backgroundThread.IsAlive)
                 {
                     Thread.Sleep(100);
@@ -481,6 +478,7 @@ namespace Salient.ReliableHttpClient
                 {
                     ((IDisposable)_waitHandle).Dispose();
                 }
+                
             }
 
 

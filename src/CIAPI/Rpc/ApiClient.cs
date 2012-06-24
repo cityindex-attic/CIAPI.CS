@@ -26,6 +26,10 @@ namespace CIAPI.Rpc
             }
         }
 
+
+
+
+
         private Dictionary<string, string> GetHeaders(string target)
         {
             var headers = new Dictionary<string, string>();
@@ -307,7 +311,21 @@ namespace CIAPI.Rpc
             Session = response.Session;
             return response;
         }
+        public void LogInUsingSession(string username, string session)
+        {
+            try
+            {
+                this.Session = session;
+                AccountInformationResponseDTO d = this.AccountInformation.GetClientAndTradingAccount();
 
+            }
+            catch
+            {
+                Session = null;
+                throw;
+            }
+        }
+ 
         /// <summary>
         /// Log In
         /// </summary>		

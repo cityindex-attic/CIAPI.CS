@@ -22,13 +22,16 @@ namespace CIAPI.Tests
             client.Session = TestConfig.ApiTestSessionId;
             return client;
         }
+        protected  Client BuildTestClientExtracted(  TestRequestFactory requestFactory,   TestStreamingClientFactory streamingFactory)
+        {
+            var rpcClient = new Client(new Uri("http://foo.com"), new Uri("http://foo.com"), "FOOBAR", new Serializer(), requestFactory, streamingFactory);
+            return rpcClient;
+        }
         protected Client BuildTestClient(out TestRequestFactory requestFactory, out TestStreamingClientFactory streamingFactory)
         {
             requestFactory = new TestRequestFactory();
             streamingFactory = new TestStreamingClientFactory();
-
-            var rpcClient = new Client(new Uri("http://foo.com"), new Uri("http://foo.com"), "FOOBAR", new Serializer(), requestFactory, streamingFactory);
-            return rpcClient;
+            return BuildTestClientExtracted(  requestFactory,   streamingFactory);
         }
     }
 }

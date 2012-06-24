@@ -36,6 +36,68 @@ namespace CIAPI.Tests.Rpc
 
 
         [Test]
+        public void LoginUsingSessionShouldValidateSession()
+        {
+            TestRequestFactory requestFactory;
+            TestStreamingClientFactory streamingFactory;
+            Client rpcClient = BuildTestClient(out requestFactory, out streamingFactory);
+            requestFactory.PrepareResponse = testRequest =>
+            {
+                //string jsonConvertSerializeObject =
+                //    JsonConvert.SerializeObject(errorDto);
+                testRequest.SetResponseStream(LoggedIn);
+            };
+
+             rpcClient.LogIn("foo", "foo");
+
+            Assert.That(rpcClient.Session, Is.Not.Empty);
+
+            //This should work
+            Client rpcClientUsingSession = BuildTestClientExtracted( requestFactory,  streamingFactory);
+            requestFactory.PrepareResponse = testRequest =>
+            {
+                string jsonConvertSerializeObject =
+                    JsonConvert.SerializeObject(new CIAPI.DTO.AccountInformationResponseDTO() { TradingAccounts = new ApiTradingAccountDTO[] { new ApiTradingAccountDTO() { TradingAccountType = "Spread Betting" }, new ApiTradingAccountDTO() { TradingAccountType = "CFD" }, } });
+                testRequest.SetResponseStream(jsonConvertSerializeObject);
+            };
+
+            rpcClientUsingSession.LogInUsingSession("foo", rpcClient.Session);
+        
+            Assert.That(rpcClientUsingSession.Session, Is.Not.Empty);
+            requestFactory.PrepareResponse = testRequest =>
+            {
+
+                testRequest.SetResponseStream(LoggedOut);
+            };
+            //After the session has been destroyed, trying to login using it should fail
+            rpcClient.LogOut();
+
+            requestFactory.PrepareResponse = testRequest =>
+            {
+
+                testRequest.SetResponseStream(AuthError);
+            };
+
+            Assert.Throws<ReliableHttpException>(() =>
+            {
+                rpcClientUsingSession.LogInUsingSession(
+                    "foo", rpcClient.Session);
+            });
+
+            //And there shouldn't be a session
+            Assert.IsNullOrEmpty(rpcClientUsingSession.Session);
+            requestFactory.PrepareResponse = testRequest =>
+            {
+
+                testRequest.SetResponseStream(LoggedOut);
+            };
+            rpcClientUsingSession.LogOut();
+            rpcClientUsingSession.Dispose();
+            rpcClient.Dispose();
+        }
+
+
+        [Test]
         public void ApiAuthenticationFailure()
         {
             var errorDto = new ApiErrorResponseDTO

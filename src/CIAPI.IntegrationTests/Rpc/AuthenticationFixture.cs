@@ -27,7 +27,7 @@ namespace CIAPI.IntegrationTests.Rpc
             rpcClient.Dispose();
         }
 
-/*  TODO:  Implement
+ 
         [Test]
         public void LoginUsingSessionShouldValidateSession()
         {
@@ -43,17 +43,19 @@ namespace CIAPI.IntegrationTests.Rpc
 
             //After the session has been destroyed, trying to login using it should fail
             rpcClient.LogOut();
-            Assert.Throws<ApiException>(() => {
-                rpcClientUsingSession.LogInUsingSession(Settings.RpcUserName, rpcClient.Session);
-            }
+            Assert.Throws<ReliableHttpException>(() =>
+                                                     {
+                                                         rpcClientUsingSession.LogInUsingSession(
+                                                             Settings.RpcUserName, rpcClient.Session);
+                                                     });
 
             //And there shouldn't be a session
-            Assert.That(rpcClientUsingSession.Session, Is.Empty);
+            Assert.IsNullOrEmpty(rpcClientUsingSession.Session);
 
             rpcClientUsingSession.LogOut();
             rpcClientUsingSession.Dispose();
             rpcClient.Dispose();
         }
-*/
+ 
     }
 }

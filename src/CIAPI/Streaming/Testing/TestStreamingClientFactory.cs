@@ -17,6 +17,7 @@ namespace CIAPI.Streaming.Testing
                 handler(e);
             }
         }
+
         internal void OnCreateOrderMessage(MessageEventArgs<OrderDTO> e)
         {
             Action<MessageEventArgs<OrderDTO>> handler = CreateOrderMessage;

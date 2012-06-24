@@ -4,6 +4,7 @@ namespace Salient.ReliableHttpClient
 {
     public abstract class RecorderBase : IDisposable
     {
+        private bool _disposed;
         protected RecorderBase(ClientBase client)
         {
             Paused = true;
@@ -17,9 +18,13 @@ namespace Salient.ReliableHttpClient
         }
         protected ClientBase Client { get; private set; }
 
-
+        protected bool IsDisposed()
+        {
+            return _disposed;
+        }
         public void Dispose()
         {
+            _disposed = true;
             Dispose(true);
             GC.SuppressFinalize(this);
         }

@@ -64,6 +64,7 @@
     <Compile Include="IRequestFactory.cs" />
     <Compile Include="Recorder.cs" />
     <Compile Include="ReliableHttpException.cs" />
+    <Compile Include="RequestCompletedEventArgs.cs" />
     <Compile Include="RequestController.cs" />
     <Compile Include="RequestFactory.cs" />
     <Compile Include="RequestInfo.cs" />

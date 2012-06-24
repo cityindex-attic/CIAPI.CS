@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading;
 using CIAPI.DTO;
 using CIAPI.Rpc;
@@ -72,16 +73,21 @@ namespace CIAPI.IntegrationTests.Streaming
 
             var gate = new AutoResetEvent(false);
             TradeMarginDTO actual = null;
+
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
             tradeMarginListener.MessageReceived += (s, e) =>
             {
 
                 Console.WriteLine(
                     "-----------------------------------------------");
-                
+                sw.Stop();
                 actual = e.Data;
+                Console.WriteLine("event received in {0} seconds", TimeSpan.FromMilliseconds(sw.ElapsedMilliseconds));
                 Console.WriteLine(actual.ToStringWithValues());
                 Console.WriteLine(
                     "-----------------------------------------------");
+                
                 gate.Set();
             };
 
@@ -91,6 +97,8 @@ namespace CIAPI.IntegrationTests.Streaming
             AccountInformationResponseDTO accounts = _authenticatedClient.AccountInformation.GetClientAndTradingAccount();
 
             PriceDTO marketInfo = GetMarketInfo(80905);
+
+
 
             NewTradeOrderRequestDTO trade = new NewTradeOrderRequestDTO()
             {
@@ -114,33 +122,33 @@ namespace CIAPI.IntegrationTests.Streaming
 
 
 
-            gate.WaitOne(25000);
+            gate.WaitOne(50000);
 
             _streamingClient.TearDownListener(tradeMarginListener);
 
             
             // close the tradeMarginListener
 
-            marketInfo = GetMarketInfo(80905);
+            //marketInfo = GetMarketInfo(80905);
 
-            int orderId = response.OrderId;
-            trade = new NewTradeOrderRequestDTO()
-            {
-                AuditId = marketInfo.AuditId,
-                AutoRollover = false,
-                BidPrice = marketInfo.Bid,
-                Close = new int[] { orderId },
-                Currency = null,
-                Direction = "sell",
-                IfDone = null,
-                MarketId = marketInfo.MarketId,
-                OfferPrice = marketInfo.Offer,
-                Quantity = 1,
-                QuoteId = null,
-                TradingAccountId = accounts.SpreadBettingAccount.TradingAccountId
-            };
+            //int orderId = response.OrderId;
+            //trade = new NewTradeOrderRequestDTO()
+            //{
+            //    AuditId = marketInfo.AuditId,
+            //    AutoRollover = false,
+            //    BidPrice = marketInfo.Bid,
+            //    Close = new int[] { orderId },
+            //    Currency = null,
+            //    Direction = "sell",
+            //    IfDone = null,
+            //    MarketId = marketInfo.MarketId,
+            //    OfferPrice = marketInfo.Offer,
+            //    Quantity = 1,
+            //    QuoteId = null,
+            //    TradingAccountId = accounts.SpreadBettingAccount.TradingAccountId
+            //};
 
-            _authenticatedClient.TradesAndOrders.Trade(trade);
+            //_authenticatedClient.TradesAndOrders.Trade(trade);
            
             
             Assert.IsNotNull(actual,"did not get a streaming event");
