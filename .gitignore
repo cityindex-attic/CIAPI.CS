@@ -23,7 +23,6 @@ Thumbs.db
 *.log
 [Bb]in
 [Oo]bj
-*.lib
 *.sbr
 obj/
 _ReSharper*/

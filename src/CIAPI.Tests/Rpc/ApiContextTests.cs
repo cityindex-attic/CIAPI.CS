@@ -57,7 +57,7 @@ namespace CIAPI.Tests.Rpc
             {
                 string jsonConvertSerializeObject =
                     JsonConvert.SerializeObject(new CIAPI.DTO.AccountInformationResponseDTO() { TradingAccounts = new ApiTradingAccountDTO[] { new ApiTradingAccountDTO() { TradingAccountType = "Spread Betting" }, new ApiTradingAccountDTO() { TradingAccountType = "CFD" }, } });
-                testRequest.SetResponseStream(jsonConvertSerializeObject);
+                testRequest.SetResponseStream("{\"LogonUserName\":\"Sky Sanders - Test\",\"ClientAccountId\":400188637,\"ClientAccountCurrency\":\"USD\",\"AccountOperatorId\":4000,\"TradingAccounts\":[{\"TradingAccountId\":400282314,\"TradingAccountCode\":\"DM603751\",\"TradingAccountStatus\":\"Open\",\"TradingAccountType\":\"CFD\"},{\"TradingAccountId\":400282315,\"TradingAccountCode\":\"DM667890\",\"TradingAccountStatus\":\"Open\",\"TradingAccountType\":\"Spread Betting\"}],\"PersonalEmailAddress\":\"sky.sanders@gmail.com\",\"HasMultipleEmailAddresses\":false}");
             };
 
             rpcClientUsingSession.LogInUsingSession("foo", rpcClient.Session);
