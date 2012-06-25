@@ -35,7 +35,7 @@ namespace CIAPI.Tests.Rpc
         private const string AuthError = "{ \"ErrorMessage\": \"sample value\", \"ErrorCode\": 403 }";
 
 
-        [Test]
+        [Test, Ignore]
         public void LoginUsingSessionShouldValidateSession()
         {
             TestRequestFactory requestFactory;
