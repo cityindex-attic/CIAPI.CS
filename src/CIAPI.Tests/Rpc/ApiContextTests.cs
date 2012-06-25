@@ -35,7 +35,7 @@ namespace CIAPI.Tests.Rpc
         private const string AuthError = "{ \"ErrorMessage\": \"sample value\", \"ErrorCode\": 403 }";
 
 
-        [Test, Ignore]
+        [Test]
         public void LoginUsingSessionShouldValidateSession()
         {
             TestRequestFactory requestFactory;
@@ -55,9 +55,7 @@ namespace CIAPI.Tests.Rpc
             Client rpcClientUsingSession = BuildTestClientExtracted( requestFactory,  streamingFactory);
             requestFactory.PrepareResponse = testRequest =>
             {
-                string jsonConvertSerializeObject =
-                    JsonConvert.SerializeObject(new CIAPI.DTO.AccountInformationResponseDTO() { TradingAccounts = new ApiTradingAccountDTO[] { new ApiTradingAccountDTO() { TradingAccountType = "Spread Betting" }, new ApiTradingAccountDTO() { TradingAccountType = "CFD" }, } });
-                testRequest.SetResponseStream("{\"LogonUserName\":\"Sky Sanders - Test\",\"ClientAccountId\":400188637,\"ClientAccountCurrency\":\"USD\",\"AccountOperatorId\":4000,\"TradingAccounts\":[{\"TradingAccountId\":400282314,\"TradingAccountCode\":\"DM603751\",\"TradingAccountStatus\":\"Open\",\"TradingAccountType\":\"CFD\"},{\"TradingAccountId\":400282315,\"TradingAccountCode\":\"DM667890\",\"TradingAccountStatus\":\"Open\",\"TradingAccountType\":\"Spread Betting\"}],\"PersonalEmailAddress\":\"sky.sanders@gmail.com\",\"HasMultipleEmailAddresses\":false}");
+                   testRequest.SetResponseStream("{\"LogonUserName\":\"Sky Sanders - Test\",\"ClientAccountId\":400188637,\"ClientAccountCurrency\":\"USD\",\"AccountOperatorId\":4000,\"TradingAccounts\":[{\"TradingAccountId\":400282314,\"TradingAccountCode\":\"DM603751\",\"TradingAccountStatus\":\"Open\",\"TradingAccountType\":\"CFD\"},{\"TradingAccountId\":400282315,\"TradingAccountCode\":\"DM667890\",\"TradingAccountStatus\":\"Open\",\"TradingAccountType\":\"Spread Betting\"}],\"PersonalEmailAddress\":\"sky.sanders@gmail.com\",\"HasMultipleEmailAddresses\":false}");
             };
 
             rpcClientUsingSession.LogInUsingSession("foo", rpcClient.Session);
