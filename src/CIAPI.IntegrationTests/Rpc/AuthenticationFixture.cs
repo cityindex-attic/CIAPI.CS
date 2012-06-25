@@ -34,12 +34,12 @@ namespace CIAPI.IntegrationTests.Rpc
             var rpcClient = new Client(Settings.RpcUri, Settings.StreamingUri, AppKey);
             rpcClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);
 
-            Assert.That(rpcClient.Session, Is.Not.Empty);
+            Assert.That(rpcClient.Session, Is.Not.Null.Or.Empty);
 
             //This should work
             var rpcClientUsingSession = new Client(Settings.RpcUri, Settings.StreamingUri, AppKey);
             rpcClientUsingSession.LogInUsingSession(Settings.RpcUserName, rpcClient.Session);
-            Assert.That(rpcClientUsingSession.Session, Is.Not.Empty);
+            Assert.That(rpcClientUsingSession.Session, Is.Not.Null.Or.Empty);
 
             //After the session has been destroyed, trying to login using it should fail
             rpcClient.LogOut();
@@ -52,7 +52,9 @@ namespace CIAPI.IntegrationTests.Rpc
             //And there shouldn't be a session
             Assert.IsNullOrEmpty(rpcClientUsingSession.Session);
 
-            rpcClientUsingSession.LogOut();
+
+            // this client is already logged out. should we swallow unauthorized exceptions in the logout methods?
+            // rpcClientUsingSession.LogOut();
             rpcClientUsingSession.Dispose();
             rpcClient.Dispose();
         }

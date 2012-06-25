@@ -43,8 +43,7 @@ namespace CIAPI.Tests.Rpc
             Client rpcClient = BuildTestClient(out requestFactory, out streamingFactory);
             requestFactory.PrepareResponse = testRequest =>
             {
-                //string jsonConvertSerializeObject =
-                //    JsonConvert.SerializeObject(errorDto);
+       
                 testRequest.SetResponseStream(LoggedIn);
             };
 
@@ -62,8 +61,8 @@ namespace CIAPI.Tests.Rpc
             };
 
             rpcClientUsingSession.LogInUsingSession("foo", rpcClient.Session);
-        
-            Assert.That(rpcClientUsingSession.Session, Is.Not.Empty);
+
+            Assert.That(rpcClientUsingSession.Session, Is.Not.Null.Or.Empty);
             requestFactory.PrepareResponse = testRequest =>
             {
 
@@ -78,11 +77,7 @@ namespace CIAPI.Tests.Rpc
                 testRequest.SetResponseStream(AuthError);
             };
 
-            Assert.Throws<ReliableHttpException>(() =>
-            {
-                rpcClientUsingSession.LogInUsingSession(
-                    "foo", rpcClient.Session);
-            });
+            Assert.Throws<ReliableHttpException>(() => rpcClientUsingSession.LogInUsingSession("foo", rpcClient.Session));
 
             //And there shouldn't be a session
             Assert.IsNullOrEmpty(rpcClientUsingSession.Session);
@@ -304,7 +299,7 @@ namespace CIAPI.Tests.Rpc
         }
 
         [Test, Ignore("need to examine timeout functionality of both TestWebRequest and HttpWebRequest")]
-        public void ShouldThrowExceptionIfRequestTimesOut()
+        public void ShouldThrowExceptionIfRequestTimesOut()  
         {
             TestRequestFactory requestFactory;
             TestStreamingClientFactory streamingFactory;

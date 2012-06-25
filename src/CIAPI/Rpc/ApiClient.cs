@@ -315,6 +315,7 @@ namespace CIAPI.Rpc
         {
             try
             {
+                this.UserName = username;
                 this.Session = session;
                 AccountInformationResponseDTO d = this.AccountInformation.GetClientAndTradingAccount();
 
