@@ -10,6 +10,7 @@ using Salient.ReliableHttpClient.Testing;
 
 namespace CIAPI.Tests
 {
+
     public abstract class FixtureBase
     {
         

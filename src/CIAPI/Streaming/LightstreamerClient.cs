@@ -78,6 +78,11 @@ namespace CIAPI.Streaming
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void TearDownListener(IStreamingListener  listener)
         {
+            if (_disposed)
+            {
+                throw new ObjectDisposedException(GetType().FullName);
+            }
+
             if (_adapters.ContainsKey(listener.Adapter))
             {
                 var adapter = _adapters[listener.Adapter];
@@ -95,6 +100,11 @@ namespace CIAPI.Streaming
         public IStreamingListener<TDto> BuildListener<TDto>(string dataAdapter, string topic)
                 where TDto : class, new()
         {
+            if (_disposed)
+            {
+                throw new ObjectDisposedException(GetType().FullName);
+            }
+
             //lock (_adapters)
             {
                 if (!_adapters.ContainsKey(dataAdapter))
@@ -129,9 +139,10 @@ namespace CIAPI.Streaming
             }
         }
 
-
+        private bool _disposed;
         public void Dispose()
         {
+            _disposed = true;
             Dispose(true);
             GC.SuppressFinalize(this);
         }

@@ -253,6 +253,11 @@ namespace CIAPI.StreamingClient
         /// </summary>
         public void TearDownListener(IStreamingListener listener)
         {
+            if (_disposed)
+            {
+                throw new ObjectDisposedException(GetType().FullName);
+            }
+
             lock (_currentListeners)
             {
                 if (_currentListeners.ContainsValue(listener))
@@ -265,6 +270,11 @@ namespace CIAPI.StreamingClient
 
         public IStreamingListener<TDto> BuildListener<TDto>(string topic) where TDto : class, new()
         {
+
+            if (_disposed)
+            {
+                throw new ObjectDisposedException(GetType().FullName);
+            }
 
             if (!_currentListeners.ContainsKey(topic))
             {
@@ -302,6 +312,8 @@ namespace CIAPI.StreamingClient
         /// <param name="ee"></param>
         private void PauseAndRetryStartClient(int ph, Exception ee)
         {
+            
+            // #TODO: push to logger
             Debug.WriteLine("Lightstreamer Client, unable to start: " + ee);
 
             _lastDelay *= 2;
@@ -467,8 +479,10 @@ namespace CIAPI.StreamingClient
             }
         }
 
+        private bool _disposed;
         public void Dispose()
         {
+            _disposed = true;
             Dispose(true);
             GC.SuppressFinalize(this);
         }

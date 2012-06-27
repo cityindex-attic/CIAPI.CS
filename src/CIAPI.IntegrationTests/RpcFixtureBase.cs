@@ -3,6 +3,7 @@ using System.Text;
 using CIAPI.DTO;
 using CIAPI.Rpc;
 using CIAPI.Streaming;
+using CIAPI.StreamingClient;
 using NUnit.Framework;
 using Salient.ReflectiveLoggingAdapter;
 
@@ -10,6 +11,31 @@ using Salient.ReflectiveLoggingAdapter;
 
 namespace CIAPI.IntegrationTests.Streaming
 {
+    [TestFixture]
+    public class DisposableFixture : RpcFixtureBase
+    {
+        [Test]
+        public void ShouldThrowObjectDisposedException()
+        {
+
+            var client = this.BuildRpcClient();
+            client.LogIn(Settings.RpcUserName, Settings.RpcPassword);
+            IStreamingClient streamingClient = client.CreateStreamingClient();
+            
+            
+            client.Dispose();
+            streamingClient.Dispose();
+
+            Assert.Throws(typeof(ObjectDisposedException), () => client.BeginLogIn("", "", a => { }, null), "async calls not guarded");
+            Assert.Throws(typeof(ObjectDisposedException), () => client.AccountInformation.GetClientAndTradingAccount(), "sync calls not guarded");
+            Assert.Throws(typeof(ObjectDisposedException), () => client.CreateStreamingClient(), "streaming client factory method not guarded");
+            Assert.Throws(typeof(ObjectDisposedException), () => streamingClient.BuildDefaultPricesListener(9), "streaming client listener factory method not guarded");
+
+
+
+        }
+
+    }
     public class RpcFixtureBase 
     {
         protected ApiMarketInformationDTO[] GetAvailableCFDMarkets(Client rpcClient)

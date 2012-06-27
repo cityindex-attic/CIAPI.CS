@@ -75,6 +75,11 @@ namespace CIAPI.Rpc
 
         public Guid BeginRequest(RequestMethod method, string target, string uriTemplate, Dictionary<string, object> parameters, ContentType requestContentType, ContentType responseContentType, TimeSpan cacheDuration, int timeout, int retryCount, ReliableAsyncCallback callback, object state)
         {
+            if (_disposed)
+            {
+                throw new ObjectDisposedException(GetType().FullName);
+            }
+
             target = PrepareUrl(_rootUri.AbsoluteUri ,target);
             var param = new Dictionary<string, object>(parameters ?? new Dictionary<string, object>());
             if (Http200ErrorsOnly)
@@ -90,7 +95,10 @@ namespace CIAPI.Rpc
 
         public T Request<T>(RequestMethod method, string target, string uriTemplate, Dictionary<string, object> parameters, ContentType requestContentType, ContentType responseContentType, TimeSpan cacheDuration, int timeout, int retryCount)
         {
-
+            if (_disposed)
+            {
+                throw new ObjectDisposedException(GetType().FullName);
+            }
             target = PrepareUrl(_rootUri.AbsoluteUri, target);
             var param = new Dictionary<string, object>(parameters ?? new Dictionary<string, object>());
             if (Http200ErrorsOnly)
@@ -105,6 +113,11 @@ namespace CIAPI.Rpc
 
         public string Request(RequestMethod method, string target, string uriTemplate, Dictionary<string, object> parameters, ContentType requestContentType, ContentType responseContentType, TimeSpan cacheDuration, int timeout, int retryCount)
         {
+            if (_disposed)
+            {
+                throw new ObjectDisposedException(GetType().FullName);
+            }
+
             target = PrepareUrl(_rootUri.AbsoluteUri, target);
             var param = new Dictionary<string, object>(parameters ?? new Dictionary<string, object>());
             if (Http200ErrorsOnly)
@@ -117,8 +130,18 @@ namespace CIAPI.Rpc
         }
 
         #endregion
+        
+        protected override void Dispose(bool disposing)
+        {
+            _disposed = true;
+            if (disposing)
+            {
+                // dispose components
+            }
 
-
+            base.Dispose(disposing);
+        }
+        private bool _disposed;
 
         private Uri _streamingUri;
         private Uri _rootUri;
@@ -218,6 +241,10 @@ namespace CIAPI.Rpc
         }
         public override string EndRequest(ReliableAsyncResult result)
         {
+            if (_disposed)
+            {
+                throw new ObjectDisposedException(GetType().FullName);
+            }
             string responseText;
             try
             {
@@ -279,6 +306,11 @@ namespace CIAPI.Rpc
 
         public IStreamingClient CreateStreamingClient()
         {
+            if (_disposed)
+            {
+                throw new ObjectDisposedException(GetType().FullName);
+            }
+
             return _streamingFactory.Create(_streamingUri, UserName, Session, Serializer);
         }
 
