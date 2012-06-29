@@ -73,7 +73,7 @@
             switch (propertyType) {
                 case "string":
                     // new formats "wcf-date"
-                    if (property.format == "wcf-date") {
+                    if (property && property.hasOwnProperty("format") && property.format == "wcf-date") {
                         propertyType = "Date";
                     }
                     else {
@@ -124,6 +124,7 @@
                         this.writeLine("     * " + current.value.description);
                         this.writeLine("     * ");
                         this.writeLine("     * DO NOT EDIT -- code is generated from API metadata. Changes will be overwritten.");
+                        this.writeLine("     * Generated on "+new Date().toGMTString());
                         this.writeLine("     * ");
                         this.writeLine("     */");
                     }
@@ -187,7 +188,11 @@
                                         this.writeLine("                {");
                                         this.writeLine("                    for(var "+iterVar+":int = 0; "+iterVar+" < data."+key+".length; "+iterVar+"++)");
                                         this.writeLine("                    {");
-                                        this.writeLine("                        "+nameLowerCaseLead(key)+".push(new "+this.normalizeKey(prop.items[0].$ref)+"(data."+key+"["+iterVar+"]));");
+                                        if(prop.items && prop.items.length>0 && prop.items[0].hasOwnProperty("$ref")){
+                                            this.writeLine("                        "+nameLowerCaseLead(key)+".push(new "+this.normalizeKey(prop.items[0].$ref)+"(data."+key+"["+iterVar+"]));");
+                                        } else {
+                                            this.writeLine("                        "+nameLowerCaseLead(key)+".push(new "+this.applyFormat(prop.items[0])+"(data."+key+"["+iterVar+"]));");
+                                        }
                                         this.writeLine("                    }");
                                         this.writeLine("                }");
                                         arrayCount++;
@@ -237,7 +242,6 @@
         }
         return ret;
     }
-
     function isArray(obj) {
         return ((typeof (obj) == "object") && isDefined(obj.length));
     }

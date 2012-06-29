@@ -124,6 +124,7 @@
                             this.writeLine("     * Test for " + current.key+".");
                             this.writeLine("     * ");
                             this.writeLine("     * DO NOT EDIT -- test is generated from API metadata. Changes will be overwritten.");
+                            this.writeLine("     * Generated on "+new Date().toGMTString());
                             this.writeLine("     * ");
                             this.writeLine("     */");
                         }
