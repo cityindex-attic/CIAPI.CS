@@ -203,6 +203,8 @@
                                     } else {
                                         if(prop.format && prop.format=='wcf-date'){
                                             this.writeLine("                "+nameLowerCaseLead(key)+" = DateUtils.dateFromJSONDateString(data."+key+");");
+                                        } else if(prop.type && prop.type.hasOwnProperty("$ref")) {
+                                            this.writeLine("                "+nameLowerCaseLead(key)+" = new "+this.resolveType(prop)+"(data."+key+");");
                                         } else {
                                             this.writeLine("                "+nameLowerCaseLead(key)+" = data."+key+";");
                                         }
