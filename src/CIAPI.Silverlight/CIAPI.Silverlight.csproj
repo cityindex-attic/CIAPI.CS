@@ -56,6 +56,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Salient.ReflectiveLoggingAdapter.3.2.0\lib\sl4\Release\Salient.ReflectiveLoggingAdapter.Silverlight.dll</HintPath>
     </Reference>
+    <Reference Include="Salient.ReliableHttpClient.Serializer.Newtonsoft.Silverlight">
+      <HintPath>..\packages\Salient.ReliableHttpClient.1.0.0\lib\sl4\Release\Salient.ReliableHttpClient.Serializer.Newtonsoft.Silverlight.dll</HintPath>
+    </Reference>
+    <Reference Include="Salient.ReliableHttpClient.Silverlight">
+      <HintPath>..\packages\Salient.ReliableHttpClient.1.0.0\lib\sl4\Release\Salient.ReliableHttpClient.Silverlight.dll</HintPath>
+    </Reference>
     <Reference Include="SilverlightClient">
       <HintPath>..\packages\Lightstreamer 4.2 Client\sdk_client_silverlight\lib\StrongName\SilverlightClient.dll</HintPath>
     </Reference>
@@ -188,10 +194,6 @@
     <ProjectReference Include="..\CIAPI.Serializer.Silverlight\CIAPI.Serializer.Silverlight.csproj">
       <Project>{523FB37B-0E87-4F82-A72D-5AF58BDE2509}</Project>
       <Name>CIAPI.Serializer.Silverlight</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ReliableHttpClient\Salient.ReliableHttpClient.Silverlight\Salient.ReliableHttpClient.Silverlight.csproj">
-      <Project>{5532B9EE-BDE5-446C-883E-EF210BA1865F}</Project>
-      <Name>Salient.ReliableHttpClient.Silverlight</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />

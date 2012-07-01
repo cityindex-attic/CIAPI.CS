@@ -59,16 +59,19 @@
     <Reference Include="Microsoft.Phone" />
     <Reference Include="Microsoft.Phone.Interop" />
     <Reference Include="Newtonsoft.Json">
-      <HintPath>libs\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\packages\Newtonsoft.Json.4.5.7\lib\sl4-windowsphone71\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\..\packages\NUnit.2.6.0.12054\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="Salient.ReflectiveLoggingAdapter.Phone7">
-      <HintPath>libs\Salient.ReflectiveLoggingAdapter.Phone7.dll</HintPath>
+      <HintPath>..\..\packages\Salient.ReflectiveLoggingAdapter.3.2.0\lib\sl3-wp\Release\Salient.ReflectiveLoggingAdapter.Phone7.dll</HintPath>
     </Reference>
     <Reference Include="Salient.ReliableHttpClient.Phone7">
-      <HintPath>libs\Salient.ReliableHttpClient.Phone7.dll</HintPath>
+      <HintPath>..\..\packages\Salient.ReliableHttpClient.1.0.0\lib\sl3-wp\Release\Salient.ReliableHttpClient.Phone7.dll</HintPath>
     </Reference>
     <Reference Include="Salient.ReliableHttpClient.Serializer.Newtonsoft.Phone7">
-      <HintPath>libs\Salient.ReliableHttpClient.Serializer.Newtonsoft.Phone7.dll</HintPath>
+      <HintPath>..\..\packages\Salient.ReliableHttpClient.1.0.0\lib\sl3-wp\Release\Salient.ReliableHttpClient.Serializer.Newtonsoft.Phone7.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows" />
     <Reference Include="system" />
@@ -100,6 +103,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="Properties\AppManifest.xml" />
     <None Include="Properties\WMAppManifest.xml" />
   </ItemGroup>

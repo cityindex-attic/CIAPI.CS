@@ -45,6 +45,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Salient.ReflectiveLoggingAdapter.3.2.0\lib\net35\Release\Salient.ReflectiveLoggingAdapter.35.dll</HintPath>
     </Reference>
+    <Reference Include="Salient.ReliableHttpClient">
+      <HintPath>..\packages\Salient.ReliableHttpClient.1.0.0\lib\net35\Release\Salient.ReliableHttpClient.dll</HintPath>
+    </Reference>
+    <Reference Include="Salient.ReliableHttpClient.Serializer.Newtonsoft">
+      <HintPath>..\packages\Salient.ReliableHttpClient.1.0.0\lib\net35\Release\Salient.ReliableHttpClient.Serializer.Newtonsoft.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
@@ -80,10 +86,6 @@
     <ProjectReference Include="..\CIAPI.Serializer\CIAPI.Serializer.csproj">
       <Project>{B6CE30C2-5A52-4A4C-884B-64504902F833}</Project>
       <Name>CIAPI.Serializer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ReliableHttpClient\Salient.ReliableHttpClient\Salient.ReliableHttpClient.csproj">
-      <Project>{528B283F-41C8-489D-A031-C9A4058BB283}</Project>
-      <Name>Salient.ReliableHttpClient</Name>
     </ProjectReference>
     <ProjectReference Include="..\CIAPI\CIAPI.csproj">
       <Project>{B40E6F1C-453E-44A2-BA9D-1692378B355C}</Project>

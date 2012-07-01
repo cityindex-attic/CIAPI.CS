@@ -52,6 +52,15 @@
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.4.5.7\lib\sl4\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Salient.ReflectiveLoggingAdapter.Silverlight">
+      <HintPath>..\packages\Salient.ReflectiveLoggingAdapter.3.2.0\lib\sl4\Release\Salient.ReflectiveLoggingAdapter.Silverlight.dll</HintPath>
+    </Reference>
+    <Reference Include="Salient.ReliableHttpClient.Serializer.Newtonsoft.Silverlight">
+      <HintPath>..\packages\Salient.ReliableHttpClient.1.0.0\lib\sl4\Release\Salient.ReliableHttpClient.Serializer.Newtonsoft.Silverlight.dll</HintPath>
+    </Reference>
+    <Reference Include="Salient.ReliableHttpClient.Silverlight">
+      <HintPath>..\packages\Salient.ReliableHttpClient.1.0.0\lib\sl4\Release\Salient.ReliableHttpClient.Silverlight.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows" />
     <Reference Include="system" />
     <Reference Include="System.Core" />
@@ -64,12 +73,6 @@
       <Link>Serializer.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ReliableHttpClient\Salient.ReliableHttpClient.Silverlight\Salient.ReliableHttpClient.Silverlight.csproj">
-      <Project>{5532B9EE-BDE5-446C-883E-EF210BA1865F}</Project>
-      <Name>Salient.ReliableHttpClient.Silverlight</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

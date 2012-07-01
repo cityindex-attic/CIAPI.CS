@@ -112,9 +112,12 @@
     <Content Include="src\CSharpRouteGenerator.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="src\generate_actionscript.js" />
     <Content Include="src\JSchemaInheritanceResolver.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="src\JSchemaProvider.ActionScriptTestVisitor.js" />
+    <Content Include="src\JSchemaProvider.ActionScriptVisitor.js" />
     <Content Include="src\JSchemaProvider.CSharpVisitor.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

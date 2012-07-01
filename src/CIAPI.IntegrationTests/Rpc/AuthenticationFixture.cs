@@ -32,13 +32,16 @@ namespace CIAPI.IntegrationTests.Rpc
         public void LoginUsingSessionShouldValidateSession()
         {
             var rpcClient = new Client(Settings.RpcUri, Settings.StreamingUri, AppKey);
+
             rpcClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);
 
             Assert.That(rpcClient.Session, Is.Not.Null.Or.Empty);
 
             //This should work
             var rpcClientUsingSession = new Client(Settings.RpcUri, Settings.StreamingUri, AppKey);
+
             rpcClientUsingSession.LogInUsingSession(Settings.RpcUserName, rpcClient.Session);
+                
             Assert.That(rpcClientUsingSession.Session, Is.Not.Null.Or.Empty);
 
             //After the session has been destroyed, trying to login using it should fail
