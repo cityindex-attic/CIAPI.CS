@@ -14,7 +14,7 @@ namespace CIAPI.IntegrationTests.Rpc
 {
     [TestFixture]
     public class ErrorHandlingFixture : RpcFixtureBase
-    {
+    { 
         [Test]
         public void ShouldGiveGuidanceWhenSpecifyingInvalidServerName()
         {
