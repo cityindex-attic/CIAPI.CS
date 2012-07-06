@@ -35,7 +35,7 @@ namespace CIAPI.IntegrationTests.Rpc
                 rpcClient.News.GetNewsDetail("dj", item.StoryId.ToString());
             }
 
-            new AutoResetEvent(false).WaitOne(10000);
+            Thread.Sleep(10000);
 
             rpcClient.LogOut();
 

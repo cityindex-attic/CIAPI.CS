@@ -62,9 +62,10 @@ namespace CIAPI.Rpc
 
             Log.Debug("LATENCY:/n" + latencyData);
 
+            // #FIXME: determine appropriate identifier to replace session
             try
             {
-                ((Client)Client).BeginRequest(RequestMethod.POST, AppmetricsUri.AbsoluteUri, "", new Dictionary<string, string>(), new Dictionary<string, object> { { "MessageAppKey", ((Client)Client).AppKey ?? "null" }, { "MessageSession", ((Client)Client).Session ?? "null" }, { "MessagesList", latencyData } },
+                ((Client)Client).BeginRequest(RequestMethod.POST, AppmetricsUri.AbsoluteUri, "", new Dictionary<string, string>(), new Dictionary<string, object> { { "MessageAppKey", ((Client)Client).AppKey ?? "null" }, { "MessageSession", "null" }, { "MessagesList", latencyData } },
                                      ContentType.FORM,
                                      ContentType.TEXT,
                                      TimeSpan.FromMilliseconds(0),
