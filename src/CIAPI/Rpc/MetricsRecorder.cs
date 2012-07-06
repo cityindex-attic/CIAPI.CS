@@ -21,7 +21,13 @@ namespace CIAPI.Rpc
             _metricsTimer = new Timer(ignored => PostMetrics(), null, 1000, 10000);
         }
 
-  
+        public override void Stop()
+        {
+            
+            _metricsTimer.Change(int.MaxValue, int.MaxValue);
+            PostMetrics();
+            base.Stop();
+        }
         private void PostMetrics()
         {
             
