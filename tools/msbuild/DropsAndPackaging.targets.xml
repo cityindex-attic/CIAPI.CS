@@ -13,7 +13,7 @@
   <Target Name="Package" DependsOnTargets="CreateDropDirectories;CopyMSBuildOutputToDropDirectory;CopySourceToDropDirectory;DeleteBinFilesFromSource;CopyLicenseToAllDirectories;CopyReportsToDropFolder">
     <Message Text="Packaging with NuGet" />
     <Copy SourceFiles="$(RootDirectory)\src\CIAPI.nuspec" DestinationFolder="$(DropDirectory)"/>
-    <Exec Command='"$(NuGetEXE)" pack -sym $(DropDirectory)\CIAPI.nuspec' ContinueOnError='false' WorkingDirectory='$(DropDirectory)'/>
+    <Exec Command='"$(NuGetEXE)" pack -Symbols "$(DropDirectory)\CIAPI.nuspec"' ContinueOnError='false' WorkingDirectory='$(DropDirectory)'/>
   </Target>
 
   <Target Name="PublishToNugetOrg" DependsOnTargets="Package">
