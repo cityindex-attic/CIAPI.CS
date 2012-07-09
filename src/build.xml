@@ -29,7 +29,7 @@
 		<!-- list of test assemblies (space separated) -->
 		<TestAssemblies>$(SrcDirectory)\CIAPI.Tests\bin\$(Configuration)\CIAPI.Tests.dll</TestAssemblies>
 		<!-- list of assembly filters (space separated) - see https://github.com/sawilde/opencover/wiki/Usage -filter: for syntax-->
-		<OpenCoverFilter>+[*]* -[CIAPI.Tests*]* -[*]CIAPI.DTO* -[*]Lightstreamer.DotNet.Client* </OpenCoverFilter>
+		<OpenCoverFilter>+[*]* -[CIAPI.Tests*]* -[*]CIAPI.DTO* -[DotNetClient_N2]* </OpenCoverFilter>
 	</PropertyGroup>
  
   <Target Name="Go" DependsOnTargets="UpdateVersion;Build;CalculateMetrics;Package">
