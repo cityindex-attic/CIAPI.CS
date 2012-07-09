@@ -23,13 +23,16 @@
 
   <ItemGroup>
     <Assemblies     Include="$(SrcDirectory)\CIAPI\bin\$(Configuration)\CIAPI.dll"/>
-    <TestAssemblies Include="$(SrcDirectory)\CIAPI.Tests\bin\$(Configuration)\CIAPI.Tests.dll"/>
   </ItemGroup>
 
+	<PropertyGroup>
+		<!-- list of test assemblies (space separated) -->
+		<TestAssemblies>$(SrcDirectory)\CIAPI.Tests\bin\$(Configuration)\CIAPI.Tests.dll</TestAssemblies>
+		<!-- list of assembly filters (space separated) - see https://github.com/sawilde/opencover/wiki/Usage -filter: for syntax-->
+		<OpenCoverFilter>+[*]* -[CIAPI.Tests*]* -[*]CIAPI.DTO* -[*]Lightstreamer.DotNet.Client* </OpenCoverFilter>
+	</PropertyGroup>
  
-  <Target Name="Go" DependsOnTargets="UpdateVersion;Build;RunTests;Package">
-                                      
-    <!-- CalculateMetrics  calculation of metrics disabled until replacement for Reflector can be integrated -->
+  <Target Name="Go" DependsOnTargets="UpdateVersion;Build;CalculateMetrics;Package">
   </Target>
   
   <!-- Used to build the Dev branch - everything except packaging RunTests reports/*NUnitResults.xml -->
