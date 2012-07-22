@@ -7,6 +7,7 @@
     <licenseUrl>https://github.com/cityindex/CIAPI.CS/raw/master/LICENSE.txt</licenseUrl>
     <dependencies>
       <dependency id="Salient.ReliableHttpClient" />
+      <dependency id="Newtonsoft.Json" />
     </dependencies>
     <id>CIAPI</id>
     <title>CIAPI</title>

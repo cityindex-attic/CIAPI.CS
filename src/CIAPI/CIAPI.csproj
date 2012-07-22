@@ -44,20 +44,17 @@
     <Reference Include="DotNetClient_N2">
       <HintPath>..\packages\Lightstreamer 4.2 Client\sdk_client_dotnet\lib\StrongName\DotNetClient_N2.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.4.5.7\lib\net35\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="Salient.ReflectiveLoggingAdapter.35, Version=3.2.0.22, Culture=neutral, PublicKeyToken=b9b5972b9f69332b, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Salient.ReflectiveLoggingAdapter.3.2.0\lib\net35\Release\Salient.ReflectiveLoggingAdapter.35.dll</HintPath>
     </Reference>
-    <Reference Include="Salient.ReliableHttpClient, Version=1.0.2.6, Culture=neutral, PublicKeyToken=de2ccdae144c2020, processorArchitecture=MSIL">
+    <Reference Include="Salient.ReliableHttpClient, Version=1.0.3.7, Culture=neutral, PublicKeyToken=de2ccdae144c2020, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Salient.ReliableHttpClient.1.0.2\lib\net35\Release\Salient.ReliableHttpClient.dll</HintPath>
+      <HintPath>..\packages\Salient.ReliableHttpClient.1.0.3\lib\net35\Release\Salient.ReliableHttpClient.dll</HintPath>
     </Reference>
-    <Reference Include="Salient.ReliableHttpClient.Serializer.Newtonsoft, Version=1.0.2.6, Culture=neutral, PublicKeyToken=af1483d0b03a76fa, processorArchitecture=MSIL">
+    <Reference Include="Salient.ReliableHttpClient.Serializer.Newtonsoft, Version=1.0.3.7, Culture=neutral, PublicKeyToken=af1483d0b03a76fa, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Salient.ReliableHttpClient.1.0.2\lib\net35\Release\Salient.ReliableHttpClient.Serializer.Newtonsoft.dll</HintPath>
+      <HintPath>..\packages\Salient.ReliableHttpClient.1.0.3\lib\net35\Release\Salient.ReliableHttpClient.Serializer.Newtonsoft.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

@@ -38,12 +38,15 @@ namespace CIAPI.Rpc
 
 
             var records = GetRequests();
-            Clear();
 
             if (records.Count == 0)
             {
                 return;
             }
+
+            Clear();
+
+            
 
             var sb = new StringBuilder();
             foreach (var item in records)
