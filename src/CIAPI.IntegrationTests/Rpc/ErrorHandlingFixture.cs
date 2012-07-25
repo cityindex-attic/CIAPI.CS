@@ -109,21 +109,7 @@ namespace CIAPI.IntegrationTests.Rpc
         }
 
 
-        [Test,Ignore("endpoint removed")]
-        public void Issue166ExceptionEndpointShouldThrowCorrectException()
-        {
-            var rpcClient = BuildRpcClient();
-
-            try
-            {
-                var response = rpcClient.ExceptionHandling.GenerateException(4003);
-            }
-            catch (ReliableHttpException ex)
-            {
-
-                Assert.AreEqual(4003, ex.ErrorCode, "expecting a 4003");
-            }
-        }
+        
 
     }
 }

@@ -106,7 +106,7 @@ namespace CIAPI.DTO
         /// </summary>
         public ApiBasicStopLimitOrderDTO OcoOrder { get; set; }
         /// <summary>
-        /// The last time that the order changed. Note - does not include things such as the current market price.
+        /// The last time that the order changed. **Note:** does not include things such as the current market price.
         /// </summary>
         public DateTime LastChangedDateTimeUTC { get; set; }
         /// <summary>
@@ -140,15 +140,15 @@ namespace CIAPI.DTO
     public partial class ApiChangePasswordRequestDTO
     {
         /// <summary>
-        /// The username of the user whose password is to be changed (case sensitive).
+        /// The username of the user whose password is to be changed *(case sensitive)*.
         /// </summary>
         public string UserName { get; set; }
         /// <summary>
-        /// The user's existing password (case sensitive).
+        /// The user's existing password *(case sensitive)*.
         /// </summary>
         public string Password { get; set; }
         /// <summary>
-        /// The user's new password (case sensitive).
+        /// The user's new password *(case sensitive)*.
         /// </summary>
         public string NewPassword { get; set; }
     }
@@ -207,7 +207,7 @@ namespace CIAPI.DTO
     }
 
     /// <summary>
-    /// Message translation entity with client specific translated textual strings.
+    /// Message translation entity with client specific translated text strings.
     /// </summary>
     public partial class ApiClientApplicationMessageTranslationDTO
     {
@@ -250,7 +250,7 @@ namespace CIAPI.DTO
     public partial class ApiClientApplicationMessageTranslationResponseDTO
     {
         /// <summary>
-        /// List of message translations (key/value pairs).
+        /// List of message translations *(key/value pairs)*.
         /// </summary>
         public ApiClientApplicationMessageTranslationDTO[] TranslationKeyValuePairs { get; set; }
     }
@@ -267,12 +267,12 @@ namespace CIAPI.DTO
     }
 
     /// <summary>
-    /// Contains DateTime represented as Utc time and timezone offset in minutes to convert back to local time
+    /// Contains DateTime represented as UTC time and timezone offset in minutes to convert back to local time.
     /// </summary>
     public partial class ApiDateTimeOffsetDTO
     {
         /// <summary>
-        /// Gets the date and time in UTC
+        /// Gets the date and time in UTC.
         /// </summary>
         public DateTime UtcDateTime { get; set; }
         /// <summary>
@@ -309,7 +309,7 @@ namespace CIAPI.DTO
     public partial class ApiErrorResponseDTO
     {
         /// <summary>
-        /// The intended HTTP status code. This will be the same value as the actual HTTP status code unless the QueryString contains only200=true. This is useful for JavaScript clients who can only read responses with status code 200.
+        /// The intended HTTP status code. This will be the same value as the actual HTTP status code unless the QueryString contains *only200=true*. This is useful for JavaScript clients who can only read responses with status code 200.
         /// </summary>
         public int HttpStatus { get; set; }
         /// <summary>
@@ -353,22 +353,22 @@ namespace CIAPI.DTO
     }
 
     /// <summary>
-    /// Request to delete a session (log off).
+    /// Request to delete a session *(log off)*.
     /// </summary>
     public partial class ApiLogOffRequestDTO
     {
         /// <summary>
-        /// User name of the session to delete (log off). This is case sensitive.
+        /// User name of the session to delete *(log off)*. This is case sensitive.
         /// </summary>
         public string UserName { get; set; }
         /// <summary>
-        /// Session identifier (session token) to delete (log off).
+        /// Session identifier *(session token)* to delete *(log off)*.
         /// </summary>
-        public string Session { get; set; }
+        public string session { get; set; }
     }
 
     /// <summary>
-    /// Response from a session delete (Log Out) request.
+    /// Response from a session delete *(Log Out)* request.
     /// </summary>
     public partial class ApiLogOffResponseDTO
     {
@@ -379,7 +379,7 @@ namespace CIAPI.DTO
     }
 
     /// <summary>
-    /// Request to create a session (log on).
+    /// Request to create a session *(log on)*.
     /// </summary>
     public partial class ApiLogOnRequestDTO
     {
@@ -400,18 +400,18 @@ namespace CIAPI.DTO
         /// </summary>
         public string AppVersion { get; set; }
         /// <summary>
-        /// Any client application comments on what to associate with this session. (Optional).
+        /// Any client application comments on what to associate with this session. *(Optional)*.
         /// </summary>
         public string AppComments { get; set; }
     }
 
     /// <summary>
-    /// Response to a LogOn call.
+    /// Response to a [LogOn](http://labs.cityindex.com/docs/#HTTP%20Services/LogOn.htm) call.
     /// </summary>
     public partial class ApiLogOnResponseDTO
     {
         /// <summary>
-        /// Your session token (treat as a random string). <BR /> Session tokens are valid for a set period from the time of their creation. <BR /> The period is subject to change, and may vary depending on who you logon as.
+        /// Your session token *(treat as a random string)*. <BR /> Session tokens are valid for a set period from the time of their creation. <BR /> The period is subject to change, and may vary depending on who you logon as.
         /// </summary>
         public string Session { get; set; }
         /// <summary>
@@ -425,7 +425,7 @@ namespace CIAPI.DTO
     }
 
     /// <summary>
-    /// Generic look up data entities - such as localised textual names.
+    /// Generic look up data entities - such as localised text names.
     /// </summary>
     public partial class ApiLookupDTO
     {
@@ -646,7 +646,7 @@ namespace CIAPI.DTO
         /// </summary>
         public ApiTradingDayTimesDTO[] MarketPricingTimes { get; set; }
         /// <summary>
-        /// Breaks throughout each trading day (Day is specified as 'DayOfWeek').
+        /// Breaks throughout each trading day *(Day is specified as 'DayOfWeek')*.
         /// </summary>
         public ApiTradingDayTimesDTO[] MarketBreakTimes { get; set; }
         /// <summary>
@@ -658,7 +658,7 @@ namespace CIAPI.DTO
         /// </summary>
         public decimal? GuaranteedOrderPremium { get; set; }
         /// <summary>
-        /// The unit type being used for the guaranteed order premium. This can be (MultipleOfQuantity=1, PercentOfConsideration=2).
+        /// The unit type being used for the guaranteed order premium. This can be *(MultipleOfQuantity=1, PercentOfConsideration=2)*.
         /// </summary>
         public int? GuaranteedOrderPremiumUnits { get; set; }
         /// <summary>
@@ -666,11 +666,11 @@ namespace CIAPI.DTO
         /// </summary>
         public decimal? GuaranteedOrderMinDistance { get; set; }
         /// <summary>
-        /// Guaranteed order minimum distance unit type. This can be: (Percentage=26, Points=27).
+        /// Guaranteed order minimum distance unit type. This can be: *(Percentage=26, Points=27)*.
         /// </summary>
         public int? GuaranteedOrderMinDistanceUnits { get; set; }
         /// <summary>
-        /// Price tolerance units - used with Price Tolerance as a multiplier (i.e. BetPer or Override Bet Per).
+        /// Price tolerance units - used with Price Tolerance as a multiplier *(i.e. BetPer or Override Bet Per)*.
         /// </summary>
         public decimal? PriceToleranceUnits { get; set; }
         /// <summary>
@@ -810,7 +810,7 @@ namespace CIAPI.DTO
         /// </summary>
         public ApiBasicStopLimitOrderDTO LimitOrder { get; set; }
         /// <summary>
-        /// The last time that the order changed. Note - does not include things such as the current market price.
+        /// The last time that the order changed. **Note:** does not include things such as the current market price.
         /// </summary>
         public DateTime LastChangedDateTimeUTC { get; set; }
         /// <summary>
@@ -880,11 +880,11 @@ namespace CIAPI.DTO
         /// </summary>
         public int TradingAccountId { get; set; }
         /// <summary>
-        /// Currency ID for order (as represented in the trading system).
+        /// Currency ID for order *(as represented in the trading system)*.
         /// </summary>
         public int CurrencyId { get; set; }
         /// <summary>
-        /// Status ID of order (as represented in the trading system).
+        /// Status ID of order *(as represented in the trading system)*.
         /// </summary>
         public int StatusId { get; set; }
         /// <summary>
@@ -1006,14 +1006,14 @@ namespace CIAPI.DTO
     }
 
     /// <summary>
-    /// An (empty) response to indicate that the save account information operation has completed.
+    /// An *(empty)* response to indicate that the save account information operation has completed.
     /// </summary>
     public partial class ApiSaveAccountInformationResponseDTO
     {
     }
 
     /// <summary>
-    /// An (empty) response to indicate that the save market information operation has completed.
+    /// An *(empty)* response to indicate that the save market information operation has completed.
     /// </summary>
     public partial class ApiSaveMarketInformationResponseDTO
     {
@@ -1031,7 +1031,7 @@ namespace CIAPI.DTO
     }
 
     /// <summary>
-    /// An (empty) response to indicate the save watchlist operation has completed.
+    /// An *(empty)* response to indicate the save watchlist operation has completed.
     /// </summary>
     public partial class ApiSaveWatchlistResponseDTO
     {
@@ -1221,7 +1221,7 @@ namespace CIAPI.DTO
     public partial class ApiTradeOrderResponseDTO
     {
         /// <summary>
-        /// The status of the order (Pending, Accepted, Open, etc.)
+        /// The status of the order *(Pending, Accepted, Open, etc.)*
         /// </summary>
         public int Status { get; set; }
         /// <summary>
@@ -1268,11 +1268,11 @@ namespace CIAPI.DTO
         /// </summary>
         public string TradingAccountCode { get; set; }
         /// <summary>
-        /// Trading account status with possible values (Open, Closed).
+        /// Trading account status with possible values *(Open, Closed)*.
         /// </summary>
         public string TradingAccountStatus { get; set; }
         /// <summary>
-        /// Trading account type with possible values (Spread, CFD).
+        /// Trading account type with possible values *(Spread, CFD)*.
         /// </summary>
         public string TradingAccountType { get; set; }
     }
@@ -1287,11 +1287,11 @@ namespace CIAPI.DTO
         /// </summary>
         public int DayOfWeek { get; set; }
         /// <summary>
-        /// Start of the market time in both UTC and local time (using Offset property).
+        /// Start of the market time in both UTC and local time *(using Offset property)*.
         /// </summary>
         public ApiDateTimeOffsetDTO StartTimeUtc { get; set; }
         /// <summary>
-        /// End of the market time in both UTC and local time (using Offset property).
+        /// End of the market time in both UTC and local time *(using Offset property)*.
         /// </summary>
         public ApiDateTimeOffsetDTO EndTimeUtc { get; set; }
     }
@@ -1312,7 +1312,7 @@ namespace CIAPI.DTO
     }
 
     /// <summary>
-    /// The current margin and other account balance data for a specific client account used in the ClientAccountMargin stream.
+    /// The current margin and other account balance data for a specific client account used in the [ClientAccountMargin](http://labs.cityindex.com/docs/#Streaming%20Data/ClientAccountMargin.htm) stream.
     /// </summary>
     public partial class ClientAccountMarginDTO
     {
@@ -1333,7 +1333,7 @@ namespace CIAPI.DTO
         /// </summary>
         public decimal NetEquity { get; set; }
         /// <summary>
-        /// Open trade equity (open / unrealised PNL) expressed in the client's base currency.
+        /// Open trade equity *(open / unrealised PNL)* expressed in the client's base currency.
         /// </summary>
         public decimal OpenTradeEquity { get; set; }
         /// <summary>
@@ -1481,17 +1481,6 @@ namespace CIAPI.DTO
     }
 
     /// <summary>
-    /// Result of IT Finance session key request.
-    /// </summary>
-    public partial class GetITFinanceSessionServiceResponseDTO
-    {
-        /// <summary>
-        /// The requested IT Finance session key.
-        /// </summary>
-        public string ITFinanceSessionKey { get; set; }
-    }
-
-    /// <summary>
     /// Results of client preference get.
     /// </summary>
     public partial class GetKeyListClientPreferenceResponseDTO
@@ -1562,7 +1551,7 @@ namespace CIAPI.DTO
     }
 
     /// <summary>
-    /// Response containing the order. Only one of the two fields will be populated depending upon the type of order (Trade or Stop / Limit).
+    /// Response containing the order. Only one of the two fields will be populated depending upon the type of order *(Trade or Stop / Limit)*.
     /// </summary>
     public partial class GetOrderResponseDTO
     {
@@ -1577,16 +1566,16 @@ namespace CIAPI.DTO
     }
 
     /// <summary>
-    /// The response from a price bar history GET request. Contains both an array of finalized price bars, and a partial (not finalized) bar for the current period.
+    /// The response from a price bar history GET request. Contains both an array of finalized price bars, and a partial *(not finalized)* bar for the current period.
     /// </summary>
     public partial class GetPriceBarResponseDTO
     {
         /// <summary>
-        /// An array of finalized price bars, sorted in ascending order based on PriceBar.BarDate
+        /// An array of finalized price bars, sorted in ascending order based on PriceBar.BarDate.
         /// </summary>
         public PriceBarDTO[] PriceBars { get; set; }
         /// <summary>
-        /// The (non-finalized) price bar data for the current period (i.e, the period that hasn't yet completed).
+        /// The *(non-finalized)* price bar data for the current period *(i.e, the period that has not yet completed)*.
         /// </summary>
         public PriceBarDTO PartialPriceBar { get; set; }
     }
@@ -1616,7 +1605,7 @@ namespace CIAPI.DTO
         /// </summary>
         public string LatestVersion { get; set; }
         /// <summary>
-        /// The url of the upgrade.
+        /// The URL of the upgrade.
         /// </summary>
         public string UpgradeUrl { get; set; }
     }
@@ -1637,7 +1626,7 @@ namespace CIAPI.DTO
     }
 
     /// <summary>
-    /// Contains the response of a ListActiveStopLimitOrder query.
+    /// Contains the response of a [ListActiveStopLimitOrders](http://labs.cityindex.com/docs/#HTTP%20Services/ListActiveStopLimitOrders.htm) query.
     /// </summary>
     public partial class ListActiveStopLimitOrderResponseDTO
     {
@@ -1648,7 +1637,7 @@ namespace CIAPI.DTO
     }
 
     /// <summary>
-    /// Contains the response of a ListCfdMarkets query.
+    /// Contains the response of a [ListCfdMarkets](http://labs.cityindex.com/docs/#HTTP%20Services/ListCfdMarkets.htm) query.
     /// </summary>
     public partial class ListCfdMarketsResponseDTO
     {
@@ -1703,6 +1692,29 @@ namespace CIAPI.DTO
     }
 
     /// <summary>
+    /// A request for news stories.
+    /// </summary>
+    public partial class ListNewsHeadlinesRequestDTO
+    {
+        /// <summary>
+        /// The source for the news stories. Leave blank to use the default Dow Jones news provider as the source.
+        /// </summary>
+        public string Source { get; set; }
+        /// <summary>
+        /// A category that is used to filter the news.
+        /// </summary>
+        public string Category { get; set; }
+        /// <summary>
+        /// The maximum number of responses to return. Leave blank to return the top 25 results.
+        /// </summary>
+        public int MaxResults { get; set; }
+        /// <summary>
+        /// The Culture ID used to filter results. Leave blank to use the culture of the requesting user.
+        /// </summary>
+        public int CultureId { get; set; }
+    }
+
+    /// <summary>
     /// The response from a GET request for News headlines.
     /// </summary>
     public partial class ListNewsHeadlinesResponseDTO
@@ -1714,7 +1726,7 @@ namespace CIAPI.DTO
     }
 
     /// <summary>
-    /// Contains the result of a ListOpenPositions query.
+    /// Contains the result of a [ListOpenPositions](http://labs.cityindex.com/docs/#HTTP%20Services/ListOpenPositions.htm) query.
     /// </summary>
     public partial class ListOpenPositionsResponseDTO
     {
@@ -1725,7 +1737,7 @@ namespace CIAPI.DTO
     }
 
     /// <summary>
-    /// Contains the result of a ListSpreadMarkets query.
+    /// Contains the result of a [ListSpreadMarkets](http://labs.cityindex.com/docs/#HTTP%20Services/ListSpreadMarkets.htm) query.
     /// </summary>
     public partial class ListSpreadMarketsResponseDTO
     {
@@ -1736,7 +1748,7 @@ namespace CIAPI.DTO
     }
 
     /// <summary>
-    /// Contains the result of a ListStopLimitOrderHistory query.
+    /// Contains the result of a [ListStopLimitOrderHistory](http://labs.cityindex.com/docs/#HTTP%20Services/ListStopLimitOrderHistory.htm) query.
     /// </summary>
     public partial class ListStopLimitOrderHistoryResponseDTO
     {
@@ -1747,7 +1759,7 @@ namespace CIAPI.DTO
     }
 
     /// <summary>
-    /// Contains the result of a ListTradeHistory query.
+    /// Contains the result of a [ListTradeHistory](http://labs.cityindex.com/docs/#HTTP%20Services/ListTradeHistory.htm) query.
     /// </summary>
     public partial class ListTradeHistoryResponseDTO
     {
@@ -1862,11 +1874,11 @@ namespace CIAPI.DTO
         /// </summary>
         public decimal Quantity { get; set; }
         /// <summary>
-        /// Market prices are quoted as a pair (buy/sell or bid/offer), the BidPrice is the lower of the two.
+        /// Market prices are quoted as a pair *(buy/sell or bid/offer)*, the BidPrice is the lower of the two.
         /// </summary>
         public decimal BidPrice { get; set; }
         /// <summary>
-        /// Market prices are quoted as a pair (buy/sell or bid/offer), the OfferPrice is the higher of the market price pair.
+        /// Market prices are quoted as a pair *(buy/sell or bid/offer)*, the OfferPrice is the higher of the market price pair.
         /// </summary>
         public decimal OfferPrice { get; set; }
         /// <summary>
@@ -1933,11 +1945,11 @@ namespace CIAPI.DTO
         /// </summary>
         public int? QuoteId { get; set; }
         /// <summary>
-        /// Market prices are quoted as a pair (buy/sell or bid/offer), the BidPrice is the lower value of the pair.
+        /// Market prices are quoted as a pair *(buy/sell or bid/offer)*, the BidPrice is the lower value of the pair.
         /// </summary>
         public decimal BidPrice { get; set; }
         /// <summary>
-        /// Market prices are quote as a pair (buy/sell or bid/offer), the OfferPrice is the higher value of the pair.
+        /// Market prices are quote as a pair *(buy/sell or bid/offer)*, the OfferPrice is the higher value of the pair.
         /// </summary>
         public decimal OfferPrice { get; set; }
         /// <summary>
@@ -1996,10 +2008,6 @@ namespace CIAPI.DTO
         /// </summary>
         public bool AutoRollover { get; set; }
         /// <summary>
-        /// The price the order was executed at.
-        /// </summary>
-        public decimal ExecutionPrice { get; set; }
-        /// <summary>
         /// The date and time that the order was last changed. Always expressed in UTC.
         /// </summary>
         public DateTime LastChangedTime { get; set; }
@@ -2024,7 +2032,7 @@ namespace CIAPI.DTO
         /// </summary>
         public decimal Quantity { get; set; }
         /// <summary>
-        /// The type of the order (1 = Trade / 2 = Stop / 3 = Limit).
+        /// The type of the order *(1 = Trade / 2 = Stop / 3 = Limit)*.
         /// </summary>
         public string Type { get; set; }
         /// <summary>
@@ -2047,7 +2055,7 @@ namespace CIAPI.DTO
         /// </summary>
         public DateTime BarDate { get; set; }
         /// <summary>
-        /// The price at the start (open) of the price bar interval.
+        /// The price at the start *(open)* of the price bar interval.
         /// </summary>
         public decimal Open { get; set; }
         /// <summary>
@@ -2059,7 +2067,7 @@ namespace CIAPI.DTO
         /// </summary>
         public decimal Low { get; set; }
         /// <summary>
-        /// The price at the end (close) of the price bar interval.
+        /// The price at the end *(close)* of the price bar interval.
         /// </summary>
         public decimal Close { get; set; }
     }
@@ -2078,11 +2086,11 @@ namespace CIAPI.DTO
         /// </summary>
         public DateTime TickDate { get; set; }
         /// <summary>
-        /// The current Bid price (price at which the customer can sell).
+        /// The current Bid price *(price at which the customer can sell)*.
         /// </summary>
         public decimal Bid { get; set; }
         /// <summary>
-        /// The current Offer price (price at which the customer can buy, sometimes referred to as Ask price).
+        /// The current Offer price *(price at which the customer can buy, sometimes referred to as Ask price)*.
         /// </summary>
         public decimal Offer { get; set; }
         /// <summary>
@@ -2098,7 +2106,7 @@ namespace CIAPI.DTO
         /// </summary>
         public decimal Low { get; set; }
         /// <summary>
-        /// The change since the last price (always positive). See Direction for direction of the change.
+        /// The change since the last price *(always positive)*. See Direction for direction of the change.
         /// </summary>
         public decimal Change { get; set; }
         /// <summary>
@@ -2152,7 +2160,7 @@ namespace CIAPI.DTO
         /// </summary>
         public decimal BidPrice { get; set; }
         /// <summary>
-        /// The amount the bid price will be adjusted to become an order when the customer is buying (BidPrice + BidAdjust = BuyPrice).
+        /// The amount the bid price will be adjusted to become an order when the customer is buying *(BidPrice + BidAdjust = BuyPrice)*.
         /// </summary>
         public decimal BidAdjust { get; set; }
         /// <summary>
@@ -2160,7 +2168,7 @@ namespace CIAPI.DTO
         /// </summary>
         public decimal OfferPrice { get; set; }
         /// <summary>
-        /// The amount the offer price will be adjusted to become an order when the customer is selling (OfferPrice + OfferAdjust = OfferPrice).
+        /// The amount the offer price will be adjusted to become an order when the customer is selling *(OfferPrice + OfferAdjust = OfferPrice)*.
         /// </summary>
         public decimal OfferAdjust { get; set; }
         /// <summary>

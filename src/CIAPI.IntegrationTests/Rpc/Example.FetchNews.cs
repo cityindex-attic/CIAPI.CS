@@ -9,9 +9,9 @@ namespace ConsoleSpikes
 {
     class Example
     {
-        private static readonly Uri RPC_URI = new Uri("https://ciapipreprod.cityindextest9.co.uk/TradingApi");
-        private static readonly Uri STREAMING_URI = new Uri("https://pushpreprod.cityindextest9.co.uk");
-        private const string USERNAME = "xx189949";
+        private static readonly Uri RPC_URI = new Uri("https://ciapi.cityindex.com/tradingapi");
+        private static readonly Uri STREAMING_URI = new Uri("https://push.cityindex.com");
+        private const string USERNAME = "DM696495";
         private const string PASSWORD = "password";
         private const string AppKey = "testkey-for-ConsoleSpikes";
 

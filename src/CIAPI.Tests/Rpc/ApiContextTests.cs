@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Net;
 using System.Text;
 using System.Threading;
@@ -43,20 +43,20 @@ namespace CIAPI.Tests.Rpc
             Client rpcClient = BuildTestClient(out requestFactory, out streamingFactory);
             requestFactory.PrepareResponse = testRequest =>
             {
-       
+
                 testRequest.SetResponseStream(LoggedIn);
             };
 
-             rpcClient.LogIn("foo", "foo");
+            rpcClient.LogIn("foo", "foo");
 
             Assert.That(rpcClient.Session, Is.Not.Empty);
 
             //This should work
-            Client rpcClientUsingSession = BuildTestClientExtracted( requestFactory,  streamingFactory);
+            Client rpcClientUsingSession = BuildTestClientExtracted(requestFactory, streamingFactory);
 
             requestFactory.PrepareResponse = testRequest =>
             {
-                   testRequest.SetResponseStream("{\"LogonUserName\":\"Sky Sanders - Test\",\"ClientAccountId\":400188637,\"ClientAccountCurrency\":\"USD\",\"AccountOperatorId\":4000,\"TradingAccounts\":[{\"TradingAccountId\":400282314,\"TradingAccountCode\":\"DM603751\",\"TradingAccountStatus\":\"Open\",\"TradingAccountType\":\"CFD\"},{\"TradingAccountId\":400282315,\"TradingAccountCode\":\"DM667890\",\"TradingAccountStatus\":\"Open\",\"TradingAccountType\":\"Spread Betting\"}],\"PersonalEmailAddress\":\"sky.sanders@gmail.com\",\"HasMultipleEmailAddresses\":false}");
+                testRequest.SetResponseStream("{\"LogonUserName\":\"Sky Sanders - Test\",\"ClientAccountId\":400188637,\"ClientAccountCurrency\":\"USD\",\"AccountOperatorId\":4000,\"TradingAccounts\":[{\"TradingAccountId\":400282314,\"TradingAccountCode\":\"DM603751\",\"TradingAccountStatus\":\"Open\",\"TradingAccountType\":\"CFD\"},{\"TradingAccountId\":400282315,\"TradingAccountCode\":\"DM667890\",\"TradingAccountStatus\":\"Open\",\"TradingAccountType\":\"Spread Betting\"}],\"PersonalEmailAddress\":\"sky.sanders@gmail.com\",\"HasMultipleEmailAddresses\":false}");
             };
 
             rpcClientUsingSession.LogInUsingSession("foo", rpcClient.Session);
@@ -95,23 +95,23 @@ namespace CIAPI.Tests.Rpc
         public void ApiAuthenticationFailure()
         {
             var errorDto = new ApiErrorResponseDTO
-                               {
-                                   ErrorCode = (int) ErrorCode.InvalidCredentials,
-                                   ErrorMessage = "InvalidCredentials"
-                               };
+            {
+                ErrorCode = (int)ErrorCode.InvalidCredentials,
+                ErrorMessage = "InvalidCredentials"
+            };
 
 
             TestRequestFactory requestFactory;
             TestStreamingClientFactory streamingFactory;
             Client ctx = BuildAuthenticatedTestClient(out requestFactory, out streamingFactory);
             requestFactory.PrepareResponse = testRequest =>
-                                                 {
-                                                     string jsonConvertSerializeObject =
-                                                         JsonConvert.SerializeObject(errorDto);
-                                                     testRequest.ResponseStream =
-                                                         new TestWebStream(
-                                                             Encoding.UTF8.GetBytes(jsonConvertSerializeObject));
-                                                 };
+            {
+                string jsonConvertSerializeObject =
+                    JsonConvert.SerializeObject(errorDto);
+                testRequest.ResponseStream =
+                    new TestWebStream(
+                        Encoding.UTF8.GetBytes(jsonConvertSerializeObject));
+            };
 
             try
             {
@@ -160,14 +160,14 @@ namespace CIAPI.Tests.Rpc
 
             var gate = new ManualResetEvent(false);
             ctx.News.BeginListNewsHeadlinesWithSource("dj", "UK", 14, ar =>
-                                                                          {
-                                                                              ListNewsHeadlinesResponseDTO response =
-                                                                                  ctx.News.
-                                                                                      EndListNewsHeadlinesWithSource(ar);
-                                                                              Assert.AreEqual(14,
-                                                                                              response.Headlines.Length);
-                                                                              gate.Set();
-                                                                          }, null);
+            {
+                ListNewsHeadlinesResponseDTO response =
+                    ctx.News.
+                        EndListNewsHeadlinesWithSource(ar);
+                Assert.AreEqual(14,
+                                response.Headlines.Length);
+                gate.Set();
+            }, null);
 
             gate.WaitOne(TimeSpan.FromSeconds(3));
         }
@@ -206,24 +206,24 @@ namespace CIAPI.Tests.Rpc
             Assert.IsTrue(response);
         }
 
-        [Test, ExpectedException(typeof (InvalidCredentialsException), ExpectedMessage = "InvalidCredentials")]
+        [Test, ExpectedException(typeof(InvalidCredentialsException), ExpectedMessage = "InvalidCredentials")]
         public void CanRecognize200JsonException()
         {
             var errorDto = new ApiErrorResponseDTO
-                               {
-                                   ErrorCode = (int) ErrorCode.InvalidCredentials,
-                                   ErrorMessage = "InvalidCredentials"
-                               };
+            {
+                ErrorCode = (int)ErrorCode.InvalidCredentials,
+                ErrorMessage = "InvalidCredentials"
+            };
 
             TestRequestFactory requestFactory;
             TestStreamingClientFactory streamingFactory;
             Client ctx = BuildAuthenticatedTestClient(out requestFactory, out streamingFactory);
             requestFactory.PrepareResponse =
                 testRequest =>
-                    {
-                        testRequest.ResponseStream =
-                            new TestWebStream(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(errorDto)));
-                    };
+                {
+                    testRequest.ResponseStream =
+                        new TestWebStream(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(errorDto)));
+                };
 
             ctx.LogIn(TestConfig.ApiUsername, TestConfig.ApiPassword);
         }
@@ -245,25 +245,25 @@ namespace CIAPI.Tests.Rpc
             var gate = new ManualResetEvent(false);
             Exception exception = null;
             ctx.News.BeginListNewsHeadlinesWithSource("dj", "UK", 14, ar =>
-                                                                          {
-                                                                              try
-                                                                              {
-                                                                                  ctx.News.
-                                                                                      EndListNewsHeadlinesWithSource(ar);
-                                                                                  Assert.Fail("expected exception");
-                                                                              }
-                                                                              catch (Exception ex)
-                                                                              {
-                                                                                  exception = ex;
-                                                                              }
-                                                                              finally
-                                                                              {
-                                                                                  gate.Set();
-                                                                              }
-                                                                          }, null);
+            {
+                try
+                {
+                    ctx.News.
+                        EndListNewsHeadlinesWithSource(ar);
+                    Assert.Fail("expected exception");
+                }
+                catch (Exception ex)
+                {
+                    exception = ex;
+                }
+                finally
+                {
+                    gate.Set();
+                }
+            }, null);
 
             gate.WaitOne(TimeSpan.FromSeconds(3));
-            Assert.IsInstanceOf(typeof (ServerConnectionException), exception,
+            Assert.IsInstanceOf(typeof(ServerConnectionException), exception,
                                 "expected ServerConnectionException but got " + exception.GetType().Name);
         }
 
@@ -298,7 +298,7 @@ namespace CIAPI.Tests.Rpc
         }
 
         [Test, Ignore("need to examine timeout functionality of both TestWebRequest and HttpWebRequest")]
-        public void ShouldThrowExceptionIfRequestTimesOut()  
+        public void ShouldThrowExceptionIfRequestTimesOut()
         {
             TestRequestFactory requestFactory;
             TestStreamingClientFactory streamingFactory;
@@ -329,24 +329,24 @@ namespace CIAPI.Tests.Rpc
             Exception exception = null;
 
             ctx.News.BeginListNewsHeadlinesWithSource("dj", "UK", 14, ar =>
-                                                                          {
-                                                                              try
-                                                                              {
-                                                                                  ListNewsHeadlinesResponseDTO response
-                                                                                      =
-                                                                                      ctx.News.
-                                                                                          EndListNewsHeadlinesWithSource
-                                                                                          (ar);
-                                                                              }
-                                                                              catch (Exception ex)
-                                                                              {
-                                                                                  exception = ex;
-                                                                              }
-                                                                              finally
-                                                                              {
-                                                                                  gate.Set();
-                                                                              }
-                                                                          }, null);
+            {
+                try
+                {
+                    ListNewsHeadlinesResponseDTO response
+                        =
+                        ctx.News.
+                            EndListNewsHeadlinesWithSource
+                            (ar);
+                }
+                catch (Exception ex)
+                {
+                    exception = ex;
+                }
+                finally
+                {
+                    gate.Set();
+                }
+            }, null);
             gate.WaitOne(TimeSpan.FromSeconds(30));
             Assert.IsNotNull(exception, "expected exception, got none");
             Assert.IsTrue(

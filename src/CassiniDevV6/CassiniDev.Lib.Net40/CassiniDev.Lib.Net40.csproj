@@ -1,0 +1,193 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{47695C1B-936D-4CAC-84B0-82E33FC704DC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CassiniDev</RootNamespace>
+    <AssemblyName>CassiniDev.Lib</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\CassiniDev.Lib.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Release\CassiniDev.Lib.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\CassiniDev.Lib.Net35\BrowserTestResultItem.cs">
+      <Link>BrowserTestResultItem.cs</Link>
+    </Compile>
+    <Compile Include="..\CassiniDev.Lib.Net35\BrowserTestResults.cs">
+      <Link>BrowserTestResults.cs</Link>
+    </Compile>
+    <Compile Include="..\CassiniDev.Lib.Net35\CassiniDevBrowserTest.cs">
+      <Link>CassiniDevBrowserTest.cs</Link>
+    </Compile>
+    <Compile Include="..\CassiniDev.Lib.Net35\CassiniServer.cs">
+      <Link>CassiniServer.cs</Link>
+    </Compile>
+    <Compile Include="..\CassiniDev.Lib.Net35\Configuration\CassiniDevConfigurationSection.cs">
+      <Link>Configuration\CassiniDevConfigurationSection.cs</Link>
+    </Compile>
+    <Compile Include="..\CassiniDev.Lib.Net35\Configuration\CassiniDevProfileElement.cs">
+      <Link>Configuration\CassiniDevProfileElement.cs</Link>
+    </Compile>
+    <Compile Include="..\CassiniDev.Lib.Net35\Configuration\CassiniDevProfileElementCollection.cs">
+      <Link>Configuration\CassiniDevProfileElementCollection.cs</Link>
+    </Compile>
+    <Compile Include="..\CassiniDev.Lib.Net35\Configuration\MimeTypeElement.cs">
+      <Link>Configuration\MimeTypeElement.cs</Link>
+    </Compile>
+    <Compile Include="..\CassiniDev.Lib.Net35\Configuration\MimeTypeElementCollection.cs">
+      <Link>Configuration\MimeTypeElementCollection.cs</Link>
+    </Compile>
+    <Compile Include="..\CassiniDev.Lib.Net35\Configuration\PluginElement.cs">
+      <Link>Configuration\PluginElement.cs</Link>
+    </Compile>
+    <Compile Include="..\CassiniDev.Lib.Net35\Configuration\PluginElementCollection.cs">
+      <Link>Configuration\PluginElementCollection.cs</Link>
+    </Compile>
+    <Compile Include="..\CassiniDev.Lib.Net35\ContentLocator.cs">
+      <Link>ContentLocator.cs</Link>
+    </Compile>
+    <Compile Include="..\CassiniDev.Lib.Net35\Core\Connection.cs">
+      <Link>Core\Connection.cs</Link>
+    </Compile>
+    <Compile Include="..\CassiniDev.Lib.Net35\Core\Host.cs">
+      <Link>Core\Host.cs</Link>
+    </Compile>
+    <Compile Include="..\CassiniDev.Lib.Net35\Core\Messages.cs">
+      <Link>Core\Messages.cs</Link>
+    </Compile>
+    <Compile Include="..\CassiniDev.Lib.Net35\Core\NtlmAuth.cs">
+      <Link>Core\NtlmAuth.cs</Link>
+    </Compile>
+    <Compile Include="..\CassiniDev.Lib.Net35\Core\Request.cs">
+      <Link>Core\Request.cs</Link>
+    </Compile>
+    <Compile Include="..\CassiniDev.Lib.Net35\Core\RequestEventArgs.cs">
+      <Link>Core\RequestEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\CassiniDev.Lib.Net35\Core\RequestInfo.cs">
+      <Link>Core\RequestInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\CassiniDev.Lib.Net35\Core\Server.cs">
+      <Link>Core\Server.cs</Link>
+    </Compile>
+    <Compile Include="..\CassiniDev.Lib.Net35\IContentLocator.cs">
+      <Link>IContentLocator.cs</Link>
+    </Compile>
+    <Compile Include="..\CassiniDev.Lib.Net35\LocalContentLocator.cs">
+      <Link>LocalContentLocator.cs</Link>
+    </Compile>
+    <Compile Include="..\CassiniDev.Lib.Net35\Logging\LogInfo.cs">
+      <Link>Logging\LogInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\CassiniDev.Lib.Net35\Misc\CommandLine.cs">
+      <Link>Misc\CommandLine.cs</Link>
+    </Compile>
+    <Compile Include="..\CassiniDev.Lib.Net35\Misc\CommandLineArguments.cs">
+      <Link>Misc\CommandLineArguments.cs</Link>
+    </Compile>
+    <Compile Include="..\CassiniDev.Lib.Net35\Misc\CommandLineParser.cs">
+      <Link>Misc\CommandLineParser.cs</Link>
+    </Compile>
+    <Compile Include="..\CassiniDev.Lib.Net35\Misc\Common.cs">
+      <Link>Misc\Common.cs</Link>
+    </Compile>
+    <Compile Include="..\CassiniDev.Lib.Net35\Misc\HostsFile.cs">
+      <Link>Misc\HostsFile.cs</Link>
+    </Compile>
+    <Compile Include="..\CassiniDev.Lib.Net35\Misc\Interop.cs">
+      <Link>Misc\Interop.cs</Link>
+    </Compile>
+    <Compile Include="..\CassiniDev.Lib.Net35\Misc\NetworkUtils.cs">
+      <Link>Misc\NetworkUtils.cs</Link>
+    </Compile>
+    <Compile Include="..\CassiniDev.Lib.Net35\QUnitExBrowserTestResultItem.cs">
+      <Link>QUnitExBrowserTestResultItem.cs</Link>
+    </Compile>
+    <Compile Include="..\CassiniDev.Lib.Net35\Resources\SR.cs">
+      <Link>Resources\SR.cs</Link>
+    </Compile>
+    <Compile Include="..\CassiniDev.Lib.Net35\WebBrowser.cs">
+      <Link>WebBrowser.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Salient.ReflectiveLoggingAdapter\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

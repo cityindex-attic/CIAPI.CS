@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using CassiniDev;
 using CIAPI.Rpc;
 using CIAPI.Serialization;
 using CIAPI.Streaming.Testing;
@@ -10,6 +11,25 @@ using Salient.ReliableHttpClient.Testing;
 
 namespace CIAPI.Tests
 {
+    public abstract class CassiniDevFixtureBase:CassiniDevServer 
+    {
+        [TestFixtureSetUp]
+        public void Start()
+        {
+
+            string content = Environment.CurrentDirectory;
+
+            StartServer(content);
+        }
+
+
+        [TestFixtureTearDown]
+        public void Stop()
+        {
+
+            StopServer();
+        }
+    }
 
     public abstract class FixtureBase
     {

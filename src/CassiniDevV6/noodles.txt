@@ -1,0 +1,32 @@
+What are the scenarios in which running as a service make sense?
+
+	to serve a configuration UI for another service.
+
+
+
+	
+
+How can we reduce the dependency footprint of logging?
+
+	expose log info via event and let consumer handle it.
+
+
+How can one share source files via links and still get symbol support?
+
+	???
+
+
+Build a plugin that allows mocking of content.  One could simply write a web application that responds appropriately but this can get complex and brittle. 
+Simply allowing consumer of CassiniDev to intercept requests and supply response is more direct and allows for a single process and assembly.
+
+
+
+Verify whether CassiniDev actually does fire up a new AppDomain for every request as purported in user issue.
+
+
+
+Logging:
+The main components of CassiniDev are MarshalByRefObjects that live in the appdomain of the request so adding classes such as loggers can be
+problematic. I propose that we simply use Trace throughout CassiniDev and with whatever logging framework one wants to use just subscribe 
+to Trace stream.
+
