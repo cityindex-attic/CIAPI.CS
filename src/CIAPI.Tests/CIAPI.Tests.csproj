@@ -35,6 +35,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CassiniDev.Lib, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\CassiniDevV6\CassiniDev.Lib.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.4.5.7\lib\net35\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -87,10 +91,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CassiniDevV6\CassiniDev.Lib.Net35\CassiniDev.Lib.Net35.csproj">
-      <Project>{E4F4B9DC-F41C-4E3E-A630-DC7F425F61A9}</Project>
-      <Name>CassiniDev.Lib.Net35</Name>
-    </ProjectReference>
     <ProjectReference Include="..\CIAPI.Serializer\CIAPI.Serializer.csproj">
       <Project>{B6CE30C2-5A52-4A4C-884B-64504902F833}</Project>
       <Name>CIAPI.Serializer</Name>
