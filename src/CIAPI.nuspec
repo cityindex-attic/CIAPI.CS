@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
   <metadata>
-    <version>7.1.1-bleeding-0</version>
+    <version>7.2.1-bleeding-0</version>
     <authors>CityIndex Ltd,Sky Sanders,David Laing</authors>
     <owners>CityIndex Ltd,Sky Sanders,David Laing</owners>
     <licenseUrl>https://github.com/cityindex/CIAPI.CS/raw/master/LICENSE.txt</licenseUrl>

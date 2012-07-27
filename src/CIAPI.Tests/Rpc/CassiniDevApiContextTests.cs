@@ -215,7 +215,7 @@ namespace CIAPI.Tests.Rpc
         }
 
         [Test]
-        public void CanLogin()
+        public void _testOrder01_CanLogin()
         {
             Console.WriteLine("CanLogin");
 
