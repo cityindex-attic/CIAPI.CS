@@ -14,7 +14,7 @@ using Salient.ReliableHttpClient;
 
 namespace CIAPI.Tests.Rpc
 {
-    [TestFixture,Ignore]
+    [TestFixture]
     public class CassiniDevApiContextTests : CassiniDevFixtureBase
     {
         static CassiniDevApiContextTests()
