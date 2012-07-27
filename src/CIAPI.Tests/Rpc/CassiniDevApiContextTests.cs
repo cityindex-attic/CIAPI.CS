@@ -227,6 +227,7 @@ namespace CIAPI.Tests.Rpc
             {
                 e.Continue = false;
                 e.Response = LoggedIn;
+                e.ResponseStatus = 200;
 
             };
 
@@ -279,11 +280,13 @@ namespace CIAPI.Tests.Rpc
                                };
 
 
+            string jsonConvertSerializeObject = JsonConvert.SerializeObject(errorDto);
 
             EventHandler<RequestInfoArgs> mockingHandler = (i, e) =>
             {
                 e.Continue = false;
-                e.Response = JsonConvert.SerializeObject(errorDto);
+                
+                e.Response = jsonConvertSerializeObject;
 
             };
 
@@ -389,11 +392,14 @@ namespace CIAPI.Tests.Rpc
 
             Client ctx = new Client(new Uri(NormalizeUrl("/")), new Uri(NormalizeUrl("/")), "foo");
 
+            string jsonConvertSerializeObject = JsonConvert.SerializeObject(new ApiErrorResponseDTO() { ErrorCode = 403 });
+
 
             EventHandler<RequestInfoArgs> mockingHandler = (i, e) =>
             {
                 e.Continue = false;
-                e.Response = JsonConvert.SerializeObject(new ApiErrorResponseDTO(){ErrorCode = 403});
+                
+                e.Response = jsonConvertSerializeObject;
                 e.ResponseStatus = 403;
 
             };
@@ -453,10 +459,13 @@ namespace CIAPI.Tests.Rpc
             ctx.Session = "123";
 
 
+            string jsonConvertSerializeObject = JsonConvert.SerializeObject(new ApiErrorResponseDTO() { HttpStatus = 500, ErrorMessage = "internal server error", ErrorCode = 500 });
+
             EventHandler<RequestInfoArgs> mockingHandler = (i, e) =>
             {
                 e.Continue = false;
-                e.Response = JsonConvert.SerializeObject(new ApiErrorResponseDTO() { HttpStatus = 500, ErrorMessage = "internal server error",ErrorCode = 500});
+                
+                e.Response = jsonConvertSerializeObject;
                 e.ResponseStatus = 500;
 
             };
