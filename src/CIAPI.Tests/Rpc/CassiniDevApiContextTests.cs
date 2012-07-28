@@ -135,7 +135,7 @@ namespace CIAPI.Tests.Rpc
             Thread.Sleep(5000);
         }
 
-        [Test,Ignore]
+        [Test]
         public void ApiAuthenticationFailure()
         {
             var errorDto = new ApiErrorResponseDTO
