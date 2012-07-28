@@ -15,7 +15,7 @@ using Salient.ReliableHttpClient;
 namespace CIAPI.Tests.Rpc
 {
     [TestFixture]
-    public class CassiniDevApiContextTests : CassiniDevFixtureBase
+    public class CassiniDevApiContextTests
     {
         static CassiniDevApiContextTests()
         {
@@ -36,6 +36,7 @@ namespace CIAPI.Tests.Rpc
         private const string AuthError = "{ \"ErrorMessage\": \"sample value\", \"ErrorCode\": 403 }";
 
 
+
         //[Test]
         //public void LoginUsingSessionShouldValidateSession()
         //{
@@ -51,13 +52,13 @@ namespace CIAPI.Tests.Rpc
 
         //    Server.ProcessRequest += mockingHandler;
 
-            
+
 
         //     rpcClient.LogIn("foo", "foo");
 
         //    Assert.That(rpcClient.Session, Is.Not.Empty);
 
-            
+
 
         //    //This should work
         //    Client rpcClientUsingSession = BuildTestClientExtracted( requestFactory,  streamingFactory);
@@ -105,15 +106,17 @@ namespace CIAPI.Tests.Rpc
 
 
         [Test]
-        public void _testOrder01_CanLogin()
+        public void CanLogin()
         {
             Console.WriteLine("CanLogin");
 
+            var server = new CassiniDevServer();
+            server.StartServer(Environment.CurrentDirectory);
 
-            Client ctx = new Client(new Uri(NormalizeUrl("/")), new Uri(NormalizeUrl("/")), "foo");
+            var ctx = new Client(new Uri(server.NormalizeUrl("/")), new Uri(server.NormalizeUrl("/")), "foo");
 
 
-            EventHandler<RequestInfoArgs> mockingHandler = (i, e) =>
+            server.Server.ProcessRequest += (i, e) =>
             {
                 e.Continue = false;
                 e.Response = LoggedIn;
@@ -121,227 +124,277 @@ namespace CIAPI.Tests.Rpc
 
             };
 
-            Server.ProcessRequest += mockingHandler;
+
+            try
+            {
+                ctx.LogIn(TestConfig.ApiUsername, TestConfig.ApiPassword);
+            }
+            finally
+            {
+                server.Dispose();
+            }
 
 
-
-
-            ctx.LogIn(TestConfig.ApiUsername, TestConfig.ApiPassword);
-
-            Server.ProcessRequest -= mockingHandler;
 
             Assert.IsNotNullOrEmpty(ctx.Session);
 
-            Thread.Sleep(5000);
         }
 
         [Test]
-        public void _testOrder00_ApiAuthenticationFailure()
+        public void ApiAuthenticationFailure()
         {
+            Console.WriteLine("ApiAuthenticationFailure");
+
+            var server = new CassiniDevServer();
+            server.StartServer(Environment.CurrentDirectory);
+
             var errorDto = new ApiErrorResponseDTO
                                {
-                                   ErrorCode = (int) ErrorCode.InvalidCredentials,
+                                   ErrorCode = (int)ErrorCode.InvalidCredentials,
                                    ErrorMessage = "InvalidCredentials"
                                };
 
 
 
-            Client ctx = new Client(new Uri(NormalizeUrl("/")), new Uri(NormalizeUrl("/")), "foo"); // authenticated
-            ctx.UserName = "foo";
-            ctx.Session = "123";
+            var ctx = new Client(new Uri(server.NormalizeUrl("/")), new Uri(server.NormalizeUrl("/")), "foo")
+                          {
+                              UserName = "foo",
+                              Session = "123"
+                          }; // authenticated
 
-            EventHandler<RequestInfoArgs> mockingHandler = (i, e) =>
+            server.Server.ProcessRequest += (i, e) =>
             {
                 e.Continue = false;
                 e.Response = JsonConvert.SerializeObject(errorDto);
 
             };
 
-            Server.ProcessRequest += mockingHandler;
 
-            
-
+            Exception ex = null;
             try
             {
                 ctx.LogIn("foo", "bar");
                 Assert.Fail("Expected exception");
             }
-            catch (ReliableHttpException ex)
+            catch (Exception ex2)
             {
-                Assert.AreEqual("InvalidCredentials", ex.Message,
-                                "FIXME: the API is just setting 401. it needs to send ErrorResponseDTO json as well.");
-                Assert.AreEqual("{\"HttpStatus\":0,\"ErrorMessage\":\"InvalidCredentials\",\"ErrorCode\":4010}",
-                                ex.ResponseText);
+                ex = ex2;
             }
             finally
             {
-                Server.ProcessRequest -= mockingHandler;
-                Thread.Sleep(5000);
+                server.Dispose();
             }
+
+
+
+            if (!(ex is ReliableHttpException))
+            {
+                Assert.Fail("Expected ReliableHttpException, got " + ex.GetType().FullName);
+            }
+
+            Assert.AreEqual("InvalidCredentials", ex.Message, "FIXME: the API is just setting 401. it needs to send ErrorResponseDTO json as well.");
+            Assert.AreEqual("{\"HttpStatus\":0,\"ErrorMessage\":\"InvalidCredentials\",\"ErrorCode\":4010}", ((ReliableHttpException)ex).ResponseText);
 
         }
 
-        [Test, Ignore]
+        [Test]
         public void CanGetNewsHeadlines()
         {
             Console.WriteLine("CanGetNewsHeadlines");
 
+            var server = new CassiniDevServer();
+            server.StartServer(Environment.CurrentDirectory);
 
-            Client ctx = new Client(new Uri(NormalizeUrl("/")), new Uri(NormalizeUrl("/")), "foo"); // authenticated
-            ctx.UserName = "foo";
-            ctx.Session = "123";
+            var ctx = new Client(new Uri(server.NormalizeUrl("/")), new Uri(server.NormalizeUrl("/")), "foo")
+                          {
+                              UserName = "foo",
+                              Session = "123"
+                          };
 
-            EventHandler<RequestInfoArgs> mockingHandler = (i, e) =>
+            server.Server.ProcessRequest += (i, e) =>
             {
                 e.Continue = false;
                 e.Response = NewsHeadlines12;
 
             };
 
-            Server.ProcessRequest += mockingHandler;
 
-            
+            ListNewsHeadlinesResponseDTO response = null;
+            try
+            {
 
-            ListNewsHeadlinesResponseDTO response = ctx.News.ListNewsHeadlinesWithSource("dj", "UK", 12);
-            Server.ProcessRequest -= mockingHandler;
-            Thread.Sleep(5000);
+                response = ctx.News.ListNewsHeadlinesWithSource("dj", "UK", 12);
+            }
+            finally
+            {
+                server.Dispose();
+            }
 
             Assert.AreEqual(12, response.Headlines.Length);
-            
+
 
         }
 
 
-        [Test, Ignore]
+        [Test]
         public void CanGetNewsHeadlinesAsync()
         {
             Console.WriteLine("CanGetNewsHeadlinesAsync");
 
+            var server = new CassiniDevServer();
+            server.StartServer(Environment.CurrentDirectory);
 
-            
-            Client ctx = new Client(new Uri(NormalizeUrl("/")), new Uri(NormalizeUrl("/")), "foo"); // authenticated
-            ctx.UserName = "foo";
-            ctx.Session = "123";
-            
+            var ctx = new Client(new Uri(server.NormalizeUrl("/")), new Uri(server.NormalizeUrl("/")), "foo")
+                          {
+                              UserName = "foo",
+                              Session = "123"
+                          };
 
-            EventHandler<RequestInfoArgs> mockingHandler = (i, e) =>
+
+            server.Server.ProcessRequest += (i, e) =>
             {
                 e.Continue = false;
                 e.Response = NewsHeadlines14;
 
             };
 
-            Server.ProcessRequest += mockingHandler;
 
-            
 
             var gate = new ManualResetEvent(false);
+
+            ListNewsHeadlinesResponseDTO response = null;
+            Exception ex = null;
             ctx.News.BeginListNewsHeadlinesWithSource("dj", "UK", 14, ar =>
                                                                           {
-                                                                              ListNewsHeadlinesResponseDTO response =
-                                                                                  ctx.News.
-                                                                                      EndListNewsHeadlinesWithSource(ar);
-                                                                              Assert.AreEqual(14,
-                                                                                              response.Headlines.Length);
-                                                                              gate.Set();
+                                                                              try
+                                                                              {
+                                                                                  response = ctx.News.EndListNewsHeadlinesWithSource(ar);
+                                                                              }
+                                                                              catch (Exception ex2)
+                                                                              {
+                                                                                  ex = ex2;
+                                                                              }
+                                                                              finally
+                                                                              {
+                                                                                  gate.Set();
+                                                                              }
+
                                                                           }, null);
 
-            gate.WaitOne(TimeSpan.FromSeconds(3));
+            gate.WaitOne();
 
-            Server.ProcessRequest -= mockingHandler;
-                Thread.Sleep(5000);
+            server.Dispose();
+
+            Assert.AreEqual(14, response.Headlines.Length);
+
         }
 
 
 
-        [Test, Ignore]
+        [Test]
         public void CanLogout()
         {
             Console.WriteLine("CanLogout");
+            var server = new CassiniDevServer();
+            server.StartServer(Environment.CurrentDirectory);
+
+            var ctx = new Client(new Uri(server.NormalizeUrl("/")), new Uri(server.NormalizeUrl("/")), "foo")
+                          {
+                              UserName = "foo",
+                              Session = "123"
+                          };
 
 
-            Client ctx = new Client(new Uri(NormalizeUrl("/")), new Uri(NormalizeUrl("/")), "foo"); // authenticated
-            ctx.UserName = "foo";
-            ctx.Session = "123";
-
-
-            EventHandler<RequestInfoArgs> mockingHandler = (i, e) =>
+            server.Server.ProcessRequest += (i, e) =>
             {
                 e.Continue = false;
                 e.Response = LoggedOut;
 
             };
 
-            Server.ProcessRequest += mockingHandler;
 
-
-            bool response = ctx.LogOut();
-            Server.ProcessRequest -= mockingHandler;
-            Thread.Sleep(5000);
+            bool response;
+            try
+            {
+                response = ctx.LogOut();
+            }
+            finally
+            {
+                server.Dispose();
+            }
 
             Assert.IsTrue(response);
-            
+
         }
 
-        [Test, Ignore, ExpectedException(typeof(InvalidCredentialsException), ExpectedMessage = "InvalidCredentials")]
+        [Test, ExpectedException(typeof(InvalidCredentialsException), ExpectedMessage = "InvalidCredentials")]
         public void CanRecognize200JsonException()
         {
+            var server = new CassiniDevServer();
+            server.StartServer(Environment.CurrentDirectory);
+
+            var ctx = new Client(new Uri(server.NormalizeUrl("/")), new Uri(server.NormalizeUrl("/")), "foo")
+            {
+                UserName = "foo",
+                Session = "123"
+            };
+
+
             var errorDto = new ApiErrorResponseDTO
                                {
-                                   ErrorCode = (int) ErrorCode.InvalidCredentials,
+                                   ErrorCode = (int)ErrorCode.InvalidCredentials,
                                    ErrorMessage = "InvalidCredentials"
                                };
 
 
             string jsonConvertSerializeObject = JsonConvert.SerializeObject(errorDto);
 
-            EventHandler<RequestInfoArgs> mockingHandler = (i, e) =>
+            server.Server.ProcessRequest += (i, e) =>
             {
                 e.Continue = false;
-                
+
                 e.Response = jsonConvertSerializeObject;
 
             };
 
-            Server.ProcessRequest += mockingHandler;
+            ApiLogOnResponseDTO response = null;
+            try
+            {
 
+                response = ctx.LogIn(TestConfig.ApiUsername, TestConfig.ApiPassword);
+            }
+            finally
+            {
+                server.Dispose();
+            }
 
-
-            Client ctx = new Client(new Uri(NormalizeUrl("/")), new Uri(NormalizeUrl("/")), "foo"); // authenticated
-            ctx.UserName = "foo";
-            ctx.Session = "123";
-
-            
-
-            ctx.LogIn(TestConfig.ApiUsername, TestConfig.ApiPassword);
-
-            Server.ProcessRequest -= mockingHandler;
-            Thread.Sleep(5000);
+            Assert.IsNotNull(response);
         }
 
-        [Test, Ignore]
+        [Test]
         public void DeserializationExceptionIsProperlySurfacedByAsyncRequests()
         {
             Console.WriteLine("DeserializationExceptionIsProperlySurfacedByAsyncRequests");
 
-
-            
-
-            Client ctx = new Client(new Uri(NormalizeUrl("/")), new Uri(NormalizeUrl("/")), "foo"); // authenticated
-            ctx.UserName = "foo";
-            ctx.Session = "123";
+            var server = new CassiniDevServer();
+            server.StartServer(Environment.CurrentDirectory);
 
 
-            EventHandler<RequestInfoArgs> mockingHandler = (i, e) =>
+            var ctx = new Client(new Uri(server.NormalizeUrl("/")), new Uri(server.NormalizeUrl("/")), "foo")
+                          {
+                              UserName = "foo",
+                              Session = "123"
+                          };
+
+
+            server.Server.ProcessRequest += (i, e) =>
             {
                 e.Continue = false;
                 e.Response = BogusJson;
 
             };
 
-            Server.ProcessRequest += mockingHandler;
 
-            
 
 
             var gate = new ManualResetEvent(false);
@@ -350,9 +403,7 @@ namespace CIAPI.Tests.Rpc
                                                                           {
                                                                               try
                                                                               {
-                                                                                  ctx.News.
-                                                                                      EndListNewsHeadlinesWithSource(ar);
-                                                                                  Assert.Fail("expected exception");
+                                                                                  ctx.News.EndListNewsHeadlinesWithSource(ar);
                                                                               }
                                                                               catch (Exception ex)
                                                                               {
@@ -364,19 +415,25 @@ namespace CIAPI.Tests.Rpc
                                                                               }
                                                                           }, null);
 
-            gate.WaitOne(TimeSpan.FromSeconds(3));
-            Server.ProcessRequest -= mockingHandler;
-            Thread.Sleep(5000);
-            Assert.IsInstanceOf(typeof (ServerConnectionException), exception,
-                                "expected ServerConnectionException but got " + exception.GetType().Name);
+            gate.WaitOne();
+
+            server.Dispose();
+            Assert.IsNotNull(exception, "Expected an exception");
+            Assert.IsInstanceOf(typeof(ServerConnectionException), exception, "expected ServerConnectionException but got " + exception.GetType().Name);
         }
 
-        [Test, Ignore]
+        [Test]
         public void DeserializationExceptionIsProperlySurfacedBySyncRequests()
         {
             Console.WriteLine("DeserializationExceptionIsProperlySurfacedBySyncRequests");
+            var server = new CassiniDevServer();
+            server.StartServer(Environment.CurrentDirectory);
 
-
+            var ctx = new Client(new Uri(server.NormalizeUrl("/")), new Uri(server.NormalizeUrl("/")), "foo")
+            {
+                UserName = "foo",
+                Session = "123"
+            };
 
             EventHandler<RequestInfoArgs> mockingHandler = (i, e) =>
             {
@@ -385,27 +442,36 @@ namespace CIAPI.Tests.Rpc
 
             };
 
-            Server.ProcessRequest += mockingHandler;
+            server.Server.ProcessRequest += mockingHandler;
+            Exception ex = null;
+            try
+            {
+                ctx.News.GetNewsDetail("dj", "foobar");
+            }
+            catch (Exception ex2)
+            {
+                ex = ex2;
+            }
 
-            
-            Client ctx = new Client(new Uri(NormalizeUrl("/")), new Uri(NormalizeUrl("/")), "foo"); // authenticated
-            ctx.UserName = "foo";
-            ctx.Session = "123";
+            finally
+            {
+                server.Dispose();
+            }
 
+            Assert.IsNotNull(ex, "Expected and exception");
 
-            Server.ProcessRequest -= mockingHandler;
-                Thread.Sleep(5000);
-            Assert.Throws<InvalidCredentialsException>(() => ctx.News.GetNewsDetail("dj", "foobar"));
+            Assert.IsInstanceOf(typeof(ServerConnectionException), ex);
         }
 
 
-        [Test, Ignore]
+        [Test]
         public void NonRetryableExceptionFailsInsteadOfRetrying()
         {
             Console.WriteLine("NonRetryableExceptionFailsInsteadOfRetrying");
+            var server = new CassiniDevServer();
+            server.StartServer(Environment.CurrentDirectory);
 
-
-            Client ctx = new Client(new Uri(NormalizeUrl("/")), new Uri(NormalizeUrl("/")), "foo");
+            Client ctx = new Client(new Uri(server.NormalizeUrl("/")), new Uri(server.NormalizeUrl("/")), "foo");
 
             string jsonConvertSerializeObject = JsonConvert.SerializeObject(new ApiErrorResponseDTO() { ErrorCode = 403 });
 
@@ -413,15 +479,15 @@ namespace CIAPI.Tests.Rpc
             EventHandler<RequestInfoArgs> mockingHandler = (i, e) =>
             {
                 e.Continue = false;
-                
+
                 e.Response = jsonConvertSerializeObject;
                 e.ResponseStatus = 403;
 
             };
 
-            Server.ProcessRequest += mockingHandler;
+            server.Server.ProcessRequest += mockingHandler;
 
-            
+
 
 
 
@@ -431,19 +497,21 @@ namespace CIAPI.Tests.Rpc
             }
             finally
             {
-                Server.ProcessRequest -= mockingHandler;
+                server.Dispose();
                 Thread.Sleep(5000);
             }
 
-            
+
         }
 
         [Test, Ignore("need to examine timeout functionality of both TestWebRequest and HttpWebRequest")]
-        public void ShouldThrowExceptionIfRequestTimesOut()  
+        public void ShouldThrowExceptionIfRequestTimesOut()
         {
 
+            var server = new CassiniDevServer();
+            server.StartServer(Environment.CurrentDirectory);
 
-            Client ctx = new Client(new Uri(NormalizeUrl("/")), new Uri(NormalizeUrl("/")), "foo");
+            Client ctx = new Client(new Uri(server.NormalizeUrl("/")), new Uri(server.NormalizeUrl("/")), "foo");
 
 
             EventHandler<RequestInfoArgs> mockingHandler = (i, e) =>
@@ -456,14 +524,18 @@ namespace CIAPI.Tests.Rpc
 
             Assert.Throws<ReliableHttpException>(() => ctx.LogIn("foo", "bar"));
 
-            Server.ProcessRequest += mockingHandler;
+            server.Server.ProcessRequest += mockingHandler;
             Thread.Sleep(5000);
+
         }
 
-        [Test,Ignore("FIXME")]
+        [Test, Ignore("FIXME")]
         public void SpecificRequestExceptionsAreRetriedTheCorrectNumberOfTimes()
         {
             Console.WriteLine("SpecificRequestExceptionsAreRetriedTheCorrectNumberOfTimes");
+
+            var server = new CassiniDevServer();
+            server.StartServer(Environment.CurrentDirectory);
 
             var gate = new ManualResetEvent(false);
 
@@ -471,7 +543,7 @@ namespace CIAPI.Tests.Rpc
             const int EXPECTED_ATTEMPT_COUNT = 3;
 
 
-            Client ctx = new Client(new Uri(NormalizeUrl("/")), new Uri(NormalizeUrl("/")), "foo"); // authenticated
+            Client ctx = new Client(new Uri(server.NormalizeUrl("/")), new Uri(server.NormalizeUrl("/")), "foo"); // authenticated
             ctx.UserName = "foo";
             ctx.Session = "123";
 
@@ -481,15 +553,15 @@ namespace CIAPI.Tests.Rpc
             EventHandler<RequestInfoArgs> mockingHandler = (i, e) =>
             {
                 e.Continue = false;
-                
+
                 e.Response = jsonConvertSerializeObject;
                 e.ResponseStatus = 500;
 
             };
 
-            Server.ProcessRequest += mockingHandler;
+            server.Server.ProcessRequest += mockingHandler;
 
-            
+
 
             Exception exception = null;
 
@@ -515,7 +587,7 @@ namespace CIAPI.Tests.Rpc
 
             gate.WaitOne(TimeSpan.FromSeconds(30));
 
-            Server.ProcessRequest -= mockingHandler;
+            server.Dispose();
 
             Thread.Sleep(5000);
 
