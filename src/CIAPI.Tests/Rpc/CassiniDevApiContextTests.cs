@@ -504,17 +504,17 @@ namespace CIAPI.Tests.Rpc
 
         }
 
-        [Test, Ignore("need to examine timeout functionality of both TestWebRequest and HttpWebRequest")]
+        [Test, Ignore("ReliableHttpClient not so reliable when it comes to timing out. Fixing there first")]
         public void ShouldThrowExceptionIfRequestTimesOut()
         {
 
             var server = new CassiniDevServer();
             server.StartServer(Environment.CurrentDirectory);
 
-            Client ctx = new Client(new Uri(server.NormalizeUrl("/")), new Uri(server.NormalizeUrl("/")), "foo");
+            var ctx = new Client(new Uri(server.NormalizeUrl("/")), new Uri(server.NormalizeUrl("/")), "foo");
 
 
-            EventHandler<RequestInfoArgs> mockingHandler = (i, e) =>
+            server.Server.ProcessRequest += (i, e) =>
             {
                 e.Continue = false;
                 e.Response = "";
@@ -522,10 +522,22 @@ namespace CIAPI.Tests.Rpc
 
             };
 
-            Assert.Throws<ReliableHttpException>(() => ctx.LogIn("foo", "bar"));
+            Exception ex = null;
+            try
+            {
+                ctx.LogIn("foo", "bar");
+            }
+            catch (Exception ex2)
+            {
+                ex = ex2;
+            }
+            finally
+            {
+                server.Dispose();
+            }
 
-            server.Server.ProcessRequest += mockingHandler;
-            Thread.Sleep(5000);
+            Assert.IsNotNull(ex, "Expected an exception");
+            Assert.IsInstanceOf(typeof(ReliableHttpException), ex);
 
         }
 
@@ -543,14 +555,16 @@ namespace CIAPI.Tests.Rpc
             const int EXPECTED_ATTEMPT_COUNT = 3;
 
 
-            Client ctx = new Client(new Uri(server.NormalizeUrl("/")), new Uri(server.NormalizeUrl("/")), "foo"); // authenticated
-            ctx.UserName = "foo";
-            ctx.Session = "123";
+            var ctx = new Client(new Uri(server.NormalizeUrl("/")), new Uri(server.NormalizeUrl("/")), "foo")
+                          {
+                              UserName = "foo",
+                              Session = "123"
+                          };
 
 
             string jsonConvertSerializeObject = JsonConvert.SerializeObject(new ApiErrorResponseDTO() { HttpStatus = 500, ErrorMessage = "internal server error", ErrorCode = 500 });
 
-            EventHandler<RequestInfoArgs> mockingHandler = (i, e) =>
+            server.Server.ProcessRequest += (i, e) =>
             {
                 e.Continue = false;
 
@@ -559,21 +573,15 @@ namespace CIAPI.Tests.Rpc
 
             };
 
-            server.Server.ProcessRequest += mockingHandler;
-
 
 
             Exception exception = null;
-
+            ListNewsHeadlinesResponseDTO response = null;
             ctx.News.BeginListNewsHeadlinesWithSource("dj", "UK", 14, ar =>
                                                                           {
                                                                               try
                                                                               {
-                                                                                  ListNewsHeadlinesResponseDTO response
-                                                                                      =
-                                                                                      ctx.News.
-                                                                                          EndListNewsHeadlinesWithSource
-                                                                                          (ar);
+                                                                                  response = ctx.News.EndListNewsHeadlinesWithSource(ar);
                                                                               }
                                                                               catch (Exception ex)
                                                                               {
@@ -589,13 +597,9 @@ namespace CIAPI.Tests.Rpc
 
             server.Dispose();
 
-            Thread.Sleep(5000);
-
             Assert.IsNotNull(exception, "expected exception, got none");
-            Assert.IsTrue(
-                exception.Message.Contains(string.Format("(500) internal server error - failed {0} times",
-                                                         EXPECTED_ATTEMPT_COUNT)),
-                "error message incorrect. got " + exception.Message);
+            string expectedMessage = string.Format("(500) internal server error - failed {0} times", EXPECTED_ATTEMPT_COUNT);
+            Assert.IsTrue(exception.Message.Contains(expectedMessage), "error message incorrect. got " + exception.Message);
         }
     }
 }

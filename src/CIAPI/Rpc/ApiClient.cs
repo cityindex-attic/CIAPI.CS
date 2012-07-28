@@ -80,7 +80,7 @@ namespace CIAPI.Rpc
                 throw new ObjectDisposedException(GetType().FullName);
             }
 
-            target = PrepareUrl(_rootUri.AbsoluteUri ,target);
+            target = PrepareUrl(_rootUri.AbsoluteUri, target);
             var param = new Dictionary<string, object>(parameters ?? new Dictionary<string, object>());
             if (Http200ErrorsOnly)
             {
@@ -130,7 +130,7 @@ namespace CIAPI.Rpc
         }
 
         #endregion
-        
+
         protected override void Dispose(bool disposing)
         {
             _disposed = true;
@@ -340,6 +340,12 @@ namespace CIAPI.Rpc
                                                                                                                    AppVersion = UserAgent
                                                                                                                }}
                                                                                          }, ContentType.JSON, ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000, 2);
+
+            //#FIXME: timeout is not throwing exception - just null response
+            if (response == null)
+            {
+                throw new Exception("No response recieved");
+            }
             Session = response.Session;
             return response;
         }
@@ -358,7 +364,7 @@ namespace CIAPI.Rpc
                 throw;
             }
         }
- 
+
         /// <summary>
         /// Log In
         /// </summary>		
