@@ -105,6 +105,37 @@ namespace CIAPI.Tests.Rpc
 
 
         [Test]
+        public void _testOrder01_CanLogin()
+        {
+            Console.WriteLine("CanLogin");
+
+
+            Client ctx = new Client(new Uri(NormalizeUrl("/")), new Uri(NormalizeUrl("/")), "foo");
+
+
+            EventHandler<RequestInfoArgs> mockingHandler = (i, e) =>
+            {
+                e.Continue = false;
+                e.Response = LoggedIn;
+                e.ResponseStatus = 200;
+
+            };
+
+            Server.ProcessRequest += mockingHandler;
+
+
+
+
+            ctx.LogIn(TestConfig.ApiUsername, TestConfig.ApiPassword);
+
+            Server.ProcessRequest -= mockingHandler;
+
+            Assert.IsNotNullOrEmpty(ctx.Session);
+
+            Thread.Sleep(5000);
+        }
+
+        [Test,Ignore]
         public void ApiAuthenticationFailure()
         {
             var errorDto = new ApiErrorResponseDTO
@@ -145,10 +176,12 @@ namespace CIAPI.Tests.Rpc
             finally
             {
                 Server.ProcessRequest -= mockingHandler;
+                Thread.Sleep(5000);
             }
+
         }
 
-        [Test]
+        [Test, Ignore]
         public void CanGetNewsHeadlines()
         {
             Console.WriteLine("CanGetNewsHeadlines");
@@ -171,11 +204,15 @@ namespace CIAPI.Tests.Rpc
 
             ListNewsHeadlinesResponseDTO response = ctx.News.ListNewsHeadlinesWithSource("dj", "UK", 12);
             Server.ProcessRequest -= mockingHandler;
+            Thread.Sleep(5000);
+
             Assert.AreEqual(12, response.Headlines.Length);
+            
+
         }
 
 
-        [Test]
+        [Test, Ignore]
         public void CanGetNewsHeadlinesAsync()
         {
             Console.WriteLine("CanGetNewsHeadlinesAsync");
@@ -212,38 +249,12 @@ namespace CIAPI.Tests.Rpc
             gate.WaitOne(TimeSpan.FromSeconds(3));
 
             Server.ProcessRequest -= mockingHandler;
+                Thread.Sleep(5000);
         }
 
-        [Test]
-        public void _testOrder01_CanLogin()
-        {
-            Console.WriteLine("CanLogin");
 
 
-            Client ctx = new Client(new Uri(NormalizeUrl("/")), new Uri(NormalizeUrl("/")), "foo");
-
-
-            EventHandler<RequestInfoArgs> mockingHandler = (i, e) =>
-            {
-                e.Continue = false;
-                e.Response = LoggedIn;
-                e.ResponseStatus = 200;
-
-            };
-
-            Server.ProcessRequest += mockingHandler;
-
-            
-            
-
-            ctx.LogIn(TestConfig.ApiUsername, TestConfig.ApiPassword);
-
-            Server.ProcessRequest -= mockingHandler;
-
-            Assert.IsNotNullOrEmpty(ctx.Session);
-        }
-
-        [Test]
+        [Test, Ignore]
         public void CanLogout()
         {
             Console.WriteLine("CanLogout");
@@ -266,11 +277,13 @@ namespace CIAPI.Tests.Rpc
 
             bool response = ctx.LogOut();
             Server.ProcessRequest -= mockingHandler;
+            Thread.Sleep(5000);
+
             Assert.IsTrue(response);
             
         }
 
-        [Test, ExpectedException(typeof (InvalidCredentialsException), ExpectedMessage = "InvalidCredentials")]
+        [Test, Ignore, ExpectedException(typeof(InvalidCredentialsException), ExpectedMessage = "InvalidCredentials")]
         public void CanRecognize200JsonException()
         {
             var errorDto = new ApiErrorResponseDTO
@@ -303,9 +316,10 @@ namespace CIAPI.Tests.Rpc
             ctx.LogIn(TestConfig.ApiUsername, TestConfig.ApiPassword);
 
             Server.ProcessRequest -= mockingHandler;
+            Thread.Sleep(5000);
         }
 
-        [Test]
+        [Test, Ignore]
         public void DeserializationExceptionIsProperlySurfacedByAsyncRequests()
         {
             Console.WriteLine("DeserializationExceptionIsProperlySurfacedByAsyncRequests");
@@ -352,12 +366,12 @@ namespace CIAPI.Tests.Rpc
 
             gate.WaitOne(TimeSpan.FromSeconds(3));
             Server.ProcessRequest -= mockingHandler;
-
+            Thread.Sleep(5000);
             Assert.IsInstanceOf(typeof (ServerConnectionException), exception,
                                 "expected ServerConnectionException but got " + exception.GetType().Name);
         }
 
-        [Test]
+        [Test, Ignore]
         public void DeserializationExceptionIsProperlySurfacedBySyncRequests()
         {
             Console.WriteLine("DeserializationExceptionIsProperlySurfacedBySyncRequests");
@@ -380,11 +394,12 @@ namespace CIAPI.Tests.Rpc
 
 
             Server.ProcessRequest -= mockingHandler;
+                Thread.Sleep(5000);
             Assert.Throws<InvalidCredentialsException>(() => ctx.News.GetNewsDetail("dj", "foobar"));
         }
 
 
-        [Test]
+        [Test, Ignore]
         public void NonRetryableExceptionFailsInsteadOfRetrying()
         {
             Console.WriteLine("NonRetryableExceptionFailsInsteadOfRetrying");
@@ -417,6 +432,7 @@ namespace CIAPI.Tests.Rpc
             finally
             {
                 Server.ProcessRequest -= mockingHandler;
+                Thread.Sleep(5000);
             }
 
             
@@ -441,6 +457,7 @@ namespace CIAPI.Tests.Rpc
             Assert.Throws<ReliableHttpException>(() => ctx.LogIn("foo", "bar"));
 
             Server.ProcessRequest += mockingHandler;
+            Thread.Sleep(5000);
         }
 
         [Test,Ignore("FIXME")]
@@ -499,6 +516,9 @@ namespace CIAPI.Tests.Rpc
             gate.WaitOne(TimeSpan.FromSeconds(30));
 
             Server.ProcessRequest -= mockingHandler;
+
+            Thread.Sleep(5000);
+
             Assert.IsNotNull(exception, "expected exception, got none");
             Assert.IsTrue(
                 exception.Message.Contains(string.Format("(500) internal server error - failed {0} times",
