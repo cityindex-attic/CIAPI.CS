@@ -136,7 +136,7 @@ namespace CIAPI.Tests.Rpc
         }
 
         [Test]
-        public void ApiAuthenticationFailure()
+        public void _testOrder00_ApiAuthenticationFailure()
         {
             var errorDto = new ApiErrorResponseDTO
                                {
