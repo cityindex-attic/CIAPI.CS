@@ -43,8 +43,10 @@ namespace CIAPI.StreamingClient
         }
         private ITableListener<TDto> _listener;
         private SubscribedTableKey _subscribedTableKey;
+        private string _mode;  //To ensure the last message published prior to this subscription is recieved immediately, mode must be MERGE and snap = true
+        private bool _snapshot;
 
-        public ListenerAdapter(string topic, IFaultTolerantLsClientAdapter client, IJsonSerializer serializer)
+        public ListenerAdapter(string topic, string mode, bool snapshot, IFaultTolerantLsClientAdapter client, IJsonSerializer serializer)
         {
             _serializer = serializer;
             _messageConverter = new LightstreamerDtoConverter<TDto>(_serializer);
@@ -54,6 +56,8 @@ namespace CIAPI.StreamingClient
             _adapterSet = client.AdapterSet;
             _channel = topic.Split('.').First();
             _groupOrItemName = topic.Replace(_channel + ".", "");
+            _mode = mode;
+            _snapshot = snapshot;
         }
 
         #region IStreamingListenerAdapter<TDto> Members
@@ -74,12 +78,12 @@ namespace CIAPI.StreamingClient
             _listener.MessageReceived += ListenerMessageReceived;
 
 
-            Logger.Debug(string.Format("Subscribing to group:{0}, schema {1}, dataAdapter {2}", groupOrItemName, schema, channel));
+            Logger.Debug(string.Format("Subscribing to group:{0}, schema {1}, dataAdapter {2}, mode {3}, snapshot {4}", groupOrItemName, schema, channel, _mode.ToUpper(), _snapshot));
 
             var simpleTableInfo = new SimpleTableInfo(
                 groupOrItemName,
                 schema: schema,
-                mode: "MERGE", snap: true) //To ensure the last message published prior to this subscription is recieved immediately, mode must be MERGE and snap = true
+                mode: _mode.ToUpper(), snap: _snapshot) 
                 { DataAdapter = channel };
             var gate = new ManualResetEvent(false);
             Exception ex = null;
