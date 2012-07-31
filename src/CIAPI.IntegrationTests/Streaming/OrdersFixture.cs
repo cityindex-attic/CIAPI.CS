@@ -61,6 +61,7 @@ namespace CIAPI.IntegrationTests.Streaming
 
                         var response = rpcClient.TradesAndOrders.Trade(order);
                         rpcClient.MagicNumberResolver.ResolveMagicNumbers(response);
+                        Console.WriteLine(string.Format("Trade/order placed: \r\n{0}", response.ToStringWithValues()));
                         Assert.AreEqual("Accepted", response.Status_Resolved, string.Format("Error placing order: \r\n{0}", response.ToStringWithValues()));
                     };
 
@@ -119,7 +120,7 @@ namespace CIAPI.IntegrationTests.Streaming
 
             try
             {
-                if (!gate.WaitOne(TimeSpan.FromSeconds(30)))
+                if (!gate.WaitOne(TimeSpan.FromMinutes(1)))
                 {
                     Assert.Fail("TradeMarginDTO message not recieved for all open positions. OpenPositions on markets: {0} but only recieved TradeMarginDTOs for markets {1}",
                         openPositions.OpenPositions.Select(p => p.MarketId).ToStringWithValues(),
