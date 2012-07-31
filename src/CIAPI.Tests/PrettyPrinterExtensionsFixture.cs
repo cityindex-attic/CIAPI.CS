@@ -19,7 +19,7 @@ namespace CIAPI.Tests
                               ADate = new DateTime(2011, 02, 03, 13, 24, 45, 111),
                               ABool = false
                           };
-            Assert.AreEqual("TheDto: \n\tAnInt=12\tAString=No place like 127.0.0.1\tADate=2011-02-03 13:24:45Z\tABool=False\n", dto.ToStringWithValues());
+            Assert.AreEqual(@"{""AnInt"":12,""AString"":""No place like 127.0.0.1"",""ADate"":""2011-02-03T13:24:45.111"",""ABool"":false}", dto.ToStringWithValues());
         }
 
         private class TheDto

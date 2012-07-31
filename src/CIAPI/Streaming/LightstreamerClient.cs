@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using CIAPI.DTO;
 using Lightstreamer.DotNet.Client;
 using Salient.ReflectiveLoggingAdapter;
 using Salient.ReliableHttpClient.Serialization;
@@ -97,7 +98,7 @@ namespace CIAPI.Streaming
 
 
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public IStreamingListener<TDto> BuildListener<TDto>(string dataAdapter, string topic)
+        public IStreamingListener<TDto> BuildListener<TDto>(string dataAdapter, string mode, bool snapshot, string topic)
                 where TDto : class, new()
         {
             if (_disposed)
@@ -134,7 +135,7 @@ namespace CIAPI.Streaming
                     }
                 }
                 var adapter = _adapters[dataAdapter];
-                IStreamingListener<TDto> listener = adapter.BuildListener<TDto>(topic);
+                IStreamingListener<TDto> listener = adapter.BuildListener<TDto>(topic, mode, snapshot);
                 return listener;
             }
         }
@@ -157,6 +158,7 @@ namespace CIAPI.Streaming
                 }
             }
         }
- 
+
+        
     }
 }

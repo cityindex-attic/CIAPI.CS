@@ -26,7 +26,7 @@ namespace CIAPI.StreamingClient
         /// </summary>
         void TearDownListener(IStreamingListener listener);
 
-        IStreamingListener<TDto> BuildListener<TDto>(string topic) where TDto : class, new();
+        IStreamingListener<TDto> BuildListener<TDto>(string topic, string mode, bool snapshot) where TDto : class, new();
 
         SubscribedTableKey SubscribeTable<TDto>(SimpleTableInfo simpleTableInfo, ITableListener<TDto> listener, bool b) where TDto : class, new();
         void UnsubscribeTable(SubscribedTableKey subscribedTableKey);
@@ -268,7 +268,7 @@ namespace CIAPI.StreamingClient
             }
         }
 
-        public IStreamingListener<TDto> BuildListener<TDto>(string topic) where TDto : class, new()
+        public IStreamingListener<TDto> BuildListener<TDto>(string topic, string mode, bool snapshot) where TDto : class, new()
         {
 
             if (_disposed)
@@ -278,7 +278,7 @@ namespace CIAPI.StreamingClient
 
             if (!_currentListeners.ContainsKey(topic))
             {
-                IStreamingListener listener = new ListenerAdapter<TDto>(topic, this,_serializer);
+                IStreamingListener listener = new ListenerAdapter<TDto>(topic, mode, snapshot, this,_serializer);
                 _currentListeners.Add(topic, listener);
                 new Thread(() => listener.Start(_phase)).Start();
             }
