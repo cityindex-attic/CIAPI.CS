@@ -386,7 +386,7 @@ exports.smd =
         "ListMarketInformationSearch": {
           "description": "Returns market information for the markets that meet the search criteria. The search can be performed by market code and/or market name, and can include CFDs and Spread Bet markets.",
           "target": "market",
-          "uriTemplate": "/market/informationsearch?SearchByMarketCode={searchByMarketCode}&SearchByMarketName={searchByMarketName}&SpreadProductType={spreadProductType}&CfdProductType={cfdProductType}&BinaryProductType={binaryProductType}&Query={query}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}",
+          "uriTemplate": "/informationsearch?SearchByMarketCode={searchByMarketCode}&SearchByMarketName={searchByMarketName}&SpreadProductType={spreadProductType}&CfdProductType={cfdProductType}&BinaryProductType={binaryProductType}&Query={query}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}",
           "contentType": "application/json",
           "responseContentType": "application/json",
           "transport": "GET",
@@ -451,7 +451,7 @@ exports.smd =
         "ListMarketSearch": {
           "description": "Returns a list of markets that meet the search criteria. The search can be performed by market code and/or market name, and can include CFDs and Spread Bet markets. Leave the query string empty to return all markets available to the user.",
           "target": "market",
-          "uriTemplate": "/market/search?SearchByMarketCode={searchByMarketCode}&SearchByMarketName={searchByMarketName}&SpreadProductType={spreadProductType}&CfdProductType={cfdProductType}&BinaryProductType={binaryProductType}&Query={query}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}",
+          "uriTemplate": "/search?SearchByMarketCode={searchByMarketCode}&SearchByMarketName={searchByMarketName}&SpreadProductType={spreadProductType}&CfdProductType={cfdProductType}&BinaryProductType={binaryProductType}&Query={query}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}",
           "contentType": "application/json",
           "responseContentType": "application/json",
           "transport": "GET",
@@ -516,7 +516,7 @@ exports.smd =
         "SearchWithTags": {
           "description": "Get market information and tags for the markets that meet the search criteria. Leave the query string empty to return all markets and tags available to the user.",
           "target": "market",
-          "uriTemplate": "/market/searchwithtags?Query={query}&TagId={tagId}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}",
+          "uriTemplate": "/searchwithtags?Query={query}&TagId={tagId}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}",
           "contentType": "application/json",
           "responseContentType": "application/json",
           "transport": "GET",
@@ -557,7 +557,7 @@ exports.smd =
         "TagLookup": {
           "description": "Gets all of the tags that the requesting user is allowed to see. Tags are returned in a primary / secondary hierarchy. There are no parameters in this call.",
           "target": "market",
-          "uriTemplate": "/market/taglookup",
+          "uriTemplate": "/taglookup",
           "contentType": "application/json",
           "responseContentType": "application/json",
           "transport": "GET",
@@ -573,7 +573,7 @@ exports.smd =
         "ListMarketInformation": {
           "description": "Get Market Information for the specified list of markets.",
           "target": "market",
-          "uriTemplate": "/market/information",
+          "uriTemplate": "/information",
           "contentType": "application/json",
           "responseContentType": "application/json",
           "transport": "POST",
@@ -595,7 +595,7 @@ exports.smd =
         "SaveMarketInformation": {
           "description": "Save Market Information for the specified list of markets.",
           "target": "market",
-          "uriTemplate": "/market/information/save",
+          "uriTemplate": "/information/save",
           "contentType": "application/json",
           "responseContentType": "application/json",
           "transport": "POST",
@@ -762,7 +762,7 @@ exports.smd =
         "ListOpenPositions": {
           "description": "Queries for a specified trading account's trades / open positions.   This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetOpenPosition](http://labs.cityindex.com/docs/#HTTP%20Services/GetOpenPosition.htm) when you get updates on the order stream to get the updated data in this format.",
           "target": "order",
-          "uriTemplate": "/order/openpositions?TradingAccountId={TradingAccountId}",
+          "uriTemplate": "/openpositions?TradingAccountId={TradingAccountId}",
           "contentType": "application/json",
           "responseContentType": "application/json",
           "transport": "GET",
@@ -783,7 +783,7 @@ exports.smd =
         "ListActiveStopLimitOrders": {
           "description": "Queries for a specified trading account's active stop / limit orders.   This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetActiveStopLimitOrder](http://labs.cityindex.com/docs/#HTTP%20Services/GetActiveStopLimitOrder.htm) when you get updates on the order stream to get the updated data in this format.",
           "target": "order",
-          "uriTemplate": "/order/activestoplimitorders?TradingAccountId={TradingAccountId}",
+          "uriTemplate": "/activestoplimitorders?TradingAccountId={TradingAccountId}",
           "contentType": "application/json",
           "responseContentType": "application/json",
           "transport": "GET",
@@ -846,7 +846,7 @@ exports.smd =
         "ListTradeHistory": {
           "description": "Queries for a specified trading account's trade history. The result set will contain orders with a status of __(3 - Open, 9 - Closed)__, and includes __orders that were a trade / stop / limit order__. There's currently no corresponding GetTradeHistory *(as with [ListOpenPositions](http://labs.cityindex.com/docs/#HTTP%20Services/ListOpenPositions.htm))*.",
           "target": "order",
-          "uriTemplate": "/order/tradehistory?TradingAccountId={TradingAccountId}&MaxResults={maxResults}",
+          "uriTemplate": "/tradehistory?TradingAccountId={TradingAccountId}&MaxResults={maxResults}",
           "contentType": "application/json",
           "responseContentType": "application/json",
           "transport": "GET",
@@ -872,7 +872,7 @@ exports.smd =
         "ListStopLimitOrderHistory": {
           "description": "Queries for a specified trading account's stop / limit order history. The result set includes __only orders that were originally stop / limit orders__ that currently have one of the following statuses __(3 - Open, 4 - Cancelled, 5 - Rejected, 9 - Closed, 10 - Red Card)__.  There is currently no corresponding GetStopLimitOrderHistory *(as with [ListActiveStopLimitOrders](http://labs.cityindex.com/docs/#HTTP%20Services/ListActiveStopLimitOrders.htm))*.",
           "target": "order",
-          "uriTemplate": "/order/stoplimitorderhistory?TradingAccountId={TradingAccountId}&MaxResults={maxResults}",
+          "uriTemplate": "/stoplimitorderhistory?TradingAccountId={TradingAccountId}&MaxResults={maxResults}",
           "contentType": "application/json",
           "responseContentType": "application/json",
           "transport": "GET",
@@ -963,7 +963,7 @@ exports.smd =
         "GetClientAndTradingAccount": {
           "description": "Returns the User's ClientAccountId and a list of their TradingAccounts. There are no parameters for this call.",
           "target": "useraccount",
-          "uriTemplate": "/UserAccount/ClientAndTradingAccount",
+          "uriTemplate": "/ClientAndTradingAccount",
           "contentType": "application/json",
           "responseContentType": "application/json",
           "transport": "GET",
@@ -979,7 +979,7 @@ exports.smd =
         "SaveAccountInformation": {
           "description": "Saves the users account information.",
           "target": "useraccount",
-          "uriTemplate": "/UserAccount/Save",
+          "uriTemplate": "/Save",
           "contentType": "application/json",
           "responseContentType": "application/json",
           "transport": "POST",
@@ -1000,7 +1000,7 @@ exports.smd =
         "GetSystemLookup": {
           "description": "Use the message lookup service to get localised textual names for the various status code & IDs returned by the API. For example, a query for **OrderStatusReason** will contain text names for all the possible values of **OrderStatusReason** in the [ApiOrderResponseDTO](http://labs.cityindex.com/docs/#Data%20Types/ApiOrderResponseDTO.htm). You should only request the list once per session *(for each entity you're interested in)*.",
           "target": "message",
-          "uriTemplate": "/message/lookup?LookupEntityName={LookupEntityName}&CultureId={CultureId}",
+          "uriTemplate": "/lookup?LookupEntityName={LookupEntityName}&CultureId={CultureId}",
           "contentType": "application/json",
           "responseContentType": "application/json",
           "transport": "GET",
@@ -1026,7 +1026,7 @@ exports.smd =
         "GetClientApplicationMessageTranslation": {
           "description": "Use the message translation service to get client specific translated text strings.",
           "target": "message",
-          "uriTemplate": "/message/translation?ClientApplicationId={ClientApplicationId}&CultureId={CultureId}&AccountOperatorId={AccountOperatorId}",
+          "uriTemplate": "/translation?ClientApplicationId={ClientApplicationId}&CultureId={CultureId}&AccountOperatorId={AccountOperatorId}",
           "contentType": "application/json",
           "responseContentType": "application/json",
           "transport": "GET",
@@ -1057,7 +1057,7 @@ exports.smd =
         "GetClientApplicationMessageTranslationWithInterestingItems": {
           "description": "Use the message translation service to get client specific translated textual strings for specific keys.",
           "target": "message",
-          "uriTemplate": "/message/translationWithInterestingItems",
+          "uriTemplate": "/translationWithInterestingItems",
           "contentType": "application/json",
           "responseContentType": "application/json",
           "transport": "POST",
@@ -1137,8 +1137,8 @@ exports.smd =
         },
         "GetVersionInformation": {
           "description": "Gets version information for a specific client application and *(optionally)* account operator.",
-          "target": "clientapplication/versioninformation",
-          "uriTemplate": "/clientapplication/versioninformation?AppKey={AppKey}&AccountOperatorId={AccountOperatorId}",
+          "target": "clientapplication",
+          "uriTemplate": "/versioninformation?AppKey={AppKey}&AccountOperatorId={AccountOperatorId}",
           "contentType": "application/json",
           "responseContentType": "application/json",
           "transport": "GET",

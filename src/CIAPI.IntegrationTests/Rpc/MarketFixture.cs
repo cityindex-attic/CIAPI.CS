@@ -16,7 +16,7 @@ namespace CIAPI.IntegrationTests.Rpc
     [TestFixture]
     public class MarketFixture : RpcFixtureBase
     {
-        [Test, Ignore("need to add tags to account")]
+        [Test]
         public void CanGetMarketTags()
         {
             var rpcClient = BuildRpcClient();
@@ -47,7 +47,7 @@ namespace CIAPI.IntegrationTests.Rpc
 
         }
 
-        [Test,Ignore("need to add tags to account")]
+        [Test]
         public void CanSearchWithTags()
         {
             var rpcClient = BuildRpcClient();

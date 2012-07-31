@@ -24,6 +24,39 @@ namespace CIAPI.IntegrationTests.Rpc
         }
 
         [Test]
+        public void CanGetTranslationWithInterestingItems()
+        {
+
+            var rpcClient = BuildRpcClient();
+            ApiClientApplicationMessageTranslationRequestDTO request = new ApiClientApplicationMessageTranslationRequestDTO
+                                                                           {
+                                                                               AccountOperatorId = 2347,
+                                                                               ClientApplicationId = 0,
+                                                                               CultureId = 69,
+                                                                               InterestedTranslationKeys = new[] { "contactus_customerservicesemail", "contactus_customerservicesphone" }
+                                                                           };
+            var translation = rpcClient.Messaging.GetClientApplicationMessageTranslationWithInterestingItems(request);
+
+            Assert.IsTrue(translation.TranslationKeyValuePairs.Length > 0, "no lookup translation values returned for " + request.ToStringWithValues());
+
+            rpcClient.LogOut();
+        }
+
+        [Test]
+        public void CanGetClientApplicationMessageTranslation()
+        {
+            var rpcClient = BuildRpcClient();
+
+            var translation = rpcClient.Messaging.GetClientApplicationMessageTranslation(0,69,2347);
+
+            Assert.IsTrue(translation.TranslationKeyValuePairs.Length > 0, "no lookup translation values returned");
+
+            rpcClient.LogOut();
+        }
+
+        
+
+        [Test]
         public void CanGetListOfCulturesLookup()
         {
             var rpcClient = BuildRpcClient();
