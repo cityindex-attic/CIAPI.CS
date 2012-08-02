@@ -9,21 +9,22 @@ namespace CIAPI.Rpc
 {
     public class MetricsRecorder : Recorder
     {
-     
+        private readonly string _metricsSession;
+
         public Uri AppmetricsUri { get; private set; }
         private Timer _metricsTimer;
         
         private static readonly ILog Log = LogManager.GetLogger(typeof(MetricsRecorder));
         
-        public MetricsRecorder(Client client,Uri appmetricsUri):base(client)
+        public MetricsRecorder(Client client, Uri appmetricsUri, string metricsSession):base(client)
         {
+            _metricsSession = metricsSession;
             AppmetricsUri = appmetricsUri;
             _metricsTimer = new Timer(ignored => PostMetrics(), null, 1000, 10000);
         }
 
         public override void Stop()
         {
-            
             _metricsTimer.Change(int.MaxValue, int.MaxValue);
             PostMetrics();
             base.Stop();
@@ -71,10 +72,10 @@ namespace CIAPI.Rpc
 
             Log.Debug("LATENCY:/n" + latencyData);
 
-            // #FIXME: determine appropriate identifier to replace session
             try
             {
-                ((Client)Client).BeginRequest(RequestMethod.POST, AppmetricsUri.AbsoluteUri, "", new Dictionary<string, string>(), new Dictionary<string, object> { { "MessageAppKey", ((Client)Client).AppKey ?? "null" }, { "MessageSession", "null" }, { "MessagesList", latencyData } },
+                Client.BeginRequest(RequestMethod.POST, AppmetricsUri.AbsoluteUri, "", new Dictionary<string, string>(), 
+                    new Dictionary<string, object> { { "MessageAppKey", ((Client)Client).AppKey ?? "null" }, { "MessageSession", _metricsSession }, { "MessagesList", latencyData } },
                                      ContentType.FORM,
                                      ContentType.TEXT,
                                      TimeSpan.FromMilliseconds(0),

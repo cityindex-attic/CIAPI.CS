@@ -23,7 +23,7 @@ namespace CIAPI.IntegrationTests.Rpc
             Trace.Listeners.Add(listener);
 
             var rpcClient = new Client(Settings.RpcUri, Settings.StreamingUri, "my-test-appkey");
-            var metricsRecorder = new MetricsRecorder(rpcClient, new Uri("http://metrics.labs.cityindex.com/LogEvent.ashx"));
+            var metricsRecorder = new MetricsRecorder(rpcClient, new Uri("http://metrics.labs.cityindex.com/LogEvent.ashx"), "metrics-session");
             metricsRecorder.Start();
 
             rpcClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);
@@ -35,7 +35,7 @@ namespace CIAPI.IntegrationTests.Rpc
                 rpcClient.News.GetNewsDetail("dj", item.StoryId.ToString());
             }
 
-            Thread.Sleep(10000);
+            Thread.Sleep(1000);
 
             rpcClient.LogOut();
 
@@ -47,6 +47,39 @@ namespace CIAPI.IntegrationTests.Rpc
             var logText = log.ToString();
 
             Assert.IsTrue(logText.Contains("Latency message complete"), "did not find evidence of metrics being posted");
+        }
+
+        /// <summary>
+        /// Test case for issue 175
+        /// </summary>
+        [Test]
+        public void MetricsAreSentWithSelectedSessionIdentifier()
+        {
+            var metricsSession = "my-metrics-session";
+
+            // set up a listener
+            var log = new StringBuilder();
+            var writer = new StringWriter(log);
+            var listener = new TextWriterTraceListener(writer);
+            Trace.Listeners.Add(listener);
+
+            var rpcClient = new Client(Settings.RpcUri, Settings.StreamingUri, "my-test-appkey");
+            
+            var metricsRecorder = new MetricsRecorder(rpcClient, new Uri("http://metrics.labs.cityindex.com/LogEvent.ashx"), metricsSession);
+            metricsRecorder.Start();
+
+            rpcClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);
+
+            rpcClient.LogOut();
+
+            metricsRecorder.Stop();
+            rpcClient.Dispose();
+
+            Trace.Listeners.Remove(listener);
+
+            var logText = log.ToString();
+
+            Assert.That(logText, Is.StringContaining(metricsSession));
         }
     }
 }
