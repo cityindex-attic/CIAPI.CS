@@ -60,9 +60,8 @@ namespace CIAPI.Rpc
                     }
 
                 }
-                catch
+                catch (Exception)
                 {
-
                     //swallow. this is just a safety swallow. no need to log
                 }
             }
@@ -75,25 +74,30 @@ namespace CIAPI.Rpc
             try
             {
                 Client.BeginRequest(RequestMethod.POST, AppmetricsUri.AbsoluteUri, "", new Dictionary<string, string>(), 
-                    new Dictionary<string, object> { { "MessageAppKey", ((Client)Client).AppKey ?? "null" }, { "MessageSession", _metricsSession }, { "MessagesList", latencyData } },
-                                     ContentType.FORM,
-                                     ContentType.TEXT,
-                                     TimeSpan.FromMilliseconds(0),
-                                     30000,
-                                     0, ar =>
-                                            {
-                                                try
-                                                {
-                                                    ((Client)Client).EndRequest(ar);
-                                                    Log.Debug("Latency message complete.");
-                                                }
-                                                catch (Exception ex)
-                                                {
+                    new Dictionary<string, object>
+                        {
+                            { "MessageAppKey", ((Client)Client).AppKey ?? "null" }, 
+                            { "MessageSession", _metricsSession }, 
+                            { "MessagesList", latencyData }
+                        },
+                        ContentType.FORM,
+                        ContentType.TEXT,
+                        TimeSpan.FromMilliseconds(0),
+                        30000,
+                        0, ar =>
+                            {
+                                try
+                                {
+                                    ((Client)Client).EndRequest(ar);
+                                    Log.Debug("Latency message complete.");
+                                }
+                                catch (Exception ex)
+                                {
 
-                                                    Log.Error("Latency message failed to complete.", ex);
-                                                }
+                                    Log.Error("Latency message failed to complete.", ex);
+                                }
 
-                                            }, null);
+                            }, null);
 
             }
             catch (Exception ex2)
