@@ -55,5 +55,13 @@ namespace CIAPI.IntegrationTests
                 return Environment.GetEnvironmentVariable("AppMetrics_Password");
             }
         }
+
+        public static string AppMetrics_AccessKey
+        {
+            get
+            {
+                return Environment.GetEnvironmentVariable("AppMetrics_AccessKey");
+            }
+        }
     }
 }
