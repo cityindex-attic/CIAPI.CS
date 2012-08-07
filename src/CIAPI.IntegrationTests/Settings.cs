@@ -44,7 +44,7 @@ namespace CIAPI.IntegrationTests
         {
             get
             {
-                return Environment.GetEnvironmentVariable("AppMetrics_UserName");
+                return Environment.GetEnvironmentVariable("AppMetricsTest_UserName");
             }
         }
 
@@ -52,7 +52,7 @@ namespace CIAPI.IntegrationTests
         {
             get
             {
-                return Environment.GetEnvironmentVariable("AppMetrics_Password");
+                return Environment.GetEnvironmentVariable("AppMetricsTest_Password");
             }
         }
 
@@ -60,7 +60,7 @@ namespace CIAPI.IntegrationTests
         {
             get
             {
-                return Environment.GetEnvironmentVariable("AppMetrics_AccessKey");
+                return Environment.GetEnvironmentVariable("AppMetricsTest_AccessKey");
             }
         }
     }

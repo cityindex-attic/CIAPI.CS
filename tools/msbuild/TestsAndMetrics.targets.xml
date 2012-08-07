@@ -15,9 +15,9 @@
   <!-- Runs unit tests -->
   <Target Name="RunTests" DependsOnTargets="CreateReportDirectories">
 
-    <SetEnvVariable Name="AppMetrics_UserName" Value="$(AppMetrics_UserName)"/>
-    <SetEnvVariable Name="AppMetrics_Password" Value="$(AppMetrics_Password)"/>
-    <SetEnvVariable Name="AppMetrics_AccessKey" Value="$(AppMetrics_AccessKey)"/>
+    <SetEnvVariable Name="AppMetricsTest_UserName" Value="$(AppMetricsTest_UserName)"/>
+    <SetEnvVariable Name="AppMetricsTest_Password" Value="$(AppMetricsTest_Password)"/>
+    <SetEnvVariable Name="AppMetricsTest_AccessKey" Value="$(AppMetricsTest_AccessKey)"/>
 
     <NUnit DisableShadowCopy="True"
          Force32Bit="true"
