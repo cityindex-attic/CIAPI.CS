@@ -39,5 +39,29 @@ namespace CIAPI.IntegrationTests
                 return ConfigurationManager.AppSettings["RpcPassword"];
             }
         }
+
+        public static string AppMetrics_UserName
+        {
+            get
+            {
+                return Environment.GetEnvironmentVariable("AppMetricsTest_UserName");
+            }
+        }
+
+        public static string AppMetrics_Password
+        {
+            get
+            {
+                return Environment.GetEnvironmentVariable("AppMetricsTest_Password");
+            }
+        }
+
+        public static string AppMetrics_AccessKey
+        {
+            get
+            {
+                return Environment.GetEnvironmentVariable("AppMetricsTest_AccessKey");
+            }
+        }
     }
 }

@@ -9,21 +9,25 @@ namespace CIAPI.Rpc
 {
     public class MetricsRecorder : Recorder
     {
-     
+        private readonly string _metricsSession;
+        private readonly string _metricsAccessKey;
+
         public Uri AppmetricsUri { get; private set; }
         private Timer _metricsTimer;
         
         private static readonly ILog Log = LogManager.GetLogger(typeof(MetricsRecorder));
-        
-        public MetricsRecorder(Client client,Uri appmetricsUri):base(client)
+
+        public MetricsRecorder(Client client, Uri appmetricsUri, string metricsSession, string metricsAccessKey = null)
+            : base(client)
         {
+            _metricsSession = metricsSession;
+            _metricsAccessKey = metricsAccessKey;
             AppmetricsUri = appmetricsUri;
             _metricsTimer = new Timer(ignored => PostMetrics(), null, 1000, 10000);
         }
 
         public override void Stop()
         {
-            
             _metricsTimer.Change(int.MaxValue, int.MaxValue);
             PostMetrics();
             base.Stop();
@@ -59,9 +63,8 @@ namespace CIAPI.Rpc
                     }
 
                 }
-                catch
+                catch (Exception)
                 {
-
                     //swallow. this is just a safety swallow. no need to log
                 }
             }
@@ -71,28 +74,34 @@ namespace CIAPI.Rpc
 
             Log.Debug("LATENCY:/n" + latencyData);
 
-            // #FIXME: determine appropriate identifier to replace session
             try
             {
-                ((Client)Client).BeginRequest(RequestMethod.POST, AppmetricsUri.AbsoluteUri, "", new Dictionary<string, string>(), new Dictionary<string, object> { { "MessageAppKey", ((Client)Client).AppKey ?? "null" }, { "MessageSession", "null" }, { "MessagesList", latencyData } },
-                                     ContentType.FORM,
-                                     ContentType.TEXT,
-                                     TimeSpan.FromMilliseconds(0),
-                                     30000,
-                                     0, ar =>
-                                            {
-                                                try
-                                                {
-                                                    ((Client)Client).EndRequest(ar);
-                                                    Log.Debug("Latency message complete.");
-                                                }
-                                                catch (Exception ex)
-                                                {
+                Client.BeginRequest(RequestMethod.POST, AppmetricsUri.AbsoluteUri, "", new Dictionary<string, string>(), 
+                    new Dictionary<string, object>
+                        {
+                            { "AccessKey", _metricsAccessKey }, 
+                            { "MessageAppKey", ((Client)Client).AppKey ?? "null" }, 
+                            { "MessageSession", _metricsSession }, 
+                            { "MessagesList", latencyData }
+                        },
+                        ContentType.FORM,
+                        ContentType.TEXT,
+                        TimeSpan.FromMilliseconds(0),
+                        30000,
+                        0, ar =>
+                            {
+                                try
+                                {
+                                    ((Client)Client).EndRequest(ar);
+                                    Log.Debug("Latency message complete.");
+                                }
+                                catch (Exception ex)
+                                {
 
-                                                    Log.Error("Latency message failed to complete.", ex);
-                                                }
+                                    Log.Error("Latency message failed to complete.", ex);
+                                }
 
-                                            }, null);
+                            }, null);
 
             }
             catch (Exception ex2)
