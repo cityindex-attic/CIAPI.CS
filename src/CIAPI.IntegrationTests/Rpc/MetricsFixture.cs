@@ -23,7 +23,7 @@ namespace CIAPI.IntegrationTests.Rpc
             Trace.Listeners.Add(listener);
 
             var rpcClient = new Client(Settings.RpcUri, Settings.StreamingUri, "my-test-appkey");
-            var metricsRecorder = new MetricsRecorder(rpcClient, new Uri("http://metrics.labs.cityindex.com/LogEvent.ashx"));
+            var metricsRecorder = new MetricsRecorder(rpcClient, new Uri("http://metrics.labs.cityindex.com/LogEvent.ashx"),"MyAppMetricsKey");
             metricsRecorder.Start();
 
             rpcClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);

@@ -12,12 +12,13 @@ namespace CIAPI.Rpc
      
         public Uri AppmetricsUri { get; private set; }
         private Timer _metricsTimer;
-        
+        private string _clientId;
         private static readonly ILog Log = LogManager.GetLogger(typeof(MetricsRecorder));
         
-        public MetricsRecorder(Client client,Uri appmetricsUri):base(client)
+        public MetricsRecorder(Client client,Uri appmetricsUri,string clientId):base(client)
         {
             AppmetricsUri = appmetricsUri;
+            _clientId = clientId;
             _metricsTimer = new Timer(ignored => PostMetrics(), null, 1000, 10000);
         }
 
@@ -74,7 +75,7 @@ namespace CIAPI.Rpc
             // #FIXME: determine appropriate identifier to replace session
             try
             {
-                ((Client)Client).BeginRequest(RequestMethod.POST, AppmetricsUri.AbsoluteUri, "", new Dictionary<string, string>(), new Dictionary<string, object> { { "MessageAppKey", ((Client)Client).AppKey ?? "null" }, { "MessageSession", "null" }, { "MessagesList", latencyData } },
+                ((Client)Client).BeginRequest(RequestMethod.POST, AppmetricsUri.AbsoluteUri, "", new Dictionary<string, string>(), new Dictionary<string, object> { { "MessageAppKey", ((Client)Client).AppKey ?? "null" }, { "MessageSession", _clientId }, { "MessagesList", latencyData } },
                                      ContentType.FORM,
                                      ContentType.TEXT,
                                      TimeSpan.FromMilliseconds(0),

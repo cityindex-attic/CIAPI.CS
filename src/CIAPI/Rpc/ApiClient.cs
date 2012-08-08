@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Reflection;
+using System.Threading;
 using CIAPI.DTO;
 using CIAPI.Streaming;
 using Salient.ReflectiveLoggingAdapter;
@@ -14,6 +15,9 @@ namespace CIAPI.Rpc
     // #TODO: reintegrate exception factory into ReliableHttpClient
     public partial class Client : ClientBase
     {
+
+  
+        
         private readonly IStreamingClientFactory _streamingFactory;
         /// <summary>
         /// used as a null target for json deserialization test
@@ -32,6 +36,7 @@ namespace CIAPI.Rpc
 
         private Dictionary<string, string> GetHeaders(string target)
         {
+            
             var headers = new Dictionary<string, string>();
             if (target.IndexOf("/session", StringComparison.OrdinalIgnoreCase) == -1)
             {
@@ -45,6 +50,8 @@ namespace CIAPI.Rpc
             return headers;
         }
 
+        
+
         public bool Http200ErrorsOnly { get; set; }
 
 
@@ -52,6 +59,7 @@ namespace CIAPI.Rpc
 
         private static string AppendQueryParameter(string uriTemplate, string paramName)
         {
+            
             if (uriTemplate.Contains("?"))
             {
 
