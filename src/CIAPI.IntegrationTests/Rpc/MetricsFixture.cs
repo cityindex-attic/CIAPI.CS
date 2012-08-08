@@ -40,6 +40,14 @@ namespace CIAPI.IntegrationTests.Rpc
             rpcClient.LogOut();
 
             metricsRecorder.Stop();
+            
+            var purgeHandle = rpcClient.ShutDown();
+
+            if (!purgeHandle.WaitOne(60000))
+            {
+                throw new Exception("timed out waiting for client to purge");
+            }
+
             rpcClient.Dispose();
 
             Trace.Listeners.Remove(listener);
