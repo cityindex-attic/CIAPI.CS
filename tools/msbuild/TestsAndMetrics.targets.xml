@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Go" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
   <PropertyGroup>
 	  <NUnit-ToolPath>$(RootDirectory)\tools\nunit-runner\</NUnit-ToolPath>
 	  <OpenCover-ToolPath>$(SrcDirectory)\packages\OpenCover.4.0.519\</OpenCover-ToolPath>
@@ -8,8 +9,15 @@
     <SimianEXE>$(RootDirectory)\tools\simian-2.3.31\bin\simian-2.3.31.exe</SimianEXE>
   </PropertyGroup>
 
+  <UsingTask TaskName="SetEnvVariable"
+           AssemblyFile="$(RootDirectory)\tools\MSBuild.SetEnvVariable\MSBuild.SetEnvVariable.dll"/>
+
   <!-- Runs unit tests -->
   <Target Name="RunTests" DependsOnTargets="CreateReportDirectories">
+
+    <SetEnvVariable Name="AppMetricsTest_UserName" Value="$(AppMetricsTest_UserName)"/>
+    <SetEnvVariable Name="AppMetricsTest_Password" Value="$(AppMetricsTest_Password)"/>
+    <SetEnvVariable Name="AppMetricsTest_AccessKey" Value="$(AppMetricsTest_AccessKey)"/>
 
     <NUnit DisableShadowCopy="True"
          Force32Bit="true"
