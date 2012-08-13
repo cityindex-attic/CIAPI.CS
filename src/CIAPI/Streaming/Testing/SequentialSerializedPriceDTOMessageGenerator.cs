@@ -10,7 +10,7 @@ using CIAPI.Streaming.Testing;
 using CIAPI.StreamingClient;
 
 
-using Salient.ReliableHttpClient.Testing;
+
 
 namespace CIAPI.Streaming.Testing
 {

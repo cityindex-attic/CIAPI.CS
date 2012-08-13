@@ -13,17 +13,24 @@ namespace CIAPI.Rpc
         private readonly string _metricsAccessKey;
 
         public Uri AppmetricsUri { get; private set; }
-        private readonly Timer _metricsTimer;
+        private Timer _metricsTimer;
+<<<<<<< HEAD
+        private string _clientId;
+        private static readonly ILog Log = LogManager.GetLogger(typeof(MetricsRecorder));
+        
+        public MetricsRecorder(Client client,Uri appmetricsUri,string clientId):base(client)
+=======
         
         private static readonly ILog Log = LogManager.GetLogger(typeof(MetricsRecorder));
 
         public MetricsRecorder(Client client, Uri appmetricsUri, string metricsSession, string metricsAccessKey = null)
             : base(client)
+>>>>>>> issue-175
         {
             _metricsSession = metricsSession;
             _metricsAccessKey = metricsAccessKey;
             AppmetricsUri = appmetricsUri;
-            
+            _clientId = clientId;
             _metricsTimer = new Timer(ignored => PostMetrics(), null, 1000, 10000);
         }
 
@@ -77,6 +84,27 @@ namespace CIAPI.Rpc
 
             try
             {
+<<<<<<< HEAD
+                ((Client)Client).BeginRequest(RequestMethod.POST, AppmetricsUri.AbsoluteUri, "", new Dictionary<string, string>(), new Dictionary<string, object> { { "MessageAppKey", ((Client)Client).AppKey ?? "null" }, { "MessageSession", _clientId }, { "MessagesList", latencyData } },
+                                     ContentType.FORM,
+                                     ContentType.TEXT,
+                                     TimeSpan.FromMilliseconds(0),
+                                     30000,
+                                     0, ar =>
+                                            {
+                                                try
+                                                {
+                                                    ((Client)Client).EndRequest(ar);
+                                                    Log.Debug("Latency message complete.");
+                                                }
+                                                catch (Exception ex)
+                                                {
+
+                                                    Log.Error("Latency message failed to complete.", ex);
+                                                }
+
+                                            }, null);
+=======
                 Client.BeginRequest(RequestMethod.POST, AppmetricsUri.AbsoluteUri, "", new Dictionary<string, string>(), 
                     new Dictionary<string, object>
                         {
@@ -103,6 +131,7 @@ namespace CIAPI.Rpc
                                 }
 
                             }, null);
+>>>>>>> issue-175
 
             }
             catch (Exception ex2)

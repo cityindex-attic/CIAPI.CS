@@ -8,7 +8,7 @@ using NUnit.Framework;
 using System.Text.RegularExpressions;
 using Salient.ReliableHttpClient;
 
-using Salient.ReliableHttpClient.Testing;
+
 
 namespace CIAPI.IntegrationTests.Rpc
 {
