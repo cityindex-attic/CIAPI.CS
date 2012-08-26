@@ -85,7 +85,7 @@ exports.smd =
           ]
         },
         "GetPriceBars": {
-          "description": "Get historic price bars for the specified market in OHLC *(open, high, low, close)* format, suitable for plotting in candlestick charts. Returns price bars in ascending order up to the current time. When there are no prices for a particular time period, no price bar is returned. Thus, it can appear that the array of price bars has \"gaps\", i.e. the gap between the date & time of each price bar might not be equal to interval x span.    Sample Urls:   * /market/1234/history?interval=MINUTE&span=15&PriceBars=180  * /market/735/history?interval=HOUR&span=1&PriceBars=240  * /market/1577/history?interval=DAY&span=1&PriceBars=10",
+          
           "target": "market",
           "uriTemplate": "/{MarketId}/barhistory?interval={interval}&span={span}&PriceBars={PriceBars}",
           "contentType": "application/json",
@@ -846,7 +846,7 @@ exports.smd =
         "ListTradeHistory": {
           "description": "Queries for a specified trading account's trade history. The result set will contain orders with a status of __(3 - Open, 9 - Closed)__, and includes __orders that were a trade / stop / limit order__. There's currently no corresponding GetTradeHistory *(as with [ListOpenPositions](http://labs.cityindex.com/docs/#HTTP%20Services/ListOpenPositions.htm))*.",
           "target": "order",
-          "uriTemplate": "/tradehistory?TradingAccountId={TradingAccountId}&MaxResults={maxResults}",
+          "uriTemplate": "/order/tradehistory?TradingAccountId={TradingAccountId}&MaxResults={maxResults}",
           "contentType": "application/json",
           "responseContentType": "application/json",
           "transport": "GET",
@@ -1137,8 +1137,8 @@ exports.smd =
         },
         "GetVersionInformation": {
           "description": "Gets version information for a specific client application and *(optionally)* account operator.",
-          "target": "clientapplication",
-          "uriTemplate": "/versioninformation?AppKey={AppKey}&AccountOperatorId={AccountOperatorId}",
+          "target": "clientapplication/versioninformation",
+          "uriTemplate": "?AppKey={AppKey}&AccountOperatorId={AccountOperatorId}",
           "contentType": "application/json",
           "responseContentType": "application/json",
           "transport": "GET",
@@ -1180,7 +1180,7 @@ exports.smd =
             {
               "type": "string",
               "name": "category",
-              "description": "A news category.",
+              "description": "A news category. See [Usage Notes: News Feeds](http://labs.cityindex.com/docs/#News.htm)",
               "minLength": 1,
               "maxLength": 100,
               "demoValue": "UK"
@@ -1213,8 +1213,8 @@ exports.smd =
         },
         "DefaultPrices": {
           "description": "Stream of default prices for the specified account operator. This stream does not require authentication, so can be used on a public website.  **NB:** this stream returns prices for a group of markets, so check the MarketId & Name field when displaying.",
-          "endpoint": "CITYINDEXSTREAMINGDEFAULTPRICES",
-          "channel": "{AccountOperatorId}",
+          "target": "CITYINDEXSTREAMINGDEFAULTPRICES",
+          "channel": "AC{AccountOperatorId}",
           "transport": "HTTP",
           "protocol": "lightstreamer-4",
           "returns": {
@@ -1225,7 +1225,7 @@ exports.smd =
             {
               "type": "string",
               "name": "AccountOperatorId",
-              "description": "The account operator ID whose default market prices are required. Generally you want to hardcode this depending on the brand you are using.  See [http://faq.labs.cityindex.com/questions/what-are-the-list-of-accountoperatorids](http://faq.labs.cityindex.com/questions/what-are-the-list-of-accountoperatorids)",
+              "description": "The account operator ID whose default market prices are required. Generally you want to hardcode this depending on the brand you are using.  See [http://faq.labs.cityindex.com/questions/what-are-the-list-of-accountoperatorids](http://faq.labs.cityindex.com/questions/what-are-the-list-of-accountoperatorids). The AccountOperatorId parameter requires an AC prefix, for example AC1234 instead of just 1234. ",
               "demoValue": "3347"
             }
           ]

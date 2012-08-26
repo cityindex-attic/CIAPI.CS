@@ -364,7 +364,7 @@ namespace CIAPI.DTO
         /// <summary>
         /// Session identifier *(session token)* to delete *(log off)*.
         /// </summary>
-        public string session { get; set; }
+        public string Session { get; set; }
     }
 
     /// <summary>
@@ -518,7 +518,7 @@ namespace CIAPI.DTO
     public partial class ApiMarketInformationDTO
     {
         /// <summary>
-        /// Market ID.
+        /// The ID of the market.
         /// </summary>
         public int MarketId { get; set; }
         /// <summary>
@@ -545,6 +545,10 @@ namespace CIAPI.DTO
         /// The minimum distance from the current price you can place an order.
         /// </summary>
         public decimal? MinDistance { get; set; }
+        /// <summary>
+        /// The minimum distance unit type. This can be: *(Percentage=26, Points=27)*.
+        /// </summary>
+        public int MinDistanceUnits { get; set; }
         /// <summary>
         /// The minimum quantity that can be traded over the web.
         /// </summary>
@@ -682,7 +686,7 @@ namespace CIAPI.DTO
         /// </summary>
         public decimal? BetPer { get; set; }
         /// <summary>
-        /// Reflects the market underlying type id of the associated market
+        /// Reflects the market underlying type ID of the associated market
         /// </summary>
         public int? MarketUnderlyingTypeId { get; set; }
         /// <summary>
@@ -690,9 +694,49 @@ namespace CIAPI.DTO
         /// </summary>
         public string MarketUnderlyingType { get; set; }
         /// <summary>
-        /// Exipry of the market in UTC
+        /// Flag indicating whether guaranteed orders are allowed.
+        /// </summary>
+        public bool AllowGuaranteedOrders { get; set; }
+        /// <summary>
+        /// Flag to indicate if stop orders are allowed for inclusion in margin calculation.
+        /// </summary>
+        public bool OrdersAwareMargining { get; set; }
+        /// <summary>
+        /// The minimum for orders aware margining.
+        /// </summary>
+        public decimal? OrdersAwareMarginingMinimum { get; set; }
+        /// <summary>
+        /// The minimum commission charged on trade/order.
+        /// </summary>
+        public decimal? CommissionChargeMinimum { get; set; }
+        /// <summary>
+        /// The commission rate charged on trade/order.
+        /// </summary>
+        public decimal? CommissionRate { get; set; }
+        /// <summary>
+        /// The unit type for the commission rate charged on a trade/order. This can be: *(Percentage=26, Points=27)*.
+        /// </summary>
+        public int? CommissionRateUnits { get; set; }
+        /// <summary>
+        /// Exipry of the market in UTC.
         /// </summary>
         public DateTime? ExpiryUtc { get; set; }
+        /// <summary>
+        /// The date and time in UTC for the future rollover of the market.
+        /// </summary>
+        public DateTime? FutureRolloverUTC { get; set; }
+        /// <summary>
+        /// Flag to indicate if auto-rollover on the market is allowed.
+        /// </summary>
+        public bool AllowRollover { get; set; }
+        /// <summary>
+        /// The expiry basis ID of the market.
+        /// </summary>
+        public int? ExpiryBasisId { get; set; }
+        /// <summary>
+        /// The expiry basis text of the market.
+        /// </summary>
+        public string ExpiryBasisText { get; set; }
     }
 
     /// <summary>

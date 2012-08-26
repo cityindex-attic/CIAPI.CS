@@ -236,7 +236,7 @@ public string AppKey { get; set; }
 
 
         /// <summary>
-        /// Get historic price bars for the specified market in OHLC *(open, high, low, close)* format, suitable for plotting in candlestick charts. Returns price bars in ascending order up to the current time. When there are no prices for a particular time period, no price bar is returned. Thus, it can appear that the array of price bars has "gaps", i.e. the gap between the date & time of each price bar might not be equal to interval x span.    Sample Urls:   * /market/1234/history?interval=MINUTE&span=15&PriceBars=180  * /market/735/history?interval=HOUR&span=1&PriceBars=240  * /market/1577/history?interval=DAY&span=1&PriceBars=10
+        ///  [DESCRIPTION MISSING]
         /// </summary>
         /// <param name="MarketId">The ID of the market.</param>
         /// <param name="interval">The pricebar interval.</param>
@@ -257,7 +257,7 @@ public string AppKey { get; set; }
 
 
         /// <summary>
-        /// Get historic price bars for the specified market in OHLC *(open, high, low, close)* format, suitable for plotting in candlestick charts. Returns price bars in ascending order up to the current time. When there are no prices for a particular time period, no price bar is returned. Thus, it can appear that the array of price bars has "gaps", i.e. the gap between the date & time of each price bar might not be equal to interval x span.    Sample Urls:   * /market/1234/history?interval=MINUTE&span=15&PriceBars=180  * /market/735/history?interval=HOUR&span=1&PriceBars=240  * /market/1577/history?interval=DAY&span=1&PriceBars=10
+        ///  [DESCRIPTION MISSING]
         /// </summary>
         /// <param name="MarketId">The ID of the market.</param>
         /// <param name="interval">The pricebar interval.</param>
@@ -1452,7 +1452,7 @@ public string AppKey { get; set; }
         /// <param name="maxResults">The maximum number of results to return.</param>
         public virtual ListTradeHistoryResponseDTO ListTradeHistory(int TradingAccountId, int maxResults)
         {
-            string uriTemplate = "/tradehistory?TradingAccountId={TradingAccountId}&MaxResults={maxResults}";
+            string uriTemplate = "/order/tradehistory?TradingAccountId={TradingAccountId}&MaxResults={maxResults}";
             return _client.Request<ListTradeHistoryResponseDTO>(RequestMethod.GET,"order", uriTemplate ,
             new Dictionary<string, object>
             {
@@ -1471,7 +1471,7 @@ public string AppKey { get; set; }
         /// <param name="state"></param>
         public virtual void BeginListTradeHistory(int TradingAccountId, int maxResults, ReliableAsyncCallback callback, object state)
         {
-            string uriTemplate = "/tradehistory?TradingAccountId={TradingAccountId}&MaxResults={maxResults}";
+            string uriTemplate = "/order/tradehistory?TradingAccountId={TradingAccountId}&MaxResults={maxResults}";
             _client.BeginRequest(RequestMethod.GET, "order", uriTemplate , 
             new Dictionary<string, object>
             {
@@ -2038,8 +2038,8 @@ public string AppKey { get; set; }
         /// <param name="AccountOperatorId">An optional parameter to identify the account operator string to uniquely identify the application.</param>
         public virtual GetVersionInformationResponseDTO GetVersionInformation(string AppKey, int AccountOperatorId)
         {
-            string uriTemplate = "/versioninformation?AppKey={AppKey}&AccountOperatorId={AccountOperatorId}";
-            return _client.Request<GetVersionInformationResponseDTO>(RequestMethod.GET,"clientapplication", uriTemplate ,
+            string uriTemplate = "?AppKey={AppKey}&AccountOperatorId={AccountOperatorId}";
+            return _client.Request<GetVersionInformationResponseDTO>(RequestMethod.GET,"clientapplication/versioninformation", uriTemplate ,
             new Dictionary<string, object>
             {
                 { "AppKey", AppKey}, 
@@ -2057,8 +2057,8 @@ public string AppKey { get; set; }
         /// <param name="state"></param>
         public virtual void BeginGetVersionInformation(string AppKey, int AccountOperatorId, ReliableAsyncCallback callback, object state)
         {
-            string uriTemplate = "/versioninformation?AppKey={AppKey}&AccountOperatorId={AccountOperatorId}";
-            _client.BeginRequest(RequestMethod.GET, "clientapplication", uriTemplate , 
+            string uriTemplate = "?AppKey={AppKey}&AccountOperatorId={AccountOperatorId}";
+            _client.BeginRequest(RequestMethod.GET, "clientapplication/versioninformation", uriTemplate , 
             new Dictionary<string, object>
             {
                 { "AppKey", AppKey}, 

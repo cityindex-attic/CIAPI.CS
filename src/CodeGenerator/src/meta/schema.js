@@ -462,7 +462,7 @@ exports.schema =
           "type": "string",
           "description": "User name of the session to delete *(log off)*. This is case sensitive."
         },
-        "session": {
+        "Session": {
           "type": "string",
           "description": "Session identifier *(session token)* to delete *(log off)*."
         }
@@ -658,7 +658,7 @@ exports.schema =
           "type": "integer",
           "minValue": -2147483648,
           "maxValue": 2147483647,
-          "description": "Market ID."
+          "description": "The ID of the market."
         },
         "Name": {
           "type": "string",
@@ -709,6 +709,10 @@ exports.schema =
           "minValue": -7.9228162514264338E+28,
           "maxValue": 7.9228162514264338E+28,
           "description": "The minimum distance from the current price you can place an order."
+        },
+        "MinDistanceUnits": {
+          "type": "integer",
+          "description": "The minimum distance unit type. This can be: *(Percentage=26, Points=27)*."
         },
         "WebMinSize": {
           "type": [
@@ -965,11 +969,52 @@ exports.schema =
           ],
           "minValue": -2147483648,
           "maxValue": 2147483647,
-          "description": "Reflects the market underlying type id of the associated market"
+          "description": "Reflects the market underlying type ID of the associated market"
         },
         "MarketUnderlyingType": {
           "type": "string",
           "description": "Reflects the market underlying type description of the associated market"
+        },
+        "AllowGuaranteedOrders": {
+          "type": "boolean",
+          "description": "Flag indicating whether guaranteed orders are allowed."
+        },
+       "OrdersAwareMargining": {
+          "type": "boolean",
+          "description": "Flag to indicate if stop orders are allowed for inclusion in margin calculation."
+        },       
+       "OrdersAwareMarginingMinimum": {
+          "type": [
+            "null",
+            "number"
+          ],
+          "format": "decimal",
+          "description": "The minimum for orders aware margining."
+        },
+       "CommissionChargeMinimum": {
+          "type": [
+            "null",
+            "number"
+          ],
+          "format": "decimal",
+          "description": "The minimum commission charged on trade/order."
+        },
+       "CommissionRate": {
+          "type": [
+            "null",
+            "number"
+          ],
+          "format": "decimal",
+          "description": "The commission rate charged on trade/order."
+        },
+        "CommissionRateUnits": {
+          "type": [
+            "null",
+            "integer"
+          ],
+          "minValue": -2147483648,
+          "maxValue": 2147483647,
+          "description": "The unit type for the commission rate charged on a trade/order. This can be: *(Percentage=26, Points=27)*."
         },
         "ExpiryUtc": {
           "type": [
@@ -977,8 +1022,33 @@ exports.schema =
             "string"
           ],
           "format": "wcf-date",
-          "description": "Exipry of the market in UTC"
-        }
+          "description": "Exipry of the market in UTC."
+        },
+        "FutureRolloverUTC": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "format": "wcf-date",
+          "description": "The date and time in UTC for the future rollover of the market."
+        },
+        "AllowRollover": {
+          "type": "boolean",
+          "description": "Flag to indicate if auto-rollover on the market is allowed."
+        }, 
+        "ExpiryBasisId": {
+          "type": [
+            "null",
+            "integer"
+          ],
+          "minValue": -2147483648,
+          "maxValue": 2147483647,
+          "description": "The expiry basis ID of the market."
+        },
+        "ExpiryBasisText": {
+          "type": "string",
+          "description": "The expiry basis text of the market."
+        },
       },
       "description": "Contains market information."
     },
