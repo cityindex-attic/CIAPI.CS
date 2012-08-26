@@ -78,6 +78,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rpc\CassiniDevApiContextTests.cs" />
     <Compile Include="Rpc\ExceptionHandling.cs" />
+    <Compile Include="Rpc\LatencyFixture.cs" />
     <Compile Include="Rpc\MarketInfoFixture.cs" />
     <Compile Include="Streaming\StreamingClientFactoryTests.cs" />
     <Compile Include="Streaming\StreamingClientTests.cs" />
