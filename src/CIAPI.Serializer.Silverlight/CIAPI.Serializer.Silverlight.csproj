@@ -55,13 +55,13 @@
     <Reference Include="Salient.ReflectiveLoggingAdapter.Silverlight">
       <HintPath>..\packages\Salient.ReflectiveLoggingAdapter.3.2.0\lib\sl4\Release\Salient.ReflectiveLoggingAdapter.Silverlight.dll</HintPath>
     </Reference>
-    <Reference Include="Salient.ReliableHttpClient.Serializer.Newtonsoft.Silverlight, Version=1.0.5.14, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Salient.ReliableHttpClient.Serializer.Newtonsoft.Silverlight, Version=1.0.6.16, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Salient.ReliableHttpClient.1.0.5-bleeding-14\lib\sl4\Debug\Salient.ReliableHttpClient.Serializer.Newtonsoft.Silverlight.dll</HintPath>
+      <HintPath>..\packages\Salient.ReliableHttpClient.1.0.6-bleeding-16\lib\sl4\Debug\Salient.ReliableHttpClient.Serializer.Newtonsoft.Silverlight.dll</HintPath>
     </Reference>
-    <Reference Include="Salient.ReliableHttpClient.Silverlight, Version=1.0.5.14, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Salient.ReliableHttpClient.Silverlight, Version=1.0.6.16, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Salient.ReliableHttpClient.1.0.5-bleeding-14\lib\sl4\Debug\Salient.ReliableHttpClient.Silverlight.dll</HintPath>
+      <HintPath>..\packages\Salient.ReliableHttpClient.1.0.6-bleeding-16\lib\sl4\Debug\Salient.ReliableHttpClient.Silverlight.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows" />
     <Reference Include="system" />

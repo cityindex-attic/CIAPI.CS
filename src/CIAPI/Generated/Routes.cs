@@ -56,6 +56,38 @@ public string AppKey { get; set; }
             this. ClientApplication = new _ClientApplication(this);
         Log.Debug("Rpc.Client created for " + _rootUri.AbsoluteUri);
         }
+        public Client(Uri rpcUri, Uri streamingUri, string appKey, int backgroundInterval)
+            : base(new Serializer(),backgroundInterval)
+        {
+	#if SILVERLIGHT
+	#if WINDOWS_PHONE
+	        UserAgent = "CIAPI.PHONE7."+ GetVersionNumber();
+	#else
+	        UserAgent = "CIAPI.SILVERLIGHT."+ GetVersionNumber();
+	#endif
+	#else
+	        UserAgent = "CIAPI.CS." + GetVersionNumber();
+	#endif
+        _streamingFactory=new LightStreamerStreamingClientFactory();
+        AppKey=appKey;
+        _client=this;
+        _rootUri = rpcUri;
+        _streamingUri = streamingUri;
+
+            this. Authentication = new _Authentication(this);
+            this. PriceHistory = new _PriceHistory(this);
+            this. News = new _News(this);
+            this. CFDMarkets = new _CFDMarkets(this);
+            this. SpreadMarkets = new _SpreadMarkets(this);
+            this. Market = new _Market(this);
+            this. Preference = new _Preference(this);
+            this. TradesAndOrders = new _TradesAndOrders(this);
+            this. AccountInformation = new _AccountInformation(this);
+            this. Messaging = new _Messaging(this);
+            this. Watchlist = new _Watchlist(this);
+            this. ClientApplication = new _ClientApplication(this);
+        Log.Debug("Rpc.Client created for " + _rootUri.AbsoluteUri);
+        }
         public Client(Uri rpcUri, Uri streamingUri, string appKey,IJsonSerializer serializer, IRequestFactory requestFactory, IStreamingClientFactory streamingFactory)
             : base(serializer, requestFactory)
         {

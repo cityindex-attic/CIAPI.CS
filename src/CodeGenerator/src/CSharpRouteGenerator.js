@@ -253,6 +253,32 @@
             
             self.writeLine("        }");
 
+
+
+            self.writeLine("        public Client(Uri rpcUri, Uri streamingUri, string appKey, int backgroundInterval)");
+            self.writeLine("            : base(new Serializer(),backgroundInterval)");
+            self.writeLine("        {");
+            self.writeLine('	#if SILVERLIGHT');
+            self.writeLine('	#if WINDOWS_PHONE');
+            self.writeLine('	        UserAgent = "CIAPI.PHONE7."+ GetVersionNumber();');
+            self.writeLine('	#else');
+            self.writeLine('	        UserAgent = "CIAPI.SILVERLIGHT."+ GetVersionNumber();');
+            self.writeLine('	#endif');
+            self.writeLine('	#else');
+            self.writeLine('	        UserAgent = "CIAPI.CS." + GetVersionNumber();');
+            self.writeLine('	#endif');
+            self.writeLine("        _streamingFactory=new LightStreamerStreamingClientFactory();");
+            self.writeLine("        AppKey=appKey;");
+            self.writeLine("        _client=this;");
+            self.writeLine("        _rootUri = rpcUri;");
+            self.writeLine("        _streamingUri = streamingUri;");
+
+            self.writeLine(subClassInitializer);
+            self.writeLine('        Log.Debug("Rpc.Client created for " + _rootUri.AbsoluteUri);');
+
+            self.writeLine("        }");
+
+
             self.writeLine("        public Client(Uri rpcUri, Uri streamingUri, string appKey,IJsonSerializer serializer, IRequestFactory requestFactory, IStreamingClientFactory streamingFactory)");
             self.writeLine("            : base(serializer, requestFactory)");
             self.writeLine("        {");
