@@ -63,8 +63,6 @@ namespace CIAPI
                 this.ResolveMagicNumbers(value.OCO);
             }
 
-
-
             if (value.IfDone != null)
             {
                 foreach (ApiIfDoneResponseDTO apiIfDoneResponseDTO in value.IfDone)
@@ -83,6 +81,27 @@ namespace CIAPI
                 }
             }
 
+        }
+
+        public void ResolveMagicNumbers(ApiSimulateTradeOrderResponseDTO value)
+        {
+            value.StatusReason_Resolved = this.ResolveMagicNumber(MagicNumberKeys.ApiTradeOrderResponseDTO_StatusReason, value.StatusReason);
+            value.Status_Resolved = this.ResolveMagicNumber(MagicNumberKeys.ApiTradeOrderResponseDTO_Status, value.Status);
+
+            if (value.Orders != null)
+            {
+                foreach (ApiSimulateOrderResponseDTO order in value.Orders)
+                {
+                    this.ResolveMagicNumbers(order);
+                }
+            }
+
+        }
+
+        public void ResolveMagicNumbers(ApiSimulateOrderResponseDTO value)
+        {
+            value.StatusReason_Resolved = this.ResolveMagicNumber(MagicNumberKeys.ApiOrderResponseDTO_StatusReason, value.StatusReason);
+            value.Status_Resolved = this.ResolveMagicNumber(MagicNumberKeys.ApiOrderResponseDTO_Status, value.Status);
         }
 
         public void ResolveMagicNumbers(GetOpenPositionResponseDTO value)

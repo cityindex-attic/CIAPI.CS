@@ -1,7 +1,7 @@
 exports.schema =
 {
-  "namespace":"CIAPI.DTO",
-  "version": "0.111.0.0",
+    "version": "0.111.0.0",
+    "namespace": "CIAPI.DTO",
   "properties": {
     "AccountInformationResponseDTO": {
       "id": "AccountInformationResponseDTO",
@@ -1048,7 +1048,7 @@ exports.schema =
         "ExpiryBasisText": {
           "type": "string",
           "description": "The expiry basis text of the market."
-        },
+        }
       },
       "description": "Contains market information."
     },
@@ -2402,7 +2402,7 @@ exports.schema =
         "CultureId": {
           "type": "integer",
           "description": "The Culture ID used to filter results. Leave blank to use the culture of the requesting user."
-        },
+        }
       },
       "description": "A request for news stories."
     },
@@ -3327,6 +3327,54 @@ exports.schema =
         }
       },
       "description": "Request to update the display order of items in a watchlist."
+    },
+    "ApiSimulateTradeOrderResponseDTO": {
+      "id": "ApiSimulateTradeOrderResponseDTO",
+      "type": "object",
+      "properties": {
+        "Status": {
+          "type": "integer",
+          "minValue": -2147483648,
+          "maxValue": 2147483647,
+          "description": "The status of the simulated order *(Pending, Accepted, Open, etc.)*"
+        },
+        "StatusReason": {
+          "type": "integer",
+          "minValue": -2147483648,
+          "maxValue": 2147483647,
+          "description": "The ID corresponding to a more descriptive reason for the order status."
+        },
+        "SimulatedCash": {
+          "type": "decimal",         
+          "description": "The simulated cash balance after the trade."
+        },
+        "ActualCash": {
+          "type": "decimal",         
+          "description": "The actual cash balance before the trade."
+        },
+        "SimulatedTotalMarginRequirment": {
+          "type": "decimal",         
+          "description": "The simulated total margin requirement (TMR) after the trade."
+        },
+        "ActualTotalMarginRequirment": {
+          "type": "decimal",         
+          "description": "The actual total margin requirement (TMR) before the trade."
+        },
+        "CurrencyId": {
+          "type": "int",         
+          "description": "The currency Id for the currency values in this response."
+        },
+        "Orders": {
+          "type": "array",
+          "items": [
+            {
+              "$ref": "#.ApiSimulateOrderResponseDTO"
+            }
+          ],
+          "description": "List of simulated orders with their associated response."
+        }      
+      },
+      "description": "The response from the simulated trade request."
     }
   }
 }

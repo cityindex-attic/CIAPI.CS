@@ -144,6 +144,9 @@ exports.routesPatch = {
     "Trade": {
         "section": "TradesAndOrders"
     },
+    "SimulateTrade": {
+        "section": "TradesAndOrders"
+    },
     "UpdateTrade": {
         "section": "TradesAndOrders"
     },

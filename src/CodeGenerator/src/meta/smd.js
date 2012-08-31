@@ -85,7 +85,7 @@ exports.smd =
           ]
         },
         "GetPriceBars": {
-          
+          "description": "Get historic price bars for the specified market in OHLC *(open, high, low, close)* format, suitable for plotting in candlestick charts. Returns price bars in ascending order up to the current time. When there are no prices for a particular time period, no price bar is returned. Thus, it can appear that the array of price bars has \"gaps\", i.e. the gap between the date & time of each price bar might not be equal to interval x span. \n\n Sample Urls: \n\n* /market/1234/history?interval=MINUTE&span=15&PriceBars=180 \n* /market/735/history?interval=HOUR&span=1&PriceBars=240 \n* /market/1577/history?interval=DAY&span=1&PriceBars=10",
           "target": "market",
           "uriTemplate": "/{MarketId}/barhistory?interval={interval}&span={span}&PriceBars={PriceBars}",
           "contentType": "application/json",
@@ -212,8 +212,8 @@ exports.smd =
             {
               "$ref": "#.ListNewsHeadlinesRequestDTO",
               "name": "request",
-              "description": "Object specifing the various request parameters.",
-            },
+              "description": "Object specifing the various request parameters."
+            }
           ]
         },
         "GetNewsDetail": {
@@ -696,7 +696,7 @@ exports.smd =
           ]
         },
         "Order": {
-          "description": "Place an order on a particular market.  Do not set any order ID fields when requesting a new order, the platform will generate them.",
+          "description": "Place an order on a particular market. \nDo not set any order ID fields when requesting a new order, the platform will generate them.",
           "target": "order",
           "uriTemplate": "/newstoplimitorder",
           "contentType": "application/json",
@@ -760,7 +760,7 @@ exports.smd =
           ]
         },
         "ListOpenPositions": {
-          "description": "Queries for a specified trading account's trades / open positions.   This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetOpenPosition](http://labs.cityindex.com/docs/#HTTP%20Services/GetOpenPosition.htm) when you get updates on the order stream to get the updated data in this format.",
+          "description": "Queries for a specified trading account's trades / open positions. \n\nThis URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetOpenPosition](http://labs.cityindex.com/docs/#HTTP%20Services/GetOpenPosition.htm) when you get updates on the order stream to get the updated data in this format.",
           "target": "order",
           "uriTemplate": "/openpositions?TradingAccountId={TradingAccountId}",
           "contentType": "application/json",
@@ -781,7 +781,7 @@ exports.smd =
           ]
         },
         "ListActiveStopLimitOrders": {
-          "description": "Queries for a specified trading account's active stop / limit orders.   This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetActiveStopLimitOrder](http://labs.cityindex.com/docs/#HTTP%20Services/GetActiveStopLimitOrder.htm) when you get updates on the order stream to get the updated data in this format.",
+          "description": "Queries for a specified trading account's active stop / limit orders. \n\nThis URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetActiveStopLimitOrder](http://labs.cityindex.com/docs/#HTTP%20Services/GetActiveStopLimitOrder.htm) when you get updates on the order stream to get the updated data in this format.",
           "target": "order",
           "uriTemplate": "/activestoplimitorders?TradingAccountId={TradingAccountId}",
           "contentType": "application/json",
@@ -802,7 +802,7 @@ exports.smd =
           ]
         },
         "GetActiveStopLimitOrder": {
-          "description": "Queries for an active stop limit order with a specified order ID. It returns a null value if the order doesn't exist, or is not an active stop limit order.   This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call the HTTP service [ListActiveStopLimitOrders](http://labs.cityindex.com/docs/#HTTP%20Services/ListActiveStopLimitOrders.htm) for the initial data to display in the grid, and call this URI when you get updates on the order stream to get the updated data in this format. For a more comprehensive order response, see the HTTP service [GetOrder](http://labs.cityindex.com/docs/#HTTP%20Services/GetOrder.htm).",
+          "description": "Queries for an active stop limit order with a specified order ID. It returns a null value if the order doesn't exist, or is not an active stop limit order.\n \nThis URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call the HTTP service [ListActiveStopLimitOrders](http://labs.cityindex.com/docs/#HTTP%20Services/ListActiveStopLimitOrders.htm) for the initial data to display in the grid, and call this URI when you get updates on the order stream to get the updated data in this format. For a more comprehensive order response, see the HTTP service [GetOrder](http://labs.cityindex.com/docs/#HTTP%20Services/GetOrder.htm).",
           "target": "order",
           "uriTemplate": "/{OrderId}/activestoplimitorder",
           "contentType": "application/json",
@@ -823,7 +823,7 @@ exports.smd =
           ]
         },
         "GetOpenPosition": {
-          "description": "Queries for a trade / open position with a specified order ID. It returns a null value if the order doesn't exist, or is not a trade / open position.   This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call the HTTP service [ListOpenPositions](http://labs.cityindex.com/docs/#HTTP%20Services/ListOpenPositions.htm) for the initial data to display in the grid, and call this URI when you get updates on the order stream to get the updated data in this format.  For a more comprehensive order response, see the HTTP service [GetOrder](http://labs.cityindex.com/docs/#HTTP%20Services/GetOrder.htm).",
+          "description": "Queries for a trade / open position with a specified order ID. It returns a null value if the order doesn't exist, or is not a trade / open position. \n\nThis URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call the HTTP service [ListOpenPositions](http://labs.cityindex.com/docs/#HTTP%20Services/ListOpenPositions.htm) for the initial data to display in the grid, and call this URI when you get updates on the order stream to get the updated data in this format. \nFor a more comprehensive order response, see the HTTP service [GetOrder](http://labs.cityindex.com/docs/#HTTP%20Services/GetOrder.htm).",
           "target": "order",
           "uriTemplate": "/{OrderId}/openposition",
           "contentType": "application/json",
@@ -917,7 +917,7 @@ exports.smd =
           ]
         },
         "Trade": {
-          "description": "Place a trade on a particular market.  Do not set any order ID fields when requesting a new trade, the platform will generate them.",
+          "description": "Place a trade on a particular market. \nDo not set any order ID fields when requesting a new trade, the platform will generate them.",
           "target": "order",
           "uriTemplate": "/newtradeorder",
           "contentType": "application/json",
@@ -1160,6 +1160,27 @@ exports.smd =
               "description": "An optional parameter to identify the account operator string to uniquely identify the application."
             }
           ]
+        },
+        "SimulateTrade": {
+          "description": "API call that allows a simulated new trade to be placed.",
+          "target": "order",
+          "uriTemplate": "/simulate/newtradeorder",
+          "contentType": "application/json",
+          "responseContentType": "application/json",
+          "transport": "POST",
+          "envelope": "JSON",
+          "returns": {
+            "$ref": "#.ApiSimulateTradeOrderResponseDTO"
+          },
+          "group": "Authentication",
+          "throttleScope": "data",
+          "parameters": [
+            {
+              "$ref": "#.NewTradeOrderRequestDTO",
+              "name": "Trade",
+              "description": "The simulated trade request."
+            }
+          ]
         }
       }
     },
@@ -1273,7 +1294,7 @@ exports.smd =
             "$ref": "#.QuoteDTO"
           },
           "group": "Streaming API"
-        }
+        }     
       }
     }
   }

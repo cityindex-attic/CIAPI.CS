@@ -14,7 +14,31 @@ exports.schemaPatch = {
                 }
             }
         },
+        "ApiSimulateOrderResponseDTO": {
+            "properties": {
+                "StatusReason_Resolved": {
+                    "type": "string",
+                    "description": "Plain text StatusReason"
+                },
+                "Status_Resolved": {
+                    "type": "string",
+                    "description": "Plain text StatusReason"
+                }
+            }
+        },
         "ApiTradeOrderResponseDTO": {
+            "properties": {
+                "StatusReason_Resolved": {
+                    "type": "string",
+                    "description": "Plain text StatusReason"
+                },
+                "Status_Resolved": {
+                    "type": "string",
+                    "description": "Plain text StatusReason"
+                }
+            }
+        },
+        "ApiSimulateTradeOrderResponseDTO": {
             "properties": {
                 "StatusReason_Resolved": {
                     "type": "string",

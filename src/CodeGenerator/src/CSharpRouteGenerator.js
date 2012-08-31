@@ -36,7 +36,7 @@
         },
         createDescription: function (description) {
 
-            return description ? description : " [DESCRIPTION MISSING]";
+            return description ? description.replace(/[\r\n]/g,"") : " [DESCRIPTION MISSING]";
 
         },
         generate: function () {

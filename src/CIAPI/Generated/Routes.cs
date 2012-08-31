@@ -268,7 +268,7 @@ public string AppKey { get; set; }
 
 
         /// <summary>
-        ///  [DESCRIPTION MISSING]
+        /// Get historic price bars for the specified market in OHLC *(open, high, low, close)* format, suitable for plotting in candlestick charts. Returns price bars in ascending order up to the current time. When there are no prices for a particular time period, no price bar is returned. Thus, it can appear that the array of price bars has "gaps", i.e. the gap between the date & time of each price bar might not be equal to interval x span.  Sample Urls: * /market/1234/history?interval=MINUTE&span=15&PriceBars=180 * /market/735/history?interval=HOUR&span=1&PriceBars=240 * /market/1577/history?interval=DAY&span=1&PriceBars=10
         /// </summary>
         /// <param name="MarketId">The ID of the market.</param>
         /// <param name="interval">The pricebar interval.</param>
@@ -289,7 +289,7 @@ public string AppKey { get; set; }
 
 
         /// <summary>
-        ///  [DESCRIPTION MISSING]
+        /// Get historic price bars for the specified market in OHLC *(open, high, low, close)* format, suitable for plotting in candlestick charts. Returns price bars in ascending order up to the current time. When there are no prices for a particular time period, no price bar is returned. Thus, it can appear that the array of price bars has "gaps", i.e. the gap between the date & time of each price bar might not be equal to interval x span.  Sample Urls: * /market/1234/history?interval=MINUTE&span=15&PriceBars=180 * /market/735/history?interval=HOUR&span=1&PriceBars=240 * /market/1577/history?interval=DAY&span=1&PriceBars=10
         /// </summary>
         /// <param name="MarketId">The ID of the market.</param>
         /// <param name="interval">The pricebar interval.</param>
@@ -1184,7 +1184,7 @@ public string AppKey { get; set; }
 
 
         /// <summary>
-        /// Place an order on a particular market.  Do not set any order ID fields when requesting a new order, the platform will generate them.
+        /// Place an order on a particular market. Do not set any order ID fields when requesting a new order, the platform will generate them.
         /// </summary>
         /// <param name="order">The order request.</param>
         public virtual ApiTradeOrderResponseDTO Order(NewStopLimitOrderRequestDTO order)
@@ -1199,7 +1199,7 @@ public string AppKey { get; set; }
 
 
         /// <summary>
-        /// Place an order on a particular market.  Do not set any order ID fields when requesting a new order, the platform will generate them.
+        /// Place an order on a particular market. Do not set any order ID fields when requesting a new order, the platform will generate them.
         /// </summary>
         /// <param name="order">The order request.</param>
         /// <param name="callback"></param>
@@ -1310,7 +1310,7 @@ public string AppKey { get; set; }
 
 
         /// <summary>
-        /// Queries for a specified trading account's trades / open positions.   This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetOpenPosition](http://labs.cityindex.com/docs/#HTTP%20Services/GetOpenPosition.htm) when you get updates on the order stream to get the updated data in this format.
+        /// Queries for a specified trading account's trades / open positions. This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetOpenPosition](http://labs.cityindex.com/docs/#HTTP%20Services/GetOpenPosition.htm) when you get updates on the order stream to get the updated data in this format.
         /// </summary>
         /// <param name="TradingAccountId">The ID of the trading account to get orders for.</param>
         public virtual ListOpenPositionsResponseDTO ListOpenPositions(int TradingAccountId)
@@ -1325,7 +1325,7 @@ public string AppKey { get; set; }
 
 
         /// <summary>
-        /// Queries for a specified trading account's trades / open positions.   This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetOpenPosition](http://labs.cityindex.com/docs/#HTTP%20Services/GetOpenPosition.htm) when you get updates on the order stream to get the updated data in this format.
+        /// Queries for a specified trading account's trades / open positions. This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetOpenPosition](http://labs.cityindex.com/docs/#HTTP%20Services/GetOpenPosition.htm) when you get updates on the order stream to get the updated data in this format.
         /// </summary>
         /// <param name="TradingAccountId">The ID of the trading account to get orders for.</param>
         /// <param name="callback"></param>
@@ -1352,7 +1352,7 @@ public string AppKey { get; set; }
 
 
         /// <summary>
-        /// Queries for a specified trading account's active stop / limit orders.   This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetActiveStopLimitOrder](http://labs.cityindex.com/docs/#HTTP%20Services/GetActiveStopLimitOrder.htm) when you get updates on the order stream to get the updated data in this format.
+        /// Queries for a specified trading account's active stop / limit orders. This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetActiveStopLimitOrder](http://labs.cityindex.com/docs/#HTTP%20Services/GetActiveStopLimitOrder.htm) when you get updates on the order stream to get the updated data in this format.
         /// </summary>
         /// <param name="TradingAccountId">The ID of the trading account to get orders for.</param>
         public virtual ListActiveStopLimitOrderResponseDTO ListActiveStopLimitOrders(int TradingAccountId)
@@ -1367,7 +1367,7 @@ public string AppKey { get; set; }
 
 
         /// <summary>
-        /// Queries for a specified trading account's active stop / limit orders.   This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetActiveStopLimitOrder](http://labs.cityindex.com/docs/#HTTP%20Services/GetActiveStopLimitOrder.htm) when you get updates on the order stream to get the updated data in this format.
+        /// Queries for a specified trading account's active stop / limit orders. This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetActiveStopLimitOrder](http://labs.cityindex.com/docs/#HTTP%20Services/GetActiveStopLimitOrder.htm) when you get updates on the order stream to get the updated data in this format.
         /// </summary>
         /// <param name="TradingAccountId">The ID of the trading account to get orders for.</param>
         /// <param name="callback"></param>
@@ -1394,7 +1394,7 @@ public string AppKey { get; set; }
 
 
         /// <summary>
-        /// Queries for an active stop limit order with a specified order ID. It returns a null value if the order doesn't exist, or is not an active stop limit order.   This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call the HTTP service [ListActiveStopLimitOrders](http://labs.cityindex.com/docs/#HTTP%20Services/ListActiveStopLimitOrders.htm) for the initial data to display in the grid, and call this URI when you get updates on the order stream to get the updated data in this format. For a more comprehensive order response, see the HTTP service [GetOrder](http://labs.cityindex.com/docs/#HTTP%20Services/GetOrder.htm).
+        /// Queries for an active stop limit order with a specified order ID. It returns a null value if the order doesn't exist, or is not an active stop limit order. This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call the HTTP service [ListActiveStopLimitOrders](http://labs.cityindex.com/docs/#HTTP%20Services/ListActiveStopLimitOrders.htm) for the initial data to display in the grid, and call this URI when you get updates on the order stream to get the updated data in this format. For a more comprehensive order response, see the HTTP service [GetOrder](http://labs.cityindex.com/docs/#HTTP%20Services/GetOrder.htm).
         /// </summary>
         /// <param name="OrderId">The requested order ID.</param>
         public virtual GetActiveStopLimitOrderResponseDTO GetActiveStopLimitOrder(string OrderId)
@@ -1409,7 +1409,7 @@ public string AppKey { get; set; }
 
 
         /// <summary>
-        /// Queries for an active stop limit order with a specified order ID. It returns a null value if the order doesn't exist, or is not an active stop limit order.   This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call the HTTP service [ListActiveStopLimitOrders](http://labs.cityindex.com/docs/#HTTP%20Services/ListActiveStopLimitOrders.htm) for the initial data to display in the grid, and call this URI when you get updates on the order stream to get the updated data in this format. For a more comprehensive order response, see the HTTP service [GetOrder](http://labs.cityindex.com/docs/#HTTP%20Services/GetOrder.htm).
+        /// Queries for an active stop limit order with a specified order ID. It returns a null value if the order doesn't exist, or is not an active stop limit order. This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call the HTTP service [ListActiveStopLimitOrders](http://labs.cityindex.com/docs/#HTTP%20Services/ListActiveStopLimitOrders.htm) for the initial data to display in the grid, and call this URI when you get updates on the order stream to get the updated data in this format. For a more comprehensive order response, see the HTTP service [GetOrder](http://labs.cityindex.com/docs/#HTTP%20Services/GetOrder.htm).
         /// </summary>
         /// <param name="OrderId">The requested order ID.</param>
         /// <param name="callback"></param>
@@ -1436,7 +1436,7 @@ public string AppKey { get; set; }
 
 
         /// <summary>
-        /// Queries for a trade / open position with a specified order ID. It returns a null value if the order doesn't exist, or is not a trade / open position.   This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call the HTTP service [ListOpenPositions](http://labs.cityindex.com/docs/#HTTP%20Services/ListOpenPositions.htm) for the initial data to display in the grid, and call this URI when you get updates on the order stream to get the updated data in this format.  For a more comprehensive order response, see the HTTP service [GetOrder](http://labs.cityindex.com/docs/#HTTP%20Services/GetOrder.htm).
+        /// Queries for a trade / open position with a specified order ID. It returns a null value if the order doesn't exist, or is not a trade / open position. This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call the HTTP service [ListOpenPositions](http://labs.cityindex.com/docs/#HTTP%20Services/ListOpenPositions.htm) for the initial data to display in the grid, and call this URI when you get updates on the order stream to get the updated data in this format. For a more comprehensive order response, see the HTTP service [GetOrder](http://labs.cityindex.com/docs/#HTTP%20Services/GetOrder.htm).
         /// </summary>
         /// <param name="OrderId">The requested order ID.</param>
         public virtual GetOpenPositionResponseDTO GetOpenPosition(string OrderId)
@@ -1451,7 +1451,7 @@ public string AppKey { get; set; }
 
 
         /// <summary>
-        /// Queries for a trade / open position with a specified order ID. It returns a null value if the order doesn't exist, or is not a trade / open position.   This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call the HTTP service [ListOpenPositions](http://labs.cityindex.com/docs/#HTTP%20Services/ListOpenPositions.htm) for the initial data to display in the grid, and call this URI when you get updates on the order stream to get the updated data in this format.  For a more comprehensive order response, see the HTTP service [GetOrder](http://labs.cityindex.com/docs/#HTTP%20Services/GetOrder.htm).
+        /// Queries for a trade / open position with a specified order ID. It returns a null value if the order doesn't exist, or is not a trade / open position. This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call the HTTP service [ListOpenPositions](http://labs.cityindex.com/docs/#HTTP%20Services/ListOpenPositions.htm) for the initial data to display in the grid, and call this URI when you get updates on the order stream to get the updated data in this format. For a more comprehensive order response, see the HTTP service [GetOrder](http://labs.cityindex.com/docs/#HTTP%20Services/GetOrder.htm).
         /// </summary>
         /// <param name="OrderId">The requested order ID.</param>
         /// <param name="callback"></param>
@@ -1612,7 +1612,7 @@ public string AppKey { get; set; }
 
 
         /// <summary>
-        /// Place a trade on a particular market.  Do not set any order ID fields when requesting a new trade, the platform will generate them.
+        /// Place a trade on a particular market. Do not set any order ID fields when requesting a new trade, the platform will generate them.
         /// </summary>
         /// <param name="trade">The trade request.</param>
         public virtual ApiTradeOrderResponseDTO Trade(NewTradeOrderRequestDTO trade)
@@ -1627,7 +1627,7 @@ public string AppKey { get; set; }
 
 
         /// <summary>
-        /// Place a trade on a particular market.  Do not set any order ID fields when requesting a new trade, the platform will generate them.
+        /// Place a trade on a particular market. Do not set any order ID fields when requesting a new trade, the platform will generate them.
         /// </summary>
         /// <param name="trade">The trade request.</param>
         /// <param name="callback"></param>
@@ -1687,6 +1687,48 @@ public string AppKey { get; set; }
         public ApiTradeOrderResponseDTO EndUpdateTrade(ReliableAsyncResult asyncResult)
         {
             return _client.EndRequest<ApiTradeOrderResponseDTO>(asyncResult);
+        }
+
+
+        // ***********************************
+        // SimulateTrade
+        // ***********************************
+
+
+        /// <summary>
+        /// API call that allows a simulated new trade to be placed.
+        /// </summary>
+        /// <param name="Trade">The simulated trade request.</param>
+        public virtual ApiSimulateTradeOrderResponseDTO SimulateTrade(NewTradeOrderRequestDTO Trade)
+        {
+            string uriTemplate = "/simulate/newtradeorder";
+            return _client.Request<ApiSimulateTradeOrderResponseDTO>(RequestMethod.POST,"order", uriTemplate ,
+            new Dictionary<string, object>
+            {
+                { "Trade", Trade}
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,0 );
+        }
+
+
+        /// <summary>
+        /// API call that allows a simulated new trade to be placed.
+        /// </summary>
+        /// <param name="Trade">The simulated trade request.</param>
+        /// <param name="callback"></param>
+        /// <param name="state"></param>
+        public virtual void BeginSimulateTrade(NewTradeOrderRequestDTO Trade, ReliableAsyncCallback callback, object state)
+        {
+            string uriTemplate = "/simulate/newtradeorder";
+            _client.BeginRequest(RequestMethod.POST, "order", uriTemplate , 
+            new Dictionary<string, object>
+            {
+                { "Trade", Trade}
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,2 ,callback, state);
+        }
+
+        public ApiSimulateTradeOrderResponseDTO EndSimulateTrade(ReliableAsyncResult asyncResult)
+        {
+            return _client.EndRequest<ApiSimulateTradeOrderResponseDTO>(asyncResult);
         }
 
 

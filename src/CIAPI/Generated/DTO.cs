@@ -1094,6 +1094,14 @@ namespace CIAPI.DTO
         /// Simulated order status ID.
         /// </summary>
         public int Status { get; set; }
+        /// <summary>
+        /// Plain text StatusReason
+        /// </summary>
+        public string StatusReason_Resolved { get; set; }
+        /// <summary>
+        /// Plain text StatusReason
+        /// </summary>
+        public string Status_Resolved { get; set; }
     }
 
     /// <summary>
@@ -2410,6 +2418,53 @@ namespace CIAPI.DTO
         /// Represents the new client watchlist displayOrderId list sequence.
         /// </summary>
         public int[] NewDisplayOrderIdSequence { get; set; }
+    }
+
+    /// <summary>
+    /// The response from the simulated trade request.
+    /// </summary>
+    public partial class ApiSimulateTradeOrderResponseDTO
+    {
+        /// <summary>
+        /// The status of the simulated order *(Pending, Accepted, Open, etc.)*
+        /// </summary>
+        public int Status { get; set; }
+        /// <summary>
+        /// The ID corresponding to a more descriptive reason for the order status.
+        /// </summary>
+        public int StatusReason { get; set; }
+        /// <summary>
+        /// The simulated cash balance after the trade.
+        /// </summary>
+        public decimal SimulatedCash { get; set; }
+        /// <summary>
+        /// The actual cash balance before the trade.
+        /// </summary>
+        public decimal ActualCash { get; set; }
+        /// <summary>
+        /// The simulated total margin requirement (TMR) after the trade.
+        /// </summary>
+        public decimal SimulatedTotalMarginRequirment { get; set; }
+        /// <summary>
+        /// The actual total margin requirement (TMR) before the trade.
+        /// </summary>
+        public decimal ActualTotalMarginRequirment { get; set; }
+        /// <summary>
+        /// The currency Id for the currency values in this response.
+        /// </summary>
+        public int CurrencyId { get; set; }
+        /// <summary>
+        /// List of simulated orders with their associated response.
+        /// </summary>
+        public ApiSimulateOrderResponseDTO[] Orders { get; set; }
+        /// <summary>
+        /// Plain text StatusReason
+        /// </summary>
+        public string StatusReason_Resolved { get; set; }
+        /// <summary>
+        /// Plain text StatusReason
+        /// </summary>
+        public string Status_Resolved { get; set; }
     }
 
 }
