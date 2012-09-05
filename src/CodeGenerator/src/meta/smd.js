@@ -516,7 +516,7 @@ exports.smd =
         "SearchWithTags": {
           "description": "Get market information and tags for the markets that meet the search criteria. Leave the query string empty to return all markets and tags available to the user.",
           "target": "market",
-          "uriTemplate": "/searchwithtags?Query={query}&TagId={tagId}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}",
+          "uriTemplate": "/searchwithtags?Query={query}&TagId={tagId}SearchByMarketCode={searchByMarketCode}&SearchByMarketName={searchByMarketName}&SpreadProductType={spreadProductType}&CfdProductType={cfdProductType}&BinaryProductType={binaryProductType}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}",
           "contentType": "application/json",
           "responseContentType": "application/json",
           "transport": "GET",
@@ -539,6 +539,36 @@ exports.smd =
               "name": "tagId",
               "description": "The ID for the tag to be searched. *(Optional)*.",
               "demoValue": 0
+            },
+            {
+              "type": "boolean",
+              "name": "searchByMarketCode",
+              "description": "Sets the search to use market code.",
+              "demoValue": true
+            },
+            {
+              "type": "boolean",
+              "name": "searchByMarketName",
+              "description": "Sets the search to use market Name.",
+              "demoValue": true
+            },
+            {
+              "type": "boolean",
+              "name": "spreadProductType",
+              "description": "Sets the search to include spread bet markets.",
+              "demoValue": true
+            },
+            {
+              "type": "boolean",
+              "name": "cfdProductType",
+              "description": "Sets the search to include CFD markets.",
+              "demoValue": true
+            },
+            {
+              "type": "boolean",
+              "name": "binaryProductType",
+              "description": "Sets the search to include binary markets.",
+              "demoValue": true
             },
             {
               "type": "integer",

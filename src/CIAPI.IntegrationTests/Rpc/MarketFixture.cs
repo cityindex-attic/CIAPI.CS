@@ -56,8 +56,8 @@ namespace CIAPI.IntegrationTests.Rpc
             Assert.IsTrue(tagResponse.Tags.Length > 0, "No tags have been defined for your user's account operator");
 
             //Once you have a tag, you can search for all markets associated with that tag
-            int tagId = tagResponse.Tags[0].MarketTagId;
-            var allMarketsInTag = rpcClient.Market.SearchWithTags("", tagId, 100, false);
+            int tagId = tagResponse.Tags.First(t => t.Name.Contains("FX")).MarketTagId;
+            var allMarketsInTag = rpcClient.Market.SearchWithTags("", tagId, true, true, true, true, true, 100, false);
             Console.WriteLine(allMarketsInTag.ToStringWithValues());
             /* Gives something like:
              * MarketInformationSearchWithTagsResponseDTO: 
@@ -80,7 +80,7 @@ namespace CIAPI.IntegrationTests.Rpc
                */
 
             //Or, you can search for all markets in that tag that start with a specific string
-            var allMarketsInTagContainingGBP = rpcClient.Market.SearchWithTags("GBP", tagId, 100, false);
+            var allMarketsInTagContainingGBP = rpcClient.Market.SearchWithTags("GBP", tagId, true, true, true, true, true, 100, false);
             Console.WriteLine(allMarketsInTagContainingGBP.ToStringWithValues());
             /* Gives something like:
              * MarketInformationSearchWithTagsResponseDTO: 
