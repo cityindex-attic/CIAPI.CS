@@ -56,6 +56,8 @@ namespace CIAPI.Rpc
             var sb = new StringBuilder();
             foreach (var item in records)
             {
+                if (item.Exception != null)
+                    continue;
                 try
                 {
                     if (item.Uri.AbsoluteUri != AppmetricsUri.AbsoluteUri)
