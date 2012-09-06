@@ -516,7 +516,7 @@ exports.smd =
         "SearchWithTags": {
           "description": "Get market information and tags for the markets that meet the search criteria. Leave the query string empty to return all markets and tags available to the user.",
           "target": "market",
-          "uriTemplate": "/searchwithtags?Query={query}&TagId={tagId}SearchByMarketCode={searchByMarketCode}&SearchByMarketName={searchByMarketName}&SpreadProductType={spreadProductType}&CfdProductType={cfdProductType}&BinaryProductType={binaryProductType}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}",
+          "uriTemplate": "/searchwithtags?Query={query}&TagId={tagId}&SearchByMarketCode={searchByMarketCode}&SearchByMarketName={searchByMarketName}&SpreadProductType={spreadProductType}&CfdProductType={cfdProductType}&BinaryProductType={binaryProductType}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}",
           "contentType": "application/json",
           "responseContentType": "application/json",
           "transport": "GET",
