@@ -60,7 +60,7 @@ namespace CIAPI.Rpc
                 {
                     if (item.Uri.AbsoluteUri != AppmetricsUri.AbsoluteUri)
                     {
-                        sb.AppendLine(string.Format("{0}\tLatency {1}\t{2}", DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss.fffffff"), item.Uri, item.Completed.Subtract(item.Issued).TotalSeconds));
+                        sb.AppendLine(string.Format("{0}\tLatency {1}\t{2}", DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss.fffffff"), item.Uri, item.Watch.Elapsed.TotalSeconds));
                     }
 
                 }
