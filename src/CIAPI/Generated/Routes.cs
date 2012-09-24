@@ -841,7 +841,7 @@ public string AppKey { get; set; }
         /// <param name="useMobileShortName">True if the market name should be in short form. Helpful when displaying data on a small screen.</param>
         public virtual MarketInformationSearchWithTagsResponseDTO SearchWithTags(string query, int tagId, bool searchByMarketCode, bool searchByMarketName, bool spreadProductType, bool cfdProductType, bool binaryProductType, int maxResults, bool useMobileShortName)
         {
-            string uriTemplate = "/searchwithtags?Query={query}&TagId={tagId}SearchByMarketCode={searchByMarketCode}&SearchByMarketName={searchByMarketName}&SpreadProductType={spreadProductType}&CfdProductType={cfdProductType}&BinaryProductType={binaryProductType}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}";
+            string uriTemplate = "/searchwithtags?Query={query}&TagId={tagId}&SearchByMarketCode={searchByMarketCode}&SearchByMarketName={searchByMarketName}&SpreadProductType={spreadProductType}&CfdProductType={cfdProductType}&BinaryProductType={binaryProductType}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}";
             return _client.Request<MarketInformationSearchWithTagsResponseDTO>(RequestMethod.GET,"market", uriTemplate ,
             new Dictionary<string, object>
             {
@@ -874,7 +874,7 @@ public string AppKey { get; set; }
         /// <param name="state"></param>
         public virtual void BeginSearchWithTags(string query, int tagId, bool searchByMarketCode, bool searchByMarketName, bool spreadProductType, bool cfdProductType, bool binaryProductType, int maxResults, bool useMobileShortName, ReliableAsyncCallback callback, object state)
         {
-            string uriTemplate = "/searchwithtags?Query={query}&TagId={tagId}SearchByMarketCode={searchByMarketCode}&SearchByMarketName={searchByMarketName}&SpreadProductType={spreadProductType}&CfdProductType={cfdProductType}&BinaryProductType={binaryProductType}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}";
+            string uriTemplate = "/searchwithtags?Query={query}&TagId={tagId}&SearchByMarketCode={searchByMarketCode}&SearchByMarketName={searchByMarketName}&SpreadProductType={spreadProductType}&CfdProductType={cfdProductType}&BinaryProductType={binaryProductType}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}";
             _client.BeginRequest(RequestMethod.GET, "market", uriTemplate , 
             new Dictionary<string, object>
             {
