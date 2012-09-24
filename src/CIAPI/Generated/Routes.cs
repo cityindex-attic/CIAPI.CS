@@ -834,7 +834,7 @@ public string AppKey { get; set; }
         /// <param name="tagId">The ID for the tag to be searched. *(Optional)*.</param>
         /// <param name="searchByMarketCode">Sets the search to use market code.</param>
         /// <param name="searchByMarketName">Sets the search to use market Name.</param>
-        /// <param name="spreadProductType">Sets the search to include spread bet markets.</param>
+        /// <param name="spreadProductType">Sets the search to inlcude spread bet markets.</param>
         /// <param name="cfdProductType">Sets the search to include CFD markets.</param>
         /// <param name="binaryProductType">Sets the search to include binary markets.</param>
         /// <param name="maxResults">The maximum number of results to return. Default is 20.</param>
@@ -865,7 +865,7 @@ public string AppKey { get; set; }
         /// <param name="tagId">The ID for the tag to be searched. *(Optional)*.</param>
         /// <param name="searchByMarketCode">Sets the search to use market code.</param>
         /// <param name="searchByMarketName">Sets the search to use market Name.</param>
-        /// <param name="spreadProductType">Sets the search to include spread bet markets.</param>
+        /// <param name="spreadProductType">Sets the search to inlcude spread bet markets.</param>
         /// <param name="cfdProductType">Sets the search to include CFD markets.</param>
         /// <param name="binaryProductType">Sets the search to include binary markets.</param>
         /// <param name="maxResults">The maximum number of results to return. Default is 20.</param>

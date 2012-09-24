@@ -212,8 +212,8 @@ exports.smd =
             {
               "$ref": "#.ListNewsHeadlinesRequestDTO",
               "name": "request",
-              "description": "Object specifing the various request parameters."
-            }
+              "description": "Object specifing the various request parameters.",
+            },
           ]
         },
         "GetNewsDetail": {
@@ -555,7 +555,7 @@ exports.smd =
             {
               "type": "boolean",
               "name": "spreadProductType",
-              "description": "Sets the search to include spread bet markets.",
+              "description": "Sets the search to inlcude spread bet markets.",
               "demoValue": true
             },
             {

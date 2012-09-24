@@ -53,13 +53,17 @@ namespace CIAPI.Tests.Rpc
                 server.Dispose();
             }
 
-            Console.WriteLine("issued   {0}", requestInfo.Info.Issued.Ticks);
-            Console.WriteLine("recieved {0}", requestRecieved.Ticks);
-            Console.WriteLine("competed {0}", requestInfo.Info.Completed.Ticks);
+            Console.WriteLine("elapsed   {0}", requestInfo.Info.Watch.ElapsedMilliseconds);
 
-            Console.WriteLine("issued to recieved {0}", TimeSpan.FromTicks(requestRecieved.Ticks - requestInfo.Info.Issued.Ticks));
-            Console.WriteLine("recieved to completed {0}", TimeSpan.FromTicks(requestInfo.Info.Completed.Ticks - requestRecieved.Ticks));
-            Console.WriteLine("issued to completed {0}", TimeSpan.FromTicks(requestInfo.Info.Completed.Ticks - requestInfo.Info.Issued.Ticks));
+            // #TODO: not sure i like the complete removal of temporal data
+
+            //Console.WriteLine("issued   {0}", requestInfo.Info.Issued.Ticks);
+            //Console.WriteLine("recieved {0}", requestRecieved.Ticks);
+            //Console.WriteLine("competed {0}", requestInfo.Info.Completed.Ticks);
+
+            //Console.WriteLine("issued to recieved {0}", TimeSpan.FromTicks(requestRecieved.Ticks - requestInfo.Info.Issued.Ticks));
+            //Console.WriteLine("recieved to completed {0}", TimeSpan.FromTicks(requestInfo.Info.Completed.Ticks - requestRecieved.Ticks));
+            //Console.WriteLine("issued to completed {0}", TimeSpan.FromTicks(requestInfo.Info.Completed.Ticks - requestInfo.Info.Issued.Ticks));
 
 
             

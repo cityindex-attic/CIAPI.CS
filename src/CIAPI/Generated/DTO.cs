@@ -364,7 +364,7 @@ namespace CIAPI.DTO
         /// <summary>
         /// Session identifier *(session token)* to delete *(log off)*.
         /// </summary>
-        public string Session { get; set; }
+        public string session { get; set; }
     }
 
     /// <summary>
@@ -814,6 +814,10 @@ namespace CIAPI.DTO
         /// </summary>
         public int OrderId { get; set; }
         /// <summary>
+        /// Flag to indicate whether the trade will automatically roll into the next market interval when the current market interval expires.
+        /// </summary>
+        public bool AutoRollover { get; set; }
+        /// <summary>
         /// The market's unique identifier.
         /// </summary>
         public int MarketId { get; set; }
@@ -903,6 +907,10 @@ namespace CIAPI.DTO
         /// The order identifier.
         /// </summary>
         public int OrderId { get; set; }
+        /// <summary>
+        /// Flag to indicate whether the trade will automatically roll into the next market interval when the current market interval expires.
+        /// </summary>
+        public bool AutoRollover { get; set; }
         /// <summary>
         /// A market's unique identifier.
         /// </summary>
@@ -2404,6 +2412,10 @@ namespace CIAPI.DTO
     public partial class UpdateTradeOrderRequestDTO : NewTradeOrderRequestDTO
     {
         /// <summary>
+        /// Flag to indicate whether the trade will automatically roll into the next market interval when the current market interval expires.
+        /// </summary>
+        public bool AutoRollover { get; set; }
+        /// <summary>
         /// The identifier of the order to update.
         /// </summary>
         public int OrderId { get; set; }
@@ -2450,7 +2462,7 @@ namespace CIAPI.DTO
         /// </summary>
         public decimal ActualTotalMarginRequirment { get; set; }
         /// <summary>
-        /// The currency Id for the currency values in this response.
+        /// The currency ID for the currency values in this response.
         /// </summary>
         public int CurrencyId { get; set; }
         /// <summary>

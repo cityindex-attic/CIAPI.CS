@@ -1,7 +1,7 @@
 exports.schema =
 {
-    "version": "0.111.0.0",
-    "namespace": "CIAPI.DTO",
+  "version": "0.111.0.0",
+  "namespace": "CIAPI.DTO",
   "properties": {
     "AccountInformationResponseDTO": {
       "id": "AccountInformationResponseDTO",
@@ -462,7 +462,7 @@ exports.schema =
           "type": "string",
           "description": "User name of the session to delete *(log off)*. This is case sensitive."
         },
-        "Session": {
+        "session": {
           "type": "string",
           "description": "Session identifier *(session token)* to delete *(log off)*."
         }
@@ -1048,7 +1048,7 @@ exports.schema =
         "ExpiryBasisText": {
           "type": "string",
           "description": "The expiry basis text of the market."
-        }
+        },
       },
       "description": "Contains market information."
     },
@@ -1157,6 +1157,10 @@ exports.schema =
           "minValue": -2147483648,
           "maxValue": 2147483647,
           "description": "The order's unique identifier."
+        },
+        "AutoRollover": {
+          "type": "boolean",
+          "description": "Flag to indicate whether the trade will automatically roll into the next market interval when the current market interval expires."
         },
         "MarketId": {
           "type": "integer",
@@ -1274,6 +1278,10 @@ exports.schema =
           "minValue": -2147483648,
           "maxValue": 2147483647,
           "description": "The order identifier."
+        },
+        "AutoRollover": {
+          "type": "boolean",
+          "description": "Flag to indicate whether the trade will automatically roll into the next market interval when the current market interval expires."
         },
         "MarketId": {
           "type": "integer",
@@ -2402,7 +2410,7 @@ exports.schema =
         "CultureId": {
           "type": "integer",
           "description": "The Culture ID used to filter results. Leave blank to use the culture of the requesting user."
-        }
+        },
       },
       "description": "A request for news stories."
     },
@@ -3303,6 +3311,10 @@ exports.schema =
       "type": "object",
       "extends": "#.NewTradeOrderRequestDTO",
       "properties": {
+        "AutoRollover": {
+          "type": "boolean",
+          "description": "Flag to indicate whether the trade will automatically roll into the next market interval when the current market interval expires."
+        },
         "OrderId": {
           "type": "integer",
           "minValue": -2147483648,
@@ -3361,8 +3373,8 @@ exports.schema =
           "description": "The actual total margin requirement (TMR) before the trade."
         },
         "CurrencyId": {
-          "type": "int",         
-          "description": "The currency Id for the currency values in this response."
+          "type": "integer",         
+          "description": "The currency ID for the currency values in this response."
         },
         "Orders": {
           "type": "array",
@@ -3372,7 +3384,7 @@ exports.schema =
             }
           ],
           "description": "List of simulated orders with their associated response."
-        }      
+        },      
       },
       "description": "The response from the simulated trade request."
     }
