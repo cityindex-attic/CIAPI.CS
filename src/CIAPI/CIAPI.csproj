@@ -80,11 +80,11 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Salient.ReflectiveLoggingAdapter.3.2.0\lib\net35\Release\Salient.ReflectiveLoggingAdapter.35.dll</HintPath>
     </Reference>
-    <Reference Include="Salient.ReliableHttpClient">
-      <HintPath>..\packages\Salient.ReliableHttpClient.1.0.6-bleeding-17\lib\net35\Debug\Salient.ReliableHttpClient.dll</HintPath>
+    <Reference Include="Salient.ReliableHttpClient, Version=1.0.6.17, Culture=neutral, PublicKeyToken=de2ccdae144c2020, processorArchitecture=MSIL">
+      <HintPath>..\packages\Salient.ReliableHttpClient.1.0.6-bleeding-18\lib\net35\Debug\Salient.ReliableHttpClient.dll</HintPath>
     </Reference>
-    <Reference Include="Salient.ReliableHttpClient.Serializer.Newtonsoft">
-      <HintPath>..\packages\Salient.ReliableHttpClient.1.0.6-bleeding-17\lib\net35\Debug\Salient.ReliableHttpClient.Serializer.Newtonsoft.dll</HintPath>
+    <Reference Include="Salient.ReliableHttpClient.Serializer.Newtonsoft, Version=1.0.6.17, Culture=neutral, PublicKeyToken=af1483d0b03a76fa, processorArchitecture=MSIL">
+      <HintPath>..\packages\Salient.ReliableHttpClient.1.0.6-bleeding-18\lib\net35\Debug\Salient.ReliableHttpClient.Serializer.Newtonsoft.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using System.Threading;
 using CIAPI.DTO;
 using CIAPI.Rpc;
 using CIAPI.Streaming;
@@ -44,7 +45,10 @@ namespace CIAPI.IntegrationTests.Streaming
             Assert.That(marketList.MarketInformation.Length, Is.GreaterThanOrEqualTo(1), "There should be at least 1 CFD market availbe");
             return marketList.MarketInformation;
         }
-
+        public RpcFixtureBase()
+        {
+            Thread.Sleep(1500);
+        }
         protected const string AppKey = "testkey-for-CIAPI.IntegrationTests";
         static RpcFixtureBase()
         {
