@@ -397,7 +397,7 @@ namespace CIAPI.StreamingClient
                     User = _userName,
                     Password = _sessionId,
                     Constraints = { MaxBandwidth = 999999 },
-                    Polling = _usePolling
+                    Polling = _usePolling 
                 };
 
                 try

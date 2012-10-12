@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Net;
-using System.Text;
 using System.Threading;
+
 using CassiniDev;
 using CIAPI.DTO;
 using CIAPI.Rpc;
-using CIAPI.Streaming.Testing;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Salient.ReflectiveLoggingAdapter;
