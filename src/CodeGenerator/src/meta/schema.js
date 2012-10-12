@@ -1,7 +1,8 @@
 exports.schema =
-{
+ {
+    "namespace": "CIAPI.DTO",
+  
   "version": "0.111.0.0",
-  "namespace": "CIAPI.DTO",
   "properties": {
     "AccountInformationResponseDTO": {
       "id": "AccountInformationResponseDTO",
@@ -311,7 +312,7 @@ exports.schema =
           "type": "integer",
           "minValue": -2147483648,
           "maxValue": 2147483647,
-          "description": "Account Operatior Id of requesting user"
+          "description": "Account Operator ID of requesting user"
         },
         "InterestedTranslationKeys": {
           "type": "array",
@@ -367,7 +368,7 @@ exports.schema =
           "description": "Gets the time's offset from Coordinated Universal Time (UTC)."
         }
       },
-      "description": "Contains DateTime represented as UTC time and timezone offset in minutes to convert back to local time."
+      "description": "Contains DateTime represented as UTC time and time zone offset in minutes to convert back to local time."
     },
     "ApiDeleteWatchlistRequestDTO": {
       "id": "ApiDeleteWatchlistRequestDTO",
@@ -433,7 +434,7 @@ exports.schema =
           "description": "The price at which the limit order will be filled."
         }
       },
-      "description": "Contains the If/Done stop and limit orders. An If/Done order is comprised of two separate orders linked togehter and requested as a single order. When the first order is executed, the second order becomes an active order. For example, attaching a stop/limit to a trade or order."
+      "description": "Contains the If/Done stop and limit orders. An If/Done order is comprised of two separate orders linked together and requested as a single order. When the first order is executed, the second order becomes an active order. For example, attaching a stop/limit to a trade or order."
     },
     "ApiIfDoneResponseDTO": {
       "id": "ApiIfDoneResponseDTO",
@@ -443,7 +444,7 @@ exports.schema =
           "type": {
             "$ref": "#.ApiOrderResponseDTO"
           },
-          "description": "The Stop order reponse."
+          "description": "The Stop order response."
         },
         "Limit": {
           "type": {
@@ -462,7 +463,7 @@ exports.schema =
           "type": "string",
           "description": "User name of the session to delete *(log off)*. This is case sensitive."
         },
-        "session": {
+        "Session": {
           "type": "string",
           "description": "Session identifier *(session token)* to delete *(log off)*."
         }
@@ -519,7 +520,7 @@ exports.schema =
           "type": "string",
           "minLength": 36,
           "maxLength": 100,
-          "description": "Your session token *(treat as a random string)*. <BR /> Session tokens are valid for a set period from the time of their creation. <BR /> The period is subject to change, and may vary depending on who you logon as."
+          "description": "Your session token *(treat as a random string)*. Session tokens are valid for a set period from the time of their creation. The period is subject to change, and may vary depending on who you logon as."
         },
         "PasswordChangeRequired": {
           "type": "boolean",
@@ -530,7 +531,7 @@ exports.schema =
           "description": "Flag used to indicate whether the account operator associated with this user is allowed to access the application."
         }
       },
-      "description": "Response to a [LogOn](http://labs.cityindex.com/docs/#HTTP%20Services/LogOn.htm) call."
+      "description": "Response to a [LogOn](http://labs.cityindex.com/docs/Content/HTTP%20Services/LogOn.htm) call."
     },
     "ApiLookupDTO": {
       "id": "ApiLookupDTO",
@@ -1022,7 +1023,7 @@ exports.schema =
             "string"
           ],
           "format": "wcf-date",
-          "description": "Exipry of the market in UTC."
+          "description": "Expiry of the market in UTC."
         },
         "FutureRolloverUTC": {
           "type": [
@@ -1103,7 +1104,7 @@ exports.schema =
             "string"
           ],
           "format": "wcf-date",
-          "description": "The time and date in for the spread value in UTC, interchangable to local time using localtime offset."
+          "description": "The time and date in for the spread value in UTC, interchangeable to local time using local time offset."
         },
         "Spread": {
           "type": "number",
@@ -1617,7 +1618,7 @@ exports.schema =
           "format": "decimal",
           "minValue": -7.9228162514264338E+28,
           "maxValue": 7.9228162514264338E+28,
-          "description": "The price / rate that the the order was set to trigger at."
+          "description": "The price / rate that the order was set to trigger at."
         },
         "TradingAccountId": {
           "type": "integer",
@@ -1961,7 +1962,7 @@ exports.schema =
           "description": "The clients base currency ISO code."
         }
       },
-      "description": "The current margin and other account balance data for a specific client account used in the [ClientAccountMargin](http://labs.cityindex.com/docs/#Streaming%20Data/ClientAccountMargin.htm) stream."
+      "description": "The current margin and other account balance data for a specific client account used in the [ClientAccountMargin](http://labs.cityindex.com/docs/Content/Streaming%20Data/ClientAccountMargin.htm) stream."
     },
     "ClientPreferenceKeyDTO": {
       "id": "ClientPreferenceKeyDTO",
@@ -2029,12 +2030,12 @@ exports.schema =
         {
           "value": 0,
           "label": "NoError",
-          "description": "No error has occured."
+          "description": "No error has occurred."
         },
         {
           "value": 403,
           "label": "Forbidden",
-          "description": "The server understood the request, but is refusing to fulfill it."
+          "description": "The server understood the request, but is refusing to fulfil it."
         },
         {
           "value": 500,
@@ -2274,7 +2275,7 @@ exports.schema =
           "description": "The URL of the upgrade."
         }
       },
-      "description": "The response containing version information and upgrade url of the client application."
+      "description": "The response containing version information and upgrade URL of the client application."
     },
     "InsertWatchlistItemRequestDTO": {
       "id": "InsertWatchlistItemRequestDTO",
@@ -2309,7 +2310,7 @@ exports.schema =
           "description": "The requested list of active stop / limit orders."
         }
       },
-      "description": "Contains the response of a [ListActiveStopLimitOrders](http://labs.cityindex.com/docs/#HTTP%20Services/ListActiveStopLimitOrders.htm) query."
+      "description": "Contains the response of a [ListActiveStopLimitOrders](http://labs.cityindex.com/docs/Content/HTTP%20Services/ListActiveStopLimitOrders.htm) query."
     },
     "ListCfdMarketsResponseDTO": {
       "id": "ListCfdMarketsResponseDTO",
@@ -2325,7 +2326,7 @@ exports.schema =
           "description": "A list of CFD markets."
         }
       },
-      "description": "Contains the response of a [ListCfdMarkets](http://labs.cityindex.com/docs/#HTTP%20Services/ListCfdMarkets.htm) query."
+      "description": "Contains the response of a [ListCfdMarkets](http://labs.cityindex.com/docs/Content/HTTP%20Services/ListCfdMarkets.htm) query."
     },
     "ListMarketInformationRequestDTO": {
       "id": "ListMarketInformationRequestDTO",
@@ -2444,7 +2445,7 @@ exports.schema =
           "description": "A list of trades / open positions."
         }
       },
-      "description": "Contains the result of a [ListOpenPositions](http://labs.cityindex.com/docs/#HTTP%20Services/ListOpenPositions.htm) query."
+      "description": "Contains the result of a [ListOpenPositions](http://labs.cityindex.com/docs/Content/HTTP%20Services/ListOpenPositions.htm) query."
     },
     "ListSpreadMarketsResponseDTO": {
       "id": "ListSpreadMarketsResponseDTO",
@@ -2460,7 +2461,7 @@ exports.schema =
           "description": "A list of Spread Betting markets."
         }
       },
-      "description": "Contains the result of a [ListSpreadMarkets](http://labs.cityindex.com/docs/#HTTP%20Services/ListSpreadMarkets.htm) query."
+      "description": "Contains the result of a [ListSpreadMarkets](http://labs.cityindex.com/docs/Content/HTTP%20Services/ListSpreadMarkets.htm) query."
     },
     "ListStopLimitOrderHistoryResponseDTO": {
       "id": "ListStopLimitOrderHistoryResponseDTO",
@@ -2476,7 +2477,7 @@ exports.schema =
           "description": "A list of historical stop / limit orders."
         }
       },
-      "description": "Contains the result of a [ListStopLimitOrderHistory](http://labs.cityindex.com/docs/#HTTP%20Services/ListStopLimitOrderHistory.htm) query."
+      "description": "Contains the result of a [ListStopLimitOrderHistory](http://labs.cityindex.com/docs/Content/HTTP%20Services/ListStopLimitOrderHistory.htm) query."
     },
     "ListTradeHistoryResponseDTO": {
       "id": "ListTradeHistoryResponseDTO",
@@ -2501,7 +2502,7 @@ exports.schema =
           "description": "A list of trades which are referenced as OpenOrderId's in the trade history list - but do not actually exist in that list."
         }
       },
-      "description": "Contains the result of a [ListTradeHistory](http://labs.cityindex.com/docs/#HTTP%20Services/ListTradeHistory.htm) query."
+      "description": "Contains the result of a [ListTradeHistory](http://labs.cityindex.com/docs/Content/HTTP%20Services/ListTradeHistory.htm) query."
     },
     "ListWatchlistResponseDTO": {
       "id": "ListWatchlistResponseDTO",
@@ -3077,7 +3078,7 @@ exports.schema =
           "format": "decimal",
           "minValue": -7.9228162514264338E+28,
           "maxValue": 7.9228162514264338E+28,
-          "description": "The Quantity is the number of units for the trade i.e CFD Quantity = Number of CFD's to Buy or Sell , FX Quantity = amount in base currency."
+          "description": "The Quantity is the number of units for the trade i.e CFD Quantity = Number of CFDs to Buy or Sell , FX Quantity = amount in base currency."
         },
         "CurrencyId": {
           "type": "integer",
@@ -3340,6 +3341,60 @@ exports.schema =
       },
       "description": "Request to update the display order of items in a watchlist."
     },
+    "ListActiveOrdersRequestDTO": {
+      "id": "ListActiveOrdersRequestDTO",
+      "type": "object",
+      "properties": {
+        "TradingAccountId": {
+          "type": "integer",
+          "description": "If specified, the request fetches all open positions and orders for this trading account. *(Optional)*"
+        },
+        "MaxResults": {
+          "type": "integer",
+          "description": "The maximum number of results to return."
+        },
+      },
+      "description": "Contains the request for a [ListActiveOrders](http://labs.cityindex.com/docs/Content/HTTP%20Services/ListActiveOrders.htm) query."
+    },
+    "ListActiveOrdersResponseDTO": {
+      "id": "ListActiveOrdersResponsetDTO",
+      "type": "object",
+      "properties": {
+        "ActiveOrders": {
+          "type": "array",
+          "items": [
+            {
+              "$ref": "#.ApiActiveOrderDTO"
+            }
+          ],
+          "description": "The requested list of open positions and active orders."
+        },        
+      },
+      "description": "Contains the response for a [ListActiveOrders](http://labs.cityindex.com/docs/Content/HTTP%20Services/ListActiveOrders.htm) query."
+    },
+    "ApiActiveOrderDTO": {
+      "id": "ApiActiveOrderDTO",
+      "type": "object",
+      "properties": {        
+        "TradeOrder": {
+          "type": {
+            "$ref": "#.ApiTradeOrderDTO"
+          },
+          "description": "Represents a trade order."
+        },
+        "StopLimitOrder": {
+          "type": {
+            "$ref": "#.ApiStopLimitOrderDTO"
+          },
+          "description": "Represents a stop/limit order."
+        },       
+        "TypeId": {
+          "type": "integer",
+          "description": "Indicates the type of the order. "
+        },
+      },
+      "description": "Represents a trade order or a stop/limit order."
+    },
     "ApiSimulateTradeOrderResponseDTO": {
       "id": "ApiSimulateTradeOrderResponseDTO",
       "type": "object",
@@ -3358,17 +3413,17 @@ exports.schema =
         },
         "SimulatedCash": {
           "type": "decimal",         
-          "description": "The simulated cash balance after the trade."
+          "description": "The simulated cash balance after executing *(opening or closing)* a trade. The balance may decrease after opening a trade *(as cash may be allocated towards margin requirement)* and increase /reduce /remain unchanged following a closure." 
         },
         "ActualCash": {
           "type": "decimal",         
           "description": "The actual cash balance before the trade."
         },
-        "SimulatedTotalMarginRequirment": {
+        "SimulatedTotalMarginRequirement": {
           "type": "decimal",         
-          "description": "The simulated total margin requirement (TMR) after the trade."
+          "description": "The simulated total margin requirement (TMR) after executing *(opening or closing)* a trade."
         },
-        "ActualTotalMarginRequirment": {
+        "ActualTotalMarginRequirement": {
           "type": "decimal",         
           "description": "The actual total margin requirement (TMR) before the trade."
         },

@@ -12,14 +12,14 @@ namespace CIAPI.CS.Koans
     [KoanCategory(Order = 3)]
     public class AboutNews
     {
-        private string USERNAME = StaticTestConfig.ApiUsername;
-        private string PASSWORD = StaticTestConfig.ApiPassword;
-        private string AppKey = StaticTestConfig.AppKey;
+        private string USERNAME = Settings.RpcUserName;
+        private string PASSWORD = Settings.RpcPassword;
+        private string AppKey = "KOAN_APPKEY";
 
         [Koan(Order = 0)]
         public void UsingNewsRequiresAValidSession()
         {
-            _rpcClient = new Rpc.Client(new Uri(StaticTestConfig.RpcUrl), new Uri(StaticTestConfig.StreamingUrl), AppKey);
+            _rpcClient = new Rpc.Client(Settings.RpcUri, Settings.StreamingUri, AppKey);
 
             _rpcClient.LogIn(USERNAME, PASSWORD);
 

@@ -235,7 +235,7 @@ namespace CIAPI.DTO
         /// </summary>
         public int CultureId { get; set; }
         /// <summary>
-        /// Account Operatior Id of requesting user
+        /// Account Operator ID of requesting user
         /// </summary>
         public int AccountOperatorId { get; set; }
         /// <summary>
@@ -267,7 +267,7 @@ namespace CIAPI.DTO
     }
 
     /// <summary>
-    /// Contains DateTime represented as UTC time and timezone offset in minutes to convert back to local time.
+    /// Contains DateTime represented as UTC time and time zone offset in minutes to convert back to local time.
     /// </summary>
     public partial class ApiDateTimeOffsetDTO
     {
@@ -323,7 +323,7 @@ namespace CIAPI.DTO
     }
 
     /// <summary>
-    /// Contains the If/Done stop and limit orders. An If/Done order is comprised of two separate orders linked togehter and requested as a single order. When the first order is executed, the second order becomes an active order. For example, attaching a stop/limit to a trade or order.
+    /// Contains the If/Done stop and limit orders. An If/Done order is comprised of two separate orders linked together and requested as a single order. When the first order is executed, the second order becomes an active order. For example, attaching a stop/limit to a trade or order.
     /// </summary>
     public partial class ApiIfDoneDTO
     {
@@ -343,7 +343,7 @@ namespace CIAPI.DTO
     public partial class ApiIfDoneResponseDTO
     {
         /// <summary>
-        /// The Stop order reponse.
+        /// The Stop order response.
         /// </summary>
         public ApiOrderResponseDTO Stop { get; set; }
         /// <summary>
@@ -364,7 +364,7 @@ namespace CIAPI.DTO
         /// <summary>
         /// Session identifier *(session token)* to delete *(log off)*.
         /// </summary>
-        public string session { get; set; }
+        public string Session { get; set; }
     }
 
     /// <summary>
@@ -406,12 +406,12 @@ namespace CIAPI.DTO
     }
 
     /// <summary>
-    /// Response to a [LogOn](http://labs.cityindex.com/docs/#HTTP%20Services/LogOn.htm) call.
+    /// Response to a [LogOn](http://labs.cityindex.com/docs/Content/HTTP%20Services/LogOn.htm) call.
     /// </summary>
     public partial class ApiLogOnResponseDTO
     {
         /// <summary>
-        /// Your session token *(treat as a random string)*. <BR /> Session tokens are valid for a set period from the time of their creation. <BR /> The period is subject to change, and may vary depending on who you logon as.
+        /// Your session token *(treat as a random string)*. Session tokens are valid for a set period from the time of their creation. The period is subject to change, and may vary depending on who you logon as.
         /// </summary>
         public string Session { get; set; }
         /// <summary>
@@ -718,7 +718,7 @@ namespace CIAPI.DTO
         /// </summary>
         public int? CommissionRateUnits { get; set; }
         /// <summary>
-        /// Exipry of the market in UTC.
+        /// Expiry of the market in UTC.
         /// </summary>
         public DateTime? ExpiryUtc { get; set; }
         /// <summary>
@@ -772,7 +772,7 @@ namespace CIAPI.DTO
     public partial class ApiMarketSpreadDTO
     {
         /// <summary>
-        /// The time and date in for the spread value in UTC, interchangable to local time using localtime offset.
+        /// The time and date in for the spread value in UTC, interchangeable to local time using local time offset.
         /// </summary>
         public DateTime? SpreadTimeUtc { get; set; }
         /// <summary>
@@ -1165,7 +1165,7 @@ namespace CIAPI.DTO
         /// </summary>
         public decimal? Price { get; set; }
         /// <summary>
-        /// The price / rate that the the order was set to trigger at.
+        /// The price / rate that the order was set to trigger at.
         /// </summary>
         public decimal TriggerPrice { get; set; }
         /// <summary>
@@ -1372,7 +1372,7 @@ namespace CIAPI.DTO
     }
 
     /// <summary>
-    /// The current margin and other account balance data for a specific client account used in the [ClientAccountMargin](http://labs.cityindex.com/docs/#Streaming%20Data/ClientAccountMargin.htm) stream.
+    /// The current margin and other account balance data for a specific client account used in the [ClientAccountMargin](http://labs.cityindex.com/docs/Content/Streaming%20Data/ClientAccountMargin.htm) stream.
     /// </summary>
     public partial class ClientAccountMarginDTO
     {
@@ -1469,11 +1469,11 @@ namespace CIAPI.DTO
     public enum ErrorCode
     {
         /// <summary>
-        /// No error has occured.
+        /// No error has occurred.
         /// </summary>
         NoError = 0,
         /// <summary>
-        /// The server understood the request, but is refusing to fulfill it.
+        /// The server understood the request, but is refusing to fulfil it.
         /// </summary>
         Forbidden = 403,
         /// <summary>
@@ -1652,7 +1652,7 @@ namespace CIAPI.DTO
     }
 
     /// <summary>
-    /// The response containing version information and upgrade url of the client application.
+    /// The response containing version information and upgrade URL of the client application.
     /// </summary>
     public partial class GetVersionInformationResponseDTO
     {
@@ -1686,7 +1686,7 @@ namespace CIAPI.DTO
     }
 
     /// <summary>
-    /// Contains the response of a [ListActiveStopLimitOrders](http://labs.cityindex.com/docs/#HTTP%20Services/ListActiveStopLimitOrders.htm) query.
+    /// Contains the response of a [ListActiveStopLimitOrders](http://labs.cityindex.com/docs/Content/HTTP%20Services/ListActiveStopLimitOrders.htm) query.
     /// </summary>
     public partial class ListActiveStopLimitOrderResponseDTO
     {
@@ -1697,7 +1697,7 @@ namespace CIAPI.DTO
     }
 
     /// <summary>
-    /// Contains the response of a [ListCfdMarkets](http://labs.cityindex.com/docs/#HTTP%20Services/ListCfdMarkets.htm) query.
+    /// Contains the response of a [ListCfdMarkets](http://labs.cityindex.com/docs/Content/HTTP%20Services/ListCfdMarkets.htm) query.
     /// </summary>
     public partial class ListCfdMarketsResponseDTO
     {
@@ -1786,7 +1786,7 @@ namespace CIAPI.DTO
     }
 
     /// <summary>
-    /// Contains the result of a [ListOpenPositions](http://labs.cityindex.com/docs/#HTTP%20Services/ListOpenPositions.htm) query.
+    /// Contains the result of a [ListOpenPositions](http://labs.cityindex.com/docs/Content/HTTP%20Services/ListOpenPositions.htm) query.
     /// </summary>
     public partial class ListOpenPositionsResponseDTO
     {
@@ -1797,7 +1797,7 @@ namespace CIAPI.DTO
     }
 
     /// <summary>
-    /// Contains the result of a [ListSpreadMarkets](http://labs.cityindex.com/docs/#HTTP%20Services/ListSpreadMarkets.htm) query.
+    /// Contains the result of a [ListSpreadMarkets](http://labs.cityindex.com/docs/Content/HTTP%20Services/ListSpreadMarkets.htm) query.
     /// </summary>
     public partial class ListSpreadMarketsResponseDTO
     {
@@ -1808,7 +1808,7 @@ namespace CIAPI.DTO
     }
 
     /// <summary>
-    /// Contains the result of a [ListStopLimitOrderHistory](http://labs.cityindex.com/docs/#HTTP%20Services/ListStopLimitOrderHistory.htm) query.
+    /// Contains the result of a [ListStopLimitOrderHistory](http://labs.cityindex.com/docs/Content/HTTP%20Services/ListStopLimitOrderHistory.htm) query.
     /// </summary>
     public partial class ListStopLimitOrderHistoryResponseDTO
     {
@@ -1819,7 +1819,7 @@ namespace CIAPI.DTO
     }
 
     /// <summary>
-    /// Contains the result of a [ListTradeHistory](http://labs.cityindex.com/docs/#HTTP%20Services/ListTradeHistory.htm) query.
+    /// Contains the result of a [ListTradeHistory](http://labs.cityindex.com/docs/Content/HTTP%20Services/ListTradeHistory.htm) query.
     /// </summary>
     public partial class ListTradeHistoryResponseDTO
     {
@@ -2232,7 +2232,7 @@ namespace CIAPI.DTO
         /// </summary>
         public decimal OfferAdjust { get; set; }
         /// <summary>
-        /// The Quantity is the number of units for the trade i.e CFD Quantity = Number of CFD's to Buy or Sell , FX Quantity = amount in base currency.
+        /// The Quantity is the number of units for the trade i.e CFD Quantity = Number of CFDs to Buy or Sell , FX Quantity = amount in base currency.
         /// </summary>
         public decimal Quantity { get; set; }
         /// <summary>
@@ -2433,6 +2433,51 @@ namespace CIAPI.DTO
     }
 
     /// <summary>
+    /// Contains the request for a [ListActiveOrders](http://labs.cityindex.com/docs/Content/HTTP%20Services/ListActiveOrders.htm) query.
+    /// </summary>
+    public partial class ListActiveOrdersRequestDTO
+    {
+        /// <summary>
+        /// If specified, the request fetches all open positions and orders for this trading account. *(Optional)*
+        /// </summary>
+        public int TradingAccountId { get; set; }
+        /// <summary>
+        /// The maximum number of results to return.
+        /// </summary>
+        public int MaxResults { get; set; }
+    }
+
+    /// <summary>
+    /// Contains the response for a [ListActiveOrders](http://labs.cityindex.com/docs/Content/HTTP%20Services/ListActiveOrders.htm) query.
+    /// </summary>
+    public partial class ListActiveOrdersResponseDTO
+    {
+        /// <summary>
+        /// The requested list of open positions and active orders.
+        /// </summary>
+        public ApiActiveOrderDTO[] ActiveOrders { get; set; }
+    }
+
+    /// <summary>
+    /// Represents a trade order or a stop/limit order.
+    /// </summary>
+    public partial class ApiActiveOrderDTO
+    {
+        /// <summary>
+        /// Represents a trade order.
+        /// </summary>
+        public ApiTradeOrderDTO TradeOrder { get; set; }
+        /// <summary>
+        /// Represents a stop/limit order.
+        /// </summary>
+        public ApiStopLimitOrderDTO StopLimitOrder { get; set; }
+        /// <summary>
+        /// Indicates the type of the order. 
+        /// </summary>
+        public int TypeId { get; set; }
+    }
+
+    /// <summary>
     /// The response from the simulated trade request.
     /// </summary>
     public partial class ApiSimulateTradeOrderResponseDTO
@@ -2446,7 +2491,7 @@ namespace CIAPI.DTO
         /// </summary>
         public int StatusReason { get; set; }
         /// <summary>
-        /// The simulated cash balance after the trade.
+        /// The simulated cash balance after executing *(opening or closing)* a trade. The balance may decrease after opening a trade *(as cash may be allocated towards margin requirement)* and increase /reduce /remain unchanged following a closure.
         /// </summary>
         public decimal SimulatedCash { get; set; }
         /// <summary>
@@ -2454,13 +2499,13 @@ namespace CIAPI.DTO
         /// </summary>
         public decimal ActualCash { get; set; }
         /// <summary>
-        /// The simulated total margin requirement (TMR) after the trade.
+        /// The simulated total margin requirement (TMR) after executing *(opening or closing)* a trade.
         /// </summary>
-        public decimal SimulatedTotalMarginRequirment { get; set; }
+        public decimal SimulatedTotalMarginRequirement { get; set; }
         /// <summary>
         /// The actual total margin requirement (TMR) before the trade.
         /// </summary>
-        public decimal ActualTotalMarginRequirment { get; set; }
+        public decimal ActualTotalMarginRequirement { get; set; }
         /// <summary>
         /// The currency ID for the currency values in this response.
         /// </summary>

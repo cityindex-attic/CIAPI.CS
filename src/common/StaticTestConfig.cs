@@ -3,7 +3,7 @@
 
 namespace CIAPI.Tests
 {
-    public static class StaticTestConfig
+    public static class StaticTestConfiga
     {
         public static string RpcUrl
         {

@@ -4,6 +4,7 @@ using System.Threading;
 using CIAPI.DTO;
 using CIAPI.Rpc;
 using CIAPI.Streaming;
+using CIAPI.Tests;
 using NUnit.Framework;
 using CIAPI.StreamingClient;
 

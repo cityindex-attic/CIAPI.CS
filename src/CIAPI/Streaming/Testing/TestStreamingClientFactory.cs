@@ -71,5 +71,10 @@ namespace CIAPI.Streaming.Testing
 
             return new TestStreamingClient(streamingUri, userName, session, serializer,this);
         }
+
+        public IStreamingClient Create(Uri streamingUri, string userName, string session, bool usePolling, IJsonSerializer serializer)
+        {
+            return new TestStreamingClient(streamingUri, userName, session, serializer, this);
+        }
     }
 }

@@ -9,7 +9,11 @@ namespace CIAPI.Streaming
     {
         public IStreamingClient Create(Uri streamingUri, string userName, string session, IJsonSerializer serializer)
         {
-            return new LightstreamerClient(streamingUri, userName, session, serializer);
+            return new LightstreamerClient(streamingUri, userName, session, false, serializer);
+        }
+        public IStreamingClient Create(Uri streamingUri, string userName, string session, bool usePolling, IJsonSerializer serializer)
+        {
+            return new LightstreamerClient(streamingUri, userName, session, usePolling, serializer);
         }
     }
 }

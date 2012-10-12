@@ -11,9 +11,9 @@ namespace CIAPI.CS.Koans
     public class AboutSessions
     {
         private Client _rpcClient;
-        private string USERNAME = StaticTestConfig.ApiUsername;
-        private string PASSWORD = StaticTestConfig.ApiPassword;
-        private string AppKey = StaticTestConfig.AppKey;
+        private string USERNAME = Settings.RpcUserName;
+        private string PASSWORD = Settings.RpcPassword;
+        private string AppKey = "KOAN_APPKEY";
 
         [Koan(Order = 1)]
         public void CreatingASession()
@@ -22,7 +22,7 @@ namespace CIAPI.CS.Koans
             //that holds details about your connection.
             
             //You need to initialise the client with a valid endpoint
-            _rpcClient = new Rpc.Client(new Uri(StaticTestConfig.RpcUrl), new Uri(StaticTestConfig.StreamingUrl), AppKey);
+            _rpcClient = new Rpc.Client(Settings.RpcUri, Settings.StreamingUri, AppKey);
             
             //And then create a session by creating a username & password
             //You can get test credentials by requesting them at https://ciapipreprod.cityindextest9.co.uk/CIAPI.docs/#content.test-credentials

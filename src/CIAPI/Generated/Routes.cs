@@ -121,6 +121,48 @@ public string AppKey { get; set; }
         Log.Debug("Rpc.Client created for " + _rootUri.AbsoluteUri);
         }
 
+        // ***********************************
+        // ListActiveOrders
+        // ***********************************
+
+
+        /// <summary>
+        /// Queries the specified trading account for all open positions and active orders. This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetOpenPosition](http://labs.cityindex.com/docs/Content/HTTP%20Services/GetOpenPosition.htm) when you get updates on the order stream to get the updated data in this format.
+        /// </summary>
+        /// <param name="requestDTO">Contains the request for a ListActiveOrders query.</param>
+        public virtual ListActiveOrdersResponseDTO ListActiveOrders(ListActiveOrdersRequestDTO requestDTO)
+        {
+            string uriTemplate = "/activeorders";
+            return _client.Request<ListActiveOrdersResponseDTO>(RequestMethod.POST,"order", uriTemplate ,
+            new Dictionary<string, object>
+            {
+                { "requestDTO", requestDTO}
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,0 );
+        }
+
+
+        /// <summary>
+        /// Queries the specified trading account for all open positions and active orders. This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetOpenPosition](http://labs.cityindex.com/docs/Content/HTTP%20Services/GetOpenPosition.htm) when you get updates on the order stream to get the updated data in this format.
+        /// </summary>
+        /// <param name="requestDTO">Contains the request for a ListActiveOrders query.</param>
+        /// <param name="callback"></param>
+        /// <param name="state"></param>
+        public virtual void BeginListActiveOrders(ListActiveOrdersRequestDTO requestDTO, ReliableAsyncCallback callback, object state)
+        {
+            string uriTemplate = "/activeorders";
+            _client.BeginRequest(RequestMethod.POST, "order", uriTemplate , 
+            new Dictionary<string, object>
+            {
+                { "requestDTO", requestDTO}
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,2 ,callback, state);
+        }
+
+        public ListActiveOrdersResponseDTO EndListActiveOrders(ReliableAsyncResult asyncResult)
+        {
+            return _client.EndRequest<ListActiveOrdersResponseDTO>(asyncResult);
+        }
+
+
         public class _Authentication
         {
             private Client _client;
@@ -426,7 +468,7 @@ public string AppKey { get; set; }
         /// <summary>
         /// Get a list of current news headlines.
         /// </summary>
-        /// <param name="request">Object specifing the various request parameters.</param>
+        /// <param name="request">Object specifying the various request parameters.</param>
         public virtual ListNewsHeadlinesResponseDTO ListNewsHeadlines(ListNewsHeadlinesRequestDTO request)
         {
             string uriTemplate = "/headlines";
@@ -441,7 +483,7 @@ public string AppKey { get; set; }
         /// <summary>
         /// Get a list of current news headlines.
         /// </summary>
-        /// <param name="request">Object specifing the various request parameters.</param>
+        /// <param name="request">Object specifying the various request parameters.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
         public virtual void BeginListNewsHeadlines(ListNewsHeadlinesRequestDTO request, ReliableAsyncCallback callback, object state)
@@ -834,7 +876,7 @@ public string AppKey { get; set; }
         /// <param name="tagId">The ID for the tag to be searched. *(Optional)*.</param>
         /// <param name="searchByMarketCode">Sets the search to use market code.</param>
         /// <param name="searchByMarketName">Sets the search to use market Name.</param>
-        /// <param name="spreadProductType">Sets the search to inlcude spread bet markets.</param>
+        /// <param name="spreadProductType">Sets the search to include spread bet markets.</param>
         /// <param name="cfdProductType">Sets the search to include CFD markets.</param>
         /// <param name="binaryProductType">Sets the search to include binary markets.</param>
         /// <param name="maxResults">The maximum number of results to return. Default is 20.</param>
@@ -865,7 +907,7 @@ public string AppKey { get; set; }
         /// <param name="tagId">The ID for the tag to be searched. *(Optional)*.</param>
         /// <param name="searchByMarketCode">Sets the search to use market code.</param>
         /// <param name="searchByMarketName">Sets the search to use market Name.</param>
-        /// <param name="spreadProductType">Sets the search to inlcude spread bet markets.</param>
+        /// <param name="spreadProductType">Sets the search to include spread bet markets.</param>
         /// <param name="cfdProductType">Sets the search to include CFD markets.</param>
         /// <param name="binaryProductType">Sets the search to include binary markets.</param>
         /// <param name="maxResults">The maximum number of results to return. Default is 20.</param>
@@ -1330,7 +1372,7 @@ public string AppKey { get; set; }
 
 
         /// <summary>
-        /// Queries for a specified trading account's trades / open positions. This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetOpenPosition](http://labs.cityindex.com/docs/#HTTP%20Services/GetOpenPosition.htm) when you get updates on the order stream to get the updated data in this format.
+        /// Queries for a specified trading account's trades / open positions. This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetOpenPosition](http://labs.cityindex.com/docs/Content/HTTP%20Services/GetOpenPosition.htm) when you get updates on the order stream to get the updated data in this format.
         /// </summary>
         /// <param name="TradingAccountId">The ID of the trading account to get orders for.</param>
         public virtual ListOpenPositionsResponseDTO ListOpenPositions(int TradingAccountId)
@@ -1345,7 +1387,7 @@ public string AppKey { get; set; }
 
 
         /// <summary>
-        /// Queries for a specified trading account's trades / open positions. This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetOpenPosition](http://labs.cityindex.com/docs/#HTTP%20Services/GetOpenPosition.htm) when you get updates on the order stream to get the updated data in this format.
+        /// Queries for a specified trading account's trades / open positions. This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetOpenPosition](http://labs.cityindex.com/docs/Content/HTTP%20Services/GetOpenPosition.htm) when you get updates on the order stream to get the updated data in this format.
         /// </summary>
         /// <param name="TradingAccountId">The ID of the trading account to get orders for.</param>
         /// <param name="callback"></param>
@@ -1372,7 +1414,7 @@ public string AppKey { get; set; }
 
 
         /// <summary>
-        /// Queries for a specified trading account's active stop / limit orders. This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetActiveStopLimitOrder](http://labs.cityindex.com/docs/#HTTP%20Services/GetActiveStopLimitOrder.htm) when you get updates on the order stream to get the updated data in this format.
+        /// Queries for a specified trading account's active stop / limit orders. This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetActiveStopLimitOrder](http://labs.cityindex.com/docs/Content/HTTP%20Services/GetActiveStopLimitOrder.htm) when you get updates on the order stream to get the updated data in this format.
         /// </summary>
         /// <param name="TradingAccountId">The ID of the trading account to get orders for.</param>
         public virtual ListActiveStopLimitOrderResponseDTO ListActiveStopLimitOrders(int TradingAccountId)
@@ -1387,7 +1429,7 @@ public string AppKey { get; set; }
 
 
         /// <summary>
-        /// Queries for a specified trading account's active stop / limit orders. This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetActiveStopLimitOrder](http://labs.cityindex.com/docs/#HTTP%20Services/GetActiveStopLimitOrder.htm) when you get updates on the order stream to get the updated data in this format.
+        /// Queries for a specified trading account's active stop / limit orders. This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetActiveStopLimitOrder](http://labs.cityindex.com/docs/Content/HTTP%20Services/GetActiveStopLimitOrder.htm) when you get updates on the order stream to get the updated data in this format.
         /// </summary>
         /// <param name="TradingAccountId">The ID of the trading account to get orders for.</param>
         /// <param name="callback"></param>
@@ -1414,7 +1456,7 @@ public string AppKey { get; set; }
 
 
         /// <summary>
-        /// Queries for an active stop limit order with a specified order ID. It returns a null value if the order doesn't exist, or is not an active stop limit order. This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call the HTTP service [ListActiveStopLimitOrders](http://labs.cityindex.com/docs/#HTTP%20Services/ListActiveStopLimitOrders.htm) for the initial data to display in the grid, and call this URI when you get updates on the order stream to get the updated data in this format. For a more comprehensive order response, see the HTTP service [GetOrder](http://labs.cityindex.com/docs/#HTTP%20Services/GetOrder.htm).
+        /// Queries for an active stop limit order with a specified order ID. It returns a null value if the order doesn't exist, or is not an active stop limit order. This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call the HTTP service [ListActiveStopLimitOrders](http://labs.cityindex.com/docs/Content/HTTP%20Services/ListActiveStopLimitOrders.htm) for the initial data to display in the grid, and call this URI when you get updates on the order stream to get the updated data in this format. For a more comprehensive order response, see the HTTP service [GetOrder](http://labs.cityindex.com/docs/Content/HTTP%20Services/GetOrder.htm).
         /// </summary>
         /// <param name="OrderId">The requested order ID.</param>
         public virtual GetActiveStopLimitOrderResponseDTO GetActiveStopLimitOrder(string OrderId)
@@ -1429,7 +1471,7 @@ public string AppKey { get; set; }
 
 
         /// <summary>
-        /// Queries for an active stop limit order with a specified order ID. It returns a null value if the order doesn't exist, or is not an active stop limit order. This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call the HTTP service [ListActiveStopLimitOrders](http://labs.cityindex.com/docs/#HTTP%20Services/ListActiveStopLimitOrders.htm) for the initial data to display in the grid, and call this URI when you get updates on the order stream to get the updated data in this format. For a more comprehensive order response, see the HTTP service [GetOrder](http://labs.cityindex.com/docs/#HTTP%20Services/GetOrder.htm).
+        /// Queries for an active stop limit order with a specified order ID. It returns a null value if the order doesn't exist, or is not an active stop limit order. This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call the HTTP service [ListActiveStopLimitOrders](http://labs.cityindex.com/docs/Content/HTTP%20Services/ListActiveStopLimitOrders.htm) for the initial data to display in the grid, and call this URI when you get updates on the order stream to get the updated data in this format. For a more comprehensive order response, see the HTTP service [GetOrder](http://labs.cityindex.com/docs/Content/HTTP%20Services/GetOrder.htm).
         /// </summary>
         /// <param name="OrderId">The requested order ID.</param>
         /// <param name="callback"></param>
@@ -1456,7 +1498,7 @@ public string AppKey { get; set; }
 
 
         /// <summary>
-        /// Queries for a trade / open position with a specified order ID. It returns a null value if the order doesn't exist, or is not a trade / open position. This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call the HTTP service [ListOpenPositions](http://labs.cityindex.com/docs/#HTTP%20Services/ListOpenPositions.htm) for the initial data to display in the grid, and call this URI when you get updates on the order stream to get the updated data in this format. For a more comprehensive order response, see the HTTP service [GetOrder](http://labs.cityindex.com/docs/#HTTP%20Services/GetOrder.htm).
+        /// Queries for a trade / open position with a specified order ID. It returns a null value if the order doesn't exist, or is not a trade / open position. This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call the HTTP service [ListOpenPositions](http://labs.cityindex.com/docs/Content/HTTP%20Services/ListOpenPositions.htm) for the initial data to display in the grid, and call this URI when you get updates on the order stream to get the updated data in this format. For a more comprehensive order response, see the HTTP service [GetOrder](http://labs.cityindex.com/docs/Content/HTTP%20Services/GetOrder.htm).
         /// </summary>
         /// <param name="OrderId">The requested order ID.</param>
         public virtual GetOpenPositionResponseDTO GetOpenPosition(string OrderId)
@@ -1471,7 +1513,7 @@ public string AppKey { get; set; }
 
 
         /// <summary>
-        /// Queries for a trade / open position with a specified order ID. It returns a null value if the order doesn't exist, or is not a trade / open position. This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call the HTTP service [ListOpenPositions](http://labs.cityindex.com/docs/#HTTP%20Services/ListOpenPositions.htm) for the initial data to display in the grid, and call this URI when you get updates on the order stream to get the updated data in this format. For a more comprehensive order response, see the HTTP service [GetOrder](http://labs.cityindex.com/docs/#HTTP%20Services/GetOrder.htm).
+        /// Queries for a trade / open position with a specified order ID. It returns a null value if the order doesn't exist, or is not a trade / open position. This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call the HTTP service [ListOpenPositions](http://labs.cityindex.com/docs/Content/HTTP%20Services/ListOpenPositions.htm) for the initial data to display in the grid, and call this URI when you get updates on the order stream to get the updated data in this format. For a more comprehensive order response, see the HTTP service [GetOrder](http://labs.cityindex.com/docs/Content/HTTP%20Services/GetOrder.htm).
         /// </summary>
         /// <param name="OrderId">The requested order ID.</param>
         /// <param name="callback"></param>
@@ -1498,7 +1540,7 @@ public string AppKey { get; set; }
 
 
         /// <summary>
-        /// Queries for a specified trading account's trade history. The result set will contain orders with a status of __(3 - Open, 9 - Closed)__, and includes __orders that were a trade / stop / limit order__. There's currently no corresponding GetTradeHistory *(as with [ListOpenPositions](http://labs.cityindex.com/docs/#HTTP%20Services/ListOpenPositions.htm))*.
+        /// Queries for a specified trading account's trade history. The result set will contain orders with a status of __(3 - Open, 9 - Closed)__, and includes __orders that were a trade / stop / limit order__. There's currently no corresponding GetTradeHistory *(as with [ListOpenPositions](http://labs.cityindex.com/docs/Content/HTTP%20Services/ListOpenPositions.htm))*.
         /// </summary>
         /// <param name="TradingAccountId">The ID of the trading account to get orders for.</param>
         /// <param name="maxResults">The maximum number of results to return.</param>
@@ -1515,7 +1557,7 @@ public string AppKey { get; set; }
 
 
         /// <summary>
-        /// Queries for a specified trading account's trade history. The result set will contain orders with a status of __(3 - Open, 9 - Closed)__, and includes __orders that were a trade / stop / limit order__. There's currently no corresponding GetTradeHistory *(as with [ListOpenPositions](http://labs.cityindex.com/docs/#HTTP%20Services/ListOpenPositions.htm))*.
+        /// Queries for a specified trading account's trade history. The result set will contain orders with a status of __(3 - Open, 9 - Closed)__, and includes __orders that were a trade / stop / limit order__. There's currently no corresponding GetTradeHistory *(as with [ListOpenPositions](http://labs.cityindex.com/docs/Content/HTTP%20Services/ListOpenPositions.htm))*.
         /// </summary>
         /// <param name="TradingAccountId">The ID of the trading account to get orders for.</param>
         /// <param name="maxResults">The maximum number of results to return.</param>
@@ -1544,7 +1586,7 @@ public string AppKey { get; set; }
 
 
         /// <summary>
-        /// Queries for a specified trading account's stop / limit order history. The result set includes __only orders that were originally stop / limit orders__ that currently have one of the following statuses __(3 - Open, 4 - Cancelled, 5 - Rejected, 9 - Closed, 10 - Red Card)__.  There is currently no corresponding GetStopLimitOrderHistory *(as with [ListActiveStopLimitOrders](http://labs.cityindex.com/docs/#HTTP%20Services/ListActiveStopLimitOrders.htm))*.
+        /// Queries for a specified trading account's stop / limit order history. The result set includes __only orders that were originally stop / limit orders__ that currently have one of the following statuses __(3 - Open, 4 - Cancelled, 5 - Rejected, 9 - Closed, 10 - Red Card)__.  There is currently no corresponding GetStopLimitOrderHistory *(as with [ListActiveStopLimitOrders](http://labs.cityindex.com/docs/Content/HTTP%20Services/ListActiveStopLimitOrders.htm))*.
         /// </summary>
         /// <param name="TradingAccountId">The ID of the trading account to get orders for.</param>
         /// <param name="maxResults">The maximum number of results to return.</param>
@@ -1561,7 +1603,7 @@ public string AppKey { get; set; }
 
 
         /// <summary>
-        /// Queries for a specified trading account's stop / limit order history. The result set includes __only orders that were originally stop / limit orders__ that currently have one of the following statuses __(3 - Open, 4 - Cancelled, 5 - Rejected, 9 - Closed, 10 - Red Card)__.  There is currently no corresponding GetStopLimitOrderHistory *(as with [ListActiveStopLimitOrders](http://labs.cityindex.com/docs/#HTTP%20Services/ListActiveStopLimitOrders.htm))*.
+        /// Queries for a specified trading account's stop / limit order history. The result set includes __only orders that were originally stop / limit orders__ that currently have one of the following statuses __(3 - Open, 4 - Cancelled, 5 - Rejected, 9 - Closed, 10 - Red Card)__.  There is currently no corresponding GetStopLimitOrderHistory *(as with [ListActiveStopLimitOrders](http://labs.cityindex.com/docs/Content/HTTP%20Services/ListActiveStopLimitOrders.htm))*.
         /// </summary>
         /// <param name="TradingAccountId">The ID of the trading account to get orders for.</param>
         /// <param name="maxResults">The maximum number of results to return.</param>
@@ -1852,9 +1894,9 @@ public string AppKey { get; set; }
 
 
         /// <summary>
-        /// Use the message lookup service to get localised textual names for the various status code & IDs returned by the API. For example, a query for **OrderStatusReason** will contain text names for all the possible values of **OrderStatusReason** in the [ApiOrderResponseDTO](http://labs.cityindex.com/docs/#Data%20Types/ApiOrderResponseDTO.htm). You should only request the list once per session *(for each entity you're interested in)*.
+        /// Use the message lookup service to get localised textual names for the various status code & IDs returned by the API. For example, a query for **OrderStatusReason** will contain text names for all the possible values of **OrderStatusReason** in the [ApiOrderResponseDTO](http://labs.cityindex.com/docs/Content/Data%20Types/ApiOrderResponseDTO.htm). You should only request the list once per session *(for each entity you're interested in)*.
         /// </summary>
-        /// <param name="LookupEntityName">The entity to lookup. For example: **OrderStatusReason**, **InstructionStatusReason**, **OrderApplicability** or **Culture**.</param>
+        /// <param name="LookupEntityName">The entity to lookup. For example: **OrderStatusReason**, **InstructionStatusReason**, **OrderApplicability**, **Currency** or **Culture**.</param>
         /// <param name="CultureId">The Culture ID used to override the translated text description. *(Optional)*.</param>
         public virtual ApiLookupResponseDTO GetSystemLookup(string LookupEntityName, int CultureId)
         {
@@ -1869,9 +1911,9 @@ public string AppKey { get; set; }
 
 
         /// <summary>
-        /// Use the message lookup service to get localised textual names for the various status code & IDs returned by the API. For example, a query for **OrderStatusReason** will contain text names for all the possible values of **OrderStatusReason** in the [ApiOrderResponseDTO](http://labs.cityindex.com/docs/#Data%20Types/ApiOrderResponseDTO.htm). You should only request the list once per session *(for each entity you're interested in)*.
+        /// Use the message lookup service to get localised textual names for the various status code & IDs returned by the API. For example, a query for **OrderStatusReason** will contain text names for all the possible values of **OrderStatusReason** in the [ApiOrderResponseDTO](http://labs.cityindex.com/docs/Content/Data%20Types/ApiOrderResponseDTO.htm). You should only request the list once per session *(for each entity you're interested in)*.
         /// </summary>
-        /// <param name="LookupEntityName">The entity to lookup. For example: **OrderStatusReason**, **InstructionStatusReason**, **OrderApplicability** or **Culture**.</param>
+        /// <param name="LookupEntityName">The entity to lookup. For example: **OrderStatusReason**, **InstructionStatusReason**, **OrderApplicability**, **Currency** or **Culture**.</param>
         /// <param name="CultureId">The Culture ID used to override the translated text description. *(Optional)*.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>

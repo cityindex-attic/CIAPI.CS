@@ -127,7 +127,7 @@ namespace CIAPI.Tests.Rpc
 
             try
             {
-                ctx.LogIn(TestConfig.ApiUsername, TestConfig.ApiPassword);
+                ctx.LogIn(Settings.RpcUserName, Settings.RpcPassword);
             }
             finally
             {
@@ -361,7 +361,7 @@ namespace CIAPI.Tests.Rpc
             try
             {
 
-                response = ctx.LogIn(TestConfig.ApiUsername, TestConfig.ApiPassword);
+                response = ctx.LogIn(Settings.RpcUserName, Settings.RpcPassword);
             }
             finally
             {

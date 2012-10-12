@@ -1,4 +1,5 @@
 exports.smd =
+
 {
   "SMDVersion": "2.6",
   "version": "0.111.0.0",
@@ -212,7 +213,7 @@ exports.smd =
             {
               "$ref": "#.ListNewsHeadlinesRequestDTO",
               "name": "request",
-              "description": "Object specifing the various request parameters.",
+              "description": "Object specifying the various request parameters.",
             },
           ]
         },
@@ -555,7 +556,7 @@ exports.smd =
             {
               "type": "boolean",
               "name": "spreadProductType",
-              "description": "Sets the search to inlcude spread bet markets.",
+              "description": "Sets the search to include spread bet markets.",
               "demoValue": true
             },
             {
@@ -790,7 +791,7 @@ exports.smd =
           ]
         },
         "ListOpenPositions": {
-          "description": "Queries for a specified trading account's trades / open positions. \n\nThis URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetOpenPosition](http://labs.cityindex.com/docs/#HTTP%20Services/GetOpenPosition.htm) when you get updates on the order stream to get the updated data in this format.",
+          "description": "Queries for a specified trading account's trades / open positions. \n\nThis URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetOpenPosition](http://labs.cityindex.com/docs/Content/HTTP%20Services/GetOpenPosition.htm) when you get updates on the order stream to get the updated data in this format.",
           "target": "order",
           "uriTemplate": "/openpositions?TradingAccountId={TradingAccountId}",
           "contentType": "application/json",
@@ -811,7 +812,7 @@ exports.smd =
           ]
         },
         "ListActiveStopLimitOrders": {
-          "description": "Queries for a specified trading account's active stop / limit orders. \n\nThis URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetActiveStopLimitOrder](http://labs.cityindex.com/docs/#HTTP%20Services/GetActiveStopLimitOrder.htm) when you get updates on the order stream to get the updated data in this format.",
+          "description": "Queries for a specified trading account's active stop / limit orders. \n\nThis URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetActiveStopLimitOrder](http://labs.cityindex.com/docs/Content/HTTP%20Services/GetActiveStopLimitOrder.htm) when you get updates on the order stream to get the updated data in this format.",
           "target": "order",
           "uriTemplate": "/activestoplimitorders?TradingAccountId={TradingAccountId}",
           "contentType": "application/json",
@@ -831,8 +832,29 @@ exports.smd =
             }
           ]
         },
+        "ListActiveOrders": {
+          "description": "Queries the specified trading account for all open positions and active orders. \n\nThis URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetOpenPosition](http://labs.cityindex.com/docs/Content/HTTP%20Services/GetOpenPosition.htm) when you get updates on the order stream to get the updated data in this format.",
+          "target": "order",
+          "uriTemplate": "/activeorders",
+          "contentType": "application/json",
+          "responseContentType": "application/json",
+          "transport": "POST",
+          "envelope": "URL",
+          "returns": {
+            "$ref": "#.ListActiveOrdersResponseDTO"
+          },
+          "group": "Trades and Orders",
+          "cacheDuration": 0,
+          "parameters": [
+            {
+              "$ref": "#.ListActiveOrdersRequestDTO",
+              "name": "requestDTO",
+              "description": "Contains the request for a ListActiveOrders query."
+            }
+          ]
+        },
         "GetActiveStopLimitOrder": {
-          "description": "Queries for an active stop limit order with a specified order ID. It returns a null value if the order doesn't exist, or is not an active stop limit order.\n \nThis URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call the HTTP service [ListActiveStopLimitOrders](http://labs.cityindex.com/docs/#HTTP%20Services/ListActiveStopLimitOrders.htm) for the initial data to display in the grid, and call this URI when you get updates on the order stream to get the updated data in this format. For a more comprehensive order response, see the HTTP service [GetOrder](http://labs.cityindex.com/docs/#HTTP%20Services/GetOrder.htm).",
+          "description": "Queries for an active stop limit order with a specified order ID. It returns a null value if the order doesn't exist, or is not an active stop limit order.\n \nThis URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call the HTTP service [ListActiveStopLimitOrders](http://labs.cityindex.com/docs/Content/HTTP%20Services/ListActiveStopLimitOrders.htm) for the initial data to display in the grid, and call this URI when you get updates on the order stream to get the updated data in this format. For a more comprehensive order response, see the HTTP service [GetOrder](http://labs.cityindex.com/docs/Content/HTTP%20Services/GetOrder.htm).",
           "target": "order",
           "uriTemplate": "/{OrderId}/activestoplimitorder",
           "contentType": "application/json",
@@ -853,7 +875,7 @@ exports.smd =
           ]
         },
         "GetOpenPosition": {
-          "description": "Queries for a trade / open position with a specified order ID. It returns a null value if the order doesn't exist, or is not a trade / open position. \n\nThis URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call the HTTP service [ListOpenPositions](http://labs.cityindex.com/docs/#HTTP%20Services/ListOpenPositions.htm) for the initial data to display in the grid, and call this URI when you get updates on the order stream to get the updated data in this format. \nFor a more comprehensive order response, see the HTTP service [GetOrder](http://labs.cityindex.com/docs/#HTTP%20Services/GetOrder.htm).",
+          "description": "Queries for a trade / open position with a specified order ID. It returns a null value if the order doesn't exist, or is not a trade / open position. \n\nThis URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call the HTTP service [ListOpenPositions](http://labs.cityindex.com/docs/Content/HTTP%20Services/ListOpenPositions.htm) for the initial data to display in the grid, and call this URI when you get updates on the order stream to get the updated data in this format. \nFor a more comprehensive order response, see the HTTP service [GetOrder](http://labs.cityindex.com/docs/Content/HTTP%20Services/GetOrder.htm).",
           "target": "order",
           "uriTemplate": "/{OrderId}/openposition",
           "contentType": "application/json",
@@ -874,7 +896,7 @@ exports.smd =
           ]
         },
         "ListTradeHistory": {
-          "description": "Queries for a specified trading account's trade history. The result set will contain orders with a status of __(3 - Open, 9 - Closed)__, and includes __orders that were a trade / stop / limit order__. There's currently no corresponding GetTradeHistory *(as with [ListOpenPositions](http://labs.cityindex.com/docs/#HTTP%20Services/ListOpenPositions.htm))*.",
+          "description": "Queries for a specified trading account's trade history. The result set will contain orders with a status of __(3 - Open, 9 - Closed)__, and includes __orders that were a trade / stop / limit order__. There's currently no corresponding GetTradeHistory *(as with [ListOpenPositions](http://labs.cityindex.com/docs/Content/HTTP%20Services/ListOpenPositions.htm))*.",
           "target": "order",
           "uriTemplate": "/order/tradehistory?TradingAccountId={TradingAccountId}&MaxResults={maxResults}",
           "contentType": "application/json",
@@ -900,7 +922,7 @@ exports.smd =
           ]
         },
         "ListStopLimitOrderHistory": {
-          "description": "Queries for a specified trading account's stop / limit order history. The result set includes __only orders that were originally stop / limit orders__ that currently have one of the following statuses __(3 - Open, 4 - Cancelled, 5 - Rejected, 9 - Closed, 10 - Red Card)__.  There is currently no corresponding GetStopLimitOrderHistory *(as with [ListActiveStopLimitOrders](http://labs.cityindex.com/docs/#HTTP%20Services/ListActiveStopLimitOrders.htm))*.",
+          "description": "Queries for a specified trading account's stop / limit order history. The result set includes __only orders that were originally stop / limit orders__ that currently have one of the following statuses __(3 - Open, 4 - Cancelled, 5 - Rejected, 9 - Closed, 10 - Red Card)__.  There is currently no corresponding GetStopLimitOrderHistory *(as with [ListActiveStopLimitOrders](http://labs.cityindex.com/docs/Content/HTTP%20Services/ListActiveStopLimitOrders.htm))*.",
           "target": "order",
           "uriTemplate": "/stoplimitorderhistory?TradingAccountId={TradingAccountId}&MaxResults={maxResults}",
           "contentType": "application/json",
@@ -1028,7 +1050,7 @@ exports.smd =
           ]
         },
         "GetSystemLookup": {
-          "description": "Use the message lookup service to get localised textual names for the various status code & IDs returned by the API. For example, a query for **OrderStatusReason** will contain text names for all the possible values of **OrderStatusReason** in the [ApiOrderResponseDTO](http://labs.cityindex.com/docs/#Data%20Types/ApiOrderResponseDTO.htm). You should only request the list once per session *(for each entity you're interested in)*.",
+          "description": "Use the message lookup service to get localised textual names for the various status code & IDs returned by the API. For example, a query for **OrderStatusReason** will contain text names for all the possible values of **OrderStatusReason** in the [ApiOrderResponseDTO](http://labs.cityindex.com/docs/Content/Data%20Types/ApiOrderResponseDTO.htm). You should only request the list once per session *(for each entity you're interested in)*.",
           "target": "message",
           "uriTemplate": "/lookup?LookupEntityName={LookupEntityName}&CultureId={CultureId}",
           "contentType": "application/json",
@@ -1044,7 +1066,7 @@ exports.smd =
             {
               "type": "string",
               "name": "LookupEntityName",
-              "description": "The entity to lookup. For example: **OrderStatusReason**, **InstructionStatusReason**, **OrderApplicability** or **Culture**."
+              "description": "The entity to lookup. For example: **OrderStatusReason**, **InstructionStatusReason**, **OrderApplicability**, **Currency** or **Culture**."
             },
             {
               "type": "integer",
@@ -1231,7 +1253,7 @@ exports.smd =
             {
               "type": "string",
               "name": "category",
-              "description": "A news category. See [Usage Notes: News Feeds](http://labs.cityindex.com/docs/#News.htm)",
+              "description": "A news category. See [Usage Notes: News Feeds](http://labs.cityindex.com/docs/Content/News.htm)",
               "minLength": 1,
               "maxLength": 100,
               "demoValue": "UK"
@@ -1276,7 +1298,7 @@ exports.smd =
             {
               "type": "string",
               "name": "AccountOperatorId",
-              "description": "The account operator ID whose default market prices are required. Generally you want to hardcode this depending on the brand you are using.  See [http://faq.labs.cityindex.com/questions/what-are-the-list-of-accountoperatorids](http://faq.labs.cityindex.com/questions/what-are-the-list-of-accountoperatorids). The AccountOperatorId parameter requires an AC prefix, for example AC1234 instead of just 1234. ",
+              "description": "The account operator ID whose default market prices are required. Generally you want to hard code this depending on the brand you are using.  See [http://faq.labs.cityindex.com/questions/what-are-the-list-of-accountoperatorids](http://faq.labs.cityindex.com/questions/what-are-the-list-of-accountoperatorids). The AccountOperatorId parameter requires an AC prefix, for example AC1234 instead of just 1234. ",
               "demoValue": "3347"
             }
           ]

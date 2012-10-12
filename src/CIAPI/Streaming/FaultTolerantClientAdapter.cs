@@ -38,8 +38,8 @@ namespace CIAPI.StreamingClient
     {
         public SubscribedTableKey SubscribeTable<TDto>(SimpleTableInfo simpleTableInfo, ITableListener<TDto> listener, bool b) where TDto : class, new()
         {
-            
-           SubscribedTableKey key =  _client.SubscribeTable(simpleTableInfo, listener, b);
+
+            SubscribedTableKey key = _client.SubscribeTable(simpleTableInfo, listener, b);
             return key;
         }
 
@@ -64,7 +64,7 @@ namespace CIAPI.StreamingClient
 
         private readonly string _sessionId;
         private readonly string _userName;
-
+        private bool _usePolling = false;
         private readonly string _streamingUri;
         private bool _isPolling;
         private bool _reconnect;
@@ -78,7 +78,8 @@ namespace CIAPI.StreamingClient
         private readonly Dictionary<string, IStreamingListener> _currentListeners = new Dictionary<string, IStreamingListener>();
         ///<summary>
         ///</summary>
-        public int ListenerCount{
+        public int ListenerCount
+        {
             get
             {
                 return _currentListeners.Count;
@@ -86,20 +87,21 @@ namespace CIAPI.StreamingClient
         }
 
 
-        public FaultTolerantLsClientAdapter(string streamingUri, string userName, string sessionId, string adapterSet, IJsonSerializer serializer)
+        public FaultTolerantLsClientAdapter(string streamingUri, string userName, string sessionId, string adapterSet, bool usePolling, IJsonSerializer serializer)
         {
 #if !SILVERLIGHT
             //Ensure that at least another 2 concurrent HTTP connections are allowed by the desktop .NET framework
             //(it defaults to 2, which will already be used if there is another LSClient active)
             ServicePointManager.DefaultConnectionLimit += 2;
 #endif
+            _usePolling = usePolling;
             _serializer = serializer;
             _adapterSet = adapterSet;
             _streamingUri = streamingUri;
             _sessionId = sessionId;
             _userName = userName;
             _client = new LSClient();
-            
+
         }
 
 
@@ -278,7 +280,7 @@ namespace CIAPI.StreamingClient
 
             if (!_currentListeners.ContainsKey(topic))
             {
-                IStreamingListener listener = new ListenerAdapter<TDto>(topic, mode, snapshot, this,_serializer);
+                IStreamingListener listener = new ListenerAdapter<TDto>(topic, mode, snapshot, this, _serializer);
                 _currentListeners.Add(topic, listener);
                 new Thread(() => listener.Start(_phase)).Start();
             }
@@ -312,7 +314,7 @@ namespace CIAPI.StreamingClient
         /// <param name="ee"></param>
         private void PauseAndRetryStartClient(int ph, Exception ee)
         {
-            
+
             // #TODO: push to logger
             Debug.WriteLine("Lightstreamer Client, unable to start: " + ee);
 
@@ -394,7 +396,8 @@ namespace CIAPI.StreamingClient
                     Adapter = _adapterSet,
                     User = _userName,
                     Password = _sessionId,
-                    Constraints = { MaxBandwidth = 999999 }
+                    Constraints = { MaxBandwidth = 999999 },
+                    Polling = _usePolling
                 };
 
                 try

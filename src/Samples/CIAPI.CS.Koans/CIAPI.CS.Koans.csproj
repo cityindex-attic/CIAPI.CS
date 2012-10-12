@@ -109,6 +109,7 @@
       <HintPath>..\..\packages\Salient.ReliableHttpClient.1.0.6-bleeding-18\lib\net35\Debug\Salient.ReliableHttpClient.Serializer.Newtonsoft.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -116,8 +117,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\common\StaticTestConfig.cs">
-      <Link>StaticTestConfig.cs</Link>
+    <Compile Include="..\..\common\TestConfig.cs">
+      <Link>TestConfig.cs</Link>
     </Compile>
     <Compile Include="c-AboutSessions.cs" />
     <Compile Include="b-AboutKoans.cs" />

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading;
 using CIAPI.IntegrationTests.Streaming;
 using CIAPI.Rpc;
-
+using CIAPI.Tests;
 using NUnit.Framework;
 using Salient.ReliableHttpClient;
 using Client = CIAPI.Rpc.Client;

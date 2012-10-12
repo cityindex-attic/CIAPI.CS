@@ -1,6 +1,7 @@
 ﻿using CIAPI.DTO;
 using CIAPI.IntegrationTests.Streaming;
 using CIAPI.Rpc;
+using CIAPI.Tests;
 using NUnit.Framework;
 
 namespace CIAPI.IntegrationTests.Rpc

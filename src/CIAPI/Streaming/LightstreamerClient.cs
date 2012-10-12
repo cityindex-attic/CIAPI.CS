@@ -45,7 +45,7 @@ namespace CIAPI.Streaming
         private readonly string _userName;
         private readonly string _streamingUri;
         private readonly Dictionary<string, IFaultTolerantLsClientAdapter> _adapters ;
-        
+        private bool _usePolling;
         
         static LightstreamerClient()
         {
@@ -53,8 +53,9 @@ namespace CIAPI.Streaming
         }
 
 
-        public LightstreamerClient(Uri streamingUri, string userName, string sessionId, IJsonSerializer serializer)
+        public LightstreamerClient(Uri streamingUri, string userName, string sessionId, bool usePolling,IJsonSerializer serializer)
         {
+            _usePolling = usePolling;
             _serializer = serializer;
             Log.Debug("LightstreamerClient created for " + string.Format("{1} {2} {0}", streamingUri, userName, sessionId));
 
@@ -119,7 +120,7 @@ namespace CIAPI.Streaming
                     FaultTolerantLsClientAdapter adp=null;
                     try
                     {
-                        adp = new FaultTolerantLsClientAdapter(_streamingUri, _userName, _sessionId, dataAdapter, _serializer);
+                        adp = new FaultTolerantLsClientAdapter(_streamingUri, _userName, _sessionId, dataAdapter,_usePolling, _serializer);
                         adp.StatusUpdate += OnStatusUpdate;
                         _adapters.Add(dataAdapter, adp);
                         adp.Start();

@@ -3,47 +3,63 @@ using System.Configuration;
 
 namespace CIAPI.Tests
 {
-    public static class TestConfig
+    public class Settings
     {
-        public static string RpcUrl
+        public static Uri RpcUri
         {
             get
             {
-                return ConfigurationManager.AppSettings["apiUrl"];
+                return new Uri(ConfigurationManager.AppSettings["apiRpcUrl"]);
             }
         }
 
-        public static string StreamingUrl
+        public static Uri StreamingUri
         {
             get
             {
-                return ConfigurationManager.AppSettings["streamingUrl"];
+                return new Uri(ConfigurationManager.AppSettings["apiStreamingUrl"]);
             }
         }
 
-        public static string ApiUsername
+        public static string RpcUserName
         {
             get
             {
-                return ConfigurationManager.AppSettings["apiUsername"];
-            }
-        }
-        public static string ApiPassword
-        {
-            get
-            {
-                return ConfigurationManager.AppSettings["apiPassword"];
-            }
-        }
-        public static string ApiTestSessionId
-        {
-            get
-            {
-                return ConfigurationManager.AppSettings["apiTestSessionId"];
+                return Environment.GetEnvironmentVariable("CIAPI_USERNAME");
             }
         }
 
+        public static string RpcPassword
+        {
+            get
+            {
+                return Environment.GetEnvironmentVariable("CIAPI_PASSWORD");
+            }
+        }
 
-        
+        public static string AppMetrics_UserName
+        {
+            get
+            {
+                return Environment.GetEnvironmentVariable("AppMetricsTest_UserName");
+            }
+        }
+
+        public static string AppMetrics_Password
+        {
+            get
+            {
+                return Environment.GetEnvironmentVariable("AppMetricsTest_Password");
+            }
+        }
+
+        public static string AppMetrics_AccessKey
+        {
+            get
+            {
+                return Environment.GetEnvironmentVariable("AppMetricsTest_AccessKey");
+            }
+        }
+
     }
 }

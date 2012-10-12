@@ -46,7 +46,7 @@ namespace CIAPI.Tests.Rpc
 
             try
             {
-                ctx.LogIn(TestConfig.ApiUsername, TestConfig.ApiPassword);
+                ctx.LogIn(Settings.RpcUserName, Settings.RpcPassword);
             }
             finally
             {
