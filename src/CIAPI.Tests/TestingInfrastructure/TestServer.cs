@@ -1,17 +1,22 @@
 using System;
 using System.Globalization;
 
-namespace CIAPI.Tests
+namespace CIAPI.Tests.TestingInfrastructure
 {
     public class TestServer : ServerBase
     {
 
+        public TestServer()
+            : base(GetAvailablePort(), 1024)
+        {
+
+        }
         public TestServer(int port, int receiveBuffer)
             : base(port, receiveBuffer)
         {
         }
 
-        public ResponseInfo CreateRpcResponse(string body)
+        public static ResponseInfo CreateRpcResponse(string body)
         {
 
             var response = new ResponseInfo { Body = body };
@@ -29,7 +34,7 @@ namespace CIAPI.Tests
             }
             return response;
         }
-        public ResponseInfo CreateLightStreamerResponse(string body)
+        public static ResponseInfo CreateLightStreamerResponse(string body)
         {
             var response = new ResponseInfo { Body = body };
 
@@ -47,7 +52,7 @@ namespace CIAPI.Tests
         }
         public override ResponseInfo HandleRequest(RequestInfo request)
         {
-            var args = new RequestEventArgs {Request = request};
+            var args = new RequestEventArgs { Request = request };
             OnProcessRequest(args);
             return args.Response;
         }
@@ -61,8 +66,8 @@ namespace CIAPI.Tests
         }
     }
 
-    
 
 
-    
+
+
 }

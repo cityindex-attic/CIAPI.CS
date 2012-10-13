@@ -6,8 +6,7 @@ using Newtonsoft.Json;
 using NUnit.Framework;
 using Salient.ReflectiveLoggingAdapter;
 
-
-namespace CIAPI.Tests.Rpc
+namespace CIAPI.Tests.TestingInfrastructure
 {
     [TestFixture]
     public class TestServerApiContextTests
@@ -24,14 +23,14 @@ namespace CIAPI.Tests.Rpc
         {
             // #TODO: get available socket code from cassinidev
 
-            var server = new TestServer(5051, 1024);
+            var server = new TestServer();
             server.Start();
 
             
             
             server.ProcessRequest += (s, e) =>
                                          {
-                                             var dto = new ApiLogOnResponseDTO()
+                                             var dto = new ApiLogOnResponseDTO
                                                            {
                                                                AllowedAccountOperator = true,
                                                                PasswordChangeRequired = false,
@@ -39,7 +38,7 @@ namespace CIAPI.Tests.Rpc
                                                                    "86c6b0df-24d4-4b3f-b699-688626817599"
                                                            };
                                              string json = JsonConvert.SerializeObject(dto);
-                                             e.Response = server.CreateRpcResponse(json);
+                                             e.Response = TestServer.CreateRpcResponse(json);
                                          };
             try
             {
@@ -49,6 +48,7 @@ namespace CIAPI.Tests.Rpc
                 ctx.LogIn(Settings.RpcUserName, Settings.RpcPassword);
 
                 Assert.IsNotNullOrEmpty(ctx.Session);
+                ctx.Dispose();
 
             }
             finally
@@ -65,17 +65,16 @@ namespace CIAPI.Tests.Rpc
         [Test]
         public void CanStream()
         {
-            var server = new TestServer(5052, 1024);
+            var server = new TestServer();
             server.Start();
 
 
 
             server.ProcessRequest += (s, e) =>
-            {
+                                         {
+                                             const string defaultPricesSessionid = "S8f295c055c413e4bT4448618";
 
-                string DEFAULT_PRICES_SESSIONID = "S8f295c055c413e4bT4448618";
-
-                switch (e.Request.Route)
+                                             switch (e.Request.Route)
                 {
                     // Streaming requests
 
@@ -84,9 +83,8 @@ namespace CIAPI.Tests.Rpc
 
                     case "/lightstreamer/create_session.txt":
                         // build up a session for adapter set
-                        string response;
 
-                        response = string.Format(@"OK
+                        string response = string.Format(@"OK
 SessionId:{0}
 ControlAddress:localhost.
 KeepaliveMillis:30000
@@ -96,17 +94,17 @@ ServerName:Lightstreamer HTTP Server
 
 PROBE
 LOOP
-", DEFAULT_PRICES_SESSIONID);
+", defaultPricesSessionid);
 
 
-                        e.Response = server.CreateLightStreamerResponse(response);
+                        e.Response = TestServer.CreateLightStreamerResponse(response);
                         break;
 
 
                     case "/lightstreamer/control.txt":
                         // this is where we associate topics (tables) to a session
 
-                        e.Response = server.CreateLightStreamerResponse(@"OK
+                        e.Response = TestServer.CreateLightStreamerResponse(@"OK
 ");
                         
                         break;
@@ -114,7 +112,7 @@ LOOP
                         // this is where we return data. we can't use long polling with cassinidev 
 
 
-                        e.Response = server.CreateLightStreamerResponse(string.Format(@"OK
+                        e.Response = TestServer.CreateLightStreamerResponse(string.Format(@"OK
 SessionId:{0}
 ControlAddress:localhost.
 KeepaliveMillis:30000
@@ -132,7 +130,7 @@ PROBE
 1,2|sbPreProdFXAPP475824757|1.61791|-0.00114|1|1.62006|1.61737|400494234|1.61801|1.61796|0|\u005C/Date(1349422105265)\u005C/
 LOOP
 
-", DEFAULT_PRICES_SESSIONID));
+", defaultPricesSessionid));
                         
 
                         break;
@@ -141,7 +139,7 @@ LOOP
                         throw new Exception("unexpected request:" + e.Request.Route);
 
                 }
-            };
+                                         };
 
 
 
