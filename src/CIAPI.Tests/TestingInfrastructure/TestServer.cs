@@ -7,12 +7,12 @@ namespace CIAPI.Tests.TestingInfrastructure
     {
 
         public TestServer()
-            : base(GetAvailablePort(), 1024)
+            : base(GetAvailablePort(), 2048,false)
         {
 
         }
         public TestServer(int port, int receiveBuffer)
-            : base(port, receiveBuffer)
+            : base(port, receiveBuffer,false)
         {
         }
 

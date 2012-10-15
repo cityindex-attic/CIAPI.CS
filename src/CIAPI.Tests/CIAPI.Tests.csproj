@@ -64,10 +64,16 @@
     <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
     <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CassiniDev.Lib, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+    <Reference Include="DotNetClient_N2, Version=2.1.4588.28987, Culture=neutral, PublicKeyToken=8d72f58860ac9835, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\CassiniDevV6\CassiniDev.Lib.dll</HintPath>
+      <HintPath>..\packages\Lightstreamer 4.2 Client\sdk_client_dotnet\lib\StrongName\DotNetClient_N2.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.4.5.7\lib\net35\Newtonsoft.Json.dll</HintPath>
@@ -104,10 +110,8 @@
     <Compile Include="PrettyPrinterExtensionsFixture.cs" />
     <Compile Include="Rpc\ApiContextTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Rpc\CassiniDevApiContextTests.cs" />
     <Compile Include="TestingInfrastructure\TestServerApiContextTests.cs" />
     <Compile Include="Rpc\ExceptionHandling.cs" />
-    <Compile Include="Rpc\LatencyFixture.cs" />
     <Compile Include="Rpc\MarketInfoFixture.cs" />
     <Compile Include="TestingInfrastructure\ServerBase.cs" />
     <Compile Include="TestingInfrastructure\TestServer.cs" />
@@ -121,6 +125,7 @@
     <None Include="..\common\App.config">
       <Link>App.config</Link>
     </None>
+    <None Include="key.snk" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

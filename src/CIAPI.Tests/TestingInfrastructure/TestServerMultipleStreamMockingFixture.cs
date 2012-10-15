@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Linq;
 using System.Threading;
 using System.Web;
 using CIAPI.Rpc;
@@ -61,26 +63,30 @@ namespace CIAPI.Tests.TestingInfrastructure
                 // only difference here is that we MUST force polling mode on the lightstreamer client
                 var streamingClient = ctx.CreateStreamingClient();
 
-
+                var gates = new AutoResetEvent[] { new AutoResetEvent(false), new AutoResetEvent(false) };
                 bool defaultPricesListenerMessageRecieved = false;
                 bool pricesListenerMessageRecieved = false;
 
                 var defaultPricesListener = streamingClient.BuildDefaultPricesListener(9);
                 defaultPricesListener.MessageReceived += (a, r) =>
                 {
-                    Console.WriteLine("\nDEFAULT PRICE\n" + r.ToStringWithValues());
+                    Console.WriteLine("\n***********************************\nDEFAULT PRICE\n***********************************\n");
                     defaultPricesListenerMessageRecieved = true;
+                    gates[0].Set();
                 };
 
                 var pricesListener = streamingClient.BuildPricesListener(new[] { 99498, 99500 });
                 pricesListener.MessageReceived += (a, r) =>
                 {
-                    Console.WriteLine("\nPRICE\n" + r.ToStringWithValues());
+                    Console.WriteLine("\n***********************************\nPRICE\n***********************************\n");
                     pricesListenerMessageRecieved = true;
+                    gates[1].Set();
                 };
 
-
-                Thread.Sleep(3000);
+                if(!WaitHandle.WaitAll(gates,20000))
+                {
+                    throw new Exception("timed out waiting for events");
+                } 
 
                 streamingClient.TearDownListener(defaultPricesListener);
                 streamingClient.TearDownListener(pricesListener);
@@ -88,16 +94,13 @@ namespace CIAPI.Tests.TestingInfrastructure
 
                 ctx.LogOut();
                 ctx.Dispose();
-
-                Assert.IsFalse(string.IsNullOrEmpty(loginResponse.Session), "login failed");
-                Assert.IsTrue(defaultPricesListenerMessageRecieved, "no defaultPricesListenerMessageRecieved recieved");
-                Assert.IsTrue(pricesListenerMessageRecieved, "no pricesListenerMessageRecieved  recieved");
+ 
             }
             finally
             {
                 server.Stop();
             }
-                
+
 
         }
 
@@ -129,6 +132,7 @@ namespace CIAPI.Tests.TestingInfrastructure
 
         private void ProcessStreamingRequest(ServerBase.RequestEventArgs e)
         {
+            
             NameValueCollection parameters;
             if (e.Request.Body != null)
             {
@@ -146,7 +150,7 @@ namespace CIAPI.Tests.TestingInfrastructure
 
             switch (e.Request.Route)
             {
-                    // Streaming requests
+                // Streaming requests
 
 
 
@@ -154,7 +158,7 @@ namespace CIAPI.Tests.TestingInfrastructure
                 case "/lightstreamer/create_session.txt":
                     // build up a session for adapter set
 
-
+                    Thread.Sleep(500); // simulates some latency
                     string thisSessionId;
                     switch (adapter)
                     {
@@ -168,12 +172,13 @@ namespace CIAPI.Tests.TestingInfrastructure
                             throw new NotImplementedException("unexpected adapter");
                     }
 
-                    e.Response = TestServer.CreateLightStreamerResponse(string.Format(STREAMING_RESPONSE_HEADER, thisSessionId) + "PROBE\nLOOP");
+                    e.Response = TestServer.CreateLightStreamerResponse(string.Format(STREAMING_RESPONSE_HEADER, thisSessionId) + "PROBE\nLOOP\n");
                     break;
 
 
                 case "/lightstreamer/control.txt":
                     // this is where we associate topics (tables) to a session
+                    Thread.Sleep(500); // simulates some latency
                     switch (parameters["LS_op"])
                     {
                         case "add":
@@ -186,6 +191,7 @@ namespace CIAPI.Tests.TestingInfrastructure
                                     break;
                                 case CITYINDEXSTREAMINGDEFAULTPRICES_SESSIONID:
                                     _defaultPricesTableIndex = int.Parse(table);
+
                                     break;
                                 default:
                                     throw new NotImplementedException("unexpected adapter");
@@ -202,7 +208,7 @@ namespace CIAPI.Tests.TestingInfrastructure
                 case "/lightstreamer/bind_session.txt":
                     // this is where we return data. we can't use long polling with cassinidev 
                     // we are providing static response here but a programmatic approach could be taken
-
+                    Thread.Sleep(100); // simulates some latency
 
                     string response = string.Format(STREAMING_RESPONSE_HEADER, session);
 

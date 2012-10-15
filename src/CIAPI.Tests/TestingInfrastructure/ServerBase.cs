@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
@@ -17,13 +18,23 @@ namespace CIAPI.Tests.TestingInfrastructure
         private readonly int _recieveBufferSize;
         private bool _listen;
         private TcpListener _listener;
-
+        public bool Debug;
         public int Port
         {
             get { return _port; }
         }
-        protected ServerBase(int port, int recieveBufferSize)
+
+        private void LogMessage(string message)
         {
+            if (!Debug)
+            {
+                return;
+            }
+            Trace.WriteLine("TESTSERVER\r\n" + message + "\r\n");
+        }
+        protected ServerBase(int port, int recieveBufferSize, bool debug)
+        {
+            Debug = debug;
             _port = port;
             _recieveBufferSize = recieveBufferSize;
         }
@@ -41,13 +52,13 @@ namespace CIAPI.Tests.TestingInfrastructure
             {
                 _listener = new TcpListener(IPAddress.Loopback, _port);
                 _listener.Start();
-                Console.WriteLine("Server started on " + _port);
+                LogMessage("Server started on " + _port);
                 var th = new Thread(Listen);
                 th.Start();
             }
             catch (Exception e)
             {
-                Console.WriteLine("Error starting server: \r\n" + e);
+                LogMessage("Error starting server: \r\n" + e);
             }
         }
 
@@ -60,18 +71,18 @@ namespace CIAPI.Tests.TestingInfrastructure
                 {
                     int count;
                     if ((count = socket.Send(data, data.Length, 0)) == -1)
-                        Console.WriteLine("Socket Error cannot Send Packet");
+                        LogMessage("Socket Error cannot Send Packet");
                     else
                     {
-                        Console.WriteLine("No. of bytes send {0}", count);
+                        LogMessage("No. of bytes sent " + count);
                     }
                 }
                 else
-                    Console.WriteLine("Connection Dropped....");
+                    LogMessage("Connection Dropped....");
             }
             catch (Exception e)
             {
-                Console.WriteLine("Error Occurred : {0} ", e);
+                LogMessage("Error Occurred :  " + e.ToString());
             }
         }
 
@@ -80,34 +91,85 @@ namespace CIAPI.Tests.TestingInfrastructure
         {
             while (_listen)
             {
-                Socket socket = _listener.AcceptSocket();
+                Socket socket;
+                try
+                {
+                     socket = _listener.AcceptSocket();
 
+                }
+                catch (SocketException ex)
+                {
+                    if (ex.Message.Contains("A blocking operation was interrupted by a call to WSACancelBlockingCall"))
+                    { 
+                        return; 
+                    }
+                    throw;
+                }
+                
 
                 if (socket.Connected)
                 {
-                    Console.WriteLine("Socket connected");
-
-
-                    var buffer = new Byte[_recieveBufferSize];
-                    int count = socket.Receive(buffer, buffer.Length, 0);
-                    if (count == _recieveBufferSize)
+                    try
                     {
-                        throw new Exception("RecieveBufferSize is too small");
+                        LogMessage("Socket connected");
+
+
+                        var buffer = new Byte[_recieveBufferSize];
+                        StringBuilder sb = new StringBuilder();
+                        int count = -1;
+                        string reqText;
+
+                        count = socket.Receive(buffer, buffer.Length, 0);
+                        reqText = Encoding.ASCII.GetString(buffer, 0, count);
+                        sb.Append(reqText);
+
+                        if (!reqText.Contains("Content-Length: 0"))
+                        {
+                            int pos = reqText.IndexOf("\r\n\r\n");
+                            if (reqText.Length == pos + 4)
+                            {
+                                count = socket.Receive(buffer, buffer.Length, 0);
+                                reqText = Encoding.ASCII.GetString(buffer, 0, count);
+                                sb.Append(reqText);
+
+
+                            }
+
+
+                        }
+                        reqText = sb.ToString();
+                        LogMessage("SERVER RECEVIED:\n" + reqText);
+
+
+
+                        var request = new RequestInfo(reqText);
+
+
+                        ResponseInfo response = HandleRequest(request);
+
+                        byte[] responseBytes = Encoding.ASCII.GetBytes(response.ToString());
+
+                        WriteToSocket(responseBytes, ref socket);
+                        LogMessage("SERVER SENT:\n" + response.ToString());
                     }
+                    catch (Exception ex)
+                    {
 
-                    var request = new RequestInfo(Encoding.ASCII.GetString(buffer));
+                        ResponseInfo response = new ResponseInfo()
+                                                    {
+                                                        Body = ex.ToString(),
+                                                        Status = "503 Internal Server Error"
+                                                    };
+                        byte[] responseBytes = Encoding.ASCII.GetBytes(response.ToString());
+                        WriteToSocket(responseBytes, ref socket);
+                        LogMessage("SERVER SENT:\n" + response.ToString());
 
-                    ResponseInfo response = HandleRequest(request);
-
-                    byte[] responseBytes = Encoding.ASCII.GetBytes(response.ToString());
-
-                    WriteToSocket(responseBytes, ref socket);
-
+                    }
                     socket.Close();
-                    Console.WriteLine("Socket Closed");
+                    LogMessage("Socket Closed");
                 }
             }
-            
+
         }
 
         public static int GetAvailablePort()
@@ -208,7 +270,7 @@ namespace CIAPI.Tests.TestingInfrastructure
 
             private void ParseRequest(string request)
             {
-                string[] lines = request.Split(new[] {Environment.NewLine}, StringSplitOptions.None);
+                string[] lines = request.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
                 // first line is request descriptor
 
                 string line = lines[0].Trim();

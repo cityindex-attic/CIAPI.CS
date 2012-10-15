@@ -73,7 +73,8 @@
     <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DotNetClient_N2">
+    <Reference Include="DotNetClient_N2, Version=2.1.4588.28987, Culture=neutral, PublicKeyToken=8d72f58860ac9835, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Lightstreamer 4.2 Client\sdk_client_dotnet\lib\StrongName\DotNetClient_N2.dll</HintPath>
     </Reference>
     <Reference Include="Salient.ReflectiveLoggingAdapter.35, Version=3.2.0.22, Culture=neutral, PublicKeyToken=b9b5972b9f69332b, processorArchitecture=MSIL">

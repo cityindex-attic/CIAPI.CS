@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Threading;
 using CIAPI.DTO;
 using CIAPI.Rpc;
@@ -13,16 +14,16 @@ namespace CIAPI.Tests.TestingInfrastructure
     {
         static TestServerApiContextTests()
         {
-            LogManager.CreateInnerLogger =
-                (logName, logLevel, showLevel, showDateTime, showLogName, dateTimeFormat) =>
-                new SimpleTraceAppender(logName, logLevel, showLevel, showDateTime, showLogName, dateTimeFormat);
+            //LogManager.CreateInnerLogger =
+            //    (logName, logLevel, showLevel, showDateTime, showLogName, dateTimeFormat) =>
+            //    new SimpleTraceAppender(logName, logLevel, showLevel, showDateTime, showLogName, dateTimeFormat);
+           
         }
  
         [Test]
         public void CanLogin()
         {
-            // #TODO: get available socket code from cassinidev
-
+    
             var server = new TestServer();
             server.Start();
 
@@ -46,7 +47,7 @@ namespace CIAPI.Tests.TestingInfrastructure
                 var ctx = new Client(new Uri("http://localhost.:" + server.Port), new Uri("http://localhost.:" + server.Port), "foo");
 
                 ctx.LogIn(Settings.RpcUserName, Settings.RpcPassword);
-
+                
                 Assert.IsNotNullOrEmpty(ctx.Session);
                 ctx.Dispose();
 
@@ -147,6 +148,9 @@ LOOP
             {
 
                 var ctx = new Client(new Uri("http://localhost.:" + server.Port), new Uri("http://localhost.:" + server.Port), "foo");
+                ctx.Session = "session";
+                ctx.UserName = "foo";
+
                 var streaming = ctx.CreateStreamingClient();
                 var listener = streaming.BuildDefaultPricesListener(9);
 

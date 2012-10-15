@@ -133,7 +133,10 @@ namespace CIAPI.StreamingClient
             {
                 Name = "LightStreamerStartThread"
             }.Start();
-            gate.WaitOne();
+            if(!gate.WaitOne(LightstreamerDefaults.DEFAULT_TIMEOUT_MS+1000))
+            {
+                throw new Exception("Timeout starting lightstreamer thread");
+            }
             if (ex != null)
             {
                 throw ex;
