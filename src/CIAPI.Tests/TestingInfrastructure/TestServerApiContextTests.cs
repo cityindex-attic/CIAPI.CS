@@ -24,7 +24,7 @@ namespace CIAPI.Tests.TestingInfrastructure
         public void CanLogin()
         {
     
-            var server = new TestServer();
+            var server = new TestServer(true);
             server.Start();
 
             
@@ -63,10 +63,12 @@ namespace CIAPI.Tests.TestingInfrastructure
 
         }
 
+
+
         [Test]
         public void CanStream()
         {
-            var server = new TestServer();
+            var server = new TestServer(true);
             server.Start();
 
 

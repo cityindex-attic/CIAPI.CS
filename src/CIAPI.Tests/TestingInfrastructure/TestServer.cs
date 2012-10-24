@@ -6,13 +6,13 @@ namespace CIAPI.Tests.TestingInfrastructure
     public class TestServer : ServerBase
     {
 
-        public TestServer()
-            : base(GetAvailablePort(), 2048,false)
+        public TestServer(bool debug)
+            : base(GetAvailablePort(), 2048, debug)
         {
 
         }
-        public TestServer(int port, int receiveBuffer)
-            : base(port, receiveBuffer,false)
+        public TestServer(int port, int receiveBuffer, bool debug)
+            : base(port, receiveBuffer, debug)
         {
         }
 

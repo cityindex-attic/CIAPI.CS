@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Web;
 
@@ -94,18 +95,18 @@ namespace CIAPI.Tests.TestingInfrastructure
                 Socket socket;
                 try
                 {
-                     socket = _listener.AcceptSocket();
+                    socket = _listener.AcceptSocket();
 
                 }
                 catch (SocketException ex)
                 {
                     if (ex.Message.Contains("A blocking operation was interrupted by a call to WSACancelBlockingCall"))
-                    { 
-                        return; 
+                    {
+                        return;
                     }
                     throw;
                 }
-                
+
 
                 if (socket.Connected)
                 {
@@ -122,21 +123,29 @@ namespace CIAPI.Tests.TestingInfrastructure
                         count = socket.Receive(buffer, buffer.Length, 0);
                         reqText = Encoding.ASCII.GetString(buffer, 0, count);
                         sb.Append(reqText);
-
-                        if (!reqText.Contains("Content-Length: 0"))
+                        var pattern = new Regex("Content-Length: (?<length>\\d+)", RegexOptions.Multiline | RegexOptions.Singleline | RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture);
+                        int contentLength;
+                        int bodyLength;
+                        if (pattern.IsMatch(reqText))
                         {
-                            int pos = reqText.IndexOf("\r\n\r\n");
-                            if (reqText.Length == pos + 4)
+                            contentLength = int.Parse(pattern.Match(reqText).Groups["length"].Value);
+                            if (contentLength > 0)
                             {
-                                count = socket.Receive(buffer, buffer.Length, 0);
-                                reqText = Encoding.ASCII.GetString(buffer, 0, count);
-                                sb.Append(reqText);
+                                int pos = reqText.IndexOf("\r\n\r\n");
 
+                                bodyLength = reqText.Length - (pos + 4);
+                                while (bodyLength < contentLength)
+                                {
+
+                                    count = socket.Receive(buffer, buffer.Length, 0);
+                                    reqText = Encoding.ASCII.GetString(buffer, 0, count);
+                                    bodyLength = bodyLength + reqText.Length;
+                                    sb.Append(reqText);
+                                }
 
                             }
-
-
                         }
+
                         reqText = sb.ToString();
                         LogMessage("SERVER RECEVIED:\n" + reqText);
 

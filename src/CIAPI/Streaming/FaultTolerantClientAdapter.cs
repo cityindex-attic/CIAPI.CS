@@ -400,11 +400,12 @@ namespace CIAPI.StreamingClient
                     User = _userName,
                     Password = _sessionId,
                     Constraints = { MaxBandwidth = 999999 },
-                    Polling = _usePolling 
+                    Polling = _usePolling //,PollingIdleMillis = 250,PollingMillis = 250
                 };
 
                 try
                 {
+                    //#TODO find out why it is still trying to connect after shutdown
                     Debug.WriteLine("connecting streaming client to adapter " + _adapterSet);
                     _client.OpenConnection(connection, this);
                     Debug.WriteLine("connected streaming client to adapter " + _adapterSet);
