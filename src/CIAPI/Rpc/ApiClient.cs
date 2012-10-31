@@ -7,6 +7,7 @@ using CIAPI.DTO;
 using CIAPI.Streaming;
 using Salient.ReflectiveLoggingAdapter;
 using Salient.ReliableHttpClient;
+using System.Text.RegularExpressions;
 
 namespace CIAPI.Rpc
 {
@@ -74,10 +75,9 @@ namespace CIAPI.Rpc
             return uriTemplate;
         }
 
-        private static string PrepareUrl(string url, string target)
+        private static string PrepareUrl(string url, string target  )
         {
-            target = target ?? "";
-
+            target = target ?? ""; 
             return !url.EndsWith("/") && !target.StartsWith("/") ? url + "/" + target : url + target;
         }
 
@@ -88,8 +88,10 @@ namespace CIAPI.Rpc
                 throw new ObjectDisposedException(GetType().FullName);
             }
 
-            target = PrepareUrl(_rootUri.AbsoluteUri, target);
             var param = new Dictionary<string, object>(parameters ?? new Dictionary<string, object>());
+            MungeUrlParams(uriTemplate, param);
+            target = PrepareUrl(_rootUri.AbsoluteUri, target );
+            
             if (Http200ErrorsOnly)
             {
                 uriTemplate = AppendQueryParameter(uriTemplate, "only200");
@@ -99,7 +101,28 @@ namespace CIAPI.Rpc
             return base.BeginRequest(method, target, uriTemplate, headers, param, requestContentType, responseContentType, cacheDuration, timeout, retryCount, callback, state);
         }
 
+        private void MungeUrlParams(string uriTemplate, Dictionary<string, object> parameters)
+        {
 
+            new Regex(@"{\w+}").Replace(uriTemplate, match =>
+            {
+                string key = match.Value.Substring(1, match.Value.Length - 2);
+                if (parameters.ContainsKey(key))
+                {
+                    object paramValue = parameters[key];
+
+                    if (paramValue != null && (paramValue is string))
+                    {
+                        string paramString = (string)paramValue;
+                        // munge the value to make safe
+                        paramString = paramString.Replace("/", " ");
+                        parameters[key] = paramString;
+                    }
+                }
+                return null;
+            });
+
+        }
 
         public T Request<T>(RequestMethod method, string target, string uriTemplate, Dictionary<string, object> parameters, ContentType requestContentType, ContentType responseContentType, TimeSpan cacheDuration, int timeout, int retryCount)
         {
@@ -107,8 +130,11 @@ namespace CIAPI.Rpc
             {
                 throw new ObjectDisposedException(GetType().FullName);
             }
-            target = PrepareUrl(_rootUri.AbsoluteUri, target);
+          
             var param = new Dictionary<string, object>(parameters ?? new Dictionary<string, object>());
+            MungeUrlParams(uriTemplate, param);
+
+            target = PrepareUrl(_rootUri.AbsoluteUri, target );   
             if (Http200ErrorsOnly)
             {
                 uriTemplate = AppendQueryParameter(uriTemplate, "only200");
@@ -126,8 +152,10 @@ namespace CIAPI.Rpc
                 throw new ObjectDisposedException(GetType().FullName);
             }
 
-            target = PrepareUrl(_rootUri.AbsoluteUri, target);
+            
             var param = new Dictionary<string, object>(parameters ?? new Dictionary<string, object>());
+            MungeUrlParams(uriTemplate, param);
+            target = PrepareUrl(_rootUri.AbsoluteUri, target );
             if (Http200ErrorsOnly)
             {
                 uriTemplate = AppendQueryParameter(uriTemplate, "only200");

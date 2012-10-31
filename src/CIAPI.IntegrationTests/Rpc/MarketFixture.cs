@@ -141,7 +141,7 @@ namespace CIAPI.IntegrationTests.Rpc
         public void CanListMarketInformationSearch()
         {
             var rpcClient = BuildRpcClient();
-
+           
             var response = rpcClient.Market.ListMarketInformationSearch(false, true, false, true, false, "GBP", 10, false);
             Assert.Greater(response.MarketInformation.Length, 1);
             rpcClient.LogOut();
@@ -166,6 +166,21 @@ namespace CIAPI.IntegrationTests.Rpc
             rpcClient.LogOut();
         }
 
+        //
+        [Test]
+        public void CanGetMarketInformationWithPathChar()
+        {
+            var rpcClient = BuildRpcClient();
+            var account = rpcClient.AccountInformation.GetClientAndTradingAccount();
+
+            var response = rpcClient.SpreadMarkets.ListSpreadMarkets("GBP/CAD", null, account.ClientAccountId, 19, false);
+           
+ 
+
+            Assert.That(response.Markets.Length, Is.GreaterThan(1));
+
+            rpcClient.LogOut();
+        }
         [Test]
         public void CanGetMarketInformation()
         {
