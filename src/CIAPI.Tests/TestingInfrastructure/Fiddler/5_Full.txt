@@ -1,0 +1,108 @@
+POST https://ciapi.cityindex.com/tradingapi/session HTTP/1.1
+Content-Type: application/json
+Accept: text/plain, text/json, application/json
+User-Agent: CIAPI.CS.7.2.1.0
+Host: ciapi.cityindex.com
+Content-Length: 169
+Expect: 100-continue
+Accept-Encoding: gzip, deflate
+Connection: Keep-Alive
+
+{
+  "UserName": "DM813766",
+  "Password": "password",
+  "AppKey": "testkey-for-CIAPI.IntegrationTests",
+  "AppVersion": "CIAPI.CS.7.2.1.0",
+  "AppComments": null
+}
+HTTP/1.1 200 OK
+Cache-Control: no-cache
+Pragma: no-cache
+Content-Type: text/json; charset=utf-8
+Expires: -1
+Vary: Accept-Encoding
+Server: Microsoft-IIS/7.5
+X-AspNet-Version: 4.0.30319
+X-Powered-By: ASP.NET
+Date: Wed, 07 Nov 2012 10:16:46 GMT
+Content-Length: 112
+
+{"Session":"a7053409-6cb1-4ad3-83b0-5ff91c6f9bbf","PasswordChangeRequired":false,"AllowedAccountOperator":false}
+
+------------------------------------------------------------------
+
+GET https://ciapi.cityindex.com/tradingapi/useraccount/ClientAndTradingAccount HTTP/1.1
+Accept: text/plain, text/json, application/json
+User-Agent: CIAPI.CS.7.2.1.0
+UserName: DM813766
+Session: a7053409-6cb1-4ad3-83b0-5ff91c6f9bbf
+Host: ciapi.cityindex.com
+Accept-Encoding: gzip, deflate
+
+
+HTTP/1.1 200 OK
+Cache-Control: no-cache
+Pragma: no-cache
+Content-Type: text/json; charset=utf-8
+Expires: -1
+Vary: Accept-Encoding
+Server: Microsoft-IIS/7.5
+X-AspNet-Version: 4.0.30319
+X-Powered-By: ASP.NET
+Date: Wed, 07 Nov 2012 10:16:47 GMT
+Content-Length: 481
+
+{"LogonUserName":"Mr David  Laing - Test","ClientAccountId":400134233,"ClientAccountCurrency":"GBP","AccountOperatorId":3020,"TradingAccounts":[{"TradingAccountId":400198331,"TradingAccountCode":"DM813766","TradingAccountStatus":"Open","TradingAccountType":"CFD"},{"TradingAccountId":400198332,"TradingAccountCode":"DM197906","TradingAccountStatus":"Open","TradingAccountType":"Spread Betting"}],"PersonalEmailAddress":"david.laing@cityindex.com","HasMultipleEmailAddresses":false}
+
+------------------------------------------------------------------
+
+GET https://ciapi.cityindex.com/tradingapi/order/openpositions?TradingAccountId=400198331 HTTP/1.1
+Accept: text/plain, text/json, application/json
+User-Agent: CIAPI.CS.7.2.1.0
+UserName: DM813766
+Session: a7053409-6cb1-4ad3-83b0-5ff91c6f9bbf
+Host: ciapi.cityindex.com
+Accept-Encoding: gzip, deflate
+
+
+HTTP/1.1 200 OK
+Cache-Control: no-cache
+Pragma: no-cache
+Content-Type: text/json; charset=utf-8
+Expires: -1
+Vary: Accept-Encoding
+Server: Microsoft-IIS/7.5
+X-AspNet-Version: 4.0.30319
+X-Powered-By: ASP.NET
+Date: Wed, 07 Nov 2012 10:16:47 GMT
+Content-Length: 1519
+
+{"OpenPositions":[{"OrderId":478239879,"MarketId":154297,"MarketName":"GBP/USD (per 0.0001) CFD","Direction":"buy","Quantity":2.0000,"Price":1.623660000,"TradingAccountId":400198331,"Currency":"USD","Status":3,"StopOrder":null,"LimitOrder":null,"LastChangedDateTimeUTC":"\/Date(1335819873720)\/","AutoRollover":false},{"OrderId":478239903,"MarketId":154297,"MarketName":"GBP/USD (per 0.0001) CFD","Direction":"buy","Quantity":2.0000,"Price":1.623450000,"TradingAccountId":400198331,"Currency":"USD","Status":3,"StopOrder":null,"LimitOrder":null,"LastChangedDateTimeUTC":"\/Date(1335820058083)\/","AutoRollover":false},{"OrderId":483875550,"MarketId":154291,"MarketName":"GBP/AUD (per 0.0001) CFD","Direction":"buy","Quantity":1.0000,"Price":1.563250000,"TradingAccountId":400198331,"Currency":"AUD","Status":3,"StopOrder":null,"LimitOrder":null,"LastChangedDateTimeUTC":"\/Date(1350029883073)\/","AutoRollover":false},{"OrderId":483875567,"MarketId":154297,"MarketName":"GBP/USD (per 0.0001) CFD","Direction":"buy","Quantity":2.0000,"Price":1.605840000,"TradingAccountId":400198331,"Currency":"USD","Status":3,"StopOrder":null,"LimitOrder":null,"LastChangedDateTimeUTC":"\/Date(1350029921967)\/","AutoRollover":false},{"OrderId":484265883,"MarketId":154291,"MarketName":"GBP/AUD (per 0.0001) CFD","Direction":"buy","Quantity":1.0000,"Price":1.550420000,"TradingAccountId":400198331,"Currency":"AUD","Status":3,"StopOrder":null,"LimitOrder":null,"LastChangedDateTimeUTC":"\/Date(1351074162910)\/","AutoRollover":false}]}
+
+------------------------------------------------------------------
+
+POST https://ciapi.cityindex.com/tradingapi/session/deleteSession?userName=DM813766&session=a7053409-6cb1-4ad3-83b0-5ff91c6f9bbf HTTP/1.1
+Content-Type: application/json
+Accept: text/plain, text/json, application/json
+User-Agent: CIAPI.CS.7.2.1.0
+Host: ciapi.cityindex.com
+Content-Length: 0
+Accept-Encoding: gzip, deflate
+
+
+HTTP/1.1 200 OK
+Cache-Control: no-cache
+Pragma: no-cache
+Content-Type: text/json; charset=utf-8
+Expires: -1
+Vary: Accept-Encoding
+Server: Microsoft-IIS/7.5
+X-AspNet-Version: 4.0.30319
+X-Powered-By: ASP.NET
+Date: Wed, 07 Nov 2012 10:16:47 GMT
+Content-Length: 18
+
+{"LoggedOut":true}
+
+------------------------------------------------------------------
+

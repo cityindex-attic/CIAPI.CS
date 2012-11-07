@@ -51,7 +51,7 @@
 
 //            Assert.IsNotNullOrEmpty(marketInfo.MarketInformation.Name, "Market should have a name");
 //            Assert.That(marketInfo.MarketInformation.MarketPricingTimes[1].EndTimeUtc.UtcDateTime,
-//                        Is.EqualTo(DateTime.Parse("2012-05-29 20:00:00.000")));
+//                        Is.EqualTo(DateTime.ParseFile("2012-05-29 20:00:00.000")));
 
 
 //            rpcClient.Dispose();

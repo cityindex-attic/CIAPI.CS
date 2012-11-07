@@ -271,7 +271,8 @@ namespace CIAPI.Tests.TestingInfrastructure
             public string Method = "";
             public NameValueCollection Parameters = new NameValueCollection();
             public string Route = "";
-
+            public string Url;
+            public string QueryString;
             public RequestInfo(string request)
             {
                 ParseRequest(request);
@@ -285,12 +286,14 @@ namespace CIAPI.Tests.TestingInfrastructure
                 string line = lines[0].Trim();
                 Method = line.Substring(0, line.IndexOf(' '));
                 Route = line.Substring(Method.Length, line.LastIndexOf("HTTP/1.1", StringComparison.Ordinal) - Method.Length).Trim();
+                Url = Route;
                 int queryIndex = Route.IndexOf('?');
 
                 if (queryIndex > 0)
                 {
                     string queryString = Route.Substring(queryIndex + 1);
                     Route = Route.Substring(0, queryIndex);
+                    QueryString = queryString;
                     Parameters = HttpUtility.ParseQueryString(queryString);
                 }
                 int lineIndex = 1;
