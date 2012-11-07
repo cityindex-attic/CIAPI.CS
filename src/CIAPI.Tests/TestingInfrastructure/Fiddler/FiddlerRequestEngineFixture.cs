@@ -28,7 +28,7 @@ namespace CIAPI.Tests.TestingInfrastructure.Fiddler
             var parser = new Parser();
 
             // parse saved sessions into collection of session objects
-            string path = @"..\..\..\TestingInfrastructure\Fiddler\5_Full.txt";
+            string path = @"TestingInfrastructure\Fiddler\5_Full.txt";
             var sessions = parser.ParseFile(path);
 
 

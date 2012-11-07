@@ -149,7 +149,9 @@
     <Content Include="Streaming\streamingprices01.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestingInfrastructure\Fiddler\5_Full.txt" />
+    <Content Include="TestingInfrastructure\Fiddler\5_Full.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Workflows\" />
