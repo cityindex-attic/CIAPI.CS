@@ -737,12 +737,13 @@ public string AppKey { get; set; }
         /// <param name="spreadProductType">Sets the search to include spread bet markets.</param>
         /// <param name="cfdProductType">Sets the search to include CFD markets.</param>
         /// <param name="binaryProductType">Sets the search to include binary markets.</param>
+        /// <param name="includeOptions">When set to true, the search captures and returns options markets. When set to false, options markets are excluded from the search results.</param>
         /// <param name="query">The text to search for. Matches part of market name / code from the start.</param>
         /// <param name="maxResults">The maximum number of results to return.</param>
         /// <param name="useMobileShortName">True if the market name should be in short form.  Helpful when displaying data on a small screen.</param>
-        public virtual ListMarketInformationSearchResponseDTO ListMarketInformationSearch(bool searchByMarketCode, bool searchByMarketName, bool spreadProductType, bool cfdProductType, bool binaryProductType, string query, int maxResults, bool useMobileShortName)
+        public virtual ListMarketInformationSearchResponseDTO ListMarketInformationSearch(bool searchByMarketCode, bool searchByMarketName, bool spreadProductType, bool cfdProductType, bool binaryProductType, bool includeOptions, string query, int maxResults, bool useMobileShortName)
         {
-            string uriTemplate = "/informationsearch?SearchByMarketCode={searchByMarketCode}&SearchByMarketName={searchByMarketName}&SpreadProductType={spreadProductType}&CfdProductType={cfdProductType}&BinaryProductType={binaryProductType}&Query={query}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}";
+            string uriTemplate = "/informationsearch?SearchByMarketCode={searchByMarketCode}&SearchByMarketName={searchByMarketName}&SpreadProductType={spreadProductType}&CfdProductType={cfdProductType}&BinaryProductType={binaryProductType}&IncludeOptions={includeOptions}&Query={query}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}";
             return _client.Request<ListMarketInformationSearchResponseDTO>(RequestMethod.GET,"market", uriTemplate ,
             new Dictionary<string, object>
             {
@@ -751,6 +752,7 @@ public string AppKey { get; set; }
                 { "spreadProductType", spreadProductType}, 
                 { "cfdProductType", cfdProductType}, 
                 { "binaryProductType", binaryProductType}, 
+                { "includeOptions", includeOptions}, 
                 { "query", query}, 
                 { "maxResults", maxResults}, 
                 { "useMobileShortName", useMobileShortName}
@@ -766,14 +768,15 @@ public string AppKey { get; set; }
         /// <param name="spreadProductType">Sets the search to include spread bet markets.</param>
         /// <param name="cfdProductType">Sets the search to include CFD markets.</param>
         /// <param name="binaryProductType">Sets the search to include binary markets.</param>
+        /// <param name="includeOptions">When set to true, the search captures and returns options markets. When set to false, options markets are excluded from the search results.</param>
         /// <param name="query">The text to search for. Matches part of market name / code from the start.</param>
         /// <param name="maxResults">The maximum number of results to return.</param>
         /// <param name="useMobileShortName">True if the market name should be in short form.  Helpful when displaying data on a small screen.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginListMarketInformationSearch(bool searchByMarketCode, bool searchByMarketName, bool spreadProductType, bool cfdProductType, bool binaryProductType, string query, int maxResults, bool useMobileShortName, ReliableAsyncCallback callback, object state)
+        public virtual void BeginListMarketInformationSearch(bool searchByMarketCode, bool searchByMarketName, bool spreadProductType, bool cfdProductType, bool binaryProductType, bool includeOptions, string query, int maxResults, bool useMobileShortName, ReliableAsyncCallback callback, object state)
         {
-            string uriTemplate = "/informationsearch?SearchByMarketCode={searchByMarketCode}&SearchByMarketName={searchByMarketName}&SpreadProductType={spreadProductType}&CfdProductType={cfdProductType}&BinaryProductType={binaryProductType}&Query={query}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}";
+            string uriTemplate = "/informationsearch?SearchByMarketCode={searchByMarketCode}&SearchByMarketName={searchByMarketName}&SpreadProductType={spreadProductType}&CfdProductType={cfdProductType}&BinaryProductType={binaryProductType}&IncludeOptions={includeOptions}&Query={query}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}";
             _client.BeginRequest(RequestMethod.GET, "market", uriTemplate , 
             new Dictionary<string, object>
             {
@@ -782,6 +785,7 @@ public string AppKey { get; set; }
                 { "spreadProductType", spreadProductType}, 
                 { "cfdProductType", cfdProductType}, 
                 { "binaryProductType", binaryProductType}, 
+                { "includeOptions", includeOptions}, 
                 { "query", query}, 
                 { "maxResults", maxResults}, 
                 { "useMobileShortName", useMobileShortName}
@@ -807,12 +811,13 @@ public string AppKey { get; set; }
         /// <param name="spreadProductType">Sets the search to include spread bet markets.</param>
         /// <param name="cfdProductType">Sets the search to include CFD markets.</param>
         /// <param name="binaryProductType">Sets the search to include binary markets.</param>
+        /// <param name="includeOptions">When set to true, the search captures and returns options markets. When set to false, options markets are excluded from the search results.</param>
         /// <param name="query">The text to search for. Matches part of market name / code from the start. *(Optional)*.</param>
         /// <param name="maxResults">The maximum number of results to return.</param>
         /// <param name="useMobileShortName">True if the market name should be in short form.  Helpful when displaying data on a small screen.</param>
-        public virtual ListMarketSearchResponseDTO ListMarketSearch(bool searchByMarketCode, bool searchByMarketName, bool spreadProductType, bool cfdProductType, bool binaryProductType, string query, int maxResults, bool useMobileShortName)
+        public virtual ListMarketSearchResponseDTO ListMarketSearch(bool searchByMarketCode, bool searchByMarketName, bool spreadProductType, bool cfdProductType, bool binaryProductType, bool includeOptions, string query, int maxResults, bool useMobileShortName)
         {
-            string uriTemplate = "/search?SearchByMarketCode={searchByMarketCode}&SearchByMarketName={searchByMarketName}&SpreadProductType={spreadProductType}&CfdProductType={cfdProductType}&BinaryProductType={binaryProductType}&Query={query}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}";
+            string uriTemplate = "/search?SearchByMarketCode={searchByMarketCode}&SearchByMarketName={searchByMarketName}&SpreadProductType={spreadProductType}&CfdProductType={cfdProductType}&BinaryProductType={binaryProductType}&IncludeOptions={includeOptions}&Query={query}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}";
             return _client.Request<ListMarketSearchResponseDTO>(RequestMethod.GET,"market", uriTemplate ,
             new Dictionary<string, object>
             {
@@ -821,6 +826,7 @@ public string AppKey { get; set; }
                 { "spreadProductType", spreadProductType}, 
                 { "cfdProductType", cfdProductType}, 
                 { "binaryProductType", binaryProductType}, 
+                { "includeOptions", includeOptions}, 
                 { "query", query}, 
                 { "maxResults", maxResults}, 
                 { "useMobileShortName", useMobileShortName}
@@ -836,14 +842,15 @@ public string AppKey { get; set; }
         /// <param name="spreadProductType">Sets the search to include spread bet markets.</param>
         /// <param name="cfdProductType">Sets the search to include CFD markets.</param>
         /// <param name="binaryProductType">Sets the search to include binary markets.</param>
+        /// <param name="includeOptions">When set to true, the search captures and returns options markets. When set to false, options markets are excluded from the search results.</param>
         /// <param name="query">The text to search for. Matches part of market name / code from the start. *(Optional)*.</param>
         /// <param name="maxResults">The maximum number of results to return.</param>
         /// <param name="useMobileShortName">True if the market name should be in short form.  Helpful when displaying data on a small screen.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginListMarketSearch(bool searchByMarketCode, bool searchByMarketName, bool spreadProductType, bool cfdProductType, bool binaryProductType, string query, int maxResults, bool useMobileShortName, ReliableAsyncCallback callback, object state)
+        public virtual void BeginListMarketSearch(bool searchByMarketCode, bool searchByMarketName, bool spreadProductType, bool cfdProductType, bool binaryProductType, bool includeOptions, string query, int maxResults, bool useMobileShortName, ReliableAsyncCallback callback, object state)
         {
-            string uriTemplate = "/search?SearchByMarketCode={searchByMarketCode}&SearchByMarketName={searchByMarketName}&SpreadProductType={spreadProductType}&CfdProductType={cfdProductType}&BinaryProductType={binaryProductType}&Query={query}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}";
+            string uriTemplate = "/search?SearchByMarketCode={searchByMarketCode}&SearchByMarketName={searchByMarketName}&SpreadProductType={spreadProductType}&CfdProductType={cfdProductType}&BinaryProductType={binaryProductType}&IncludeOptions={includeOptions}&Query={query}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}";
             _client.BeginRequest(RequestMethod.GET, "market", uriTemplate , 
             new Dictionary<string, object>
             {
@@ -852,6 +859,7 @@ public string AppKey { get; set; }
                 { "spreadProductType", spreadProductType}, 
                 { "cfdProductType", cfdProductType}, 
                 { "binaryProductType", binaryProductType}, 
+                { "includeOptions", includeOptions}, 
                 { "query", query}, 
                 { "maxResults", maxResults}, 
                 { "useMobileShortName", useMobileShortName}
@@ -879,11 +887,12 @@ public string AppKey { get; set; }
         /// <param name="spreadProductType">Sets the search to include spread bet markets.</param>
         /// <param name="cfdProductType">Sets the search to include CFD markets.</param>
         /// <param name="binaryProductType">Sets the search to include binary markets.</param>
+        /// <param name="includeOptions">When set to true, the search captures and returns options markets. When set to false, options markets are excluded from the search results.</param>
         /// <param name="maxResults">The maximum number of results to return. Default is 20.</param>
         /// <param name="useMobileShortName">True if the market name should be in short form. Helpful when displaying data on a small screen.</param>
-        public virtual MarketInformationSearchWithTagsResponseDTO SearchWithTags(string query, int tagId, bool searchByMarketCode, bool searchByMarketName, bool spreadProductType, bool cfdProductType, bool binaryProductType, int maxResults, bool useMobileShortName)
+        public virtual MarketInformationSearchWithTagsResponseDTO SearchWithTags(string query, int tagId, bool searchByMarketCode, bool searchByMarketName, bool spreadProductType, bool cfdProductType, bool binaryProductType, bool includeOptions, int maxResults, bool useMobileShortName)
         {
-            string uriTemplate = "/searchwithtags?Query={query}&TagId={tagId}&SearchByMarketCode={searchByMarketCode}&SearchByMarketName={searchByMarketName}&SpreadProductType={spreadProductType}&CfdProductType={cfdProductType}&BinaryProductType={binaryProductType}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}";
+            string uriTemplate = "/searchwithtags?Query={query}&TagId={tagId}&SearchByMarketCode={searchByMarketCode}&SearchByMarketName={searchByMarketName}&SpreadProductType={spreadProductType}&CfdProductType={cfdProductType}&BinaryProductType={binaryProductType}&IncludeOptions={includeOptions}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}";
             return _client.Request<MarketInformationSearchWithTagsResponseDTO>(RequestMethod.GET,"market", uriTemplate ,
             new Dictionary<string, object>
             {
@@ -894,6 +903,7 @@ public string AppKey { get; set; }
                 { "spreadProductType", spreadProductType}, 
                 { "cfdProductType", cfdProductType}, 
                 { "binaryProductType", binaryProductType}, 
+                { "includeOptions", includeOptions}, 
                 { "maxResults", maxResults}, 
                 { "useMobileShortName", useMobileShortName}
             },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,0 );
@@ -910,13 +920,14 @@ public string AppKey { get; set; }
         /// <param name="spreadProductType">Sets the search to include spread bet markets.</param>
         /// <param name="cfdProductType">Sets the search to include CFD markets.</param>
         /// <param name="binaryProductType">Sets the search to include binary markets.</param>
+        /// <param name="includeOptions">When set to true, the search captures and returns options markets. When set to false, options markets are excluded from the search results.</param>
         /// <param name="maxResults">The maximum number of results to return. Default is 20.</param>
         /// <param name="useMobileShortName">True if the market name should be in short form. Helpful when displaying data on a small screen.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public virtual void BeginSearchWithTags(string query, int tagId, bool searchByMarketCode, bool searchByMarketName, bool spreadProductType, bool cfdProductType, bool binaryProductType, int maxResults, bool useMobileShortName, ReliableAsyncCallback callback, object state)
+        public virtual void BeginSearchWithTags(string query, int tagId, bool searchByMarketCode, bool searchByMarketName, bool spreadProductType, bool cfdProductType, bool binaryProductType, bool includeOptions, int maxResults, bool useMobileShortName, ReliableAsyncCallback callback, object state)
         {
-            string uriTemplate = "/searchwithtags?Query={query}&TagId={tagId}&SearchByMarketCode={searchByMarketCode}&SearchByMarketName={searchByMarketName}&SpreadProductType={spreadProductType}&CfdProductType={cfdProductType}&BinaryProductType={binaryProductType}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}";
+            string uriTemplate = "/searchwithtags?Query={query}&TagId={tagId}&SearchByMarketCode={searchByMarketCode}&SearchByMarketName={searchByMarketName}&SpreadProductType={spreadProductType}&CfdProductType={cfdProductType}&BinaryProductType={binaryProductType}&IncludeOptions={includeOptions}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}";
             _client.BeginRequest(RequestMethod.GET, "market", uriTemplate , 
             new Dictionary<string, object>
             {
@@ -927,6 +938,7 @@ public string AppKey { get; set; }
                 { "spreadProductType", spreadProductType}, 
                 { "cfdProductType", cfdProductType}, 
                 { "binaryProductType", binaryProductType}, 
+                { "includeOptions", includeOptions}, 
                 { "maxResults", maxResults}, 
                 { "useMobileShortName", useMobileShortName}
             },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,2 ,callback, state);

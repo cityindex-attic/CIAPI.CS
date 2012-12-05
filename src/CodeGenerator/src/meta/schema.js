@@ -1,7 +1,7 @@
 exports.schema =
  {
     "namespace": "CIAPI.DTO",
-  
+
   "version": "0.111.0.0",
   "properties": {
     "AccountInformationResponseDTO": {
@@ -161,6 +161,10 @@ exports.schema =
       "id": "ApiBasicStopLimitOrderDTO",
       "type": "object",
       "properties": {
+        "Guaranteed": {
+          "type": "boolean",
+          "description": "Flag indicating if the stop order is a guaranteed order."
+        },
         "OrderId": {
           "type": "integer",
           "minValue": -2147483648,
@@ -2402,7 +2406,19 @@ exports.schema =
         },
         "Category": {
           "type": "string",
-          "description": "A category that is used to filter the news."
+          "description": "A news category that can be used to filter the news."
+        },
+        "MarketId": {
+          "type": "integer",
+          "description": "A market ID that can be used to filter the news."
+        },
+        "MarketName": {
+          "type": "string",
+          "description": "A market name that can be used to filter the news."
+        },
+        "RicCode": {
+          "type": "string",
+          "description": "A Reuters Instrument Code *(RIC)* that can be used to filter the news."
         },
         "MaxResults": {
           "type": "integer",
@@ -2413,7 +2429,7 @@ exports.schema =
           "description": "The Culture ID used to filter results. Leave blank to use the culture of the requesting user."
         },
       },
-      "description": "A request for news stories."
+      "description": "A request for news stories. The stories can be filtered by one of the four available filters: *(Category, MarketId, MarketName, RicCode)*. Only use **1** of the filters at a time. If zero or more than one filter is used simultaneously, then an exception is thrown and a 400 status error code is returned."
     },
     "ListNewsHeadlinesResponseDTO": {
       "id": "ListNewsHeadlinesResponseDTO",
@@ -2631,6 +2647,15 @@ exports.schema =
           "type": "string",
           "description": "Direction identifier for order/trade, values supported are buy or sell."
         },
+        "PositionMethodId": {
+          "type": [
+            "null",
+            "integer"
+          ],
+          "minValue": -2147483648,
+          "maxValue": 2147483647,
+          "description": "Indicates the position of the trade. 1 == LongOrShortOnly, 2 == LongAndShort."
+        },
         "Quantity": {
           "type": "number",
           "format": "decimal",
@@ -2739,7 +2764,16 @@ exports.schema =
           ],
           "minValue": -2147483648,
           "maxValue": 2147483647,
-          "description": "The quote identifier."
+          "description": "The quote identifier"
+        },
+        "PositionMethodId": {
+          "type": [
+            "null",
+            "integer"
+          ],
+          "minValue": -2147483648,
+          "maxValue": 2147483647,
+          "description": "Indicates the position of the trade. 1 == LongOrShortOnly, 2 == LongAndShort."
         },
         "BidPrice": {
           "type": "number",
@@ -2859,10 +2893,13 @@ exports.schema =
           "description": "The orders original quantity, before any part / full closures."
         },
         "PositionMethodId": {
-          "type": "integer",
+          "type": [
+            "null",
+            "integer"
+          ],
           "minValue": -2147483648,
           "maxValue": 2147483647,
-          "description": "The position method identifier of the order."
+          "description": "Indicates the position of the trade. 1 == LongOrShortOnly, 2 == LongAndShort."
         },
         "Quantity": {
           "type": "number",
@@ -3311,11 +3348,7 @@ exports.schema =
       "id": "UpdateTradeOrderRequestDTO",
       "type": "object",
       "extends": "#.NewTradeOrderRequestDTO",
-      "properties": {
-        "AutoRollover": {
-          "type": "boolean",
-          "description": "Flag to indicate whether the trade will automatically roll into the next market interval when the current market interval expires."
-        },
+      "properties": {       
         "OrderId": {
           "type": "integer",
           "minValue": -2147483648,
@@ -3444,4 +3477,6 @@ exports.schema =
       "description": "The response from the simulated trade request."
     }
   }
+  
+
 }

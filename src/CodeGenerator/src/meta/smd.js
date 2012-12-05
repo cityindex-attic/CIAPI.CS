@@ -387,7 +387,7 @@ exports.smd =
         "ListMarketInformationSearch": {
           "description": "Returns market information for the markets that meet the search criteria. The search can be performed by market code and/or market name, and can include CFDs and Spread Bet markets.",
           "target": "market",
-          "uriTemplate": "/informationsearch?SearchByMarketCode={searchByMarketCode}&SearchByMarketName={searchByMarketName}&SpreadProductType={spreadProductType}&CfdProductType={cfdProductType}&BinaryProductType={binaryProductType}&Query={query}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}",
+          "uriTemplate": "/informationsearch?SearchByMarketCode={searchByMarketCode}&SearchByMarketName={searchByMarketName}&SpreadProductType={spreadProductType}&CfdProductType={cfdProductType}&BinaryProductType={binaryProductType}&IncludeOptions={includeOptions}&Query={query}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}",
           "contentType": "application/json",
           "responseContentType": "application/json",
           "transport": "GET",
@@ -430,6 +430,12 @@ exports.smd =
               "demoValue": true
             },
             {
+              "type": "boolean",
+              "name": "includeOptions",
+              "description": "When set to true, the search captures and returns options markets. When set to false, options markets are excluded from the search results.",
+              "demoValue": true
+            },
+            {
               "type": "string",
               "name": "query",
               "description": "The text to search for. Matches part of market name / code from the start.",
@@ -452,7 +458,7 @@ exports.smd =
         "ListMarketSearch": {
           "description": "Returns a list of markets that meet the search criteria. The search can be performed by market code and/or market name, and can include CFDs and Spread Bet markets. Leave the query string empty to return all markets available to the user.",
           "target": "market",
-          "uriTemplate": "/search?SearchByMarketCode={searchByMarketCode}&SearchByMarketName={searchByMarketName}&SpreadProductType={spreadProductType}&CfdProductType={cfdProductType}&BinaryProductType={binaryProductType}&Query={query}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}",
+          "uriTemplate": "/search?SearchByMarketCode={searchByMarketCode}&SearchByMarketName={searchByMarketName}&SpreadProductType={spreadProductType}&CfdProductType={cfdProductType}&BinaryProductType={binaryProductType}&IncludeOptions={includeOptions}&Query={query}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}",
           "contentType": "application/json",
           "responseContentType": "application/json",
           "transport": "GET",
@@ -495,6 +501,12 @@ exports.smd =
               "demoValue": true
             },
             {
+              "type": "boolean",
+              "name": "includeOptions",
+              "description": "When set to true, the search captures and returns options markets. When set to false, options markets are excluded from the search results.",
+              "demoValue": true
+            },
+            {
               "type": "string",
               "name": "query",
               "description": "The text to search for. Matches part of market name / code from the start. *(Optional)*.",
@@ -517,7 +529,7 @@ exports.smd =
         "SearchWithTags": {
           "description": "Get market information and tags for the markets that meet the search criteria. Leave the query string empty to return all markets and tags available to the user.",
           "target": "market",
-          "uriTemplate": "/searchwithtags?Query={query}&TagId={tagId}&SearchByMarketCode={searchByMarketCode}&SearchByMarketName={searchByMarketName}&SpreadProductType={spreadProductType}&CfdProductType={cfdProductType}&BinaryProductType={binaryProductType}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}",
+          "uriTemplate": "/searchwithtags?Query={query}&TagId={tagId}&SearchByMarketCode={searchByMarketCode}&SearchByMarketName={searchByMarketName}&SpreadProductType={spreadProductType}&CfdProductType={cfdProductType}&BinaryProductType={binaryProductType}&IncludeOptions={includeOptions}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}",
           "contentType": "application/json",
           "responseContentType": "application/json",
           "transport": "GET",
@@ -569,6 +581,12 @@ exports.smd =
               "type": "boolean",
               "name": "binaryProductType",
               "description": "Sets the search to include binary markets.",
+              "demoValue": true
+            },
+            {
+              "type": "boolean",
+              "name": "includeOptions",
+              "description": "When set to true, the search captures and returns options markets. When set to false, options markets are excluded from the search results.",
               "demoValue": true
             },
             {

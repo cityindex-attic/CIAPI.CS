@@ -32,6 +32,6 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("7.2.1.0")]
-[assembly: AssemblyFileVersion("7.2.1.0")]
+[assembly: AssemblyVersion("8.0.0.0")]
+[assembly: AssemblyFileVersion("8.0.0.0")]
 [assembly: InternalsVisibleTo("CIAPI.Tests, PublicKey=0024000004800000940000000602000000240000525341310004000001000100ff9ef2c75b78caf82c5e10b7d3c20e45edd8c38dbd686de289638435052376fc3301d7d109bd8092ae8894d7589ae2925128e4cc84dcebee8461f86de4ed92307d9fbb65ec78e2ee4ec61d290195c09e0e3bba1d9d963041af116245e628f5606ca0190336aa08ea83af90aec0c9926e67256407555806d5b8d9baa6ac4b8abd")]

@@ -121,6 +121,10 @@ namespace CIAPI.DTO
     public partial class ApiBasicStopLimitOrderDTO
     {
         /// <summary>
+        /// Flag indicating if the stop order is a guaranteed order.
+        /// </summary>
+        public bool Guaranteed { get; set; }
+        /// <summary>
         /// The order's unique identifier.
         /// </summary>
         public int OrderId { get; set; }
@@ -1752,7 +1756,7 @@ namespace CIAPI.DTO
     }
 
     /// <summary>
-    /// A request for news stories.
+    /// A request for news stories. The stories can be filtered by one of the four available filters: *(Category, MarketId, MarketName, RicCode)*. Only use **1** of the filters at a time. If zero or more than one filter is used simultaneously, then an exception is thrown and a 400 status error code is returned.
     /// </summary>
     public partial class ListNewsHeadlinesRequestDTO
     {
@@ -1761,9 +1765,21 @@ namespace CIAPI.DTO
         /// </summary>
         public string Source { get; set; }
         /// <summary>
-        /// A category that is used to filter the news.
+        /// A news category that can be used to filter the news.
         /// </summary>
         public string Category { get; set; }
+        /// <summary>
+        /// A market ID that can be used to filter the news.
+        /// </summary>
+        public int MarketId { get; set; }
+        /// <summary>
+        /// A market name that can be used to filter the news.
+        /// </summary>
+        public string MarketName { get; set; }
+        /// <summary>
+        /// A Reuters Instrument Code *(RIC)* that can be used to filter the news.
+        /// </summary>
+        public string RicCode { get; set; }
         /// <summary>
         /// The maximum number of responses to return. Leave blank to return the top 25 results.
         /// </summary>
@@ -1930,6 +1946,10 @@ namespace CIAPI.DTO
         /// </summary>
         public string Direction { get; set; }
         /// <summary>
+        /// Indicates the position of the trade. 1 == LongOrShortOnly, 2 == LongAndShort.
+        /// </summary>
+        public int? PositionMethodId { get; set; }
+        /// <summary>
         /// Size of the order/trade.
         /// </summary>
         public decimal Quantity { get; set; }
@@ -2001,9 +2021,13 @@ namespace CIAPI.DTO
         /// </summary>
         public decimal Quantity { get; set; }
         /// <summary>
-        /// The quote identifier.
+        /// The quote identifier
         /// </summary>
         public int? QuoteId { get; set; }
+        /// <summary>
+        /// Indicates the position of the trade. 1 == LongOrShortOnly, 2 == LongAndShort.
+        /// </summary>
+        public int? PositionMethodId { get; set; }
         /// <summary>
         /// Market prices are quoted as a pair *(buy/sell or bid/offer)*, the BidPrice is the lower value of the pair.
         /// </summary>
@@ -2084,9 +2108,9 @@ namespace CIAPI.DTO
         /// </summary>
         public decimal OriginalQuantity { get; set; }
         /// <summary>
-        /// The position method identifier of the order.
+        /// Indicates the position of the trade. 1 == LongOrShortOnly, 2 == LongAndShort.
         /// </summary>
-        public int PositionMethodId { get; set; }
+        public int? PositionMethodId { get; set; }
         /// <summary>
         /// The current quantity of the order.
         /// </summary>
@@ -2411,10 +2435,6 @@ namespace CIAPI.DTO
     /// </summary>
     public partial class UpdateTradeOrderRequestDTO : NewTradeOrderRequestDTO
     {
-        /// <summary>
-        /// Flag to indicate whether the trade will automatically roll into the next market interval when the current market interval expires.
-        /// </summary>
-        public bool AutoRollover { get; set; }
         /// <summary>
         /// The identifier of the order to update.
         /// </summary>

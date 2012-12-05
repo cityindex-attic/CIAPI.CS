@@ -42,7 +42,7 @@ namespace CIAPI.IntegrationTests.Streaming
     {
         protected ApiMarketInformationDTO[] GetAvailableCFDMarkets(Client rpcClient)
         {
-            var marketList = rpcClient.Market.ListMarketInformationSearch(false, true, false, true, false, "GBP", 10, false);
+            var marketList = rpcClient.Market.ListMarketInformationSearch(false, true, false, true, false, true, "GBP", 10, false);
             Assert.That(marketList.MarketInformation.Length, Is.GreaterThanOrEqualTo(1), "There should be at least 1 CFD market availbe");
             return marketList.MarketInformation;
         }

@@ -57,7 +57,7 @@ namespace CIAPI.IntegrationTests.Rpc
 
             //Once you have a tag, you can search for all markets associated with that tag
             int tagId = tagResponse.Tags.First(t => t.Name.Contains("FX")).MarketTagId;
-            var allMarketsInTag = rpcClient.Market.SearchWithTags("", tagId, true, true, true, true, true, 100, false);
+            var allMarketsInTag = rpcClient.Market.SearchWithTags("", tagId, true, true, true, true, true,true, 100, false);
             Console.WriteLine(allMarketsInTag.ToStringWithValues());
             /* Gives something like:
              * MarketInformationSearchWithTagsResponseDTO: 
@@ -80,7 +80,7 @@ namespace CIAPI.IntegrationTests.Rpc
                */
 
             //Or, you can search for all markets in that tag that start with a specific string
-            var allMarketsInTagContainingGBP = rpcClient.Market.SearchWithTags("GBP", tagId, true, true, true, true, true, 100, false);
+            var allMarketsInTagContainingGBP = rpcClient.Market.SearchWithTags("GBP", tagId, true, true, true, true, true, true,100, false);
             Console.WriteLine(allMarketsInTagContainingGBP.ToStringWithValues());
             /* Gives something like:
              * MarketInformationSearchWithTagsResponseDTO: 
@@ -116,15 +116,15 @@ namespace CIAPI.IntegrationTests.Rpc
         {
             var rpcClient = BuildRpcClient();
 
-            rpcClient.Market.ListMarketInformationSearch(false, true, true, false, false, "/", 100, false);
-            rpcClient.Market.ListMarketInformationSearch(false, true, true, false, false, "\\", 100, false);
-            rpcClient.Market.ListMarketInformationSearch(false, true, true, false, false, @"\", 100, false);
-            rpcClient.Market.ListMarketInformationSearch(false, true, true, false, false, @"GBP \ USD", 100, false);
-            rpcClient.Market.ListMarketInformationSearch(false, true, true, false, false, @"GBP \\ USD", 100, false);
+            rpcClient.Market.ListMarketInformationSearch(false, true, true, false, false,true, "/", 100, false);
+            rpcClient.Market.ListMarketInformationSearch(false, true, true, false, false, true, "\\", 100, false);
+            rpcClient.Market.ListMarketInformationSearch(false, true, true, false, false, true, @"\", 100, false);
+            rpcClient.Market.ListMarketInformationSearch(false, true, true, false, false, true, @"GBP \ USD", 100, false);
+            rpcClient.Market.ListMarketInformationSearch(false, true, true, false, false, true, @"GBP \\ USD", 100, false);
 
             var gate = new AutoResetEvent(false);
 
-            rpcClient.Market.BeginListMarketInformationSearch(false, true, true, false, false, @"\", 100, false, ar =>
+            rpcClient.Market.BeginListMarketInformationSearch(false, true, true, false, false, true, @"\", 100, false, ar =>
                 {
                     var response = rpcClient.Market.EndListMarketInformationSearch(ar);
                     gate.Set();
@@ -141,8 +141,8 @@ namespace CIAPI.IntegrationTests.Rpc
         public void CanListMarketInformationSearch()
         {
             var rpcClient = BuildRpcClient();
-           
-            var response = rpcClient.Market.ListMarketInformationSearch(false, true, false, true, false, "GBP", 10, false);
+
+            var response = rpcClient.Market.ListMarketInformationSearch(false, true, false, true, false, true, "GBP", 10, false);
             Assert.Greater(response.MarketInformation.Length, 1);
             rpcClient.LogOut();
         }
