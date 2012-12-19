@@ -1,7 +1,7 @@
 exports.schema =
  {
     "namespace": "CIAPI.DTO",
-
+    
   "version": "0.111.0.0",
   "properties": {
     "AccountInformationResponseDTO": {
@@ -718,6 +718,18 @@ exports.schema =
         "MinDistanceUnits": {
           "type": "integer",
           "description": "The minimum distance unit type. This can be: *(Percentage=26, Points=27)*."
+        },
+        "OptionType": {
+          "type": "string",
+          "description": "Indicates if the option is a Call or a Put option."
+        },
+        "OptionTypeId": {
+          "type": "integer",
+          "description": "ID number indicating the option type: Put == 1 and Call == 2."
+        },
+        "StrikePrice": {
+          "type": "integer",
+          "description": "The strike price of the option."
         },
         "WebMinSize": {
           "type": [
@@ -3477,6 +3489,6 @@ exports.schema =
       "description": "The response from the simulated trade request."
     }
   }
-  
+ 
 
 }
