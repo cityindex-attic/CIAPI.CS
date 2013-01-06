@@ -720,17 +720,23 @@ exports.schema =
           "description": "The minimum distance unit type. This can be: *(Percentage=26, Points=27)*."
         },
         "OptionType": {
-          "type": "string",
-          "description": "Indicates if the option is a Call or a Put option."
-        },
-        "OptionTypeId": {
-          "type": "integer",
-          "description": "ID number indicating the option type: Put == 1 and Call == 2."
-        },
-        "StrikePrice": {
-          "type": "integer",
-          "description": "The strike price of the option."
-        },
+        "type": "string",
+        "description": "Indicates if the option is a Call or a Put option."
+    },
+    "OptionTypeId": {
+        "type": [
+            "null", 
+            "integer"
+        ],
+        "description": "ID number indicating the option type: Put == 1 and Call == 2."
+    },
+    "StrikePrice": {
+        "type": [
+            "null", 
+            "integer"
+        ],
+        "description": "The strike price of the option."
+    } ,
         "WebMinSize": {
           "type": [
             "null",

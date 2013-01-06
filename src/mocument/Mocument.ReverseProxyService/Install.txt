@@ -1,0 +1,10 @@
+﻿to install service:
+
+as admin:
+C:\WINDOWS\Microsoft.NET\Framework\v4.0.30319\installutil.exe Mocument.ReverseProxyService.exe
+
+to uninstall service:
+
+as admin:
+C:\WINDOWS\Microsoft.NET\Framework\v4.0.30319\installutil.exe /u Mocument.ReverseProxyService.exe
+

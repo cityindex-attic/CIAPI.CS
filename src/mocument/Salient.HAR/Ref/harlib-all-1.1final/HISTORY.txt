@@ -1,0 +1,8 @@
+HarLib release HISTORY
+
+1.0.1 - Oct 10, 2012
++ Better support for BrowserMob proxy
++ Fiddler time format support by Alan Richardson
++ Complex custom field support by Gregory Bobak
+
+1.0rc2 - April 23, 2012 - First major release

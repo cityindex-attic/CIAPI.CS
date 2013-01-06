@@ -560,11 +560,11 @@ namespace CIAPI.DTO
         /// <summary>
         /// ID number indicating the option type: Put == 1 and Call == 2.
         /// </summary>
-        public int OptionTypeId { get; set; }
+        public int? OptionTypeId { get; set; }
         /// <summary>
         /// The strike price of the option.
         /// </summary>
-        public int StrikePrice { get; set; }
+        public int? StrikePrice { get; set; }
         /// <summary>
         /// The minimum quantity that can be traded over the web.
         /// </summary>

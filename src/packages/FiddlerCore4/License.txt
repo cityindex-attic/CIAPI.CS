@@ -1,0 +1,14 @@
+By using this software, you accept these terms. If you do not accept these terms, do not install, build upon, distribute, or use the software.
+
+The software (FiddlerCore) is provided "as is" and you bear the risk of using it. In no event shall I, Eric Lawrence, be liable for any consequential, special, incidental or indirect damages of any kind arising out of the delivery, performance or use of this software. This software was written with care, but no one warrants that the software is error free.
+
+Your sole remedy for any failure or any form of damage caused by this software is a full refund of the fee I have received from you, which in all cases is $0. 
+
+You may use any number of copies of the software to design, develop and test your programs that run on a Microsoft Windows operating system. You may copy and distribute the software, in compiled form, to run on a Microsoft Windows operating system. Permission to redistribute FiddlerCore without charge is granted, subject to the following restrictions: You may not: 1> alter any copyright, trademark or patent notice in the software, 2> include the software in malicious, deceptive or unlawful programs. You may not decompile or otherwise reverse-engineer any part of the software, except and only to the extent that such actions are expressly allowed by applicable law notwithstanding this restriction.
+
+If you distribute the software, you must 1> require distributors and external end users to agree to terms that protect it at least as much as this agreement, 2> display your valid copyright notice on your programs, 3> indemnify, defend, and hold harmless Eric Lawrence from any claims, including attorneys’ fees, related to the distribution or use of your programs or to your modifications to the software.
+
+EXPORT RESTRICTIONS: The software is subject to United States export laws and regulations. You must comply with all domestic and international export laws and regulations that apply to software. These laws include restrictions on destinations, end users and end use. 
+USE RESTRICTIONS: You warrant that your use of this software is legal and does not violate any law or regulation to which you are subject.
+
+FiddlerCore(tm) is ©2012 Eric Lawrence.  All rights reserved.

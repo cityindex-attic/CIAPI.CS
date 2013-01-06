@@ -1,0 +1,604 @@
+﻿{
+  "Id": "sky.ciapisession3",
+  "Description": "",
+  "OpenForRecording": true,
+  "AllowedIpAddress": "::1",
+  "Comment": null,
+  "log": {
+    "version": null,
+    "creator": null,
+    "browser": null,
+    "pages": null,
+    "entries": [
+      {
+        "pageref": null,
+        "startedDateTime": "2013-01-01T01:34:02.2767207-07:00",
+        "time": 832,
+        "request": {
+          "host": "ciapi.cityindex.com",
+          "path": "/tradingapi/session",
+          "method": "POST",
+          "url": "http://ciapi.cityindex.com/tradingapi/session",
+          "httpVersion": "HTTP/1.1",
+          "cookies": [],
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json",
+              "comment": null
+            },
+            {
+              "name": "Accept",
+              "value": "text/plain, text/json, application/json",
+              "comment": null
+            },
+            {
+              "name": "User-Agent",
+              "value": "CIAPI.CS.8.0.0.0",
+              "comment": null
+            },
+            {
+              "name": "Host",
+              "value": "ciapi.cityindex.com",
+              "comment": null
+            },
+            {
+              "name": "Content-Length",
+              "value": "169",
+              "comment": null
+            },
+            {
+              "name": "Expect",
+              "value": "100-continue",
+              "comment": null
+            },
+            {
+              "name": "Accept-Encoding",
+              "value": "gzip, deflate",
+              "comment": null
+            },
+            {
+              "name": "Connection",
+              "value": "Keep-Alive",
+              "comment": null
+            }
+          ],
+          "queryString": [],
+          "postData": {
+            "mimeType": "application/json",
+            "params": null,
+            "text": "{\r\n  \"UserName\": \"DM813766\",\r\n  \"Password\": \"password\",\r\n  \"AppKey\": \"testkey-for-CIAPI.IntegrationTests\",\r\n  \"AppVersion\": \"CIAPI.CS.8.0.0.0\",\r\n  \"AppComments\": null\r\n}",
+            "comment": null
+          },
+          "headersSize": 274,
+          "bodySize": 169,
+          "comment": null
+        },
+        "response": {
+          "status": 200,
+          "statusText": "OK",
+          "httpVersion": "HTTP/1.1",
+          "cookies": [],
+          "headers": [
+            {
+              "name": "Cache-Control",
+              "value": "no-cache",
+              "comment": null
+            },
+            {
+              "name": "Pragma",
+              "value": "no-cache",
+              "comment": null
+            },
+            {
+              "name": "Content-Type",
+              "value": "text/json; charset=utf-8",
+              "comment": null
+            },
+            {
+              "name": "Content-Encoding",
+              "value": "gzip",
+              "comment": null
+            },
+            {
+              "name": "Expires",
+              "value": "-1",
+              "comment": null
+            },
+            {
+              "name": "Vary",
+              "value": "Accept-Encoding",
+              "comment": null
+            },
+            {
+              "name": "Server",
+              "value": "Microsoft-IIS/7.5",
+              "comment": null
+            },
+            {
+              "name": "X-AspNet-Version",
+              "value": "4.0.30319",
+              "comment": null
+            },
+            {
+              "name": "X-Powered-By",
+              "value": "ASP.NET",
+              "comment": null
+            },
+            {
+              "name": "Date",
+              "value": "Tue, 01 Jan 2013 08:34:02 GMT",
+              "comment": null
+            },
+            {
+              "name": "Content-Length",
+              "value": "221",
+              "comment": null
+            }
+          ],
+          "content": {
+            "size": 112,
+            "compression": -109,
+            "mimeType": "text/json; charset=utf-8",
+            "text": "{\"Session\":\"d2081162-9163-4af5-b4b4-bc3470bfa426\",\"PasswordChangeRequired\":false,\"AllowedAccountOperator\":false}",
+            "encoding": null,
+            "comment": null
+          },
+          "redirectURL": "",
+          "headersSize": 299,
+          "bodySize": 221,
+          "comment": null
+        },
+        "cache": null,
+        "timings": {
+          "blocked": -1,
+          "dns": 181,
+          "connect": 146,
+          "send": 12,
+          "wait": 146,
+          "receive": 348,
+          "ssl": 0,
+          "comment": null
+        },
+        "serverIPAddress": null,
+        "connection": "65141",
+        "comment": null
+      },
+      {
+        "pageref": null,
+        "startedDateTime": "2013-01-01T01:34:04.2168317-07:00",
+        "time": 165,
+        "request": {
+          "host": "ciapi.cityindex.com",
+          "path": "/tradingapi/useraccount/ClientAndTradingAccount",
+          "method": "GET",
+          "url": "http://ciapi.cityindex.com/tradingapi/useraccount/ClientAndTradingAccount",
+          "httpVersion": "HTTP/1.1",
+          "cookies": [],
+          "headers": [
+            {
+              "name": "Accept",
+              "value": "text/plain, text/json, application/json",
+              "comment": null
+            },
+            {
+              "name": "User-Agent",
+              "value": "CIAPI.CS.8.0.0.0",
+              "comment": null
+            },
+            {
+              "name": "UserName",
+              "value": "DM813766",
+              "comment": null
+            },
+            {
+              "name": "Session",
+              "value": "d2081162-9163-4af5-b4b4-bc3470bfa426",
+              "comment": null
+            },
+            {
+              "name": "Host",
+              "value": "ciapi.cityindex.com",
+              "comment": null
+            },
+            {
+              "name": "Accept-Encoding",
+              "value": "gzip, deflate",
+              "comment": null
+            }
+          ],
+          "queryString": [],
+          "postData": null,
+          "headersSize": 269,
+          "bodySize": 0,
+          "comment": null
+        },
+        "response": {
+          "status": 200,
+          "statusText": "OK",
+          "httpVersion": "HTTP/1.1",
+          "cookies": [],
+          "headers": [
+            {
+              "name": "Cache-Control",
+              "value": "no-cache",
+              "comment": null
+            },
+            {
+              "name": "Pragma",
+              "value": "no-cache",
+              "comment": null
+            },
+            {
+              "name": "Content-Type",
+              "value": "text/json; charset=utf-8",
+              "comment": null
+            },
+            {
+              "name": "Content-Encoding",
+              "value": "gzip",
+              "comment": null
+            },
+            {
+              "name": "Expires",
+              "value": "-1",
+              "comment": null
+            },
+            {
+              "name": "Vary",
+              "value": "Accept-Encoding",
+              "comment": null
+            },
+            {
+              "name": "Server",
+              "value": "Microsoft-IIS/7.5",
+              "comment": null
+            },
+            {
+              "name": "X-AspNet-Version",
+              "value": "4.0.30319",
+              "comment": null
+            },
+            {
+              "name": "X-Powered-By",
+              "value": "ASP.NET",
+              "comment": null
+            },
+            {
+              "name": "Date",
+              "value": "Tue, 01 Jan 2013 08:34:03 GMT",
+              "comment": null
+            },
+            {
+              "name": "Content-Length",
+              "value": "374",
+              "comment": null
+            }
+          ],
+          "content": {
+            "size": 481,
+            "compression": 107,
+            "mimeType": "text/json; charset=utf-8",
+            "text": "{\"LogonUserName\":\"Mr David  Laing - Test\",\"ClientAccountId\":400134233,\"ClientAccountCurrency\":\"GBP\",\"AccountOperatorId\":3020,\"TradingAccounts\":[{\"TradingAccountId\":400198331,\"TradingAccountCode\":\"DM813766\",\"TradingAccountStatus\":\"Open\",\"TradingAccountType\":\"CFD\"},{\"TradingAccountId\":400198332,\"TradingAccountCode\":\"DM197906\",\"TradingAccountStatus\":\"Open\",\"TradingAccountType\":\"Spread Betting\"}],\"PersonalEmailAddress\":\"david.laing@cityindex.com\",\"HasMultipleEmailAddresses\":false}",
+            "encoding": null,
+            "comment": null
+          },
+          "redirectURL": "",
+          "headersSize": 299,
+          "bodySize": 374,
+          "comment": null
+        },
+        "cache": null,
+        "timings": {
+          "blocked": -1,
+          "dns": 0,
+          "connect": 0,
+          "send": 0,
+          "wait": 166,
+          "receive": 0,
+          "ssl": 0,
+          "comment": null
+        },
+        "serverIPAddress": null,
+        "connection": "65141",
+        "comment": null
+      },
+      {
+        "pageref": null,
+        "startedDateTime": "2013-01-01T01:34:04.4518451-07:00",
+        "time": 164,
+        "request": {
+          "host": "ciapi.cityindex.com",
+          "path": "/tradingapi/order/openpositions",
+          "method": "GET",
+          "url": "http://ciapi.cityindex.com/tradingapi/order/openpositions?TradingAccountId=400198331",
+          "httpVersion": "HTTP/1.1",
+          "cookies": [],
+          "headers": [
+            {
+              "name": "Accept",
+              "value": "text/plain, text/json, application/json",
+              "comment": null
+            },
+            {
+              "name": "User-Agent",
+              "value": "CIAPI.CS.8.0.0.0",
+              "comment": null
+            },
+            {
+              "name": "UserName",
+              "value": "DM813766",
+              "comment": null
+            },
+            {
+              "name": "Session",
+              "value": "d2081162-9163-4af5-b4b4-bc3470bfa426",
+              "comment": null
+            },
+            {
+              "name": "Host",
+              "value": "ciapi.cityindex.com",
+              "comment": null
+            },
+            {
+              "name": "Accept-Encoding",
+              "value": "gzip, deflate",
+              "comment": null
+            }
+          ],
+          "queryString": [
+            {
+              "name": "TradingAccountId",
+              "value": "400198331",
+              "comment": null
+            }
+          ],
+          "postData": null,
+          "headersSize": 280,
+          "bodySize": 0,
+          "comment": null
+        },
+        "response": {
+          "status": 200,
+          "statusText": "OK",
+          "httpVersion": "HTTP/1.1",
+          "cookies": [],
+          "headers": [
+            {
+              "name": "Cache-Control",
+              "value": "no-cache",
+              "comment": null
+            },
+            {
+              "name": "Pragma",
+              "value": "no-cache",
+              "comment": null
+            },
+            {
+              "name": "Content-Type",
+              "value": "text/json; charset=utf-8",
+              "comment": null
+            },
+            {
+              "name": "Content-Encoding",
+              "value": "gzip",
+              "comment": null
+            },
+            {
+              "name": "Expires",
+              "value": "-1",
+              "comment": null
+            },
+            {
+              "name": "Vary",
+              "value": "Accept-Encoding",
+              "comment": null
+            },
+            {
+              "name": "Server",
+              "value": "Microsoft-IIS/7.5",
+              "comment": null
+            },
+            {
+              "name": "X-AspNet-Version",
+              "value": "4.0.30319",
+              "comment": null
+            },
+            {
+              "name": "X-Powered-By",
+              "value": "ASP.NET",
+              "comment": null
+            },
+            {
+              "name": "Date",
+              "value": "Tue, 01 Jan 2013 08:34:03 GMT",
+              "comment": null
+            },
+            {
+              "name": "Content-Length",
+              "value": "561",
+              "comment": null
+            }
+          ],
+          "content": {
+            "size": 1519,
+            "compression": 958,
+            "mimeType": "text/json; charset=utf-8",
+            "text": "{\"OpenPositions\":[{\"OrderId\":478239879,\"MarketId\":154297,\"MarketName\":\"GBP/USD (per 0.0001) CFD\",\"Direction\":\"buy\",\"Quantity\":2.0000,\"Price\":1.623660000,\"TradingAccountId\":400198331,\"Currency\":\"USD\",\"Status\":3,\"StopOrder\":null,\"LimitOrder\":null,\"LastChangedDateTimeUTC\":\"\\/Date(1335819873720)\\/\",\"AutoRollover\":false},{\"OrderId\":478239903,\"MarketId\":154297,\"MarketName\":\"GBP/USD (per 0.0001) CFD\",\"Direction\":\"buy\",\"Quantity\":2.0000,\"Price\":1.623450000,\"TradingAccountId\":400198331,\"Currency\":\"USD\",\"Status\":3,\"StopOrder\":null,\"LimitOrder\":null,\"LastChangedDateTimeUTC\":\"\\/Date(1335820058083)\\/\",\"AutoRollover\":false},{\"OrderId\":483875550,\"MarketId\":154291,\"MarketName\":\"GBP/AUD (per 0.0001) CFD\",\"Direction\":\"buy\",\"Quantity\":1.0000,\"Price\":1.563250000,\"TradingAccountId\":400198331,\"Currency\":\"AUD\",\"Status\":3,\"StopOrder\":null,\"LimitOrder\":null,\"LastChangedDateTimeUTC\":\"\\/Date(1350029883073)\\/\",\"AutoRollover\":false},{\"OrderId\":483875567,\"MarketId\":154297,\"MarketName\":\"GBP/USD (per 0.0001) CFD\",\"Direction\":\"buy\",\"Quantity\":2.0000,\"Price\":1.605840000,\"TradingAccountId\":400198331,\"Currency\":\"USD\",\"Status\":3,\"StopOrder\":null,\"LimitOrder\":null,\"LastChangedDateTimeUTC\":\"\\/Date(1350029921967)\\/\",\"AutoRollover\":false},{\"OrderId\":484265883,\"MarketId\":154291,\"MarketName\":\"GBP/AUD (per 0.0001) CFD\",\"Direction\":\"buy\",\"Quantity\":1.0000,\"Price\":1.550420000,\"TradingAccountId\":400198331,\"Currency\":\"AUD\",\"Status\":3,\"StopOrder\":null,\"LimitOrder\":null,\"LastChangedDateTimeUTC\":\"\\/Date(1351074162910)\\/\",\"AutoRollover\":false}]}",
+            "encoding": null,
+            "comment": null
+          },
+          "redirectURL": "",
+          "headersSize": 299,
+          "bodySize": 561,
+          "comment": null
+        },
+        "cache": null,
+        "timings": {
+          "blocked": -1,
+          "dns": 0,
+          "connect": 0,
+          "send": 0,
+          "wait": 165,
+          "receive": 0,
+          "ssl": 0,
+          "comment": null
+        },
+        "serverIPAddress": null,
+        "connection": "65141",
+        "comment": null
+      },
+      {
+        "pageref": null,
+        "startedDateTime": "2013-01-01T01:34:04.7538624-07:00",
+        "time": 166,
+        "request": {
+          "host": "ciapi.cityindex.com",
+          "path": "/tradingapi/session/deleteSession",
+          "method": "POST",
+          "url": "http://ciapi.cityindex.com/tradingapi/session/deleteSession?userName=DM813766&session=d2081162-9163-4af5-b4b4-bc3470bfa426",
+          "httpVersion": "HTTP/1.1",
+          "cookies": [],
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json",
+              "comment": null
+            },
+            {
+              "name": "Accept",
+              "value": "text/plain, text/json, application/json",
+              "comment": null
+            },
+            {
+              "name": "User-Agent",
+              "value": "CIAPI.CS.8.0.0.0",
+              "comment": null
+            },
+            {
+              "name": "Host",
+              "value": "ciapi.cityindex.com",
+              "comment": null
+            },
+            {
+              "name": "Content-Length",
+              "value": "0",
+              "comment": null
+            },
+            {
+              "name": "Accept-Encoding",
+              "value": "gzip, deflate",
+              "comment": null
+            }
+          ],
+          "queryString": [
+            {
+              "name": "userName",
+              "value": "DM813766",
+              "comment": null
+            },
+            {
+              "name": "session",
+              "value": "d2081162-9163-4af5-b4b4-bc3470bfa426",
+              "comment": null
+            }
+          ],
+          "postData": null,
+          "headersSize": 303,
+          "bodySize": 0,
+          "comment": null
+        },
+        "response": {
+          "status": 200,
+          "statusText": "OK",
+          "httpVersion": "HTTP/1.1",
+          "cookies": [],
+          "headers": [
+            {
+              "name": "Cache-Control",
+              "value": "no-cache",
+              "comment": null
+            },
+            {
+              "name": "Pragma",
+              "value": "no-cache",
+              "comment": null
+            },
+            {
+              "name": "Content-Type",
+              "value": "text/json; charset=utf-8",
+              "comment": null
+            },
+            {
+              "name": "Content-Encoding",
+              "value": "gzip",
+              "comment": null
+            },
+            {
+              "name": "Expires",
+              "value": "-1",
+              "comment": null
+            },
+            {
+              "name": "Vary",
+              "value": "Accept-Encoding",
+              "comment": null
+            },
+            {
+              "name": "Server",
+              "value": "Microsoft-IIS/7.5",
+              "comment": null
+            },
+            {
+              "name": "X-AspNet-Version",
+              "value": "4.0.30319",
+              "comment": null
+            },
+            {
+              "name": "X-Powered-By",
+              "value": "ASP.NET",
+              "comment": null
+            },
+            {
+              "name": "Date",
+              "value": "Tue, 01 Jan 2013 08:34:03 GMT",
+              "comment": null
+            },
+            {
+              "name": "Content-Length",
+              "value": "138",
+              "comment": null
+            }
+          ],
+          "content": {
+            "size": 18,
+            "compression": -120,
+            "mimeType": "text/json; charset=utf-8",
+            "text": "{\"LoggedOut\":true}",
+            "encoding": null,
+            "comment": null
+          },
+          "redirectURL": "",
+          "headersSize": 299,
+          "bodySize": 138,
+          "comment": null
+        },
+        "cache": null,
+        "timings": {
+          "blocked": -1,
+          "dns": 0,
+          "connect": 0,
+          "send": 0,
+          "wait": 167,
+          "receive": 0,
+          "ssl": 0,
+          "comment": null
+        },
+        "serverIPAddress": null,
+        "connection": "65141",
+        "comment": null
+      }
+    ],
+    "comment": null
+  }
+}
