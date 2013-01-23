@@ -118,23 +118,6 @@
     <Compile Include="Streaming\StreamingClientTests.cs" />
     <Compile Include="Streaming\StreamingRecorderFixture.cs" />
     <Compile Include="Streaming\TestStreamingListenerFixture.cs" />
-    <Compile Include="Tests\AccountInformationFixture.cs" />
-    <Compile Include="Tests\AppKeyFixture.cs" />
-    <Compile Include="Tests\AuthenticationFixture.cs" />
-    <Compile Include="Tests\BasicAuthenticationFixture.cs" />
-    <Compile Include="Tests\CfdMarketsFixture.cs" />
-    <Compile Include="Tests\DateTimeOffsetFixture.cs" />
-    <Compile Include="Tests\ErrorHandlingFixture.cs" />
-    <Compile Include="Tests\FaqIssueResolutionFixture.cs" />
-    <Compile Include="Tests\MarketFixture.cs" />
-    <Compile Include="Tests\MessagingFixture.cs" />
-    <Compile Include="Tests\MetricsFixture.cs" />
-    <Compile Include="Tests\NewsFixture.cs" />
-    <Compile Include="Tests\PriceHistoryFixture.cs" />
-    <Compile Include="Tests\revisit\SimulatedTradesAndOrdersFixture.cs" />
-    <Compile Include="Tests\revisit\TradesAndOrdersFixture.cs" />
-    <Compile Include="Tests\SpreadMarketsFixture.cs" />
-    <Compile Include="Tests\WatchListFixture.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\common\App.config">
