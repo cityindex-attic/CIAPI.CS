@@ -1,7 +1,7 @@
 exports.schema =
- {
-    "namespace": "CIAPI.DTO",
-    
+
+{
+ "namespace": "CIAPI.DTO",
   "version": "0.111.0.0",
   "properties": {
     "AccountInformationResponseDTO": {
@@ -65,7 +65,7 @@ exports.schema =
           ],
           "minValue": -2147483648,
           "maxValue": 2147483647,
-          "description": "The order's parent OrderId."
+          "description": "This represents the OrderID of any orders that the current order is related to. If there is no parent order as the order in question *is* the parent order, then the value is null."
         },
         "MarketId": {
           "type": "integer",
@@ -152,7 +152,7 @@ exports.schema =
         "LastChangedDateTimeUTC": {
           "type": "string",
           "format": "wcf-date",
-          "description": "The last time that the order changed. **Note:** does not include things such as the current market price."
+          "description": "Represents the date and time when the trade/order was last edited. **Note:** does not include things such as the current market price."
         }
       },
       "description": "A stop or limit order that is currently active."
@@ -669,6 +669,16 @@ exports.schema =
           "type": "string",
           "description": "The market name."
         },
+        "ExchangeId": {
+          "type": "integer",
+          "minValue": -2147483648,
+          "maxValue": 2147483647,
+          "description": "Unique identifier for the exchange where the underlying is traded."
+        },
+        "ExchangeName": {
+          "type": "string",
+          "description": "The name of the exchange where the underlying is traded."
+        },
         "MarginFactor": {
           "type": [
             "null",
@@ -705,6 +715,14 @@ exports.schema =
           "maxValue": 7.9228162514264338E+28,
           "description": "The maximum margin factor."
         },
+        "MarketType": {
+          "type": "string",
+          "description": "Description of the market type. This can be 'OptionMarket', 'Ordinary Market', or 'BinaryMarket'."
+        },
+        "MarketTypeId": {
+          "type": "integer",          
+          "description": "Identifier for each of the market types. Option == 1, Ordinary == 2 and Binary == 4. "
+        },
         "MinDistance": {
           "type": [
             "null",
@@ -720,23 +738,23 @@ exports.schema =
           "description": "The minimum distance unit type. This can be: *(Percentage=26, Points=27)*."
         },
         "OptionType": {
-        "type": "string",
-        "description": "Indicates if the option is a Call or a Put option."
-    },
-    "OptionTypeId": {
-        "type": [
-            "null", 
+          "type": "string",
+          "description": "Indicates if the option is a Call or a Put option."
+        },
+        "OptionTypeId": {
+          "type": [
+            "null",
             "integer"
-        ],
-        "description": "ID number indicating the option type: Put == 1 and Call == 2."
-    },
-    "StrikePrice": {
-        "type": [
-            "null", 
+          ],
+          "description": "ID number indicating the option type: Put == 1 and Call == 2. This value is null for non-option markets."
+        },
+        "StrikePrice": {
+          "type": [
+            "null",
             "integer"
-        ],
-        "description": "The strike price of the option."
-    } ,
+          ],
+          "description": "The strike price of the option. This value is null for non-option markets."
+        },
         "WebMinSize": {
           "type": [
             "null",
@@ -973,7 +991,23 @@ exports.schema =
           "type": "integer",
           "minValue": -2147483648,
           "maxValue": 2147483647,
-          "description": "Offset minutes to convert UTC times to local times"
+          "description": "Offset minutes to convert UTC times to local times."
+        },               
+        "QuantityConversionFactor": {
+          "type": [
+            "null",
+            "number"
+          ],
+          "format": "decimal",
+          "minValue": -7.9228162514264338E+28,
+          "maxValue": 7.9228162514264338E+28,
+          "description": "The number of units for an instrument per actual traded units."
+        },
+        "PointFactorDivisor": {
+          "type": "integer",
+          "minValue": -2147483648,
+          "maxValue": 2147483647,
+          "description": "The number of cents which make up a dollar trade on the exchange."
         },
         "BetPer": {
           "type": [
@@ -983,7 +1017,7 @@ exports.schema =
           "format": "decimal",
           "minValue": -7.9228162514264338E+28,
           "maxValue": 7.9228162514264338E+28,
-          "description": "Bet Per value for CFD and Spread Bet markets"
+          "description": "Bet Per value for CFD and Spread Bet markets."
         },
         "MarketUnderlyingTypeId": {
           "type": [
@@ -992,11 +1026,11 @@ exports.schema =
           ],
           "minValue": -2147483648,
           "maxValue": 2147483647,
-          "description": "Reflects the market underlying type ID of the associated market"
+          "description": "Reflects the market underlying type ID of the associated market."
         },
         "MarketUnderlyingType": {
           "type": "string",
-          "description": "Reflects the market underlying type description of the associated market"
+          "description": "Reflects the market underlying type description of the associated market."
         },
         "AllowGuaranteedOrders": {
           "type": "boolean",
@@ -1046,6 +1080,13 @@ exports.schema =
           ],
           "format": "wcf-date",
           "description": "Expiry of the market in UTC."
+        },
+        "StepMargin": {
+          "type":  {
+              "$ref": "#.ApiStepMarginDTO"
+            },
+         
+          "description": "Step margin data for this market."
         },
         "FutureRolloverUTC": {
           "type": [
@@ -1244,7 +1285,7 @@ exports.schema =
         "LastChangedDateTimeUTC": {
           "type": "string",
           "format": "wcf-date",
-          "description": "The last time that the order changed. **Note:** does not include things such as the current market price."
+          "description": "Represents the date and time when the trade/order was last edited. **Note:** does not include things such as the current market price."
         }
       },
       "description": "A trade, or order that is currently open."
@@ -1563,6 +1604,51 @@ exports.schema =
       },
       "description": "Simulated order response."
     },
+    "ApiStepMarginDTO": {
+      "id": "ApiStepMarginDTO",
+      "type": "object",
+      "properties": {
+        "EligibleForStepMargin": {
+          "type": "boolean",
+          "description": "Flag indicating whether this market is eligible for step margin."
+        },
+        "StepMarginConfigured": {
+          "type": "boolean",
+          "description": "Flag indicating whether this market has step margin configured."
+        },
+        "InheritedFromParentAccountOperator": {
+          "type": "boolean",
+          "description": "Flag indicating whether this market's step margin configuration is inherited from a parent account operator."
+        },
+        "Bands": {
+          "type": "array",
+          "items": [
+            {
+              "$ref": "#.ApiStepMarginBandDTO"
+            }
+          ],
+          "description": "The step margining bands used for this market / account operator."
+        }
+      },
+      "description": "A market's step margin information as expressed by the TradingApi."
+    },
+    "ApiStepMarginBandDTO": {
+      "id": "ApiStepMarginDTO",
+      "type": "object",
+      "properties": {
+        "LowerBound": {
+          "type": "number",
+          "format": "decimal",
+          "description": "Minimum threshold for this band, expressed in terms of the client's trade quantity."
+        },
+        "MarginFactor": {
+          "type": "number",
+          "format": "decimal",
+          "description": "The margin factor that is used for this band. It can be expressed as a percentage or in points based on the market's margin factor type. "
+        }
+      },
+      "description": "Represents a single step margin band as expressed by the TradingApi."
+    },
     "ApiStopLimitOrderDTO": {
       "id": "ApiStopLimitOrderDTO",
       "type": "object",
@@ -1590,6 +1676,20 @@ exports.schema =
         "Applicability": {
           "type": "string",
           "description": "Identifier which relates to the expiry of the order/trade, i.e. GoodTillDate (GTD), GoodTillCancelled (GTC) or GoodForDay (GFD)."
+        },
+        "ParentOrderId": {
+          "type": [
+            "null",
+            "integer"
+          ],
+          "minValue": -2147483648,
+          "maxValue": 2147483647,
+          "description": "This represents the OrderID of any orders that the current order is related to. If there is no parent order as the order in question *is* the parent order, then the value is null."
+        },
+        "LastChangedDateTimeUTC": {
+          "type": "string",
+          "format": "wcf-date",
+          "description": "Represents the date and time when the trade/order was last edited. **Note:** does not include things such as the current market price."
         }
       },
       "description": "Represents a stop/limit order."
@@ -1673,7 +1773,7 @@ exports.schema =
         "LastChangedDateTimeUtc": {
           "type": "string",
           "format": "wcf-date",
-          "description": "The last time that the order changed."
+          "description": "Represents the date and time when the trade/order was last edited. **Note:** does not include things such as the current market price."
         },
         "CreatedDateTimeUtc": {
           "type": "string",
@@ -1771,7 +1871,7 @@ exports.schema =
         "LastChangedDateTimeUtc": {
           "type": "string",
           "format": "wcf-date",
-          "description": "The last time that the order changed. Note - does not include things such as the current market price."
+          "description": "Represents the date and time when the trade/order was last edited. **Note:** does not include things such as the current market price."
         },
         "ExecutedDateTimeUtc": {
           "type": "string",
@@ -1785,7 +1885,22 @@ exports.schema =
       "id": "ApiTradeOrderDTO",
       "type": "object",
       "extends": "#.ApiOrderDTO",
-      "properties": {},
+      "properties": {
+        "ParentOrderId": {
+          "type": [
+            "null",
+            "integer"
+          ],
+          "minValue": -2147483648,
+          "maxValue": 2147483647,
+          "description": "This represents the OrderID of any orders that the current order is related to. If there is no parent order as the order in question *is* the parent order, then the value is null."
+        },
+        "LastChangedDateTimeUTC": {
+          "type": "string",
+          "format": "wcf-date",
+          "description": "Represents the date and time when the trade/order was last edited. **Note:** does not include things such as the current market price."
+        }                            
+      },
       "description": "Represents a trade order."
     },
     "ApiTradeOrderResponseDTO": {
@@ -3038,13 +3153,33 @@ exports.schema =
           "format": "decimal",
           "minValue": -7.9228162514264338E+28,
           "maxValue": 7.9228162514264338E+28,
-          "description": "The change since the last price *(always positive)*. See Direction for direction of the change."
+          "description": "The change from the previous day's close to the current price - can be negative or positive."
         },
         "Direction": {
           "type": "integer",
           "minValue": -2147483648,
           "maxValue": 2147483647,
           "description": "The direction of movement since the last price. 1 == up, 0 == down."
+        },
+        "Delta": {
+          "type": [
+            "null",
+            "number"
+          ],
+          "format": "decimal",
+          "minValue": -7.9228162514264338E+28,
+          "maxValue": 7.9228162514264338E+28,
+          "description": "The Delta of an option. Delta measures the rate of change of option value with respect to changes in the underlying asset's price. This is null for non-option markets."
+        },
+        "Volatility": {
+          "type": [
+            "null",
+            "number"
+          ],
+          "format": "decimal",
+          "minValue": -7.9228162514264338E+28,
+          "maxValue": 7.9228162514264338E+28,
+          "description": "A measure of an options's price variance over time. **Note:** this volatility is a calculated value from a proprietary City Index model. For non-option markets this is null."
         },
         "AuditId": {
           "type": "string",
@@ -3495,6 +3630,4 @@ exports.schema =
       "description": "The response from the simulated trade request."
     }
   }
- 
-
 }

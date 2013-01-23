@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Salient.ReflectiveLoggingAdapter</id>
+    <version>3.2.0</version>
+    <title>Salient.ReflectiveLoggingAdapter</title>
+    <authors>Sky Sanders,  David Laing</authors>
+    <owners>Sky Sanders,  David Laing</owners>
+    <licenseUrl>https://raw.github.com/bitpusher/Salient.ReflectiveLoggingAdapter/master/LICENSE.txt</licenseUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Salient.ReflectiveLoggingAdapter</description>
+    <references>
+      <reference file="Salient.ReflectiveLoggingAdapter.35.dll" />
+      <reference file="Salient.ReflectiveLoggingAdapter.Phone7.dll" />
+      <reference file="Salient.ReflectiveLoggingAdapter.Silverlight.dll" />
+    </references>
+  </metadata>
+</package>

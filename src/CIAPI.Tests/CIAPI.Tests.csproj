@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CIAPI.Tests</RootNamespace>
     <AssemblyName>CIAPI.Tests</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\CIAPI\</SolutionDir>
     <RestorePackages>true</RestorePackages>
@@ -39,7 +39,7 @@
     <OutputPath>bin\x86\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DebugType>full</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisLogFile>bin\Debug\CIAPI.Tests.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
     <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
     <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
@@ -107,22 +107,34 @@
     </Compile>
     <Compile Include="DTOTestFixture.cs" />
     <Compile Include="FixtureBase.cs" />
+    <Compile Include="Infrastructure\CIAPIRecordingFixtureBase.cs" />
+    <Compile Include="Infrastructure\MocumentModeOverrideAttribute.cs" />
     <Compile Include="PrettyPrinterExtensionsFixture.cs" />
     <Compile Include="Rpc\ApiContextTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestingInfrastructure\Fiddler\FiddlerRequestEngine.cs" />
-    <Compile Include="TestingInfrastructure\Fiddler\FiddlerRequestEngineFixture.cs" />
-    <Compile Include="TestingInfrastructure\LSAdapterInfo.cs" />
-    <Compile Include="TestingInfrastructure\TestServerApiContextTests.cs" />
     <Compile Include="Rpc\ExceptionHandling.cs" />
     <Compile Include="Rpc\MarketInfoFixture.cs" />
-    <Compile Include="TestingInfrastructure\ServerBase.cs" />
-    <Compile Include="TestingInfrastructure\TestServer.cs" />
-    <Compile Include="TestingInfrastructure\TestServerMultipleStreamMockingFixture.cs" />
     <Compile Include="Streaming\StreamingClientFactoryTests.cs" />
     <Compile Include="Streaming\StreamingClientTests.cs" />
     <Compile Include="Streaming\StreamingRecorderFixture.cs" />
     <Compile Include="Streaming\TestStreamingListenerFixture.cs" />
+    <Compile Include="Tests\AccountInformationFixture.cs" />
+    <Compile Include="Tests\AppKeyFixture.cs" />
+    <Compile Include="Tests\AuthenticationFixture.cs" />
+    <Compile Include="Tests\BasicAuthenticationFixture.cs" />
+    <Compile Include="Tests\CfdMarketsFixture.cs" />
+    <Compile Include="Tests\DateTimeOffsetFixture.cs" />
+    <Compile Include="Tests\ErrorHandlingFixture.cs" />
+    <Compile Include="Tests\FaqIssueResolutionFixture.cs" />
+    <Compile Include="Tests\MarketFixture.cs" />
+    <Compile Include="Tests\MessagingFixture.cs" />
+    <Compile Include="Tests\MetricsFixture.cs" />
+    <Compile Include="Tests\NewsFixture.cs" />
+    <Compile Include="Tests\PriceHistoryFixture.cs" />
+    <Compile Include="Tests\revisit\SimulatedTradesAndOrdersFixture.cs" />
+    <Compile Include="Tests\revisit\TradesAndOrdersFixture.cs" />
+    <Compile Include="Tests\SpreadMarketsFixture.cs" />
+    <Compile Include="Tests\WatchListFixture.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\common\App.config">
@@ -140,16 +152,29 @@
       <Project>{B40E6F1C-453E-44A2-BA9D-1692378B355C}</Project>
       <Name>CIAPI</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FiddlerSessionParser\FiddlerSessionParser\FiddlerSessionParser.csproj">
-      <Project>{21202699-A5E1-4A9B-BD50-FAC67967F31D}</Project>
-      <Name>FiddlerSessionParser %28FiddlerSessionParser\FiddlerSessionParser%29</Name>
+    <ProjectReference Include="..\mocument\Lib\Salient.HTTPArchiveModel\Salient.HTTPArchiveModel.csproj">
+      <Project>{C4E3839D-7607-4B2D-B261-69170E3B66D8}</Project>
+      <Name>Salient.HTTPArchiveModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\mocument\Mocument.DataAccess\Mocument.DataAccess.csproj">
+      <Project>{8E4A6BEE-AF75-48E4-AB16-B4CC16E53A2E}</Project>
+      <Name>Mocument.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\mocument\Mocument.Model\Mocument.Model.csproj">
+      <Project>{061D1E96-587D-4E2F-9F26-756755FA5135}</Project>
+      <Name>Mocument.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\mocument\Mocument.ReverseProxyServer\Mocument.ReverseProxyServer.csproj">
+      <Project>{DA1A8878-BDA3-4F4E-B32B-62785C9ADC1C}</Project>
+      <Name>Mocument.ReverseProxyServer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\mocument\Mocument.Transcoders\Mocument.Transcoders.csproj">
+      <Project>{343CFACC-2A91-4AD2-B372-697D93467C55}</Project>
+      <Name>Mocument.Transcoders</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Streaming\streamingprices01.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="TestingInfrastructure\Fiddler\5_Full.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

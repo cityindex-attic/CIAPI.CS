@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
+  <metadata>
+    <id>Salient.ReliableHttpClient</id>
+    <version>1.0.6-bleeding-18</version>
+    <title>Salient.ReliableHttpClient</title>
+    <authors>Sky Sanders</authors>
+    <owners>Sky Sanders</owners>
+    <licenseUrl>https://github.com/bitpusher/Salient.ReliableHttpClient/raw/master/LICENSE.txt</licenseUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A multipurpose .NET client for HTTP services</description>
+    <language>en-US</language>
+    <dependencies>
+      <dependency id="Salient.ReflectiveLoggingAdapter" />
+    </dependencies>
+    <references>
+      <reference file="Salient.ReliableHttpClient.dll" />
+      <reference file="Salient.ReliableHttpClient.Serializer.Newtonsoft.dll" />
+      <reference file="Salient.ReliableHttpClient.Phone7.dll" />
+      <reference file="Salient.ReliableHttpClient.Serializer.Newtonsoft.Phone7.dll" />
+      <reference file="Salient.ReliableHttpClient.Serializer.Newtonsoft.Silverlight.dll" />
+      <reference file="Salient.ReliableHttpClient.Silverlight.dll" />
+    </references>
+  </metadata>
+</package>

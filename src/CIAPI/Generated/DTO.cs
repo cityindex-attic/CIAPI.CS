@@ -46,7 +46,7 @@ namespace CIAPI.DTO
         /// </summary>
         public int OrderId { get; set; }
         /// <summary>
-        /// The order's parent OrderId.
+        /// This represents the OrderID of any orders that the current order is related to. If there is no parent order as the order in question *is* the parent order, then the value is null.
         /// </summary>
         public int? ParentOrderId { get; set; }
         /// <summary>
@@ -106,7 +106,7 @@ namespace CIAPI.DTO
         /// </summary>
         public ApiBasicStopLimitOrderDTO OcoOrder { get; set; }
         /// <summary>
-        /// The last time that the order changed. **Note:** does not include things such as the current market price.
+        /// Represents the date and time when the trade/order was last edited. **Note:** does not include things such as the current market price.
         /// </summary>
         public DateTime LastChangedDateTimeUTC { get; set; }
         /// <summary>
@@ -530,6 +530,14 @@ namespace CIAPI.DTO
         /// </summary>
         public string Name { get; set; }
         /// <summary>
+        /// Unique identifier for the exchange where the underlying is traded.
+        /// </summary>
+        public int ExchangeId { get; set; }
+        /// <summary>
+        /// The name of the exchange where the underlying is traded.
+        /// </summary>
+        public string ExchangeName { get; set; }
+        /// <summary>
         /// Margin factor, expressed as points or as a percentage.
         /// </summary>
         public decimal? MarginFactor { get; set; }
@@ -546,6 +554,14 @@ namespace CIAPI.DTO
         /// </summary>
         public decimal? MaxMarginFactor { get; set; }
         /// <summary>
+        /// Description of the market type. This can be 'OptionMarket', 'Ordinary Market', or 'BinaryMarket'.
+        /// </summary>
+        public string MarketType { get; set; }
+        /// <summary>
+        /// Identifier for each of the market types. Option == 1, Ordinary == 2 and Binary == 4. 
+        /// </summary>
+        public int MarketTypeId { get; set; }
+        /// <summary>
         /// The minimum distance from the current price you can place an order.
         /// </summary>
         public decimal? MinDistance { get; set; }
@@ -558,11 +574,11 @@ namespace CIAPI.DTO
         /// </summary>
         public string OptionType { get; set; }
         /// <summary>
-        /// ID number indicating the option type: Put == 1 and Call == 2.
+        /// ID number indicating the option type: Put == 1 and Call == 2. This value is null for non-option markets.
         /// </summary>
         public int? OptionTypeId { get; set; }
         /// <summary>
-        /// The strike price of the option.
+        /// The strike price of the option. This value is null for non-option markets.
         /// </summary>
         public int? StrikePrice { get; set; }
         /// <summary>
@@ -694,19 +710,27 @@ namespace CIAPI.DTO
         /// </summary>
         public decimal? PriceToleranceUnits { get; set; }
         /// <summary>
-        /// Offset minutes to convert UTC times to local times
+        /// Offset minutes to convert UTC times to local times.
         /// </summary>
         public int MarketTimeZoneOffsetMinutes { get; set; }
         /// <summary>
-        /// Bet Per value for CFD and Spread Bet markets
+        /// The number of units for an instrument per actual traded units.
+        /// </summary>
+        public decimal? QuantityConversionFactor { get; set; }
+        /// <summary>
+        /// The number of cents which make up a dollar trade on the exchange.
+        /// </summary>
+        public int PointFactorDivisor { get; set; }
+        /// <summary>
+        /// Bet Per value for CFD and Spread Bet markets.
         /// </summary>
         public decimal? BetPer { get; set; }
         /// <summary>
-        /// Reflects the market underlying type ID of the associated market
+        /// Reflects the market underlying type ID of the associated market.
         /// </summary>
         public int? MarketUnderlyingTypeId { get; set; }
         /// <summary>
-        /// Reflects the market underlying type description of the associated market
+        /// Reflects the market underlying type description of the associated market.
         /// </summary>
         public string MarketUnderlyingType { get; set; }
         /// <summary>
@@ -737,6 +761,10 @@ namespace CIAPI.DTO
         /// Expiry of the market in UTC.
         /// </summary>
         public DateTime? ExpiryUtc { get; set; }
+        /// <summary>
+        /// Step margin data for this market.
+        /// </summary>
+        public ApiStepMarginDTO StepMargin { get; set; }
         /// <summary>
         /// The date and time in UTC for the future rollover of the market.
         /// </summary>
@@ -874,7 +902,7 @@ namespace CIAPI.DTO
         /// </summary>
         public ApiBasicStopLimitOrderDTO LimitOrder { get; set; }
         /// <summary>
-        /// The last time that the order changed. **Note:** does not include things such as the current market price.
+        /// Represents the date and time when the trade/order was last edited. **Note:** does not include things such as the current market price.
         /// </summary>
         public DateTime LastChangedDateTimeUTC { get; set; }
         /// <summary>
@@ -1129,6 +1157,44 @@ namespace CIAPI.DTO
     }
 
     /// <summary>
+    /// A market's step margin information as expressed by the TradingApi.
+    /// </summary>
+    public partial class ApiStepMarginDTO
+    {
+        /// <summary>
+        /// Flag indicating whether this market is eligible for step margin.
+        /// </summary>
+        public bool EligibleForStepMargin { get; set; }
+        /// <summary>
+        /// Flag indicating whether this market has step margin configured.
+        /// </summary>
+        public bool StepMarginConfigured { get; set; }
+        /// <summary>
+        /// Flag indicating whether this market's step margin configuration is inherited from a parent account operator.
+        /// </summary>
+        public bool InheritedFromParentAccountOperator { get; set; }
+        /// <summary>
+        /// The step margining bands used for this market / account operator.
+        /// </summary>
+        public ApiStepMarginBandDTO[] Bands { get; set; }
+    }
+
+    /// <summary>
+    /// Represents a single step margin band as expressed by the TradingApi.
+    /// </summary>
+    public partial class ApiStepMarginBandDTO
+    {
+        /// <summary>
+        /// Minimum threshold for this band, expressed in terms of the client's trade quantity.
+        /// </summary>
+        public decimal LowerBound { get; set; }
+        /// <summary>
+        /// The margin factor that is used for this band. It can be expressed as a percentage or in points based on the market's margin factor type. 
+        /// </summary>
+        public decimal MarginFactor { get; set; }
+    }
+
+    /// <summary>
     /// Represents a stop/limit order.
     /// </summary>
     public partial class ApiStopLimitOrderDTO : ApiOrderDTO
@@ -1149,6 +1215,14 @@ namespace CIAPI.DTO
         /// Identifier which relates to the expiry of the order/trade, i.e. GoodTillDate (GTD), GoodTillCancelled (GTC) or GoodForDay (GFD).
         /// </summary>
         public string Applicability { get; set; }
+        /// <summary>
+        /// This represents the OrderID of any orders that the current order is related to. If there is no parent order as the order in question *is* the parent order, then the value is null.
+        /// </summary>
+        public int? ParentOrderId { get; set; }
+        /// <summary>
+        /// Represents the date and time when the trade/order was last edited. **Note:** does not include things such as the current market price.
+        /// </summary>
+        public DateTime LastChangedDateTimeUTC { get; set; }
     }
 
     /// <summary>
@@ -1205,7 +1279,7 @@ namespace CIAPI.DTO
         /// </summary>
         public int StatusId { get; set; }
         /// <summary>
-        /// The last time that the order changed.
+        /// Represents the date and time when the trade/order was last edited. **Note:** does not include things such as the current market price.
         /// </summary>
         public DateTime LastChangedDateTimeUtc { get; set; }
         /// <summary>
@@ -1275,7 +1349,7 @@ namespace CIAPI.DTO
         /// </summary>
         public string RealisedPnlCurrency { get; set; }
         /// <summary>
-        /// The last time that the order changed. Note - does not include things such as the current market price.
+        /// Represents the date and time when the trade/order was last edited. **Note:** does not include things such as the current market price.
         /// </summary>
         public DateTime LastChangedDateTimeUtc { get; set; }
         /// <summary>
@@ -1289,6 +1363,14 @@ namespace CIAPI.DTO
     /// </summary>
     public partial class ApiTradeOrderDTO : ApiOrderDTO
     {
+        /// <summary>
+        /// This represents the OrderID of any orders that the current order is related to. If there is no parent order as the order in question *is* the parent order, then the value is null.
+        /// </summary>
+        public int? ParentOrderId { get; set; }
+        /// <summary>
+        /// Represents the date and time when the trade/order was last edited. **Note:** does not include things such as the current market price.
+        /// </summary>
+        public DateTime LastChangedDateTimeUTC { get; set; }
     }
 
     /// <summary>
@@ -2202,13 +2284,21 @@ namespace CIAPI.DTO
         /// </summary>
         public decimal Low { get; set; }
         /// <summary>
-        /// The change since the last price *(always positive)*. See Direction for direction of the change.
+        /// The change from the previous day's close to the current price - can be negative or positive.
         /// </summary>
         public decimal Change { get; set; }
         /// <summary>
         /// The direction of movement since the last price. 1 == up, 0 == down.
         /// </summary>
         public int Direction { get; set; }
+        /// <summary>
+        /// The Delta of an option. Delta measures the rate of change of option value with respect to changes in the underlying asset's price. This is null for non-option markets.
+        /// </summary>
+        public decimal? Delta { get; set; }
+        /// <summary>
+        /// A measure of an options's price variance over time. **Note:** this volatility is a calculated value from a proprietary City Index model. For non-option markets this is null.
+        /// </summary>
+        public decimal? Volatility { get; set; }
         /// <summary>
         /// A unique ID for this price. Treat as a unique, but random string.
         /// </summary>

@@ -1068,7 +1068,7 @@ exports.smd =
           ]
         },
         "GetSystemLookup": {
-          "description": "Use the message lookup service to get localised textual names for the various status code & IDs returned by the API. For example, a query for **OrderStatusReason** will contain text names for all the possible values of **OrderStatusReason** in the [ApiOrderResponseDTO](http://labs.cityindex.com/docs/Content/Data%20Types/ApiOrderResponseDTO.htm). You should only request the list once per session *(for each entity you're interested in)*.",
+          "description": "Use the message lookup service to get localised text names for the various status codes & IDs returned by the API. For example, a query for **OrderStatusReason** will contain text names for all the possible values of **OrderStatusReason** in the [ApiOrderResponseDTO](http://labs.cityindex.com/docs/Content/Data%20Types/ApiOrderResponseDTO.htm). You should only request the list once per session *(for each entity you're interested in)*.",
           "target": "message",
           "uriTemplate": "/lookup?LookupEntityName={LookupEntityName}&CultureId={CultureId}",
           "contentType": "application/json",
@@ -1084,7 +1084,7 @@ exports.smd =
             {
               "type": "string",
               "name": "LookupEntityName",
-              "description": "The entity to lookup. For example: **OrderStatusReason**, **InstructionStatusReason**, **OrderApplicability**, **Currency** or **Culture**."
+              "description": "The entity to lookup. For example: **OrderStatusReason**, **InstructionStatusReason**, **OrderApplicability**, **Currency**, **QuoteStatus**, **QuoteStatusReason** or **Culture**."
             },
             {
               "type": "integer",

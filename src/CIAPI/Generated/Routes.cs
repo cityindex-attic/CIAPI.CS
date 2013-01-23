@@ -1906,9 +1906,9 @@ public string AppKey { get; set; }
 
 
         /// <summary>
-        /// Use the message lookup service to get localised textual names for the various status code & IDs returned by the API. For example, a query for **OrderStatusReason** will contain text names for all the possible values of **OrderStatusReason** in the [ApiOrderResponseDTO](http://labs.cityindex.com/docs/Content/Data%20Types/ApiOrderResponseDTO.htm). You should only request the list once per session *(for each entity you're interested in)*.
+        /// Use the message lookup service to get localised text names for the various status codes & IDs returned by the API. For example, a query for **OrderStatusReason** will contain text names for all the possible values of **OrderStatusReason** in the [ApiOrderResponseDTO](http://labs.cityindex.com/docs/Content/Data%20Types/ApiOrderResponseDTO.htm). You should only request the list once per session *(for each entity you're interested in)*.
         /// </summary>
-        /// <param name="LookupEntityName">The entity to lookup. For example: **OrderStatusReason**, **InstructionStatusReason**, **OrderApplicability**, **Currency** or **Culture**.</param>
+        /// <param name="LookupEntityName">The entity to lookup. For example: **OrderStatusReason**, **InstructionStatusReason**, **OrderApplicability**, **Currency**, **QuoteStatus**, **QuoteStatusReason** or **Culture**.</param>
         /// <param name="CultureId">The Culture ID used to override the translated text description. *(Optional)*.</param>
         public virtual ApiLookupResponseDTO GetSystemLookup(string LookupEntityName, int CultureId)
         {
@@ -1923,9 +1923,9 @@ public string AppKey { get; set; }
 
 
         /// <summary>
-        /// Use the message lookup service to get localised textual names for the various status code & IDs returned by the API. For example, a query for **OrderStatusReason** will contain text names for all the possible values of **OrderStatusReason** in the [ApiOrderResponseDTO](http://labs.cityindex.com/docs/Content/Data%20Types/ApiOrderResponseDTO.htm). You should only request the list once per session *(for each entity you're interested in)*.
+        /// Use the message lookup service to get localised text names for the various status codes & IDs returned by the API. For example, a query for **OrderStatusReason** will contain text names for all the possible values of **OrderStatusReason** in the [ApiOrderResponseDTO](http://labs.cityindex.com/docs/Content/Data%20Types/ApiOrderResponseDTO.htm). You should only request the list once per session *(for each entity you're interested in)*.
         /// </summary>
-        /// <param name="LookupEntityName">The entity to lookup. For example: **OrderStatusReason**, **InstructionStatusReason**, **OrderApplicability**, **Currency** or **Culture**.</param>
+        /// <param name="LookupEntityName">The entity to lookup. For example: **OrderStatusReason**, **InstructionStatusReason**, **OrderApplicability**, **Currency**, **QuoteStatus**, **QuoteStatusReason** or **Culture**.</param>
         /// <param name="CultureId">The Culture ID used to override the translated text description. *(Optional)*.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>

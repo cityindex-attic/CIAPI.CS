@@ -1,20 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+using System;
 using System.Linq;
 using System.Threading;
 using CIAPI.DTO;
-using CIAPI.IntegrationTests.Streaming;
+using CIAPI.RecordedTests.Infrastructure;
 using CIAPI.Rpc;
 using NUnit.Framework;
 
-namespace CIAPI.IntegrationTests.Rpc
+namespace CIAPI.RecordedTests
 {
-    /// <summary>
-    /// WARNING!  Market Tags are a new feature, and have not been defined for many account operators.
-    /// Try testing with an IFX Markets user account.
-    /// </summary>
-    [TestFixture]
-    public class MarketFixture : RpcFixtureBase
+    [TestFixture, MocumentModeOverride(MocumentMode.Play),Category("APIBUG")]
+    public class MarketFixture : CIAPIRecordingFixtureBase
     {
         [Test]
         public void CanGetMarketTags()
@@ -24,8 +19,8 @@ namespace CIAPI.IntegrationTests.Rpc
             //Markets are grouped into a collection of tags.  
             //You can get a list of available tags from TagLookup
             var tagResponse = rpcClient.Market.TagLookup();
-            Assert.IsTrue(tagResponse.Tags.Length > 0,"No tags have been defined for your user's account operator");
-            
+            Assert.IsTrue(tagResponse.Tags.Length > 0, "No tags have been defined for your user's account operator");
+
             Console.WriteLine(tagResponse.ToStringWithValues());
             /* Gives something like:
              * MarketInformationTagLookupResponseDTO: 
@@ -57,7 +52,7 @@ namespace CIAPI.IntegrationTests.Rpc
 
             //Once you have a tag, you can search for all markets associated with that tag
             int tagId = tagResponse.Tags.First(t => t.Name.Contains("FX")).MarketTagId;
-            var allMarketsInTag = rpcClient.Market.SearchWithTags("", tagId, true, true, true, true, true,true, 100, false);
+            var allMarketsInTag = rpcClient.Market.SearchWithTags("", tagId, true, true, true, true, true, true, 100, false);
             Console.WriteLine(allMarketsInTag.ToStringWithValues());
             /* Gives something like:
              * MarketInformationSearchWithTagsResponseDTO: 
@@ -80,7 +75,7 @@ namespace CIAPI.IntegrationTests.Rpc
                */
 
             //Or, you can search for all markets in that tag that start with a specific string
-            var allMarketsInTagContainingGBP = rpcClient.Market.SearchWithTags("GBP", tagId, true, true, true, true, true, true,100, false);
+            var allMarketsInTagContainingGBP = rpcClient.Market.SearchWithTags("GBP", tagId, true, true, true, true, true, true, 100, false);
             Console.WriteLine(allMarketsInTagContainingGBP.ToStringWithValues());
             /* Gives something like:
              * MarketInformationSearchWithTagsResponseDTO: 
@@ -101,9 +96,9 @@ namespace CIAPI.IntegrationTests.Rpc
 
             var response = rpcClient.Market.ListMarketInformation(
                 new ListMarketInformationRequestDTO
-                    { 
-                        MarketIds = marketList.ToList().Select(m => m.MarketId).ToArray()
-                    }
+                {
+                    MarketIds = marketList.ToList().Select(m => m.MarketId).ToArray()
+                }
             );
 
             Assert.AreEqual(marketList.Length, response.MarketInformation.Length);
@@ -116,7 +111,7 @@ namespace CIAPI.IntegrationTests.Rpc
         {
             var rpcClient = BuildRpcClient();
 
-            rpcClient.Market.ListMarketInformationSearch(false, true, true, false, false,true, "/", 100, false);
+            rpcClient.Market.ListMarketInformationSearch(false, true, true, false, false, true, "/", 100, false);
             rpcClient.Market.ListMarketInformationSearch(false, true, true, false, false, true, "\\", 100, false);
             rpcClient.Market.ListMarketInformationSearch(false, true, true, false, false, true, @"\", 100, false);
             rpcClient.Market.ListMarketInformationSearch(false, true, true, false, false, true, @"GBP \ USD", 100, false);
@@ -125,10 +120,10 @@ namespace CIAPI.IntegrationTests.Rpc
             var gate = new AutoResetEvent(false);
 
             rpcClient.Market.BeginListMarketInformationSearch(false, true, true, false, false, true, @"\", 100, false, ar =>
-                {
-                    var response = rpcClient.Market.EndListMarketInformationSearch(ar);
-                    gate.Set();
-                }, null);
+            {
+                var response = rpcClient.Market.EndListMarketInformationSearch(ar);
+                gate.Set();
+            }, null);
 
             if (!gate.WaitOne(10000))
             {
@@ -156,7 +151,7 @@ namespace CIAPI.IntegrationTests.Rpc
         {
             var rpcClient = BuildRpcClient();
 
-            for (var i = 0; i < 100; i++ )
+            for (var i = 0; i < 100; i++)
             {
                 var response = rpcClient.Market.GetMarketInformation("154303");
                 Assert.That(response.MarketInformation.Name.Length, Is.GreaterThan(1));
@@ -167,15 +162,15 @@ namespace CIAPI.IntegrationTests.Rpc
         }
 
         //
-        [Test,Ignore("spread markets not available to account?")]
+        [Test]
         public void CanGetMarketInformationWithPathChar()
         {
             var rpcClient = BuildRpcClient();
             var account = rpcClient.AccountInformation.GetClientAndTradingAccount();
 
             var response = rpcClient.SpreadMarkets.ListSpreadMarkets("GBP/CAD", null, account.ClientAccountId, 19, false);
-           
- 
+
+
 
             Assert.That(response.Markets.Length, Is.GreaterThan(1));
 
@@ -186,7 +181,7 @@ namespace CIAPI.IntegrationTests.Rpc
         {
             var rpcClient = BuildRpcClient();
             var marketList = GetAvailableCFDMarkets(rpcClient);
-            
+
             var response = rpcClient.Market.GetMarketInformation(marketList[0].MarketId.ToString());
             string stringWithValues = response.MarketInformation.ToStringWithValues();
             Console.WriteLine(stringWithValues);
@@ -211,7 +206,7 @@ namespace CIAPI.IntegrationTests.Rpc
                     SpreadTimeUtc=NULL    Spread=0.00067000    SpreadUnits=27
                     GuaranteedOrderPremium=8.00    GuaranteedOrderPremiumUnits=1    GuaranteedOrderMinDistance=75.00    GuaranteedOrderMinDistanceUnits=27
             */
-            
+
             Assert.That(response.MarketInformation.Name.Length, Is.GreaterThan(1));
 
             rpcClient.LogOut();
@@ -245,8 +240,11 @@ namespace CIAPI.IntegrationTests.Rpc
 
 
         }
-
+        public static ApiMarketInformationDTO[] GetAvailableCFDMarkets(Client rpcClient)
+        {
+            var marketList = rpcClient.Market.ListMarketInformationSearch(false, true, false, true, false, true, "GBP", 10, false);
+            Assert.That(marketList.MarketInformation.Length, Is.GreaterThanOrEqualTo(1), "There should be at least 1 CFD market availbe");
+            return marketList.MarketInformation;
+        }
     }
-
-
 }
