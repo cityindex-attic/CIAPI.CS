@@ -4,7 +4,7 @@ using Salient.ReliableHttpClient;
 
 namespace CIAPI.RecordedTests
 {
-    [TestFixture, MocumentModeOverride(MocumentMode.Record)]
+    [TestFixture, MocumentModeOverride(MocumentMode.Play)]
     public class NewsFixture : CIAPIRecordingFixtureBase
     {
         [Test(Description = "This test duplicates issue http://faq.labs.cityindex.com/questions/listnewsheadlineswithsource-api-returning-an-error-for-source-mni-and-category-all. When it fails the bug is fixed.")]

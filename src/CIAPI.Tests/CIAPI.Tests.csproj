@@ -118,6 +118,57 @@
     <Compile Include="Streaming\StreamingClientTests.cs" />
     <Compile Include="Streaming\StreamingRecorderFixture.cs" />
     <Compile Include="Streaming\TestStreamingListenerFixture.cs" />
+    <Compile Include="Tests\AccountInformationFixture.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tests\AppKeyFixture.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tests\AuthenticationFixture.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tests\BasicAuthenticationFixture.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tests\CfdMarketsFixture.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tests\DateTimeOffsetFixture.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tests\ErrorHandlingFixture.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tests\FaqIssueResolutionFixture.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tests\MarketFixture.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tests\MessagingFixture.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tests\MetricsFixture.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tests\NewsFixture.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tests\PriceHistoryFixture.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tests\revisit\SimulatedTradesAndOrdersFixture.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tests\revisit\TradesAndOrdersFixture.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tests\SpreadMarketsFixture.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tests\WatchListFixture.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\common\App.config">
