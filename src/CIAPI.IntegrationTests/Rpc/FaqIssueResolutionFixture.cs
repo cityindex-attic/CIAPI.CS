@@ -10,6 +10,18 @@ namespace CIAPI.IntegrationTests.Rpc
     public class FaqIssueResolutionFixture : RpcFixtureBase
     {
 
+        [Test]
+        public void Purge()
+        {
+            using (var rpcClient = BuildRpcClient())
+            {
+                using (var handle = rpcClient.ShutDown())
+                {
+                    handle.WaitOne();
+                }
+                rpcClient.Dispose();
+            }
+        }
          
         /// <summary>
         /// http://faq.labs.cityindex.com/questions/why-getpricebars-sometimes-does-not-return-back-a-getpricebarresponsedto-object-or-throw-an-error

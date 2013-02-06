@@ -546,7 +546,7 @@ namespace CIAPI.DTO
         /// </summary>
         public decimal? MinMarginFactor { get; set; }
         /// <summary>
-        /// Controls if the margin factor is displayed as a percentage or in points. 26 == Percentage, and 27 == Points.
+        /// Controls if the margin factor is displayed as a percentage or in points. *(Percentage=26, and Points=27)*.
         /// </summary>
         public int MarginFactorUnits { get; set; }
         /// <summary>
@@ -558,7 +558,7 @@ namespace CIAPI.DTO
         /// </summary>
         public string MarketType { get; set; }
         /// <summary>
-        /// Identifier for each of the market types. Option == 1, Ordinary == 2 and Binary == 4. 
+        /// Identifier for each of the market types. *(Option=1, Ordinary=2 and Binary=4)*. 
         /// </summary>
         public int MarketTypeId { get; set; }
         /// <summary>
@@ -574,7 +574,7 @@ namespace CIAPI.DTO
         /// </summary>
         public string OptionType { get; set; }
         /// <summary>
-        /// ID number indicating the option type: Put == 1 and Call == 2. This value is null for non-option markets.
+        /// ID number indicating the option type: *Put=1* and *Call=2*. This value is null for non-option markets.
         /// </summary>
         public int? OptionTypeId { get; set; }
         /// <summary>
@@ -634,7 +634,7 @@ namespace CIAPI.DTO
         /// </summary>
         public int ConvertPriceToPipsMultiplier { get; set; }
         /// <summary>
-        /// The ID type of the market setting, i.e. Spread, CFD.
+        /// The ID type of the market setting. *(Spread=1, CFD=2, Binary=3, FX=4, Cash=5, All=6)*.
         /// </summary>
         public int MarketSettingsTypeId { get; set; }
         /// <summary>
@@ -726,7 +726,7 @@ namespace CIAPI.DTO
         /// </summary>
         public decimal? BetPer { get; set; }
         /// <summary>
-        /// Reflects the market underlying type ID of the associated market.
+        /// Reflects the market underlying type ID of the associated market. <ul> <li>Equity=1</li> <li>Index=2</li> <li>Bond=3</li> <li>FX=4</li> <li>Commodity=5</li> <li>Interest Rate=6</li> <li>Metals=7</li> <li>Equity - Common Stock=8</li> <li>Equity - ADS=9</li> <li>Binary=10</li> <li>Sectors=11</li> <li>FX Hedge=12</li> </ul>
         /// </summary>
         public int? MarketUnderlyingTypeId { get; set; }
         /// <summary>
@@ -754,7 +754,7 @@ namespace CIAPI.DTO
         /// </summary>
         public decimal? CommissionRate { get; set; }
         /// <summary>
-        /// The unit type for the commission rate charged on a trade/order. This can be: *(Percentage=26, Points=27)*.
+        /// The unit type for the commission rate charged on a trade/order. This can be: <ul> <li>Minimum commission for equities - 11</li> <li>Equities commission rate in basis points - 12</li> <li>Commission for indices - 17</li> <li>Equities commission rate in Cents Per Share - 23</li> </ul>
         /// </summary>
         public int? CommissionRateUnits { get; set; }
         /// <summary>

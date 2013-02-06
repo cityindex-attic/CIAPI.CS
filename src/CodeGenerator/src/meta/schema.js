@@ -1,5 +1,4 @@
 exports.schema =
-
 {
  "namespace": "CIAPI.DTO",
   "version": "0.111.0.0",
@@ -703,7 +702,7 @@ exports.schema =
           "type": "integer",
           "minValue": -2147483648,
           "maxValue": 2147483647,
-          "description": "Controls if the margin factor is displayed as a percentage or in points. 26 == Percentage, and 27 == Points."
+          "description": "Controls if the margin factor is displayed as a percentage or in points. *(Percentage=26, and Points=27)*."
         },
         "MaxMarginFactor": {
           "type": [
@@ -721,7 +720,7 @@ exports.schema =
         },
         "MarketTypeId": {
           "type": "integer",          
-          "description": "Identifier for each of the market types. Option == 1, Ordinary == 2 and Binary == 4. "
+          "description": "Identifier for each of the market types. *(Option=1, Ordinary=2 and Binary=4)*. "
         },
         "MinDistance": {
           "type": [
@@ -746,7 +745,7 @@ exports.schema =
             "null",
             "integer"
           ],
-          "description": "ID number indicating the option type: Put == 1 and Call == 2. This value is null for non-option markets."
+          "description": "ID number indicating the option type: *Put=1* and *Call=2*. This value is null for non-option markets."
         },
         "StrikePrice": {
           "type": [
@@ -846,7 +845,7 @@ exports.schema =
           "type": "integer",
           "minValue": -2147483648,
           "maxValue": 2147483647,
-          "description": "The ID type of the market setting, i.e. Spread, CFD."
+          "description": "The ID type of the market setting. *(Spread=1, CFD=2, Binary=3, FX=4, Cash=5, All=6)*."
         },
         "MarketSettingsType": {
           "type": "string",
@@ -1026,7 +1025,7 @@ exports.schema =
           ],
           "minValue": -2147483648,
           "maxValue": 2147483647,
-          "description": "Reflects the market underlying type ID of the associated market."
+          "description": "Reflects the market underlying type ID of the associated market. <ul> <li>Equity=1</li> <li>Index=2</li> <li>Bond=3</li> <li>FX=4</li> <li>Commodity=5</li> <li>Interest Rate=6</li> <li>Metals=7</li> <li>Equity - Common Stock=8</li> <li>Equity - ADS=9</li> <li>Binary=10</li> <li>Sectors=11</li> <li>FX Hedge=12</li> </ul>"
         },
         "MarketUnderlyingType": {
           "type": "string",
@@ -1071,7 +1070,7 @@ exports.schema =
           ],
           "minValue": -2147483648,
           "maxValue": 2147483647,
-          "description": "The unit type for the commission rate charged on a trade/order. This can be: *(Percentage=26, Points=27)*."
+          "description": "The unit type for the commission rate charged on a trade/order. This can be: <ul> <li>Minimum commission for equities - 11</li> <li>Equities commission rate in basis points - 12</li> <li>Commission for indices - 17</li> <li>Equities commission rate in Cents Per Share - 23</li> </ul>"
         },
         "ExpiryUtc": {
           "type": [
@@ -1082,10 +1081,10 @@ exports.schema =
           "description": "Expiry of the market in UTC."
         },
         "StepMargin": {
-          "type":  {
-              "$ref": "#.ApiStepMarginDTO"
-            },
-         
+          "type":   {
+          "$ref": "#.ApiStepMarginDTO"
+        },
+           
           "description": "Step margin data for this market."
         },
         "FutureRolloverUTC": {
