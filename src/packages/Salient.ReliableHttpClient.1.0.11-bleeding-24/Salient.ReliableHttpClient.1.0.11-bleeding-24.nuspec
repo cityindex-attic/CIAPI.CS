@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
   <metadata>
     <id>Salient.ReliableHttpClient</id>
-    <version>1.0.6-bleeding-18</version>
+    <version>1.0.11-bleeding-24</version>
     <title>Salient.ReliableHttpClient</title>
     <authors>Sky Sanders</authors>
     <owners>Sky Sanders</owners>
