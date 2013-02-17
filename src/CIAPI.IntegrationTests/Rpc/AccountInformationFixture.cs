@@ -33,7 +33,7 @@ namespace CIAPI.IntegrationTests.Rpc
         {
             const string NEWPASSWORD = "password";
             const string OLDPASSWORD = "newpassword";
-            const string USERNAME = "DM813766";
+            const string USERNAME = "XX658109";
             var rpcClient = new Client(Settings.RpcUri,Settings.StreamingUri, AppKey);
             
             //Login with existing credentials
