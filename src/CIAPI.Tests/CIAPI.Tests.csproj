@@ -135,26 +135,6 @@
       <Project>{B40E6F1C-453E-44A2-BA9D-1692378B355C}</Project>
       <Name>CIAPI</Name>
     </ProjectReference>
-    <ProjectReference Include="..\mocument\Lib\Salient.HTTPArchiveModel\Salient.HTTPArchiveModel.csproj">
-      <Project>{C4E3839D-7607-4B2D-B261-69170E3B66D8}</Project>
-      <Name>Salient.HTTPArchiveModel</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\mocument\Mocument.DataAccess\Mocument.DataAccess.csproj">
-      <Project>{8E4A6BEE-AF75-48E4-AB16-B4CC16E53A2E}</Project>
-      <Name>Mocument.DataAccess</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\mocument\Mocument.Model\Mocument.Model.csproj">
-      <Project>{061D1E96-587D-4E2F-9F26-756755FA5135}</Project>
-      <Name>Mocument.Model</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\mocument\Mocument.ReverseProxyServer\Mocument.ReverseProxyServer.csproj">
-      <Project>{DA1A8878-BDA3-4F4E-B32B-62785C9ADC1C}</Project>
-      <Name>Mocument.ReverseProxyServer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\mocument\Mocument.Transcoders\Mocument.Transcoders.csproj">
-      <Project>{343CFACC-2A91-4AD2-B372-697D93467C55}</Project>
-      <Name>Mocument.Transcoders</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Streaming\streamingprices01.txt">
