@@ -27,7 +27,7 @@
          ExcludeCategory="DependsOnExternalResource"
          ToolPath="$(RootDirectory)\tools\nunit-runner\"
          ProjectConfiguration="$(Configuration)"
-         Assemblies="$(TestAssemblies)" />
+         Assemblies="@(TestAssemblies)" />
   </Target>
 
   <Target Name="CreateReportDirectories">
