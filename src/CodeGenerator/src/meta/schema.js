@@ -1,6 +1,6 @@
-exports.schema =
+exports.schema = 
 {
- "namespace": "CIAPI.DTO",
+    "namespace": "CIAPI.DTO",
   "version": "0.111.0.0",
   "properties": {
     "AccountInformationResponseDTO": {
@@ -1081,10 +1081,9 @@ exports.schema =
           "description": "Expiry of the market in UTC."
         },
         "StepMargin": {
-          "type":   {
-          "$ref": "#.ApiStepMarginDTO"
-        },
-           
+          "type":   { 
+          "$ref": "#.ApiStepMarginDTO"           
+          },         
           "description": "Step margin data for this market."
         },
         "FutureRolloverUTC": {
@@ -1111,7 +1110,7 @@ exports.schema =
         "ExpiryBasisText": {
           "type": "string",
           "description": "The expiry basis text of the market."
-        },
+        }
       },
       "description": "Contains market information."
     },
@@ -2559,7 +2558,7 @@ exports.schema =
         "CultureId": {
           "type": "integer",
           "description": "The Culture ID used to filter results. Leave blank to use the culture of the requesting user."
-        },
+        }
       },
       "description": "A request for news stories. The stories can be filtered by one of the four available filters: *(Category, MarketId, MarketName, RicCode)*. Only use **1** of the filters at a time. If zero or more than one filter is used simultaneously, then an exception is thrown and a 400 status error code is returned."
     },
@@ -3537,7 +3536,7 @@ exports.schema =
         "MaxResults": {
           "type": "integer",
           "description": "The maximum number of results to return."
-        },
+        }
       },
       "description": "Contains the request for a [ListActiveOrders](http://labs.cityindex.com/docs/Content/HTTP%20Services/ListActiveOrders.htm) query."
     },
@@ -3553,7 +3552,7 @@ exports.schema =
             }
           ],
           "description": "The requested list of open positions and active orders."
-        },        
+        }      
       },
       "description": "Contains the response for a [ListActiveOrders](http://labs.cityindex.com/docs/Content/HTTP%20Services/ListActiveOrders.htm) query."
     },
@@ -3576,7 +3575,7 @@ exports.schema =
         "TypeId": {
           "type": "integer",
           "description": "Indicates the type of the order. "
-        },
+        }
       },
       "description": "Represents a trade order or a stop/limit order."
     },
@@ -3624,7 +3623,7 @@ exports.schema =
             }
           ],
           "description": "List of simulated orders with their associated response."
-        },      
+        }      
       },
       "description": "The response from the simulated trade request."
     }

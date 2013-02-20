@@ -16,6 +16,29 @@ namespace CIAPI.IntegrationTests.Rpc
     public class AuthenticationFixture : RpcFixtureBase
     {
         [Test]
+        public void CanSimultaneousSessionsExist()
+        {
+            var rpcClient1 = new Client(Settings.RpcUri, Settings.StreamingUri, AppKey);
+            rpcClient1.LogIn(Settings.RpcUserName, Settings.RpcPassword);
+
+            Assert.That(rpcClient1.Session, Is.Not.Empty);
+
+            var rpcClient2 = new Client(Settings.RpcUri, Settings.StreamingUri, AppKey);
+            rpcClient2.LogIn(Settings.RpcUserName, Settings.RpcPassword);
+
+            Assert.That(rpcClient2.Session, Is.Not.Empty);
+
+
+            var result1 = rpcClient1.AccountInformation.GetClientAndTradingAccount();
+            var result2 = rpcClient2.AccountInformation.GetClientAndTradingAccount();
+
+            rpcClient1.LogOut();
+            rpcClient1.Dispose();
+
+            rpcClient2.LogOut();
+            rpcClient2.Dispose();
+        }
+        [Test]
         public void LoginShouldCreateSession()
         {
             var rpcClient = new Client(Settings.RpcUri, Settings.StreamingUri, AppKey);

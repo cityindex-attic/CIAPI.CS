@@ -55,7 +55,7 @@ exports.smd =
             },
             {
               "type": "string",
-              "name": "session",
+              "name": "Session",
               "description": "The session token. May be set as a service parameter or as a request header.",
               "demoValue": "5998CBE8-3594-4232-A57E-09EC3A4E7AA8",
               "format": "guid",
@@ -213,8 +213,8 @@ exports.smd =
             {
               "$ref": "#.ListNewsHeadlinesRequestDTO",
               "name": "request",
-              "description": "Object specifying the various request parameters.",
-            },
+              "description": "Object specifying the various request parameters."
+            }
           ]
         },
         "GetNewsDetail": {
@@ -809,7 +809,7 @@ exports.smd =
           ]
         },
         "ListOpenPositions": {
-          "description": "Queries for a specified trading account's trades / open positions. \n\nThis URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetOpenPosition](http://labs.cityindex.com/docs/Content/HTTP%20Services/GetOpenPosition.htm) when you get updates on the order stream to get the updated data in this format.",
+          "description": "Queries for a specified trading account's trades / open positions. \n\nThis URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetOpenPosition](http://labs.cityindex.com/docs/Content/HTTP%20Services/GetOpenPosition.htm) when you get updates on the order stream to get the updated data in this format. \n\n**Notes on Parameters** \n\n>**ClientAccountId** - this can be passed in order to retrieve all information on all trading accounts for which it is the parent. \n>**TradingAccountId** - this can be passed to retrieve information specific to a certain trading account *(the child of ClientAccount)*. \n\n If *neither* ClientAccountId nor TradingAccountId is passed, then the information returned by default from the API is ClientAccount.",
           "target": "order",
           "uriTemplate": "/openpositions?TradingAccountId={TradingAccountId}",
           "contentType": "application/json",
@@ -830,7 +830,7 @@ exports.smd =
           ]
         },
         "ListActiveStopLimitOrders": {
-          "description": "Queries for a specified trading account's active stop / limit orders. \n\nThis URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetActiveStopLimitOrder](http://labs.cityindex.com/docs/Content/HTTP%20Services/GetActiveStopLimitOrder.htm) when you get updates on the order stream to get the updated data in this format.",
+          "description": "Queries for a specified trading account's active stop / limit orders. \n\nThis URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetActiveStopLimitOrder](http://labs.cityindex.com/docs/Content/HTTP%20Services/GetActiveStopLimitOrder.htm) when you get updates on the order stream to get the updated data in this format. \n\n**Notes on Parameters** \n\n>**ClientAccountId** - this can be passed in order to retrieve all information on all trading accounts for which it is the parent. \n>**TradingAccountId** - this can be passed to retrieve information specific to a certain trading account *(the child of ClientAccount)*. \n\n If *neither* ClientAccountId nor TradingAccountId is passed, then the information returned by default from the API is ClientAccount.",
           "target": "order",
           "uriTemplate": "/activestoplimitorders?TradingAccountId={TradingAccountId}",
           "contentType": "application/json",
@@ -851,7 +851,7 @@ exports.smd =
           ]
         },
         "ListActiveOrders": {
-          "description": "Queries the specified trading account for all open positions and active orders. \n\nThis URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetOpenPosition](http://labs.cityindex.com/docs/Content/HTTP%20Services/GetOpenPosition.htm) when you get updates on the order stream to get the updated data in this format.",
+          "description": "Queries the specified trading account for all open positions and active orders. \n\nThis URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetOpenPosition](http://labs.cityindex.com/docs/Content/HTTP%20Services/GetOpenPosition.htm) when you get updates on the order stream to get the updated data in this format. \n\n**Notes on Parameters** \n\n>**ClientAccountId** - this can be passed in order to retrieve all information on all trading accounts for which it is the parent. \n>**TradingAccountId** - this can be passed to retrieve information specific to a certain trading account *(the child of ClientAccount)*. \n\n If *neither* ClientAccountId nor TradingAccountId is passed, then the information returned by default from the API is ClientAccount.",
           "target": "order",
           "uriTemplate": "/activeorders",
           "contentType": "application/json",
@@ -914,7 +914,7 @@ exports.smd =
           ]
         },
         "ListTradeHistory": {
-          "description": "Queries for a specified trading account's trade history. The result set will contain orders with a status of __(3 - Open, 9 - Closed)__, and includes __orders that were a trade / stop / limit order__. There's currently no corresponding GetTradeHistory *(as with [ListOpenPositions](http://labs.cityindex.com/docs/Content/HTTP%20Services/ListOpenPositions.htm))*.",
+          "description": "Queries for a specified trading account's trade history. The result set will contain orders with a status of __(3 - Open, 9 - Closed)__, and includes __orders that were a trade / stop / limit order__. There's currently no corresponding GetTradeHistory *(as with [ListOpenPositions](http://labs.cityindex.com/docs/Content/HTTP%20Services/ListOpenPositions.htm))*. \n\n**Notes on Parameters** \n\n>**ClientAccountId** - this can be passed in order to retrieve all information on all trading accounts for which it is the parent. \n>**TradingAccountId** - this can be passed to retrieve information specific to a certain trading account *(the child of ClientAccount)*. \n\n If *neither* ClientAccountId nor TradingAccountId is passed, then the information returned by default from the API is ClientAccount.",
           "target": "order",
           "uriTemplate": "/order/tradehistory?TradingAccountId={TradingAccountId}&MaxResults={maxResults}",
           "contentType": "application/json",
@@ -940,7 +940,7 @@ exports.smd =
           ]
         },
         "ListStopLimitOrderHistory": {
-          "description": "Queries for a specified trading account's stop / limit order history. The result set includes __only orders that were originally stop / limit orders__ that currently have one of the following statuses __(3 - Open, 4 - Cancelled, 5 - Rejected, 9 - Closed, 10 - Red Card)__.  There is currently no corresponding GetStopLimitOrderHistory *(as with [ListActiveStopLimitOrders](http://labs.cityindex.com/docs/Content/HTTP%20Services/ListActiveStopLimitOrders.htm))*.",
+          "description": "Queries for a specified trading account's stop / limit order history. The result set includes __only orders that were originally stop / limit orders__ that currently have one of the following statuses __(3 - Open, 4 - Cancelled, 5 - Rejected, 9 - Closed, 10 - Red Card)__.  There is currently no corresponding GetStopLimitOrderHistory *(as with [ListActiveStopLimitOrders](http://labs.cityindex.com/docs/Content/HTTP%20Services/ListActiveStopLimitOrders.htm))*. \n\n**Notes on Parameters** \n\n>**ClientAccountId** - this can be passed in order to retrieve all information on all trading accounts for which it is the parent. \n>**TradingAccountId** - this can be passed to retrieve information specific to a certain trading account *(the child of ClientAccount)*. \n\n If *neither* ClientAccountId nor TradingAccountId is passed, then the information returned by default from the API is ClientAccount.",
           "target": "order",
           "uriTemplate": "/stoplimitorderhistory?TradingAccountId={TradingAccountId}&MaxResults={maxResults}",
           "contentType": "application/json",

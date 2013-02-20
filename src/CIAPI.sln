@@ -21,6 +21,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{6F653CAA
 		CIAPI.nuspec = CIAPI.nuspec
 		..\tools\msbuild\CommonProperties.targets.xml = ..\tools\msbuild\CommonProperties.targets.xml
 		..\tools\msbuild\DropsAndPackaging.targets.xml = ..\tools\msbuild\DropsAndPackaging.targets.xml
+		..\tools\msbuild\TestsAndMetrics.targets.xml = ..\tools\msbuild\TestsAndMetrics.targets.xml
 		..\tools\msbuild\Versioning.targets.xml = ..\tools\msbuild\Versioning.targets.xml
 	EndProjectSection
 EndProject

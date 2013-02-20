@@ -127,7 +127,7 @@ public string AppKey { get; set; }
 
 
         /// <summary>
-        /// Queries the specified trading account for all open positions and active orders. This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetOpenPosition](http://labs.cityindex.com/docs/Content/HTTP%20Services/GetOpenPosition.htm) when you get updates on the order stream to get the updated data in this format.
+        /// Queries the specified trading account for all open positions and active orders. This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetOpenPosition](http://labs.cityindex.com/docs/Content/HTTP%20Services/GetOpenPosition.htm) when you get updates on the order stream to get the updated data in this format. **Notes on Parameters** >**ClientAccountId** - this can be passed in order to retrieve all information on all trading accounts for which it is the parent. >**TradingAccountId** - this can be passed to retrieve information specific to a certain trading account *(the child of ClientAccount)*.  If *neither* ClientAccountId nor TradingAccountId is passed, then the information returned by default from the API is ClientAccount.
         /// </summary>
         /// <param name="requestDTO">Contains the request for a ListActiveOrders query.</param>
         public virtual ListActiveOrdersResponseDTO ListActiveOrders(ListActiveOrdersRequestDTO requestDTO)
@@ -142,7 +142,7 @@ public string AppKey { get; set; }
 
 
         /// <summary>
-        /// Queries the specified trading account for all open positions and active orders. This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetOpenPosition](http://labs.cityindex.com/docs/Content/HTTP%20Services/GetOpenPosition.htm) when you get updates on the order stream to get the updated data in this format.
+        /// Queries the specified trading account for all open positions and active orders. This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetOpenPosition](http://labs.cityindex.com/docs/Content/HTTP%20Services/GetOpenPosition.htm) when you get updates on the order stream to get the updated data in this format. **Notes on Parameters** >**ClientAccountId** - this can be passed in order to retrieve all information on all trading accounts for which it is the parent. >**TradingAccountId** - this can be passed to retrieve information specific to a certain trading account *(the child of ClientAccount)*.  If *neither* ClientAccountId nor TradingAccountId is passed, then the information returned by default from the API is ClientAccount.
         /// </summary>
         /// <param name="requestDTO">Contains the request for a ListActiveOrders query.</param>
         /// <param name="callback"></param>
@@ -219,15 +219,15 @@ public string AppKey { get; set; }
         /// Delete a session. This is how you "log off" from the CIAPI.
         /// </summary>
         /// <param name="UserName">Username is case sensitive. May be set as a service parameter or as a request header.</param>
-        /// <param name="session">The session token. May be set as a service parameter or as a request header.</param>
-        internal virtual ApiLogOffResponseDTO DeleteSession(string UserName, string session)
+        /// <param name="Session">The session token. May be set as a service parameter or as a request header.</param>
+        internal virtual ApiLogOffResponseDTO DeleteSession(string UserName, string Session)
         {
             string uriTemplate = "/deleteSession?UserName={UserName}&session={session}";
             return _client.Request<ApiLogOffResponseDTO>(RequestMethod.POST,"session", uriTemplate ,
             new Dictionary<string, object>
             {
                 { "UserName", UserName}, 
-                { "session", session}
+                { "Session", Session}
             },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,0 );
         }
 
@@ -236,17 +236,17 @@ public string AppKey { get; set; }
         /// Delete a session. This is how you "log off" from the CIAPI.
         /// </summary>
         /// <param name="UserName">Username is case sensitive. May be set as a service parameter or as a request header.</param>
-        /// <param name="session">The session token. May be set as a service parameter or as a request header.</param>
+        /// <param name="Session">The session token. May be set as a service parameter or as a request header.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        internal virtual void BeginDeleteSession(string UserName, string session, ReliableAsyncCallback callback, object state)
+        internal virtual void BeginDeleteSession(string UserName, string Session, ReliableAsyncCallback callback, object state)
         {
             string uriTemplate = "/deleteSession?UserName={UserName}&session={session}";
             _client.BeginRequest(RequestMethod.POST, "session", uriTemplate , 
             new Dictionary<string, object>
             {
                 { "UserName", UserName}, 
-                { "session", session}
+                { "Session", Session}
             },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,2 ,callback, state);
         }
 
@@ -1384,7 +1384,7 @@ public string AppKey { get; set; }
 
 
         /// <summary>
-        /// Queries for a specified trading account's trades / open positions. This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetOpenPosition](http://labs.cityindex.com/docs/Content/HTTP%20Services/GetOpenPosition.htm) when you get updates on the order stream to get the updated data in this format.
+        /// Queries for a specified trading account's trades / open positions. This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetOpenPosition](http://labs.cityindex.com/docs/Content/HTTP%20Services/GetOpenPosition.htm) when you get updates on the order stream to get the updated data in this format. **Notes on Parameters** >**ClientAccountId** - this can be passed in order to retrieve all information on all trading accounts for which it is the parent. >**TradingAccountId** - this can be passed to retrieve information specific to a certain trading account *(the child of ClientAccount)*.  If *neither* ClientAccountId nor TradingAccountId is passed, then the information returned by default from the API is ClientAccount.
         /// </summary>
         /// <param name="TradingAccountId">The ID of the trading account to get orders for.</param>
         public virtual ListOpenPositionsResponseDTO ListOpenPositions(int TradingAccountId)
@@ -1399,7 +1399,7 @@ public string AppKey { get; set; }
 
 
         /// <summary>
-        /// Queries for a specified trading account's trades / open positions. This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetOpenPosition](http://labs.cityindex.com/docs/Content/HTTP%20Services/GetOpenPosition.htm) when you get updates on the order stream to get the updated data in this format.
+        /// Queries for a specified trading account's trades / open positions. This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetOpenPosition](http://labs.cityindex.com/docs/Content/HTTP%20Services/GetOpenPosition.htm) when you get updates on the order stream to get the updated data in this format. **Notes on Parameters** >**ClientAccountId** - this can be passed in order to retrieve all information on all trading accounts for which it is the parent. >**TradingAccountId** - this can be passed to retrieve information specific to a certain trading account *(the child of ClientAccount)*.  If *neither* ClientAccountId nor TradingAccountId is passed, then the information returned by default from the API is ClientAccount.
         /// </summary>
         /// <param name="TradingAccountId">The ID of the trading account to get orders for.</param>
         /// <param name="callback"></param>
@@ -1426,7 +1426,7 @@ public string AppKey { get; set; }
 
 
         /// <summary>
-        /// Queries for a specified trading account's active stop / limit orders. This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetActiveStopLimitOrder](http://labs.cityindex.com/docs/Content/HTTP%20Services/GetActiveStopLimitOrder.htm) when you get updates on the order stream to get the updated data in this format.
+        /// Queries for a specified trading account's active stop / limit orders. This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetActiveStopLimitOrder](http://labs.cityindex.com/docs/Content/HTTP%20Services/GetActiveStopLimitOrder.htm) when you get updates on the order stream to get the updated data in this format. **Notes on Parameters** >**ClientAccountId** - this can be passed in order to retrieve all information on all trading accounts for which it is the parent. >**TradingAccountId** - this can be passed to retrieve information specific to a certain trading account *(the child of ClientAccount)*.  If *neither* ClientAccountId nor TradingAccountId is passed, then the information returned by default from the API is ClientAccount.
         /// </summary>
         /// <param name="TradingAccountId">The ID of the trading account to get orders for.</param>
         public virtual ListActiveStopLimitOrderResponseDTO ListActiveStopLimitOrders(int TradingAccountId)
@@ -1441,7 +1441,7 @@ public string AppKey { get; set; }
 
 
         /// <summary>
-        /// Queries for a specified trading account's active stop / limit orders. This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetActiveStopLimitOrder](http://labs.cityindex.com/docs/Content/HTTP%20Services/GetActiveStopLimitOrder.htm) when you get updates on the order stream to get the updated data in this format.
+        /// Queries for a specified trading account's active stop / limit orders. This URI is intended to support a grid in a UI. One usage pattern is to subscribe to streaming orders, call this for the initial data to display in the grid, and call the HTTP service [GetActiveStopLimitOrder](http://labs.cityindex.com/docs/Content/HTTP%20Services/GetActiveStopLimitOrder.htm) when you get updates on the order stream to get the updated data in this format. **Notes on Parameters** >**ClientAccountId** - this can be passed in order to retrieve all information on all trading accounts for which it is the parent. >**TradingAccountId** - this can be passed to retrieve information specific to a certain trading account *(the child of ClientAccount)*.  If *neither* ClientAccountId nor TradingAccountId is passed, then the information returned by default from the API is ClientAccount.
         /// </summary>
         /// <param name="TradingAccountId">The ID of the trading account to get orders for.</param>
         /// <param name="callback"></param>
@@ -1552,7 +1552,7 @@ public string AppKey { get; set; }
 
 
         /// <summary>
-        /// Queries for a specified trading account's trade history. The result set will contain orders with a status of __(3 - Open, 9 - Closed)__, and includes __orders that were a trade / stop / limit order__. There's currently no corresponding GetTradeHistory *(as with [ListOpenPositions](http://labs.cityindex.com/docs/Content/HTTP%20Services/ListOpenPositions.htm))*.
+        /// Queries for a specified trading account's trade history. The result set will contain orders with a status of __(3 - Open, 9 - Closed)__, and includes __orders that were a trade / stop / limit order__. There's currently no corresponding GetTradeHistory *(as with [ListOpenPositions](http://labs.cityindex.com/docs/Content/HTTP%20Services/ListOpenPositions.htm))*. **Notes on Parameters** >**ClientAccountId** - this can be passed in order to retrieve all information on all trading accounts for which it is the parent. >**TradingAccountId** - this can be passed to retrieve information specific to a certain trading account *(the child of ClientAccount)*.  If *neither* ClientAccountId nor TradingAccountId is passed, then the information returned by default from the API is ClientAccount.
         /// </summary>
         /// <param name="TradingAccountId">The ID of the trading account to get orders for.</param>
         /// <param name="maxResults">The maximum number of results to return.</param>
@@ -1569,7 +1569,7 @@ public string AppKey { get; set; }
 
 
         /// <summary>
-        /// Queries for a specified trading account's trade history. The result set will contain orders with a status of __(3 - Open, 9 - Closed)__, and includes __orders that were a trade / stop / limit order__. There's currently no corresponding GetTradeHistory *(as with [ListOpenPositions](http://labs.cityindex.com/docs/Content/HTTP%20Services/ListOpenPositions.htm))*.
+        /// Queries for a specified trading account's trade history. The result set will contain orders with a status of __(3 - Open, 9 - Closed)__, and includes __orders that were a trade / stop / limit order__. There's currently no corresponding GetTradeHistory *(as with [ListOpenPositions](http://labs.cityindex.com/docs/Content/HTTP%20Services/ListOpenPositions.htm))*. **Notes on Parameters** >**ClientAccountId** - this can be passed in order to retrieve all information on all trading accounts for which it is the parent. >**TradingAccountId** - this can be passed to retrieve information specific to a certain trading account *(the child of ClientAccount)*.  If *neither* ClientAccountId nor TradingAccountId is passed, then the information returned by default from the API is ClientAccount.
         /// </summary>
         /// <param name="TradingAccountId">The ID of the trading account to get orders for.</param>
         /// <param name="maxResults">The maximum number of results to return.</param>
@@ -1598,7 +1598,7 @@ public string AppKey { get; set; }
 
 
         /// <summary>
-        /// Queries for a specified trading account's stop / limit order history. The result set includes __only orders that were originally stop / limit orders__ that currently have one of the following statuses __(3 - Open, 4 - Cancelled, 5 - Rejected, 9 - Closed, 10 - Red Card)__.  There is currently no corresponding GetStopLimitOrderHistory *(as with [ListActiveStopLimitOrders](http://labs.cityindex.com/docs/Content/HTTP%20Services/ListActiveStopLimitOrders.htm))*.
+        /// Queries for a specified trading account's stop / limit order history. The result set includes __only orders that were originally stop / limit orders__ that currently have one of the following statuses __(3 - Open, 4 - Cancelled, 5 - Rejected, 9 - Closed, 10 - Red Card)__.  There is currently no corresponding GetStopLimitOrderHistory *(as with [ListActiveStopLimitOrders](http://labs.cityindex.com/docs/Content/HTTP%20Services/ListActiveStopLimitOrders.htm))*. **Notes on Parameters** >**ClientAccountId** - this can be passed in order to retrieve all information on all trading accounts for which it is the parent. >**TradingAccountId** - this can be passed to retrieve information specific to a certain trading account *(the child of ClientAccount)*.  If *neither* ClientAccountId nor TradingAccountId is passed, then the information returned by default from the API is ClientAccount.
         /// </summary>
         /// <param name="TradingAccountId">The ID of the trading account to get orders for.</param>
         /// <param name="maxResults">The maximum number of results to return.</param>
@@ -1615,7 +1615,7 @@ public string AppKey { get; set; }
 
 
         /// <summary>
-        /// Queries for a specified trading account's stop / limit order history. The result set includes __only orders that were originally stop / limit orders__ that currently have one of the following statuses __(3 - Open, 4 - Cancelled, 5 - Rejected, 9 - Closed, 10 - Red Card)__.  There is currently no corresponding GetStopLimitOrderHistory *(as with [ListActiveStopLimitOrders](http://labs.cityindex.com/docs/Content/HTTP%20Services/ListActiveStopLimitOrders.htm))*.
+        /// Queries for a specified trading account's stop / limit order history. The result set includes __only orders that were originally stop / limit orders__ that currently have one of the following statuses __(3 - Open, 4 - Cancelled, 5 - Rejected, 9 - Closed, 10 - Red Card)__.  There is currently no corresponding GetStopLimitOrderHistory *(as with [ListActiveStopLimitOrders](http://labs.cityindex.com/docs/Content/HTTP%20Services/ListActiveStopLimitOrders.htm))*. **Notes on Parameters** >**ClientAccountId** - this can be passed in order to retrieve all information on all trading accounts for which it is the parent. >**TradingAccountId** - this can be passed to retrieve information specific to a certain trading account *(the child of ClientAccount)*.  If *neither* ClientAccountId nor TradingAccountId is passed, then the information returned by default from the API is ClientAccount.
         /// </summary>
         /// <param name="TradingAccountId">The ID of the trading account to get orders for.</param>
         /// <param name="maxResults">The maximum number of results to return.</param>

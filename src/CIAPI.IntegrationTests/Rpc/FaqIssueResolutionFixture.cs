@@ -9,6 +9,40 @@ namespace CIAPI.IntegrationTests.Rpc
     [TestFixture]
     public class FaqIssueResolutionFixture : RpcFixtureBase
     {
+        [Test,Ignore]
+        public void CanEmptyQueueAndShutdown()
+        {
+            using (var rpcClient = BuildRpcClient())
+            {
+                for (var i = 0; i < 1000; i++)
+                {
+                    Console.WriteLine(i + " queued");
+
+                    rpcClient.BeginLogIn("dm" + i, "password", r =>
+                                                               {
+                                                                   try
+                                                                   {
+                                                                       rpcClient.EndRequest(r);
+                                                                       Console.WriteLine(r.AsyncState + " succeeded?!");
+                                                                   }
+                                                                   catch (Exception)
+                                                                   {
+
+                                                                       Console.WriteLine(r.AsyncState + " failed");
+
+                                                                   }
+
+                                                               }, i);
+                }
+                Console.WriteLine("killing queue and shutting down");
+                using (var handle = rpcClient.ShutDown(true))
+                {
+                    handle.WaitOne();
+                }
+                Console.WriteLine("shut down");
+                rpcClient.Dispose();
+            }
+        }
 
         [Test]
         public void Purge()
@@ -22,7 +56,7 @@ namespace CIAPI.IntegrationTests.Rpc
                 rpcClient.Dispose();
             }
         }
-         
+
         /// <summary>
         /// http://faq.labs.cityindex.com/questions/why-getpricebars-sometimes-does-not-return-back-a-getpricebarresponsedto-object-or-throw-an-error
         /// </summary>
@@ -45,7 +79,7 @@ namespace CIAPI.IntegrationTests.Rpc
         /// <summary>
         /// http://github.com/cityindex/CIAPI.CS/issues/42
         /// </summary>
-     [Test, Ignore("test is broken - need proper setup")]
+        [Test, Ignore("test is broken - need proper setup")]
         public void Issue42()
         {
 
@@ -80,7 +114,7 @@ namespace CIAPI.IntegrationTests.Rpc
         /// <summary>
         /// http://github.com/cityindex/CIAPI.CS/issues/35
         /// </summary>
-        [Test,Ignore("test is broken - need proper setup")]
+        [Test, Ignore("test is broken - need proper setup")]
         public void Issue35()
         {
 
