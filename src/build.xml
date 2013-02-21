@@ -27,17 +27,17 @@
 
 	<PropertyGroup>
 		<!-- list of test assemblies (space separated) -->
-		<TestAssemblies>$(SrcDirectory)\CIAPI.Tests\bin\$(Configuration)\CIAPI.Tests.dll</TestAssemblies>
+		<TestAssemblies>$(SrcDirectory)\CIAPI.Tests\bin\$(Configuration)\CIAPI.Tests.dll $(SrcDirectory)\mocument\CIAPI\CIAPI.RecordedTests\bin\$(Configuration)\CIAPI.RecordedTests.dll</TestAssemblies>
 		<!-- list of assembly filters (space separated) - see https://github.com/sawilde/opencover/wiki/Usage -filter: for syntax-->
 		<OpenCoverFilter>+[*]* -[CIAPI.Tests*]* -[*]CIAPI.DTO* -[DotNetClient_N2]* </OpenCoverFilter>
 	</PropertyGroup>
  
-  <Target Name="Go" DependsOnTargets="UpdateVersion;Build;RunTests;Package">
+  <Target Name="Go" DependsOnTargets="UpdateVersion;Build;RunTests;CalculateMetrics;Package">
   </Target>
   
-  <!-- Used to build the Dev branch - everything except packaging RunTests CalculateMetrics reports/*NUnitResults.xml -->
+  <!-- Used to build the Dev branch - everything except packaging reports/*NUnitResults.xml -->
   
-  <Target Name="GoDev" DependsOnTargets="UpdateVersion;Build;RunTests">
+  <Target Name="GoDev" DependsOnTargets="UpdateVersion;Build;RunTests;CalculateMetrics">
   </Target>
 
   <Target Name="Build">
