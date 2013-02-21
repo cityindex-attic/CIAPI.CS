@@ -9,7 +9,7 @@ namespace CIAPI.RecordedTests
     [TestFixture, MocumentModeOverride(MocumentMode.Play)]
     public class ErrorHandlingFixture : CIAPIRecordingFixtureBase
     {
-        [Test]
+        [Test,Ignore("response is environment dependant")]
         public void ShouldGiveGuidanceWhenSpecifyingInvalidServerName()
         {
             try
