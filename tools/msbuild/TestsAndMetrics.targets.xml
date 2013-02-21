@@ -40,7 +40,7 @@
 
 	<Target Name="RunTestsAndCalculateCoverage">
 		<Message Text="Executing Unit Tests and running OpenCover to check code coverage..." />
-		<Exec Command='"$(OpenCover-ToolPath)\OpenCover.Console.exe" -register:user -target:"$(NUnit-ToolPath)\nunit-console-x86.exe" "-targetargs: /nologo /noshadow /config=$(Configuration) /exclude=DependsOnExternalResource /xml=$(ReportsDirectory)\NUnitResults.xml /err=$(ReportsDirectory)\NUnitResults-errors.xml" "$(TestAssemblies)" "-filter:$(OpenCoverFilter)" "-output:$(ReportsDirectory)\CodeCoverageResults.xml"' />
+		<Exec Command='"$(OpenCover-ToolPath)\OpenCover.Console.exe" -register:user -target:"$(NUnit-ToolPath)\nunit-console-x86.exe" "-targetargs: /nologo /noshadow /config=$(Configuration) /exclude=DependsOnExternalResource /xml=$(ReportsDirectory)\NUnitResults.xml /err=$(ReportsDirectory)\NUnitResults-errors.xml" $(TestAssemblies) "-filter:$(OpenCoverFilter)" "-output:$(ReportsDirectory)\CodeCoverageResults.xml"' />
 		<Exec Command='$(ReportGenerator-ToolPath)ReportGenerator.exe "-reports:$(ReportsDirectory)\CodeCoverageResults.xml" "-targetdir:$(ReportsDirectory)\coveragereport" "-reporttypes:html;htmlsummary;xmlsummary"' />
 	</Target>
 

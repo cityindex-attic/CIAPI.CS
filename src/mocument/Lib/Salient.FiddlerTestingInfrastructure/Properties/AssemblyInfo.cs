@@ -32,8 +32,8 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("9.5.3.0")]
+[assembly: AssemblyFileVersion("9.5.3.0")]
 
 
 [assembly: InternalsVisibleTo("Mocument.DataAccess.Tests, PublicKey=00240000048000009400000006020000002400005253413100040000010001000F27E44C8410F28818DB766AEF9EEECC0D180F1401B8D62C90D6CF424C996642102A72C2942DFEF53B1353B70563F504C23A8B792A9D16A070DA595DAA0D4786F55DBF829BDC608C5C8DB66CDD149225D0EFB1BB4B9ADAC4A9DF7AADCDE17E6185614A249973F09FAA46B7CCEDB7E8BD87EB5A49CC355A3AC484BE08B379BED5")]
