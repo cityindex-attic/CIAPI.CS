@@ -97,6 +97,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="dev.snk" />
+    <None Include="FiddlerRoot.cer">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

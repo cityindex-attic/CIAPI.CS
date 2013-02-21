@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
+using System.Reflection;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using Fiddler;
 using Mocument.DataAccess;
@@ -64,6 +67,13 @@ namespace Mocument.ReverseProxyServer
         public void Start()
         {
 
+            var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetName().CodeBase);
+            path = path.Replace("file:\\", "");
+            if (!path.EndsWith(@"\")) path += @"\";
+            path += "FiddlerRoot.cer";
+
+ 
+            FiddlerApplication.oDefaultClientCertificate = new X509Certificate(path);
             FiddlerApplication.BeforeRequest += ProcessBeginRequest;
 
             FiddlerApplication.AfterSessionComplete += ProcessEndResponse;
