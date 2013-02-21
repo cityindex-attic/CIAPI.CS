@@ -8,7 +8,7 @@ using NUnit.Framework;
 
 namespace CIAPI.RecordedTests
 {
-    [TestFixture, MocumentModeOverride(MocumentMode.Record),Ignore("not designed properly"),Category("REFACTOR")]
+    [TestFixture, MocumentModeOverride(MocumentMode.Play),Ignore("not designed properly"),Category("REFACTOR")]
     public class TradesAndOrdersFixture : CIAPIRecordingFixtureBase
     {
         private CIAPI.Streaming.IStreamingClient _streamingClient;

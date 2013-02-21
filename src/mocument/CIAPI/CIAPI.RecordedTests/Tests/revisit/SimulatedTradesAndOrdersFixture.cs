@@ -8,7 +8,7 @@ using NUnit.Framework;
 
 namespace CIAPI.RecordedTests
 {
-    [TestFixture, MocumentModeOverride(MocumentMode.Record), Ignore("need setup for streaming")]
+    [TestFixture, MocumentModeOverride(MocumentMode.Play), Ignore("need setup for streaming")]
     public class SimulatedTradesAndOrdersFixture : CIAPIRecordingFixtureBase
     {
         //private CIAPI.Streaming.IStreamingClient _streamingClient;

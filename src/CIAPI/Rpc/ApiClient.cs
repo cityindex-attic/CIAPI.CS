@@ -459,7 +459,8 @@ namespace CIAPI.Rpc
                                                                                                                    UserName=userName,
                                                                                                                    Password = password,
                                                                                                                    AppKey = AppKey,
-                                                                                                                   AppVersion = UserAgent
+                                                                                                                   AppVersion = "CIAPI.CS"
+                                                                                                                   // #TODO: stop putting version in this DTO - cannot record with versions changing. Version is available in headers
                                                                                                                }}
                                                                                          }, ContentType.JSON, ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000, 2);
 
@@ -512,7 +513,9 @@ namespace CIAPI.Rpc
                                                                             UserName=userName,
                                                                             Password = password,
                                                                             AppKey = AppKey,
-                                                                            AppVersion = UserAgent
+                                                                            AppVersion = "CIAPI.CS"
+                                                                               // #TODO: stop putting version in this DTO - cannot record with versions changing. Version is available in headers
+                                                                                                           
                                                                             }
                                                                          }
                                                                       }, ContentType.JSON, ContentType.JSON, TimeSpan.Zero, 30000, 2, callback, state);

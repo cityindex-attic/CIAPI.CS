@@ -26,7 +26,7 @@ namespace CIAPI.RecordedTests
          
         public void CanChangePassword()
         {
-            string NEWPASSWORD = "new" + Password;
+            string NEWPASSWORD= "new" + Password;
             string OLDPASSWORD = Password;
 
             var rpcClient = BuildUnauthenticatedRpcClient("CanChangePassword");
@@ -43,6 +43,23 @@ namespace CIAPI.RecordedTests
             });
 
             Assert.IsTrue(changePasswordResponse.IsPasswordChanged);
+
+            var foo = NEWPASSWORD;
+
+            NEWPASSWORD = OLDPASSWORD;
+            OLDPASSWORD = foo;
+
+            //And change password
+            changePasswordResponse = rpcClient.Authentication.ChangePassword(new ApiChangePasswordRequestDTO()
+            {
+                UserName = UserName,
+                Password = OLDPASSWORD,
+                NewPassword = NEWPASSWORD
+            });
+
+            Assert.IsTrue(changePasswordResponse.IsPasswordChanged);
+
+
             rpcClient.LogOut();
 
 #if FALSE
