@@ -243,6 +243,7 @@ namespace CIAPI.Rpc
                 var asm = Assembly.GetExecutingAssembly();
                 var parts = asm.FullName.Split(',');
                 _versionNumber = parts[1].Split('=')[1];
+                _versionNumber.Substring(0, _versionNumber.LastIndexOf(".")-2);
             }
             return _versionNumber;
         }
