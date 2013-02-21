@@ -35,10 +35,10 @@
 		<OpenCoverFilter>+[*]* -[CIAPI.Tests*]* -[*]CIAPI.DTO* -[DotNetClient_N2]* </OpenCoverFilter>
 	</PropertyGroup>
  
-  <Target Name="Go" DependsOnTargets="UpdateVersion;Build;RunTests">
+  <Target Name="Go" DependsOnTargets="UpdateVersion;Build;RunTests;CalculateMetrics">
   </Target>
   
-  <!-- Used to build the Dev branch - everything except packaging reports/*NUnitResults.xml ;CalculateMetrics;Package-->
+  <!-- Used to build the Dev branch - everything except packaging reports/*NUnitResults.xml ;Package-->
   
   <Target Name="GoDev" DependsOnTargets="UpdateVersion;Build;RunTests">
   </Target>
