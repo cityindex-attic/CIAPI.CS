@@ -11,7 +11,7 @@ namespace CIAPI.RecordedTests
         public void HowToUseWatchLists()
         {
 
-            var rpcClient = BuildRpcClient();
+            var rpcClient = BuildRpcClient("HowToUseWatchLists");
             ListWatchlistResponseDTO watchlists;            
 
  #if FALSE

@@ -14,7 +14,7 @@ namespace CIAPI.RecordedTests
         public void Json_Ho_01()
         {
 
-            var rpcClient = BuildRpcClient();
+            var rpcClient = BuildRpcClient("Json_Ho_01");
 
 
 
@@ -33,7 +33,7 @@ namespace CIAPI.RecordedTests
         public void Issue42()
         {
 
-            var rpcClient = BuildRpcClient();
+            var rpcClient = BuildRpcClient("Issue42");
 
             var param = new NewStopLimitOrderRequestDTO
             {
@@ -68,7 +68,7 @@ namespace CIAPI.RecordedTests
         public void Issue35()
         {
 
-            var rpcClient = BuildRpcClient();
+            var rpcClient = BuildRpcClient("Issue35");
 
             var accountInfo = rpcClient.AccountInformation.GetClientAndTradingAccount();
             var resp = rpcClient.TradesAndOrders.ListTradeHistory(accountInfo.ClientAccountId, 20);

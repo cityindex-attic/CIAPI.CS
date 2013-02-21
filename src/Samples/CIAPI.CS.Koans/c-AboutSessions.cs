@@ -88,7 +88,9 @@ namespace CIAPI.CS.Koans
         }
 
 
+// ReSharper disable UnusedMember.Local
         private string FILL_ME_IN = "replace FILL_ME_IN with the correct value";
+// ReSharper restore UnusedMember.Local
 
     }
 }

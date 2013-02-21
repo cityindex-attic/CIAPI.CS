@@ -10,6 +10,9 @@ using Salient.ReliableHttpClient.Serialization;
 
 namespace CIAPI.Streaming.Testing
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class TestStreamingClient : IStreamingClient
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(TestStreamingClient));
@@ -18,6 +21,14 @@ namespace CIAPI.Streaming.Testing
         private string _userName;
         private string _session;
         private TestStreamingClientFactory _testStreamingClientFactory;
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="streamingUri"></param>
+        /// <param name="userName"></param>
+        /// <param name="session"></param>
+        /// <param name="serializer"></param>
+        /// <param name="testStreamingClientFactory"></param>
         public TestStreamingClient(Uri streamingUri, string userName, string session, IJsonSerializer serializer, TestStreamingClientFactory testStreamingClientFactory)
         {
             _testStreamingClientFactory = testStreamingClientFactory;
@@ -32,7 +43,15 @@ namespace CIAPI.Streaming.Testing
         private readonly Dictionary<string, Dictionary<string, IStreamingListener>> _adapters;
 
 
+        /// <summary>
+        /// 
+        /// </summary>
         public event EventHandler<StatusEventArgs> StatusChanged;
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected virtual void OnStatusChanged(object sender, StatusEventArgs e)
         {
             EventHandler<StatusEventArgs> handler = StatusChanged;
@@ -45,6 +64,13 @@ namespace CIAPI.Streaming.Testing
 
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dataAdapter"></param>
+        /// <param name="topic"></param>
+        /// <typeparam name="TDto"></typeparam>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IStreamingListener<TDto> BuildListener<TDto>(string dataAdapter, string topic)
                 where TDto : class, new()
@@ -99,7 +125,11 @@ namespace CIAPI.Streaming.Testing
                 }
             }
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="category"></param>
+        /// <returns></returns>
         public IStreamingListener<NewsDTO> BuildNewsHeadlinesListener(string category)
         {
             var topic = Regex.Replace("NEWS.HEADLINES.{category}", "{category}", category.ToString());
@@ -117,7 +147,11 @@ namespace CIAPI.Streaming.Testing
 
             return listener;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="marketIds"></param>
+        /// <returns></returns>
         public IStreamingListener<PriceDTO> BuildPricesListener(int[] marketIds)
         {
             var topic = string.Join(" ", marketIds.Select(t => Regex.Replace("PRICES.PRICE.{marketIds}", "{marketIds}", t.ToString())).ToArray());
@@ -125,7 +159,10 @@ namespace CIAPI.Streaming.Testing
             ((TestStreamingListener<PriceDTO>)listener).CreateMessage += _testStreamingClientFactory.OnCreatePriceMessage;
             return listener;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public IStreamingListener<QuoteDTO> BuildQuotesListener()
         {
             string topic = "QUOTES";
@@ -133,7 +170,10 @@ namespace CIAPI.Streaming.Testing
             ((TestStreamingListener<QuoteDTO>)listener).CreateMessage += _testStreamingClientFactory.OnCreateQuoteMessage;
             return listener;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public IStreamingListener<ClientAccountMarginDTO> BuildClientAccountMarginListener()
         {
             string topic = "CLIENTACCOUNTMARGIN";
@@ -141,7 +181,10 @@ namespace CIAPI.Streaming.Testing
             ((TestStreamingListener<ClientAccountMarginDTO>)listener).CreateMessage += _testStreamingClientFactory.OnCreateClientAccountMarginMessage;
             return listener;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public IStreamingListener<OrderDTO> BuildOrdersListener()
         {
             string topic = "ORDERS";
@@ -149,14 +192,21 @@ namespace CIAPI.Streaming.Testing
             ((TestStreamingListener<OrderDTO>)listener).CreateMessage += _testStreamingClientFactory.OnCreateOrderMessage;
             return listener;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="accountOperatorId"></param>
+        /// <returns></returns>
         public IStreamingListener<PriceDTO> BuildDefaultPricesListener(int accountOperatorId)
         {
             IStreamingListener<PriceDTO> listener = BuildListener<PriceDTO>("CITYINDEXSTREAMINGDEFAULTPRICES", "PRICES.AC" + accountOperatorId);
             ((TestStreamingListener<PriceDTO>)listener).CreateMessage += _testStreamingClientFactory.OnCreatePriceMessage;
             return listener;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public IStreamingListener<TradeMarginDTO> BuildTradeMarginListener()
         {
             IStreamingListener<TradeMarginDTO> listener = BuildListener<TradeMarginDTO>("STREAMINGCLIENTACCOUNT", "TRADEMARGIN.ALL");
@@ -165,13 +215,19 @@ namespace CIAPI.Streaming.Testing
             return listener;
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="disposing"></param>
         protected virtual void Dispose(bool disposing)
         {
             if (disposing)

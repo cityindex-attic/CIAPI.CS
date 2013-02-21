@@ -10,6 +10,9 @@ using Salient.ReliableHttpClient;
 namespace CIAPI
 {
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class MagicNumberResolver
     {
 #if SILVERLIGHT
@@ -17,6 +20,10 @@ namespace CIAPI
 #endif
         private static ILog _logger = LogManager.GetLogger(typeof (MagicNumberResolver));
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
         public void ResolveMagicNumbers(ListOpenPositionsResponseDTO value)
         {
             if (value.OpenPositions != null)
@@ -29,16 +36,28 @@ namespace CIAPI
 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
         public void ResolveMagicNumbers(ApiOpenPositionDTO value)
         {
             value.Status_Resolved = this.ResolveMagicNumber(MagicNumberKeys.ApiOpenPositionDTO_Status, value.Status);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
         public void ResolveMagicNumbers(ApiActiveStopLimitOrderDTO value)
         {
             value.Applicability_Resolved = this.ResolveMagicNumber(MagicNumberKeys.ApiActiveStopLimitOrderDTO_Applicability, value.Applicability);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
         public void ResolveMagicNumbers(ApiTradeOrderResponseDTO value)
         {
             value.StatusReason_Resolved = this.ResolveMagicNumber(MagicNumberKeys.ApiTradeOrderResponseDTO_StatusReason, value.StatusReason);
@@ -54,6 +73,10 @@ namespace CIAPI
 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
         public void ResolveMagicNumbers(ApiOrderResponseDTO value)
         {
             value.StatusReason_Resolved = this.ResolveMagicNumber(MagicNumberKeys.ApiOrderResponseDTO_StatusReason, value.StatusReason);
@@ -83,6 +106,10 @@ namespace CIAPI
 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
         public void ResolveMagicNumbers(ApiSimulateTradeOrderResponseDTO value)
         {
             value.StatusReason_Resolved = this.ResolveMagicNumber(MagicNumberKeys.ApiTradeOrderResponseDTO_StatusReason, value.StatusReason);
@@ -98,12 +125,20 @@ namespace CIAPI
 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
         public void ResolveMagicNumbers(ApiSimulateOrderResponseDTO value)
         {
             value.StatusReason_Resolved = this.ResolveMagicNumber(MagicNumberKeys.ApiOrderResponseDTO_StatusReason, value.StatusReason);
             value.Status_Resolved = this.ResolveMagicNumber(MagicNumberKeys.ApiOrderResponseDTO_Status, value.Status);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
         public void ResolveMagicNumbers(GetOpenPositionResponseDTO value)
         {
             if (value.OpenPosition != null)
@@ -117,12 +152,22 @@ namespace CIAPI
 
         private readonly Client _client;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="client"></param>
         public MagicNumberResolver(Client client)
         {
             _client = client;
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="code"></param>
+        /// <returns></returns>
         public string ResolveMagicNumber(string type, int code)
         {
             lock (MagicNumbers)
@@ -154,6 +199,10 @@ namespace CIAPI
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <exception cref="AggregateException"></exception>
         public void PreloadMagicNumbers()
         {
             var gates = new AutoResetEvent[6];

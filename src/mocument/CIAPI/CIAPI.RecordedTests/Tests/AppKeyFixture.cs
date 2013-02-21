@@ -13,7 +13,7 @@ namespace CIAPI.RecordedTests
         public void AppKeyIsAppendedToLogonRequest()
         {
 
-            var rpcClient = BuildRpcClient();
+            var rpcClient = BuildRpcClient("AppKeyIsAppendedToLogonRequest");
             rpcClient.LogOut();
             rpcClient.Dispose();
 

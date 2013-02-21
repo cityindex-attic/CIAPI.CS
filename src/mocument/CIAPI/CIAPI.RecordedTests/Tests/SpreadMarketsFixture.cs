@@ -13,7 +13,7 @@ namespace CIAPI.RecordedTests
         {
             try
             {
-                var rpcClient = BuildRpcClient();
+                var rpcClient = BuildRpcClient("CanListSpreadMarkets");
 
                 AccountInformationResponseDTO accounts = rpcClient.AccountInformation.GetClientAndTradingAccount();
 

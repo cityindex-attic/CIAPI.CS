@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using CIAPI.DTO;
+﻿using System.Linq;
 
 // these dto are missing from metadata
+// ReSharper disable CheckNamespace
 namespace CIAPI.DTO
+// ReSharper restore CheckNamespace
 {
     public partial class ApiChangePasswordRequestDTO
     {
@@ -19,13 +17,19 @@ namespace CIAPI.DTO
 
     public partial class AccountInformationResponseDTO
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public ApiTradingAccountDTO CFDAccount
         {
             get
             {
-                return this.TradingAccounts.Where(a => a.TradingAccountType.Contains("CFD")).FirstOrDefault();
+                return TradingAccounts.Where(a => a.TradingAccountType.Contains("CFD")).FirstOrDefault();
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
         public ApiTradingAccountDTO SpreadBettingAccount
         {
             get

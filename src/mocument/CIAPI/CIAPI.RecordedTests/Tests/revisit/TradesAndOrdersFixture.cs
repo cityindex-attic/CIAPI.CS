@@ -21,7 +21,7 @@ namespace CIAPI.RecordedTests
         {
             base.FixtureSetup();
             // hmmmm... only one fixture setup allowed. 
-            _rpcClient = BuildRpcClient();
+            _rpcClient = BuildRpcClient("FixtureSetup");
             _streamingClient = _rpcClient.CreateStreamingClient();
             _CFDmarketId = MarketFixture.GetAvailableCFDMarkets(_rpcClient)[0].MarketId;
             _accounts = _rpcClient.AccountInformation.GetClientAndTradingAccount();
@@ -268,7 +268,7 @@ namespace CIAPI.RecordedTests
         [Test]
         public void CanUpdateTrade()
         {
-            var rpcClient = BuildRpcClient();
+            var rpcClient = BuildRpcClient("CanUpdateTrade");
 
             AccountInformationResponseDTO accounts = rpcClient.AccountInformation.GetClientAndTradingAccount();
 

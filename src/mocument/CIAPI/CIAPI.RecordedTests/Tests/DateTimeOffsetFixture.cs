@@ -13,7 +13,7 @@ namespace CIAPI.RecordedTests
         [Test(Description = "Validates error condition reported in https://github.com/cityindex/CIAPI.CS/issues/133")]
         public void CanHandleResponseWithNullableDateTimeOffset()
         {
-            var rpcClient = BuildRpcClient();
+            var rpcClient = BuildRpcClient("CanHandleResponseWithNullableDateTimeOffset");
 
             try
             {

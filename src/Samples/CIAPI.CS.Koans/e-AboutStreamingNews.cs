@@ -113,8 +113,12 @@ namespace CIAPI.CS.Koans
         private IStreamingClient _streamingClient;
 
 
+// ReSharper disable UnusedMember.Local
         private int FILL_IN_THE_CORRECT_VALUE = 999;
+// ReSharper restore UnusedMember.Local
+// ReSharper disable UnusedMember.Local
         private object FILL_ME_IN = false;
+// ReSharper restore UnusedMember.Local
 
     }
 }

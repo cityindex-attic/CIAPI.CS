@@ -11,7 +11,7 @@ namespace CIAPI.RecordedTests
         [Test]
         public void CanListCFDMarkets()
         {
-            Client rpcClient = BuildRpcClient();
+            Client rpcClient = BuildRpcClient("CanListCFDMarkets");
 
             AccountInformationResponseDTO accounts = rpcClient.AccountInformation.GetClientAndTradingAccount();
 

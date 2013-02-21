@@ -19,6 +19,11 @@ namespace CIAPI.Streaming.Testing
     /// </summary>
     public class SequentialSerializedPriceDTOMessageGenerator
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="source"></param>
         public static void Populate(PriceDTO target, PriceDTO source)
         {
             target.AuditId = source.AuditId;
@@ -34,6 +39,10 @@ namespace CIAPI.Streaming.Testing
             target.TickDate = source.TickDate;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="messages"></param>
         public SequentialSerializedPriceDTOMessageGenerator(List<MessageEventArgs<PriceDTO>> messages)
         {
             _messages = messages;
@@ -41,6 +50,13 @@ namespace CIAPI.Streaming.Testing
         }
         private List<MessageEventArgs<PriceDTO>> _messages;
         private Dictionary<string, int> _indexes;
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="adapter"></param>
+        /// <param name="topic"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public MessageEventArgs<PriceDTO> GetNextMessage(string adapter, string topic)
         {
 

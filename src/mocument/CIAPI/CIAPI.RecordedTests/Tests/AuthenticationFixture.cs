@@ -11,7 +11,7 @@ namespace CIAPI.RecordedTests
         [Test]
         public void LoginShouldCreateSession()
         {
-            Client rpcClient = BuildRpcClient();
+            Client rpcClient = BuildRpcClient("LoginShouldCreateSession");
 
             Assert.That(rpcClient.Session, Is.Not.Empty);
 
@@ -23,12 +23,12 @@ namespace CIAPI.RecordedTests
         [Test]
         public void LoginUsingSessionShouldValidateSession()
         {
-            Client rpcClient = BuildRpcClient();
+            Client rpcClient = BuildRpcClient("LoginUsingSessionShouldValidateSession");
 
             Assert.That(rpcClient.Session, Is.Not.Null.Or.Empty);
 
             //This should work
-            Client rpcClientUsingSession = BuildUnauthenticatedRpcClient();
+            Client rpcClientUsingSession = BuildUnauthenticatedRpcClient("LoginUsingSessionShouldValidateSession");
 
             rpcClientUsingSession.LogInUsingSession(UserName, rpcClient.Session);
 

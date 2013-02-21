@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using CIAPI.DTO;
 using Lightstreamer.DotNet.Client;
 using Salient.ReflectiveLoggingAdapter;
 using Salient.ReliableHttpClient.Serialization;
@@ -11,6 +10,9 @@ using CIAPI.StreamingClient.Lightstreamer;
 namespace CIAPI.Streaming
 {
 
+    /// <summary>
+    /// 
+    /// </summary>
     public partial class LightstreamerClient : IStreamingClient
     {
         private readonly IJsonSerializer _serializer;
@@ -19,7 +21,16 @@ namespace CIAPI.Streaming
 
         
 
+        /// <summary>
+        /// 
+        /// </summary>
         public event EventHandler<StatusEventArgs> StatusChanged;
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected virtual void OnStatusChanged(object sender, StatusEventArgs e)
         {
             EventHandler<StatusEventArgs> handler = StatusChanged;
@@ -45,7 +56,9 @@ namespace CIAPI.Streaming
         private readonly string _userName;
         private readonly string _streamingUri;
         private readonly Dictionary<string, IFaultTolerantLsClientAdapter> _adapters ;
+// ReSharper disable FieldCanBeMadeReadOnly.Local
         private bool _usePolling;
+// ReSharper restore FieldCanBeMadeReadOnly.Local
         
         static LightstreamerClient()
         {
@@ -53,6 +66,14 @@ namespace CIAPI.Streaming
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="streamingUri"></param>
+        /// <param name="userName"></param>
+        /// <param name="sessionId"></param>
+        /// <param name="usePolling"></param>
+        /// <param name="serializer"></param>
         public LightstreamerClient(Uri streamingUri, string userName, string sessionId, bool usePolling,IJsonSerializer serializer)
         {
             _usePolling = usePolling;
@@ -66,6 +87,9 @@ namespace CIAPI.Streaming
         }
 
  
+        /// <summary>
+        /// 
+        /// </summary>
         public event EventHandler<ConnectionStatusEventArgs> StatusUpdate;
 
         private void OnStatusUpdate(object sender, ConnectionStatusEventArgs e)
@@ -98,6 +122,16 @@ namespace CIAPI.Streaming
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dataAdapter"></param>
+        /// <param name="mode"></param>
+        /// <param name="snapshot"></param>
+        /// <param name="topic"></param>
+        /// <typeparam name="TDto"></typeparam>
+        /// <returns></returns>
+        /// <exception cref="ObjectDisposedException"></exception>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IStreamingListener<TDto> BuildListener<TDto>(string dataAdapter, string mode, bool snapshot, string topic)
                 where TDto : class, new()
@@ -142,6 +176,11 @@ namespace CIAPI.Streaming
         }
 
         private bool _disposed;
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        /// <filterpriority>2</filterpriority>
         public void Dispose()
         {
             _disposed = true;
@@ -149,6 +188,10 @@ namespace CIAPI.Streaming
             GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="disposing"></param>
         protected virtual void Dispose(bool disposing)
         {
             if (disposing)

@@ -147,7 +147,11 @@ namespace CIAPI.CS.Koans
         private ListNewsHeadlinesResponseDTO _ausHeadlines;
 
 
+// ReSharper disable UnusedMember.Local
         private string FILL_ME_IN = "replace FILL_ME_IN with the correct value";
+// ReSharper restore UnusedMember.Local
+// ReSharper disable UnusedMember.Local
         private DateTime FILL_ME_IN_DATE = DateTime.UtcNow;
+// ReSharper restore UnusedMember.Local
     }
 }

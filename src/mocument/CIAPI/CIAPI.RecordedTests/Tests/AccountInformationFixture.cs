@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using CIAPI.DTO;
 using CIAPI.RecordedTests.Infrastructure;
 using CIAPI.Rpc;
@@ -12,7 +13,7 @@ namespace CIAPI.RecordedTests
         [Test]
         public void CanListOpenPositions()
         {
-            var rpcClient = BuildRpcClient();
+            var rpcClient = BuildRpcClient("CanListOpenPositions");
 
             AccountInformationResponseDTO accounts = rpcClient.AccountInformation.GetClientAndTradingAccount();
             rpcClient.TradesAndOrders.ListOpenPositions(accounts.TradingAccounts[0].TradingAccountId);
@@ -22,12 +23,13 @@ namespace CIAPI.RecordedTests
         }
 
         [Test]
+         
         public void CanChangePassword()
         {
             string NEWPASSWORD = "new" + Password;
             string OLDPASSWORD = Password;
 
-            var rpcClient = BuildUnauthenticatedRpcClient();
+            var rpcClient = BuildUnauthenticatedRpcClient("CanChangePassword");
 
             //Login with existing credentials
             rpcClient.LogIn(UserName, OLDPASSWORD);

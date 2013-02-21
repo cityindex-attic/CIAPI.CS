@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net;
 using System.Reflection;
-using System.Threading;
 using CIAPI.DTO;
 using CIAPI.Streaming;
 using Salient.ReflectiveLoggingAdapter;
@@ -25,6 +23,9 @@ namespace CIAPI.Rpc
         /// </summary>
         public class NullObject
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public NullObject()
             {
 
@@ -53,6 +54,9 @@ namespace CIAPI.Rpc
 
 
 
+        /// <summary>
+        /// 
+        /// </summary>
         public bool Http200ErrorsOnly { get; set; }
 
 
@@ -81,6 +85,22 @@ namespace CIAPI.Rpc
             return !url.EndsWith("/") && !target.StartsWith("/") ? url + "/" + target : url + target;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="method"></param>
+        /// <param name="target"></param>
+        /// <param name="uriTemplate"></param>
+        /// <param name="parameters"></param>
+        /// <param name="requestContentType"></param>
+        /// <param name="responseContentType"></param>
+        /// <param name="cacheDuration"></param>
+        /// <param name="timeout"></param>
+        /// <param name="retryCount"></param>
+        /// <param name="callback"></param>
+        /// <param name="state"></param>
+        /// <returns></returns>
+        /// <exception cref="ObjectDisposedException"></exception>
         public Guid BeginRequest(RequestMethod method, string target, string uriTemplate, Dictionary<string, object> parameters, ContentType requestContentType, ContentType responseContentType, TimeSpan cacheDuration, int timeout, int retryCount, ReliableAsyncCallback callback, object state)
         {
             if (_disposed)
@@ -113,7 +133,7 @@ namespace CIAPI.Rpc
 
                     if (paramValue != null && (paramValue is string))
                     {
-                        string paramString = (string)paramValue;
+                        var paramString = (string)paramValue;
                         // munge the value to make safe
                         paramString = paramString.Replace("/", " ");
                         parameters[key] = paramString;
@@ -124,6 +144,21 @@ namespace CIAPI.Rpc
 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="method"></param>
+        /// <param name="target"></param>
+        /// <param name="uriTemplate"></param>
+        /// <param name="parameters"></param>
+        /// <param name="requestContentType"></param>
+        /// <param name="responseContentType"></param>
+        /// <param name="cacheDuration"></param>
+        /// <param name="timeout"></param>
+        /// <param name="retryCount"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        /// <exception cref="ObjectDisposedException"></exception>
         public T Request<T>(RequestMethod method, string target, string uriTemplate, Dictionary<string, object> parameters, ContentType requestContentType, ContentType responseContentType, TimeSpan cacheDuration, int timeout, int retryCount)
         {
             if (_disposed)
@@ -145,6 +180,20 @@ namespace CIAPI.Rpc
             return base.Request<T>(method, target, uriTemplate, headers, param, requestContentType, responseContentType, cacheDuration, timeout, retryCount);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="method"></param>
+        /// <param name="target"></param>
+        /// <param name="uriTemplate"></param>
+        /// <param name="parameters"></param>
+        /// <param name="requestContentType"></param>
+        /// <param name="responseContentType"></param>
+        /// <param name="cacheDuration"></param>
+        /// <param name="timeout"></param>
+        /// <param name="retryCount"></param>
+        /// <returns></returns>
+        /// <exception cref="ObjectDisposedException"></exception>
         public string Request(RequestMethod method, string target, string uriTemplate, Dictionary<string, object> parameters, ContentType requestContentType, ContentType responseContentType, TimeSpan cacheDuration, int timeout, int retryCount)
         {
             if (_disposed)
@@ -167,6 +216,10 @@ namespace CIAPI.Rpc
 
         #endregion
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="disposing"></param>
         protected override void Dispose(bool disposing)
         {
             _disposed = true;
@@ -197,6 +250,9 @@ namespace CIAPI.Rpc
 
 
         private MagicNumberResolver _magicNumberResolver;
+        /// <summary>
+        /// 
+        /// </summary>
         public MagicNumberResolver MagicNumberResolver
         {
             get
@@ -210,7 +266,13 @@ namespace CIAPI.Rpc
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public string UserName { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
         public string Session { get; set; }
 
 
@@ -275,6 +337,14 @@ namespace CIAPI.Rpc
             }
             return ex2;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="result"></param>
+        /// <returns></returns>
+        /// <exception cref="ObjectDisposedException"></exception>
+        /// <exception cref="ReliableHttpException"></exception>
+        /// <exception cref="ServerConnectionException"></exception>
         public override string EndRequest(ReliableAsyncResult result)
         {
             if (_disposed)
@@ -340,12 +410,22 @@ namespace CIAPI.Rpc
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public IStreamingClient CreateStreamingClient()
         {
 
             return CreateStreamingClient(false);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="usePolling"></param>
+        /// <returns></returns>
+        /// <exception cref="ObjectDisposedException"></exception>
         public IStreamingClient CreateStreamingClient(bool usePolling)
         {
             if (_disposed)
@@ -390,6 +470,11 @@ namespace CIAPI.Rpc
             Session = response.Session;
             return response;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="session"></param>
         public void LogInUsingSession(string username, string session)
         {
             try
@@ -433,9 +518,14 @@ namespace CIAPI.Rpc
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="asyncResult"></param>
+        /// <returns></returns>
         public ApiLogOnResponseDTO EndLogIn(ReliableAsyncResult asyncResult)
         {
-            ApiLogOnResponseDTO response = EndRequest<ApiLogOnResponseDTO>(asyncResult);
+            var response = EndRequest<ApiLogOnResponseDTO>(asyncResult);
             Session = response.Session;
             return response;
         }
@@ -477,9 +567,14 @@ namespace CIAPI.Rpc
                              }, ContentType.JSON, ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000, 2, callback, state);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="asyncResult"></param>
+        /// <returns></returns>
         public bool EndLogOut(ReliableAsyncResult asyncResult)
         {
-            ApiLogOffResponseDTO response = EndRequest<ApiLogOffResponseDTO>(asyncResult);
+            var response = EndRequest<ApiLogOffResponseDTO>(asyncResult);
 
             if (response.LoggedOut)
             {
@@ -492,5 +587,59 @@ namespace CIAPI.Rpc
         #endregion
 
 
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    [Serializable]
+    public class InvalidCredentialsException : ReliableHttpException
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="message"></param>
+        public InvalidCredentialsException(string message)
+            : base(message)
+        {
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="ex"></param>
+        public InvalidCredentialsException(string message, Exception ex)
+            : base(message, ex)
+        {
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ex"></param>
+        public InvalidCredentialsException(Exception ex)
+            : base(ex)
+        {
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="exception"></param>
+        public InvalidCredentialsException(string message, ReliableHttpException exception)
+            : base(message, exception)
+        {
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="exception"></param>
+        public InvalidCredentialsException(ReliableHttpException exception)
+            : base(exception)
+        {
+        }
     }
 }

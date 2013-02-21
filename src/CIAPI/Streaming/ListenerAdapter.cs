@@ -7,7 +7,9 @@ using Salient.ReflectiveLoggingAdapter;
 using Salient.ReliableHttpClient.Serialization;
 using CIAPI.StreamingClient.Lightstreamer;
 
+// ReSharper disable CheckNamespace
 namespace CIAPI.StreamingClient
+// ReSharper restore CheckNamespace
 {
     /// <summary>
     /// the purpose of this adapter is to allow consumer to maintain handlers
@@ -27,6 +29,9 @@ namespace CIAPI.StreamingClient
 
 
 
+        /// <summary>
+        /// 
+        /// </summary>
         public string AdapterSet
         {
             get
@@ -34,6 +39,9 @@ namespace CIAPI.StreamingClient
                 return _adapterSet;
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
         public string Adapter
         {
             get
@@ -46,6 +54,14 @@ namespace CIAPI.StreamingClient
         private string _mode;  //To ensure the last message published prior to this subscription is recieved immediately, mode must be MERGE and snap = true
         private bool _snapshot;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="topic"></param>
+        /// <param name="mode"></param>
+        /// <param name="snapshot"></param>
+        /// <param name="client"></param>
+        /// <param name="serializer"></param>
         public ListenerAdapter(string topic, string mode, bool snapshot, IFaultTolerantLsClientAdapter client, IJsonSerializer serializer)
         {
             _serializer = serializer;
@@ -133,9 +149,15 @@ namespace CIAPI.StreamingClient
                            }) { Name = "Thread for " + message }.Start();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public event EventHandler<MessageEventArgs<TDto>> MessageReceived;
 
 
+        /// <summary>
+        /// 
+        /// </summary>
         public string Topic { get; set; }
 
         #endregion
@@ -156,12 +178,20 @@ namespace CIAPI.StreamingClient
         }
 
 
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        /// <filterpriority>2</filterpriority>
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="disposing"></param>
         private void Dispose(bool disposing)
         {
             if (disposing)

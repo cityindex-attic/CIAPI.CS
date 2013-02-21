@@ -7,6 +7,9 @@ namespace CIAPI.Streaming.Testing
 {
     
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class TestStreamingClientFactory : IStreamingClientFactory
     {
         internal void OnCreateTradeMarginMessage(MessageEventArgs<TradeMarginDTO> e)
@@ -59,19 +62,53 @@ namespace CIAPI.Streaming.Testing
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public Action<MessageEventArgs<NewsDTO>>  CreateNewsMessage;
+        /// <summary>
+        /// 
+        /// </summary>
         public Action<MessageEventArgs<PriceDTO>> CreatePriceMessage;
+        /// <summary>
+        /// 
+        /// </summary>
         public Action<MessageEventArgs<QuoteDTO>> CreateQuoteMessage;
+        /// <summary>
+        /// 
+        /// </summary>
         public Action<MessageEventArgs<ClientAccountMarginDTO>> CreateClientAccountMarginMessage;
+        /// <summary>
+        /// 
+        /// </summary>
         public Action<MessageEventArgs<OrderDTO>> CreateOrderMessage;
+        /// <summary>
+        /// 
+        /// </summary>
         public Action<MessageEventArgs<TradeMarginDTO>> CreateTradeMarginMessage;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="streamingUri"></param>
+        /// <param name="userName"></param>
+        /// <param name="session"></param>
+        /// <param name="serializer"></param>
+        /// <returns></returns>
         public IStreamingClient Create(Uri streamingUri, string userName, string session, IJsonSerializer serializer)
         {
 
             return new TestStreamingClient(streamingUri, userName, session, serializer,this);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="streamingUri"></param>
+        /// <param name="userName"></param>
+        /// <param name="session"></param>
+        /// <param name="usePolling"></param>
+        /// <param name="serializer"></param>
+        /// <returns></returns>
         public IStreamingClient Create(Uri streamingUri, string userName, string session, bool usePolling, IJsonSerializer serializer)
         {
             return new TestStreamingClient(streamingUri, userName, session, serializer, this);

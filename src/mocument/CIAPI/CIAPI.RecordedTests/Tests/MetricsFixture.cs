@@ -22,8 +22,8 @@ namespace CIAPI.RecordedTests
 
 
 
-            var rpcClient = BuildUnauthenticatedRpcClient();
-            Uri metricsUrl = BuildUri("http://metrics.labs.cityindex.com/LogEvent.ashx", 1);
+            var rpcClient = BuildUnauthenticatedRpcClient("CanSendMetrics");
+            Uri metricsUrl = BuildUri("CanSendMetrics","http://metrics.labs.cityindex.com/LogEvent.ashx");
             var metricsRecorder = new MetricsRecorder(rpcClient, metricsUrl, "metrics-session");
             metricsRecorder.Start();
 

@@ -16,7 +16,7 @@ namespace CIAPI.RecordedTests
             // Salient.ReliableHttpClient.ReliableHttpException : The server committed a protocol violation. Section=ResponseStatusLine - failed 1 times
             // http://stackoverflow.com/questions/2482715/the-server-committed-a-protocol-violation-section-responsestatusline-error
 
-            var rpcClient = BuildRpcClient();
+            var rpcClient = BuildRpcClient("CanGetLookup");
 
             const string lookupEntityName = "OrderStatusReason";
             var orderStatus = rpcClient.Messaging.GetSystemLookup(lookupEntityName, 69);
@@ -30,7 +30,7 @@ namespace CIAPI.RecordedTests
         public void CanGetTranslationWithInterestingItems()
         {
 
-            var rpcClient = BuildRpcClient();
+            var rpcClient = BuildRpcClient("CanGetTranslationWithInterestingItems");
             ApiClientApplicationMessageTranslationRequestDTO request = new ApiClientApplicationMessageTranslationRequestDTO
             {
                 AccountOperatorId = 2347,
@@ -48,7 +48,7 @@ namespace CIAPI.RecordedTests
         [Test]
         public void CanGetClientApplicationMessageTranslation()
         {
-            var rpcClient = BuildRpcClient();
+            var rpcClient = BuildRpcClient("CanGetClientApplicationMessageTranslation");
 
             var translation = rpcClient.Messaging.GetClientApplicationMessageTranslation(0, 69, 2347);
 
@@ -64,7 +64,7 @@ namespace CIAPI.RecordedTests
         {
             try
             {
-                var rpcClient = BuildRpcClient();
+                var rpcClient = BuildRpcClient("CanGetListOfCulturesLookup");
 
                 const string lookupEntityName = "culture";
                 var language = rpcClient.Messaging.GetSystemLookup(lookupEntityName, 0); //A bit wierd, but you need to specify a dummy culture when asking for a list of cultures returned in...
@@ -84,7 +84,7 @@ namespace CIAPI.RecordedTests
         public void CanResolveMagicNumber()
         {
 
-            var rpcClient = BuildRpcClient();
+            var rpcClient = BuildRpcClient("CanResolveMagicNumber");
 
             var resolver = new MagicNumberResolver(rpcClient);
             const string lookupEntityName = MagicNumberKeys.ApiOrderResponseDTO_Status;
@@ -100,7 +100,7 @@ namespace CIAPI.RecordedTests
         public void CanResolveDTO()
         {
 
-            var rpcClient = BuildRpcClient();
+            var rpcClient = BuildRpcClient("CanResolveDTO");
 
 
             // this would be the value you get back from the API
@@ -119,7 +119,7 @@ namespace CIAPI.RecordedTests
         [Test]
         public void CanPreloadMessages()
         {
-            var rpcClient = BuildRpcClient();
+            var rpcClient = BuildRpcClient("CanPreloadMessages");
             rpcClient.MagicNumberResolver.PreloadMagicNumbers();
             rpcClient.LogOut();
         }
@@ -129,7 +129,7 @@ namespace CIAPI.RecordedTests
         public void CanResolveDTOVersion2()
         {
 
-            var rpcClient = BuildRpcClient();
+            var rpcClient = BuildRpcClient("CanResolveDTOVersion2");
 
 
             // this would be the value you get back from the API
@@ -150,7 +150,7 @@ namespace CIAPI.RecordedTests
         public void LookupIsCached()
         {
 
-            var rpcClient = BuildRpcClient();
+            var rpcClient = BuildRpcClient("LookupIsCached");
 
             var sw = new Stopwatch();
 

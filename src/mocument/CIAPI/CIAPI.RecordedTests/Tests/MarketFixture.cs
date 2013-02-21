@@ -14,7 +14,7 @@ namespace CIAPI.RecordedTests
         [Test]
         public void CanGetMarketTags()
         {
-            var rpcClient = BuildRpcClient();
+            var rpcClient = BuildRpcClient("CanGetMarketTags");
 
             //Markets are grouped into a collection of tags.  
             //You can get a list of available tags from TagLookup
@@ -45,7 +45,7 @@ namespace CIAPI.RecordedTests
         [Test]
         public void CanSearchWithTags()
         {
-            var rpcClient = BuildRpcClient();
+            var rpcClient = BuildRpcClient("CanSearchWithTags");
 
             var tagResponse = rpcClient.Market.TagLookup();
             Assert.IsTrue(tagResponse.Tags.Length > 0, "No tags have been defined for your user's account operator");
@@ -91,7 +91,7 @@ namespace CIAPI.RecordedTests
         [Test]
         public void CanListMarketInformation()
         {
-            var rpcClient = BuildRpcClient();
+            var rpcClient = BuildRpcClient("CanListMarketInformation");
             var marketList = GetAvailableCFDMarkets(rpcClient);
 
             var response = rpcClient.Market.ListMarketInformation(
@@ -109,7 +109,7 @@ namespace CIAPI.RecordedTests
         [Test]
         public void ListMarketInformationSearchQueryIsValidated()
         {
-            var rpcClient = BuildRpcClient();
+            var rpcClient = BuildRpcClient("ListMarketInformationSearchQueryIsValidated");
 
             rpcClient.Market.ListMarketInformationSearch(false, true, true, false, false, true, "/", 100, false);
             rpcClient.Market.ListMarketInformationSearch(false, true, true, false, false, true, "\\", 100, false);
@@ -135,7 +135,7 @@ namespace CIAPI.RecordedTests
         [Test]
         public void CanListMarketInformationSearch()
         {
-            var rpcClient = BuildRpcClient();
+            var rpcClient = BuildRpcClient("CanListMarketInformationSearch");
 
             var response = rpcClient.Market.ListMarketInformationSearch(false, true, false, true, false, true, "GBP", 10, false);
             Assert.Greater(response.MarketInformation.Length, 1);
@@ -149,7 +149,7 @@ namespace CIAPI.RecordedTests
         [Test, Ignore("Long running")]
         public void MultipleRequestsToCanGetMarketInformationShouldNotThrowAnyExceptions()
         {
-            var rpcClient = BuildRpcClient();
+            var rpcClient = BuildRpcClient("MultipleRequestsToCanGetMarketInformationShouldNotThrowAnyExceptions");
 
             for (var i = 0; i < 100; i++)
             {
@@ -165,7 +165,7 @@ namespace CIAPI.RecordedTests
         [Test]
         public void CanGetMarketInformationWithPathChar()
         {
-            var rpcClient = BuildRpcClient();
+            var rpcClient = BuildRpcClient("CanGetMarketInformationWithPathChar");
             var account = rpcClient.AccountInformation.GetClientAndTradingAccount();
 
             var response = rpcClient.SpreadMarkets.ListSpreadMarkets("GBP/CAD", null, account.ClientAccountId, 19, false);
@@ -179,7 +179,7 @@ namespace CIAPI.RecordedTests
         [Test]
         public void CanGetMarketInformation()
         {
-            var rpcClient = BuildRpcClient();
+            var rpcClient = BuildRpcClient("CanGetMarketInformation");
             var marketList = GetAvailableCFDMarkets(rpcClient);
 
             var response = rpcClient.Market.GetMarketInformation(marketList[0].MarketId.ToString());
@@ -215,7 +215,7 @@ namespace CIAPI.RecordedTests
         [Test]
         public void CanSaveMarketInformation()
         {
-            var rpcClient = BuildRpcClient();
+            var rpcClient = BuildRpcClient("CanSaveMarketInformation");
 
             var clientAccount = rpcClient.AccountInformation.GetClientAndTradingAccount();
             var marketList = GetAvailableCFDMarkets(rpcClient);

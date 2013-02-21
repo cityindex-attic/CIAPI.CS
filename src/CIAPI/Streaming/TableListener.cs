@@ -11,8 +11,15 @@ using CIAPI.StreamingClient.Lightstreamer;
 
 namespace CIAPI.StreamingClient
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="TDto"></typeparam>
     public interface ITableListener<TDto> : IHandyTableListener where TDto : class, new()
     {
+        /// <summary>
+        /// 
+        /// </summary>
         event EventHandler<MessageEventArgs<TDto>> MessageReceived;
     }
 

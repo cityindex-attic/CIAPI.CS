@@ -8,17 +8,36 @@ using Lightstreamer.DotNet.Client;
 using Salient.ReliableHttpClient.Serialization;
 using CIAPI.StreamingClient.Lightstreamer;
 
+// ReSharper disable CheckNamespace
 namespace CIAPI.StreamingClient
+// ReSharper restore CheckNamespace
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public interface IFaultTolerantLsClientAdapter : IDisposable
     {
+        /// <summary>
+        /// 
+        /// </summary>
         string AdapterSet { get; }
+        /// <summary>
+        /// 
+        /// </summary>
         bool Connected { get; }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ph"></param>
+        /// <returns></returns>
         Boolean CheckPhase(int ph);
         ///<summary>
         ///</summary>
         int ListenerCount { get; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         event EventHandler<ConnectionStatusEventArgs> StatusUpdate;
 
         /// <summary>
@@ -26,16 +45,55 @@ namespace CIAPI.StreamingClient
         /// </summary>
         void TearDownListener(IStreamingListener listener);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="topic"></param>
+        /// <param name="mode"></param>
+        /// <param name="snapshot"></param>
+        /// <typeparam name="TDto"></typeparam>
+        /// <returns></returns>
         IStreamingListener<TDto> BuildListener<TDto>(string topic, string mode, bool snapshot) where TDto : class, new();
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="simpleTableInfo"></param>
+        /// <param name="listener"></param>
+        /// <param name="b"></param>
+        /// <typeparam name="TDto"></typeparam>
+        /// <returns></returns>
         SubscribedTableKey SubscribeTable<TDto>(SimpleTableInfo simpleTableInfo, ITableListener<TDto> listener, bool b) where TDto : class, new();
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="subscribedTableKey"></param>
         void UnsubscribeTable(SubscribedTableKey subscribedTableKey);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="phase"></param>
         void OpenConnection(int phase);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="phase"></param>
         void CloseConnection(int phase);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public sealed class FaultTolerantLsClientAdapter : IConnectionListener, IFaultTolerantLsClientAdapter
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="TDto"></typeparam>
+        /// <param name="simpleTableInfo"></param>
+        /// <param name="listener"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
         public SubscribedTableKey SubscribeTable<TDto>(SimpleTableInfo simpleTableInfo, ITableListener<TDto> listener, bool b) where TDto : class, new()
         {
 
@@ -43,6 +101,10 @@ namespace CIAPI.StreamingClient
             return key;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="subscribedTableKey"></param>
         public void UnsubscribeTable(SubscribedTableKey subscribedTableKey)
         {
             _client.UnsubscribeTable(subscribedTableKey);
@@ -54,6 +116,9 @@ namespace CIAPI.StreamingClient
         private static readonly Object ConnLock = new Object();
 
         private readonly string _adapterSet;
+        /// <summary>
+        /// 
+        /// </summary>
         public string AdapterSet
         {
             get
@@ -69,6 +134,9 @@ namespace CIAPI.StreamingClient
         private bool _isPolling;
         private bool _reconnect;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public bool Connected { get; private set; }
 
         private int _phase;
@@ -87,6 +155,15 @@ namespace CIAPI.StreamingClient
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="streamingUri"></param>
+        /// <param name="userName"></param>
+        /// <param name="sessionId"></param>
+        /// <param name="adapterSet"></param>
+        /// <param name="usePolling"></param>
+        /// <param name="serializer"></param>
         public FaultTolerantLsClientAdapter(string streamingUri, string userName, string sessionId, string adapterSet, bool usePolling, IJsonSerializer serializer)
         {
 #if !SILVERLIGHT
@@ -168,6 +245,9 @@ namespace CIAPI.StreamingClient
             gate.WaitOne();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public event EventHandler<ConnectionStatusEventArgs> StatusUpdate;
 
         #region IConnectionListener Members
@@ -273,6 +353,14 @@ namespace CIAPI.StreamingClient
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="topic"></param>
+        /// <param name="mode"></param>
+        /// <param name="snapshot"></param>
+        /// <typeparam name="TDto"></typeparam>
+        /// <returns></returns>
         public IStreamingListener<TDto> BuildListener<TDto>(string topic, string mode, bool snapshot) where TDto : class, new()
         {
 
@@ -487,6 +575,11 @@ namespace CIAPI.StreamingClient
         }
 
         private bool _disposed;
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        /// <filterpriority>2</filterpriority>
         public void Dispose()
         {
             _disposed = true;

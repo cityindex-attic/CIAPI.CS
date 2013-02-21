@@ -3,22 +3,37 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
-using CIAPI.Streaming;
 using Lightstreamer.DotNet.Client;
 using Salient.ReflectiveLoggingAdapter;
 using Salient.ReliableHttpClient.Serialization;
 
 
+// ReSharper disable CheckNamespace
 namespace CIAPI.StreamingClient.Lightstreamer
+// ReSharper restore CheckNamespace
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="TDto"></typeparam>
     public class LightstreamerDtoConverter<TDto> : IMessageConverter<TDto> where TDto : new()
     {
-        private IJsonSerializer _serializer;
+        private readonly IJsonSerializer _serializer;
         private static readonly ILog Log = LogManager.GetLogger(typeof(LightstreamerDtoConverter<TDto>));
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="serializer"></param>
         public LightstreamerDtoConverter(IJsonSerializer serializer)
         {
             _serializer = serializer;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
         public virtual TDto Convert(object data)
         {
             var updateInfo = (IUpdateInfo)data;
@@ -34,11 +49,21 @@ namespace CIAPI.StreamingClient.Lightstreamer
             return dto;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public string GetFieldList()
         {
             return string.Join(" ", DtoPropertyNames.ToArray());
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fieldPropertyInfo"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
         public int GetFieldIndex(PropertyInfo fieldPropertyInfo)
         {
             for (var i = 0; i < DtoPropertyNames.Count; i++)
@@ -50,6 +75,9 @@ namespace CIAPI.StreamingClient.Lightstreamer
         }
 
         private List<string> _dtoPropertyNames;
+        /// <summary>
+        /// 
+        /// </summary>
         public List<string> DtoPropertyNames
         {
             get
@@ -191,6 +219,13 @@ namespace CIAPI.StreamingClient.Lightstreamer
 
             return convertedValue;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <param name="propertyName"></param>
+        /// <param name="value"></param>
+        /// <exception cref="Exception"></exception>
         public void PopulateProperty(TDto dto, string propertyName, string value)
         {
 

@@ -33,16 +33,32 @@ using System;
 using System.IO;
 using System.Text;
 
+// ReSharper disable CheckNamespace
 namespace CIAPI.StreamingClient.Lightstreamer
+// ReSharper restore CheckNamespace
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public sealed class HttpUtility
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
         public static string UrlEncode(string str)
         {
             return UrlEncode(str, Encoding.UTF8);
         }
 
-        public static string UrlEncode(string s, Encoding Enc)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="enc"></param>
+        /// <returns></returns>
+        public static string UrlEncode(string s, Encoding enc)
         {
             if (s == null)
                 return null;
@@ -69,8 +85,8 @@ namespace CIAPI.StreamingClient.Lightstreamer
                 return s;
 
             // avoided GetByteCount call
-            byte[] bytes = new byte[Enc.GetMaxByteCount(s.Length)];
-            int realLen = Enc.GetBytes(s, 0, s.Length, bytes, 0);
+            var bytes = new byte[enc.GetMaxByteCount(s.Length)];
+            int realLen = enc.GetBytes(s, 0, s.Length, bytes, 0);
 #if SILVERLIGHT
             var buff = UrlEncodeToBytes(bytes, 0, realLen);
             return Encoding.UTF8.GetString(buff, 0, buff.Length);
@@ -80,6 +96,13 @@ namespace CIAPI.StreamingClient.Lightstreamer
 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <param name="offset"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
         public static byte[] UrlEncodeToBytes(byte[] bytes, int offset, int count)
         {
             if (bytes == null)
@@ -87,7 +110,7 @@ namespace CIAPI.StreamingClient.Lightstreamer
             return HttpEncoder.UrlEncodeToBytes(bytes, offset, count);
         }
 
-        private class HttpEncoder
+        private static class HttpEncoder
         {
             static char[] hexChars = "0123456789abcdef".ToCharArray();
 
@@ -118,7 +141,8 @@ namespace CIAPI.StreamingClient.Lightstreamer
 
             internal static bool NotEncoded(char c)
             {
-                return (c == '!' || c == '(' || c == ')' || c == '*' || c == '-' || c == '.' || c == '_'
+                return 
+                    (c == '!' || c == '(' || c == ')' || c == '*' || c == '-' || c == '.' || c == '_'
 #if !NET_4_0
  || c == '\''
 #endif

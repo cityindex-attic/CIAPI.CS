@@ -7,16 +7,29 @@ using Salient.ReliableHttpClient;
 
 namespace CIAPI.Rpc
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class MetricsRecorder : Recorder
     {
         private readonly string _metricsSession;
         private readonly string _metricsAccessKey;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public Uri AppmetricsUri { get; private set; }
         private readonly Timer _metricsTimer;
         
         private static readonly ILog Log = LogManager.GetLogger(typeof(MetricsRecorder));
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="appmetricsUri"></param>
+        /// <param name="metricsSession"></param>
+        /// <param name="metricsAccessKey"></param>
         public MetricsRecorder(Client client, Uri appmetricsUri, string metricsSession, string metricsAccessKey = null)
             : base(client)
         {
@@ -27,6 +40,9 @@ namespace CIAPI.Rpc
             _metricsTimer = new Timer(ignored => PostMetrics(), null, 1000, 10000);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public override void Stop()
         {
             _metricsTimer.Change(int.MaxValue, int.MaxValue);
@@ -112,6 +128,10 @@ namespace CIAPI.Rpc
                 Log.Error("Latency message failed to be issued.", ex2);
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="disposing"></param>
         protected override void Dispose(bool disposing)
         {
             if (disposing)

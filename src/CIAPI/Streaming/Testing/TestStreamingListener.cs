@@ -4,6 +4,9 @@ using CIAPI.StreamingClient;
 
 namespace CIAPI.Streaming.Testing
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public abstract class TestStreamingListener : IStreamingListener
     {
 
@@ -11,6 +14,9 @@ namespace CIAPI.Streaming.Testing
         private readonly string _topic;
         private Timer _timer;
         private readonly string _adapter;
+        /// <summary>
+        /// 
+        /// </summary>
         public string Adapter
         {
             get
@@ -20,6 +26,11 @@ namespace CIAPI.Streaming.Testing
 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="adapter"></param>
+        /// <param name="topic"></param>
         protected TestStreamingListener(string adapter, string topic)
         {
             _adapter = adapter;
@@ -28,16 +39,25 @@ namespace CIAPI.Streaming.Testing
             _topic = topic;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public int Phase { get; set; }
 
         #region IStreamingListener Members
-
+        /// <summary>
+        /// 
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="phase"></param>
         public void Start(int phase)
         {
             Phase = phase;
@@ -48,6 +68,9 @@ namespace CIAPI.Streaming.Testing
             _timer = new Timer(TimerCallback, null, 0, 250);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void Stop()
         {
             if (_timer != null)
@@ -57,6 +80,9 @@ namespace CIAPI.Streaming.Testing
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public string Topic
         {
             get { return _topic; }
@@ -67,9 +93,16 @@ namespace CIAPI.Streaming.Testing
 
 
         #endregion
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ignored"></param>
         protected abstract void TimerCallback(object ignored);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="disposing"></param>
         protected virtual void Dispose(bool disposing)
         {
             if (disposing)
@@ -79,8 +112,17 @@ namespace CIAPI.Streaming.Testing
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="TDTO"></typeparam>
     public class TestStreamingListener<TDTO> : TestStreamingListener, IStreamingListener<TDTO> where TDTO : class, new()
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="adapter"></param>
+        /// <param name="topic"></param>
         public TestStreamingListener(string adapter, string topic)
             : base(adapter, topic)
         {
@@ -88,10 +130,16 @@ namespace CIAPI.Streaming.Testing
 
         #region IStreamingListener<TDTO> Members
 
+        /// <summary>
+        /// 
+        /// </summary>
         public event EventHandler<MessageEventArgs<TDTO>> MessageReceived;
 
         #endregion
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ignored"></param>
         protected override void TimerCallback(object ignored)
         {
             OnCreateMessage(this, new MessageEventArgs<TDTO>(Adapter,  Topic, new TDTO(), Phase));
@@ -114,6 +162,9 @@ namespace CIAPI.Streaming.Testing
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public Action<MessageEventArgs<TDTO>> CreateMessage;
     }
 }

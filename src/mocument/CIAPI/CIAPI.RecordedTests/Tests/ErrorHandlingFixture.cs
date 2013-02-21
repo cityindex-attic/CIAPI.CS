@@ -30,7 +30,7 @@ namespace CIAPI.RecordedTests
         {
             try
             {
-                var rpcClient = BuildRpcClient();
+                var rpcClient = BuildRpcClient("Http200ErrorsShouldThrow");
                 rpcClient.Http200ErrorsOnly = true;
 
                 const int moreThanMaxHeadlines = 1000;
@@ -45,7 +45,7 @@ namespace CIAPI.RecordedTests
         [Test]
         public void LogOutShouldInvalidateSession()
         {
-            var rpcClient = BuildRpcClient();
+            var rpcClient = BuildRpcClient("LogOutShouldInvalidateSession");
 
             var headlines = rpcClient.News.ListNewsHeadlinesWithSource("dj", "UK", 3);
             Assert.That(headlines.Headlines.Length, Is.GreaterThan(0), "you should have a set of headlines");
@@ -67,7 +67,7 @@ namespace CIAPI.RecordedTests
         [Test]
         public void TheSameErrorShouldhaveTheSameErrorMessage()
         {
-            var rpcClient = BuildRpcClient();
+            var rpcClient = BuildRpcClient("TheSameErrorShouldhaveTheSameErrorMessage");
 
             var error1 = GetBadRequestErrorMessage(rpcClient);
             var error2 = GetBadRequestErrorMessage(rpcClient);
@@ -96,7 +96,7 @@ namespace CIAPI.RecordedTests
         [Test]
         public void ErrorMessageShouldContainDetailsOfErrorResponseDTO()
         {
-            var rpcClient = BuildRpcClient();
+            var rpcClient = BuildRpcClient("ErrorMessageShouldContainDetailsOfErrorResponseDTO");
 
             var error1 = GetBadRequestErrorMessage(rpcClient);
 

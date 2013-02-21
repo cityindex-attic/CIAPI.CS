@@ -12,7 +12,7 @@ namespace CIAPI.RecordedTests
         [Test]
         public void CanGetPriceBars()
         {
-            var rpcClient = BuildRpcClient();
+            var rpcClient = BuildRpcClient("CanGetPriceBars");
 
             var response = rpcClient.PriceHistory.GetPriceBars("400158776", "MINUTE", 10, "10");
             Assert.AreEqual(10, response.PriceBars.Length);
@@ -21,7 +21,7 @@ namespace CIAPI.RecordedTests
         [Test]
         public void CanGetPriceTicks()
         {
-            var rpcClient = BuildRpcClient();
+            var rpcClient = BuildRpcClient("CanGetPriceTicks");
 
             var response = rpcClient.PriceHistory.GetPriceTicks("400158776", "10");
             Assert.AreEqual(10, response.PriceTicks.Length);

@@ -11,7 +11,7 @@ namespace CIAPI.RecordedTests
         [Test]
         public void CanCreateAndLoginAndLogout()
         {
-            var client = BuildRpcClient();
+            var client = BuildRpcClient("CanCreateAndLoginAndLogout");
 
             client.LogOut();
             client.Dispose();
@@ -20,7 +20,7 @@ namespace CIAPI.RecordedTests
         [Test]
         public void CanCreateAndThenLoginAndLogout()
         {
-            var client = BuildUnauthenticatedRpcClient();
+            var client = BuildUnauthenticatedRpcClient("CanCreateAndThenLoginAndLogout");
             client.LogIn(UserName, Password);
             client.LogOut();
             client.Dispose();

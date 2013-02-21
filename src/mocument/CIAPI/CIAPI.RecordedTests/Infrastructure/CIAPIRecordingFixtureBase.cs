@@ -94,10 +94,10 @@ namespace CIAPI.RecordedTests.Infrastructure
             }
         }
 
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        protected  Uri BuildUri(string u=null,int frame = 2)
+   
+        protected  Uri BuildUri(string tapeName,string u=null)
         {
-            string tapeId = new StackFrame(frame, true).GetMethod().Name;
+            string tapeId = tapeName;
             var apiUri = u ?? _apiUrl;
 
             string api = apiUri.Substring(new Uri(apiUri).Scheme.Length + 3);
@@ -155,20 +155,12 @@ namespace CIAPI.RecordedTests.Infrastructure
 
         private Server CreateServer()
         {
-            try
-            {
-                int port = Server.GetAvailablePort(32000, 33000, IPAddress.Loopback, false);
-                int sslPort = Server.GetAvailablePort(32000, 33000, IPAddress.Loopback, false, port);
-                IStore store = CreateStore();
-                var server = new Server(port, sslPort, "localhost.", false, store);
-                server.Start();
-                return server;
-            }
-            catch (Exception ex)
-            {
-                
-                throw;
-            }
+            int port = Server.GetAvailablePort(32000, 33000, IPAddress.Loopback, false);
+            int sslPort = Server.GetAvailablePort(32000, 33000, IPAddress.Loopback, false, port);
+            IStore store = CreateStore();
+            var server = new Server(port, sslPort, "localhost.", false, store);
+            server.Start();
+            return server;
         }
 
         protected internal string GetErrorInfo(Exception exception)
@@ -180,22 +172,22 @@ namespace CIAPI.RecordedTests.Infrastructure
         }
 
 
-        protected Client BuildRpcClient()
+        protected Client BuildRpcClient(string tapeId)
         {
             // WARNING: do not nest or otherwise refactor this method
             // buildUri is looking back 2 stack frames to get the method that called this
 
 
-            var rpcClient = new Client(BuildUri(), new Uri(_streamingUrl), _apiKey);
+            var rpcClient = new Client(BuildUri(tapeId), new Uri(_streamingUrl), _apiKey);
             rpcClient.LogIn(_userName, _password);
             return rpcClient;
         }
-        protected Client BuildUnauthenticatedRpcClient()
+        protected Client BuildUnauthenticatedRpcClient(string tapeId)
         {
             // WARNING: do not nest or otherwise refactor this method
             // buildUri is looking back 2 stack frames to get the method that called this
 
-            var rpcClient = new Client(BuildUri(), new Uri(_streamingUrl), _apiKey);
+            var rpcClient = new Client(BuildUri(tapeId), new Uri(_streamingUrl), _apiKey);
             return rpcClient;
         }
     }

@@ -1341,11 +1341,11 @@ namespace CIAPI.DTO
         /// </summary>
         public string Currency { get; set; }
         /// <summary>
-        /// The realised profit and loss (P&L).
+        /// The realised profit and loss (P&amp;L).
         /// </summary>
         public decimal? RealisedPnl { get; set; }
         /// <summary>
-        /// The realised P&L currency.
+        /// The realised P&amp;L currency.
         /// </summary>
         public string RealisedPnlCurrency { get; set; }
         /// <summary>

@@ -11,14 +11,14 @@ namespace CIAPI.RecordedTests
         [ExpectedException(typeof(ReliableHttpException))]
         public void ListNewsHeadlinesWithSourceMNIExpectsException()
         {
-            var rpcClient = BuildRpcClient();
+            var rpcClient = BuildRpcClient("ListNewsHeadlinesWithSourceMNIExpectsException");
             rpcClient.News.ListNewsHeadlinesWithSource("MNI", "ALL", 2);
         }
 
         [Test]
         public void HowToUseNews()
         {
-            var rpcClient = BuildRpcClient();
+            var rpcClient = BuildRpcClient("HowToUseNews");
 
 
 
@@ -45,7 +45,7 @@ namespace CIAPI.RecordedTests
         [Test]
         public void CanListNewsHeadlinesWithSource()
         {
-            var rpcClient = BuildRpcClient();
+            var rpcClient = BuildRpcClient("CanListNewsHeadlinesWithSource");
 
 
 
