@@ -27,7 +27,7 @@
 
 	<PropertyGroup>
 		<!-- list of test assemblies (space separated) -->
-		<TestAssemblies>$(SrcDirectory)\CIAPI.Tests\bin\$(Configuration)\CIAPI.Tests.dll $(SrcDirectory)\mocument\CIAPI\CIAPI.RecordedTests\bin\$(Configuration)\CIAPI.RecordedTests.dll</TestAssemblies>
+		<TestAssemblies>"$(SrcDirectory)\CIAPI.Tests\bin\$(Configuration)\CIAPI.Tests.dll" "$(SrcDirectory)\mocument\CIAPI\CIAPI.RecordedTests\bin\$(Configuration)\CIAPI.RecordedTests.dll"</TestAssemblies>
 		<!-- list of assembly filters (space separated) - see https://github.com/sawilde/opencover/wiki/Usage -filter: for syntax-->
 		<OpenCoverFilter>+[*]* -[CIAPI.Tests*]* -[*]CIAPI.DTO* -[DotNetClient_N2]* </OpenCoverFilter>
 	</PropertyGroup>
