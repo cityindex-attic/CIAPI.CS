@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
+﻿using System.Collections.Specialized;
 using System.Configuration;
-using System.Linq;
-using System.Text;
-using System;
-using System.IO;
+using System.ServiceProcess;
 using Mocument.DataAccess.SQLite;
 using Mocument.ReverseProxyServer;
 
 namespace Mocument.ReverseProxyService
 {
-    class WinService : System.ServiceProcess.ServiceBase
+    class WinService : ServiceBase
     {
         private static int _port;
         private static bool _secured;
@@ -23,20 +18,21 @@ namespace Mocument.ReverseProxyService
         // The main entry point for the process
         static void Main()
         {
-            System.ServiceProcess.ServiceBase[] ServicesToRun;
-            ServicesToRun =
-              new System.ServiceProcess.ServiceBase[] { new WinService() };
-            System.ServiceProcess.ServiceBase.Run(ServicesToRun);
+            var servicesToRun = new ServiceBase[] { new WinService() };
+            Run(servicesToRun);
         }
+
         /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
+// ReSharper disable UnusedMember.Local
         private void InitializeComponent()
+// ReSharper restore UnusedMember.Local
         {
-            this.ServiceName = "Mocument.ReverseProxyService";
+            ServiceName = "Mocument.ReverseProxyService";
         }
-        private string folderPath = @"c:\temp";
+    
         /// <summary>
         /// Set things in motion so your service can do its work.
         /// </summary>

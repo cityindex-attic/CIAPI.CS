@@ -30,7 +30,7 @@
     NOTE: multiple assemblies seem not to be possible. tried all permutations of quotes, no  quotes, see if you can figure it out
     $(SrcDirectory)\CIAPI.Tests\bin\$(Configuration)\CIAPI.Tests.dll
     -->
-    <TestAssemblies>$(SrcDirectory)\mocument\CIAPI\CIAPI.RecordedTests\bin\$(Configuration)\CIAPI.RecordedTests.dll</TestAssemblies>
+    <TestAssemblies>$(SrcDirectory)\mocument\CIAPI\CIAPI.RecordedTests\bin\$(Configuration)\CIAPI.RecordedTests.dll;$(SrcDirectory)\CIAPI.Tests\bin\$(Configuration)\CIAPI.Tests.dll</TestAssemblies>
 		<!-- list of assembly filters (space separated) - see https://github.com/sawilde/opencover/wiki/Usage -filter: for syntax-->
 		<OpenCoverFilter>+[*]* -[CIAPI.Tests*]* -[*]CIAPI.DTO* -[DotNetClient_N2]* </OpenCoverFilter>
 	</PropertyGroup>

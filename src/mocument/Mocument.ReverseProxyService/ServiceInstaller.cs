@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System;
-using System.IO;
-namespace Mocument.ReverseProxyService
+﻿namespace Mocument.ReverseProxyService
 {
     /// <summary>
     ///     Summary description for ProjectInstaller.
@@ -16,9 +10,9 @@ namespace Mocument.ReverseProxyService
         ///    Required designer variable.
         /// </summary>
         //private System.ComponentModel.Container components;
-        private System.ServiceProcess.ServiceInstaller serviceInstaller;
+        private System.ServiceProcess.ServiceInstaller _serviceInstaller;
         private System.ServiceProcess.ServiceProcessInstaller
-                serviceProcessInstaller;
+                _serviceProcessInstaller;
 
         public ProjectInstaller()
         {
@@ -32,28 +26,28 @@ namespace Mocument.ReverseProxyService
         /// </summary>
         private void InitializeComponent()
         {
-            this.serviceInstaller = new System.ServiceProcess.ServiceInstaller();
-            this.serviceProcessInstaller =
+            _serviceInstaller = new System.ServiceProcess.ServiceInstaller();
+            _serviceProcessInstaller =
               new System.ServiceProcess.ServiceProcessInstaller();
             // 
             // serviceInstaller
             // 
-            this.serviceInstaller.Description = "Mocument.ReverseProxyService";
-            this.serviceInstaller.DisplayName = "Mocument.ReverseProxyService";
-            this.serviceInstaller.ServiceName = "Mocument.ReverseProxyService";
+            _serviceInstaller.Description = "Mocument.ReverseProxyService";
+            _serviceInstaller.DisplayName = "Mocument.ReverseProxyService";
+            _serviceInstaller.ServiceName = "Mocument.ReverseProxyService";
             // 
             // serviceProcessInstaller
             // 
-            this.serviceProcessInstaller.Account =
+            _serviceProcessInstaller.Account =
               System.ServiceProcess.ServiceAccount.LocalService;
-            this.serviceProcessInstaller.Password = null;
-            this.serviceProcessInstaller.Username = null;
+            _serviceProcessInstaller.Password = null;
+            _serviceProcessInstaller.Username = null;
             // 
             // ServiceInstaller
             // 
-            this.Installers.AddRange(new System.Configuration.Install.Installer[] {
-            this.serviceProcessInstaller,
-            this.serviceInstaller});
+            Installers.AddRange(new System.Configuration.Install.Installer[] {
+            _serviceProcessInstaller,
+            _serviceInstaller});
 
         }
     }

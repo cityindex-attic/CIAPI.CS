@@ -9,7 +9,7 @@ namespace CIAPI.IntegrationTests.Rpc
     [TestFixture]
     public class FaqIssueResolutionFixture : RpcFixtureBase
     {
-        [Test,Ignore]
+        [Test,Ignore("core functionality broken")]
         public void CanEmptyQueueAndShutdown()
         {
             using (var rpcClient = BuildRpcClient())
@@ -22,7 +22,7 @@ namespace CIAPI.IntegrationTests.Rpc
                                                                {
                                                                    try
                                                                    {
-                                                                       rpcClient.EndRequest(r);
+                                                                       rpcClient.EndLogIn(r);
                                                                        Console.WriteLine(r.AsyncState + " succeeded?!");
                                                                    }
                                                                    catch (Exception)
@@ -40,7 +40,7 @@ namespace CIAPI.IntegrationTests.Rpc
                     handle.WaitOne();
                 }
                 Console.WriteLine("shut down");
-                rpcClient.Dispose();
+            
             }
         }
 

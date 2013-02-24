@@ -3,5 +3,5 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
           <asp:Button ID="btnGoogleLogin" runat="server" CommandArgument="https://www.google.com/accounts/o8/id" 
-        OnCommand="btnGoogleLogin_Click" Text="Sign In with Google" />
+        OnCommand="BtnGoogleLoginClick" Text="Sign In with Google" />
 </asp:Content>
