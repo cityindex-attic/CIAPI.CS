@@ -1,7 +1,5 @@
-﻿// #DONE
-
-using System;
-
+﻿using System;
+using System.Runtime.Serialization;
 namespace Salient.HTTPArchiveModel
 {
     /// <summary>

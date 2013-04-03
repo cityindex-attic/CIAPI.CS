@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="src/tools/fauxconsole.js" type="text/javascript"></script>
+    <style type="text/css">
+        @import 'src/tools/fauxconsole.css';
+    </style>
+    
+    
+    
+    <script type="text/javascript">
+        console.addLoadEvent(function () {
+
+
+            var schema = exports.schema;
+            var smd = exports.smd;
+            var schemaPatch = exports.schemaPatch;
+            var routesPatch = exports.routesPatch;
+
+            for (patchTypeName in schemaPatch.properties) {
+                if (schemaPatch.properties.hasOwnProperty(patchTypeName)) {
+                    var patchType = schemaPatch.properties[patchTypeName];
+                    var targetType = schema.properties[patchTypeName];
+                    for (patchPropertyName in patchType.properties) {
+
+
+                        if (patchType.properties.hasOwnProperty(patchPropertyName)) {
+                            if (patchPropertyName == "$DELETE$") {
+                                for (toDelete in patchType.properties["$DELETE$"]) {
+                                    var toDeletePropName = patchType.properties["$DELETE$"][toDelete];
+                                    delete targetType.properties[toDeletePropName];
+                                }
+
+                            }
+                            else {
+                                targetType.properties[patchPropertyName] = patchType.properties[patchPropertyName];
+                            }
+
+                        }
+                    }
+                }
+            }
+
+
+            var JSchemaProvider = exports.JSchemaProvider;
+            var CSharpVisitor = exports.CSharpVisitor;
+            var CSharpRouteGenerator = exports.CSharpRouteGenerator;
+
+            var LSChannelGenerator = exports.LSChannelGenerator;
+
+
+            // FIXME: provider model idea sounded good at the time but is actually just
+            // unnecessary complexity. need to revert to simple iteration model.
+
+            var visitor = new CSharpVisitor();
+            var provider = new JSchemaProvider(visitor);
+            // FIXME: schema should be a ctor param 
+            provider.schema = schema;
+            // FIXME: instigator should not take parameters
+            provider.visit("root", schema, "schema");
+            var output = visitor.toString();
+            document.getElementById("code").value = output;
+
+
+
+            var rpcGenerator = new CSharpRouteGenerator(smd.services.rpc, schema, "CIAPI.Rpc", "Client", ["System", "System.Collections.Generic", "CIAPI.DTO"], routesPatch);
+            var rpcRoutes = rpcGenerator.generate();
+            document.getElementById("routes").value = rpcRoutes;
+
+            var channelGenerator = new LSChannelGenerator();
+            var channels = channelGenerator.generateChannels(smd.services.streaming);
+            document.getElementById("channels").value = channels;
+        });
+
+        var exports = {};
+    </script>
+    <script src="src/meta/schema.js" type="text/javascript"></script>
+    <script src="src/meta/smd.js" type="text/javascript"></script>
+    <script src="src/meta/schema.patch.js" type="text/javascript"></script>
+    <script src="src/meta/routes.patch.js" type="text/javascript"></script>
+    <script src="src/JSchemaProvider.js" type="text/javascript"></script>
+    <script src="src/JSchemaProvider.CSharpVisitor.js" type="text/javascript"></script>
+    <script src="src/CSharpRouteGenerator.js" type="text/javascript"></script>
+    <script src="src/CSharpLightStreamerChannelGenerator.js" type="text/javascript"></script>
+</head>
+<body>
+    <textarea id="code" style="width: 100%; height: 400px"></textarea>
+    <textarea id="routes" style="width: 100%; height: 400px"></textarea>
+    <textarea id="channels" style="width: 100%; height: 400px"></textarea>
+    
+</body>
+</html>
