@@ -117,6 +117,19 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="data\AccountInformationFixture.har" />
+    <None Include="data\AppKeyFixture.har" />
+    <None Include="data\AuthenticationFixture.har" />
+    <None Include="data\BasicAuthenticationFixture.har" />
+    <None Include="data\CfdMarketsFixture.har" />
+    <None Include="data\ErrorHandlingFixture.har" />
+    <None Include="data\FaqIssueResolutionFixture.har" />
+    <None Include="data\MarketFixture.har" />
+    <None Include="data\MessagingFixture.har" />
+    <None Include="data\NewsFixture.har" />
+    <None Include="data\PriceHistoryFixture.har" />
+    <None Include="data\SpreadMarketsFixture.har" />
+    <None Include="data\WatchListFixture.har" />
     <None Include="FiddlerRoot.cer">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

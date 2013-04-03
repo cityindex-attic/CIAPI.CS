@@ -2296,9 +2296,9 @@ namespace CIAPI.DTO
         /// </summary>
         public decimal? Delta { get; set; }
         /// <summary>
-        /// A measure of an options's price variance over time. **Note:** this volatility is a calculated value from a proprietary City Index model. For non-option markets this is null.
+        /// A measure of an options's price variance over time. **Note:** this volatility is a calculated value from a proprietary model. For non-option markets this is null.
         /// </summary>
-        public decimal? Volatility { get; set; }
+        public decimal? ImpliedVolatility { get; set; }
         /// <summary>
         /// A unique ID for this price. Treat as a unique, but random string.
         /// </summary>

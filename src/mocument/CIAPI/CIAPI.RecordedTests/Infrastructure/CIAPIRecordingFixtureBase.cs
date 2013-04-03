@@ -10,6 +10,7 @@ using Mocument.DataAccess;
 using Mocument.ReverseProxyServer;
 using NUnit.Framework;
 using Newtonsoft.Json;
+using Salient.ReflectiveLoggingAdapter;
 
 namespace CIAPI.RecordedTests.Infrastructure
 {
@@ -19,6 +20,14 @@ namespace CIAPI.RecordedTests.Infrastructure
     [TestFixture]
     public abstract class CIAPIRecordingFixtureBase
     {
+        static CIAPIRecordingFixtureBase()
+        {
+            LogManager.CreateInnerLogger = (logName, logLevel, showLevel, showDateTime, showLogName, dateTimeFormat)
+   => new SimpleTraceAppender(logName, logLevel, showLevel, showDateTime, showLogName, dateTimeFormat);
+
+            
+        }
+
         private MocumentMode _mocumentMode;
         private string _userName;
         private string _password;
