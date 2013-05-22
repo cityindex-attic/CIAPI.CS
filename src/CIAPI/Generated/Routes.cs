@@ -310,7 +310,7 @@ public string AppKey { get; set; }
 
 
         /// <summary>
-        /// Get historic price bars for the specified market in OHLC *(open, high, low, close)* format, suitable for plotting in candlestick charts. Returns price bars in ascending order up to the current time. When there are no prices for a particular time period, no price bar is returned. Thus, it can appear that the array of price bars has "gaps", i.e. the gap between the date & time of each price bar might not be equal to interval x span.  Sample Urls: * /market/1234/history?interval=MINUTE&span=15&PriceBars=180 * /market/735/history?interval=HOUR&span=1&PriceBars=240 * /market/1577/history?interval=DAY&span=1&PriceBars=10
+        /// Get historic price bars for the specified market in OHLC *(open, high, low, close)* format, suitable for plotting in candlestick charts. Returns price bars in ascending order up to the current time. When there are no prices for a particular time period, no price bar is returned. Thus, it can appear that the array of price bars has "gaps", i.e. the gap between the date &amp; time of each price bar might not be equal to interval x span.  Sample Urls: * /market/1234/history?interval=MINUTE&amp;span=15&amp;PriceBars=180 * /market/735/history?interval=HOUR&amp;span=1&amp;PriceBars=240 * /market/1577/history?interval=DAY&amp;span=1&PriceBars=10
         /// </summary>
         /// <param name="MarketId">The ID of the market.</param>
         /// <param name="interval">The pricebar interval.</param>
@@ -331,7 +331,7 @@ public string AppKey { get; set; }
 
 
         /// <summary>
-        /// Get historic price bars for the specified market in OHLC *(open, high, low, close)* format, suitable for plotting in candlestick charts. Returns price bars in ascending order up to the current time. When there are no prices for a particular time period, no price bar is returned. Thus, it can appear that the array of price bars has "gaps", i.e. the gap between the date & time of each price bar might not be equal to interval x span.  Sample Urls: * /market/1234/history?interval=MINUTE&span=15&PriceBars=180 * /market/735/history?interval=HOUR&span=1&PriceBars=240 * /market/1577/history?interval=DAY&span=1&PriceBars=10
+        /// Get historic price bars for the specified market in OHLC *(open, high, low, close)* format, suitable for plotting in candlestick charts. Returns price bars in ascending order up to the current time. When there are no prices for a particular time period, no price bar is returned. Thus, it can appear that the array of price bars has "gaps", i.e. the gap between the date &amp; time of each price bar might not be equal to interval x span.  Sample Urls: * /market/1234/history?interval=MINUTE&amp;span=15&amp;PriceBars=180 * /market/735/history?interval=HOUR&amp;span=1&amp;PriceBars=240 * /market/1577/history?interval=DAY&amp;span=1&PriceBars=10
         /// </summary>
         /// <param name="MarketId">The ID of the market.</param>
         /// <param name="interval">The pricebar interval.</param>
@@ -1906,7 +1906,7 @@ public string AppKey { get; set; }
 
 
         /// <summary>
-        /// Use the message lookup service to get localised text names for the various status codes & IDs returned by the API. For example, a query for **OrderStatusReason** will contain text names for all the possible values of **OrderStatusReason** in the [ApiOrderResponseDTO](http://labs.cityindex.com/docs/Content/Data%20Types/ApiOrderResponseDTO.htm). You should only request the list once per session *(for each entity you're interested in)*.
+        /// Use the message lookup service to get localised text names for the various status codes &amp; IDs returned by the API. For example, a query for **OrderStatusReason** will contain text names for all the possible values of **OrderStatusReason** in the [ApiOrderResponseDTO](http://labs.cityindex.com/docs/Content/Data%20Types/ApiOrderResponseDTO.htm). You should only request the list once per session *(for each entity you're interested in)*.
         /// </summary>
         /// <param name="LookupEntityName">The entity to lookup. For example: **OrderStatusReason**, **InstructionStatusReason**, **OrderApplicability**, **Currency**, **QuoteStatus**, **QuoteStatusReason** or **Culture**.</param>
         /// <param name="CultureId">The Culture ID used to override the translated text description. *(Optional)*.</param>
@@ -1923,7 +1923,7 @@ public string AppKey { get; set; }
 
 
         /// <summary>
-        /// Use the message lookup service to get localised text names for the various status codes & IDs returned by the API. For example, a query for **OrderStatusReason** will contain text names for all the possible values of **OrderStatusReason** in the [ApiOrderResponseDTO](http://labs.cityindex.com/docs/Content/Data%20Types/ApiOrderResponseDTO.htm). You should only request the list once per session *(for each entity you're interested in)*.
+        /// Use the message lookup service to get localised text names for the various status codes &amp; IDs returned by the API. For example, a query for **OrderStatusReason** will contain text names for all the possible values of **OrderStatusReason** in the [ApiOrderResponseDTO](http://labs.cityindex.com/docs/Content/Data%20Types/ApiOrderResponseDTO.htm). You should only request the list once per session *(for each entity you're interested in)*.
         /// </summary>
         /// <param name="LookupEntityName">The entity to lookup. For example: **OrderStatusReason**, **InstructionStatusReason**, **OrderApplicability**, **Currency**, **QuoteStatus**, **QuoteStatusReason** or **Culture**.</param>
         /// <param name="CultureId">The Culture ID used to override the translated text description. *(Optional)*.</param>

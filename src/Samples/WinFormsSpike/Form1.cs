@@ -65,7 +65,13 @@ namespace WinFormsSpike
                     }
                     finally
                     {
-                        Cursor = Cursors.Default;
+                        Invoke(() =>
+                        {
+                            Cursor = Cursors.Default;
+                            Application.DoEvents();
+
+                        });
+                        
                     }
                 }, null);
 

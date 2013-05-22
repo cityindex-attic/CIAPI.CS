@@ -3,7 +3,7 @@
 
 namespace CIAPI.Tests
 {
-    public static class StaticTestConfiga
+    public static class StaticTestConfig
     {
         public static string RpcUrl
         {
@@ -29,14 +29,14 @@ namespace CIAPI.Tests
             get
             {
                 //xx189949
-                return "DM715257";
+                return "xx663766";
             }
         }
         public static string ApiPassword
         {
             get
             {
-                return "password";
+                return "password1";
             }
         }
         public static string ApiTestSessionId

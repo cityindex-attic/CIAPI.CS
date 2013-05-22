@@ -51,12 +51,8 @@
     <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Newtonsoft.Json.4.5.1\lib\net40\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="Salient.ReflectiveLoggingAdapter.35, Version=3.1.0.21, Culture=neutral, PublicKeyToken=b9b5972b9f69332b, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Salient.ReflectiveLoggingAdapter.3.1.0\lib\net35\Release\Salient.ReflectiveLoggingAdapter.35.dll</HintPath>
+    <Reference Include="Salient.ReliableHttpClient">
+      <HintPath>..\..\CIAPI\bin\Debug\Salient.ReliableHttpClient.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -78,9 +74,6 @@
     <Compile Include="SyncVsAsync.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\CIAPI.Serializer\CIAPI.Serializer.csproj">
       <Project>{B6CE30C2-5A52-4A4C-884B-64504902F833}</Project>
       <Name>CIAPI.Serializer</Name>
@@ -88,10 +81,6 @@
     <ProjectReference Include="..\..\CIAPI\CIAPI.csproj">
       <Project>{B40E6F1C-453E-44A2-BA9D-1692378B355C}</Project>
       <Name>CIAPI</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\ReliableHttpClient\Salient.ReliableHttpClient\Salient.ReliableHttpClient.csproj">
-      <Project>{528B283F-41C8-489D-A031-C9A4058BB283}</Project>
-      <Name>Salient.ReliableHttpClient</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
