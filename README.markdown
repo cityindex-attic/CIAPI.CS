@@ -24,21 +24,25 @@ Covers the complete API, and is actively being developed and supported
     
     //Setup a connection to the streaming endpoint
 
-	// Need to set up the serializer to be used by stream listeners
+	            
 
-    StreamingClientFactory.SetSerializer(new Serializer());
+    var streamingClient = rpcClient.CreateStreamingClient();
 
-    var streamingClient = StreamingClientFactory
-          .CreateStreamingClient(new Uri("https://{streaming api url}"), "{username}", rpcClient.Session);
     //Subscribe to a stream
+ 
     var priceListener = streamingClient.BuildPricesListener({marketId});
+
     priceListener.MessageReceived += (s, message) => { Console.Write(message.Data.ToString()) };
     
     //When done, disconnect and clean up
+
     streamingClient.TearDownListener(priceListener);
-    streamingClient.Dispose();
-    rpcClient.LogOut();
-    rpcClient.Dispose();
+    
+	streamingClient.Dispose();
+    
+	rpcClient.LogOut();
+    
+	rpcClient.Dispose();
     
 See the [Integration tests for further examples](https://github.com/cityindex/CIAPI.CS/tree/master/src/CIAPI.IntegrationTests)
 
