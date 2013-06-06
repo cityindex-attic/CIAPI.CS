@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>Salient.ReliableHttpClient</id>
+    <version>1.1.0</version>
+    <title>Salient.ReliableHttpClient</title>
+    <authors>Sky Sanders</authors>
+    <owners>Sky Sanders</owners>
+    <licenseUrl>https://github.com/bitpusher/Salient.ReliableHttpClient/raw/master/LICENSE.txt</licenseUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A multipurpose .NET client for HTTP services</description>
+    <language>en-US</language>
+    <dependencies>
+      <dependency id="Salient.ReflectiveLoggingAdapter" />
+    </dependencies>
+  </metadata>
+</package>

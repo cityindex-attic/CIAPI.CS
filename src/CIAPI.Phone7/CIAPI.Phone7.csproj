@@ -86,13 +86,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Salient.ReflectiveLoggingAdapter.3.2.0\lib\sl3-wp\Release\Salient.ReflectiveLoggingAdapter.Phone7.dll</HintPath>
     </Reference>
-    <Reference Include="Salient.ReliableHttpClient.Phone7, Version=1.0.11.24, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Salient.ReliableHttpClient.Phone7, Version=1.1.0.27, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Salient.ReliableHttpClient.1.0.11-bleeding-24\lib\sl3-wp\Debug\Salient.ReliableHttpClient.Phone7.dll</HintPath>
+      <HintPath>..\packages\Salient.ReliableHttpClient.1.1.0\lib\sl3-wp\Release\Salient.ReliableHttpClient.Phone7.dll</HintPath>
     </Reference>
-    <Reference Include="Salient.ReliableHttpClient.Serializer.Newtonsoft.Phone7, Version=1.0.11.24, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Salient.ReliableHttpClient.Serializer.Newtonsoft.Phone7, Version=1.1.0.27, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Salient.ReliableHttpClient.1.0.11-bleeding-24\lib\sl3-wp\Debug\Salient.ReliableHttpClient.Serializer.Newtonsoft.Phone7.dll</HintPath>
+      <HintPath>..\packages\Salient.ReliableHttpClient.1.1.0\lib\sl3-wp\Release\Salient.ReliableHttpClient.Serializer.Newtonsoft.Phone7.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows" />
     <Reference Include="system" />
