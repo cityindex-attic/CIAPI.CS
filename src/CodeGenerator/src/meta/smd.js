@@ -213,7 +213,7 @@ exports.smd =
               "$ref": "#.ListNewsHeadlinesRequestDTO",
               "name": "request",
               "description": "Object specifying the various request parameters.",
-            }
+            },
           ]
         },
         "GetNewsDetail": {
@@ -526,7 +526,7 @@ exports.smd =
           ]
         },
         "SearchWithTags": {
-          "description": "Get market information and tags for the markets that meet the search criteria. Leave the query string empty to return all markets and tags available to the user.",
+          "description": "Get market information and tags for the markets that meet the search criteria. Leave the query string empty to return all markets and tags available to the user. The results contain the summarised *MarketId* and *MarketName* properties.",
           "target": "market",
           "uriTemplate": "/searchwithtags?Query={query}&TagId={tagId}&SearchByMarketCode={searchByMarketCode}&SearchByMarketName={searchByMarketName}&SpreadProductType={spreadProductType}&CfdProductType={cfdProductType}&BinaryProductType={binaryProductType}&IncludeOptions={includeOptions}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}",
           "contentType": "application/json",
@@ -549,49 +549,126 @@ exports.smd =
             {
               "type": "integer",
               "name": "tagId",
-              "description": "The ID for the tag to be searched. *(Optional)*.",
+              "description": "The ID for the tag to be searched. *(Optional)*. Default is 0.",
               "demoValue": 0
             },
             {
               "type": "boolean",
               "name": "searchByMarketCode",
-              "description": "Sets the search to use market code.",
+              "description": "Sets the search to use market code. Default is true.",
               "demoValue": true
             },
             {
               "type": "boolean",
               "name": "searchByMarketName",
-              "description": "Sets the search to use market Name.",
+              "description": "Sets the search to use market Name. Default is true.",
               "demoValue": true
             },
             {
               "type": "boolean",
               "name": "spreadProductType",
-              "description": "Sets the search to include spread bet markets.",
+              "description": "Sets the search to include spread bet markets. Default is true.",
               "demoValue": true
             },
             {
               "type": "boolean",
               "name": "cfdProductType",
-              "description": "Sets the search to include CFD markets.",
+              "description": "Sets the search to include CFD markets. Default is true.",
               "demoValue": true
             },
             {
               "type": "boolean",
               "name": "binaryProductType",
-              "description": "Sets the search to include binary markets.",
+              "description": "Sets the search to include binary markets. Default is true.",
               "demoValue": true
             },
             {
               "type": "boolean",
               "name": "includeOptions",
-              "description": "When set to true, the search captures and returns options markets. When set to false, options markets are excluded from the search results.",
+              "description": "When set to true, the search captures and returns options markets. When set to false, options markets are excluded from the search results. Default is true.",
               "demoValue": true
             },
             {
               "type": "integer",
               "name": "maxResults",
-              "description": "The maximum number of results to return. Default is 20.",
+              "description": "The maximum number of results to return. Default is 50.",
+              "demoValue": 50
+            },
+            {
+              "type": "boolean",
+              "name": "useMobileShortName",
+              "description": "True if the market name should be in short form. Helpful when displaying data on a small screen.",
+              "default": false
+            }
+          ]
+        },
+        "FullSearchWithTags": {
+          "description": "Get full market information and tags for the markets that meet the search criteria. The results contain the full [ApiMarketInformationDTO](http://labs.cityindex.com/docs/#Data%20Types/ApiMarketInformationDTO.htm).",
+          "target": "market",
+          "uriTemplate": "/fullsearchwithtags?Query={query}&TagId={tagId}&SearchByMarketCode={searchByMarketCode}&SearchByMarketName={searchByMarketName}&SpreadProductType={spreadProductType}&CfdProductType={cfdProductType}&BinaryProductType={binaryProductType}&IncludeOptions={includeOptions}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}",
+          "contentType": "application/json",
+          "responseContentType": "application/json",
+          "transport": "GET",
+          "envelope": "URL",
+          "returns": {
+            "$ref": "#.FullMarketInformationSearchWithTagsResponseDTO"
+          },
+          "group": "Market",
+          "cacheDuration": 0,
+          "throttleScope": "data",
+          "parameters": [
+            {
+              "type": "string",
+              "name": "query",
+              "description": "The text to search for. Matches part of market name / code from the start.",
+              "demoValue": "UK 100"
+            },
+            {
+              "type": "integer",
+              "name": "tagId",
+              "description": "The ID for the tag to be searched. Default is 0. *(Optional)*.",
+              "demoValue": 0
+            },
+            {
+              "type": "boolean",
+              "name": "searchByMarketCode",
+              "description": "Sets the search to use market code. Default is true.",
+              "demoValue": true
+            },
+            {
+              "type": "boolean",
+              "name": "searchByMarketName",
+              "description": "Sets the search to use market Name. Default is true.",
+              "demoValue": true
+            },
+            {
+              "type": "boolean",
+              "name": "spreadProductType",
+              "description": "Sets the search to include spread bet markets. Default is true.",
+              "demoValue": true
+            },
+            {
+              "type": "boolean",
+              "name": "cfdProductType",
+              "description": "Sets the search to include CFD markets. Default is true.",
+              "demoValue": true
+            },
+            {
+              "type": "boolean",
+              "name": "binaryProductType",
+              "description": "Sets the search to include binary markets. Default is true.",
+              "demoValue": true
+            },
+            {
+              "type": "boolean",
+              "name": "includeOptions",
+              "description": "When set to true, the search captures and returns options markets. When set to false, options markets are excluded from the search results. Default is true.",
+              "demoValue": true
+            },
+            {
+              "type": "integer",
+              "name": "maxResults",
+              "description": "The maximum number of results to return. Default is 50.",
               "demoValue": 50
             },
             {

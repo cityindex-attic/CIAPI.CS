@@ -1,7 +1,7 @@
 exports.schema = 
 
 {
-        "namespace": "CIAPI.DTO",
+    "namespace": "CIAPI.DTO",
   "version": "0.111.0.0",
   "properties": {
     "AccountInformationResponseDTO": {
@@ -2699,6 +2699,31 @@ exports.schema =
       },
       "description": "Response from a market information search with tags request."
     },
+    "FullMarketInformationSearchWithTagsResponseDTO": {
+      "id": "FullMarketInformationSearchWithTagsResponseDTO",
+      "type": "object",
+      "properties": {
+        "Markets": {
+          "type": "array",
+          "items": [
+            {
+              "$ref": "#.ApiMarketDTO"
+            }
+          ],
+          "description": "The requested list of market information."
+        },
+        "Tags": {
+          "type": "array",
+          "items": [
+            {
+              "$ref": "#.ApiMarketTagDTO"
+            }
+          ],
+          "description": "The requested list of market tags."
+        }
+      },
+      "description": "Response from a full market information search with tags request. *(Includes market information for each market.)*"
+    },
     "MarketInformationTagLookupResponseDTO": {
       "id": "MarketInformationTagLookupResponseDTO",
       "type": "object",
@@ -3630,5 +3655,3 @@ exports.schema =
     }
   }
 }
-
-

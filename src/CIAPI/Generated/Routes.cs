@@ -122,6 +122,84 @@ public string AppKey { get; set; }
         }
 
         // ***********************************
+        // FullSearchWithTags
+        // ***********************************
+
+
+        /// <summary>
+        /// Get full market information and tags for the markets that meet the search criteria. The results contain the full [ApiMarketInformationDTO](http://labs.cityindex.com/docs/#Data%20Types/ApiMarketInformationDTO.htm).
+        /// </summary>
+        /// <param name="query">The text to search for. Matches part of market name / code from the start.</param>
+        /// <param name="tagId">The ID for the tag to be searched. Default is 0. *(Optional)*.</param>
+        /// <param name="searchByMarketCode">Sets the search to use market code. Default is true.</param>
+        /// <param name="searchByMarketName">Sets the search to use market Name. Default is true.</param>
+        /// <param name="spreadProductType">Sets the search to include spread bet markets. Default is true.</param>
+        /// <param name="cfdProductType">Sets the search to include CFD markets. Default is true.</param>
+        /// <param name="binaryProductType">Sets the search to include binary markets. Default is true.</param>
+        /// <param name="includeOptions">When set to true, the search captures and returns options markets. When set to false, options markets are excluded from the search results. Default is true.</param>
+        /// <param name="maxResults">The maximum number of results to return. Default is 50.</param>
+        /// <param name="useMobileShortName">True if the market name should be in short form. Helpful when displaying data on a small screen.</param>
+        public virtual FullMarketInformationSearchWithTagsResponseDTO FullSearchWithTags(string query, int tagId, bool searchByMarketCode, bool searchByMarketName, bool spreadProductType, bool cfdProductType, bool binaryProductType, bool includeOptions, int maxResults, bool useMobileShortName)
+        {
+            string uriTemplate = "/fullsearchwithtags?Query={query}&TagId={tagId}&SearchByMarketCode={searchByMarketCode}&SearchByMarketName={searchByMarketName}&SpreadProductType={spreadProductType}&CfdProductType={cfdProductType}&BinaryProductType={binaryProductType}&IncludeOptions={includeOptions}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}";
+            return _client.Request<FullMarketInformationSearchWithTagsResponseDTO>(RequestMethod.GET,"market", uriTemplate ,
+            new Dictionary<string, object>
+            {
+                { "query", query}, 
+                { "tagId", tagId}, 
+                { "searchByMarketCode", searchByMarketCode}, 
+                { "searchByMarketName", searchByMarketName}, 
+                { "spreadProductType", spreadProductType}, 
+                { "cfdProductType", cfdProductType}, 
+                { "binaryProductType", binaryProductType}, 
+                { "includeOptions", includeOptions}, 
+                { "maxResults", maxResults}, 
+                { "useMobileShortName", useMobileShortName}
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,0 );
+        }
+
+
+        /// <summary>
+        /// Get full market information and tags for the markets that meet the search criteria. The results contain the full [ApiMarketInformationDTO](http://labs.cityindex.com/docs/#Data%20Types/ApiMarketInformationDTO.htm).
+        /// </summary>
+        /// <param name="query">The text to search for. Matches part of market name / code from the start.</param>
+        /// <param name="tagId">The ID for the tag to be searched. Default is 0. *(Optional)*.</param>
+        /// <param name="searchByMarketCode">Sets the search to use market code. Default is true.</param>
+        /// <param name="searchByMarketName">Sets the search to use market Name. Default is true.</param>
+        /// <param name="spreadProductType">Sets the search to include spread bet markets. Default is true.</param>
+        /// <param name="cfdProductType">Sets the search to include CFD markets. Default is true.</param>
+        /// <param name="binaryProductType">Sets the search to include binary markets. Default is true.</param>
+        /// <param name="includeOptions">When set to true, the search captures and returns options markets. When set to false, options markets are excluded from the search results. Default is true.</param>
+        /// <param name="maxResults">The maximum number of results to return. Default is 50.</param>
+        /// <param name="useMobileShortName">True if the market name should be in short form. Helpful when displaying data on a small screen.</param>
+        /// <param name="callback"></param>
+        /// <param name="state"></param>
+        public virtual void BeginFullSearchWithTags(string query, int tagId, bool searchByMarketCode, bool searchByMarketName, bool spreadProductType, bool cfdProductType, bool binaryProductType, bool includeOptions, int maxResults, bool useMobileShortName, ReliableAsyncCallback callback, object state)
+        {
+            string uriTemplate = "/fullsearchwithtags?Query={query}&TagId={tagId}&SearchByMarketCode={searchByMarketCode}&SearchByMarketName={searchByMarketName}&SpreadProductType={spreadProductType}&CfdProductType={cfdProductType}&BinaryProductType={binaryProductType}&IncludeOptions={includeOptions}&MaxResults={maxResults}&UseMobileShortName={useMobileShortName}";
+            _client.BeginRequest(RequestMethod.GET, "market", uriTemplate , 
+            new Dictionary<string, object>
+            {
+                { "query", query}, 
+                { "tagId", tagId}, 
+                { "searchByMarketCode", searchByMarketCode}, 
+                { "searchByMarketName", searchByMarketName}, 
+                { "spreadProductType", spreadProductType}, 
+                { "cfdProductType", cfdProductType}, 
+                { "binaryProductType", binaryProductType}, 
+                { "includeOptions", includeOptions}, 
+                { "maxResults", maxResults}, 
+                { "useMobileShortName", useMobileShortName}
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,2 ,callback, state);
+        }
+
+        public FullMarketInformationSearchWithTagsResponseDTO EndFullSearchWithTags(ReliableAsyncResult asyncResult)
+        {
+            return _client.EndRequest<FullMarketInformationSearchWithTagsResponseDTO>(asyncResult);
+        }
+
+
+        // ***********************************
         // ListActiveOrders
         // ***********************************
 
@@ -878,17 +956,17 @@ public string AppKey { get; set; }
 
 
         /// <summary>
-        /// Get market information and tags for the markets that meet the search criteria. Leave the query string empty to return all markets and tags available to the user.
+        /// Get market information and tags for the markets that meet the search criteria. Leave the query string empty to return all markets and tags available to the user. The results contain the summarised *MarketId* and *MarketName* properties.
         /// </summary>
         /// <param name="query">The text to search for. Matches part of market name / code from the start. *(Optional)*.</param>
-        /// <param name="tagId">The ID for the tag to be searched. *(Optional)*.</param>
-        /// <param name="searchByMarketCode">Sets the search to use market code.</param>
-        /// <param name="searchByMarketName">Sets the search to use market Name.</param>
-        /// <param name="spreadProductType">Sets the search to include spread bet markets.</param>
-        /// <param name="cfdProductType">Sets the search to include CFD markets.</param>
-        /// <param name="binaryProductType">Sets the search to include binary markets.</param>
-        /// <param name="includeOptions">When set to true, the search captures and returns options markets. When set to false, options markets are excluded from the search results.</param>
-        /// <param name="maxResults">The maximum number of results to return. Default is 20.</param>
+        /// <param name="tagId">The ID for the tag to be searched. *(Optional)*. Default is 0.</param>
+        /// <param name="searchByMarketCode">Sets the search to use market code. Default is true.</param>
+        /// <param name="searchByMarketName">Sets the search to use market Name. Default is true.</param>
+        /// <param name="spreadProductType">Sets the search to include spread bet markets. Default is true.</param>
+        /// <param name="cfdProductType">Sets the search to include CFD markets. Default is true.</param>
+        /// <param name="binaryProductType">Sets the search to include binary markets. Default is true.</param>
+        /// <param name="includeOptions">When set to true, the search captures and returns options markets. When set to false, options markets are excluded from the search results. Default is true.</param>
+        /// <param name="maxResults">The maximum number of results to return. Default is 50.</param>
         /// <param name="useMobileShortName">True if the market name should be in short form. Helpful when displaying data on a small screen.</param>
         public virtual MarketInformationSearchWithTagsResponseDTO SearchWithTags(string query, int tagId, bool searchByMarketCode, bool searchByMarketName, bool spreadProductType, bool cfdProductType, bool binaryProductType, bool includeOptions, int maxResults, bool useMobileShortName)
         {
@@ -911,17 +989,17 @@ public string AppKey { get; set; }
 
 
         /// <summary>
-        /// Get market information and tags for the markets that meet the search criteria. Leave the query string empty to return all markets and tags available to the user.
+        /// Get market information and tags for the markets that meet the search criteria. Leave the query string empty to return all markets and tags available to the user. The results contain the summarised *MarketId* and *MarketName* properties.
         /// </summary>
         /// <param name="query">The text to search for. Matches part of market name / code from the start. *(Optional)*.</param>
-        /// <param name="tagId">The ID for the tag to be searched. *(Optional)*.</param>
-        /// <param name="searchByMarketCode">Sets the search to use market code.</param>
-        /// <param name="searchByMarketName">Sets the search to use market Name.</param>
-        /// <param name="spreadProductType">Sets the search to include spread bet markets.</param>
-        /// <param name="cfdProductType">Sets the search to include CFD markets.</param>
-        /// <param name="binaryProductType">Sets the search to include binary markets.</param>
-        /// <param name="includeOptions">When set to true, the search captures and returns options markets. When set to false, options markets are excluded from the search results.</param>
-        /// <param name="maxResults">The maximum number of results to return. Default is 20.</param>
+        /// <param name="tagId">The ID for the tag to be searched. *(Optional)*. Default is 0.</param>
+        /// <param name="searchByMarketCode">Sets the search to use market code. Default is true.</param>
+        /// <param name="searchByMarketName">Sets the search to use market Name. Default is true.</param>
+        /// <param name="spreadProductType">Sets the search to include spread bet markets. Default is true.</param>
+        /// <param name="cfdProductType">Sets the search to include CFD markets. Default is true.</param>
+        /// <param name="binaryProductType">Sets the search to include binary markets. Default is true.</param>
+        /// <param name="includeOptions">When set to true, the search captures and returns options markets. When set to false, options markets are excluded from the search results. Default is true.</param>
+        /// <param name="maxResults">The maximum number of results to return. Default is 50.</param>
         /// <param name="useMobileShortName">True if the market name should be in short form. Helpful when displaying data on a small screen.</param>
         /// <param name="callback"></param>
         /// <param name="state"></param>

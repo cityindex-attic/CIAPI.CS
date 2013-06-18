@@ -1974,6 +1974,21 @@ namespace CIAPI.DTO
     }
 
     /// <summary>
+    /// Response from a full market information search with tags request. *(Includes market information for each market.)*
+    /// </summary>
+    public partial class FullMarketInformationSearchWithTagsResponseDTO
+    {
+        /// <summary>
+        /// The requested list of market information.
+        /// </summary>
+        public ApiMarketDTO[] Markets { get; set; }
+        /// <summary>
+        /// The requested list of market tags.
+        /// </summary>
+        public ApiMarketTagDTO[] Tags { get; set; }
+    }
+
+    /// <summary>
     /// Response from a search request of market information tags.
     /// </summary>
     public partial class MarketInformationTagLookupResponseDTO
