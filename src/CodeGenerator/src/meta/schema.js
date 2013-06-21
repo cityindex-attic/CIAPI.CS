@@ -44,9 +44,35 @@ exports.schema =
         "HasMultipleEmailAddresses": {
           "type": "boolean",
           "description": "Flag indicating whether the user has more than one email address configured."
+        },
+        "AccountHolders": {
+          "type": "array",
+          "items": [
+            {
+              "$ref": "#.ApiAccountHolderDTO"
+            }
+          ],
+          "description": "[missing]"
         }
       },
       "description": "Response from an account information query."
+    },
+    "ApiAccountHolderDTO": {
+      "id": "ApiActiveStopLimitOrderDTO",
+      "type": "object",
+      "properties": {
+            "LegalPartyId": {
+          "type": "integer",
+          "minValue": -2147483648,
+          "maxValue": 2147483647,
+          "description": "Legal party identifier."
+        },
+          "Name": {
+          "type": "string",
+          "description": "Name of person associated with joint account."
+        }
+      },
+      "description": "Information about a Joint Account."
     },
     "ApiActiveStopLimitOrderDTO": {
       "id": "ApiActiveStopLimitOrderDTO",

@@ -34,6 +34,25 @@ namespace CIAPI.DTO
         /// Flag indicating whether the user has more than one email address configured.
         /// </summary>
         public bool HasMultipleEmailAddresses { get; set; }
+        /// <summary>
+        /// [missing]
+        /// </summary>
+        public ApiAccountHolderDTO[] AccountHolders { get; set; }
+    }
+
+    /// <summary>
+    /// Information about a Joint Account.
+    /// </summary>
+    public partial class ApiAccountHolderDTO
+    {
+        /// <summary>
+        /// Legal party identifier.
+        /// </summary>
+        public int LegalPartyId { get; set; }
+        /// <summary>
+        /// Name of person associated with joint account.
+        /// </summary>
+        public string Name { get; set; }
     }
 
     /// <summary>
