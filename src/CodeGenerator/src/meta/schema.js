@@ -1,7 +1,7 @@
 exports.schema = 
 
 {
-    "namespace": "CIAPI.DTO",
+  "namespace": "CIAPI.DTO",
   "version": "0.111.0.0",
   "properties": {
     "AccountInformationResponseDTO": {
@@ -52,7 +52,7 @@ exports.schema =
               "$ref": "#.ApiAccountHolderDTO"
             }
           ],
-          "description": "[missing]"
+          "description": "Information about account holders."
         }
       },
       "description": "Response from an account information query."
@@ -61,7 +61,7 @@ exports.schema =
       "id": "ApiActiveStopLimitOrderDTO",
       "type": "object",
       "properties": {
-            "LegalPartyId": {
+        "LegalPartyId": {
           "type": "integer",
           "minValue": -2147483648,
           "maxValue": 2147483647,
@@ -2733,7 +2733,7 @@ exports.schema =
           "type": "array",
           "items": [
             {
-              "$ref": "#.ApiMarketDTO"
+              "$ref": "#.ApiMarketInformationDTO"
             }
           ],
           "description": "The requested list of market information."

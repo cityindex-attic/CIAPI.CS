@@ -35,7 +35,7 @@ namespace CIAPI.DTO
         /// </summary>
         public bool HasMultipleEmailAddresses { get; set; }
         /// <summary>
-        /// [missing]
+        /// Information about account holders.
         /// </summary>
         public ApiAccountHolderDTO[] AccountHolders { get; set; }
     }
@@ -2000,7 +2000,7 @@ namespace CIAPI.DTO
         /// <summary>
         /// The requested list of market information.
         /// </summary>
-        public ApiMarketDTO[] Markets { get; set; }
+        public ApiMarketInformationDTO[] Markets { get; set; }
         /// <summary>
         /// The requested list of market tags.
         /// </summary>
