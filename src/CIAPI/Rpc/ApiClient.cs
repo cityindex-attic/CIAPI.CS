@@ -14,7 +14,7 @@ namespace CIAPI.Rpc
     // #TODO: reintegrate exception factory into ReliableHttpClient
     public partial class Client : ClientBase
     {
-
+        public string OAuthToken { get; set; }
 
 
         private readonly IStreamingClientFactory _streamingFactory;
@@ -40,14 +40,24 @@ namespace CIAPI.Rpc
         {
 
             var headers = new Dictionary<string, string>();
+            
             if (target.IndexOf("/session", StringComparison.OrdinalIgnoreCase) == -1)
             {
-                headers["UserName"] = UserName;
-                if (Session == null)
+                if (!string.IsNullOrEmpty(OAuthToken))
                 {
-                    throw new ReliableHttpException("Session is null. Have you created a session? (logged on)");
+                    headers["UserName"] = UserName;
+                    if (Session == null)
+                    {
+                        throw new ReliableHttpException("Session is null. Have you created a session? (logged on)");
+                    }
+                    headers["Session"] = Session;
                 }
-                headers["Session"] = Session;
+                else
+                {
+                    headers["Authorization"] = "Bearer" + OAuthToken;
+                }
+
+                
             }
             return headers;
         }
