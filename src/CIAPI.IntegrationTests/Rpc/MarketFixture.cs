@@ -93,6 +93,25 @@ namespace CIAPI.IntegrationTests.Rpc
              */
         }
 
+
+        [Test]
+        public void CanListMarket400743302Information()
+        {
+            var rpcClient = BuildRpcClient();
+            var marketList = GetAvailableCFDMarkets(rpcClient);
+
+            var response = rpcClient.Market.ListMarketInformation(
+                new ListMarketInformationRequestDTO
+                {
+                    MarketIds = new int[] { 400743302 }
+                }
+            );
+
+            Assert.AreEqual(marketList.Length, response.MarketInformation.Length);
+
+            rpcClient.LogOut();
+        }
+
         [Test]
         public void CanListMarketInformation()
         {

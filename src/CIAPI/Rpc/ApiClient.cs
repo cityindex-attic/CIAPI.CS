@@ -43,7 +43,7 @@ namespace CIAPI.Rpc
             
             if (target.IndexOf("/session", StringComparison.OrdinalIgnoreCase) == -1)
             {
-                if (!string.IsNullOrEmpty(OAuthToken))
+                if (string.IsNullOrEmpty(OAuthToken))
                 {
                     headers["UserName"] = UserName;
                     if (Session == null)
