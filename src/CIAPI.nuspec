@@ -17,7 +17,7 @@
   <files>
 
     <file src="..\dist\lib\ciapi\bin\**\DotNetClient_N2.dll" target="lib\net35" />
-    <file src="..\dist\lib\ciapi\bin\**\Salient.ReliableHttpClient.dll" target="lib\net35" />
+    <!--<file src="..\dist\lib\ciapi\bin\**\Salient.ReliableHttpClient.dll" target="lib\net35" />-->
     <file src="..\dist\lib\ciapi\bin\**\CIAPI.Serializer.dll" target="lib\net35" />
     
     <file src="..\dist\lib\ciapi\bin\**\CIAPI.dll" target="lib\net35" />
@@ -25,7 +25,7 @@
     <file src="..\dist\lib\ciapi\bin\**\CIAPI.XML" target="lib\net35" />
 
     <file src="..\dist\lib\ciapi.phone7\bin\**\WindowsPhoneClient.dll" target="lib\sl3-wp" />
-    <file src="..\dist\lib\ciapi.phone7\bin\**\Salient.ReliableHttpClient.Phone7.dll" target="lib\sl3-wp" />
+    <!--<file src="..\dist\lib\ciapi.phone7\bin\**\Salient.ReliableHttpClient.Phone7.dll" target="lib\sl3-wp" />-->
     <file src="..\dist\lib\ciapi.phone7\bin\**\CIAPI.Serializer.Phone7.dll" target="lib\sl3-wp" />
     
     <file src="..\dist\lib\ciapi.phone7\bin\**\CIAPI.Phone7.dll" target="lib\sl3-wp" />
@@ -35,7 +35,7 @@
 
  
     <file src="..\dist\lib\ciapi.silverlight\bin\**\SilverlightClient.dll" target="lib\sl4" />
-    <file src="..\dist\lib\ciapi.silverlight\bin\**\Salient.ReliableHttpClient.silverlight.dll" target="lib\sl4" />
+    <!--<file src="..\dist\lib\ciapi.silverlight\bin\**\Salient.ReliableHttpClient.silverlight.dll" target="lib\sl4" />-->
     <file src="..\dist\lib\ciapi.silverlight\bin\**\CIAPI.Serializer.silverlight.dll" target="lib\sl4" />
 
     <file src="..\dist\lib\ciapi.silverlight\bin\**\CIAPI.silverlight.dll" target="lib\sl4" />
