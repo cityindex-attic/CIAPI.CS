@@ -73,12 +73,10 @@
     <Reference Include="Salient.ReflectiveLoggingAdapter.35">
       <HintPath>..\packages\Salient.ReflectiveLoggingAdapter.3.2.0\lib\net35\Release\Salient.ReflectiveLoggingAdapter.35.dll</HintPath>
     </Reference>
-    <Reference Include="Salient.ReliableHttpClient, Version=1.4.1.34, Culture=neutral, PublicKeyToken=de2ccdae144c2020, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Salient.ReliableHttpClient">
       <HintPath>..\packages\Salient.ReliableHttpClient.1.4.1\lib\net35\Release\Salient.ReliableHttpClient.dll</HintPath>
     </Reference>
-    <Reference Include="Salient.ReliableHttpClient.Serializer.Newtonsoft, Version=1.4.1.34, Culture=neutral, PublicKeyToken=af1483d0b03a76fa, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Salient.ReliableHttpClient.Serializer.Newtonsoft">
       <HintPath>..\packages\Salient.ReliableHttpClient.1.4.1\lib\net35\Release\Salient.ReliableHttpClient.Serializer.Newtonsoft.dll</HintPath>
     </Reference>
     <Reference Include="System" />
