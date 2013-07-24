@@ -6,6 +6,8 @@
     <owners>CityIndex Ltd,Sky Sanders,David Laing</owners>
     <licenseUrl>https://github.com/cityindex/CIAPI.CS/raw/master/LICENSE.txt</licenseUrl>
     <dependencies>
+      <dependency id="Salient.ReliableHttpClient"/>
+      <dependency id="Salient.ReflectiveLoggingAdapter"/>
       <dependency id="Newtonsoft.Json" />
     </dependencies>
     <id>CIAPI</id>
