@@ -518,6 +518,10 @@ namespace CIAPI.DTO
         /// The market name.
         /// </summary>
         public string Name { get; set; }
+        /// <summary>
+        /// Relays the priority of the market in the market search results. The higher the value the more prominent the market should appear.
+        /// </summary>
+        public int Weighting { get; set; }
     }
 
     /// <summary>
@@ -792,6 +796,14 @@ namespace CIAPI.DTO
         /// Flag to indicate if auto-rollover on the market is allowed.
         /// </summary>
         public bool AllowRollover { get; set; }
+        /// <summary>
+        /// Defines the maximum quantity accepted for buy direction trades or orders.
+        /// </summary>
+        public int MaxLongSize { get; set; }
+        /// <summary>
+        /// Defines the maximum quantity accepted for sell direction trades or orders.
+        /// </summary>
+        public int MaxShortSize { get; set; }
         /// <summary>
         /// The expiry basis ID of the market.
         /// </summary>

@@ -1,7 +1,6 @@
 exports.schema = 
-
 {
-  "namespace": "CIAPI.DTO",
+    "namespace": "CIAPI.DTO",
   "version": "0.111.0.0",
   "properties": {
     "AccountInformationResponseDTO": {
@@ -657,6 +656,12 @@ exports.schema =
           "minLength": 1,
           "maxLength": 120,
           "description": "The market name."
+        },
+        "Weighting": {
+          "type": "integer",
+          "minValue": -2147483648,
+          "maxValue": 2147483647,
+          "description": "Relays the priority of the market in the market search results. The higher the value the more prominent the market should appear."
         }
       },
       "description": "Basic information about a Market."
@@ -1125,6 +1130,18 @@ exports.schema =
           "type": "boolean",
           "description": "Flag to indicate if auto-rollover on the market is allowed."
         }, 
+        "MaxLongSize": {
+          "type": "integer",
+          "minValue": -2147483648,
+          "maxValue": 2147483647,
+          "description": "Defines the maximum quantity accepted for buy direction trades or orders."
+        },
+        "MaxShortSize": {
+          "type": "integer",
+          "minValue": -2147483648,
+          "maxValue": 2147483647,
+          "description": "Defines the maximum quantity accepted for sell direction trades or orders."
+        },
         "ExpiryBasisId": {
           "type": [
             "null",

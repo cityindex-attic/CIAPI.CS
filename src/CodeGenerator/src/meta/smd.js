@@ -1,5 +1,5 @@
 exports.smd =
-{
+ {
   "SMDVersion": "2.6",
   "version": "0.111.0.0",
   "description": "CIAPI SMD",
