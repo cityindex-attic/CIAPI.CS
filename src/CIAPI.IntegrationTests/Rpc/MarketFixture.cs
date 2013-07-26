@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using CIAPI.DTO;
@@ -93,21 +94,30 @@ namespace CIAPI.IntegrationTests.Rpc
              */
         }
 
+        [Test]
+        public void CanListMarket400743302InformationOffline()
+        {
+            var rpcClient = new Client(new Uri("http://foo.com"), new Uri("http://foo.com"), "foo");
+
+            string json = File.ReadAllText("rpc\\listmarketjson.txt");
+            //T = CIAPI.DTO.ListMarketInformationSearchResponseDTO
+            var dto = rpcClient.Serializer.DeserializeObject<ListMarketInformationResponseDTO>(json);
+        }
 
         [Test]
         public void CanListMarket400743302Information()
         {
-            var rpcClient = BuildRpcClient();
-            var marketList = GetAvailableCFDMarkets(rpcClient);
+          var rpcClient = BuildRpcClient();
+            //var marketList = GetAvailableCFDMarkets(rpcClient);
 
-            var response = rpcClient.Market.ListMarketInformation(
+            ListMarketInformationResponseDTO response = rpcClient.Market.ListMarketInformation(
                 new ListMarketInformationRequestDTO
                 {
                     MarketIds = new int[] { 400743302 }
                 }
             );
 
-            Assert.AreEqual(marketList.Length, response.MarketInformation.Length);
+            
 
             rpcClient.LogOut();
         }

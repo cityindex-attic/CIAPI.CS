@@ -603,7 +603,7 @@ namespace CIAPI.DTO
         /// <summary>
         /// The strike price of the option. This value is null for non-option markets.
         /// </summary>
-        public int? StrikePrice { get; set; }
+        public decimal? StrikePrice { get; set; }
         /// <summary>
         /// The minimum quantity that can be traded over the web.
         /// </summary>
@@ -799,11 +799,11 @@ namespace CIAPI.DTO
         /// <summary>
         /// Defines the maximum quantity accepted for buy direction trades or orders.
         /// </summary>
-        public int MaxLongSize { get; set; }
+        public decimal? MaxLongSize { get; set; }
         /// <summary>
         /// Defines the maximum quantity accepted for sell direction trades or orders.
         /// </summary>
-        public int MaxShortSize { get; set; }
+        public decimal? MaxShortSize { get; set; }
         /// <summary>
         /// The expiry basis ID of the market.
         /// </summary>

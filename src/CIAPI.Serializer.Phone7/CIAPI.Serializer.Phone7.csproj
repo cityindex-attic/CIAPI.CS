@@ -78,19 +78,20 @@
     <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.4.5.7\lib\sl3-wp\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.5.0.6\lib\portable-net40+sl4+wp7+win8\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Salient.ReflectiveLoggingAdapter.Phone7">
       <HintPath>..\packages\Salient.ReflectiveLoggingAdapter.3.2.0\lib\sl3-wp\Release\Salient.ReflectiveLoggingAdapter.Phone7.dll</HintPath>
     </Reference>
-    <Reference Include="Salient.ReliableHttpClient.Phone7, Version=1.4.1.34, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Salient.ReliableHttpClient.Phone7, Version=1.4.3.36, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Salient.ReliableHttpClient.1.4.1\lib\sl3-wp\Release\Salient.ReliableHttpClient.Phone7.dll</HintPath>
+      <HintPath>..\packages\Salient.ReliableHttpClient.1.4.3-bleeding-36\lib\sl3-wp\Debug\Salient.ReliableHttpClient.Phone7.dll</HintPath>
     </Reference>
-    <Reference Include="Salient.ReliableHttpClient.Serializer.Newtonsoft.Phone7, Version=1.4.1.34, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Salient.ReliableHttpClient.Serializer.Newtonsoft.Phone7, Version=1.4.3.36, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Salient.ReliableHttpClient.1.4.1\lib\sl3-wp\Release\Salient.ReliableHttpClient.Serializer.Newtonsoft.Phone7.dll</HintPath>
+      <HintPath>..\packages\Salient.ReliableHttpClient.1.4.3-bleeding-36\lib\sl3-wp\Debug\Salient.ReliableHttpClient.Serializer.Newtonsoft.Phone7.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows" />
     <Reference Include="system" />

@@ -780,10 +780,11 @@ exports.schema =
           "description": "ID number indicating the option type: *Put=1* and *Call=2*. This value is null for non-option markets."
         },
         "StrikePrice": {
-          "type": [
+        "type": [
             "null",
-            "integer"
+            "number"
           ],
+          "format": "decimal",
           "description": "The strike price of the option. This value is null for non-option markets."
         },
         "WebMinSize": {
@@ -1131,15 +1132,19 @@ exports.schema =
           "description": "Flag to indicate if auto-rollover on the market is allowed."
         }, 
         "MaxLongSize": {
-          "type": "integer",
-          "minValue": -2147483648,
-          "maxValue": 2147483647,
+        "type": [
+            "null",
+            "number"
+          ],
+          "format": "decimal",
           "description": "Defines the maximum quantity accepted for buy direction trades or orders."
         },
         "MaxShortSize": {
-          "type": "integer",
-          "minValue": -2147483648,
-          "maxValue": 2147483647,
+        "type": [
+            "null",
+            "number"
+          ],
+          "format": "decimal",
           "description": "Defines the maximum quantity accepted for sell direction trades or orders."
         },
         "ExpiryBasisId": {

@@ -81,19 +81,20 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.4.5.7\lib\sl4\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.5.0.6\lib\portable-net40+sl4+wp7+win8\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Salient.ReflectiveLoggingAdapter.Silverlight">
       <HintPath>..\packages\Salient.ReflectiveLoggingAdapter.3.2.0\lib\sl4\Release\Salient.ReflectiveLoggingAdapter.Silverlight.dll</HintPath>
     </Reference>
-    <Reference Include="Salient.ReliableHttpClient.Serializer.Newtonsoft.Silverlight, Version=1.4.1.34, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Salient.ReliableHttpClient.Serializer.Newtonsoft.Silverlight, Version=1.4.3.36, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Salient.ReliableHttpClient.1.4.1\lib\sl4\Release\Salient.ReliableHttpClient.Serializer.Newtonsoft.Silverlight.dll</HintPath>
+      <HintPath>..\packages\Salient.ReliableHttpClient.1.4.3-bleeding-36\lib\sl4\Debug\Salient.ReliableHttpClient.Serializer.Newtonsoft.Silverlight.dll</HintPath>
     </Reference>
-    <Reference Include="Salient.ReliableHttpClient.Silverlight, Version=1.4.1.34, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Salient.ReliableHttpClient.Silverlight, Version=1.4.3.36, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Salient.ReliableHttpClient.1.4.1\lib\sl4\Release\Salient.ReliableHttpClient.Silverlight.dll</HintPath>
+      <HintPath>..\packages\Salient.ReliableHttpClient.1.4.3-bleeding-36\lib\sl4\Debug\Salient.ReliableHttpClient.Silverlight.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows" />
     <Reference Include="system" />

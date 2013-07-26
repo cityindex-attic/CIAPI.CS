@@ -61,6 +61,7 @@ namespace CIAPI.IntegrationTests.Streaming
 
         public Client BuildRpcClient()
         {
+            Thread.Sleep(2000); // to let throttle settle down
             var rpcClient = new Client(Settings.RpcUri, Settings.StreamingUri, AppKey);
             rpcClient.LogIn(Settings.RpcUserName, Settings.RpcPassword);
             return rpcClient;
