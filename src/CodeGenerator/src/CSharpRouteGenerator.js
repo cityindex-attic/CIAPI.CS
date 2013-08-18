@@ -36,7 +36,7 @@
         },
         createDescription: function (description) {
 
-            return description ? description.replace(/[\r\n]/g,"") : " [DESCRIPTION MISSING]";
+            return description ? description.replace(/[\r\n]/g, "") : " [DESCRIPTION MISSING]";
 
         },
         generate: function () {
@@ -155,6 +155,7 @@
                     subClasses[subClassName] = "";
                 }
 
+                var retryCount = transport == "GET" ? 2 : 0;
 
                 serviceText = serviceText.concat("\n" + "        " + visibility + " virtual " + returnType + " " + key + "(" + paramList + ")");
                 serviceText = serviceText.concat("\n" + "        {");
@@ -165,7 +166,7 @@
                 serviceText = serviceText.concat("\n" + "            {");
                 serviceText = serviceText.concat("\n" + requestParamList);
 
-                serviceText = serviceText.concat("\n" + "            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(" + cacheDuration + "),30000,0 );");
+                serviceText = serviceText.concat("\n" + "            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(" + cacheDuration + "),30000," + retryCount + " );");
 
 
                 serviceText = serviceText.concat("\n" + "        }");
@@ -190,7 +191,7 @@
                 serviceText = serviceText.concat("\n" + "            {");
                 serviceText = serviceText.concat("\n" + requestParamList);
 
-                serviceText = serviceText.concat("\n" + "            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(" + cacheDuration + "), 30000,2 ,callback, state);");
+                serviceText = serviceText.concat("\n" + "            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(" + cacheDuration + "), 30000," + retryCount + " ,callback, state);");
 
                 serviceText = serviceText.concat("\n" + "        }");
                 serviceText = serviceText.concat("\n" + "");
@@ -247,10 +248,10 @@
             self.writeLine("        _client=this;");
             self.writeLine("        _rootUri = rpcUri;");
             self.writeLine("        _streamingUri = streamingUri;");
-            
+
             self.writeLine(subClassInitializer);
             self.writeLine('        Log.Debug("Rpc.Client created for " + _rootUri.AbsoluteUri);');
-            
+
             self.writeLine("        }");
 
 

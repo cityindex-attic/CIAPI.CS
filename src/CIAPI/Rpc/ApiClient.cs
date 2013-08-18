@@ -54,7 +54,7 @@ namespace CIAPI.Rpc
                 }
                 else
                 {
-                    headers["Authorization"] = "Bearer" + OAuthToken;
+                    headers["Authorization"] = "Bearer " + OAuthToken;
                 }
 
                 

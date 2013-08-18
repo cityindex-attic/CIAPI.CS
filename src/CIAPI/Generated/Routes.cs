@@ -155,7 +155,7 @@ public string AppKey { get; set; }
                 { "includeOptions", includeOptions}, 
                 { "maxResults", maxResults}, 
                 { "useMobileShortName", useMobileShortName}
-            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,0 );
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,2 );
         }
 
 
@@ -232,7 +232,7 @@ public string AppKey { get; set; }
             new Dictionary<string, object>
             {
                 { "requestDTO", requestDTO}
-            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,2 ,callback, state);
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,0 ,callback, state);
         }
 
         public ListActiveOrdersResponseDTO EndListActiveOrders(ReliableAsyncResult asyncResult)
@@ -279,7 +279,7 @@ public string AppKey { get; set; }
             new Dictionary<string, object>
             {
                 { "apiLogOnRequest", apiLogOnRequest}
-            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,2 ,callback, state);
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,0 ,callback, state);
         }
 
         internal ApiLogOnResponseDTO EndLogOn(ReliableAsyncResult asyncResult)
@@ -325,7 +325,7 @@ public string AppKey { get; set; }
             {
                 { "UserName", UserName}, 
                 { "Session", Session}
-            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,2 ,callback, state);
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,0 ,callback, state);
         }
 
         internal ApiLogOffResponseDTO EndDeleteSession(ReliableAsyncResult asyncResult)
@@ -367,7 +367,7 @@ public string AppKey { get; set; }
             new Dictionary<string, object>
             {
                 { "apiChangePasswordRequest", apiChangePasswordRequest}
-            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,2 ,callback, state);
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,0 ,callback, state);
         }
 
         public ApiChangePasswordResponseDTO EndChangePassword(ReliableAsyncResult asyncResult)
@@ -404,7 +404,7 @@ public string AppKey { get; set; }
                 { "interval", interval}, 
                 { "span", span}, 
                 { "PriceBars", PriceBars}
-            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,0 );
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,2 );
         }
 
 
@@ -454,7 +454,7 @@ public string AppKey { get; set; }
             {
                 { "MarketId", MarketId}, 
                 { "PriceTicks", PriceTicks}
-            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,0 );
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,2 );
         }
 
 
@@ -508,7 +508,7 @@ public string AppKey { get; set; }
                 { "source", source}, 
                 { "category", category}, 
                 { "maxResults", maxResults}
-            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(10000),30000,0 );
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(10000),30000,2 );
         }
 
 
@@ -571,7 +571,7 @@ public string AppKey { get; set; }
             new Dictionary<string, object>
             {
                 { "request", request}
-            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,2 ,callback, state);
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,0 ,callback, state);
         }
 
         public ListNewsHeadlinesResponseDTO EndListNewsHeadlines(ReliableAsyncResult asyncResult)
@@ -598,7 +598,7 @@ public string AppKey { get; set; }
             {
                 { "source", source}, 
                 { "storyId", storyId}
-            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(10000),30000,0 );
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(10000),30000,2 );
         }
 
 
@@ -656,7 +656,7 @@ public string AppKey { get; set; }
                 { "ClientAccountId", ClientAccountId}, 
                 { "maxResults", maxResults}, 
                 { "useMobileShortName", useMobileShortName}
-            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,0 );
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,2 );
         }
 
 
@@ -720,7 +720,7 @@ public string AppKey { get; set; }
                 { "ClientAccountId", ClientAccountId}, 
                 { "maxResults", maxResults}, 
                 { "useMobileShortName", useMobileShortName}
-            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,0 );
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,2 );
         }
 
 
@@ -776,7 +776,7 @@ public string AppKey { get; set; }
             new Dictionary<string, object>
             {
                 { "MarketId", MarketId}
-            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(1000),30000,0 );
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(1000),30000,2 );
         }
 
 
@@ -834,7 +834,7 @@ public string AppKey { get; set; }
                 { "query", query}, 
                 { "maxResults", maxResults}, 
                 { "useMobileShortName", useMobileShortName}
-            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,0 );
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,2 );
         }
 
 
@@ -908,7 +908,7 @@ public string AppKey { get; set; }
                 { "query", query}, 
                 { "maxResults", maxResults}, 
                 { "useMobileShortName", useMobileShortName}
-            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,0 );
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,2 );
         }
 
 
@@ -984,7 +984,7 @@ public string AppKey { get; set; }
                 { "includeOptions", includeOptions}, 
                 { "maxResults", maxResults}, 
                 { "useMobileShortName", useMobileShortName}
-            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,0 );
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,2 );
         }
 
 
@@ -1043,7 +1043,7 @@ public string AppKey { get; set; }
             new Dictionary<string, object>
             {
 
-            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,0 );
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,2 );
         }
 
 
@@ -1101,7 +1101,7 @@ public string AppKey { get; set; }
             new Dictionary<string, object>
             {
                 { "listMarketInformationRequestDTO", listMarketInformationRequestDTO}
-            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(1000), 30000,2 ,callback, state);
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(1000), 30000,0 ,callback, state);
         }
 
         public ListMarketInformationResponseDTO EndListMarketInformation(ReliableAsyncResult asyncResult)
@@ -1143,7 +1143,7 @@ public string AppKey { get; set; }
             new Dictionary<string, object>
             {
                 { "listMarketInformationRequestSaveDTO", listMarketInformationRequestSaveDTO}
-            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,2 ,callback, state);
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,0 ,callback, state);
         }
 
         public ApiSaveMarketInformationResponseDTO EndSaveMarketInformation(ReliableAsyncResult asyncResult)
@@ -1191,7 +1191,7 @@ public string AppKey { get; set; }
             new Dictionary<string, object>
             {
                 { "saveClientPreferenceRequestDTO", saveClientPreferenceRequestDTO}
-            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,2 ,callback, state);
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,0 ,callback, state);
         }
 
         public UpdateDeleteClientPreferenceResponseDTO EndSave(ReliableAsyncResult asyncResult)
@@ -1233,7 +1233,7 @@ public string AppKey { get; set; }
             new Dictionary<string, object>
             {
                 { "clientPreferenceRequestDto", clientPreferenceRequestDto}
-            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,2 ,callback, state);
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,0 ,callback, state);
         }
 
         public GetClientPreferenceResponseDTO EndGet(ReliableAsyncResult asyncResult)
@@ -1257,7 +1257,7 @@ public string AppKey { get; set; }
             new Dictionary<string, object>
             {
 
-            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,0 );
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,2 );
         }
 
 
@@ -1315,7 +1315,7 @@ public string AppKey { get; set; }
             new Dictionary<string, object>
             {
                 { "clientPreferenceKey", clientPreferenceKey}
-            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,2 ,callback, state);
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,0 ,callback, state);
         }
 
         public UpdateDeleteClientPreferenceResponseDTO EndDelete(ReliableAsyncResult asyncResult)
@@ -1363,7 +1363,7 @@ public string AppKey { get; set; }
             new Dictionary<string, object>
             {
                 { "order", order}
-            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,2 ,callback, state);
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,0 ,callback, state);
         }
 
         public ApiTradeOrderResponseDTO EndOrder(ReliableAsyncResult asyncResult)
@@ -1405,7 +1405,7 @@ public string AppKey { get; set; }
             new Dictionary<string, object>
             {
                 { "cancelOrder", cancelOrder}
-            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,2 ,callback, state);
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,0 ,callback, state);
         }
 
         public ApiTradeOrderResponseDTO EndCancelOrder(ReliableAsyncResult asyncResult)
@@ -1447,7 +1447,7 @@ public string AppKey { get; set; }
             new Dictionary<string, object>
             {
                 { "order", order}
-            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,2 ,callback, state);
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,0 ,callback, state);
         }
 
         public ApiTradeOrderResponseDTO EndUpdateOrder(ReliableAsyncResult asyncResult)
@@ -1472,7 +1472,7 @@ public string AppKey { get; set; }
             new Dictionary<string, object>
             {
                 { "TradingAccountId", TradingAccountId}
-            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,0 );
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,2 );
         }
 
 
@@ -1514,7 +1514,7 @@ public string AppKey { get; set; }
             new Dictionary<string, object>
             {
                 { "TradingAccountId", TradingAccountId}
-            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,0 );
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,2 );
         }
 
 
@@ -1556,7 +1556,7 @@ public string AppKey { get; set; }
             new Dictionary<string, object>
             {
                 { "OrderId", OrderId}
-            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,0 );
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,2 );
         }
 
 
@@ -1598,7 +1598,7 @@ public string AppKey { get; set; }
             new Dictionary<string, object>
             {
                 { "OrderId", OrderId}
-            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,0 );
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,2 );
         }
 
 
@@ -1642,7 +1642,7 @@ public string AppKey { get; set; }
             {
                 { "TradingAccountId", TradingAccountId}, 
                 { "maxResults", maxResults}
-            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,0 );
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,2 );
         }
 
 
@@ -1688,7 +1688,7 @@ public string AppKey { get; set; }
             {
                 { "TradingAccountId", TradingAccountId}, 
                 { "maxResults", maxResults}
-            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,0 );
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,2 );
         }
 
 
@@ -1732,7 +1732,7 @@ public string AppKey { get; set; }
             new Dictionary<string, object>
             {
                 { "OrderId", OrderId}
-            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,0 );
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,2 );
         }
 
 
@@ -1791,7 +1791,7 @@ public string AppKey { get; set; }
             new Dictionary<string, object>
             {
                 { "trade", trade}
-            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,2 ,callback, state);
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,0 ,callback, state);
         }
 
         public ApiTradeOrderResponseDTO EndTrade(ReliableAsyncResult asyncResult)
@@ -1833,7 +1833,7 @@ public string AppKey { get; set; }
             new Dictionary<string, object>
             {
                 { "update", update}
-            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,2 ,callback, state);
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,0 ,callback, state);
         }
 
         public ApiTradeOrderResponseDTO EndUpdateTrade(ReliableAsyncResult asyncResult)
@@ -1875,7 +1875,7 @@ public string AppKey { get; set; }
             new Dictionary<string, object>
             {
                 { "Trade", Trade}
-            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,2 ,callback, state);
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,0 ,callback, state);
         }
 
         public ApiSimulateTradeOrderResponseDTO EndSimulateTrade(ReliableAsyncResult asyncResult)
@@ -1905,7 +1905,7 @@ public string AppKey { get; set; }
             new Dictionary<string, object>
             {
 
-            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,0 );
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,2 );
         }
 
 
@@ -1963,7 +1963,7 @@ public string AppKey { get; set; }
             new Dictionary<string, object>
             {
                 { "saveAccountInformationRequest", saveAccountInformationRequest}
-            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,2 ,callback, state);
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,0 ,callback, state);
         }
 
         public ApiSaveAccountInformationResponseDTO EndSaveAccountInformation(ReliableAsyncResult asyncResult)
@@ -1996,7 +1996,7 @@ public string AppKey { get; set; }
             {
                 { "LookupEntityName", LookupEntityName}, 
                 { "CultureId", CultureId}
-            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(3600000),30000,0 );
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(3600000),30000,2 );
         }
 
 
@@ -2044,7 +2044,7 @@ public string AppKey { get; set; }
                 { "ClientApplicationId", ClientApplicationId}, 
                 { "CultureId", CultureId}, 
                 { "AccountOperatorId", AccountOperatorId}
-            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(3600000),30000,0 );
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(3600000),30000,2 );
         }
 
 
@@ -2107,7 +2107,7 @@ public string AppKey { get; set; }
             new Dictionary<string, object>
             {
                 { "apiClientApplicationMessageTranslationRequestDto", apiClientApplicationMessageTranslationRequestDto}
-            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,2 ,callback, state);
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,0 ,callback, state);
         }
 
         public ApiClientApplicationMessageTranslationResponseDTO EndGetClientApplicationMessageTranslationWithInterestingItems(ReliableAsyncResult asyncResult)
@@ -2137,7 +2137,7 @@ public string AppKey { get; set; }
             new Dictionary<string, object>
             {
 
-            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,0 );
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,2 );
         }
 
 
@@ -2195,7 +2195,7 @@ public string AppKey { get; set; }
             new Dictionary<string, object>
             {
                 { "apiSaveWatchlistRequestDto", apiSaveWatchlistRequestDto}
-            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,2 ,callback, state);
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,0 ,callback, state);
         }
 
         public ApiSaveWatchlistResponseDTO EndSaveWatchlist(ReliableAsyncResult asyncResult)
@@ -2237,7 +2237,7 @@ public string AppKey { get; set; }
             new Dictionary<string, object>
             {
                 { "deleteWatchlistRequestDto", deleteWatchlistRequestDto}
-            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,2 ,callback, state);
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,0 ,callback, state);
         }
 
         public ApiDeleteWatchlistResponseDTO EndDeleteWatchlist(ReliableAsyncResult asyncResult)
@@ -2270,7 +2270,7 @@ public string AppKey { get; set; }
             {
                 { "AppKey", AppKey}, 
                 { "AccountOperatorId", AccountOperatorId}
-            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(360000),30000,0 );
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(360000),30000,2 );
         }
 
 
