@@ -1,5 +1,5 @@
 exports.smd =
- {
+{
   "SMDVersion": "2.6",
   "version": "0.111.0.0",
   "description": "CIAPI SMD",
@@ -84,6 +84,22 @@ exports.smd =
             }
           ]
         },
+        "GetClientAccountMargin": {
+          "description": "Retrieves the current margin values for the logged-in client account.",
+          "target": "margin",
+          "uriTemplate": "/ClientAccountMargin",
+          "contentType": "application/json",
+          "responseContentType": "application/json",
+          "transport": "GET",
+          "envelope": "URL",
+          "returns": {
+            "$ref": "#.ApiClientAccountMarginResponseDTO"
+          },
+          "group": "Margin",
+          "cacheDuration": 0,
+          "throttleScope": "data",
+          "parameters": []
+        },                        
         "GetPriceBars": {
           "description": "Get historic price bars for the specified market in OHLC *(open, high, low, close)* format, suitable for plotting in candlestick charts. Returns price bars in ascending order up to the current time. When there are no prices for a particular time period, no price bar is returned. Thus, it can appear that the array of price bars has \"gaps\", i.e. the gap between the date &amp; time of each price bar might not be equal to interval x span. \n\n Sample Urls: \n\n* /market/1234/history?interval=MINUTE&amp;span=15&amp;PriceBars=180 \n* /market/735/history?interval=HOUR&amp;span=1&amp;PriceBars=240 \n* /market/1577/history?interval=DAY&amp;span=1&PriceBars=10",
           "target": "market",

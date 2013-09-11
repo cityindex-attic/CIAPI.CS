@@ -122,6 +122,46 @@ public string AppKey { get; set; }
         }
 
         // ***********************************
+        // GetClientAccountMargin
+        // ***********************************
+
+
+        /// <summary>
+        /// Retrieves the current margin values for the logged-in client account.
+        /// </summary>
+        public virtual ApiClientAccountMarginResponseDTO GetClientAccountMargin()
+        {
+            string uriTemplate = "/ClientAccountMargin";
+            return _client.Request<ApiClientAccountMarginResponseDTO>(RequestMethod.GET,"margin", uriTemplate ,
+            new Dictionary<string, object>
+            {
+
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0),30000,2 );
+        }
+
+
+        /// <summary>
+        /// Retrieves the current margin values for the logged-in client account.
+        /// </summary>
+        /// <param name="callback"></param>
+        /// <param name="state"></param>
+        public virtual void BeginGetClientAccountMargin( ReliableAsyncCallback callback, object state)
+        {
+            string uriTemplate = "/ClientAccountMargin";
+            _client.BeginRequest(RequestMethod.GET, "margin", uriTemplate , 
+            new Dictionary<string, object>
+            {
+
+            },ContentType.JSON,ContentType.JSON, TimeSpan.FromMilliseconds(0), 30000,2 ,callback, state);
+        }
+
+        public ApiClientAccountMarginResponseDTO EndGetClientAccountMargin(ReliableAsyncResult asyncResult)
+        {
+            return _client.EndRequest<ApiClientAccountMarginResponseDTO>(asyncResult);
+        }
+
+
+        // ***********************************
         // FullSearchWithTags
         // ***********************************
 

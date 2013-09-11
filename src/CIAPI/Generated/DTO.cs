@@ -56,6 +56,57 @@ namespace CIAPI.DTO
     }
 
     /// <summary>
+    /// The current margin and other account balance data for a specific client account used in the ClientAccountMargin stream.
+    /// </summary>
+    public partial class ApiClientAccountMarginResponseDTO
+    {
+        /// <summary>
+        /// Cash balance expressed in the client's base currency.
+        /// </summary>
+        public decimal Cash { get; set; }
+        /// <summary>
+        /// The client account's total margin requirement expressed in base currency.
+        /// </summary>
+        public decimal Margin { get; set; }
+        /// <summary>
+        /// The client account's total margin requirement expressed in base currency.
+        /// </summary>
+        public decimal MarginIndicator { get; set; }
+        /// <summary>
+        /// Net equity expressed in the clients base currency.
+        /// </summary>
+        public decimal NetEquity { get; set; }
+        /// <summary>
+        /// Open trade equity *(open / unrealised PNL)* expressed in the client's base currency.
+        /// </summary>
+        public decimal OpenTradeEquity { get; set; }
+        /// <summary>
+        /// Tradable funds expressed in the client's base currency.
+        /// </summary>
+        public decimal TradeableFunds { get; set; }
+        /// <summary>
+        /// The amount of funds currently being processed for addition to the client's account.
+        /// </summary>
+        public decimal PendingFunds { get; set; }
+        /// <summary>
+        /// Trading resource expressed in the client's base currency.
+        /// </summary>
+        public decimal TradingResource { get; set; }
+        /// <summary>
+        /// Total margin requirement expressed in the client's base currency.
+        /// </summary>
+        public decimal TotalMarginRequirement { get; set; }
+        /// <summary>
+        /// The client's base currency ID.
+        /// </summary>
+        public decimal CurrencyId { get; set; }
+        /// <summary>
+        /// The client's base currency ISO code.
+        /// </summary>
+        public decimal CurrencyIsoCode { get; set; }
+    }
+
+    /// <summary>
     /// A stop or limit order that is currently active.
     /// </summary>
     public partial class ApiActiveStopLimitOrderDTO
@@ -1250,10 +1301,6 @@ namespace CIAPI.DTO
         /// This represents the OrderID of any orders that the current order is related to. If there is no parent order as the order in question *is* the parent order, then the value is null.
         /// </summary>
         public int? ParentOrderId { get; set; }
-        /// <summary>
-        /// Represents the date and time when the trade/order was last edited. **Note:** does not include things such as the current market price.
-        /// </summary>
-        public DateTime LastChangedDateTimeUTC { get; set; }
     }
 
     /// <summary>
@@ -1433,6 +1480,10 @@ namespace CIAPI.DTO
         /// List of order actions with their associated response.
         /// </summary>
         public ApiOrderActionResponseDTO[] Actions { get; set; }
+        /// <summary>
+        /// Contains the error message - this is only used when the StatusId = -1.
+        /// </summary>
+        public string ErrorMessage { get; set; }
         /// <summary>
         /// Plain text StatusReason
         /// </summary>

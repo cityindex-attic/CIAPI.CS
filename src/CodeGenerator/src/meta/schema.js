@@ -1,6 +1,6 @@
 exports.schema = 
 {
-    "namespace": "CIAPI.DTO",
+    "namespace": "CIAPI.DTO",    
   "version": "0.111.0.0",
   "properties": {
     "AccountInformationResponseDTO": {
@@ -57,7 +57,7 @@ exports.schema =
       "description": "Response from an account information query."
     },
     "ApiAccountHolderDTO": {
-      "id": "ApiActiveStopLimitOrderDTO",
+      "id": "ApiAccountHolderDTO",
       "type": "object",
       "properties": {
         "LegalPartyId": {
@@ -72,6 +72,90 @@ exports.schema =
         }
       },
       "description": "Information about a Joint Account."
+    },
+    "ApiClientAccountMarginResponseDTO": {
+      "id": "ApiClientAccountMarginResponseDTO",
+      "type": "object",
+      "properties": {
+        "Cash": {
+          "type": "number",
+          "format": "decimal",
+          "minValue": 0,
+          "maxValue": 999999999,
+          "description": "Cash balance expressed in the client's base currency."
+        },
+        "Margin": {
+          "type": "number",
+          "format": "decimal",
+          "minValue": 0,
+          "maxValue": 999999999,
+          "description": "The client account's total margin requirement expressed in base currency."
+        },
+        "MarginIndicator": {
+          "type": "number",
+          "format": "decimal",
+          "minValue": 0,
+          "maxValue": 999999999,
+          "description": "The client account's total margin requirement expressed in base currency."
+        },
+        "NetEquity": {
+          "type": "number",
+          "format": "decimal",
+          "minValue": 0,
+          "maxValue": 999999999,
+          "description": "Net equity expressed in the clients base currency."
+        },
+        "OpenTradeEquity": {
+          "type": "number",
+          "format": "decimal",
+          "minValue": 0,
+          "maxValue": 999999999,
+          "description": "Open trade equity *(open / unrealised PNL)* expressed in the client's base currency."
+        },
+        "TradeableFunds": {
+          "type": "number",
+          "format": "decimal",
+          "minValue": 0,
+          "maxValue": 999999999,
+          "description": "Tradable funds expressed in the client's base currency."
+        },
+        "PendingFunds": {
+          "type": "number",
+          "format": "decimal",
+          "minValue": 0,
+          "maxValue": 999999999,
+          "description": "The amount of funds currently being processed for addition to the client's account."
+        },
+        "TradingResource": {
+          "type": "number",
+          "format": "decimal",
+          "minValue": 0,
+          "maxValue": 999999999,
+          "description": "Trading resource expressed in the client's base currency."
+        },
+        "TotalMarginRequirement": {
+          "type": "number",
+          "format": "decimal",
+          "minValue": 0,
+          "maxValue": 999999999,
+          "description": "Total margin requirement expressed in the client's base currency."
+        },
+        "CurrencyId": {
+          "type": "number",
+          "format": "decimal",
+          "minValue": 0,
+          "maxValue": 999999999,
+          "description": "The client's base currency ID."
+        },
+        "CurrencyIsoCode": {
+          "type": "number",
+          "format": "decimal",
+          "minValue": 0,
+          "maxValue": 999999999,
+          "description": "The client's base currency ISO code."
+        }         
+      },
+      "description": "The current margin and other account balance data for a specific client account used in the ClientAccountMargin stream."
     },
     "ApiActiveStopLimitOrderDTO": {
       "id": "ApiActiveStopLimitOrderDTO",
@@ -780,7 +864,7 @@ exports.schema =
           "description": "ID number indicating the option type: *Put=1* and *Call=2*. This value is null for non-option markets."
         },
         "StrikePrice": {
-        "type": [
+          "type": [
             "null",
             "number"
           ],
@@ -1132,19 +1216,23 @@ exports.schema =
           "description": "Flag to indicate if auto-rollover on the market is allowed."
         }, 
         "MaxLongSize": {
-        "type": [
+          "type": [
             "null",
             "number"
           ],
           "format": "decimal",
+          "minValue": -2147483648,
+          "maxValue": 2147483647,
           "description": "Defines the maximum quantity accepted for buy direction trades or orders."
         },
         "MaxShortSize": {
-        "type": [
+          "type": [
             "null",
             "number"
           ],
           "format": "decimal",
+          "minValue": -2147483648,
+          "maxValue": 2147483647,
           "description": "Defines the maximum quantity accepted for sell direction trades or orders."
         },
         "ExpiryBasisId": {
@@ -1732,12 +1820,7 @@ exports.schema =
           "minValue": -2147483648,
           "maxValue": 2147483647,
           "description": "This represents the OrderID of any orders that the current order is related to. If there is no parent order as the order in question *is* the parent order, then the value is null."
-        },
-        "LastChangedDateTimeUTC": {
-          "type": "string",
-          "format": "wcf-date",
-          "description": "Represents the date and time when the trade/order was last edited. **Note:** does not include things such as the current market price."
-        }
+        }        
       },
       "description": "Represents a stop/limit order."
     },
@@ -1995,6 +2078,10 @@ exports.schema =
             }
           ],
           "description": "List of order actions with their associated response."
+        },
+        "ErrorMessage": {
+          "type": "string",
+          "description": "Contains the error message - this is only used when the StatusId = -1."
         }
       },
       "description": "The response from the trade request."

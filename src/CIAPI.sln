@@ -31,7 +31,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "readme", "readme", "{3D66D7
 		..\DEV_SETUP.txt = ..\DEV_SETUP.txt
 		..\LICENSE.txt = ..\LICENSE.txt
 		..\NOTICES.txt = ..\NOTICES.txt
-		..\README.markdown = ..\README.markdown
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Phone7", "Phone7", "{97F879F5-F3A3-4990-ABAC-8BB7FE0B3F6E}"
