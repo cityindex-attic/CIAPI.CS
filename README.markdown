@@ -57,13 +57,13 @@ Compiled versions of CIAPI.CS are distributed via NuGet.org.  You must be runnin
 
 To install the latest stable version, search for CIAPI.CS in the NuGet VS2010 GUI, or run:
 
-    Install-Package CIAPI.CS
+    Install-Package CIAPI
    
 From the NuGet Console in VS2010.
 
 You can also install a pre-release "bleedingedge" version:
 
-    Install-Package CIAPI.CS
+    Install-Package CIAPI -pre
 
 Versioning numbers follow the [SemVer](semver.org) standard.
 
