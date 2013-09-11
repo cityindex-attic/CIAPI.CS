@@ -50,7 +50,19 @@ namespace CIAPI.IntegrationTests.Rpc
             rpcClient.Dispose();
         }
 
- 
+
+        [Test, ExpectedException(typeof(CIAPI.Rpc.InvalidCredentialsException))]
+        public void InvalidLoginShouldThrow()
+        {
+            var rpcClient = new Client(Settings.RpcUri, Settings.StreamingUri, AppKey);
+            rpcClient.LogIn(Settings.RpcUserName, "foo");
+
+            Assert.That(rpcClient.Session, Is.Not.Empty);
+
+            rpcClient.LogOut();
+            rpcClient.Dispose();
+        }
+
         [Test]
         public void LoginUsingSessionShouldValidateSession()
         {
@@ -69,12 +81,28 @@ namespace CIAPI.IntegrationTests.Rpc
 
             //After the session has been destroyed, trying to login using it should fail
             rpcClient.LogOut();
-            Assert.Throws<ReliableHttpException>(() =>
-                                                     {
-                                                         rpcClientUsingSession.LogInUsingSession(
-                                                             Settings.RpcUserName, rpcClient.Session);
-                                                     });
+     
 
+            try
+            {
+                rpcClientUsingSession.LogInUsingSession(Settings.RpcUserName, rpcClient.Session);
+                Assert.Fail("should throw");
+            }
+            catch (ReliableHttpException ex)
+            {
+                
+            }
+
+            try
+            {
+                rpcClientUsingSession.LogInUsingSession(Settings.RpcUserName, Guid.NewGuid().ToString());
+                Assert.Fail("should throw");
+            }
+            catch (ReliableHttpException ex)
+            {
+
+            }
+ 
             //And there shouldn't be a session
             Assert.IsNullOrEmpty(rpcClientUsingSession.Session);
 
