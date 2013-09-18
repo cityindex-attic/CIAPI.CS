@@ -103,7 +103,7 @@ namespace CIAPI.DTO
         /// <summary>
         /// The client's base currency ISO code.
         /// </summary>
-        public decimal CurrencyIsoCode { get; set; }
+        public string CurrencyIsoCode { get; set; }
     }
 
     /// <summary>
@@ -2605,6 +2605,14 @@ namespace CIAPI.DTO
         /// The price the order was taken at.
         /// </summary>
         public decimal PriceTakenAt { get; set; }
+        /// <summary>
+        /// The price the calculation was performed at in ticks.
+        /// </summary>
+        public decimal PriceCalculatedAtInTicks { get; set; }
+        /// <summary>
+        /// The price the order was taken at in ticks.
+        /// </summary>
+        public decimal PriceTakenAtInTicks { get; set; }
         /// <summary>
         /// The quantity of the order.
         /// </summary>

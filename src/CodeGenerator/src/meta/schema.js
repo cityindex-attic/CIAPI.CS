@@ -1,6 +1,6 @@
 exports.schema = 
 {
-    "namespace": "CIAPI.DTO",    
+"namespace": "CIAPI.DTO",    
   "version": "0.111.0.0",
   "properties": {
     "AccountInformationResponseDTO": {
@@ -148,12 +148,9 @@ exports.schema =
           "description": "The client's base currency ID."
         },
         "CurrencyIsoCode": {
-          "type": "number",
-          "format": "decimal",
-          "minValue": 0,
-          "maxValue": 999999999,
+          "type": "string",
           "description": "The client's base currency ISO code."
-        }         
+        }                 
       },
       "description": "The current margin and other account balance data for a specific client account used in the ClientAccountMargin stream."
     },
@@ -3627,6 +3624,20 @@ exports.schema =
           "minValue": -7.9228162514264338E+28,
           "maxValue": 7.9228162514264338E+28,
           "description": "The price the order was taken at."
+        },
+        "PriceCalculatedAtInTicks": {
+          "type": "number",
+          "format": "decimal",
+          "minValue": -7.9228162514264338E+28,
+          "maxValue": 7.9228162514264338E+28,
+          "description": "The price the calculation was performed at in ticks."
+        },
+        "PriceTakenAtInTicks": {
+          "type": "number",
+          "format": "decimal",
+          "minValue": -7.9228162514264338E+28,
+          "maxValue": 7.9228162514264338E+28,
+          "description": "The price the order was taken at in ticks."
         },
         "Quantity": {
           "type": "number",
