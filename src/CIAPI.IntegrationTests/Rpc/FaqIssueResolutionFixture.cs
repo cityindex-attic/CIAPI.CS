@@ -9,6 +9,18 @@ namespace CIAPI.IntegrationTests.Rpc
     [TestFixture]
     public class FaqIssueResolutionFixture : RpcFixtureBase
     {
+        [Test]
+        public void Issue243()
+        {
+            var rpcClient = BuildRpcClient();
+            rpcClient.LogIn("xx663766", "password1");
+            var x = rpcClient.TradesAndOrders.ListOpenPositions(0);
+
+
+
+        } 
+
+
         [Test,Ignore("core functionality broken")]
         public void CanEmptyQueueAndShutdown()
         {
