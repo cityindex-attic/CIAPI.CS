@@ -12,6 +12,7 @@ namespace CIAPI.Streaming
     /// </summary>
     public partial class LightstreamerClient
     {
+
         #region IStreamingClient Members
 
         /// <summary>
@@ -21,8 +22,9 @@ namespace CIAPI.Streaming
         /// <returns></returns>
         public IStreamingListener<NewsDTO> BuildNewsHeadlinesListener(string category)
         {
+
             var topic = Regex.Replace("NEWS.HEADLINES.{category}", "{category}", category.ToString());
-            return BuildListener<NewsDTO>("CITYINDEXSTREAMING", "MERGE", true, topic);
+            return BuildListener<NewsDTO>("STREAMINGALL", "MERGE", true, topic);
         }
 
         /// <summary>
@@ -32,8 +34,10 @@ namespace CIAPI.Streaming
         /// <returns></returns>
         public IStreamingListener<PriceDTO> BuildPricesListener(int [] marketIds)
         {
+            
+
           var topic = string.Join(" ", marketIds.Select(t => Regex.Replace("PRICES.PRICE.{marketIds}", "{marketIds}", t.ToString())).ToArray());
-          return BuildListener<PriceDTO>("CITYINDEXSTREAMING", "MERGE", true, topic);
+          return BuildListener<PriceDTO>("STREAMINGALL", "MERGE", true, topic);
         }
 
         /// <summary>
@@ -42,8 +46,8 @@ namespace CIAPI.Streaming
         /// <returns></returns>
         public IStreamingListener<QuoteDTO> BuildQuotesListener()
         {
-            string topic = "QUOTES";
-            return BuildListener<QuoteDTO>("STREAMINGTRADINGACCOUNT", "MERGE", true, topic);
+            
+            return BuildListener<QuoteDTO>("STREAMINGALL", "MERGE", true, "QUOTES.QUOTES");
         }
 
         /// <summary>
@@ -52,8 +56,7 @@ namespace CIAPI.Streaming
         /// <returns></returns>
         public IStreamingListener<ClientAccountMarginDTO> BuildClientAccountMarginListener()
         {
-            string topic = "CLIENTACCOUNTMARGIN";
-            return BuildListener<ClientAccountMarginDTO>("STREAMINGCLIENTACCOUNT", "MERGE", true, topic);
+            return BuildListener<ClientAccountMarginDTO>("STREAMINGALL", "MERGE", true, "CLIENTACCOUNTMARGIN.CLIENTACCOUNTMARGIN");
         }
 
         /// <summary>
@@ -62,8 +65,7 @@ namespace CIAPI.Streaming
         /// <returns></returns>
         public IStreamingListener<OrderDTO> BuildOrdersListener()
         {
-            string topic = "ORDERS";
-            return BuildListener<OrderDTO>("STREAMINGCLIENTACCOUNT", "MERGE", true, topic);
+            return BuildListener<OrderDTO>("STREAMINGALL", "MERGE", true, "ORDERS.ORDERS");
         }
 
         /// <summary>
@@ -82,7 +84,8 @@ namespace CIAPI.Streaming
         /// <returns></returns>
         public IStreamingListener<TradeMarginDTO> BuildTradeMarginListener()
         {
-            return BuildListener<TradeMarginDTO>("STREAMINGCLIENTACCOUNT", "RAW", false, "TRADEMARGIN.ALL" );
+
+            return BuildListener<TradeMarginDTO>("STREAMINGALL", "RAW", false, "TRADEMARGIN.TRADEMARGIN");
         }
 
         #endregion
