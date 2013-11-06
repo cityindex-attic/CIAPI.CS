@@ -26,7 +26,7 @@ namespace CIAPI.IntegrationTests.Streaming
 
             // odd - 80905 returns null values for the first update and then subsequently returns values - indicative of a spin-up process?
             // 71442
-            var priceListener = streamingClient.BuildPricesListener(71442);
+            var priceListener = streamingClient.BuildPricesListener(400740080);
 
 
             PriceDTO actual = null;
@@ -76,7 +76,8 @@ namespace CIAPI.IntegrationTests.Streaming
 
             // odd - 80905 returns null values for the first update and then subsequently returns values - indicative of a spin-up process?
             // 71442
-            var priceListener = streamingClient.BuildPricesListener(71442);
+            // 400740080
+            var priceListener = streamingClient.BuildPricesListener(400740080);
             var recorder = StreamingRecorder.Create(priceListener);
             recorder .Start();
             PriceDTO actual = null;
@@ -87,6 +88,7 @@ namespace CIAPI.IntegrationTests.Streaming
             priceListener.MessageReceived += (s, e) =>
             {
                 actual = e.Data;
+                Console.WriteLine("got data {0}",e.Data.Change);
                 gate.Set();
             };
 
@@ -141,8 +143,8 @@ namespace CIAPI.IntegrationTests.Streaming
             var streamingClient = BuildStreamingClient();
             
             var priceListener = streamingClient.BuildPricesListener(new[]{
-                                                                         71442,
-                                                                         71443
+                                                                         400740080,
+                                                                         400776242
                                                                     });
 
             var prices = new Dictionary<string, PriceDTO>();

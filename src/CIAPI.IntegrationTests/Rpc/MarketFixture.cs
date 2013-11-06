@@ -171,7 +171,7 @@ namespace CIAPI.IntegrationTests.Rpc
         {
             var rpcClient = BuildRpcClient();
 
-            var response = rpcClient.Market.ListMarketInformationSearch(false, true, false, true, false, true, "GBP", 10, false);
+            var response = rpcClient.Market.ListMarketInformationSearch(false, true, false, true, false, true, "GBP/USD", 200, false);
             Assert.Greater(response.MarketInformation.Length, 1);
             rpcClient.LogOut();
         }
