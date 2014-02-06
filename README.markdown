@@ -1,4 +1,9 @@
-#  CIAPI.CS ![Complete](http://labs.cityindex.com/wp-content/uploads/2012/01/lbl-complete.png)![Supported](http://labs.cityindex.com/wp-content/uploads/2012/01/lbl-supported.png)
+#  CIAPI.CS![Unsupported](http://labs.cityindex.com/wp-content/uploads/2012/01/lbl-unsupported.png)
+
+#NB - this project is no longer being supported by City Index Ltd.
+
+-----------
+
 A complete .NET client library for connecting to the CityIndex Trading API.
 
 Includes builds for:
