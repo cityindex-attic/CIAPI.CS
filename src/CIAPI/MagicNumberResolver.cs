@@ -6,7 +6,7 @@ using CIAPI.DTO;
 using CIAPI.Rpc;
 using Salient.ReflectiveLoggingAdapter;
 using Salient.ReliableHttpClient;
-
+using AggregateException = CIAPI.Rpc.AggregateException;
 namespace CIAPI
 {
 

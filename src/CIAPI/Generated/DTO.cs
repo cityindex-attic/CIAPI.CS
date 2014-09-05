@@ -14,6 +14,12 @@ namespace CIAPI.DTO
         /// Client account ID.
         /// </summary>
         public int ClientAccountId { get; set; }
+
+        /// <summary>
+        /// Culture id
+        /// </summary>
+        public int CultureId { get; set; }
+
         /// <summary>
         /// Base currency of the client account.
         /// </summary>
@@ -38,6 +44,11 @@ namespace CIAPI.DTO
         /// Information about account holders.
         /// </summary>
         public ApiAccountHolderDTO[] AccountHolders { get; set; }
+
+        /// <summary>
+        /// Client type id
+        /// </summary>
+        public int ClientTypeId { get; set; }
     }
 
     /// <summary>

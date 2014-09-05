@@ -269,7 +269,7 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
-    <PostBuildEvent>call "..\node-0.4.7-cygwin\bin\node" "../src/generate.js"
+    <PostBuildEvent>REM call "..\node-0.4.7-cygwin\bin\node" "../src/generate.js"
 
 </PostBuildEvent>
   </PropertyGroup>

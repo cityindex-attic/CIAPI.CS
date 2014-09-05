@@ -88,7 +88,7 @@ namespace CIAPI.IntegrationTests.Rpc
                 rpcClientUsingSession.LogInUsingSession(Settings.RpcUserName, rpcClient.Session);
                 Assert.Fail("should throw");
             }
-            catch (ReliableHttpException ex)
+            catch (ReliableHttpException)
             {
                 
             }
@@ -98,7 +98,7 @@ namespace CIAPI.IntegrationTests.Rpc
                 rpcClientUsingSession.LogInUsingSession(Settings.RpcUserName, Guid.NewGuid().ToString());
                 Assert.Fail("should throw");
             }
-            catch (ReliableHttpException ex)
+            catch (ReliableHttpException)
             {
 
             }
